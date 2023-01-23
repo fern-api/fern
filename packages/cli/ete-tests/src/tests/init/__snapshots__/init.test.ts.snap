@@ -9,7 +9,9 @@ exports[`fern init covie openapi 1`] = `
           {
             "contents": [
               {
-                "contents": "services:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
   http:
     AccountService:
       auth: true
@@ -20,18 +22,20 @@ exports[`fern init covie openapi 1`] = `
           type: string
       endpoints:
         enableAccountMfaRequired:
-          path: ''
+          path: ""
           method: POST
           docs: Require all account users to have an MFA application configured
           display-name: Enable Account MFA Requirement
           response: AccountWithConfig
+
         disableAccountMfaRequired:
-          path: ''
+          path: ""
           method: DELETE
           docs: >-
             Remove requirement for all account users to have an MFA application
             configured
           display-name: Disable Account MFA Requirement
+
 types:
   AccountWithConfig:
     properties: {}
@@ -47,8 +51,11 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     ApplicationService:
@@ -113,6 +120,7 @@ services:
                   integration IDs, comma-separated.
                 type: optional<string>
           response: commons.Links
+
         getApplicationPolicies:
           path: /policies
           method: GET
@@ -137,13 +145,16 @@ services:
                 "type": "file",
               },
               {
-                "contents": "types:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
   Carrier:
     docs: >-
       A basic object describing the individual insurance company which has
       issued a policy.
     properties:
       name: optional<string>
+
   Policyholder:
     docs: >-
       Describes the company or person which is legally listed on, and entitled
@@ -154,10 +165,12 @@ services:
       email_addresses: optional<list<EMail>>
       phone_numbers: optional<list<Phone>>
       is_primary: optional<boolean>
+
   Name:
     docs: Contains a name for a person or business
     properties:
       full: optional<string>
+
   EMail:
     docs: >-
       A universal base object encapsulating the e-mail address related to
@@ -165,6 +178,7 @@ services:
     properties:
       address: optional<string>
       is_primary: optional<boolean>
+
   Phone:
     docs: >-
       A universal base object encapsulating the phone number related to another
@@ -173,6 +187,7 @@ services:
       type: optional<string>
       number: optional<string>
       is_primary: optional<boolean>
+
   Vehicle:
     docs: >-
       Describes the motor vehicle which is covered under the terms of a policy.
@@ -192,12 +207,14 @@ services:
       interests: optional<list<Interest>>
       coverages: optional<_InlinedType28>
       discounts: optional<list<Discount>>
+
   _InlinedType26:
     docs: The intended usage of the vehicle by the insured.
     enum:
       - commute
       - pleasure
       - business
+
   _InlinedType27:
     docs: >-
       Whether or not the vehicle specified is owned, leased, or financed by the
@@ -206,6 +223,7 @@ services:
       - own
       - lease
       - finance
+
   _InlinedType28:
     docs: >-
       A list of all coverages that apply to this vehicle. The omission of any
@@ -246,6 +264,7 @@ services:
       motorcycle_enhanced_injury: optional<Coverage>
       limited_personal_injury_protection: optional<Coverage>
       carried_contents: optional<Coverage>
+
   Driver:
     docs: >-
       Describes the individual driver who is considered the routine operator of
@@ -260,6 +279,7 @@ services:
       license_number: optional<string>
       license_state: optional<string>
       is_primary: optional<boolean>
+
   _InlinedType29:
     docs: >-
       The current marital status of the driver, if provided. The \`separated\`
@@ -269,12 +289,14 @@ services:
       - single
       - separated
       - widowed
+
   _InlinedType30:
     docs: The reported gender of the driver, when provided by the insurer.
     enum:
       - male
       - female
       - non-binary
+
   Interest:
     docs: >-
       Describes an entity, person or company, that has a legal interest in a
@@ -288,14 +310,16 @@ services:
       name: optional<Name>
       email_addresses: optional<list<EMail>>
       phone_numbers: optional<list<Phone>>
+
   Coverage:
     docs: >-
       Describes the features of a specific coverage element for a person or
       property, encapsulating the limits, deductibles, and premium information
-      therein. 
+      therein.
     properties:
       name: optional<string>
       limits: optional<_InlinedType31>
+
   _InlinedType31:
     docs: >-
       A breakout of different limits and sublimits that apply to this coverage
@@ -306,6 +330,7 @@ services:
     properties:
       duration: optional<PeriodValue>
       term: optional<CurrencyValue>
+
   PeriodValue:
     docs: >-
       Describes a value that represents a period of time, such as days, weeks,
@@ -313,6 +338,7 @@ services:
     properties:
       unit: optional<string>
       value: optional<integer>
+
   CurrencyValue:
     docs: >-
       Describes a value that is tied to a monetary amount. Most frequently used
@@ -320,6 +346,7 @@ services:
     properties:
       unit: optional<string>
       value: optional<double>
+
   Discount:
     docs: >-
       Describes a discount which a policyholder is receiving for a particular
@@ -328,6 +355,7 @@ services:
     properties:
       code: optional<string>
       friendly_name: optional<string>
+
   Location:
     docs: >-
       Describes a physical location and/or structure which is covered under the
@@ -338,6 +366,7 @@ services:
       other_deductibles: optional<_InlinedType33>
       discounts: optional<list<Discount>>
       interests: optional<list<Interest>>
+
   _InlinedType32:
     docs: A list of coverages that apply to the location being insured.
     properties:
@@ -360,11 +389,13 @@ services:
       locks: optional<Coverage>
       landscaping: optional<Coverage>
       additional_structures: optional<Coverage>
+
   _InlinedType33:
     docs: >-
       A list of deductibles that apply in addition to the coverage-specific
       deductibles.
     properties: {}
+
   Address:
     docs: >-
       A universal base object encapsulating the physical address related to
@@ -375,6 +406,7 @@ services:
       city: optional<string>
       state: optional<string>
       postal_code: optional<string>
+
   DocumentRef:
     docs: >-
       Describes the individual insurance document available for download from a
@@ -384,14 +416,17 @@ services:
       type: optional<string>
       content_type: optional<string>
       href: optional<string>
+
   Events:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
       _embedded: optional<_InlinedType34>
+
   _InlinedType34:
     properties:
       events: optional<list<Event>>
+
   Event:
     docs: >-
       Represents an event delivered via webhook on the occurrence of certain
@@ -401,13 +436,16 @@ services:
       event_type: optional<string>
       occurred_at: optional<string>
       _links: optional<_InlinedType36>
+
   _InlinedType35:
     docs: Link to view the full event payload.
     properties:
       href: optional<string>
+
   _InlinedType36:
     properties:
       payload: optional<_InlinedType35>
+
   Integration:
     docs: >-
       Represents a connection between a client application and Covie's systems
@@ -420,70 +458,83 @@ services:
       created_at: optional<string>
       updated_at: optional<string>
       configuration: optional<_InlinedType46>
+
   _InlinedType37:
     properties:
       primary: optional<string>
+
   _InlinedType38:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
       colors: optional<_InlinedType37>
+
   _InlinedType39:
     properties:
       agency_logo: optional<string>
       agency_photo: optional<string>
+
   _InlinedType40:
     properties:
       agency_name: optional<string>
       agent_name: optional<string>
       agent_email: optional<string>
       image_urls: optional<_InlinedType39>
+
   _InlinedType41:
     properties:
       brand: optional<_InlinedType38>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
       hosted: optional<_InlinedType40>
+
   _InlinedType42:
     properties:
       primary: optional<string>
+
   _InlinedType43:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
       colors: optional<_InlinedType42>
+
   _InlinedType44:
     properties:
       agency_logo: optional<string>
       agency_photo: optional<string>
+
   _InlinedType45:
     properties:
       agency_name: optional<string>
       agent_name: optional<string>
       agent_email: optional<string>
       image_urls: optional<_InlinedType44>
+
   _InlinedType46:
     properties:
       brand: optional<_InlinedType43>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
       hosted: optional<_InlinedType45>
+
   Policies:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
       _embedded: optional<_InlinedType47>
+
   _InlinedType47:
     properties:
       policies: optional<list<Policy>>
+
   Policy:
     docs: >-
       This describes, in high level, the insurance policy record that is
       provided by a link. This object encapsulates all the necessary details to
       understand the policy's status, policyholders, and covered persons or
-      properties. 
+      properties.
     properties:
       id: optional<string>
       object: optional<string>
@@ -506,6 +557,7 @@ services:
       _links: optional<_InlinedType50>
       _embedded: optional<_InlinedType51>
       link_id: optional<string>
+
   _InlinedType48:
     docs: >-
       The determined reason for the cancellation, such as insured_non_payment or
@@ -517,10 +569,12 @@ services:
       - insured_non_payment
       - insured_requested
       - other
+
   _InlinedType49:
     docs: A link to the logo for the carrier on the policy.
     properties:
       href: optional<string>
+
   _InlinedType50:
     docs: >-
       A polymorphic list of externally linked resources related to this policy
@@ -528,10 +582,12 @@ services:
     properties:
       documents: optional<list<DocumentRef>>
       carrier_logo: optional<_InlinedType49>
+
   _InlinedType51:
     docs: A container for objects wrapped by the current object.
     properties:
       missing_fields: optional<list<string>>
+
   Provider:
     docs: >-
       Represents a connected insurance partner that can be used to authenticate
@@ -541,14 +597,17 @@ services:
       name: optional<string>
       _links: optional<_InlinedType54>
       _embedded: optional<_InlinedType55>
+
   _InlinedType52:
     docs: The logo image to be used when describing a given provider.
     properties:
       href: optional<string>
+
   _InlinedType53:
     docs: A reference to the provider's primary website.
     properties:
       href: optional<string>
+
   _InlinedType54:
     docs: >-
       A collection of externally referenced material pertaining to the provider,
@@ -556,6 +615,7 @@ services:
     properties:
       image: optional<_InlinedType52>
       website: optional<_InlinedType53>
+
   _InlinedType55:
     docs: >-
       A collection of sub objects that are related to this provider, most
@@ -563,6 +623,7 @@ services:
       this provider.
     properties:
       alternative_providers: optional<list<Provider>>
+
   Link_2:
     docs: >-
       Represents the individual connections between Covie and a Policyholder's
@@ -579,6 +640,7 @@ services:
       updated_at: optional<string>
       created_at: optional<string>
       _links: optional<_InlinedType66>
+
   _InlinedType56:
     docs: >-
       The frequency of which tracking should be performed. This value is \`never\`
@@ -589,53 +651,65 @@ services:
       - monthly
       - never
       - on_demand
+
   _InlinedType57:
     docs: Link to retrieve the link's details.
     properties:
       href: optional<string>
+
   _InlinedType58:
     docs: Link to the carrier's logo.
     properties:
       href: optional<string>
+
   _InlinedType59:
     properties:
       href: optional<string>
       content_type: optional<string>
+
   _InlinedType60:
     properties:
       self: optional<_InlinedType57>
       carrier_logo: optional<_InlinedType58>
       uploaded_documents: optional<list<_InlinedType59>>
+
   Links:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
       _embedded: optional<_InlinedType61>
+
   _InlinedType61:
     properties:
       links: optional<list<Link_2>>
+
   _InlinedType62:
     docs: >-
       The frequency of which tracking should be performed. This value is \`never\`
       when tracking is disabled.
     enum: *ref_0
+
   _InlinedType63:
     docs: Link to retrieve the link's details.
     properties:
       href: optional<string>
+
   _InlinedType64:
     docs: Link to the carrier's logo.
     properties:
       href: optional<string>
+
   _InlinedType65:
     properties:
       href: optional<string>
       content_type: optional<string>
+
   _InlinedType66:
     properties:
       self: optional<_InlinedType63>
       carrier_logo: optional<_InlinedType64>
       uploaded_documents: optional<list<_InlinedType65>>
+
   Webhook:
     docs: Represents a webhook in the Covie system.
     properties:
@@ -653,7 +727,9 @@ services:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
   http:
     EventService:
       auth: true
@@ -662,11 +738,12 @@ services:
         event_id: string
       endpoints:
         postEventsEventIdBroadcasts:
-          path: ''
+          path: ""
           method: POST
           docs: Rebroadcast an event.
           display-name: Rebroadcast Event
           response: _InlinedType25
+
 types:
   EventBroadcast:
     docs: Record of a broadcast to a webhook endpoint when an event is triggered.
@@ -677,9 +754,11 @@ types:
       request_uri: optional<string>
       response_code: optional<integer>
       response_body: optional<string>
+
   _InlinedType24:
     properties:
       broadcasts: optional<list<EventBroadcast>>
+
   _InlinedType25:
     properties:
       count: optional<integer>
@@ -689,8 +768,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     IntegrationService:
@@ -698,7 +780,7 @@ services:
       base-path: /integrations
       endpoints:
         listIntegrations:
-          path: ''
+          path: ""
           method: GET
           docs: List integrations associated to an application
           display-name: List Integrations
@@ -713,8 +795,9 @@ services:
                 docs: Filter active or archived integrations
                 type: optional<string>
           response: Integrations
+
         createIntegration:
-          path: ''
+          path: ""
           method: POST
           docs: Creates a new integration.
           display-name: Create Integration
@@ -724,6 +807,7 @@ services:
                 name: string
                 policyRequirements: optional<_InlinedType10>
                 configuration: optional<_InlinedType13>
+
         getIntegration:
           path: /{integration_id}
           method: GET
@@ -737,6 +821,7 @@ services:
                 authenticated Client ID and Secret.
               type: string
           response: commons.Integration_2
+
         deleteIntegration:
           path: /{integration_id}
           method: DELETE
@@ -749,6 +834,7 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
         updateIntegration:
           path: /{integration_id}
           method: PATCH
@@ -769,6 +855,7 @@ services:
                 configuration: optional<_InlinedType16>
                 policy_requirements: optional<_InlinedType17>
           response: commons.Integration_2
+
         getIntegrationPolicies:
           path: /{integration_id}/policies
           method: GET
@@ -790,6 +877,7 @@ services:
                 docs: Specifies the offset of the first result to return.
                 type: optional<integer>
           response: commons.Policies
+
         getIntegrationProviders:
           path: /{integration_id}/providers
           method: GET
@@ -810,9 +898,10 @@ services:
                 docs: >-
                   A pipe delineated list of policy types desired. Providers who
                   do not support at least one required policy type will be
-                  excluded. 
+                  excluded.
                 type: optional<string>
           response: Providers
+
         regenerateIntegrationKey:
           path: /{integration_id}/regenerate_key
           method: POST
@@ -828,6 +917,7 @@ services:
                 authenticated Client ID and Secret.
               type: string
           response: commons.Integration_2
+
         getIntegrationsIntegrationIdAgencyLogo:
           path: /{integration_id}/agency_logo
           method: GET
@@ -840,6 +930,7 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
         putIntegrationsIntegrationIdAgencyLogo:
           path: /{integration_id}/agency_logo
           method: PUT
@@ -853,6 +944,7 @@ services:
                 authenticated Client ID and Secret.
               type: string
           response: _InlinedType18
+
         deleteIntegrationsIntegrationIdAgencyLogo:
           path: /{integration_id}/agency_logo
           method: DELETE
@@ -865,6 +957,7 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
         getIntegrationsIntegrationIdAgentPhoto:
           path: /{integration_id}/agent_photo
           method: GET
@@ -877,6 +970,7 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
         putIntegrationsIntegrationIdAgentPhoto:
           path: /{integration_id}/agent_photo
           method: PUT
@@ -890,6 +984,7 @@ services:
                 authenticated Client ID and Secret.
               type: string
           response: _InlinedType19
+
         deleteIntegrationsIntegrationIdAgentPhoto:
           path: /{integration_id}/agent_photo
           method: DELETE
@@ -902,6 +997,7 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
         getIntegrationsIntegrationIdBrandLogo:
           path: /{integration_id}/brand_logo
           method: GET
@@ -914,6 +1010,7 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
         putIntegrationsIntegrationIdBrandLogo:
           path: /{integration_id}/brand_logo
           method: PUT
@@ -927,6 +1024,7 @@ services:
                 authenticated Client ID and Secret.
               type: string
           response: _InlinedType20
+
         deleteIntegrationsIntegrationIdBrandLogo:
           path: /{integration_id}/brand_logo
           method: DELETE
@@ -939,77 +1037,96 @@ services:
                 be a valid integration under the application associated with the
                 authenticated Client ID and Secret.
               type: string
+
 types:
   Integrations:
     properties:
       count: optional<integer>
       _links: optional<_InlinedType5>
       _embedded: optional<_InlinedType6>
+
   _InlinedType4:
     properties:
       href: optional<string>
+
   _InlinedType5:
     properties:
       self: optional<_InlinedType4>
+
   _InlinedType6:
     properties:
       integrations: optional<list<commons.Integration>>
+
   Providers:
     properties:
       count: optional<integer>
       _links: optional<_InlinedType8>
       _embedded: optional<_InlinedType9>
+
   _InlinedType7:
     properties:
       href: optional<string>
+
   _InlinedType8:
     properties:
       self: optional<_InlinedType7>
+
   _InlinedType9:
     properties:
       providers: optional<list<commons.Provider>>
+
   _InlinedType10:
     properties:
       effective_date: optional<string>
       allow_inactive: optional<boolean>
+
   _InlinedType11:
     properties:
       primary: optional<string>
+
   _InlinedType12:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
       colors: optional<_InlinedType11>
+
   _InlinedType13:
     properties:
       brand: optional<_InlinedType12>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
+
   _InlinedType14:
     properties:
       primary: optional<string>
+
   _InlinedType15:
     docs: Branding configuration for the embed.
     properties:
       logo: optional<string>
       hide_logo: optional<boolean>
       colors: optional<_InlinedType14>
+
   _InlinedType16:
     properties:
       brand: optional<_InlinedType15>
       display_name: optional<string>
       use_name_as_display_name: optional<boolean>
+
   _InlinedType17:
     properties:
       allow_inactive: optional<boolean>
       effective_date: optional<string>
+
   _InlinedType18:
     properties:
       href: optional<string>
+
   _InlinedType19:
     properties:
       href: optional<string>
+
   _InlinedType20:
     properties:
       href: optional<string>
@@ -1018,13 +1135,16 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     LinkService:
       auth: true
-      base-path: ''
+      base-path: ""
       endpoints:
         getLink:
           path: /links/{id}
@@ -1036,6 +1156,7 @@ services:
               docs: The unique identifier of the link being inspected.
               type: string
           response: commons.Link
+
         deleteLink:
           path: /links/{id}
           method: DELETE
@@ -1045,6 +1166,7 @@ services:
             id:
               docs: The unique identifier of the link being inspected.
               type: string
+
         updateLinkSettings:
           path: /links/{id}
           method: PATCH
@@ -1058,6 +1180,7 @@ services:
               properties:
                 tracking_frequency: optional<string>
           response: commons.Link
+
         getLinkPolicies:
           path: /links/{id}/policies
           method: GET
@@ -1076,6 +1199,7 @@ services:
                 docs: Specifies the offset of the first result to return.
                 type: optional<integer>
           response: commons.Policies
+
         getLinkEvents:
           path: /links/{id}/events
           method: GET
@@ -1097,6 +1221,7 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: commons.Events
+
         attachLinkDocument:
           path: /links/{id}/documents
           method: POST
@@ -1108,6 +1233,7 @@ services:
             id:
               docs: The unique identifier of the link being inspected.
               type: string
+
         syncLinkManually:
           path: /links/{id}/syncs
           method: POST
@@ -1119,6 +1245,7 @@ services:
             id:
               docs: The unique identifier of the link being inspected.
               type: string
+
         getIntegrationLinks:
           path: /integrations/{integration_id}/links
           method: GET
@@ -1175,6 +1302,7 @@ services:
                 docs: The type of policy linked.
                 type: optional<string>
           response: commons.Links
+
         initializeLinkViaIntegration:
           path: /integrations/{integration_id}/links
           method: POST
@@ -1195,6 +1323,7 @@ services:
               properties:
                 provider_id: optional<string>
           response: commons.Link
+
         getIntegrationLinksWithPolicies:
           path: /integrations/{integration_id}/links_with_policies
           method: GET
@@ -1248,15 +1377,18 @@ services:
                   policy types.
                 type: optional<string>
           response: LinksWithPolicies
+
 types:
   LinksWithPolicies:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
       _embedded: optional<_InlinedType21>
+
   _InlinedType21:
     properties:
       links: optional<list<LinkWithPolicies>>
+
   LinkWithPolicies:
     docs: >-
       Represents the individual connections between Covie and a Policyholder's
@@ -1265,6 +1397,7 @@ types:
     extends:
       - commons.Link_2
       - _InlinedType22
+
   _InlinedType22:
     properties:
       policies: optional<list<commons.Policy>>
@@ -1273,8 +1406,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     PolicyService:
@@ -1286,11 +1422,12 @@ services:
           type: string
       endpoints:
         getPoliciesPolicyId:
-          path: ''
+          path: ""
           method: GET
           docs: Retrieve a Policy object that was previously connected via a Link
           display-name: Retrieve Policy
           response: Policy_2
+
         getPolicyDocument:
           path: /documents/{document_type}
           method: GET
@@ -1301,6 +1438,7 @@ services:
               docs: The document type being requested.
               type: string
           response: FileContents
+
         listPolicyEvents:
           path: /events
           method: GET
@@ -1318,13 +1456,14 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: commons.Events
+
 types:
   Policy:
     docs: >-
       This describes, in high level, the insurance policy record that is
       provided by a link. This object encapsulates all the necessary details to
       understand the policy's status, policyholders, and covered persons or
-      properties. 
+      properties.
     properties:
       id: optional<string>
       object: optional<string>
@@ -1347,6 +1486,7 @@ types:
       _links: optional<_InlinedType2>
       _embedded: optional<_InlinedType3>
       link_id: optional<string>
+
   _InlinedType0:
     docs: >-
       The determined reason for the cancellation, such as insured_non_payment or
@@ -1358,10 +1498,12 @@ types:
       - insured_non_payment
       - insured_requested
       - other
+
   _InlinedType1:
     docs: A link to the logo for the carrier on the policy.
     properties:
       href: optional<string>
+
   _InlinedType2:
     docs: >-
       A polymorphic list of externally linked resources related to this policy
@@ -1369,6 +1511,7 @@ types:
     properties:
       documents: optional<list<commons.DocumentRef>>
       carrier_logo: optional<_InlinedType1>
+
   _InlinedType3:
     docs: A container for objects wrapped by the current object.
     properties:
@@ -1378,8 +1521,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     WebhookService:
@@ -1387,7 +1533,7 @@ services:
       base-path: /webhooks
       endpoints:
         listWebhooks:
-          path: ''
+          path: ""
           method: GET
           docs: List an application's configured webhooks.
           display-name: List Webhooks
@@ -1403,8 +1549,9 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: Webhooks
+
         createWebhook:
-          path: ''
+          path: ""
           method: POST
           docs: Create a new webhook
           display-name: Create Webhook
@@ -1413,6 +1560,7 @@ services:
               properties:
                 uri: optional<string>
                 event_types: optional<list<string>>
+
         getWebhook:
           path: /{webhook_id}
           method: GET
@@ -1423,6 +1571,7 @@ services:
               docs: Unique identifier of the webhook.
               type: string
           response: commons.Webhook_2
+
         updateWebhook:
           path: /{webhook_id}
           method: PATCH
@@ -1439,6 +1588,7 @@ services:
                 is_enabled: optional<boolean>
                 event_types: optional<list<string>>
           response: commons.Webhook_2
+
         listWebhookEvents:
           path: /{webhook_id}/events
           method: GET
@@ -1460,12 +1610,14 @@ services:
                 docs: Filter events by type.
                 type: optional<string>
           response: commons.Events
+
 types:
   Webhooks:
     properties:
       count: optional<integer>
       filtered_count: optional<integer>
       _embedded: optional<_InlinedType23>
+
   _InlinedType23:
     properties:
       webhooks: optional<list<commons.Webhook>>
@@ -1519,7 +1671,9 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
   deviceModel:
     properties:
       object: string
@@ -1528,6 +1682,7 @@ headers: {}
       name: string
       simTypes: list<string>
       type: string
+
   device:
     properties:
       object: string
@@ -1538,6 +1693,7 @@ headers: {}
       sims: list<sim>
       user: _InlinedType18
       createdAt: string
+
   _InlinedType17:
     properties:
       object: string
@@ -1546,6 +1702,7 @@ headers: {}
       name: string
       simTypes: list<string>
       type: string
+
   _InlinedType18:
     properties:
       object: string
@@ -1556,6 +1713,7 @@ headers: {}
       fullName: optional<string>
       preferredLocale: string
       createdAt: string
+
   sim:
     properties:
       object: string
@@ -1565,6 +1723,7 @@ headers: {}
       status: string
       type: string
       createdAt: string
+
   plan:
     properties:
       object: string
@@ -1587,28 +1746,33 @@ headers: {}
       voice: integer
       voiceUnit: string
       createdAt: string
+
   _InlinedType19:
     properties:
       amount: integer
       currency: string
+
   _InlinedType20:
     properties:
       address: string
       device: string
       user.birthday: string
       user.fullName: string
+
   _InlinedType21:
     properties:
       minimumPeriods: integer
       type: string
       unit: string
       value: integer
+
   coverage:
     properties:
       object: string
       id: string
       countries: list<string>
       name: string
+
   planDocument:
     properties:
       object: string
@@ -1618,6 +1782,7 @@ headers: {}
       type: string
       url: string
       createdAt: string
+
   porting:
     properties:
       object: string
@@ -1640,6 +1805,7 @@ headers: {}
       createdAt: string
       lastDeclinedAt: optional<string>
       lastRequestedAt: optional<string>
+
   _InlinedType22:
     docs: The service provider from whom the number is ported.
     properties:
@@ -1647,6 +1813,7 @@ headers: {}
       id: string
       name: string
       recipientProviders: list<string>
+
   _InlinedType23:
     docs: The service provider to whom the number is ported.
     properties:
@@ -1654,12 +1821,14 @@ headers: {}
       id: string
       name: string
       recipientProviders: list<string>
+
   serviceProvider:
     properties:
       object: string
       id: string
       name: string
       recipientProviders: list<string>
+
   project:
     properties:
       object: string
@@ -1676,6 +1845,7 @@ headers: {}
       subscriptionOwner: string
       support: _InlinedType27
       createdAt: string
+
   _InlinedType24:
     docs: >-
       Deprecated object of project images. Please use the image property
@@ -1684,6 +1854,7 @@ headers: {}
       favicon: optional<string>
       icon: optional<string>
       logoHorizontal: optional<string>
+
   _InlinedType25:
     docs: The legal address for the company that manages the project.
     properties:
@@ -1694,22 +1865,26 @@ headers: {}
       line2: optional<string>
       postalCode: string
       state: optional<string>
+
   _InlinedType26:
     docs: Configuration parameters for the project use of payments.
     properties:
       currency: string
       mode: string
+
   _InlinedType27:
     docs: Contact details for consumer support requests regarding the project.
     properties:
       email: optional<string>
       phoneNumber: optional<string>
+
   organization:
     properties:
       object: string
       id: string
       name: string
       createdAt: string
+
   subscription:
     properties:
       object: string
@@ -1726,11 +1901,13 @@ headers: {}
       createdAt: string
       endedAt: optional<string>
       firstUsageAt: optional<string>
+
   _InlinedType28:
     properties:
       number: integer
       start: string
       end: string
+
   _InlinedType29:
     properties:
       object: string
@@ -1740,6 +1917,7 @@ headers: {}
       status: string
       type: string
       createdAt: string
+
   user:
     properties:
       object: string
@@ -1750,6 +1928,7 @@ headers: {}
       fullName: optional<string>
       preferredLocale: string
       createdAt: string
+
   userAddress:
     properties:
       object: string
@@ -1767,13 +1946,16 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     DevicesService:
       auth: true
-      base-path: ''
+      base-path: ""
       endpoints:
         deviceModelsRetrieve:
           path: /deviceModels/{id}
@@ -1785,6 +1967,7 @@ services:
               docs: The unique identifier for the device model.
               type: string
           response: commons.deviceModel
+
         deviceModelsSearch:
           path: /deviceModels/search
           method: POST
@@ -1795,6 +1978,7 @@ services:
               properties:
                 imei: string
           response: _InlinedType0
+
         deviceModelsList:
           path: /deviceModels
           method: GET
@@ -1832,6 +2016,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType1
+
         devicesRetrieve:
           path: /projects/{project}/devices/{id}
           method: GET
@@ -1849,6 +2034,7 @@ services:
               docs: The unique identifier for the device.
               type: string
           response: commons.device
+
         devicesDelete:
           path: /projects/{project}/devices/{id}
           method: DELETE
@@ -1864,25 +2050,19 @@ services:
               docs: The unique identifier for the device.
               type: string
           response: commons.device
+
         devicesUpdate:
           path: /projects/{project}/devices/{id}
           method: PATCH
           docs: >
             Updates the given properties of an existing device.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Update a device
@@ -1902,6 +2082,7 @@ services:
                 sims: optional<list<string>>
                 user: optional<string>
           response: commons.device
+
         devicesSearch:
           path: /projects/{project}/devices/search
           method: POST
@@ -1921,6 +2102,7 @@ services:
               properties:
                 imei: string
           response: _InlinedType2
+
         devicesList:
           path: /projects/{project}/devices
           method: GET
@@ -1961,6 +2143,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType3
+
         devicesCreate:
           path: /projects/{project}/devices
           method: POST
@@ -1979,6 +2162,7 @@ services:
                 user: string
                 sims: optional<list<string>>
                 name: optional<string>
+
 types:
   _InlinedType0:
     properties:
@@ -1986,18 +2170,21 @@ types:
       items: list<commons.deviceModel>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType1:
     properties:
       object: string
       items: list<commons.deviceModel>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType2:
     properties:
       object: string
       items: list<commons.device>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType3:
     properties:
       object: string
@@ -2009,8 +2196,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     PlansService:
@@ -2029,20 +2219,13 @@ services:
           docs: >
             Set the status of a plan to archived. An archived plan can not be
             used to create new subscriptions.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Archive a plan
@@ -2051,6 +2234,7 @@ services:
               docs: The unique identifier for the plan.
               type: string
           response: commons.plan
+
         planDocumentRetrieve:
           path: /{plan}/documents/{id}
           method: GET
@@ -2064,6 +2248,7 @@ services:
               docs: The unique identifier for the document.
               type: string
           response: commons.planDocument
+
         planDocumentsList:
           path: /{plan}/documents
           method: GET
@@ -2077,6 +2262,7 @@ services:
               docs: The unique identifier for the plan.
               type: string
           response: _InlinedType4
+
         plansRetrieve:
           path: /{id}
           method: GET
@@ -2087,6 +2273,7 @@ services:
               docs: The unique identifier for the plan.
               type: string
           response: commons.plan
+
         plansUpdate:
           path: /{id}
           method: PATCH
@@ -2105,26 +2292,20 @@ services:
                 description: optional<string>
                 image: optional<string>
           response: commons.plan
+
         plansPublish:
           path: /{id}/publish
           method: POST
           docs: >
             Set the status of a plan to available. Available plans can be used
             to create new subscriptions.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Publish a plan
@@ -2133,8 +2314,9 @@ services:
               docs: The unique identifier for the plan.
               type: string
           response: commons.plan
+
         plansList:
-          path: ''
+          path: ""
           method: GET
           docs: Returns a list of plans.
           display-name: List all plans
@@ -2169,6 +2351,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType5
+
 types:
   _InlinedType4:
     properties:
@@ -2176,6 +2359,7 @@ types:
       items: list<commons.planDocument>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType5:
     properties:
       object: string
@@ -2187,13 +2371,16 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     PortingsService:
       auth: true
-      base-path: ''
+      base-path: ""
       endpoints:
         portingCancel:
           path: /projects/{project}/portings/{id}/cancel
@@ -2201,20 +2388,13 @@ services:
           docs: >
             Retrieves the details of an existing porting and cancels it. Only
             portings that have not yet being completed can be canceled.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Cancel a porting
@@ -2228,25 +2408,19 @@ services:
               docs: The unique identifier for the porting.
               type: string
           response: commons.porting
+
         portingRetrieve:
           path: /projects/{project}/portings/{id}
           method: GET
           docs: >
             Retrieves the details of an existing porting.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a Porting
@@ -2260,26 +2434,20 @@ services:
               docs: The unique identifier for the porting.
               type: string
           response: commons.porting
+
         portingUpdate:
           path: /projects/{project}/portings/{id}
           method: PATCH
           docs: >
             Updates the specified porting by setting the values of the
             parameters passed.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Update a porting
@@ -2304,6 +2472,7 @@ services:
                 phoneNumber: optional<string>
                 provider: optional<string>
           response: commons.porting
+
         portingsList:
           path: /projects/{project}/portings
           method: GET
@@ -2311,20 +2480,13 @@ services:
             Returns a list of portings. The portings returned are sorted by
             creation date, with the most recently created portings appearing
             first.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all portings
@@ -2354,6 +2516,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType6
+
         portingsCreate:
           path: /projects/{project}/portings
           method: POST
@@ -2361,26 +2524,16 @@ services:
             Creates a new porting with the parameters passed. The porting will
             be created in \`draft\` status and can be later used to create an
             order or subscription for the given network provider.
-
-
             Only some of the fields are required during creation creation, but
             all of the ones required by the network provider must be set before
             submitting the porting.
-
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Create a porting
@@ -2402,25 +2555,19 @@ services:
                 phoneNumber: string
                 provider: string
                 user: string
+
         serviceProviderRetrieve:
           path: /serviceProviders/{id}
           method: GET
           docs: >
             Retrieves the details of a service provider.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve a service provider
@@ -2429,25 +2576,19 @@ services:
               docs: The unique identifier for the service provider.
               type: string
           response: commons.serviceProvider
+
         serviceProvidersList:
           path: /serviceProviders
           method: GET
           docs: >
             Returns a list of service providers.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: List all service providers
@@ -2459,6 +2600,7 @@ services:
                   provider as supported porting recipient.
                 type: optional<string>
           response: _InlinedType7
+
 types:
   _InlinedType6:
     properties:
@@ -2466,6 +2608,7 @@ types:
       items: list<commons.porting>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType7:
     properties:
       object: string
@@ -2477,8 +2620,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     ProjectsService:
@@ -2499,25 +2645,19 @@ services:
                 [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
               type: string
           response: commons.project
+
         projectsCredentialsRetrieve:
           path: /{project}/credentials
           method: GET
           docs: >
             Retrieve the credentials of an existing project.
-
-
             <!-- theme: info -->
-
             > #### Preview
-
             >
-
             > This endpoint is currently in preview and might change in the
             future.
-
             > We’re excited to hear your feedback and ideas. Please send an
             email
-
             > to [support@gigs.com](mailto:support@gigs.com) to share your
             thoughts.
           display-name: Retrieve the project credentials
@@ -2528,8 +2668,9 @@ services:
                 [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
               type: string
           response: _InlinedType8
+
         projectsList:
-          path: ''
+          path: ""
           method: GET
           docs: >-
             Returns a list of projects. The projects returned are sorted by
@@ -2559,11 +2700,13 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType9
+
 types:
   _InlinedType8:
     properties:
       object: string
       paymentsKey: optional<string>
+
   _InlinedType9:
     properties:
       object: string
@@ -2575,8 +2718,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     SiMsService:
@@ -2599,6 +2745,7 @@ services:
               docs: The unique identifier for the SIM.
               type: string
           response: simCredentials
+
         siMsRetrieve:
           path: /{id}
           method: GET
@@ -2611,6 +2758,7 @@ services:
               docs: The unique identifier for the SIM.
               type: string
           response: commons.sim
+
         siMsSearch:
           path: /search
           method: POST
@@ -2622,8 +2770,9 @@ services:
                 iccid: string
                 type: optional<list<string>>
           response: _InlinedType10
+
         siMsList:
-          path: ''
+          path: ""
           method: GET
           docs: >-
             Returns a list of SIMs. The SIMs returned are sorted by creation
@@ -2661,6 +2810,7 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType11
+
 types:
   simCredentials:
     properties:
@@ -2668,12 +2818,14 @@ types:
       activationCode: optional<string>
       qrCodeUrl: optional<string>
       sim: string
+
   _InlinedType10:
     properties:
       object: string
       items: list<commons.sim>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType11:
     properties:
       object: string
@@ -2685,8 +2837,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     SubscriptionsService:
@@ -2713,6 +2868,7 @@ services:
               docs: The unique identifier for the subscription.
               type: string
           response: commons.subscription
+
         subscriptionsRetrieve:
           path: /{id}
           method: GET
@@ -2726,6 +2882,7 @@ services:
               docs: The unique identifier for the subscription.
               type: string
           response: commons.subscription
+
         subscriptionsEnd:
           path: /{id}
           method: DELETE
@@ -2739,6 +2896,7 @@ services:
               docs: The unique identifier for the subscription.
               type: string
           response: commons.subscription
+
         subscriptionsResume:
           path: /{id}/resume
           method: POST
@@ -2751,8 +2909,9 @@ services:
               docs: The unique identifier for the subscription.
               type: string
           response: commons.subscription
+
         subscriptionsList:
-          path: ''
+          path: ""
           method: GET
           docs: >-
             Returns a list of subscriptions. The subscriptions returned are
@@ -2794,8 +2953,9 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType12
+
         subscriptionsCreate:
-          path: ''
+          path: ""
           method: POST
           docs: >-
             Creates a new subscription for an existing user in the specified
@@ -2809,6 +2969,7 @@ services:
                 userAddress: optional<string>
                 user: string
                 porting: optional<string>
+
 types:
   _InlinedType12:
     properties:
@@ -2821,7 +2982,9 @@ types:
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
   http:
     UsageService:
       auth: true
@@ -2832,12 +2995,13 @@ types:
             The unique identifier for the
             [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
           type: string
+
         id:
           docs: The unique identifier for the subscription.
           type: string
       endpoints:
         subscriptionUsageRecordList:
-          path: ''
+          path: ""
           method: GET
           docs: >-
             Lists usage records in ascending order for a subscription,
@@ -2869,6 +3033,7 @@ types:
                   or period requested.
                 type: optional<string>
           response: _InlinedType13
+
 types:
   usageRecord:
     properties:
@@ -2878,6 +3043,7 @@ types:
       data: integer
       voice: integer
       sms: integer
+
   _InlinedType13:
     properties:
       object: string
@@ -2889,8 +3055,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     UserAddressesService:
@@ -2902,12 +3071,13 @@ services:
             The unique identifier for the
             [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
           type: string
+
         user:
           docs: The unique identifier for the user.
           type: string
       endpoints:
         userAddressesList:
-          path: ''
+          path: ""
           method: GET
           docs: >-
             Returns a list of addresses owned by the given user. The addresses
@@ -2915,8 +3085,9 @@ services:
             addresses appearing first.
           display-name: List all user addresses
           response: _InlinedType14
+
         userAddressesCreate:
-          path: ''
+          path: ""
           method: POST
           docs: Create a new address for the given user with the given parameters.
           display-name: Create a user address
@@ -2930,6 +3101,7 @@ services:
                 state: optional<string>
                 postalCode: optional<string>
                 country: string
+
         userAddressesRetrieve:
           path: /{id}
           method: GET
@@ -2940,6 +3112,7 @@ services:
               docs: The unique identifier for the address.
               type: string
           response: commons.userAddress
+
         userAddressesDelete:
           path: /{id}
           method: DELETE
@@ -2950,6 +3123,7 @@ services:
               docs: The unique identifier for the address.
               type: string
           response: commons.userAddress
+
 types:
   _InlinedType14:
     properties:
@@ -2962,8 +3136,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     UsersService:
@@ -2988,6 +3165,7 @@ services:
               docs: The unique identifier for the user.
               type: string
           response: commons.user
+
         usersDelete:
           path: /{id}
           method: DELETE
@@ -2998,6 +3176,7 @@ services:
               docs: The unique identifier for the user.
               type: string
           response: commons.user
+
         usersUpdate:
           path: /{id}
           method: PATCH
@@ -3018,6 +3197,7 @@ services:
                 fullName: optional<string>
                 preferredLocale: optional<string>
           response: commons.user
+
         usersSearch:
           path: /search
           method: POST
@@ -3028,8 +3208,9 @@ services:
               properties:
                 email: string
           response: _InlinedType15
+
         usersList:
-          path: ''
+          path: ""
           method: GET
           docs: >-
             Returns a list of users. The users returned are sorted by creation
@@ -3055,8 +3236,9 @@ services:
                   200.
                 type: optional<integer>
           response: _InlinedType16
+
         usersCreate:
-          path: ''
+          path: ""
           method: POST
           docs: Creates a new user with the given parameters.
           display-name: Create a user
@@ -3068,6 +3250,7 @@ services:
                 email: string
                 fullName: optional<string>
                 preferredLocale: optional<string>
+
 types:
   _InlinedType15:
     properties:
@@ -3075,6 +3258,7 @@ types:
       items: list<commons.user>
       moreItemsAfter: optional<string>
       moreItemsBefore: optional<string>
+
   _InlinedType16:
     properties:
       object: string
@@ -3139,24 +3323,23 @@ types:
     properties:
       id: MovieId
       title: string
-      rating: 
+      rating:
         type: double
         docs: The rating scale is one to five stars
 
-  CreateMovieRequest: 
+  CreateMovieRequest:
     properties:
       title: string
-      rating: double 
+      rating: double
 
 services:
   http:
-  
     MoviesService:
       auth: false
       base-path: /movies
       endpoints:
-
         # Here's an HTTP endpoint
+
         createMovie:
           docs: Add a movie to the database
           method: POST
@@ -3223,7 +3406,9 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
   MatchmakerLobbyJoinInfo:
     docs: A matchmaker lobby.
     properties:
@@ -3231,18 +3416,20 @@ headers: {}
       region: MatchmakerLobbyJoinInfoRegion
       ports: MatchmakerLobbyJoinInfoPorts
       player: MatchmakerLobbyJoinInfoPlayer
+
   MatchmakerLobbyJoinInfoRegion:
     docs: A matchmaker lobby region.
     properties:
       region_id: string
       display_name: string
+
   MatchmakerLobbyJoinInfoPorts:
     docs: A list of lobby ports.
     type: map<string, MatchmakerLobbyJoinInfoPort>
+
   MatchmakerLobbyJoinInfoPort:
     docs: |-
       A matchmaker lobby port.
-
       Configured by \`rivet.cloud#LobbyGroupRuntimeDockerPort$label\`.
     properties:
       host: optional<string>
@@ -3250,19 +3437,23 @@ headers: {}
       port: optional<double>
       port_range: optional<MatchmakerLobbyJoinInfoPortRange>
       is_tls: boolean
+
   MatchmakerLobbyJoinInfoPortRange:
     docs: Inclusive range of ports that can be connected to.
     properties:
       min: double
       max: double
+
   MatchmakerLobbyJoinInfoPlayer:
     docs: A matchmaker lobby player.
     properties:
       token: string
+
   GameModeInfo:
     docs: A game mode that the player can join.
     properties:
       game_mode_id: string
+
   RegionInfo:
     docs: A region that the player can connect to.
     properties:
@@ -3271,16 +3462,19 @@ headers: {}
       region_display_name: string
       datacenter_coord: Coord
       datacenter_distance_from_client: Distance
+
   Coord:
     docs: Geographical coordinates for a location on Planet Earth.
     properties:
       latitude: double
       longitude: double
+
   Distance:
     docs: Distance available in multiple units.
     properties:
       kilometers: double
       miles: double
+
   LobbyInfo:
     docs: A public lobby in the lobby list.
     properties:
@@ -3296,11 +3490,13 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
   http:
     LobbyService:
       auth: true
-      base-path: ''
+      base-path: ""
       endpoints:
         lobbyReady:
           path: /lobbies/ready
@@ -3308,124 +3504,82 @@ headers: {}
           docs: >-
             Marks the current lobby as ready to accept connections. Players will
             not be
-
             able to connect to this lobby until the lobby is flagged as ready.
+
         playerConnected:
           path: /players/connected
           method: POST
           docs: >-
             Validates the player token is valid and has not already been
             consumed then
-
             marks the player as connected.
-
-
             # Player Tokens and Reserved Slots
-
-
             Player tokens reserve a spot in the lobby until they expire. This
             allows for
-
             precise matchmaking up to exactly the lobby's player limit, which is
-
             important for games with small lobbies and a high influx of players.
-
-
             By calling this endpoint with the player token, the player's spot is
             marked
-
             as connected and will not expire. If this endpoint is never called,
             the
-
             player's token will expire and this spot will be filled by another
             player.
-
-
             # Anti-Botting
-
-
             Player tokens are only issued by caling
             \`rivet.api.matchmaker#JoinLobby\`, calling
             \`rivet.api.matchmaker#FindLobby\`, or
-
             from the \`rivet.api.identity.common#GlobalEventMatchmakerLobbyJoin\`
             event.
-
             These endpoints have anti-botting measures (i.e. enforcing max
             player
-
             limits, captchas, and detecting bots), so valid player tokens
             provide some
-
             confidence that the player is not a bot.
-
-
             Therefore, it's important to make sure the token is valid by waiting
             for
-
             this endpoint to return OK before allowing the connected socket to
             do
-
             anything else. If this endpoint returns an error, the socket should
             be
-
             disconnected immediately.
-
-
             # How to Transmit the Player Token
-
-
             The client is responsible for acquiring the player token by caling
-
             \`rivet.api.matchmaker#JoinLobby\`, calling
             \`rivet.api.matchmaker#FindLobby\`,
-
             or from the
             \`rivet.api.identity.common#GlobalEventMatchmakerLobbyJoin\`
-
             event.  Beyond that, it's up to the developer how the player token
             is
-
             transmitted to the lobby.
-
-
             If using WebSockets, the player token can be transmitted as a query
-
             paramter.
-
-
             Otherwise, the player token will likely be automatically sent by the
             client
-
             once the socket opens. As mentioned above, nothing else should
             happen until
-
             the player token is validated.
           request:
             body: PlayerConnectedRequestContent
+
         playerDisconnected:
           path: /players/disconnected
           method: POST
           docs: >-
             Marks a player as disconnected.
-
-
             # Ghost Players
-
-
             If players are not marked as disconnected, lobbies will result with
             "ghost
-
             players" that the matchmaker thinks exist but are no longer
             connected to the
-
             lobby.
           request:
             body: PlayerDisconnectedRequestContent
+
 types:
   PlayerConnectedRequestContent:
     properties:
       player_token: string
+
   PlayerDisconnectedRequestContent:
     properties:
       player_token: string
@@ -3434,13 +3588,16 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     PublicService:
       auth: true
-      base-path: ''
+      base-path: ""
       endpoints:
         setLobbyClosed:
           path: /lobbies/closed
@@ -3448,18 +3605,15 @@ services:
           docs: >-
             If \`is_closed\` is \`true\`, players will be prevented from joining the
             lobby.
-
-
             Does not shutdown the lobby.
           request:
             body: SetLobbyClosedRequestContent
+
         findLobby:
           path: /lobbies/find
           method: POST
           docs: >-
             Finds a lobby based on the given criteria.
-
-
             If a lobby is not found and \`prevent_auto_create_lobby\` is \`true\`, a
             new lobby will be created.
           request:
@@ -3467,62 +3621,66 @@ services:
               origin: optional<string>
             body: FindLobbyRequestContent
           response: FindLobbyResponseContent
+
         joinLobby:
           path: /lobbies/join
           method: POST
           docs: >-
             Joins a specific lobby.
-
-
             This request will use the direct player count configured for the
             lobby
-
             group.
           request:
             body: JoinLobbyRequestContent
           response: JoinLobbyResponseContent
+
         listLobbies:
           path: /lobbies/list
           method: GET
           docs: Lists all open lobbies.
           response: ListLobbiesResponseContent
+
         listRegions:
           path: /regions
           method: GET
           docs: >-
             Returns a list of regions available to this namespace.
-
-
             Regions are sorted by most optimal to least optimal. The player's IP
             address
-
             is used to calculate the regions' optimality.
           response: ListRegionsResponseContent
+
 types:
   SetLobbyClosedRequestContent:
     properties:
       is_closed: boolean
+
   FindLobbyRequestContent:
     properties:
       game_modes: list<string>
       regions: optional<list<string>>
       prevent_auto_create_lobby: optional<boolean>
       captcha: optional<commons.CaptchaConfig>
+
   FindLobbyResponseContent:
     properties:
       lobby: commons.MatchmakerLobbyJoinInfo
+
   JoinLobbyRequestContent:
     properties:
       lobby_id: string
       captcha: optional<commons.CaptchaConfig>
+
   JoinLobbyResponseContent:
     properties:
       lobby: commons.MatchmakerLobbyJoinInfo
+
   ListLobbiesResponseContent:
     properties:
       game_modes: list<commons.GameModeInfo>
       regions: list<commons.RegionInfo>
       lobbies: list<commons.LobbyInfo>
+
   ListRegionsResponseContent:
     properties:
       regions: list<commons.RegionInfo>
@@ -3576,29 +3734,38 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "types:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
   SOC_ResponseDTO:
     properties:
       soc: double
+
   Range_ResponseDTO:
     properties:
       range: double
+
   RangeSoc_ResponseDTO:
     properties:
       range: double
       soc: double
+
   Location_ResponseDTO:
     properties:
       location: _InlinedType0
+
   _InlinedType0:
     extends:
       - ILocation
+
   ChargingStatus_ResponseDTO:
     properties:
       isCharging: boolean
+
   Odo_ResponseDTO:
     properties:
       odo: double
+
   StaticAttributes_ResponseDTO:
     properties:
       vin: string
@@ -3611,18 +3778,19 @@ headers: {}
                 "type": "file",
               },
               {
-                "contents": "services:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+services:
   http:
     SampleCallbackService:
       auth: true
       base-path: /callback
       endpoints:
         appControllerCallback:
-          path: ''
+          path: ""
           method: POST
           docs: >-
             This is a dummy callback endpoint.
-
             Please share the POST callback endpoint created in your app's
             backend with Telematica to get callback requests of this format.
           display-name: Dummy callback endpoint
@@ -3631,6 +3799,7 @@ headers: {}
               properties:
                 user: optional<string>
                 vehicles: optional<list<Callback_DTO>>
+
 types:
   Callback_DTO:
     properties:
@@ -3641,8 +3810,11 @@ types:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     TestingEndpointsService:
@@ -3661,6 +3833,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.SOC_ResponseDTO
+
         getRangeTest:
           path: /range/test
           method: GET
@@ -3673,6 +3846,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.Range_ResponseDTO
+
         getRangeSocTest:
           path: /range-soc/test
           method: GET
@@ -3685,6 +3859,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.RangeSoc_ResponseDTO
+
         getLocationTest:
           path: /location/test
           method: GET
@@ -3697,6 +3872,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.Location_ResponseDTO
+
         getChargingStatusTest:
           path: /charging-status/test
           method: GET
@@ -3709,6 +3885,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.ChargingStatus_ResponseDTO
+
         getOdoTest:
           path: /odo/test
           method: GET
@@ -3721,6 +3898,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.Odo_ResponseDTO
+
         getStaticAttributesTest:
           path: /static-attributes/test
           method: GET
@@ -3738,8 +3916,11 @@ services:
                 "type": "file",
               },
               {
-                "contents": "imports:
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
   commons: commons.yml
+
 services:
   http:
     VehicleDataService:
@@ -3758,6 +3939,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.SOC_ResponseDTO
+
         getRange:
           path: /range
           method: GET
@@ -3770,6 +3952,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.Range_ResponseDTO
+
         getRangeSoc:
           path: /range-soc
           method: GET
@@ -3785,6 +3968,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.RangeSoc_ResponseDTO
+
         getLocation:
           path: /location
           method: GET
@@ -3797,6 +3981,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.Location_ResponseDTO
+
         getChargingStatus:
           path: /charging-status
           method: GET
@@ -3809,6 +3994,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.ChargingStatus_ResponseDTO
+
         getOdo:
           path: /odo
           method: GET
@@ -3821,6 +4007,7 @@ services:
                   provided consent through Telematica consent flow
                 type: string
           response: commons.Odo_ResponseDTO
+
         getStaticAttributes:
           path: /static-attributes
           method: GET
