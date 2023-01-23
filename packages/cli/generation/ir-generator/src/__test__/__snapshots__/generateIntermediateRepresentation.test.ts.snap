@@ -1,0 +1,447 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateIntermediateRepresentation audiences 1`] = `
+{
+  "apiDisplayName": "Audiences API",
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "audiences",
+      "unsafeName": "audiences",
+    },
+    "originalName": "audiences",
+    "pascalCase": {
+      "safeName": "Audiences",
+      "unsafeName": "Audiences",
+    },
+    "screamingSnakeCase": {
+      "safeName": "AUDIENCES",
+      "unsafeName": "AUDIENCES",
+    },
+    "snakeCase": {
+      "safeName": "audiences",
+      "unsafeName": "audiences",
+    },
+  },
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": undefined,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": [],
+  "headers": [],
+  "sdkConfig": {
+    "isAuthMandatory": false,
+  },
+  "services": [
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "basePath": {
+        "head": "/",
+        "parts": [],
+      },
+      "baseUrl": undefined,
+      "docs": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": {
+            "message": undefined,
+            "status": "GENERAL_AVAILABILITY",
+          },
+          "displayName": undefined,
+          "docs": undefined,
+          "errors": [],
+          "examples": [],
+          "headers": [],
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "find",
+              "unsafeName": "find",
+            },
+            "originalName": "find",
+            "pascalCase": {
+              "safeName": "Find",
+              "unsafeName": "Find",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FIND",
+              "unsafeName": "FIND",
+            },
+            "snakeCase": {
+              "safeName": "find",
+              "unsafeName": "find",
+            },
+          },
+          "path": {
+            "head": "/",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "docs": undefined,
+            "type": {
+              "_type": "named",
+              "fernFilepath": [
+                {
+                  "camelCase": {
+                    "safeName": "foo",
+                    "unsafeName": "foo",
+                  },
+                  "originalName": "foo",
+                  "pascalCase": {
+                    "safeName": "Foo",
+                    "unsafeName": "Foo",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FOO",
+                    "unsafeName": "FOO",
+                  },
+                  "snakeCase": {
+                    "safeName": "foo",
+                    "unsafeName": "foo",
+                  },
+                },
+              ],
+              "name": {
+                "camelCase": {
+                  "safeName": "importingType",
+                  "unsafeName": "importingType",
+                },
+                "originalName": "ImportingType",
+                "pascalCase": {
+                  "safeName": "ImportingType",
+                  "unsafeName": "ImportingType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "IMPORTING_TYPE",
+                  "unsafeName": "IMPORTING_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "importing_type",
+                  "unsafeName": "importing_type",
+                },
+              },
+            },
+          },
+          "sdkRequest": undefined,
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": [
+          {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+        ],
+        "name": {
+          "camelCase": {
+            "safeName": "importerService",
+            "unsafeName": "importerService",
+          },
+          "originalName": "ImporterService",
+          "pascalCase": {
+            "safeName": "ImporterService",
+            "unsafeName": "ImporterService",
+          },
+          "screamingSnakeCase": {
+            "safeName": "IMPORTER_SERVICE",
+            "unsafeName": "IMPORTER_SERVICE",
+          },
+          "snakeCase": {
+            "safeName": "importer_service",
+            "unsafeName": "importer_service",
+          },
+        },
+      },
+      "pathParameters": [],
+    },
+  ],
+  "types": [
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+        "name": {
+          "camelCase": {
+            "safeName": "imported",
+            "unsafeName": "imported",
+          },
+          "originalName": "Imported",
+          "pascalCase": {
+            "safeName": "Imported",
+            "unsafeName": "Imported",
+          },
+          "screamingSnakeCase": {
+            "safeName": "IMPORTED",
+            "unsafeName": "IMPORTED",
+          },
+          "snakeCase": {
+            "safeName": "imported",
+            "unsafeName": "imported",
+          },
+        },
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": [
+          {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+        ],
+        "name": {
+          "camelCase": {
+            "safeName": "importingType",
+            "unsafeName": "importingType",
+          },
+          "originalName": "ImportingType",
+          "pascalCase": {
+            "safeName": "ImportingType",
+            "unsafeName": "ImportingType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "IMPORTING_TYPE",
+            "unsafeName": "IMPORTING_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "importing_type",
+            "unsafeName": "importing_type",
+          },
+        },
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+          "name": {
+            "camelCase": {
+              "safeName": "imported",
+              "unsafeName": "imported",
+            },
+            "originalName": "Imported",
+            "pascalCase": {
+              "safeName": "Imported",
+              "unsafeName": "Imported",
+            },
+            "screamingSnakeCase": {
+              "safeName": "IMPORTED",
+              "unsafeName": "IMPORTED",
+            },
+            "snakeCase": {
+              "safeName": "imported",
+              "unsafeName": "imported",
+            },
+          },
+        },
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": {
+              "message": undefined,
+              "status": "GENERAL_AVAILABILITY",
+            },
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "imported",
+                  "unsafeName": "imported",
+                },
+                "originalName": "imported",
+                "pascalCase": {
+                  "safeName": "Imported",
+                  "unsafeName": "Imported",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "IMPORTED",
+                  "unsafeName": "IMPORTED",
+                },
+                "snakeCase": {
+                  "safeName": "imported",
+                  "unsafeName": "imported",
+                },
+              },
+              "wireValue": "imported",
+            },
+            "valueType": {
+              "_type": "named",
+              "fernFilepath": [
+                {
+                  "camelCase": {
+                    "safeName": "commons",
+                    "unsafeName": "commons",
+                  },
+                  "originalName": "commons",
+                  "pascalCase": {
+                    "safeName": "Commons",
+                    "unsafeName": "Commons",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "COMMONS",
+                    "unsafeName": "COMMONS",
+                  },
+                  "snakeCase": {
+                    "safeName": "commons",
+                    "unsafeName": "commons",
+                  },
+                },
+              ],
+              "name": {
+                "camelCase": {
+                  "safeName": "imported",
+                  "unsafeName": "imported",
+                },
+                "originalName": "Imported",
+                "pascalCase": {
+                  "safeName": "Imported",
+                  "unsafeName": "Imported",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "IMPORTED",
+                  "unsafeName": "IMPORTED",
+                },
+                "snakeCase": {
+                  "safeName": "imported",
+                  "unsafeName": "imported",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+  ],
+}
+`;

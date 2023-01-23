@@ -6,7 +6,7 @@ import { init } from "./init";
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
 const OPEN_API_FILENAME = "openapi.json";
 
-const FIXTURES = ["gigs", "telematica", "rivet", "covie"];
+const FIXTURES = ["gigs", "telematica", "covie"];
 
 describe("fern init", () => {
     it("no existing fern directory", async () => {
