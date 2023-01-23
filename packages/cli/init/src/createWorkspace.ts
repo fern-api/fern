@@ -33,12 +33,12 @@ export async function createWorkspace({
         await mkdir(directoryOfDefinition);
         await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(fernDefinition.rootApiFile));
         for (const [relativePath, serviceFile] of entries(fernDefinition.serviceFiles)) {
-            const absoluteFilePath = join(directoryOfDefinition, relativePath);
+            const absoluteFilepath = join(directoryOfDefinition, relativePath);
             await writeFile(
-                absoluteFilePath,
+                absoluteFilepath,
                 formatServiceFile({
                     fileContents: yaml.dump(serviceFile),
-                    absoluteFilePath,
+                    absoluteFilepath,
                 })
             );
         }
@@ -74,7 +74,7 @@ async function writeSampleApiDefinition({
         absoluteFilepathToImdbYaml,
         formatServiceFile({
             fileContents: SAMPLE_IMDB_API,
-            absoulteFilePath: absoluteFilepathToImdbYaml,
+            absoluteFilepath: absoluteFilepathToImdbYaml,
         })
     );
 }
