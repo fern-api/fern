@@ -9,7 +9,7 @@ import { NoDuplicateDeclarationsRule } from "./rules/no-duplicate-declarations";
 import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
 import { NoDuplicateExampleNamesRule } from "./rules/no-duplicate-example-names";
 import { NoDuplicateFieldNamesRule } from "./rules/no-duplicate-field-names";
-import { NoErrorStatusCodeConflict } from "./rules/no-error-status-code-conflict";
+import { NoErrorStatusCodeConflictRule } from "./rules/no-error-status-code-conflict";
 import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
 import { NoMissingAuthRule } from "./rules/no-missing-auth";
 import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
@@ -42,7 +42,7 @@ export function getAllRules(): Rule[] {
         ValidDefaultEnvironmentRule,
         NoMissingErrorDiscriminantRule,
         ValidExampleTypeRule,
-        NoErrorStatusCodeConflict,
+        NoErrorStatusCodeConflictRule,
         NoMissingAuthRule,
         NoMissingRequestNameRule,
         NoConflictingEndpointParametersRule,

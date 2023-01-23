@@ -1,11 +1,11 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { NoErrorStatusCodeConflict } from "../no-error-status-code-conflict";
+import { NoErrorStatusCodeConflictRule } from "../no-error-status-code-conflict";
 
 describe("no-duplicate-declarations", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
-            rule: NoErrorStatusCodeConflict,
+            rule: NoErrorStatusCodeConflictRule,
             absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
         });
         expect(violations).toEqual([

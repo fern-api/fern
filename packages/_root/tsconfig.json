@@ -24,6 +24,7 @@
     { "path": "../cli/services" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
+    { "path": "../cli/yaml/formatter" },
     { "path": "../cli/yaml/json-schema" },
     { "path": "../cli/yaml/validator" },
     { "path": "../cli/yaml/yaml-migrations" },
