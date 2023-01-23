@@ -21,6 +21,7 @@ export interface OpenAPIV3Schema {
 const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 
 const TWO_HUNDRED_RESPONSE = 200;
+const TWO_HUNDRED_AND_ONE_RESPONSE = 201;
 
 /**
  * A class that provides helper methods to access information from an OpenAPI V3 Document.
@@ -248,7 +249,9 @@ export class OpenApiV3Context {
                 }
             }
 
-            const successResponse = endpoint.definition.responses[TWO_HUNDRED_RESPONSE];
+            const successResponse =
+                endpoint.definition.responses[TWO_HUNDRED_RESPONSE] ??
+                endpoint.definition.responses[TWO_HUNDRED_AND_ONE_RESPONSE];
             if (successResponse != null) {
                 if (isReferenceObject(successResponse)) {
                     this.referenceObjectToTags.add(successResponse, tag);
