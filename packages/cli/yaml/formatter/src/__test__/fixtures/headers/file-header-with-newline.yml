@@ -1,0 +1,4 @@
+# i'm a file header
+
+types:
+  MovieId: string

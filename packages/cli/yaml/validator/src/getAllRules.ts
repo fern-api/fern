@@ -1,29 +1,29 @@
 import { Rule } from "./Rule";
-import ImportFileExistsRule from "./rules/import-file-exists";
-import MatchingEnvironmentUrlsRule from "./rules/matching-environment-urls";
-import NoCircularImportsRule from "./rules/no-circular-imports";
-import NoComplexQueryParamsRule from "./rules/no-complex-query-params";
-import NoConflictingEndpointParametersRule from "./rules/no-conflicting-endpoint-parameters";
-import NoConflictingRequestWrapperPropertiesRule from "./rules/no-conflicting-request-wrapper-properties";
-import NoDuplicateDeclarationsRule from "./rules/no-duplicate-declarations";
-import NoDuplicateEnumValuesRule from "./rules/no-duplicate-enum-values";
-import NoDuplicateExampleNamesRule from "./rules/no-duplicate-example-names";
-import NoDuplicateFieldNamesRule from "./rules/no-duplicate-field-names";
-import NoErrorStatusCodeConflict from "./rules/no-error-status-code-conflict";
-import NoGetRequestBody from "./rules/no-get-request-body";
-import NoMissingAuthRule from "./rules/no-missing-auth";
-import NoMissingErrorDiscriminant from "./rules/no-missing-error-discriminant";
-import NoMissingRequestNameRule from "./rules/no-missing-request-name";
-import NoObjectSinglePropertyKey from "./rules/no-object-single-property-key";
-import NoUndefinedErrorReferenceRule from "./rules/no-undefined-error-reference";
-import NoUndefinedExampleReferenceRule from "./rules/no-undefined-example-reference";
-import NoUndefinedPathParametersRule from "./rules/no-undefined-path-parameters";
-import NoUndefinedTypeReferenceRule from "./rules/no-undefined-type-reference";
-import ValidDefaultEnvironmentRule from "./rules/valid-default-environment";
-import ValidExampleEndpointCallRule from "./rules/valid-example-endpoint-call";
-import ValidExampleTypeRule from "./rules/valid-example-type";
-import ValidFieldNamesRule from "./rules/valid-field-names";
-import ValidServiceUrlsRule from "./rules/valid-service-urls";
+import { ImportFileExistsRule } from "./rules/import-file-exists";
+import { MatchingEnvironmentUrlsRule } from "./rules/matching-environment-urls";
+import { NoCircularImportsRule } from "./rules/no-circular-imports";
+import { NoComplexQueryParamsRule } from "./rules/no-complex-query-params";
+import { NoConflictingEndpointParametersRule } from "./rules/no-conflicting-endpoint-parameters";
+import { NoConflictingRequestWrapperPropertiesRule } from "./rules/no-conflicting-request-wrapper-properties";
+import { NoDuplicateDeclarationsRule } from "./rules/no-duplicate-declarations";
+import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
+import { NoDuplicateExampleNamesRule } from "./rules/no-duplicate-example-names";
+import { NoDuplicateFieldNamesRule } from "./rules/no-duplicate-field-names";
+import { NoErrorStatusCodeConflictRule } from "./rules/no-error-status-code-conflict";
+import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
+import { NoMissingAuthRule } from "./rules/no-missing-auth";
+import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
+import { NoMissingRequestNameRule } from "./rules/no-missing-request-name";
+import { NoObjectSinglePropertyKeyRule } from "./rules/no-object-single-property-key";
+import { NoUndefinedErrorReferenceRule } from "./rules/no-undefined-error-reference";
+import { NoUndefinedExampleReferenceRule } from "./rules/no-undefined-example-reference";
+import { NoUndefinedPathParametersRule } from "./rules/no-undefined-path-parameters";
+import { NoUndefinedTypeReferenceRule } from "./rules/no-undefined-type-reference";
+import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment";
+import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-call";
+import { ValidExampleTypeRule } from "./rules/valid-example-type";
+import { ValidFieldNamesRule } from "./rules/valid-field-names";
+import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
 
 export function getAllRules(): Rule[] {
     return [
@@ -36,13 +36,13 @@ export function getAllRules(): Rule[] {
         NoCircularImportsRule,
         ValidFieldNamesRule,
         NoDuplicateFieldNamesRule,
-        NoObjectSinglePropertyKey,
-        NoGetRequestBody,
+        NoObjectSinglePropertyKeyRule,
+        NoGetRequestBodyRule,
         NoComplexQueryParamsRule,
         ValidDefaultEnvironmentRule,
-        NoMissingErrorDiscriminant,
+        NoMissingErrorDiscriminantRule,
         ValidExampleTypeRule,
-        NoErrorStatusCodeConflict,
+        NoErrorStatusCodeConflictRule,
         NoMissingAuthRule,
         NoMissingRequestNameRule,
         NoConflictingEndpointParametersRule,

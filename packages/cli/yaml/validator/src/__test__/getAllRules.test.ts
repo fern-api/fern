@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
+import { camelCase, upperFirst } from "lodash-es";
 import { getAllRules } from "../getAllRules";
 import { Rule } from "../Rule";
 
@@ -12,7 +13,12 @@ describe("getAllRules", () => {
             .map(async (item) => {
                 const fullPath = join(RULES_DIRECTORY, RelativeFilePath.of(item.name));
                 const imported = await import(fullPath);
-                return imported.default as Rule;
+                const ruleName = `${upperFirst(camelCase(item.name))}Rule`;
+                const rule = imported[ruleName];
+                if (rule == null) {
+                    throw new Error("Rule does not exist: " + ruleName);
+                }
+                return rule as Rule;
             });
         const allRules: Rule[] = await Promise.all(allRulesPromises);
 

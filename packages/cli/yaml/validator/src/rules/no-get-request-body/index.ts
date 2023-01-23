@@ -1,1 +1,1 @@
-export { NoGetRequestBodyRule as default } from "./no-get-request-body";
+export { NoGetRequestBodyRule } from "./no-get-request-body";

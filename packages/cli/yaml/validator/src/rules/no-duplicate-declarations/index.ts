@@ -1,1 +1,1 @@
-export { NoDuplicateDeclarationsRule as default } from "./no-duplicate-declarations";
+export { NoDuplicateDeclarationsRule } from "./no-duplicate-declarations";

@@ -11,7 +11,11 @@ export interface Workspace {
     generatorsConfiguration: GeneratorsConfiguration;
     dependenciesConfiguration: DependenciesConfiguration;
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
-    serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
+    serviceFiles: Record<RelativeFilePath, OnDiskServiceFile>;
     importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
+}
+
+export interface OnDiskServiceFile extends ParsedFernFile<ServiceFileSchema> {
+    absoluteFilepath: AbsoluteFilePath;
 }

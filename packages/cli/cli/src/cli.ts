@@ -18,6 +18,7 @@ import yargs from "yargs/yargs";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { registerApiDefinitions } from "./commands/register/registerWorkspace";
@@ -48,7 +49,10 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
+        const versionOfCliToRun =
+            process.env.FERN_NO_VERSION_REDIRECTION === "true"
+                ? cliContext.environment.packageVersion
+                : await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
         } else {
@@ -115,6 +119,7 @@ async function tryRunCli(cliContext: CliContext) {
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addLoginCommand(cli, cliContext);
+    addFormatCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -378,6 +383,34 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             await login(context);
         });
     });
+}
+
+function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "format",
+        "Formats your Fern Definition",
+        (yargs) =>
+            yargs
+                .option("ci", {
+                    boolean: true,
+                    default: false,
+                    description: "Fail with non-zero exit status if files are not formatted correctly.",
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
+        async (argv) => {
+            await formatWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: true,
+                }),
+                cliContext,
+                shouldFix: !argv.ci,
+            });
+        }
+    );
 }
 
 async function loadProjectAndRegisterWorkspacesWithContext(

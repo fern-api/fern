@@ -1,1 +1,1 @@
-export { MatchingEnvironmentUrlsRule as default } from "./matching-environment-urls";
+export { MatchingEnvironmentUrlsRule } from "./matching-environment-urls";

@@ -52,6 +52,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.163",
     "@fern-fern/ir-model": "0.0.741",

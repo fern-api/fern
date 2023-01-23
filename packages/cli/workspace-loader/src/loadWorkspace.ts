@@ -28,7 +28,10 @@ export async function loadWorkspace({
         return parseResult;
     }
 
-    const structuralValidationResult = validateStructureOfYamlFiles(parseResult.files);
+    const structuralValidationResult = validateStructureOfYamlFiles({
+        files: parseResult.files,
+        absolutePathToDefinition,
+    });
     if (!structuralValidationResult.didSucceed) {
         return structuralValidationResult;
     }

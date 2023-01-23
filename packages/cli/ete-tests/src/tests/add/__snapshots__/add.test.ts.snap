@@ -26,24 +26,23 @@ types:
     properties:
       id: MovieId
       title: string
-      rating: 
+      rating:
         type: double
         docs: The rating scale is one to five stars
 
-  CreateMovieRequest: 
+  CreateMovieRequest:
     properties:
       title: string
-      rating: double 
+      rating: double
 
 services:
   http:
-  
     MoviesService:
       auth: false
       base-path: /movies
       endpoints:
-
         # Here's an HTTP endpoint
+
         createMovie:
           docs: Add a movie to the database
           method: POST

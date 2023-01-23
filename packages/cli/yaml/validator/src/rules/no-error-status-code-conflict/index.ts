@@ -1,1 +1,1 @@
-export { NoErrorStatusCodeConflict as default } from "./no-error-status-code-conflict";
+export { NoErrorStatusCodeConflictRule } from "./no-error-status-code-conflict";

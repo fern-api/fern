@@ -7,6 +7,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     ROOT_API_FILENAME,
 } from "@fern-api/project-configuration";
+import { formatServiceFile } from "@fern-api/yaml-formatter";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -32,7 +33,14 @@ export async function createWorkspace({
         await mkdir(directoryOfDefinition);
         await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(fernDefinition.rootApiFile));
         for (const [relativePath, serviceFile] of entries(fernDefinition.serviceFiles)) {
-            await writeFile(join(directoryOfDefinition, relativePath), yaml.dump(serviceFile));
+            const absoluteFilepath = join(directoryOfDefinition, relativePath);
+            await writeFile(
+                absoluteFilepath,
+                formatServiceFile({
+                    fileContents: yaml.dump(serviceFile),
+                    absoluteFilepath,
+                })
+            );
         }
     }
 }
@@ -60,5 +68,13 @@ async function writeSampleApiDefinition({
 }): Promise<void> {
     await mkdir(directoryOfDefinition);
     await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(ROOT_API));
-    await writeFile(join(directoryOfDefinition, "imdb.yml"), SAMPLE_IMDB_API);
+
+    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, "imdb.yml");
+    await writeFile(
+        absoluteFilepathToImdbYaml,
+        formatServiceFile({
+            fileContents: SAMPLE_IMDB_API,
+            absoluteFilepath: absoluteFilepathToImdbYaml,
+        })
+    );
 }

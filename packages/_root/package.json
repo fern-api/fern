@@ -58,6 +58,7 @@
     "@fern-api/transaction-resolver": "workspace:*",
     "@fern-api/validator": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-ui/app": "workspace:*",

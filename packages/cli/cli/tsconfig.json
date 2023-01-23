@@ -19,6 +19,7 @@
     { "path": "../services" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" },
+    { "path": "../yaml/formatter" },
     { "path": "../yaml/validator" },
     { "path": "../yaml/yaml-migrations" }
   ]

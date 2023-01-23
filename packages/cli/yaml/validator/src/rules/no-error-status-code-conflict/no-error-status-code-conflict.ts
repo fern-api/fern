@@ -3,7 +3,7 @@ import { RawSchemas, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import { noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 
-export const NoErrorStatusCodeConflict: Rule = {
+export const NoErrorStatusCodeConflictRule: Rule = {
     name: "no-error-status-code-conflict",
     create: async ({ workspace }) => {
         if (workspace.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
