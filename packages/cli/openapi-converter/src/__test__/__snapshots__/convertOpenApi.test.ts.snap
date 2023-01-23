@@ -187,7 +187,7 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Describes a value that is tied to a monetary amount. Most frequently used to describe limits, premiums, and deductibles.",
           "extends": undefined,
           "properties": {
-            "unit": "optional<_InlinedType42>",
+            "unit": "optional<_InlinedType41>",
             "value": "optional<double>",
           },
         },
@@ -195,8 +195,16 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Describes a discount which a policyholder is receiving for a particular covered property under a policy. When available, this object also describes the amount of savings.",
           "extends": undefined,
           "properties": {
-            "code": "optional<_InlinedType43>",
+            "code": "optional<_InlinedType47>",
             "friendly_name": "optional<string>",
+          },
+        },
+        "DistanceValue": {
+          "docs": "Describes a value that is tied to a physical length or distance. Most frequently used to describe limits on coverages.",
+          "extends": undefined,
+          "properties": {
+            "unit": "optional<_InlinedType45>",
+            "value": "optional<double>",
           },
         },
         "DocumentRef": {
@@ -205,7 +213,7 @@ exports[`open api converter covie simple 1`] = `
           "properties": {
             "content_type": "optional<string>",
             "href": "optional<string>",
-            "type": "optional<_InlinedType46>",
+            "type": "optional<_InlinedType50>",
           },
         },
         "Driver": {
@@ -234,8 +242,8 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Represents an event delivered via webhook on the occurrence of certain policy changes.",
           "extends": undefined,
           "properties": {
-            "_links": "optional<_InlinedType50>",
-            "event_type": "optional<_InlinedType48>",
+            "_links": "optional<_InlinedType54>",
+            "event_type": "optional<_InlinedType52>",
             "id": "optional<string>",
             "occurred_at": "optional<string>",
           },
@@ -243,7 +251,7 @@ exports[`open api converter covie simple 1`] = `
         "Events": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType47>",
+            "_embedded": "optional<_InlinedType51>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
           },
@@ -252,12 +260,12 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Represents a connection between a client application and Covie's systems allowing a client users to create and process links.",
           "extends": undefined,
           "properties": {
-            "configuration": "optional<_InlinedType62>",
+            "configuration": "optional<_InlinedType66>",
             "created_at": "optional<string>",
             "id": "optional<string>",
             "key": "optional<string>",
             "name": "optional<string>",
-            "status": "optional<_InlinedType57>",
+            "status": "optional<_InlinedType61>",
             "updated_at": "optional<string>",
           },
         },
@@ -275,22 +283,22 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Represents the individual connections between Covie and a Policyholder's account with a carrier and wraps the policies retrieved from it that have been made available to the consumer.",
           "extends": undefined,
           "properties": {
-            "_links": "optional<_InlinedType86>",
+            "_links": "optional<_InlinedType90>",
             "created_at": "optional<string>",
             "id": "optional<string>",
             "integration_id": "optional<string>",
             "is_tracked": "optional<boolean>",
             "object": "optional<string>",
             "policy_count": "optional<integer>",
-            "status": "optional<_InlinedType81>",
-            "tracking_frequency": "optional<_InlinedType82>",
+            "status": "optional<_InlinedType85>",
+            "tracking_frequency": "optional<_InlinedType86>",
             "updated_at": "optional<string>",
           },
         },
         "Links": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType80>",
+            "_embedded": "optional<_InlinedType84>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
           },
@@ -300,10 +308,10 @@ exports[`open api converter covie simple 1`] = `
           "extends": undefined,
           "properties": {
             "address": "optional<Address>",
-            "coverages": "optional<_InlinedType44>",
+            "coverages": "optional<_InlinedType48>",
             "discounts": "optional<list<Discount>>",
             "interests": "optional<list<Interest>>",
-            "other_deductibles": "optional<_InlinedType45>",
+            "other_deductibles": "optional<_InlinedType49>",
           },
         },
         "Name": {
@@ -313,11 +321,19 @@ exports[`open api converter covie simple 1`] = `
             "full": "optional<string>",
           },
         },
+        "PercentageValue": {
+          "docs": "Describes a value that is represented as a percentage, fraction, or ratio of another value. Most frequently depicted for deductibles which may be a percentage of a limit.",
+          "extends": undefined,
+          "properties": {
+            "unit": "optional<_InlinedType44>",
+            "value": "optional<double>",
+          },
+        },
         "PeriodValue": {
           "docs": "Describes a value that represents a period of time, such as days, weeks, or months.",
           "extends": undefined,
           "properties": {
-            "unit": "optional<_InlinedType41>",
+            "unit": "optional<_InlinedType46>",
             "value": "optional<integer>",
           },
         },
@@ -333,7 +349,7 @@ exports[`open api converter covie simple 1`] = `
         "Policies": {
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType63>",
+            "_embedded": "optional<_InlinedType67>",
             "count": "optional<integer>",
             "filtered_count": "optional<integer>",
           },
@@ -342,17 +358,17 @@ exports[`open api converter covie simple 1`] = `
           "docs": "This describes, in high level, the insurance policy record that is provided by a link. This object encapsulates all the necessary details to understand the policy's status, policyholders, and covered persons or properties. ",
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType69>",
-            "_links": "optional<_InlinedType68>",
+            "_embedded": "optional<_InlinedType73>",
+            "_links": "optional<_InlinedType72>",
             "cancellation_date": "optional<string>",
-            "cancellation_reason": "optional<_InlinedType66>",
+            "cancellation_reason": "optional<_InlinedType70>",
             "carrier": "optional<Carrier>",
             "expiration_date": "optional<string>",
             "fingerprint": "optional<string>",
             "id": "optional<string>",
             "inception_date": "optional<string>",
             "last_synced_at": "optional<string>",
-            "line": "optional<_InlinedType64>",
+            "line": "optional<_InlinedType68>",
             "link_id": "optional<string>",
             "linked_at": "optional<string>",
             "locations": "optional<list<Location>>",
@@ -360,7 +376,7 @@ exports[`open api converter covie simple 1`] = `
             "number": "optional<string>",
             "object": "optional<string>",
             "policyholders": "optional<list<Policyholder>>",
-            "status": "optional<_InlinedType65>",
+            "status": "optional<_InlinedType69>",
             "term_length": "optional<PeriodValue>",
             "vehicles": "optional<list<Vehicle>>",
           },
@@ -380,10 +396,18 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Represents a connected insurance partner that can be used to authenticate and return policy data.",
           "extends": undefined,
           "properties": {
-            "_embedded": "optional<_InlinedType73>",
-            "_links": "optional<_InlinedType72>",
+            "_embedded": "optional<_InlinedType77>",
+            "_links": "optional<_InlinedType76>",
             "id": "optional<string>",
             "name": "optional<string>",
+          },
+        },
+        "RelativeValue": {
+          "docs": "Describes a value that is relative to another, such as the fair market value or replacement value. It is inherently variable and subject to the context in which it is invoked.",
+          "extends": undefined,
+          "properties": {
+            "unit": "optional<_InlinedType42>",
+            "value": "optional<_InlinedType43>",
           },
         },
         "Vehicle": {
@@ -410,7 +434,7 @@ exports[`open api converter covie simple 1`] = `
           "extends": undefined,
           "properties": {
             "created_at": "optional<string>",
-            "event_types": "optional<list<_InlinedType88>>",
+            "event_types": "optional<list<_InlinedType92>>",
             "id": "optional<string>",
             "is_enabled": "optional<boolean>",
             "last_called_at": "optional<string>",
@@ -526,6 +550,42 @@ exports[`open api converter covie simple 1`] = `
           },
         },
         "_InlinedType41": {
+          "docs": "The ISO-compatible currency code of the value being represented.",
+          "enum": [
+            "USD",
+            "USD_cents",
+          ],
+        },
+        "_InlinedType42": {
+          "docs": "Always "other".",
+          "enum": [
+            "other",
+          ],
+        },
+        "_InlinedType43": {
+          "docs": "The form of measure used to calculate the relative value, such as "actual cash value" or "ACV" which looks at the original price or investment and factors in depreciation (effectively "Fair Market Value"), or "replacement cost" (sometimes "Actual Loss Sustained" or "ALS") which sets a value against real cost to replace something today.
+
+Occasionally, a response of "unknown" may be returned. This value indicates that no specific value was provided in high level policy documents. The value may be subjective and specific to the individual policyholder as specified in their policy contract and should be manually reviewed.",
+          "enum": [
+            "actual_cash_value",
+            "replacement_value",
+            "unknown",
+          ],
+        },
+        "_InlinedType44": {
+          "docs": "Always "percentage"",
+          "enum": [
+            "percentage",
+          ],
+        },
+        "_InlinedType45": {
+          "docs": "The distance unit of the value being represented.",
+          "enum": [
+            "mile",
+            "kilometer",
+          ],
+        },
+        "_InlinedType46": {
           "docs": "The scale of time period being represented.",
           "enum": [
             "day",
@@ -533,14 +593,7 @@ exports[`open api converter covie simple 1`] = `
             "month",
           ],
         },
-        "_InlinedType42": {
-          "docs": "The ISO-compatible currency code of the value being represented.",
-          "enum": [
-            "USD",
-            "USD_cents",
-          ],
-        },
-        "_InlinedType43": {
+        "_InlinedType47": {
           "docs": "The programming-friendly value to indicate the discount being applied. NOTE: We regularly add values to this enumeration, so your code should be able to gracefully handle unexpected enum values (though new values are documented here as they go live).",
           "enum": [
             "safe_driver",
@@ -578,7 +631,7 @@ exports[`open api converter covie simple 1`] = `
             "motorcycle_endorsement",
           ],
         },
-        "_InlinedType44": {
+        "_InlinedType48": {
           "docs": "A list of coverages that apply to the location being insured.",
           "extends": undefined,
           "properties": {
@@ -603,12 +656,12 @@ exports[`open api converter covie simple 1`] = `
             "sewer_backup": "optional<Coverage>",
           },
         },
-        "_InlinedType45": {
+        "_InlinedType49": {
           "docs": "A list of deductibles that apply in addition to the coverage-specific deductibles.",
           "extends": undefined,
           "properties": {},
         },
-        "_InlinedType46": {
+        "_InlinedType50": {
           "docs": "The type of document provided at the corresponding URL.",
           "enum": [
             "declaration",
@@ -618,13 +671,13 @@ exports[`open api converter covie simple 1`] = `
             "cancellation",
           ],
         },
-        "_InlinedType47": {
+        "_InlinedType51": {
           "extends": undefined,
           "properties": {
             "events": "optional<list<Event>>",
           },
         },
-        "_InlinedType48": {
+        "_InlinedType52": {
           "docs": "An enumerated string representing the type of event that occurred.",
           "enum": [
             "link.created",
@@ -646,120 +699,120 @@ exports[`open api converter covie simple 1`] = `
             "policy.changed.premium",
           ],
         },
-        "_InlinedType49": {
+        "_InlinedType53": {
           "docs": "Link to view the full event payload.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType50": {
+        "_InlinedType54": {
           "extends": undefined,
           "properties": {
-            "payload": "optional<_InlinedType49>",
+            "payload": "optional<_InlinedType53>",
           },
         },
-        "_InlinedType51": {
+        "_InlinedType55": {
           "docs": "String representation of the current status of the integration.",
           "enum": [
             "active",
             "archived",
           ],
         },
-        "_InlinedType52": {
+        "_InlinedType56": {
           "extends": undefined,
           "properties": {
             "primary": "optional<string>",
           },
         },
-        "_InlinedType53": {
+        "_InlinedType57": {
           "docs": "Branding configuration for the embed.",
           "extends": undefined,
           "properties": {
-            "colors": "optional<_InlinedType52>",
+            "colors": "optional<_InlinedType56>",
             "hide_logo": "optional<boolean>",
             "logo": "optional<string>",
           },
         },
-        "_InlinedType54": {
+        "_InlinedType58": {
           "extends": undefined,
           "properties": {
             "agency_logo": "optional<string>",
             "agency_photo": "optional<string>",
           },
         },
-        "_InlinedType55": {
+        "_InlinedType59": {
           "extends": undefined,
           "properties": {
             "agency_name": "optional<string>",
             "agent_email": "optional<string>",
             "agent_name": "optional<string>",
-            "image_urls": "optional<_InlinedType54>",
-          },
-        },
-        "_InlinedType56": {
-          "extends": undefined,
-          "properties": {
-            "brand": "optional<_InlinedType53>",
-            "display_name": "optional<string>",
-            "hosted": "optional<_InlinedType55>",
-            "use_name_as_display_name": "optional<boolean>",
-          },
-        },
-        "_InlinedType57": {
-          "docs": "String representation of the current status of the integration.",
-          "enum": [
-            "active",
-            "archived",
-          ],
-        },
-        "_InlinedType58": {
-          "extends": undefined,
-          "properties": {
-            "primary": "optional<string>",
-          },
-        },
-        "_InlinedType59": {
-          "docs": "Branding configuration for the embed.",
-          "extends": undefined,
-          "properties": {
-            "colors": "optional<_InlinedType58>",
-            "hide_logo": "optional<boolean>",
-            "logo": "optional<string>",
+            "image_urls": "optional<_InlinedType58>",
           },
         },
         "_InlinedType60": {
           "extends": undefined,
           "properties": {
+            "brand": "optional<_InlinedType57>",
+            "display_name": "optional<string>",
+            "hosted": "optional<_InlinedType59>",
+            "use_name_as_display_name": "optional<boolean>",
+          },
+        },
+        "_InlinedType61": {
+          "docs": "String representation of the current status of the integration.",
+          "enum": [
+            "active",
+            "archived",
+          ],
+        },
+        "_InlinedType62": {
+          "extends": undefined,
+          "properties": {
+            "primary": "optional<string>",
+          },
+        },
+        "_InlinedType63": {
+          "docs": "Branding configuration for the embed.",
+          "extends": undefined,
+          "properties": {
+            "colors": "optional<_InlinedType62>",
+            "hide_logo": "optional<boolean>",
+            "logo": "optional<string>",
+          },
+        },
+        "_InlinedType64": {
+          "extends": undefined,
+          "properties": {
             "agency_logo": "optional<string>",
             "agency_photo": "optional<string>",
           },
         },
-        "_InlinedType61": {
+        "_InlinedType65": {
           "extends": undefined,
           "properties": {
             "agency_name": "optional<string>",
             "agent_email": "optional<string>",
             "agent_name": "optional<string>",
-            "image_urls": "optional<_InlinedType60>",
+            "image_urls": "optional<_InlinedType64>",
           },
         },
-        "_InlinedType62": {
+        "_InlinedType66": {
           "extends": undefined,
           "properties": {
-            "brand": "optional<_InlinedType59>",
+            "brand": "optional<_InlinedType63>",
             "display_name": "optional<string>",
-            "hosted": "optional<_InlinedType61>",
+            "hosted": "optional<_InlinedType65>",
             "use_name_as_display_name": "optional<boolean>",
           },
         },
-        "_InlinedType63": {
+        "_InlinedType67": {
           "extends": undefined,
           "properties": {
             "policies": "optional<list<Policy>>",
           },
         },
-        "_InlinedType64": {
+        "_InlinedType68": {
           "docs": "A string indicating the line of business this policy encompasses.",
           "enum": [
             "personal_auto",
@@ -768,7 +821,7 @@ exports[`open api converter covie simple 1`] = `
             "motorcycle",
           ],
         },
-        "_InlinedType65": {
+        "_InlinedType69": {
           "docs": "A string representation of the policy's current status.",
           "enum": [
             "active",
@@ -777,7 +830,7 @@ exports[`open api converter covie simple 1`] = `
             "cancelled",
           ],
         },
-        "_InlinedType66": {
+        "_InlinedType70": {
           "docs": "The determined reason for the cancellation, such as insured_non_payment or carrier_non_renew or insured_action. This value is null when cancellation is not active or not explicitly indicated by the carrier systems and is not guaranteed to be provided in any circumstance.",
           "enum": [
             "carrier_non_renew",
@@ -786,58 +839,58 @@ exports[`open api converter covie simple 1`] = `
             "other",
           ],
         },
-        "_InlinedType67": {
+        "_InlinedType71": {
           "docs": "A link to the logo for the carrier on the policy.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType68": {
+        "_InlinedType72": {
           "docs": "A polymorphic list of externally linked resources related to this policy such as documents or logos for carriers.",
           "extends": undefined,
           "properties": {
-            "carrier_logo": "optional<_InlinedType67>",
+            "carrier_logo": "optional<_InlinedType71>",
             "documents": "optional<list<DocumentRef>>",
           },
         },
-        "_InlinedType69": {
+        "_InlinedType73": {
           "docs": "A container for objects wrapped by the current object.",
           "extends": undefined,
           "properties": {
             "missing_fields": "optional<list<string>>",
           },
         },
-        "_InlinedType70": {
+        "_InlinedType74": {
           "docs": "The logo image to be used when describing a given provider.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType71": {
+        "_InlinedType75": {
           "docs": "A reference to the provider's primary website.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType72": {
+        "_InlinedType76": {
           "docs": "A collection of externally referenced material pertaining to the provider, such as web addresses and images.",
           "extends": undefined,
           "properties": {
-            "image": "optional<_InlinedType70>",
-            "website": "optional<_InlinedType71>",
+            "image": "optional<_InlinedType74>",
+            "website": "optional<_InlinedType75>",
           },
         },
-        "_InlinedType73": {
+        "_InlinedType77": {
           "docs": "A collection of sub objects that are related to this provider, most commonly consisting of co-branded or sub-issuing providers affiliated with this provider.",
           "extends": undefined,
           "properties": {
             "alternative_providers": "optional<list<Provider>>",
           },
         },
-        "_InlinedType74": {
+        "_InlinedType78": {
           "docs": "A string representation of the link's current status. This is distinct from a policy's status which is an indicator to whether a policy is in force. A link's status is an indicator of how new and complete the data is and whether or not it is possible to retrieve refreshed information.",
           "enum": [
             "new",
@@ -848,7 +901,7 @@ exports[`open api converter covie simple 1`] = `
             "stale",
           ],
         },
-        "_InlinedType75": {
+        "_InlinedType79": {
           "docs": "The frequency of which tracking should be performed. This value is \`never\` when tracking is disabled.",
           "enum": [
             "daily",
@@ -858,42 +911,42 @@ exports[`open api converter covie simple 1`] = `
             "on_demand",
           ],
         },
-        "_InlinedType76": {
+        "_InlinedType80": {
           "docs": "Link to retrieve the link's details.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType77": {
+        "_InlinedType81": {
           "docs": "Link to the carrier's logo.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType78": {
+        "_InlinedType82": {
           "extends": undefined,
           "properties": {
             "content_type": "optional<string>",
             "href": "optional<string>",
           },
         },
-        "_InlinedType79": {
+        "_InlinedType83": {
           "extends": undefined,
           "properties": {
-            "carrier_logo": "optional<_InlinedType77>",
-            "self": "optional<_InlinedType76>",
-            "uploaded_documents": "optional<list<_InlinedType78>>",
+            "carrier_logo": "optional<_InlinedType81>",
+            "self": "optional<_InlinedType80>",
+            "uploaded_documents": "optional<list<_InlinedType82>>",
           },
         },
-        "_InlinedType80": {
+        "_InlinedType84": {
           "extends": undefined,
           "properties": {
             "links": "optional<list<Link_2>>",
           },
         },
-        "_InlinedType81": {
+        "_InlinedType85": {
           "docs": "A string representation of the link's current status. This is distinct from a policy's status which is an indicator to whether a policy is in force. A link's status is an indicator of how new and complete the data is and whether or not it is possible to retrieve refreshed information.",
           "enum": [
             "new",
@@ -904,7 +957,7 @@ exports[`open api converter covie simple 1`] = `
             "stale",
           ],
         },
-        "_InlinedType82": {
+        "_InlinedType86": {
           "docs": "The frequency of which tracking should be performed. This value is \`never\` when tracking is disabled.",
           "enum": [
             "daily",
@@ -914,36 +967,36 @@ exports[`open api converter covie simple 1`] = `
             "on_demand",
           ],
         },
-        "_InlinedType83": {
+        "_InlinedType87": {
           "docs": "Link to retrieve the link's details.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType84": {
+        "_InlinedType88": {
           "docs": "Link to the carrier's logo.",
           "extends": undefined,
           "properties": {
             "href": "optional<string>",
           },
         },
-        "_InlinedType85": {
+        "_InlinedType89": {
           "extends": undefined,
           "properties": {
             "content_type": "optional<string>",
             "href": "optional<string>",
           },
         },
-        "_InlinedType86": {
+        "_InlinedType90": {
           "extends": undefined,
           "properties": {
-            "carrier_logo": "optional<_InlinedType84>",
-            "self": "optional<_InlinedType83>",
-            "uploaded_documents": "optional<list<_InlinedType85>>",
+            "carrier_logo": "optional<_InlinedType88>",
+            "self": "optional<_InlinedType87>",
+            "uploaded_documents": "optional<list<_InlinedType89>>",
           },
         },
-        "_InlinedType87": {
+        "_InlinedType91": {
           "enum": [
             "link.created",
             "link.changed",
@@ -964,7 +1017,7 @@ exports[`open api converter covie simple 1`] = `
             "policy.changed.premium",
           ],
         },
-        "_InlinedType88": {
+        "_InlinedType92": {
           "enum": [
             "link.created",
             "link.changed",
@@ -2337,6 +2390,25 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "types": {
+        "ACHDetails": {
+          "docs": "Model for ACH payment method",
+          "extends": undefined,
+          "properties": {
+            "accountNumber": "optional<string>",
+            "bankAddress": "optional<Address>",
+            "bankName": "optional<string>",
+            "beneficiaryName": "optional<string>",
+            "method": "ACHPaymentMethod",
+            "name": "optional<string>",
+            "routingNumber": "optional<string>",
+          },
+        },
+        "ACHPaymentMethod": {
+          "docs": "Classify the method of payment as "ACH" for ACHDetails",
+          "enum": [
+            "ACH",
+          ],
+        },
         "Address": {
           "docs": "Model for standardized address",
           "extends": undefined,
@@ -2408,10 +2480,74 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "userRiskScoreDetails": "optional<RiskScoringResult>",
           },
         },
+        "CardDetails": {
+          "docs": "Model for credit or debit card details",
+          "extends": undefined,
+          "properties": {
+            "3dsDone": "optional<boolean>",
+            "cardAuthenticated": "optional<boolean>",
+            "cardBrand": "optional<_InlinedType0>",
+            "cardExpiry": "optional<CardExpiry>",
+            "cardFingerprint": "optional<string>",
+            "cardFunding": "optional<_InlinedType1>",
+            "cardIssuedCountry": "optional<CountryCode>",
+            "cardLast4Digits": "optional<string>",
+            "cardType": "optional<_InlinedType2>",
+            "merchantDetails": "optional<CardMerchantDetails>",
+            "method": "CardPaymentMethod",
+            "nameOnCard": "optional<ConsumerName>",
+            "paymentChannel": "optional<string>",
+            "transactionReferenceField": "optional<string>",
+          },
+        },
+        "CardExpiry": {
+          "extends": undefined,
+          "properties": {
+            "month": "optional<double>",
+            "year": "optional<double>",
+          },
+        },
+        "CardMerchantDetails": {
+          "extends": undefined,
+          "properties": {
+            "MCC": "optional<string>",
+            "category": "optional<string>",
+            "city": "optional<string>",
+            "country": "optional<string>",
+            "id": "optional<string>",
+            "postCode": "optional<string>",
+            "state": "optional<string>",
+          },
+        },
+        "CardPaymentMethod": {
+          "docs": "Classify the method of payment as "Card" for CardDetails
+",
+          "enum": [
+            "CARD",
+          ],
+        },
         "CaseCreationType": {
           "enum": [
             "TRANSACTION",
             "USER",
+          ],
+        },
+        "CheckDetails": {
+          "extends": undefined,
+          "properties": {
+            "checkIdentifier": "optional<string>",
+            "checkNumber": "optional<string>",
+            "deliveryStatus": "optional<_InlinedType4>",
+            "etaTimestamp": "optional<double>",
+            "method": "CheckPaymentMethod",
+            "name": "optional<string>",
+            "shippingAddress": "optional<Address>",
+          },
+        },
+        "CheckPaymentMethod": {
+          "docs": "Classify the method of payment as "CHECK" for CheckDetails",
+          "enum": [
+            "CHECK",
           ],
         },
         "CompanyFinancialDetails": {
@@ -3050,6 +3186,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "isFalsePositive": "boolean",
           },
         },
+        "GeneralBankAccountPaymentMethod": {
+          "docs": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
+          "enum": [
+            "GENERIC_BANK_ACCOUNT",
+          ],
+        },
+        "GenericBankAccountDetails": {
+          "docs": "Model for any generic bank account",
+          "extends": undefined,
+          "properties": {
+            "accountNumber": "optional<string>",
+            "accountType": "optional<string>",
+            "bankAddress": "optional<Address>",
+            "bankCode": "optional<string>",
+            "bankName": "optional<string>",
+            "method": "GeneralBankAccountPaymentMethod",
+            "name": "optional<string>",
+            "paymentChannel": "optional<string>",
+            "specialInstructions": "optional<string>",
+          },
+        },
         "HitRulesDetails": {
           "docs": "Model for list of hit rules",
           "extends": undefined,
@@ -3061,6 +3218,28 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "ruleInstanceId": "string",
             "ruleName": "string",
           },
+        },
+        "IBANDetails": {
+          "docs": "Standardized model for Bank Details",
+          "extends": undefined,
+          "properties": {
+            "BIC": "optional<string>",
+            "IBAN": "optional<string>",
+            "bankAddress": "optional<Address>",
+            "bankBranchCode": "optional<string>",
+            "bankName": "optional<string>",
+            "method": "IBANPaymentMethod",
+            "name": "optional<string>",
+            "paymentChannel": "optional<string>",
+            "tags": "optional<Tag>",
+          },
+        },
+        "IBANPaymentMethod": {
+          "docs": "Classify the method of payment as "IBAN" for IBANDetails
+",
+          "enum": [
+            "IBAN",
+          ],
         },
         "KYCStatus": {
           "enum": [
@@ -3108,6 +3287,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "code": "double",
             "description": "optional<string>",
           },
+        },
+        "MpesaDetails": {
+          "docs": "Model for Mpesa payment method",
+          "extends": undefined,
+          "properties": {
+            "businessShortCode": "string",
+            "method": "MpesaPaymentMethod",
+            "phoneNumber": "string",
+            "transactionType": "_InlinedType3",
+          },
+        },
+        "MpesaPaymentMethod": {
+          "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
+          "enum": [
+            "MPESA",
+          ],
         },
         "PEPStatus": {
           "enum": [
@@ -3191,6 +3386,26 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "hitRules": "list<HitRulesDetails>",
           },
         },
+        "SWIFTDetails": {
+          "docs": "Model for SWIFT payment method",
+          "extends": undefined,
+          "properties": {
+            "accountNumber": "optional<string>",
+            "accountType": "optional<string>",
+            "bankAddress": "optional<Address>",
+            "bankName": "optional<string>",
+            "method": "SWIFTPaymentMethod",
+            "name": "optional<string>",
+            "specialInstructions": "optional<string>",
+            "swiftCode": "optional<string>",
+          },
+        },
+        "SWIFTPaymentMethod": {
+          "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
+          "enum": [
+            "SWIFT",
+          ],
+        },
         "Tag": {
           "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
           "extends": undefined,
@@ -3259,7 +3474,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionEventMonitoringResult": {
           "extends": [
-            "_InlinedType2",
+            "_InlinedType7",
             "RulesResults",
           ],
         },
@@ -3281,12 +3496,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "maximumTransactionLimit": "optional<Amount>",
             "maximumWeeklyTransactionLimit": "optional<Amount>",
             "maximumYearlyTransactionLimit": "optional<Amount>",
-            "paymentMethodLimits": "optional<_InlinedType3>",
+            "paymentMethodLimits": "optional<_InlinedType8>",
           },
         },
         "TransactionMonitoringResult": {
           "extends": [
-            "_InlinedType0",
+            "_InlinedType5",
             "RulesResults",
           ],
         },
@@ -3331,7 +3546,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for transaction payload with rules result",
           "extends": [
             "Transaction",
-            "_InlinedType1",
+            "_InlinedType6",
+          ],
+        },
+        "UPIDetails": {
+          "docs": "Model for UPI payment method",
+          "extends": undefined,
+          "properties": {
+            "bankProvider": "optional<string>",
+            "interfaceProvider": "optional<string>",
+            "method": "UPIPaymentMethod",
+            "name": "optional<string>",
+            "upiID": "string",
+          },
+        },
+        "UPIPaymentMethod": {
+          "docs": "Classify the method of payment as "UPI" for UPIDetails",
+          "enum": [
+            "UPI",
           ],
         },
         "User": {
@@ -3397,21 +3629,86 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "userId": "optional<string>",
           },
         },
+        "WalletDetails": {
+          "docs": "Standardized model for a Generic wallet transaction",
+          "extends": undefined,
+          "properties": {
+            "method": "WalletPaymentMethod",
+            "name": "optional<string>",
+            "paymentChannel": "optional<string>",
+            "tags": "optional<Tag>",
+            "walletId": "optional<string>",
+            "walletPhoneNumber": "optional<string>",
+            "walletType": "string",
+          },
+        },
+        "WalletPaymentMethod": {
+          "docs": "Classify the method of payment as "Wallet" for WalletDetails",
+          "enum": [
+            "WALLET",
+          ],
+        },
         "_InlinedType0": {
+          "docs": "Brand of Card",
+          "enum": [
+            "VISA",
+            "MASTERCARD",
+            "AMERICAN_EXPRESS",
+            "DISCOVER",
+            "UNIONPAY",
+            "RUPAY",
+            "JCB",
+          ],
+        },
+        "_InlinedType1": {
+          "docs": "Funding of Card",
+          "enum": [
+            "CREDIT",
+            "DEBIT",
+            "PREPAID",
+          ],
+        },
+        "_InlinedType2": {
+          "enum": [
+            "VIRTUAL",
+            "PHYSICAL",
+          ],
+        },
+        "_InlinedType3": {
+          "docs": "Type of transaction",
+          "enum": [
+            "CustomerPayBillOnline",
+            "CustomerBuyGoodsOnline",
+            "SalaryPayment",
+            "BusinessPayment",
+            "PromotionPayment",
+          ],
+        },
+        "_InlinedType4": {
+          "enum": [
+            "COMPLETED",
+            "PENDING",
+            "SETTLED",
+            "CANCELED",
+            "REFUND",
+            "DECLINED",
+          ],
+        },
+        "_InlinedType5": {
           "docs": "Model to convey the results of transaction monitoring",
           "extends": undefined,
           "properties": {
             "transactionId": "string",
           },
         },
-        "_InlinedType1": {
+        "_InlinedType6": {
           "extends": undefined,
           "properties": {
             "executedRules": "list<ExecutedRulesResult>",
             "hitRules": "list<HitRulesDetails>",
           },
         },
-        "_InlinedType2": {
+        "_InlinedType7": {
           "docs": "Model to convey the results of transaction monitoring",
           "extends": undefined,
           "properties": {
@@ -3419,7 +3716,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "transaction": "Transaction",
           },
         },
-        "_InlinedType3": {
+        "_InlinedType8": {
           "extends": undefined,
           "properties": {
             "ACH": "optional<TransactionLimit>",

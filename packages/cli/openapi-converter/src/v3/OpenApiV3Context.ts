@@ -348,6 +348,18 @@ export class OpenApiV3Context {
                 }
             }
         }
+
+        if (schema.oneOf != null) {
+            for (const oneOfElement of schema.oneOf) {
+                if (isReferenceObject(oneOfElement)) {
+                    schemaReferences.add(oneOfElement);
+                    const resolvedSchema = this.maybeResolveSchemaReference(oneOfElement);
+                    if (resolvedSchema != null) {
+                        this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
+                    }
+                }
+            }
+        }
     }
 }
 
