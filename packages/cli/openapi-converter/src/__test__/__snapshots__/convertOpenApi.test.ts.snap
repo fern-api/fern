@@ -2392,6 +2392,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for business user-related events",
           "type": "map<string, unknown>",
         },
+        "BusinessUsersResponse": {
+          "docs": "Model for business user risk score response",
+          "extends": undefined,
+          "properties": {
+            "userId": "string",
+            "userRiskScoreDetails": "optional<RiskScoringResult>",
+          },
+        },
+        "CaseCreationType": {
+          "enum": [
+            "TRANSACTION",
+            "USER",
+          ],
+        },
         "CompanyFinancialDetails": {
           "docs": "Model for business user company financial details",
           "extends": undefined,
@@ -2435,6 +2449,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "ConsumerUserEvent": {
           "docs": "Model for consumer user-related events",
           "type": "map<string, unknown>",
+        },
+        "ConsumerUsersResponse": {
+          "docs": "Model for consumer user risk score response",
+          "extends": undefined,
+          "properties": {
+            "userId": "string",
+            "userRiskScoreDetails": "optional<RiskScoringResult>",
+          },
         },
         "ContactDetails": {
           "docs": "Model for business user contact information details",
@@ -2992,6 +3014,38 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "vpnUsed": "optional<boolean>",
           },
         },
+        "ExecutedRulesResult": {
+          "docs": "Model for list of executed rules",
+          "extends": undefined,
+          "properties": {
+            "ruleAction": "RuleAction",
+            "ruleDescription": "string",
+            "ruleHit": "boolean",
+            "ruleHitMeta": "optional<RuleHitMeta>",
+            "ruleId": "string",
+            "ruleInstanceId": "string",
+            "ruleName": "string",
+          },
+        },
+        "FalsePositiveDetails": {
+          "extends": undefined,
+          "properties": {
+            "confidenceScore": "double",
+            "isFalsePositive": "boolean",
+          },
+        },
+        "HitRulesDetails": {
+          "docs": "Model for list of hit rules",
+          "extends": undefined,
+          "properties": {
+            "ruleAction": "RuleAction",
+            "ruleDescription": "string",
+            "ruleHitMeta": "optional<RuleHitMeta>",
+            "ruleId": "string",
+            "ruleInstanceId": "string",
+            "ruleName": "string",
+          },
+        },
         "KYCStatus": {
           "enum": [
             "SUCCESSFUL",
@@ -3081,6 +3135,46 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "VERY_LOW",
           ],
         },
+        "RiskScoringResult": {
+          "docs": "Model for results from Risk Scoring",
+          "extends": undefined,
+          "properties": {
+            "actionRiskScore": "double",
+            "dynamicRiskScore": "optional<double>",
+            "kycRiskScore": "double",
+          },
+        },
+        "RuleAction": {
+          "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
+          "enum": [
+            "ALLOW",
+            "FLAG",
+            "BLOCK",
+            "SUSPEND",
+          ],
+        },
+        "RuleHitDirection": {
+          "enum": [
+            "ORIGIN",
+            "DESTINATION",
+          ],
+        },
+        "RuleHitMeta": {
+          "docs": "Details of rule execution, for internal purposes only",
+          "extends": undefined,
+          "properties": {
+            "caseCreationType": "optional<CaseCreationType>",
+            "falsePositiveDetails": "optional<FalsePositiveDetails>",
+            "hitDirections": "optional<list<RuleHitDirection>>",
+          },
+        },
+        "RulesResults": {
+          "extends": undefined,
+          "properties": {
+            "executedRules": "list<ExecutedRulesResult>",
+            "hitRules": "list<HitRulesDetails>",
+          },
+        },
         "Tag": {
           "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
           "extends": undefined,
@@ -3137,6 +3231,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for transaction-related events",
           "type": "map<string, unknown>",
         },
+        "TransactionEventMonitoringResult": {
+          "extends": [
+            "_InlinedType2",
+            "RulesResults",
+          ],
+        },
         "TransactionLimit": {
           "extends": undefined,
           "properties": {
@@ -3155,8 +3255,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "maximumTransactionLimit": "optional<Amount>",
             "maximumWeeklyTransactionLimit": "optional<Amount>",
             "maximumYearlyTransactionLimit": "optional<Amount>",
-            "paymentMethodLimits": "optional<_InlinedType1>",
+            "paymentMethodLimits": "optional<_InlinedType3>",
           },
+        },
+        "TransactionMonitoringResult": {
+          "extends": [
+            "_InlinedType0",
+            "RulesResults",
+          ],
         },
         "TransactionState": {
           "docs": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
@@ -3199,7 +3305,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for transaction payload with rules result",
           "extends": [
             "Transaction",
-            "_InlinedType0",
+            "_InlinedType1",
           ],
         },
         "User": {
@@ -3266,13 +3372,28 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         "_InlinedType0": {
+          "docs": "Model to convey the results of transaction monitoring",
+          "extends": undefined,
+          "properties": {
+            "transactionId": "string",
+          },
+        },
+        "_InlinedType1": {
           "extends": undefined,
           "properties": {
             "executedRules": "list<ExecutedRulesResult>",
             "hitRules": "list<HitRulesDetails>",
           },
         },
-        "_InlinedType1": {
+        "_InlinedType2": {
+          "docs": "Model to convey the results of transaction monitoring",
+          "extends": undefined,
+          "properties": {
+            "eventId": "string",
+            "transaction": "Transaction",
+          },
+        },
+        "_InlinedType3": {
           "extends": undefined,
           "properties": {
             "ACH": "optional<TransactionLimit>",
