@@ -52,7 +52,11 @@ export class SchemaConverter {
         let typeDeclaration: RawSchemas.TypeDeclarationSchema | undefined = undefined;
         const extendedObjects: string[] = [];
 
-        if (schema === "boolean" || schema.type === "boolean") {
+        if (schema.enum != null) {
+            typeDeclaration = {
+                enum: schema.enum,
+            };
+        } else if (schema === "boolean" || schema.type === "boolean") {
             typeDeclaration = "boolean";
         } else if (schema === "number" || schema.type === "number") {
             typeDeclaration = "double";
@@ -91,10 +95,6 @@ export class SchemaConverter {
                     }
                 }
             }
-        } else if (schema.enum != null) {
-            typeDeclaration = {
-                enum: schema.enum,
-            };
         } else if (schema.additionalProperties != null) {
             if (typeof schema.additionalProperties === "boolean") {
                 typeDeclaration = "map<string, unknown>";
