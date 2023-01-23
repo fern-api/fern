@@ -13,6 +13,7 @@ describe("open api converter", () => {
     testFixture("partnerstack");
     testFixture("suger");
     testFixture("covie");
+    testFixture("flagright");
 });
 
 function testFixture(fixtureName: string) {

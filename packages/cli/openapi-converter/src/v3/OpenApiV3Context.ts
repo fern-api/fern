@@ -73,45 +73,10 @@ export class OpenApiV3Context {
         // group types into tag
         this.referenceObjectToTags = new ReferenceObjectsByTag(this.document);
         Object.entries(this.endpointsGroupedByTag).forEach(([tag, endpoints]) => {
-            const referencedSchemas = new Set<OpenAPIV3.ReferenceObject>();
-            for (const endpoint of endpoints) {
-                const requestBody = endpoint.definition.requestBody;
-                if (requestBody != null) {
-                    if (isReferenceObject(requestBody)) {
-                        this.referenceObjectToTags.add(requestBody, tag);
-                        this.addAllReferencedSchemas(requestBody, referencedSchemas);
-                    } else {
-                        const schema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
-                        if (schema != null) {
-                            if (isReferenceObject(schema)) {
-                                this.referenceObjectToTags.add(schema, tag);
-                            }
-                            this.addAllReferencedSchemas(schema, referencedSchemas);
-                        }
-                    }
-                }
-
-                const successResponse = endpoint.definition.responses[TWO_HUNDRED_RESPONSE];
-                if (successResponse != null) {
-                    if (isReferenceObject(successResponse)) {
-                        this.referenceObjectToTags.add(successResponse, tag);
-                        this.addAllReferencedSchemas(successResponse, referencedSchemas);
-                    } else if (successResponse.content != null) {
-                        const schema = successResponse.content[APPLICATION_JSON_CONTENT]?.schema;
-                        if (schema != null) {
-                            if (isReferenceObject(schema)) {
-                                this.referenceObjectToTags.add(schema, tag);
-                            }
-                            this.addAllReferencedSchemas(schema, referencedSchemas);
-                        }
-                    }
-                }
-
-                for (const referencedSchema of referencedSchemas) {
-                    this.referenceObjectToTags.add(referencedSchema, tag);
-                }
-            }
+            this.exploreEndpointSchemas(tag, endpoints);
         });
+        this.exploreEndpointSchemas(undefined, this.untaggedEndpoints);
+
         const referenceGroups = this.referenceObjectToTags.getGroups();
         for (const untaggedReference of referenceGroups.untaggedReferences) {
             const resolvedSchemaReference = this.maybeResolveSchemaReference(untaggedReference);
@@ -264,6 +229,47 @@ export class OpenApiV3Context {
         return undefined;
     }
 
+    private exploreEndpointSchemas(tag: string | undefined, endpoints: OpenAPIV3Endpoint[]): void {
+        const referencedSchemas = new Set<OpenAPIV3.ReferenceObject>();
+        for (const endpoint of endpoints) {
+            const requestBody = endpoint.definition.requestBody;
+            if (requestBody != null) {
+                if (isReferenceObject(requestBody)) {
+                    this.referenceObjectToTags.add(requestBody, tag);
+                    this.addAllReferencedSchemas(requestBody, referencedSchemas);
+                } else {
+                    const schema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
+                    if (schema != null) {
+                        if (isReferenceObject(schema)) {
+                            this.referenceObjectToTags.add(schema, tag);
+                        }
+                        this.addAllReferencedSchemas(schema, referencedSchemas);
+                    }
+                }
+            }
+
+            const successResponse = endpoint.definition.responses[TWO_HUNDRED_RESPONSE];
+            if (successResponse != null) {
+                if (isReferenceObject(successResponse)) {
+                    this.referenceObjectToTags.add(successResponse, tag);
+                    this.addAllReferencedSchemas(successResponse, referencedSchemas);
+                } else if (successResponse.content != null) {
+                    const schema = successResponse.content[APPLICATION_JSON_CONTENT]?.schema;
+                    if (schema != null) {
+                        if (isReferenceObject(schema)) {
+                            this.referenceObjectToTags.add(schema, tag);
+                        }
+                        this.addAllReferencedSchemas(schema, referencedSchemas);
+                    }
+                }
+            }
+
+            for (const referencedSchema of referencedSchemas) {
+                this.referenceObjectToTags.add(referencedSchema, tag);
+            }
+        }
+    }
+
     private addAllReferencedSchemas(
         schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
         referencedSchemas: Set<OpenAPIV3.ReferenceObject>
@@ -334,7 +340,12 @@ class ReferenceObjectsByTag {
         this.refToTags = {};
     }
 
-    public add(referenceObject: OpenAPIV3.ReferenceObject, tag: string) {
+    public add(referenceObject: OpenAPIV3.ReferenceObject, tag: string | undefined) {
+        if (tag == null) {
+            this.refToTags[referenceObject.$ref] = [];
+            return;
+        }
+
         if (referenceObject.$ref in this.refToTags) {
             this.refToTags[referenceObject.$ref]?.push(tag);
         } else {
