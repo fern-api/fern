@@ -18,9 +18,7 @@ services:
             name: CreateWorkspaceRequest
             body:
               properties:
-                name: string
-                description: string
-                type: WorkspaceType
+                workspace: NestedCreateWorkspaceRequest
           response: CreateWorkspaceResponse
 
 types:
@@ -34,6 +32,12 @@ types:
     properties:
       id: WorkspaceId
       name: string
+
+  NestedCreateWorkspaceRequest:
+    properties:
+      name: string
+      description: string
+      type: WorkspaceType
 
   WorkspaceType:
     enum:
