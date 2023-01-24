@@ -24,10 +24,16 @@ class QueryEndpointParameter(EndpointParameter):
     def get_default(self) -> AST.Expression:
         value_type = self._query_parameter.value_type.get_as_union()
         is_optional = value_type.type == "container" and value_type.container.get_as_union().type == "optional"
+        is_required_list = is_optional = (
+            value_type.type == "container" and value_type.container.get_as_union().type == "list"
+        )
+        default = None
+        if is_optional:
+            default = AST.Expression(AST.TypeHint.none())
+        elif is_required_list:
+            default = AST.Expression("[]")
         return FastAPI.Query(
-            default=AST.Expression("[]" if self._query_parameter.allow_multiple else AST.TypeHint.none())
-            if is_optional
-            else None,
+            default=default,
             variable_name=self.get_name(),
             wire_value=self._query_parameter.name.wire_value,
         )
