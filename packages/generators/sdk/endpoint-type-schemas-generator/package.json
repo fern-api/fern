@@ -28,7 +28,6 @@
     "@fern-fern/ir-model": "0.0.741",
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/commons-v2": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/union-schema-generator": "workspace:*",

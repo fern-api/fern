@@ -21,12 +21,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."\
       },\
       {\
+        "name": "@fern-typescript/abstract-schema-generator",\
+        "reference": "workspace:packages/abstract-schema-generator"\
+      },\
+      {\
         "name": "@fern-typescript/commons",\
         "reference": "workspace:packages/commons"\
       },\
       {\
-        "name": "@fern-typescript/commons-v2",\
-        "reference": "workspace:packages/commons-v2"\
+        "name": "@fern-typescript/contexts",\
+        "reference": "workspace:packages/contexts"\
       },\
       {\
         "name": "@fern-typescript/auth",\
@@ -45,20 +49,36 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core-utilities/zurg"\
       },\
       {\
+        "name": "@fern-typescript/type-generator",\
+        "reference": "workspace:packages/generators/model/type-generator"\
+      },\
+      {\
+        "name": "@fern-typescript/type-reference-converters",\
+        "reference": "workspace:packages/generators/model/type-reference-converters"\
+      },\
+      {\
+        "name": "@fern-typescript/type-reference-example-generator",\
+        "reference": "workspace:packages/generators/model/type-reference-example-generator"\
+      },\
+      {\
+        "name": "@fern-typescript/type-schema-generator",\
+        "reference": "workspace:packages/generators/model/type-schema-generator"\
+      },\
+      {\
+        "name": "@fern-typescript/union-generator",\
+        "reference": "workspace:packages/generators/model/union-generator"\
+      },\
+      {\
+        "name": "@fern-typescript/union-schema-generator",\
+        "reference": "workspace:packages/generators/model/union-schema-generator"\
+      },\
+      {\
         "name": "@fern-typescript/abstract-error-class-generator",\
         "reference": "workspace:packages/generators/sdk/abstract-error-class-generator"\
       },\
       {\
-        "name": "@fern-typescript/abstract-schema-generator",\
-        "reference": "workspace:packages/generators/sdk/abstract-schema-generator"\
-      },\
-      {\
         "name": "@fern-typescript/sdk-generator-cli",\
         "reference": "workspace:packages/generators/sdk/cli"\
-      },\
-      {\
-        "name": "@fern-typescript/contexts",\
-        "reference": "workspace:packages/generators/sdk/contexts"\
       },\
       {\
         "name": "@fern-typescript/endpoint-type-schemas-generator",\
@@ -97,48 +117,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/generators/sdk/service-generator"\
       },\
       {\
-        "name": "@fern-typescript/type-generator",\
-        "reference": "workspace:packages/generators/sdk/type-generator"\
-      },\
-      {\
-        "name": "@fern-typescript/type-reference-converters",\
-        "reference": "workspace:packages/generators/sdk/type-reference-converters"\
-      },\
-      {\
-        "name": "@fern-typescript/type-reference-example-generator",\
-        "reference": "workspace:packages/generators/sdk/type-reference-example-generator"\
-      },\
-      {\
-        "name": "@fern-typescript/type-schema-generator",\
-        "reference": "workspace:packages/generators/sdk/type-schema-generator"\
-      },\
-      {\
-        "name": "@fern-typescript/union-generator",\
-        "reference": "workspace:packages/generators/sdk/union-generator"\
-      },\
-      {\
-        "name": "@fern-typescript/union-schema-generator",\
-        "reference": "workspace:packages/generators/sdk/union-schema-generator"\
-      },\
-      {\
         "name": "@fern-typescript/resolvers",\
         "reference": "workspace:packages/resolvers"\
-      },\
-      {\
-        "name": "@fern-typescript/testing-utils",\
-        "reference": "workspace:packages/testing-utils"\
       }\
     ],\
     "enableTopLevelFallback": true,\
     "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
     "fallbackExclusionList": [\
       ["@fern-typescript/abstract-error-class-generator", ["workspace:packages/generators/sdk/abstract-error-class-generator"]],\
-      ["@fern-typescript/abstract-schema-generator", ["workspace:packages/generators/sdk/abstract-schema-generator"]],\
+      ["@fern-typescript/abstract-schema-generator", ["workspace:packages/abstract-schema-generator"]],\
       ["@fern-typescript/auth", ["workspace:packages/core-utilities/auth"]],\
       ["@fern-typescript/base-core-utilities", ["workspace:packages/core-utilities/base"]],\
       ["@fern-typescript/commons", ["workspace:packages/commons"]],\
-      ["@fern-typescript/commons-v2", ["workspace:packages/commons-v2"]],\
-      ["@fern-typescript/contexts", ["workspace:packages/generators/sdk/contexts"]],\
+      ["@fern-typescript/contexts", ["workspace:packages/contexts"]],\
       ["@fern-typescript/endpoint-type-schemas-generator", ["workspace:packages/generators/sdk/endpoint-type-schemas-generator"]],\
       ["@fern-typescript/endpoint-types-generator", ["workspace:packages/generators/sdk/endpoint-types-generator"]],\
       ["@fern-typescript/environments-generator", ["workspace:packages/generators/sdk/environments-generator"]],\
@@ -151,13 +142,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/sdk-generator", ["workspace:packages/generators/sdk/generator"]],\
       ["@fern-typescript/sdk-generator-cli", ["workspace:packages/generators/sdk/cli"]],\
       ["@fern-typescript/service-generator", ["workspace:packages/generators/sdk/service-generator"]],\
-      ["@fern-typescript/testing-utils", ["workspace:packages/testing-utils"]],\
-      ["@fern-typescript/type-generator", ["workspace:packages/generators/sdk/type-generator"]],\
-      ["@fern-typescript/type-reference-converters", ["workspace:packages/generators/sdk/type-reference-converters"]],\
-      ["@fern-typescript/type-reference-example-generator", ["workspace:packages/generators/sdk/type-reference-example-generator"]],\
-      ["@fern-typescript/type-schema-generator", ["workspace:packages/generators/sdk/type-schema-generator"]],\
-      ["@fern-typescript/union-generator", ["workspace:packages/generators/sdk/union-generator"]],\
-      ["@fern-typescript/union-schema-generator", ["workspace:packages/generators/sdk/union-schema-generator"]],\
+      ["@fern-typescript/type-generator", ["workspace:packages/generators/model/type-generator"]],\
+      ["@fern-typescript/type-reference-converters", ["workspace:packages/generators/model/type-reference-converters"]],\
+      ["@fern-typescript/type-reference-example-generator", ["workspace:packages/generators/model/type-reference-example-generator"]],\
+      ["@fern-typescript/type-schema-generator", ["workspace:packages/generators/model/type-schema-generator"]],\
+      ["@fern-typescript/union-generator", ["workspace:packages/generators/model/union-generator"]],\
+      ["@fern-typescript/union-schema-generator", ["workspace:packages/generators/model/union-schema-generator"]],\
       ["@fern-typescript/zurg", ["workspace:packages/core-utilities/zurg"]],\
       ["fern", ["workspace:."]]\
     ],\
@@ -3121,7 +3111,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3135,16 +3125,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/abstract-schema-generator", [\
-        ["workspace:packages/generators/sdk/abstract-schema-generator", {\
-          "packageLocation": "./packages/generators/sdk/abstract-schema-generator/",\
+        ["workspace:packages/abstract-schema-generator", {\
+          "packageLocation": "./packages/abstract-schema-generator/",\
           "packageDependencies": [\
-            ["@fern-typescript/abstract-schema-generator", "workspace:packages/generators/sdk/abstract-schema-generator"],\
+            ["@fern-typescript/abstract-schema-generator", "workspace:packages/abstract-schema-generator"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3208,6 +3197,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
+            ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@types/esutils", "npm:2.0.0"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3223,38 +3213,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-typescript/commons-v2", [\
-        ["workspace:packages/commons-v2", {\
-          "packageLocation": "./packages/commons-v2/",\
-          "packageDependencies": [\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@babel/core", "npm:7.19.1"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.23.1"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-typescript/contexts", [\
-        ["workspace:packages/generators/sdk/contexts", {\
-          "packageLocation": "./packages/generators/sdk/contexts/",\
+        ["workspace:packages/contexts", {\
+          "packageLocation": "./packages/contexts/",\
           "packageDependencies": [\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
+            ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3276,12 +3245,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/abstract-schema-generator", "workspace:packages/generators/sdk/abstract-schema-generator"],\
+            ["@fern-typescript/abstract-schema-generator", "workspace:packages/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
-            ["@fern-typescript/union-schema-generator", "workspace:packages/generators/sdk/union-schema-generator"],\
+            ["@fern-typescript/union-schema-generator", "workspace:packages/generators/model/union-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3304,9 +3272,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
-            ["@fern-typescript/union-generator", "workspace:packages/generators/sdk/union-generator"],\
+            ["@fern-typescript/union-generator", "workspace:packages/generators/model/union-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3329,7 +3297,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3353,8 +3321,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/abstract-error-class-generator", "workspace:packages/generators/sdk/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
-            ["@fern-typescript/type-generator", "workspace:packages/generators/sdk/type-generator"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
+            ["@fern-typescript/type-generator", "workspace:packages/generators/model/type-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3377,9 +3345,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/error-generator", "workspace:packages/generators/sdk/error-generator"],\
-            ["@fern-typescript/type-schema-generator", "workspace:packages/generators/sdk/type-schema-generator"],\
+            ["@fern-typescript/type-schema-generator", "workspace:packages/generators/model/type-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3421,7 +3389,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-typescript/abstract-error-class-generator", "workspace:packages/generators/sdk/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3444,7 +3412,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3466,7 +3434,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
+            ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3491,8 +3459,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/commons", "workspace:packages/commons"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/endpoint-type-schemas-generator", "workspace:packages/generators/sdk/endpoint-type-schemas-generator"],\
             ["@fern-typescript/endpoint-types-generator", "workspace:packages/generators/sdk/endpoint-types-generator"],\
             ["@fern-typescript/environments-generator", "workspace:packages/generators/sdk/environments-generator"],\
@@ -3502,10 +3470,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/request-wrapper-generator", "workspace:packages/generators/sdk/request-wrapper-generator"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@fern-typescript/service-generator", "workspace:packages/generators/sdk/service-generator"],\
-            ["@fern-typescript/type-generator", "workspace:packages/generators/sdk/type-generator"],\
-            ["@fern-typescript/type-reference-converters", "workspace:packages/generators/sdk/type-reference-converters"],\
-            ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/sdk/type-reference-example-generator"],\
-            ["@fern-typescript/type-schema-generator", "workspace:packages/generators/sdk/type-schema-generator"],\
+            ["@fern-typescript/type-generator", "workspace:packages/generators/model/type-generator"],\
+            ["@fern-typescript/type-reference-converters", "workspace:packages/generators/model/type-reference-converters"],\
+            ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/model/type-reference-example-generator"],\
+            ["@fern-typescript/type-schema-generator", "workspace:packages/generators/model/type-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3540,7 +3508,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/generator-exec-sdk", "npm:0.0.46"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/sdk-generator", "workspace:packages/generators/sdk/generator"],\
             ["@ts-morph/common", "npm:0.16.0"],\
             ["@types/decompress", "npm:4.2.4"],\
@@ -3582,8 +3550,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3599,43 +3566,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-typescript/testing-utils", [\
-        ["workspace:packages/testing-utils", {\
-          "packageLocation": "./packages/testing-utils/",\
-          "packageDependencies": [\
-            ["@fern-typescript/testing-utils", "workspace:packages/testing-utils"],\
-            ["@babel/core", "npm:7.19.1"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.23.1"],\
-            ["execa", "npm:5.1.1"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["memfs", "npm:3.4.7"],\
-            ["prettier", "npm:2.7.1"],\
-            ["tmp-promise", "npm:3.0.3"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-typescript/type-generator", [\
-        ["workspace:packages/generators/sdk/type-generator", {\
-          "packageLocation": "./packages/generators/sdk/type-generator/",\
+        ["workspace:packages/generators/model/type-generator", {\
+          "packageLocation": "./packages/generators/model/type-generator/",\
           "packageDependencies": [\
-            ["@fern-typescript/type-generator", "workspace:packages/generators/sdk/type-generator"],\
+            ["@fern-typescript/type-generator", "workspace:packages/generators/model/type-generator"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
-            ["@fern-typescript/union-generator", "workspace:packages/generators/sdk/union-generator"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
+            ["@fern-typescript/union-generator", "workspace:packages/generators/model/union-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3649,15 +3591,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/type-reference-converters", [\
-        ["workspace:packages/generators/sdk/type-reference-converters", {\
-          "packageLocation": "./packages/generators/sdk/type-reference-converters/",\
+        ["workspace:packages/generators/model/type-reference-converters", {\
+          "packageLocation": "./packages/generators/model/type-reference-converters/",\
           "packageDependencies": [\
-            ["@fern-typescript/type-reference-converters", "workspace:packages/generators/sdk/type-reference-converters"],\
+            ["@fern-typescript/type-reference-converters", "workspace:packages/generators/model/type-reference-converters"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
+            ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3672,16 +3614,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/type-reference-example-generator", [\
-        ["workspace:packages/generators/sdk/type-reference-example-generator", {\
-          "packageLocation": "./packages/generators/sdk/type-reference-example-generator/",\
+        ["workspace:packages/generators/model/type-reference-example-generator", {\
+          "packageLocation": "./packages/generators/model/type-reference-example-generator/",\
           "packageDependencies": [\
-            ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/sdk/type-reference-example-generator"],\
+            ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/model/type-reference-example-generator"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3695,19 +3637,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/type-schema-generator", [\
-        ["workspace:packages/generators/sdk/type-schema-generator", {\
-          "packageLocation": "./packages/generators/sdk/type-schema-generator/",\
+        ["workspace:packages/generators/model/type-schema-generator", {\
+          "packageLocation": "./packages/generators/model/type-schema-generator/",\
           "packageDependencies": [\
-            ["@fern-typescript/type-schema-generator", "workspace:packages/generators/sdk/type-schema-generator"],\
+            ["@fern-typescript/type-schema-generator", "workspace:packages/generators/model/type-schema-generator"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/abstract-schema-generator", "workspace:packages/generators/sdk/abstract-schema-generator"],\
+            ["@fern-typescript/abstract-schema-generator", "workspace:packages/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
-            ["@fern-typescript/union-schema-generator", "workspace:packages/generators/sdk/union-schema-generator"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
+            ["@fern-typescript/union-schema-generator", "workspace:packages/generators/model/union-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3721,17 +3662,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/union-generator", [\
-        ["workspace:packages/generators/sdk/union-generator", {\
-          "packageLocation": "./packages/generators/sdk/union-generator/",\
+        ["workspace:packages/generators/model/union-generator", {\
+          "packageLocation": "./packages/generators/model/union-generator/",\
           "packageDependencies": [\
-            ["@fern-typescript/union-generator", "workspace:packages/generators/sdk/union-generator"],\
+            ["@fern-typescript/union-generator", "workspace:packages/generators/model/union-generator"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3745,18 +3685,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-typescript/union-schema-generator", [\
-        ["workspace:packages/generators/sdk/union-schema-generator", {\
-          "packageLocation": "./packages/generators/sdk/union-schema-generator/",\
+        ["workspace:packages/generators/model/union-schema-generator", {\
+          "packageLocation": "./packages/generators/model/union-schema-generator/",\
           "packageDependencies": [\
-            ["@fern-typescript/union-schema-generator", "workspace:packages/generators/sdk/union-schema-generator"],\
+            ["@fern-typescript/union-schema-generator", "workspace:packages/generators/model/union-schema-generator"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/abstract-schema-generator", "workspace:packages/generators/sdk/abstract-schema-generator"],\
+            ["@fern-typescript/abstract-schema-generator", "workspace:packages/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/commons-v2", "workspace:packages/commons-v2"],\
-            ["@fern-typescript/contexts", "workspace:packages/generators/sdk/contexts"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\

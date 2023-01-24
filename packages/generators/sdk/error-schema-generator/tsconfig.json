@@ -2,5 +2,9 @@
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [{ "path": "../contexts" }, { "path": "../error-generator" }, { "path": "../type-schema-generator" }]
+  "references": [
+    { "path": "../../../contexts" },
+    { "path": "../../model/type-schema-generator" },
+    { "path": "../error-generator" }
+  ]
 }

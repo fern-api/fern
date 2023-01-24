@@ -1,8 +1,7 @@
 import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
 import { HttpHeader } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { AugmentedService } from "@fern-typescript/commons-v2";
+import { AugmentedService, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedService, ServiceContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";

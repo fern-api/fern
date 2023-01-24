@@ -1,4 +1,4 @@
-import { Zurg } from "@fern-typescript/commons-v2";
+import { Zurg } from "@fern-typescript/commons";
 import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 

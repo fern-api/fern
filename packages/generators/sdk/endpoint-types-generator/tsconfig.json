@@ -4,8 +4,8 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../commons" },
+    { "path": "../../../contexts" },
     { "path": "../../../resolvers" },
-    { "path": "../contexts" },
-    { "path": "../union-generator" }
+    { "path": "../../model/union-generator" }
   ]
 }

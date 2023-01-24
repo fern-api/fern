@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Zurg } from "@fern-typescript/commons-v2";
+import { Zurg } from "@fern-typescript/commons";
 import { Reference } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { CoreUtility } from "../CoreUtility";

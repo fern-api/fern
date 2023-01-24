@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { AugmentedService } from "@fern-typescript/commons-v2";
+import { AugmentedService } from "@fern-typescript/commons";
 import { GeneratedService } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedServiceImpl } from "./GeneratedServiceImpl";

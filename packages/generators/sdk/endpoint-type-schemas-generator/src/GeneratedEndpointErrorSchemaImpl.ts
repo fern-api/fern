@@ -1,6 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
-import { Zurg } from "@fern-typescript/commons-v2";
+import { Zurg } from "@fern-typescript/commons";
 import { EndpointTypeSchemasContext, EndpointTypesContext, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";

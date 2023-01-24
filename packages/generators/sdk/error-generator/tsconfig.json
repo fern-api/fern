@@ -4,8 +4,8 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../commons" },
-    { "path": "../abstract-error-class-generator" },
-    { "path": "../contexts" },
-    { "path": "../type-generator" }
+    { "path": "../../../contexts" },
+    { "path": "../../model/type-generator" },
+    { "path": "../abstract-error-class-generator" }
   ]
 }

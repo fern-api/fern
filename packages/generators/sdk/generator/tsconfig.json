@@ -3,9 +3,13 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../commons-v2" },
+    { "path": "../../../commons" },
+    { "path": "../../../contexts" },
     { "path": "../../../resolvers" },
-    { "path": "../contexts" },
+    { "path": "../../model/type-generator" },
+    { "path": "../../model/type-reference-converters" },
+    { "path": "../../model/type-reference-example-generator" },
+    { "path": "../../model/type-schema-generator" },
     { "path": "../endpoint-type-schemas-generator" },
     { "path": "../endpoint-types-generator" },
     { "path": "../environments-generator" },
@@ -13,10 +17,6 @@
     { "path": "../error-schema-generator" },
     { "path": "../generic-error-generators" },
     { "path": "../request-wrapper-generator" },
-    { "path": "../service-generator" },
-    { "path": "../type-generator" },
-    { "path": "../type-reference-converters" },
-    { "path": "../type-reference-example-generator" },
-    { "path": "../type-schema-generator" }
+    { "path": "../service-generator" }
   ]
 }

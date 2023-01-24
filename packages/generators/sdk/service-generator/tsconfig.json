@@ -2,10 +2,5 @@
   "extends": "../../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [
-    { "path": "../../../commons" },
-    { "path": "../../../commons-v2" },
-    { "path": "../../../resolvers" },
-    { "path": "../contexts" }
-  ]
+  "references": [{ "path": "../../../commons" }, { "path": "../../../contexts" }, { "path": "../../../resolvers" }]
 }

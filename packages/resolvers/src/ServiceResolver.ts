@@ -1,6 +1,6 @@
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { AugmentedService } from "@fern-typescript/commons-v2";
+import { AugmentedService } from "@fern-typescript/commons";
 import { isEqual } from "lodash-es";
 import { StringifiedFernFilepath, stringifyFernFilepath } from "./stringify-fern-filepath";
 

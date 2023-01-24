@@ -1,5 +1,5 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { Zurg } from "@fern-typescript/commons-v2";
+import { Zurg } from "@fern-typescript/commons";
 import { CoreUtilities, ErrorSchemaContextMixin, GeneratedErrorSchema, Reference } from "@fern-typescript/contexts";
 import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { ErrorResolver } from "@fern-typescript/resolvers";

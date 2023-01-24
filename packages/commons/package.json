@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
+    "@fern-fern/ir-model": "0.0.741",
     "esutils": "^2.0.3",
     "ts-morph": "^15.1.0",
     "typescript": "4.6.4"
