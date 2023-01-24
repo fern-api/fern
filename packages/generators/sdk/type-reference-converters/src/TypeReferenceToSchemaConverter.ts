@@ -51,7 +51,15 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.list(this.convert(itemType));
     }
 
-    protected override map({ keyType, valueType }: MapType): Zurg.Schema {
+    protected override mapWithEnumKeys({ keyType, valueType }: MapType): Zurg.Schema {
+        const valueSchema = this.convert(valueType);
+        return this.zurg.record({
+            keySchema: this.convert(keyType),
+            valueSchema: valueSchema.isOptional ? valueSchema : valueSchema.optional(),
+        });
+    }
+
+    protected override mapWithNonEnumKeys({ keyType, valueType }: MapType): Zurg.Schema {
         return this.zurg.record({
             keySchema: this.convert(keyType),
             valueSchema: this.convert(valueType),

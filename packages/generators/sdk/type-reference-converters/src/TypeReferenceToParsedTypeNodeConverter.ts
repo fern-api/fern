@@ -4,7 +4,17 @@ import { ts } from "ts-morph";
 import { AbstractTypeReferenceToTypeNodeConverter } from "./AbstractTypeReferenceToTypeNodeConverter";
 
 export class TypeReferenceToParsedTypeNodeConverter extends AbstractTypeReferenceToTypeNodeConverter {
-    protected override map(map: MapType): TypeReferenceNode {
+    protected override mapWithEnumKeys(map: MapType): TypeReferenceNode {
+        const valueType = this.convert(map.valueType);
+        return this.generateNonOptionalTypeReferenceNode(
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                this.convert(map.keyType).typeNode,
+                (valueType.isOptional ? valueType : this.optional(map.valueType)).typeNode,
+            ])
+        );
+    }
+
+    protected override mapWithNonEnumKeys(map: MapType): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                 this.convert(map.keyType).typeNode,

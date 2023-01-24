@@ -32,6 +32,21 @@ types:
       - as
       - date
 
+  MapWithEnumKey:
+    type: map<Color, boolean>
+    examples:
+      - value:
+          RED: true
+  MapWithEnumKeyAndOptionalValue:
+    type: map<Color, optional<boolean>>
+    examples:
+      - value:
+          RED: true
+  Color:
+    enum:
+      - RED
+      - BLUE
+
 services:
   http:
     PlaylistCrudService:

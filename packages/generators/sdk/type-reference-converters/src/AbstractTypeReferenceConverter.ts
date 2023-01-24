@@ -1,4 +1,11 @@
-import { ContainerType, DeclaredTypeName, MapType, PrimitiveType, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    ContainerType,
+    DeclaredTypeName,
+    MapType,
+    PrimitiveType,
+    ShapeType,
+    TypeReference,
+} from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons-v2";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -48,7 +55,6 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract number(): T;
     protected abstract boolean(): T;
     protected abstract dateTime(): T;
-    protected abstract map(map: MapType): T;
     protected abstract list(itemType: TypeReference): T;
     protected abstract set(itemType: TypeReference): T;
     protected abstract optional(itemType: TypeReference): T;
@@ -68,6 +74,18 @@ export abstract class AbstractTypeReferenceConverter<T> {
             },
         });
     }
+
+    protected map(mapType: MapType): T {
+        const resolvdKeyType = this.typeResolver.resolveTypeReference(mapType.keyType);
+        if (resolvdKeyType._type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
+            return this.mapWithEnumKeys(mapType);
+        } else {
+            return this.mapWithNonEnumKeys(mapType);
+        }
+    }
+
+    protected abstract mapWithEnumKeys(mapType: MapType): T;
+    protected abstract mapWithNonEnumKeys(mapType: MapType): T;
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
         const resolvedType = this.typeResolver.resolveTypeReference(typeReference);

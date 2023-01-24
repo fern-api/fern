@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import {
     ExampleContainer,
     ExamplePrimitive,
@@ -25,14 +26,18 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     }
 
     public build(context: TypeReferenceExampleContext, opts: GetReferenceOpts): ts.Expression {
-        return this.buildExample(this.example, context, opts);
+        return this.buildExample({ example: this.example, context, opts });
     }
 
-    private buildExample(
-        example: ExampleTypeReference,
-        context: TypeReferenceExampleContext,
-        opts: GetReferenceOpts
-    ): ts.Expression {
+    private buildExample({
+        example,
+        context,
+        opts,
+    }: {
+        example: ExampleTypeReference;
+        context: TypeReferenceExampleContext;
+        opts: GetReferenceOpts;
+    }): ts.Expression {
         return ExampleTypeReferenceShape._visit(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
@@ -54,27 +59,31 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 return ExampleContainer._visit<ts.Expression>(exampleContainer, {
                     list: (exampleItems) =>
                         ts.factory.createArrayLiteralExpression(
-                            exampleItems.map((exampleItem) => this.buildExample(exampleItem, context, opts))
+                            exampleItems.map((exampleItem) =>
+                                this.buildExample({ example: exampleItem, context, opts })
+                            )
                         ),
                     set: (exampleItems) =>
                         ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
                             ts.factory.createArrayLiteralExpression(
-                                exampleItems.map((exampleItem) => this.buildExample(exampleItem, context, opts))
+                                exampleItems.map((exampleItem) =>
+                                    this.buildExample({ example: exampleItem, context, opts })
+                                )
                             ),
                         ]),
                     map: (examplePairs) =>
                         ts.factory.createObjectLiteralExpression(
                             examplePairs.map((examplePair) =>
                                 ts.factory.createPropertyAssignment(
-                                    this.getExampleAsPropertyName(examplePair.key),
-                                    this.buildExample(examplePair.value, context, opts)
+                                    this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
+                                    this.buildExample({ example: examplePair.value, context, opts })
                                 )
                             ),
                             true
                         ),
                     optional: (exampleItem) =>
                         exampleItem != null
-                            ? this.buildExample(exampleItem, context, opts)
+                            ? this.buildExample({ example: exampleItem, context, opts })
                             : ts.factory.createIdentifier("undefined"),
                     _unknown: () => {
                         throw new Error("Unknown example container type: " + exampleContainer.type);
@@ -97,7 +106,15 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         });
     }
 
-    private getExampleAsPropertyName(example: ExampleTypeReference): ts.PropertyName {
+    private getExampleAsPropertyName({
+        example,
+        context,
+        opts,
+    }: {
+        example: ExampleTypeReference;
+        context: TypeReferenceExampleContext;
+        opts: GetReferenceOpts;
+    }): ts.PropertyName {
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
                 ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
@@ -118,11 +135,26 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             container: () => {
                 throw new Error("Cannot convert container to property name");
             },
-            named: ({ shape: example }) => {
-                if (example.type !== "alias") {
-                    throw new Error("Cannot convert non-alias named type to property name");
+            named: ({ shape: example, typeName }) => {
+                switch (example.type) {
+                    case "object":
+                        throw new Error("Cannot convert object to property name");
+                    case "union":
+                        throw new Error("Cannot convert union to property name");
+                    case "enum": {
+                        const generatedType = context.type.getGeneratedType(typeName);
+                        if (generatedType.type !== "enum") {
+                            throw new Error("Type is not an enum: " + typeName.name.originalName);
+                        }
+                        return ts.factory.createComputedPropertyName(
+                            generatedType.buildExample(example, context, opts)
+                        );
+                    }
+                    case "alias":
+                        return this.getExampleAsPropertyName({ example: example.value, context, opts });
+                    default:
+                        assertNever(example);
                 }
-                return this.getExampleAsPropertyName(example.value);
             },
             unknown: () => {
                 throw new Error("Cannot convert unknown to property name");

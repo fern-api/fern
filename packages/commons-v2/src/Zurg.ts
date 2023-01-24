@@ -33,6 +33,7 @@ export declare namespace Zurg {
 
     interface BaseSchema {
         toExpression: () => ts.Expression;
+        isOptional: boolean;
     }
 
     interface SchemaUtils {

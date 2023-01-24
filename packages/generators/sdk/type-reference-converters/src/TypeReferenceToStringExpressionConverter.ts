@@ -103,7 +103,11 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         throw new Error("Cannot convert list to string");
     }
 
-    protected override map(): (reference: ts.Expression) => ExpressionReferenceNode {
+    protected override mapWithEnumKeys(): (reference: ts.Expression) => ExpressionReferenceNode {
+        throw new Error("Cannot convert map to string");
+    }
+
+    protected override mapWithNonEnumKeys(): (reference: ts.Expression) => ExpressionReferenceNode {
         throw new Error("Cannot convert map to string");
     }
 
