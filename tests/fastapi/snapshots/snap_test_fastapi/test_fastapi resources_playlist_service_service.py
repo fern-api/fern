@@ -141,7 +141,11 @@ class AbstractPlaylistCrudService(AbstractFernService):
             elif parameter_name == "limit":
                 new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
             elif parameter_name == "other_field":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="otherField")))
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(default=..., alias="otherField", description="i'm another field")
+                    )
+                )
             elif parameter_name == "optional_multiple_field":
                 new_parameters.append(
                     parameter.replace(default=fastapi.Query(default=None, alias="optionalMultipleField"))

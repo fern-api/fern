@@ -33,6 +33,7 @@ class QueryEndpointParameter(EndpointParameter):
             default=default,
             variable_name=self.get_name(),
             wire_value=self._query_parameter.name.wire_value,
+            docs=self._query_parameter.docs,
         )
 
     def get_list_wrapped_type_hint(self) -> AST.TypeHint:

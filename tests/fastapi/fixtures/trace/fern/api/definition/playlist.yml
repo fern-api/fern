@@ -52,7 +52,9 @@ services:
             name: GetPlaylistsRequest
             query-parameters:
               limit: optional<integer>
-              otherField: string
+              otherField:
+                docs: i'm another field
+                type: string
               optionalMultipleField:
                 type: optional<string>
                 allow-multiple: true
