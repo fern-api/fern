@@ -148,7 +148,8 @@ export class SchemaConverter {
                 // its an object
                 const objectDefinition: Record<string, string | RawSchemas.AliasSchema> = {};
                 for (const [property, propertyType] of Object.entries(schema.properties)) {
-                    let convertedPropertyType: string | RawSchemas.AliasSchema;
+                    let convertedPropertyType: string;
+                    let propertyDescription: string | undefined;
                     if (isReferenceObject(propertyType)) {
                         convertedPropertyType = getFernReferenceForSchema(
                             propertyType,
@@ -159,7 +160,7 @@ export class SchemaConverter {
                     } else {
                         const convertedSchema = this.convertSchema(propertyType, [...breadcrumbs, property]);
                         if (convertedSchema == null) {
-                            this.taskContext.logger.error(
+                            this.taskContext.logger.warn(
                                 `#${[...breadcrumbs, property].join("/")}: Skipping property conversion`
                             );
                             continue;
@@ -176,6 +177,8 @@ export class SchemaConverter {
                             additionalTypeDeclarations[schemaName] = convertedSchema.typeDeclaration;
                             convertedPropertyType = schemaName;
                         }
+
+                        propertyDescription = propertyType.description;
                     }
 
                     if (
@@ -185,7 +188,13 @@ export class SchemaConverter {
                         convertedPropertyType = `optional<${convertedPropertyType}>`;
                     }
 
-                    objectDefinition[property] = convertedPropertyType;
+                    objectDefinition[property] =
+                        propertyDescription != null
+                            ? {
+                                  docs: propertyDescription,
+                                  type: convertedPropertyType,
+                              }
+                            : convertedPropertyType;
                 }
                 typeDeclaration = {
                     extends: extendedObjects.length > 0 ? extendedObjects : undefined,
