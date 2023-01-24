@@ -164,7 +164,7 @@ export class OpenAPIConverter {
                         serviceBasePath.pathParameters
                     );
                 } else {
-                    this.taskContext.logger.error(`${serviceName}: failed to add service path parameters.`);
+                    this.taskContext.logger.warn(`${serviceName}: failed to add service path parameters.`);
                 }
             }
 
