@@ -44,6 +44,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         service_param: int,
         limit: typing.Optional[int],
         other_field: str,
+        multi_line_docs: str,
         optional_multiple_field: typing.Optional[typing.List[str]],
         multiple_field: typing.List[str],
         auth: ApiAuth,
@@ -144,6 +145,14 @@ class AbstractPlaylistCrudService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         default=fastapi.Query(default=..., alias="otherField", description="i'm another field")
+                    )
+                )
+            elif parameter_name == "multi_line_docs":
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(
+                            default=..., alias="multiLineDocs", description="I'm a multiline\ndescription\n"
+                        )
                     )
                 )
             elif parameter_name == "optional_multiple_field":

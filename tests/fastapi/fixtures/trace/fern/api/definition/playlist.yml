@@ -55,6 +55,11 @@ services:
               otherField:
                 docs: i'm another field
                 type: string
+              multiLineDocs:
+                docs: |
+                  I'm a multiline
+                  description
+                type: string
               optionalMultipleField:
                 type: optional<string>
                 allow-multiple: true
