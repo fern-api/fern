@@ -635,6 +635,7 @@
                       "type": "string"
                     },
                     "status": {
+                      "nullable": true,
                       "format": "int32",
                       "type": "integer"
                     }
