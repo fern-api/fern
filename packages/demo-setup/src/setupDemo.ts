@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { getUserToken } from "@fern-api/auth";
+import { FernVenusApi, FernVenusApiClient } from "@fern-api/venus-api-sdk";
 import { FernPostman, FernPostmanClient } from "@fern-fern/postman-sdk";
-import { FernVenusApiClient } from "@fern-fern/venus-api-sdk";
 import sodium from "libsodium-wrappers";
 import { Octokit } from "octokit";
 
@@ -17,8 +17,8 @@ export interface SetupDemoArgs {
 const FERN_API_GITHUB_ORG = "fern-api";
 const TEMPLATE_API_GITHUB_REPO = "template-api";
 const TEMPLATE_NODE_GITHUB_REPO = "template-node";
-const TEMPLATE_POSTMAN_GITHUB_REPO = "template-openapi";
-const TEMPLATE_OPENAPI_GITHUB_REPO = "template-postman";
+const TEMPLATE_POSTMAN_GITHUB_REPO = "template-postman";
+const TEMPLATE_OPENAPI_GITHUB_REPO = "template-openapi";
 
 export async function setupDemo(args: SetupDemoArgs): Promise<void> {
     console.log("Setting up demo...");
@@ -35,7 +35,7 @@ export async function setupDemo(args: SetupDemoArgs): Promise<void> {
         environment: "https://venus.buildwithfern.com",
         token: fernUserToken.value,
     });
-    // await createFernOrg(args, venus);
+    await createFernOrg(args, venus);
 
     // Step 3: Create Fern access token for Org
     const fernAccessToken = await getFernAccessToken(venus, args);
@@ -90,21 +90,21 @@ async function createPostmanWorkspace(args: SetupDemoArgs): Promise<string> {
     return createWorkspaceResponse.workspace.id;
 }
 
-// async function createFernOrg(args: SetupDemoArgs, venus: FernVenusApiClient): Promise<void> {
-//     console.log("Creating organization in fern...");
-//     const createOrgResponse = await venus.organization.create({
-//         organizationId: args.orgId,
-//     });
-//     if (!createOrgResponse.ok) {
-//         throw new Error(`Failed to create org ${args.orgId}, ${JSON.stringify(createOrgResponse.error)}`);
-//     }
-//     console.log(`Successfully created organization ${args.orgId} in fern...`);
-// }
+async function createFernOrg(args: SetupDemoArgs, venus: FernVenusApiClient): Promise<void> {
+    console.log("Creating organization in fern...");
+    const createOrgResponse = await venus.organization.create({
+        organizationId: FernVenusApi.OrganizationId(args.orgId),
+    });
+    if (!createOrgResponse.ok) {
+        throw new Error(`Failed to create org ${args.orgId}, ${JSON.stringify(createOrgResponse.error)}`);
+    }
+    console.log(`Successfully created organization ${args.orgId} in fern...`);
+}
 
 async function getFernAccessToken(venus: FernVenusApiClient, args: SetupDemoArgs): Promise<string> {
     console.log(`Creating access token in fern for ${args.orgId}...`);
     const generateRegistryTokensResponse = await venus.registry.generateRegistryTokens({
-        organizationId: args.orgId,
+        organizationId: FernVenusApi.OrganizationId(args.orgId),
     });
     console.log("Successfully created access token...");
     if (generateRegistryTokensResponse.ok) {

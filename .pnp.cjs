@@ -7948,7 +7948,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
             ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/jsonwebtoken", "npm:9.0.0"],\
@@ -8152,8 +8152,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/json-schema", "workspace:packages/cli/yaml/json-schema"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
             ["@fern-fern/postman-sdk", "npm:0.0.20"],\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/libsodium-wrappers", "npm:0.7.10"],\
@@ -8753,8 +8753,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.163"],\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -8863,6 +8863,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/venus-api-sdk", [\
+        ["npm:0.0.14", {\
+          "packageLocation": "./.yarn/cache/@fern-api-venus-api-sdk-npm-0.0.14-c85646055f-18fd2b7b5f.zip/node_modules/@fern-api/venus-api-sdk/",\
+          "packageDependencies": [\
+            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
+            ["@types/basic-auth", "npm:1.1.3"],\
+            ["@types/url-join", "npm:4.0.1"],\
+            ["axios", "npm:0.27.2"],\
+            ["basic-auth", "npm:2.0.1"],\
+            ["buffer", "npm:6.0.3"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-api/workspace-loader", [\
@@ -9063,22 +9079,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/postman-sdk", "npm:0.0.20"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
-            ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-fern/venus-api-sdk", [\
-        ["npm:0.0.11-2-g9f28a55", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-venus-api-sdk-npm-0.0.11-2-g9f28a55-5f4126f0d1-dc6a0f7a98.zip/node_modules/@fern-fern/venus-api-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/venus-api-sdk", "npm:0.0.11-2-g9f28a55"],\
-            ["@types/basic-auth", "npm:1.1.3"],\
-            ["@types/url-join", "npm:4.0.1"],\
-            ["axios", "npm:0.27.2"],\
-            ["basic-auth", "npm:2.0.1"],\
-            ["buffer", "npm:6.0.3"],\
-            ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\

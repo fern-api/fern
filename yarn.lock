@@ -3262,7 +3262,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/venus-api-sdk": 0.0.11-2-g9f28a55
+    "@fern-api/venus-api-sdk": 0.0.14
     "@types/inquirer": ^9.0.1
     "@types/jest": ^29.0.3
     "@types/jsonwebtoken": ^9.0.0
@@ -3459,8 +3459,8 @@ __metadata:
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
+    "@fern-api/venus-api-sdk": 0.0.14
     "@fern-fern/postman-sdk": ^0.0.20
-    "@fern-fern/venus-api-sdk": 0.0.11-2-g9f28a55
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/libsodium-wrappers": ^0.7.10
@@ -4018,8 +4018,8 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/venus-api-sdk": 0.0.14
     "@fern-fern/fiddle-sdk": ^0.0.163
-    "@fern-fern/venus-api-sdk": 0.0.11-2-g9f28a55
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4120,6 +4120,21 @@ __metadata:
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
+
+"@fern-api/venus-api-sdk@npm:0.0.14":
+  version: 0.0.14
+  resolution: "@fern-api/venus-api-sdk@npm:0.0.14"
+  dependencies:
+    "@types/basic-auth": ^1.1.3
+    "@types/url-join": 4.0.1
+    axios: ^0.27.2
+    basic-auth: ^2.0.1
+    buffer: ^6.0.3
+    js-base64: ^3.7.2
+    url-join: 4.0.1
+  checksum: 18fd2b7b5fdbf3ce5bfaa7c6227aa8d3b5eabd1e2454751eb7d68cf9c97998d65093f739c5fbca3575eaa25f484a6117791a92b9866fceb901060817f8e83dfd
+  languageName: node
+  linkType: hard
 
 "@fern-api/workspace-loader@workspace:*, @fern-api/workspace-loader@workspace:packages/cli/workspace-loader":
   version: 0.0.0-use.local
@@ -4299,21 +4314,6 @@ __metadata:
     axios: ^0.27.2
     url-join: 4.0.1
   checksum: dba670df6359b496a9d79cf7cefa811c94fdc22d4e2d168f0364776f76244bcd542c092d951e2a60911485316fb6abbda6cfdcd850646b69489261baba113e26
-  languageName: node
-  linkType: hard
-
-"@fern-fern/venus-api-sdk@npm:0.0.11-2-g9f28a55":
-  version: 0.0.11-2-g9f28a55
-  resolution: "@fern-fern/venus-api-sdk@npm:0.0.11-2-g9f28a55"
-  dependencies:
-    "@types/basic-auth": ^1.1.3
-    "@types/url-join": 4.0.1
-    axios: ^0.27.2
-    basic-auth: ^2.0.1
-    buffer: ^6.0.3
-    js-base64: ^3.7.2
-    url-join: 4.0.1
-  checksum: dc6a0f7a98223a81fccb43be3b1f074c1bf66050fcdc4206b030b61311121ca85a6f05dda44905ab2ef19a3d321edde99565d4b6a89e1f70e32b5f00349eda48
   languageName: node
   linkType: hard
 
