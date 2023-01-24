@@ -4902,7 +4902,7 @@ exports[`open api converter partnerstack simple 1`] = `
           "properties": {
             "data": "_InlinedType87",
             "message": "string",
-            "status": "integer",
+            "status": "optional<integer>",
           },
         },
         "_InlinedType89": {

@@ -181,11 +181,13 @@ export class SchemaConverter {
                         propertyDescription = propertyType.description;
                     }
 
-                    if (
-                        (schema.required == null || !schema.required.includes(property)) &&
-                        !convertedPropertyType.startsWith("optional")
-                    ) {
-                        convertedPropertyType = `optional<${convertedPropertyType}>`;
+                    if (!convertedPropertyType.startsWith("optional<")) {
+                        const isRequired = schema.required != null && schema.required.includes(property);
+                        const isNullable = !isReferenceObject(propertyType) && propertyType.nullable;
+
+                        if (!isRequired || isNullable) {
+                            convertedPropertyType = `optional<${convertedPropertyType}>`;
+                        }
                     }
 
                     objectDefinition[property] =
