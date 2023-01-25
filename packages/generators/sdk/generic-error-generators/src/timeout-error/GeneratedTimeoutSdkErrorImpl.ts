@@ -1,6 +1,5 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
-import { GeneratedTimeoutSdkError } from "@fern-typescript/contexts";
-import { TimeoutSdkErrorContext } from "@fern-typescript/contexts/src/contexts/TimeoutSdkErrorContext";
+import { GeneratedTimeoutSdkError, TimeoutSdkErrorContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
 
 export class GeneratedTimeoutSdkErrorImpl

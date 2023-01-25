@@ -1,7 +1,7 @@
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ExampleType, ExampleTypeShape } from "@fern-fern/ir-model/types";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
-import { BaseGeneratedType } from "@fern-typescript/contexts/src/generated-types/BaseGeneratedType";
+import { BaseGeneratedType } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedType {

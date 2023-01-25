@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
-import { GeneratedRequestWrapper } from "@fern-typescript/contexts/src/generated-types/GeneratedRequestWrapper";
+import { GeneratedRequestWrapper } from "@fern-typescript/contexts";
 import { GeneratedRequestWrapperImpl } from "./GeneratedRequestWrapperImpl";
 
 export declare namespace RequestWrapperGenerator {

@@ -8,8 +8,7 @@ import {
 } from "@fern-fern/ir-model/http";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { RequestWrapperContext } from "@fern-typescript/contexts";
-import { GeneratedRequestWrapper } from "@fern-typescript/contexts/src/generated-types/GeneratedRequestWrapper";
+import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperImpl {

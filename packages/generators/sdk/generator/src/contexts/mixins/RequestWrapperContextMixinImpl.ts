@@ -1,7 +1,6 @@
 import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
 import { ImportsManager } from "@fern-typescript/commons";
-import { RequestWrapperContextMixin } from "@fern-typescript/contexts";
-import { GeneratedRequestWrapper } from "@fern-typescript/contexts/src/generated-types/GeneratedRequestWrapper";
+import { GeneratedRequestWrapper, RequestWrapperContextMixin } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
 import { SourceFile, ts } from "ts-morph";
