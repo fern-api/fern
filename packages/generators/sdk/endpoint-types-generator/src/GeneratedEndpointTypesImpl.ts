@@ -1,10 +1,8 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointTypesContext, GeneratedEndpointTypes, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
-import { ts } from "ts-morph";
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
 import { UnknownErrorSingleUnionType } from "./error/UnknownErrorSingleUnionType";
 import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingleUnionTypeGenerator";
@@ -20,11 +18,9 @@ export declare namespace GeneratedEndpointTypesImpl {
 }
 
 export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
-    private static RESPONSE_INTERFACE_NAME = "Response";
     private static ERROR_INTERFACE_NAME = "Error";
     private static STATUS_CODE_DISCRIMINANT = "statusCode";
 
-    private service: HttpService;
     private endpoint: HttpEndpoint;
     private errorUnion: GeneratedUnionImpl<EndpointTypesContext> | undefined;
 
@@ -35,7 +31,6 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
         errorDiscriminationStrategy,
         shouldGenerateErrors,
     }: GeneratedEndpointTypesImpl.Init) {
-        this.service = service;
         this.endpoint = endpoint;
 
         const discriminant = this.getErrorUnionDiscriminant(errorDiscriminationStrategy);
@@ -73,7 +68,6 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
     }
 
     public writeToFile(context: EndpointTypesContext): void {
-        this.writeResponseToFile(context);
         this.errorUnion?.writeToFile(context);
     }
 
@@ -82,42 +76,5 @@ export class GeneratedEndpointTypesImpl implements GeneratedEndpointTypes {
             throw new Error("Cannot get error union because error union is not defined.");
         }
         return this.errorUnion;
-    }
-
-    public getReferenceToResponseType(context: EndpointTypesContext): ts.TypeNode {
-        return context.endpointTypes
-            .getReferenceToEndpointTypeExport(
-                this.service.name.fernFilepath,
-                this.endpoint.name,
-                GeneratedEndpointTypesImpl.RESPONSE_INTERFACE_NAME
-            )
-            .getTypeNode();
-    }
-
-    private writeResponseToFile(context: EndpointTypesContext): void {
-        const responseType = this.getResponseType(context);
-        if (responseType == null) {
-            return undefined;
-        }
-        context.base.sourceFile.addTypeAlias({
-            name: GeneratedEndpointTypesImpl.RESPONSE_INTERFACE_NAME,
-            isExported: true,
-            type: getTextOfTsNode(responseType),
-        });
-    }
-
-    private getResponseType(context: EndpointTypesContext): ts.TypeNode | undefined {
-        if (this.errorUnion != null) {
-            return context.base.coreUtilities.fetcher.APIResponse._getReferenceToType(
-                this.endpoint.response.type == null
-                    ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                    : context.type.getReferenceToType(this.endpoint.response.type).typeNode,
-                this.errorUnion.getReferenceTo(context)
-            );
-        }
-        if (this.endpoint.response.type != null) {
-            return context.type.getReferenceToType(this.endpoint.response.type).typeNode;
-        }
-        return undefined;
     }
 }

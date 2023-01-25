@@ -191,7 +191,15 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
     }
 
     protected getResponseType(context: SdkClientClassContext): ts.TypeNode {
-        return this.getGeneratedEndpointTypes(context).getReferenceToResponseType(context);
+        return context.base.coreUtilities.fetcher.APIResponse._getReferenceToType(
+            this.endpoint.response.type != null
+                ? context.type.getReferenceToType(this.endpoint.response.type).typeNode
+                : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+            context.endpointTypes
+                .getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name)
+                .getErrorUnion()
+                .getReferenceTo(context)
+        );
     }
 
     private getGeneratedEndpointTypes(context: SdkClientClassContext): GeneratedEndpointTypes {
