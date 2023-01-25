@@ -1,4 +1,4 @@
-import { PackageDependencies, writeProjectToVolume } from "@fern-typescript/commons";
+import { NpmPackage, PackageDependencies, writeProjectToVolume } from "@fern-typescript/commons";
 import { Volume } from "memfs/lib/volume";
 import { Project } from "ts-morph";
 import { SRC_DIRECTORY } from "./constants";
@@ -15,18 +15,12 @@ export interface GeneratedProjectSrcInfo {
 
 export async function generateTypeScriptProject({
     volume,
-    packageName,
-    packageVersion,
-    isPackagePrivate,
-    repositoryUrl,
+    npmPackage,
     project,
     dependencies,
 }: {
     volume: Volume;
-    packageName: string;
-    packageVersion: string | undefined;
-    isPackagePrivate: boolean;
-    repositoryUrl: string | undefined;
+    npmPackage: NpmPackage;
     project: Project;
     dependencies: PackageDependencies;
 }): Promise<void> {
@@ -34,15 +28,12 @@ export async function generateTypeScriptProject({
     await writeProjectToVolume(project, volume, `/${SRC_DIRECTORY}`);
     await generatePackageJson({
         volume,
-        packageName,
-        packageVersion,
-        isPackagePrivate,
-        repositoryUrl,
+        npmPackage,
         dependencies,
     });
-    await generateTsConfig({ volume, packageName });
+    await generateTsConfig({ volume, packageName: npmPackage.packageName });
     await generatePrettierRc(volume);
     await generateGitIgnore(volume);
-    await generateEsbuildScript({ volume, packageName });
+    await generateEsbuildScript({ volume, packageName: npmPackage.packageName });
     await generateStubTypeDeclarations(volume);
 }

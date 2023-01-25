@@ -3,12 +3,12 @@ import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
+import { NpmPackage } from "@fern-typescript/commons/src/NpmPackage";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { PRETTIER_COMMAND, SdkGenerator, SRC_DIRECTORY } from "@fern-typescript/sdk-generator";
+import { SdkGenerator, SRC_DIRECTORY } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
-import { NpmPackage } from "./npm-package/NpmPackage";
 import { loadIntermediateRepresentation } from "./utils/loadIntermediateRepresentation";
 
 export async function generateFiles({
@@ -19,7 +19,7 @@ export async function generateFiles({
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     customConfig: SdkCustomConfig;
-    npmPackage: NpmPackage;
+    npmPackage: NpmPackage | undefined;
     logger: Logger;
 }): Promise<{ writtenTo: AbsoluteFilePath }> {
     const directoyOnDiskToWriteTo = AbsoluteFilePath.of(config.output.path);
@@ -32,9 +32,7 @@ export async function generateFiles({
         intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
         context: generatorContext,
         volume,
-        packageName: npmPackage.packageName,
-        packageVersion: npmPackage.version,
-        repositoryUrl: npmPackage.repoUrl,
+        npmPackage,
         config: {
             shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
             isPackagePrivate: customConfig.isPackagePrivate,
@@ -49,9 +47,19 @@ export async function generateFiles({
     }
 
     await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
-    await sdkGenerator.copyCoreUtilities({ pathToSrc: join(directoyOnDiskToWriteTo, SRC_DIRECTORY) });
 
-    await loggingExeca(logger, "npx", PRETTIER_COMMAND, { cwd: directoyOnDiskToWriteTo });
+    await sdkGenerator.copyCoreUtilities({
+        pathToSrc: npmPackage != null ? join(directoyOnDiskToWriteTo, SRC_DIRECTORY) : directoyOnDiskToWriteTo,
+    });
+
+    await loggingExeca(
+        logger,
+        "npx",
+        ["prettier", "--write", npmPackage != null ? `${SRC_DIRECTORY}/**/*.ts` : "**/*.ts"],
+        {
+            cwd: directoyOnDiskToWriteTo,
+        }
+    );
 
     return { writtenTo: directoyOnDiskToWriteTo };
 }

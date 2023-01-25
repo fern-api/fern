@@ -11,14 +11,14 @@ import { DeclarationReferencer } from "./DeclarationReferencer";
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
         apiName: string;
-        aliasOfRoot: string;
+        aliasOfRoot: string | undefined;
         containingDirectory: ExportedDirectory[];
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
     protected apiName: string;
-    protected aliasOfRoot: string;
+    protected aliasOfRoot: string | undefined;
     protected containingDirectory: ExportedDirectory[];
 
     constructor({ apiName, containingDirectory, aliasOfRoot }: AbstractDeclarationReferencer.Init) {

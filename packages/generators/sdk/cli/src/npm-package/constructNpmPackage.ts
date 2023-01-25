@@ -1,26 +1,25 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { NpmPackage } from "./NpmPackage";
+import { NpmPackage } from "@fern-typescript/commons";
 
-export function constructNpmPackage(generatorConfig: FernGeneratorExec.GeneratorConfig): NpmPackage {
+export function constructNpmPackage({
+    generatorConfig,
+    isPackagePrivate,
+}: {
+    generatorConfig: FernGeneratorExec.GeneratorConfig;
+    isPackagePrivate: boolean;
+}): NpmPackage | undefined {
     const outputMode = generatorConfig.output.mode;
     switch (outputMode.type) {
         case "downloadFiles":
-            return {
-                packageName: `@${generatorConfig.organization}/${generatorConfig.workspaceName}`,
-                version: "0.0.0",
-                publishInfo: undefined,
-                repoUrl: undefined,
-            };
+            return undefined;
         case "publish":
             return {
                 packageName: outputMode.registriesV2.npm.packageName,
                 version: outputMode.version,
+                private: isPackagePrivate,
                 publishInfo: {
-                    registry: outputMode.registriesV2.npm,
-                    packageCoordinate: FernGeneratorExec.PackageCoordinate.npm({
-                        name: outputMode.registriesV2.npm.packageName,
-                        version: outputMode.version,
-                    }),
+                    registryUrl: outputMode.registriesV2.npm.registryUrl,
+                    token: outputMode.registriesV2.npm.token,
                 },
                 repoUrl: undefined,
             };
@@ -33,6 +32,7 @@ export function constructNpmPackage(generatorConfig: FernGeneratorExec.Generator
             return {
                 packageName: outputMode.publishInfo != null ? outputMode.publishInfo.packageName : "",
                 version: outputMode.version,
+                private: isPackagePrivate,
                 publishInfo: undefined,
                 repoUrl: outputMode.repoUrl,
             };

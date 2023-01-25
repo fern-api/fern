@@ -6,6 +6,7 @@ export * from "./exports-manager";
 export { type ExpressionReferenceNode } from "./ExpressionReferenceNode";
 export * from "./external-dependencies";
 export * from "./imports-manager";
+export { type NpmPackage, type PublishInfo } from "./NpmPackage";
 export * from "./referencing";
 export { stringifyFernFilepath } from "./stringifyFernFilepath";
 export { type TypeReferenceNode } from "./TypeReferenceNode";

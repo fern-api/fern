@@ -40,11 +40,14 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
             );
         });
 
-        const npmPackage = constructNpmPackage(config);
+        const npmPackage = constructNpmPackage({
+            generatorConfig: config,
+            isPackagePrivate: customConfig.isPackagePrivate,
+        });
 
         await generatorNotificationService.sendUpdate(
             FernGeneratorExec.GeneratorUpdate.initV2({
-                publishingToRegistry: npmPackage.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
+                publishingToRegistry: npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
             })
         );
 
@@ -59,13 +62,14 @@ export async function runGenerator(pathToConfig: string): Promise<void> {
 
         await config.output.mode._visit<void | Promise<void>>({
             publish: async () => {
-                if (npmPackage.publishInfo == null) {
+                if (npmPackage?.publishInfo == null) {
                     throw new Error("npmPackage.publishInfo is not defined.");
                 }
                 await upgradeYarnAndInstall({ runYarnCommand });
                 await publishPackage({
                     generatorNotificationService,
                     logger,
+                    npmPackage,
                     publishInfo: npmPackage.publishInfo,
                     pathToPackageOnDisk,
                     runYarnCommand,

@@ -8,6 +8,8 @@ import {
     ExportedFilePath,
     ExportsManager,
     ImportsManager,
+    NpmPackage,
+    writeProjectToVolume,
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
@@ -59,9 +61,7 @@ export declare namespace SdkGenerator {
         intermediateRepresentation: IntermediateRepresentation;
         context: GeneratorContext;
         volume: Volume;
-        packageName: string;
-        packageVersion: string | undefined;
-        repositoryUrl: string | undefined;
+        npmPackage: NpmPackage | undefined;
         config: Config;
     }
 
@@ -112,23 +112,14 @@ export class SdkGenerator {
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
 
-    private generatePackage: () => Promise<void>;
+    private finish: () => Promise<void>;
 
-    constructor({
-        apiName,
-        intermediateRepresentation,
-        context,
-        volume,
-        packageName,
-        packageVersion,
-        repositoryUrl,
-        config,
-    }: SdkGenerator.Init) {
+    constructor({ apiName, intermediateRepresentation, context, volume, npmPackage, config }: SdkGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
 
-        const aliasOfRoot = packageName;
+        const aliasOfRoot = npmPackage?.packageName;
 
         this.exportsManager = new ExportsManager({ aliasOfRoot });
         this.coreUtilitiesManager = new CoreUtilitiesManager({ apiName, aliasOfRoot });
@@ -246,16 +237,17 @@ export class SdkGenerator {
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.inlinedRequestBodySchemaGenerator = new InlinedRequestBodySchemaGenerator();
 
-        this.generatePackage = async () => {
-            await generateTypeScriptProject({
-                volume,
-                packageName,
-                packageVersion,
-                isPackagePrivate: config.isPackagePrivate,
-                project,
-                dependencies: this.dependencyManager.getDependencies(),
-                repositoryUrl,
-            });
+        this.finish = async () => {
+            if (npmPackage != null) {
+                await generateTypeScriptProject({
+                    volume,
+                    npmPackage,
+                    project,
+                    dependencies: this.dependencyManager.getDependencies(),
+                });
+            } else {
+                await writeProjectToVolume(project, volume, "/");
+            }
         };
     }
 
@@ -280,7 +272,7 @@ export class SdkGenerator {
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
-        await this.generatePackage();
+        await this.finish();
     }
 
     public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {

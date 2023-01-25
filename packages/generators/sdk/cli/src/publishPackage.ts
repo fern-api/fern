@@ -2,15 +2,17 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { PackageCoordinate } from "@fern-fern/generator-exec-sdk/resources";
+import { NpmPackage, PublishInfo } from "@fern-typescript/commons/src/NpmPackage";
 import { PackageJsonScript } from "@fern-typescript/sdk-generator";
 import path from "path";
-import { PublishInfo } from "./npm-package/NpmPackage";
 import { GeneratorNotificationService } from "./utils/GeneratorNotificationService";
 import { YarnRunner } from "./yarnRunner";
 
 export async function publishPackage({
     generatorNotificationService,
     logger,
+    npmPackage,
     publishInfo,
     pathToPackageOnDisk,
     runYarnCommand,
@@ -18,6 +20,7 @@ export async function publishPackage({
 }: {
     generatorNotificationService: GeneratorNotificationService;
     logger: Logger;
+    npmPackage: NpmPackage;
     publishInfo: PublishInfo;
     pathToPackageOnDisk: AbsoluteFilePath;
     runYarnCommand: YarnRunner;
@@ -36,21 +39,23 @@ export async function publishPackage({
     });
     await runYarnCommand(["run", PackageJsonScript.BUILD]);
 
-    await generatorNotificationService.sendUpdate(
-        FernGeneratorExec.GeneratorUpdate.publishing(publishInfo.packageCoordinate)
-    );
+    const packageCoordinate = PackageCoordinate.npm({
+        name: npmPackage.packageName,
+        version: npmPackage.version,
+    });
 
-    const { registryUrl, token } = publishInfo.registry;
-    const parsedRegistryUrl = new URL(registryUrl);
+    await generatorNotificationService.sendUpdate(FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate));
+
+    const parsedRegistryUrl = new URL(publishInfo.registryUrl);
     const registryUrlWithoutProtocol = path.join(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
 
     // intentionally not writing these to the project config with `--location project`,
     // so the registry url and token aren't persisted
-    await npm(["config", "set", "registry", registryUrl], {
-        secrets: [registryUrl],
+    await npm(["config", "set", "registry", publishInfo.registryUrl], {
+        secrets: [publishInfo.registryUrl],
     });
-    await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, token], {
-        secrets: [registryUrlWithoutProtocol, token],
+    await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
+        secrets: [registryUrlWithoutProtocol, publishInfo.token],
     });
 
     const publishCommand = ["publish"];
@@ -59,7 +64,5 @@ export async function publishPackage({
     }
     await npm(publishCommand);
 
-    await generatorNotificationService.sendUpdate(
-        FernGeneratorExec.GeneratorUpdate.published(publishInfo.packageCoordinate)
-    );
+    await generatorNotificationService.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));
 }

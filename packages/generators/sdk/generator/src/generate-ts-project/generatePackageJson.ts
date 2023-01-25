@@ -1,4 +1,4 @@
-import { DependencyType, PackageDependencies } from "@fern-typescript/commons";
+import { DependencyType, NpmPackage, PackageDependencies } from "@fern-typescript/commons";
 import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
@@ -34,34 +34,22 @@ export const DEV_DEPENDENCIES: Record<string, string> = {
 
 export async function generatePackageJson({
     volume,
-    packageName,
-    packageVersion,
-    isPackagePrivate,
     dependencies,
-    repositoryUrl,
+    npmPackage,
 }: {
     volume: Volume;
-    packageName: string;
-    packageVersion: string | undefined;
-    isPackagePrivate: boolean;
-    repositoryUrl: string | undefined;
     dependencies: PackageDependencies | undefined;
+    npmPackage: NpmPackage;
 }): Promise<void> {
     let packageJson: IPackageJson = {
-        name: packageName,
+        name: npmPackage.packageName,
+        version: npmPackage.version,
     };
-
-    if (packageVersion != null) {
-        packageJson = {
-            ...packageJson,
-            version: packageVersion,
-        };
-    }
 
     packageJson = {
         ...packageJson,
-        private: isPackagePrivate,
-        repository: repositoryUrl,
+        private: npmPackage.private,
+        repository: npmPackage.repoUrl,
         files: ["dist", "types", ...getAllStubTypeFiles()],
         exports: {
             ".": getExportsForBundle(API_BUNDLE_FILENAME, {
