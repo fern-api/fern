@@ -102,6 +102,31 @@ components:
 "
 `;
 
+exports[`convertToOpenApi multiple-environment-urls 1`] = `
+"openapi: 3.0.1
+info:
+  title: fern
+  version: ''
+paths:
+  /:
+    post:
+      operationId: PostsService.doThing
+      tags:
+        - Blog
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://foo.buildwithfern.com
+        - url: https://foo-dev.buildwithfern.com
+          description: i'm dev!
+components:
+  schemas: {}
+  securitySchemes: {}
+"
+`;
+
 exports[`convertToOpenApi test-api 1`] = `
 "openapi: 3.0.1
 info:

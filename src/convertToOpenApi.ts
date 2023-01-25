@@ -37,6 +37,7 @@ export function convertToOpenApi({
         errorsByName,
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
+        environments: ir.environments ?? undefined,
     });
 
     const info: OpenAPIV3.InfoObject = {

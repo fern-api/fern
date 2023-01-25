@@ -5,7 +5,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { writeOpenApi } from "../../src/writeOpenApi";
 
-const FIXTURES = ["test-api", "any-auth"];
+const FIXTURES = ["test-api", "any-auth", "multiple-environment-urls"];
 
 describe("convertToOpenApi", () => {
     for (const fixture of FIXTURES) {

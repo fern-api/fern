@@ -1,0 +1,11 @@
+
+services:
+  http:
+    PostsService:
+      auth: false
+      base-path: /
+      url: foo
+      endpoints:
+        doThing:
+          method: POST
+          path: /

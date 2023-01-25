@@ -1,3 +1,4 @@
+import { EnvironmentsConfig } from "@fern-fern/ir-model/environment";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import {
     ExampleEndpointCall,
@@ -29,12 +30,14 @@ export function convertServices({
     errorsByName,
     errorDiscriminationStrategy,
     security,
+    environments,
 }: {
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
+    environments: EnvironmentsConfig | undefined;
 }): OpenAPIV3.PathsObject {
     const paths: OpenAPIV3.PathsObject = {};
     httpServices.forEach((httpService) => {
@@ -46,6 +49,7 @@ export function convertServices({
                 errorsByName,
                 errorDiscriminationStrategy,
                 security,
+                environments,
             });
             const pathsObject = (paths[fullPath] ??= {});
             if (pathsObject[convertedHttpMethod] != null) {
@@ -70,6 +74,7 @@ function convertHttpEndpoint({
     errorsByName,
     errorDiscriminationStrategy,
     security,
+    environments,
 }: {
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
@@ -77,6 +82,7 @@ function convertHttpEndpoint({
     errorsByName: Record<string, ErrorDeclaration>;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
+    environments: EnvironmentsConfig | undefined;
 }): ConvertedHttpEndpoint {
     const fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
@@ -114,6 +120,27 @@ function convertHttpEndpoint({
         },
         summary: httpEndpoint.displayName ?? undefined,
     };
+
+    if (httpService.baseUrl != null) {
+        const baseUrlId = httpService.baseUrl;
+        if (environments?.environments.type !== "multipleBaseUrls") {
+            throw new Error(
+                `baseUrl is defined on ${httpService.name.name.originalName} but environments are not multipleBaseUrls`
+            );
+        }
+        operationObject.servers = environments.environments.environments.map((environment) => {
+            const url = environment.urls[baseUrlId];
+            if (url == null) {
+                throw new Error("No URL defined for " + baseUrlId);
+            }
+            const server: OpenAPIV3.ServerObject = { url };
+            if (environment.docs != null) {
+                server.description = environment.docs;
+            }
+            return server;
+        });
+    }
+
     if (httpEndpoint.auth) {
         operationObject.security = security;
     }
