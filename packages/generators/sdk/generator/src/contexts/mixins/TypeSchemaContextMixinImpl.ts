@@ -56,7 +56,7 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
             typeResolver,
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
-            getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName),
+            getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
             zurg: this.coreUtilities.zurg,
             typeResolver,
         });
@@ -122,24 +122,31 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
         return this.typeReferenceToSchemaConverter.convert(typeReference);
     }
 
-    public getSchemaOfNamedType(typeName: DeclaredTypeName): Zurg.Schema {
+    public getSchemaOfNamedType(
+        typeName: DeclaredTypeName,
+        { isGeneratingSchema }: { isGeneratingSchema: boolean }
+    ): Zurg.Schema {
         const referenceToSchema = this.typeSchemaDeclarationReferencer
             .getReferenceToType({
                 name: typeName,
                 importStrategy: getSchemaImportStrategy({
-                    // use dynamic imports when  schemas insides schemas,
+                    // use dynamic imports with schemas insides schemas,
                     // to avoid issues with circular imports
-                    useDynamicImport: true,
+                    useDynamicImport: isGeneratingSchema,
                 }),
                 importsManager: this.importsManager,
                 referencedIn: this.sourceFile,
             })
             .getExpression();
 
-        const schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema);
+        let schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema);
 
         // when generating schemas, wrap named types with lazy() to prevent issues with circular imports
-        return this.wrapSchemaWithLazy(schema, typeName);
+        if (isGeneratingSchema) {
+            schema = this.wrapSchemaWithLazy(schema, typeName);
+        }
+
+        return schema;
     }
 
     private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {

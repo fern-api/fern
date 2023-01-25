@@ -100,7 +100,7 @@ export class GeneratedInlinedRequestBodySchemaImpl
         );
 
         for (const extension of this.inlinedRequestBody.extends) {
-            schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension));
+            schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true }));
         }
 
         return schema;

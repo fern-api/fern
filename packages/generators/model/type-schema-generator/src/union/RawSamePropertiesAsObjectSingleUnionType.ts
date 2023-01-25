@@ -33,7 +33,7 @@ export class RawSamePropertiesAsObjectSingleUnionType<
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         return {
             isInline: false,
-            objectSchema: context.typeSchema.getSchemaOfNamedType(this.extended),
+            objectSchema: context.typeSchema.getSchemaOfNamedType(this.extended, { isGeneratingSchema: true }),
         };
     }
 }

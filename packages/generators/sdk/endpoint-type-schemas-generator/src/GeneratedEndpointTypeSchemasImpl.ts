@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
@@ -23,6 +24,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     private static REQUEST_SCHEMA_NAME = "Request";
     private static RESPONSE_SCHEMA_NAME = "Response";
 
+    private endpoint: HttpEndpoint;
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private GeneratedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
@@ -34,25 +36,54 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
         errorDiscriminationStrategy,
         shouldGenerateErrors,
     }: GeneratedEndpointTypeSchemasImpl.Init) {
-        // only generate request schemas for referenced request bodies.
-        // inlined request bodies are generated separately
+        this.endpoint = endpoint;
+
+        // only generate request schemas for referenced request bodies.  inlined
+        // request bodies are generated separately.
         if (endpoint.requestBody?.type === "reference") {
-            this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
-                service,
-                endpoint,
-                typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                type: endpoint.requestBody.requestBodyType,
-            });
+            switch (endpoint.requestBody.requestBodyType._type) {
+                case "primitive":
+                case "container":
+                    this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
+                        service,
+                        endpoint,
+                        typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
+                        type: endpoint.requestBody.requestBodyType,
+                    });
+                    break;
+                // named requests bodies are not generated - consumers should
+                // (de)serialize the named type directly.
+                // unknown request bodies don't need to be serialized.
+                case "named":
+                case "unknown":
+                    break;
+                default:
+                    assertNever(endpoint.requestBody.requestBodyType);
+            }
         }
-        this.generatedResponseSchema =
-            endpoint.response.type != null
-                ? new GeneratedEndpointTypeSchemaImpl({
-                      service,
-                      endpoint,
-                      typeName: GeneratedEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                      type: endpoint.response.type,
-                  })
-                : undefined;
+
+        if (endpoint.response.type != null) {
+            switch (endpoint.response.type._type) {
+                case "primitive":
+                case "container":
+                    this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
+                        service,
+                        endpoint,
+                        typeName: GeneratedEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
+                        type: endpoint.response.type,
+                    });
+                    break;
+                // named response bodies are not generated - consumers should
+                // (de)serialize the named type directly.
+                // unknown response bodies don't need to be deserialized.
+                case "named":
+                case "unknown":
+                    break;
+                default:
+                    assertNever(endpoint.response.type);
+            }
+        }
+
         this.GeneratedSdkErrorSchema = shouldGenerateErrors
             ? this.getGeneratedEndpointErrorSchema({
                   service,
@@ -121,20 +152,63 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
         referenceToParsedRequest: ts.Expression,
         context: EndpointTypeSchemasContext
     ): ts.Expression {
-        if (this.generatedRequestSchema == null) {
-            throw new Error("No request schema was generated");
+        if (this.endpoint.requestBody?.type !== "reference") {
+            throw new Error("Cannot serialize request because it's not a reference");
         }
-        return this.generatedRequestSchema.getReferenceToZurgSchema(context).json(referenceToParsedRequest);
+
+        switch (this.endpoint.requestBody.requestBodyType._type) {
+            case "unknown":
+                return referenceToParsedRequest;
+            case "named":
+                return context.typeSchema
+                    .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
+                    .json(referenceToParsedRequest);
+            case "primitive":
+            case "container":
+                if (this.generatedRequestSchema == null) {
+                    throw new Error("No request schema was generated");
+                }
+                return this.generatedRequestSchema.getReferenceToZurgSchema(context).json(referenceToParsedRequest);
+            default:
+                assertNever(this.endpoint.requestBody.requestBodyType);
+        }
     }
 
     public deserializeResponse(
         referenceToRawResponse: ts.Expression,
         context: EndpointTypeSchemasContext
     ): ts.Expression {
-        if (this.generatedResponseSchema == null) {
-            throw new Error("No response schema was generated");
+        if (this.endpoint.response.type == null) {
+            throw new Error("Cannot deserialize response because it's not defined");
         }
-        return this.generatedResponseSchema.getReferenceToZurgSchema(context).parse(referenceToRawResponse);
+
+        switch (this.endpoint.response.type._type) {
+            case "unknown":
+                return referenceToRawResponse;
+            case "named":
+                return context.typeSchema
+                    .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
+                    .parse(
+                        ts.factory.createAsExpression(
+                            referenceToRawResponse,
+                            context.typeSchema
+                                .getGeneratedTypeSchema(this.endpoint.response.type)
+                                .getReferenceToRawShape(context)
+                        )
+                    );
+            case "primitive":
+            case "container":
+                if (this.generatedResponseSchema == null) {
+                    throw new Error("No response schema was generated");
+                }
+                return this.generatedResponseSchema
+                    .getReferenceToZurgSchema(context)
+                    .parse(
+                        ts.factory.createAsExpression(referenceToRawResponse, this.getReferenceToRawResponse(context))
+                    );
+            default:
+                assertNever(this.endpoint.response.type);
+        }
     }
 
     public deserializeError(referenceToRawError: ts.Expression, context: EndpointTypeSchemasContext): ts.Expression {

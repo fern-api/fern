@@ -313,12 +313,9 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     protected getOkResponseBody(context: SdkClientClassContext): ts.Expression {
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
         return generatedEndpointTypeSchemas.deserializeResponse(
-            ts.factory.createAsExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME),
-                    context.base.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-                ),
-                generatedEndpointTypeSchemas.getReferenceToRawResponse(context)
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier(AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME),
+                context.base.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
             ),
             context
         );

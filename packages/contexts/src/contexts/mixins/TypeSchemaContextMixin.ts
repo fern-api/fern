@@ -7,7 +7,7 @@ export interface TypeSchemaContextMixin {
     getReferenceToRawType: (typeReference: TypeReference) => TypeReferenceNode;
     getReferenceToRawNamedType: (typeName: DeclaredTypeName) => Reference;
     getSchemaOfTypeReference: (typeReference: TypeReference) => Zurg.Schema;
-    getSchemaOfNamedType: (typeName: DeclaredTypeName) => Zurg.Schema;
+    getSchemaOfNamedType: (typeName: DeclaredTypeName, opts: { isGeneratingSchema: boolean }) => Zurg.Schema;
 }
 
 export interface WithTypeSchemaContextMixin {

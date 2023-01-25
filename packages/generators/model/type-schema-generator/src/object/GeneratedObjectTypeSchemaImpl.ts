@@ -28,7 +28,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
         );
 
         for (const extension of this.shape.extends) {
-            schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension));
+            schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true }));
         }
 
         return schema;

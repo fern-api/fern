@@ -368,9 +368,7 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.remoteGen.createJob.Response.parse(
-                    _response.body as serializers.remoteGen.createJob.Response.Raw
-                ),
+                body: await serializers.CreateJobResponse.parse(_response.body as serializers.CreateJobResponse.Raw),
             };
         }
 
@@ -413,9 +411,7 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.remoteGen.createJobV2.Response.parse(
-                    _response.body as serializers.remoteGen.createJobV2.Response.Raw
-                ),
+                body: await serializers.CreateJobResponse.parse(_response.body as serializers.CreateJobResponse.Raw),
             };
         }
 
@@ -3446,15 +3442,6 @@ import * as serializers from \\"../../..\\";
 import { FernFiddle } from \\"@fern-fern/fiddle-sdk\\";
 import * as core from \\"../../../../core\\";
 
-export const Response: core.serialization.Schema<
-    serializers.remoteGen.createJob.Response.Raw,
-    FernFiddle.CreateJobResponse
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CreateJobResponse);
-
-export declare namespace Response {
-    type Raw = serializers.CreateJobResponse.Raw;
-}
-
 export const Error: core.serialization.Schema<
     serializers.remoteGen.createJob.Error.Raw,
     FernFiddle.remoteGen.createJob.Error
@@ -3536,15 +3523,6 @@ export declare namespace Error {
 import * as serializers from \\"../../..\\";
 import { FernFiddle } from \\"@fern-fern/fiddle-sdk\\";
 import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.remoteGen.createJobV2.Response.Raw,
-    FernFiddle.CreateJobResponse
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CreateJobResponse);
-
-export declare namespace Response {
-    type Raw = serializers.CreateJobResponse.Raw;
-}
 
 export const Error: core.serialization.Schema<
     serializers.remoteGen.createJobV2.Error.Raw,
@@ -5308,7 +5286,7 @@ export class FernApiClient {
             },
         });
         if (_response.ok) {
-            return await serializers.getString.Response.parse(_response.body as serializers.getString.Response.Raw);
+            return await serializers.RootString.parse(_response.body as serializers.RootString.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -5497,7 +5475,7 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.owner.get.Response.parse(_response.body as serializers.owner.get.Response.Raw);
+            return await serializers.Owner.parse(_response.body as serializers.Owner.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -5545,9 +5523,7 @@ export class Client {
             }),
         });
         if (_response.ok) {
-            return await serializers.owner.update.Response.parse(
-                _response.body as serializers.owner.update.Response.Raw
-            );
+            return await serializers.Owner.parse(_response.body as serializers.Owner.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -5794,9 +5770,7 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.package_.getString.Response.parse(
-                _response.body as serializers.package_.getString.Response.Raw
-            );
+            return await serializers.PackageString.parse(_response.body as serializers.PackageString.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -5905,8 +5879,8 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.package_.nested.getString.Response.parse(
-                _response.body as serializers.package_.nested.getString.Response.Raw
+            return await serializers.package_.NestedString.parse(
+                _response.body as serializers.package_.NestedString.Raw
             );
         }
 
@@ -6066,9 +6040,7 @@ export class Client {
             }),
         });
         if (_response.ok) {
-            return await serializers.token.create.Response.parse(
-                _response.body as serializers.token.create.Response.Raw
-            );
+            return await serializers.CreateTokenResponse.parse(_response.body as serializers.CreateTokenResponse.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -6116,9 +6088,7 @@ export class Client {
             }),
         });
         if (_response.ok) {
-            return await serializers.token.getTokenMetadata.Response.parse(
-                _response.body as serializers.token.getTokenMetadata.Response.Raw
-            );
+            return await serializers.TokenMetadata.parse(_response.body as serializers.TokenMetadata.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -7917,40 +7887,8 @@ export { FernApiError, FernApiTimeoutError } from \\"./errors\\";
       Object {
         "contents": Array [
           Object {
-            "contents": Array [
-              Object {
-                "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../core\\";
-
-export const Response: core.serialization.Schema<serializers.getString.Response.Raw, FernApi.RootString> =
-    core.serialization.lazy(async () => (await import(\\"..\\")).RootString);
-
-export declare namespace Response {
-    type Raw = serializers.RootString.Raw;
-}
-",
-                "name": "getString.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export * as getString from \\"./getString\\";
-",
-                "name": "index.ts",
-                "type": "file",
-              },
-            ],
-            "name": "client",
-            "type": "directory",
-          },
-          Object {
             "contents": "export * from \\"./resources\\";
 export * from \\"./types\\";
-export * from \\"./client\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -7976,28 +7914,7 @@ export * from \\"./token/client/requests\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.owner.get.Response.Raw, FernApi.Owner> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Owner);
-
-export declare namespace Response {
-    type Raw = serializers.Owner.Raw;
-}
-",
-                        "name": "get.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * as get from \\"./get\\";
-export * as update from \\"./update\\";
-export * from \\"./requests\\";
+                        "contents": "export * from \\"./requests\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -8066,25 +7983,6 @@ export { UpdateOwnerRequest } from \\"./UpdateOwnerRequest\\";
                         ],
                         "name": "requests",
                         "type": "directory",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.owner.update.Response.Raw, FernApi.Owner> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Owner);
-
-export declare namespace Response {
-    type Raw = serializers.Owner.Raw;
-}
-",
-                        "name": "update.ts",
-                        "type": "file",
                       },
                     ],
                     "name": "client",
@@ -8193,40 +8091,8 @@ export * from \\"./Owner\\";
               Object {
                 "contents": Array [
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.package_.getString.Response.Raw, FernApi.PackageString> =
-    core.serialization.lazy(async () => (await import(\\"../../..\\")).PackageString);
-
-export declare namespace Response {
-    type Raw = serializers.PackageString.Raw;
-}
-",
-                        "name": "getString.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * as getString from \\"./getString\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "client",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./resources\\";
 export * from \\"./types\\";
-export * from \\"./client\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -8243,41 +8109,7 @@ export * from \\"./nested/types\\";
                       Object {
                         "contents": Array [
                           Object {
-                            "contents": Array [
-                              Object {
-                                "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.package_.nested.getString.Response.Raw,
-    FernApi.package_.NestedString
-> = core.serialization.lazy(async () => (await import(\\"../../../../..\\")).package_.NestedString);
-
-export declare namespace Response {
-    type Raw = serializers.package_.NestedString.Raw;
-}
-",
-                                "name": "getString.ts",
-                                "type": "file",
-                              },
-                              Object {
-                                "contents": "export * as getString from \\"./getString\\";
-",
-                                "name": "index.ts",
-                                "type": "file",
-                              },
-                            ],
-                            "name": "client",
-                            "type": "directory",
-                          },
-                          Object {
                             "contents": "export * from \\"./types\\";
-export * from \\"./client\\";
 ",
                             "name": "index.ts",
                             "type": "file",
@@ -8371,46 +8203,6 @@ import * as serializers from \\"../../..\\";
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../../core\\";
 
-export const Response: core.serialization.Schema<serializers.token.create.Response.Raw, FernApi.CreateTokenResponse> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CreateTokenResponse);
-
-export declare namespace Response {
-    type Raw = serializers.CreateTokenResponse.Raw;
-}
-",
-                        "name": "create.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.token.getTokenMetadata.Response.Raw,
-    FernApi.TokenMetadata
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).TokenMetadata);
-
-export declare namespace Response {
-    type Raw = serializers.TokenMetadata.Raw;
-}
-",
-                        "name": "getTokenMetadata.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
 export const Response: core.serialization.Schema<
     serializers.token.getTokensForOwner.Response.Raw,
     FernApi.TokenMetadata[]
@@ -8424,9 +8216,7 @@ export declare namespace Response {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export * as create from \\"./create\\";
-export * as getTokenMetadata from \\"./getTokenMetadata\\";
-export * as getTokensForOwner from \\"./getTokensForOwner\\";
+                        "contents": "export * as getTokensForOwner from \\"./getTokensForOwner\\";
 export * from \\"./requests\\";
 ",
                         "name": "index.ts",
@@ -9016,7 +8806,7 @@ export class FernApiClient {
             },
         });
         if (_response.ok) {
-            return await serializers.getString.Response.parse(_response.body as serializers.getString.Response.Raw);
+            return await serializers.RootString.parse(_response.body as serializers.RootString.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -9205,7 +8995,7 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.owner.get.Response.parse(_response.body as serializers.owner.get.Response.Raw);
+            return await serializers.Owner.parse(_response.body as serializers.Owner.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -9253,9 +9043,7 @@ export class Client {
             }),
         });
         if (_response.ok) {
-            return await serializers.owner.update.Response.parse(
-                _response.body as serializers.owner.update.Response.Raw
-            );
+            return await serializers.Owner.parse(_response.body as serializers.Owner.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -9502,9 +9290,7 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.package_.getString.Response.parse(
-                _response.body as serializers.package_.getString.Response.Raw
-            );
+            return await serializers.PackageString.parse(_response.body as serializers.PackageString.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -9613,8 +9399,8 @@ export class Client {
             },
         });
         if (_response.ok) {
-            return await serializers.package_.nested.getString.Response.parse(
-                _response.body as serializers.package_.nested.getString.Response.Raw
+            return await serializers.package_.NestedString.parse(
+                _response.body as serializers.package_.NestedString.Raw
             );
         }
 
@@ -9774,9 +9560,7 @@ export class Client {
             }),
         });
         if (_response.ok) {
-            return await serializers.token.create.Response.parse(
-                _response.body as serializers.token.create.Response.Raw
-            );
+            return await serializers.CreateTokenResponse.parse(_response.body as serializers.CreateTokenResponse.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -9824,9 +9608,7 @@ export class Client {
             }),
         });
         if (_response.ok) {
-            return await serializers.token.getTokenMetadata.Response.parse(
-                _response.body as serializers.token.getTokenMetadata.Response.Raw
-            );
+            return await serializers.TokenMetadata.parse(_response.body as serializers.TokenMetadata.Raw);
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -11625,40 +11407,8 @@ export { FernApiError, FernApiTimeoutError } from \\"./errors\\";
       Object {
         "contents": Array [
           Object {
-            "contents": Array [
-              Object {
-                "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../core\\";
-
-export const Response: core.serialization.Schema<serializers.getString.Response.Raw, FernApi.RootString> =
-    core.serialization.lazy(async () => (await import(\\"..\\")).RootString);
-
-export declare namespace Response {
-    type Raw = serializers.RootString.Raw;
-}
-",
-                "name": "getString.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export * as getString from \\"./getString\\";
-",
-                "name": "index.ts",
-                "type": "file",
-              },
-            ],
-            "name": "client",
-            "type": "directory",
-          },
-          Object {
             "contents": "export * from \\"./resources\\";
 export * from \\"./types\\";
-export * from \\"./client\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -11684,28 +11434,7 @@ export * from \\"./token/client/requests\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.owner.get.Response.Raw, FernApi.Owner> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Owner);
-
-export declare namespace Response {
-    type Raw = serializers.Owner.Raw;
-}
-",
-                        "name": "get.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * as get from \\"./get\\";
-export * as update from \\"./update\\";
-export * from \\"./requests\\";
+                        "contents": "export * from \\"./requests\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -11774,25 +11503,6 @@ export { UpdateOwnerRequest } from \\"./UpdateOwnerRequest\\";
                         ],
                         "name": "requests",
                         "type": "directory",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.owner.update.Response.Raw, FernApi.Owner> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Owner);
-
-export declare namespace Response {
-    type Raw = serializers.Owner.Raw;
-}
-",
-                        "name": "update.ts",
-                        "type": "file",
                       },
                     ],
                     "name": "client",
@@ -11901,40 +11611,8 @@ export * from \\"./Owner\\";
               Object {
                 "contents": Array [
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.package_.getString.Response.Raw, FernApi.PackageString> =
-    core.serialization.lazy(async () => (await import(\\"../../..\\")).PackageString);
-
-export declare namespace Response {
-    type Raw = serializers.PackageString.Raw;
-}
-",
-                        "name": "getString.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * as getString from \\"./getString\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "client",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./resources\\";
 export * from \\"./types\\";
-export * from \\"./client\\";
 ",
                     "name": "index.ts",
                     "type": "file",
@@ -11951,41 +11629,7 @@ export * from \\"./nested/types\\";
                       Object {
                         "contents": Array [
                           Object {
-                            "contents": Array [
-                              Object {
-                                "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.package_.nested.getString.Response.Raw,
-    FernApi.package_.NestedString
-> = core.serialization.lazy(async () => (await import(\\"../../../../..\\")).package_.NestedString);
-
-export declare namespace Response {
-    type Raw = serializers.package_.NestedString.Raw;
-}
-",
-                                "name": "getString.ts",
-                                "type": "file",
-                              },
-                              Object {
-                                "contents": "export * as getString from \\"./getString\\";
-",
-                                "name": "index.ts",
-                                "type": "file",
-                              },
-                            ],
-                            "name": "client",
-                            "type": "directory",
-                          },
-                          Object {
                             "contents": "export * from \\"./types\\";
-export * from \\"./client\\";
 ",
                             "name": "index.ts",
                             "type": "file",
@@ -12079,46 +11723,6 @@ import * as serializers from \\"../../..\\";
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../../core\\";
 
-export const Response: core.serialization.Schema<serializers.token.create.Response.Raw, FernApi.CreateTokenResponse> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CreateTokenResponse);
-
-export declare namespace Response {
-    type Raw = serializers.CreateTokenResponse.Raw;
-}
-",
-                        "name": "create.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.token.getTokenMetadata.Response.Raw,
-    FernApi.TokenMetadata
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).TokenMetadata);
-
-export declare namespace Response {
-    type Raw = serializers.TokenMetadata.Raw;
-}
-",
-                        "name": "getTokenMetadata.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
 export const Response: core.serialization.Schema<
     serializers.token.getTokensForOwner.Response.Raw,
     FernApi.TokenMetadata[]
@@ -12132,9 +11736,7 @@ export declare namespace Response {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export * as create from \\"./create\\";
-export * as getTokenMetadata from \\"./getTokenMetadata\\";
-export * as getTokensForOwner from \\"./getTokensForOwner\\";
+                        "contents": "export * as getTokensForOwner from \\"./getTokensForOwner\\";
 export * from \\"./requests\\";
 ",
                         "name": "index.ts",
@@ -14167,7 +13769,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.admin.updateTestSubmissionStatus.Request.json(request),
+            body: await serializers.TestSubmissionStatus.json(request),
         });
         if (_response.ok) {
             return {
@@ -14195,7 +13797,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.admin.sendTestSubmissionUpdate.Request.json(request),
+            body: await serializers.TestSubmissionUpdate.json(request),
         });
         if (_response.ok) {
             return {
@@ -14223,7 +13825,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.admin.updateWorkspaceSubmissionStatus.Request.json(request),
+            body: await serializers.WorkspaceSubmissionStatus.json(request),
         });
         if (_response.ok) {
             return {
@@ -14251,7 +13853,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.admin.sendWorkspaceSubmissionUpdate.Request.json(request),
+            body: await serializers.WorkspaceSubmissionUpdate.json(request),
         });
         if (_response.ok) {
             return {
@@ -16733,14 +16335,12 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             queryParameters: _queryParams,
-            body: await serializers.playlist.createPlaylist.Request.json(request.body),
+            body: await serializers.PlaylistCreateRequest.json(request.body),
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.playlist.createPlaylist.Response.parse(
-                    _response.body as serializers.playlist.createPlaylist.Response.Raw
-                ),
+                body: await serializers.Playlist.parse(_response.body as serializers.Playlist.Raw),
             };
         }
 
@@ -16809,9 +16409,7 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.playlist.getPlaylist.Response.parse(
-                    _response.body as serializers.playlist.getPlaylist.Response.Raw
-                ),
+                body: await serializers.Playlist.parse(_response.body as serializers.Playlist.Raw),
             };
         }
 
@@ -17694,13 +17292,13 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.problem.createProblem.Request.json(request),
+            body: await serializers.CreateProblemRequest.json(request),
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.problem.createProblem.Response.parse(
-                    _response.body as serializers.problem.createProblem.Response.Raw
+                body: await serializers.CreateProblemResponse.parse(
+                    _response.body as serializers.CreateProblemResponse.Raw
                 ),
             };
         }
@@ -17727,13 +17325,13 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.problem.updateProblem.Request.json(request),
+            body: await serializers.CreateProblemRequest.json(request),
         });
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.problem.updateProblem.Response.parse(
-                    _response.body as serializers.problem.updateProblem.Response.Raw
+                body: await serializers.UpdateProblemResponse.parse(
+                    _response.body as serializers.UpdateProblemResponse.Raw
                 ),
             };
         }
@@ -17795,8 +17393,8 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.problem.getDefaultStarterFiles.Response.parse(
-                    _response.body as serializers.problem.getDefaultStarterFiles.Response.Raw
+                body: await serializers.GetDefaultStarterFilesResponse.parse(
+                    _response.body as serializers.GetDefaultStarterFilesResponse.Raw
                 ),
             };
         }
@@ -18593,8 +18191,8 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.submission.createExecutionSession.Response.parse(
-                    _response.body as serializers.submission.createExecutionSession.Response.Raw
+                body: await serializers.ExecutionSessionResponse.parse(
+                    _response.body as serializers.ExecutionSessionResponse.Raw
                 ),
             };
         }
@@ -18672,8 +18270,8 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.submission.getExecutionSessionsState.Response.parse(
-                    _response.body as serializers.submission.getExecutionSessionsState.Response.Raw
+                body: await serializers.GetExecutionSessionStateResponse.parse(
+                    _response.body as serializers.GetExecutionSessionStateResponse.Raw
                 ),
             };
         }
@@ -22555,9 +22153,7 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.problem.getLatestProblem.Response.parse(
-                    _response.body as serializers.v2.problem.getLatestProblem.Response.Raw
-                ),
+                body: await serializers.v2.ProblemInfoV2.parse(_response.body as serializers.v2.ProblemInfoV2.Raw),
             };
         }
 
@@ -22587,9 +22183,7 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.problem.getProblemVersion.Response.parse(
-                    _response.body as serializers.v2.problem.getProblemVersion.Response.Raw
-                ),
+                body: await serializers.v2.ProblemInfoV2.parse(_response.body as serializers.v2.ProblemInfoV2.Raw),
             };
         }
 
@@ -24199,8 +23793,8 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.v3.problem.getLatestProblem.Response.parse(
-                    _response.body as serializers.v2.v3.problem.getLatestProblem.Response.Raw
+                body: await serializers.v2.v3.ProblemInfoV2.parse(
+                    _response.body as serializers.v2.v3.ProblemInfoV2.Raw
                 ),
             };
         }
@@ -24231,8 +23825,8 @@ export class Client {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.v3.problem.getProblemVersion.Response.parse(
-                    _response.body as serializers.v2.v3.problem.getProblemVersion.Response.Raw
+                body: await serializers.v2.v3.ProblemInfoV2.parse(
+                    _response.body as serializers.v2.v3.ProblemInfoV2.Raw
                 ),
             };
         }
@@ -27109,11 +26703,7 @@ export { TraceApiEnvironment } from \\"./environments\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "export * as updateTestSubmissionStatus from \\"./updateTestSubmissionStatus\\";
-export * as sendTestSubmissionUpdate from \\"./sendTestSubmissionUpdate\\";
-export * as updateWorkspaceSubmissionStatus from \\"./updateWorkspaceSubmissionStatus\\";
-export * as sendWorkspaceSubmissionUpdate from \\"./sendWorkspaceSubmissionUpdate\\";
-export * as storeTracedTestCaseV2 from \\"./storeTracedTestCaseV2\\";
+                        "contents": "export * as storeTracedTestCaseV2 from \\"./storeTracedTestCaseV2\\";
 export * as storeTracedWorkspaceV2 from \\"./storeTracedWorkspaceV2\\";
 export * from \\"./requests\\";
 ",
@@ -27201,48 +26791,6 @@ import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../core\\";
 
 export const Request: core.serialization.Schema<
-    serializers.admin.sendTestSubmissionUpdate.Request.Raw,
-    TraceApi.TestSubmissionUpdate
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).TestSubmissionUpdate);
-
-export declare namespace Request {
-    type Raw = serializers.TestSubmissionUpdate.Raw;
-}
-",
-                        "name": "sendTestSubmissionUpdate.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Request: core.serialization.Schema<
-    serializers.admin.sendWorkspaceSubmissionUpdate.Request.Raw,
-    TraceApi.WorkspaceSubmissionUpdate
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).WorkspaceSubmissionUpdate);
-
-export declare namespace Request {
-    type Raw = serializers.WorkspaceSubmissionUpdate.Raw;
-}
-",
-                        "name": "sendWorkspaceSubmissionUpdate.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Request: core.serialization.Schema<
     serializers.admin.storeTracedTestCaseV2.Request.Raw,
     TraceApi.TraceResponseV2[]
 > = core.serialization.list(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).TraceResponseV2));
@@ -27273,48 +26821,6 @@ export declare namespace Request {
 }
 ",
                         "name": "storeTracedWorkspaceV2.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Request: core.serialization.Schema<
-    serializers.admin.updateTestSubmissionStatus.Request.Raw,
-    TraceApi.TestSubmissionStatus
-> = core.serialization.lazy(async () => (await import(\\"../../..\\")).TestSubmissionStatus);
-
-export declare namespace Request {
-    type Raw = serializers.TestSubmissionStatus.Raw;
-}
-",
-                        "name": "updateTestSubmissionStatus.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Request: core.serialization.Schema<
-    serializers.admin.updateWorkspaceSubmissionStatus.Request.Raw,
-    TraceApi.WorkspaceSubmissionStatus
-> = core.serialization.lazy(async () => (await import(\\"../../..\\")).WorkspaceSubmissionStatus);
-
-export declare namespace Request {
-    type Raw = serializers.WorkspaceSubmissionStatus.Raw;
-}
-",
-                        "name": "updateWorkspaceSubmissionStatus.ts",
                         "type": "file",
                       },
                     ],
@@ -28726,41 +28232,6 @@ import * as serializers from \\"../../..\\";
 import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../core\\";
 
-export const Request: core.serialization.Schema<
-    serializers.playlist.createPlaylist.Request.Raw,
-    TraceApi.PlaylistCreateRequest
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).PlaylistCreateRequest);
-
-export declare namespace Request {
-    type Raw = serializers.PlaylistCreateRequest.Raw;
-}
-
-export const Response: core.serialization.Schema<serializers.playlist.createPlaylist.Response.Raw, TraceApi.Playlist> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Playlist);
-
-export declare namespace Response {
-    type Raw = serializers.Playlist.Raw;
-}
-",
-                        "name": "createPlaylist.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.playlist.getPlaylist.Response.Raw, TraceApi.Playlist> =
-    core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Playlist);
-
-export declare namespace Response {
-    type Raw = serializers.Playlist.Raw;
-}
-
 export const Error: core.serialization.Schema<
     serializers.playlist.getPlaylist.Error.Raw,
     TraceApi.playlist.getPlaylist.Error
@@ -28819,8 +28290,7 @@ export declare namespace Response {
                         "type": "file",
                       },
                       Object {
-                        "contents": "export * as createPlaylist from \\"./createPlaylist\\";
-export * as getPlaylists from \\"./getPlaylists\\";
+                        "contents": "export * as getPlaylists from \\"./getPlaylists\\";
 export * as getPlaylist from \\"./getPlaylist\\";
 export * as updatePlaylist from \\"./updatePlaylist\\";
 ",
@@ -29248,61 +28718,7 @@ export * from \\"./Color\\";
                   Object {
                     "contents": Array [
                       Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Request: core.serialization.Schema<
-    serializers.problem.createProblem.Request.Raw,
-    TraceApi.CreateProblemRequest
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CreateProblemRequest);
-
-export declare namespace Request {
-    type Raw = serializers.CreateProblemRequest.Raw;
-}
-
-export const Response: core.serialization.Schema<
-    serializers.problem.createProblem.Response.Raw,
-    TraceApi.CreateProblemResponse
-> = core.serialization.lazy(async () => (await import(\\"../../..\\")).CreateProblemResponse);
-
-export declare namespace Response {
-    type Raw = serializers.CreateProblemResponse.Raw;
-}
-",
-                        "name": "createProblem.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.problem.getDefaultStarterFiles.Response.Raw,
-    TraceApi.GetDefaultStarterFilesResponse
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).GetDefaultStarterFilesResponse);
-
-export declare namespace Response {
-    type Raw = serializers.GetDefaultStarterFilesResponse.Raw;
-}
-",
-                        "name": "getDefaultStarterFiles.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * as createProblem from \\"./createProblem\\";
-export * as updateProblem from \\"./updateProblem\\";
-export * as getDefaultStarterFiles from \\"./getDefaultStarterFiles\\";
-export * from \\"./requests\\";
+                        "contents": "export * from \\"./requests\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -29349,36 +28765,6 @@ export declare namespace GetDefaultStarterFilesRequest {
                         ],
                         "name": "requests",
                         "type": "directory",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Request: core.serialization.Schema<
-    serializers.problem.updateProblem.Request.Raw,
-    TraceApi.CreateProblemRequest
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CreateProblemRequest);
-
-export declare namespace Request {
-    type Raw = serializers.CreateProblemRequest.Raw;
-}
-
-export const Response: core.serialization.Schema<
-    serializers.problem.updateProblem.Response.Raw,
-    TraceApi.UpdateProblemResponse
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).UpdateProblemResponse);
-
-export declare namespace Response {
-    type Raw = serializers.UpdateProblemResponse.Raw;
-}
-",
-                        "name": "updateProblem.ts",
-                        "type": "file",
                       },
                     ],
                     "name": "client",
@@ -29866,27 +29252,6 @@ import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../core\\";
 
 export const Response: core.serialization.Schema<
-    serializers.submission.createExecutionSession.Response.Raw,
-    TraceApi.ExecutionSessionResponse
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).ExecutionSessionResponse);
-
-export declare namespace Response {
-    type Raw = serializers.ExecutionSessionResponse.Raw;
-}
-",
-                        "name": "createExecutionSession.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<
     serializers.submission.getExecutionSession.Response.Raw,
     TraceApi.ExecutionSessionResponse | undefined
 > = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).ExecutionSessionResponse).optional();
@@ -29899,30 +29264,7 @@ export declare namespace Response {
                         "type": "file",
                       },
                       Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.submission.getExecutionSessionsState.Response.Raw,
-    TraceApi.GetExecutionSessionStateResponse
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).GetExecutionSessionStateResponse);
-
-export declare namespace Response {
-    type Raw = serializers.GetExecutionSessionStateResponse.Raw;
-}
-",
-                        "name": "getExecutionSessionsState.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * as createExecutionSession from \\"./createExecutionSession\\";
-export * as getExecutionSession from \\"./getExecutionSession\\";
-export * as getExecutionSessionsState from \\"./getExecutionSessionsState\\";
+                        "contents": "export * as getExecutionSession from \\"./getExecutionSession\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -32940,27 +32282,6 @@ import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../../../core\\";
 
 export const Response: core.serialization.Schema<
-    serializers.v2.problem.getLatestProblem.Response.Raw,
-    TraceApi.v2.ProblemInfoV2
-> = core.serialization.lazyObject(async () => (await import(\\"../../../../..\\")).v2.ProblemInfoV2);
-
-export declare namespace Response {
-    type Raw = serializers.v2.ProblemInfoV2.Raw;
-}
-",
-                                "name": "getLatestProblem.ts",
-                                "type": "file",
-                              },
-                              Object {
-                                "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../../../core\\";
-
-export const Response: core.serialization.Schema<
     serializers.v2.problem.getLightweightProblems.Response.Raw,
     TraceApi.v2.LightweightProblemInfoV2[]
 > = core.serialization.list(
@@ -32972,27 +32293,6 @@ export declare namespace Response {
 }
 ",
                                 "name": "getLightweightProblems.ts",
-                                "type": "file",
-                              },
-                              Object {
-                                "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.v2.problem.getProblemVersion.Response.Raw,
-    TraceApi.v2.ProblemInfoV2
-> = core.serialization.lazyObject(async () => (await import(\\"../../../../..\\")).v2.ProblemInfoV2);
-
-export declare namespace Response {
-    type Raw = serializers.v2.ProblemInfoV2.Raw;
-}
-",
-                                "name": "getProblemVersion.ts",
                                 "type": "file",
                               },
                               Object {
@@ -33021,8 +32321,6 @@ export declare namespace Response {
                               Object {
                                 "contents": "export * as getLightweightProblems from \\"./getLightweightProblems\\";
 export * as getProblems from \\"./getProblems\\";
-export * as getLatestProblem from \\"./getLatestProblem\\";
-export * as getProblemVersion from \\"./getProblemVersion\\";
 ",
                                 "name": "index.ts",
                                 "type": "file",
@@ -34469,27 +33767,6 @@ import { TraceApi } from \\"@fern-trace/api-sdk\\";
 import * as core from \\"../../../../../../../../core\\";
 
 export const Response: core.serialization.Schema<
-    serializers.v2.v3.problem.getLatestProblem.Response.Raw,
-    TraceApi.v2.v3.ProblemInfoV2
-> = core.serialization.lazyObject(async () => (await import(\\"../../../../../../..\\")).v2.v3.ProblemInfoV2);
-
-export declare namespace Response {
-    type Raw = serializers.v2.v3.ProblemInfoV2.Raw;
-}
-",
-                                        "name": "getLatestProblem.ts",
-                                        "type": "file",
-                                      },
-                                      Object {
-                                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../../../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../../../../../core\\";
-
-export const Response: core.serialization.Schema<
     serializers.v2.v3.problem.getLightweightProblems.Response.Raw,
     TraceApi.v2.v3.LightweightProblemInfoV2[]
 > = core.serialization.list(
@@ -34501,27 +33778,6 @@ export declare namespace Response {
 }
 ",
                                         "name": "getLightweightProblems.ts",
-                                        "type": "file",
-                                      },
-                                      Object {
-                                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../../../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../../../../../core\\";
-
-export const Response: core.serialization.Schema<
-    serializers.v2.v3.problem.getProblemVersion.Response.Raw,
-    TraceApi.v2.v3.ProblemInfoV2
-> = core.serialization.lazyObject(async () => (await import(\\"../../../../../../..\\")).v2.v3.ProblemInfoV2);
-
-export declare namespace Response {
-    type Raw = serializers.v2.v3.ProblemInfoV2.Raw;
-}
-",
-                                        "name": "getProblemVersion.ts",
                                         "type": "file",
                                       },
                                       Object {
@@ -34550,8 +33806,6 @@ export declare namespace Response {
                                       Object {
                                         "contents": "export * as getLightweightProblems from \\"./getLightweightProblems\\";
 export * as getProblems from \\"./getProblems\\";
-export * as getLatestProblem from \\"./getLatestProblem\\";
-export * as getProblemVersion from \\"./getProblemVersion\\";
 ",
                                         "name": "index.ts",
                                         "type": "file",
