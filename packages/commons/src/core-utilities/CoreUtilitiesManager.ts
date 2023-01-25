@@ -1,0 +1,103 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { cp, rm } from "fs/promises";
+import glob from "glob-promise";
+import path from "path";
+import { SourceFile } from "ts-morph";
+import { DependencyManager } from "../dependency-manager/DependencyManager";
+import { ExportedDirectory, ExportsManager } from "../exports-manager";
+import { ImportsManager } from "../imports-manager";
+import { getReferenceToExportViaNamespaceImport } from "../referencing";
+import { AuthImpl } from "./auth/AuthImpl";
+import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
+import { CoreUtilities } from "./CoreUtilities";
+import { CoreUtility, CoreUtilityName } from "./CoreUtility";
+import { FetcherImpl } from "./fetcher/FetcherImpl";
+import { ZurgImpl } from "./zurg/ZurgImpl";
+
+export declare namespace CoreUtilitiesManager {
+    namespace getCoreUtilities {
+        interface Args {
+            sourceFile: SourceFile;
+            importsManager: ImportsManager;
+        }
+    }
+}
+
+export class CoreUtilitiesManager {
+    private aliasOfRoot: string | undefined;
+    private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
+
+    constructor({ aliasOfRoot }: { apiName: string; aliasOfRoot: string | undefined }) {
+        this.aliasOfRoot = aliasOfRoot;
+    }
+
+    public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
+        const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
+        return {
+            zurg: new ZurgImpl({ getReferenceToExport }),
+            fetcher: new FetcherImpl({ getReferenceToExport }),
+            auth: new AuthImpl({ getReferenceToExport }),
+            base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
+        };
+    }
+
+    public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
+        for (const utility of Object.values(this.referencedCoreUtilities)) {
+            exportsManager.addExportsForDirectories(this.getPathToUtility(utility));
+            utility.addDependencies?.(dependencyManager);
+        }
+    }
+
+    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
+        await Promise.all(
+            [...Object.values(this.referencedCoreUtilities)].map(async (utility) => {
+                const toPath = join(
+                    pathToSrc,
+                    ...this.getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
+                );
+                await cp(
+                    process.env.NODE_ENV === "test"
+                        ? path.join(__dirname, "../../../..", utility.repoInfoForTesting.path)
+                        : utility.originalPathOnDocker,
+                    toPath,
+                    { recursive: true }
+                );
+
+                if (utility.repoInfoForTesting.ignoreGlob != null && process.env.NODE_ENV === "test") {
+                    const filesToDelete = await glob(utility.repoInfoForTesting.ignoreGlob, {
+                        cwd: toPath,
+                        absolute: true,
+                    });
+                    await Promise.all(filesToDelete.map((filepath) => rm(filepath, { recursive: true })));
+                }
+            })
+        );
+    }
+
+    private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {
+        return ({ manifest, exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => {
+            this.referencedCoreUtilities[manifest.name] = manifest;
+            return getReferenceToExportViaNamespaceImport({
+                exportedName,
+                filepathInsideNamespaceImport: manifest.pathInCoreUtilities,
+                filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
+                namespaceImport: "core",
+                referencedIn: sourceFile,
+                importsManager,
+                aliasOfRoot: this.aliasOfRoot,
+            });
+        };
+    }
+
+    private getPathToUtility(utility: CoreUtility.Manifest): ExportedDirectory[] {
+        return [...this.getCoreUtilitiesFilepath(), ...utility.pathInCoreUtilities];
+    }
+
+    private getCoreUtilitiesFilepath(): ExportedDirectory[] {
+        return [
+            {
+                nameOnDisk: "core",
+            },
+        ];
+    }
+}

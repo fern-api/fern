@@ -28,7 +28,7 @@
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
     "@fern-fern/ir-model": "0.0.741",
     "@fern-typescript/contexts": "workspace:*",
-    "@fern-typescript/error-generator": "workspace:*",
+    "@fern-typescript/sdk-error-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*"
   },
   "devDependencies": {

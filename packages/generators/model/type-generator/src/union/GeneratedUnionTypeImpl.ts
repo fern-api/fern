@@ -4,7 +4,8 @@ import {
     SingleUnionTypeProperty,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
-import { GeneratedUnion, GeneratedUnionType, GetReferenceOpts, TypeContext } from "@fern-typescript/contexts";
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GeneratedUnion, GeneratedUnionType, TypeContext } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";

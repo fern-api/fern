@@ -1,1 +1,0 @@
-export { ServiceGenerator } from "./ServiceGenerator";

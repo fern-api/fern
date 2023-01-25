@@ -29,14 +29,14 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     protected getNonDiscriminantPropertiesForInterface(
         context: EndpointTypeSchemasContext
     ): OptionalKind<PropertySignatureStructure>[] {
-        const errorSchema = context.errorSchema.getGeneratedErrorSchema(this.errorName);
-        if (errorSchema == null) {
+        const sdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(this.errorName);
+        if (sdkErrorSchema == null) {
             throw new Error("Error schema does not exist");
         }
         return [
             {
                 name: `"${this.discriminationStrategy.contentProperty.wireValue}"`,
-                type: getTextOfTsNode(errorSchema.getReferenceToRawShape(context)),
+                type: getTextOfTsNode(sdkErrorSchema.getReferenceToRawShape(context)),
             },
         ];
     }
@@ -52,7 +52,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
                         parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,
                         raw: this.discriminationStrategy.contentProperty.wireValue,
                     },
-                    value: context.errorSchema.getSchemaOfError(this.errorName),
+                    value: context.sdkErrorSchema.getSchemaOfError(this.errorName),
                 },
             ],
         };

@@ -4,8 +4,9 @@ import {
     getWriterForMultiLineUnionType,
     maybeAddDocs,
     ObjectWriter,
+    Reference,
 } from "@fern-typescript/commons";
-import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/contexts";
+import { GeneratedUnion, WithBaseContextMixin } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     OptionalKind,

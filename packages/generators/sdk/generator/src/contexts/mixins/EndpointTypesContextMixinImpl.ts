@@ -1,10 +1,10 @@
 import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
-import { EndpointTypesContextMixin, GeneratedEndpointTypes, Reference } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { EndpointTypesContextMixin, GeneratedEndpointTypes } from "@fern-typescript/contexts";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { ImportsManager } from "../../imports-manager/ImportsManager";
 
 export declare namespace EndpointTypesContextMixinImpl {
     export interface Init {

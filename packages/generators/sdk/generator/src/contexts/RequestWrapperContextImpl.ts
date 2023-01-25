@@ -1,18 +1,18 @@
 import { RequestWrapperContext } from "@fern-typescript/contexts";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
-import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
-import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
+import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
-import { ErrorContextMixinImpl } from "./mixins/ErrorContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "./mixins/RequestWrapperContextMixinImpl";
+import { SdkErrorContextMixinImpl } from "./mixins/SdkErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 
 export declare namespace RequestWrapperContextImpl {
@@ -22,8 +22,8 @@ export declare namespace RequestWrapperContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorResolver: ErrorResolver;
-        errorGenerator: ErrorGenerator;
-        errorDeclarationReferencer: ErrorDeclarationReferencer;
+        SdkErrorGenerator: SdkErrorGenerator;
+        errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
         endpointTypesGenerator: EndpointTypesGenerator;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
@@ -34,7 +34,7 @@ export declare namespace RequestWrapperContextImpl {
 
 export class RequestWrapperContextImpl extends BaseContextImpl implements RequestWrapperContext {
     public readonly type: TypeContextMixinImpl;
-    public readonly error: ErrorContextMixinImpl;
+    public readonly error: SdkErrorContextMixinImpl;
     public readonly endpointTypes: EndpointTypesContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
 
@@ -44,7 +44,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
         typeDeclarationReferencer,
         typeReferenceExampleGenerator,
         errorDeclarationReferencer,
-        errorGenerator,
+        SdkErrorGenerator,
         errorResolver,
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
@@ -62,11 +62,11 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
             typeGenerator,
             typeReferenceExampleGenerator,
         });
-        this.error = new ErrorContextMixinImpl({
+        this.error = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            errorGenerator,
+            SdkErrorGenerator,
             errorResolver,
         });
         this.endpointTypes = new EndpointTypesContextMixinImpl({

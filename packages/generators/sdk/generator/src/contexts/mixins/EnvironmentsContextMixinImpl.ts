@@ -1,9 +1,9 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { EnvironmentsContextMixin, GeneratedEnvironments, Reference } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { EnvironmentsContextMixin, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SourceFile } from "ts-morph";
 import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
-import { ImportsManager } from "../../imports-manager/ImportsManager";
 
 export declare namespace EnvironmentsContextMixinImpl {
     export interface Init {

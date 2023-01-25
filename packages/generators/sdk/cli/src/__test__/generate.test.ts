@@ -149,7 +149,6 @@ describe("runGenerator", () => {
                 await rm(path.join(unzippedGitArchive, "yarn.lock"), { recursive: true, force: true });
                 const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(unzippedGitArchive));
                 expect(directoryContents).toMatchSnapshot();
-                expect([]).toEqual([]);
             },
             180_000
         );

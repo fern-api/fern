@@ -3,9 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../../abstract-error-class-generator" },
     { "path": "../../../commons" },
     { "path": "../../../contexts" },
-    { "path": "../../model/type-generator" },
-    { "path": "../abstract-error-class-generator" }
+    { "path": "../../model/type-generator" }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@fern-typescript/error-generator",
+  "name": "@fern-typescript/sdk-error-generator",
   "version": "0.0.0",
   "repository": {
     "type": "git",

@@ -26,8 +26,11 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
+    "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-fern/ir-model": "0.0.741",
     "esutils": "^2.0.3",
+    "glob": "^8.0.3",
+    "glob-promise": "^5.0.0",
     "ts-morph": "^15.1.0",
     "typescript": "4.6.4"
   },

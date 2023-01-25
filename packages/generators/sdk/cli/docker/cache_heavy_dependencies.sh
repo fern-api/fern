@@ -12,7 +12,7 @@ cd $project_name
 yarn init -2 || :
 
 yarn add typescript@4.6.4
-yarn add esbuild-linux-64@0.14.47
+yarn add esbuild@0.16.15
 
 cd ..
 /bin/rm -rf $project_name

@@ -1,7 +1,7 @@
 import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
-import { GeneratedUnion, Reference, WithBaseContextMixin } from "@fern-typescript/contexts";
+import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { GeneratedUnion, WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 

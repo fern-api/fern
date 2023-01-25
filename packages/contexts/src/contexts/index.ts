@@ -1,13 +1,13 @@
 export { type EndpointTypeSchemasContext } from "./EndpointTypeSchemasContext";
 export { type EndpointTypesContext } from "./EndpointTypesContext";
 export { type EnvironmentsContext } from "./EnvironmentsContext";
-export { type ErrorContext } from "./ErrorContext";
-export { type ErrorSchemaContext } from "./ErrorSchemaContext";
-export { type GenericAPIErrorContext } from "./GenericAPIErrorContext";
+export { type GenericAPISdkErrorContext } from "./GenericAPISdkErrorContext";
 export * from "./mixins";
 export { type RequestWrapperContext } from "./RequestWrapperContext";
-export { type ServiceContext } from "./ServiceContext";
-export { type TimeoutErrorContext } from "./TimeoutErrorContext";
+export { type SdkClientClassContext } from "./SdkClientClassContext";
+export { type SdkErrorContext } from "./SdkErrorContext";
+export { type SdkErrorSchemaContext } from "./SdkErrorSchemaContext";
+export { type TimeoutSdkErrorContext } from "./TimeoutSdkErrorContext";
 export { type TypeContext } from "./TypeContext";
 export { type TypeReferenceExampleContext } from "./TypeReferenceExampleContext";
 export { type TypeSchemaContext } from "./TypeSchemaContext";

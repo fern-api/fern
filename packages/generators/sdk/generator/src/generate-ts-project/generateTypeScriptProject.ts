@@ -1,6 +1,6 @@
+import { PackageDependencies, writeProjectToVolume } from "@fern-typescript/commons";
 import { Volume } from "memfs/lib/volume";
 import { Project } from "ts-morph";
-import { PackageDependencies } from "../dependency-manager/DependencyManager";
 import { SRC_DIRECTORY } from "./constants";
 import { generateEsbuildScript } from "./generateEsbuildScript";
 import { generateGitIgnore } from "./generateGitIgnore";
@@ -8,7 +8,6 @@ import { generatePackageJson } from "./generatePackageJson";
 import { generatePrettierRc } from "./generatePrettierRc";
 import { generateStubTypeDeclarations } from "./generateStubTypeDeclarations";
 import { generateTsConfig } from "./generateTsConfig";
-import { writeProjectToVolume } from "./writeProjectToVolume";
 
 export interface GeneratedProjectSrcInfo {
     dependencies: PackageDependencies;

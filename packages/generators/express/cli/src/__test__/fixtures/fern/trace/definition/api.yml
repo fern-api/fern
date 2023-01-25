@@ -1,0 +1,14 @@
+name: my-api
+
+auth: bearer
+
+default-environment: PROD
+environments:
+  PROD: prod.trace.com
+  STAGING:
+    url: staging.trace.com
+    docs: i'm staging
+
+error-discrimination:
+  strategy: property
+  property-name: errorName

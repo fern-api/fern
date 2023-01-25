@@ -1,1 +1,1 @@
-export { ErrorGenerator } from "./ErrorGenerator";
+export { SdkErrorGenerator } from "./SdkErrorGenerator";

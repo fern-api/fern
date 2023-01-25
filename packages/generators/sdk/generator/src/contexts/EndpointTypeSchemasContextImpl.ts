@@ -1,23 +1,23 @@
 import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
-import { ErrorGenerator } from "@fern-typescript/error-generator";
-import { ErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
-import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
+import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { EndpointTypeSchemasContextMixinImpl } from "./mixins/EndpointTypeSchemasContextMixinImpl";
 import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
-import { ErrorContextMixinImpl } from "./mixins/ErrorContextMixinImpl";
-import { ErrorSchemaContextMixinImpl } from "./mixins/ErrorSchemaContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "./mixins/RequestWrapperContextMixinImpl";
+import { SdkErrorContextMixinImpl } from "./mixins/SdkErrorContextMixinImpl";
+import { SdkErrorSchemaContextMixinImpl } from "./mixins/SdkErrorSchemaContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 import { TypeSchemaContextMixinImpl } from "./mixins/TypeSchemaContextMixinImpl";
 
@@ -29,11 +29,11 @@ export declare namespace EndpointTypeSchemasContextImpl {
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        errorGenerator: ErrorGenerator;
+        SdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
-        errorSchemaGenerator: ErrorSchemaGenerator;
-        errorDeclarationReferencer: ErrorDeclarationReferencer;
-        errorSchemaDeclarationReferencer: ErrorDeclarationReferencer;
+        sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
+        errorDeclarationReferencer: SdkErrorDeclarationReferencer;
+        sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
         endpointTypesGenerator: EndpointTypesGenerator;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
@@ -47,8 +47,8 @@ export declare namespace EndpointTypeSchemasContextImpl {
 export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements EndpointTypeSchemasContext {
     public readonly type: TypeContextMixinImpl;
     public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly error: ErrorContextMixinImpl;
-    public readonly errorSchema: ErrorSchemaContextMixinImpl;
+    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
     public readonly endpointTypes: EndpointTypesContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly endpointTypeSchemas: EndpointTypeSchemasContextMixinImpl;
@@ -60,11 +60,11 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
         typeSchemaGenerator,
         typeSchemaDeclarationReferencer,
         typeReferenceExampleGenerator,
-        errorGenerator,
+        SdkErrorGenerator,
         errorResolver,
         errorDeclarationReferencer,
-        errorSchemaDeclarationReferencer,
-        errorSchemaGenerator,
+        sdkErrorSchemaDeclarationReferencer,
+        sdkErrorSchemaGenerator,
         endpointDeclarationReferencer,
         endpointSchemaDeclarationReferencer,
         requestWrapperDeclarationReferencer,
@@ -94,20 +94,20 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
             typeGenerator,
             typeSchemaGenerator,
         });
-        this.error = new ErrorContextMixinImpl({
+        this.error = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            errorGenerator,
+            SdkErrorGenerator,
             errorResolver,
         });
-        this.errorSchema = new ErrorSchemaContextMixinImpl({
+        this.sdkErrorSchema = new SdkErrorSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             coreUtilities: this.base.coreUtilities,
-            errorSchemaDeclarationReferencer,
+            sdkErrorSchemaDeclarationReferencer,
             errorResolver,
-            errorSchemaGenerator,
+            sdkErrorSchemaGenerator,
         });
         this.endpointTypes = new EndpointTypesContextMixinImpl({
             sourceFile: this.base.sourceFile,

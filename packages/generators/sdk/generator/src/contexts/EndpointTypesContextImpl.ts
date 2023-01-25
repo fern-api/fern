@@ -1,15 +1,15 @@
 import { EndpointTypesContext } from "@fern-typescript/contexts";
 import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
-import { ErrorGenerator } from "@fern-typescript/error-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { EndpointDeclarationReferencer } from "../declaration-referencers/EndpointDeclarationReferencer";
-import { ErrorDeclarationReferencer } from "../declaration-referencers/ErrorDeclarationReferencer";
+import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
 import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
-import { ErrorContextMixinImpl } from "./mixins/ErrorContextMixinImpl";
+import { SdkErrorContextMixinImpl } from "./mixins/SdkErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 
 export declare namespace EndpointTypesContextImpl {
@@ -19,8 +19,8 @@ export declare namespace EndpointTypesContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorResolver: ErrorResolver;
-        errorGenerator: ErrorGenerator;
-        errorDeclarationReferencer: ErrorDeclarationReferencer;
+        SdkErrorGenerator: SdkErrorGenerator;
+        errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
         endpointTypesGenerator: EndpointTypesGenerator;
         serviceResolver: ServiceResolver;
@@ -29,7 +29,7 @@ export declare namespace EndpointTypesContextImpl {
 
 export class EndpointTypesContextImpl extends BaseContextImpl implements EndpointTypesContext {
     public readonly type: TypeContextMixinImpl;
-    public readonly error: ErrorContextMixinImpl;
+    public readonly error: SdkErrorContextMixinImpl;
     public readonly endpointTypes: EndpointTypesContextMixinImpl;
 
     constructor({
@@ -37,7 +37,7 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
         typeGenerator,
         typeDeclarationReferencer,
         typeReferenceExampleGenerator,
-        errorGenerator,
+        SdkErrorGenerator,
         errorResolver,
         errorDeclarationReferencer,
         endpointDeclarationReferencer,
@@ -54,11 +54,11 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
             typeGenerator,
             typeReferenceExampleGenerator,
         });
-        this.error = new ErrorContextMixinImpl({
+        this.error = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            errorGenerator,
+            SdkErrorGenerator,
             errorResolver,
         });
         this.endpointTypes = new EndpointTypesContextMixinImpl({

@@ -1,10 +1,12 @@
 import { EnvironmentsConfig } from "@fern-fern/ir-model/environment";
-import { Reference } from "@fern-typescript/contexts";
+import {
+    ExportedFilePath,
+    getReferenceToExportViaNamespaceImport,
+    ImportsManager,
+    Reference,
+} from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
-import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
-import { ImportsManager } from "../imports-manager/ImportsManager";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
-import { getReferenceToExportViaNamespaceImport } from "./utils/getReferenceToExportViaNamespaceImport";
 
 export declare namespace EnvironmentsDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
@@ -93,7 +95,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             namespaceImport: "environments",
             importsManager,
             referencedIn: sourceFile,
-            packageName: this.packageName,
+            aliasOfRoot: this.aliasOfRoot,
         });
     }
 }

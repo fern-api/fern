@@ -1,6 +1,6 @@
 import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Reference } from "@fern-typescript/commons";
 import { GeneratedEndpointTypeSchemas } from "../../generated-types";
-import { Reference } from "../../Reference";
 
 export interface EndpointTypeSchemasContextMixin {
     getGeneratedEndpointTypeSchemas: (service: FernFilepath, endpointName: Name) => GeneratedEndpointTypeSchemas;

@@ -5,11 +5,8 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
 } from "@fern-fern/ir-model/types";
-import {
-    GeneratedTypeReferenceExample,
-    GetReferenceOpts,
-    TypeReferenceExampleContext,
-} from "@fern-typescript/contexts";
+import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GeneratedTypeReferenceExample, TypeReferenceExampleContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {

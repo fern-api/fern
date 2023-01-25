@@ -1,6 +1,6 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-model/types";
-import { getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { BrandedGeneratedAliasType, GetReferenceOpts, TypeContext } from "@fern-typescript/contexts";
+import { GetReferenceOpts, getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { BrandedGeneratedAliasType, TypeContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

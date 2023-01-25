@@ -9,20 +9,20 @@ export { type GeneratedEndpointTypeSchemas } from "./GeneratedEndpointTypeSchema
 export { type GeneratedEnumType } from "./GeneratedEnumType";
 export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
 export { type GeneratedEnvironments } from "./GeneratedEnvironments";
-export {
-    type BaseGeneratedError,
-    type GeneratedError,
-    type GeneratedErrorClass,
-    type GeneratedErrorType,
-} from "./GeneratedError";
-export { type GeneratedErrorSchema } from "./GeneratedErrorSchema";
 export { type GeneratedFile } from "./GeneratedFile";
-export { type GeneratedGenericAPIError } from "./GeneratedGenericAPIError";
+export { type GeneratedGenericAPISdkError } from "./GeneratedGenericAPISdkError";
 export { type GeneratedObjectType } from "./GeneratedObjectType";
 export { type GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
 export { type GeneratedRequestWrapper } from "./GeneratedRequestWrapper";
-export { type GeneratedService } from "./GeneratedService";
-export { type GeneratedTimeoutError } from "./GeneratedTimeoutError";
+export { type GeneratedSdkClientClass } from "./GeneratedSdkClientClass";
+export {
+    type BaseGeneratedSdkError,
+    type GeneratedSdkError,
+    type GeneratedSdkErrorClass,
+    type GeneratedSdkErrorType,
+} from "./GeneratedSdkError";
+export { type GeneratedSdkErrorSchema } from "./GeneratedSdkErrorSchema";
+export { type GeneratedTimeoutSdkError } from "./GeneratedTimeoutSdkError";
 export { type GeneratedType } from "./GeneratedType";
 export { type GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
 export { type GeneratedTypeSchema } from "./GeneratedTypeSchema";

@@ -26,7 +26,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
 
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
-    private generatedErrorSchema: GeneratedEndpointErrorSchema | undefined;
+    private GeneratedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
 
     constructor({
         service,
@@ -66,7 +66,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
                       type: endpoint.response.type,
                   })
                 : undefined;
-        this.generatedErrorSchema = shouldGenerateErrors
+        this.GeneratedSdkErrorSchema = shouldGenerateErrors
             ? this.getGeneratedEndpointErrorSchema({
                   service,
                   endpoint,
@@ -113,7 +113,7 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
             context.base.sourceFile.addStatements("\n");
         }
 
-        this.generatedErrorSchema?.writeToFile(context);
+        this.GeneratedSdkErrorSchema?.writeToFile(context);
     }
 
     public getReferenceToRawResponse(context: EndpointTypeSchemasContext): ts.TypeNode {
@@ -124,10 +124,10 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     }
 
     public getReferenceToRawError(context: EndpointTypeSchemasContext): ts.TypeNode {
-        if (this.generatedErrorSchema == null) {
+        if (this.GeneratedSdkErrorSchema == null) {
             throw new Error("Cannot get reference to raw endpoint error because it is not defined.");
         }
-        return this.generatedErrorSchema.getReferenceToRawShape(context);
+        return this.GeneratedSdkErrorSchema.getReferenceToRawShape(context);
     }
 
     public serializeRequest(
@@ -151,9 +151,9 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
     }
 
     public deserializeError(referenceToRawError: ts.Expression, context: EndpointTypeSchemasContext): ts.Expression {
-        if (this.generatedErrorSchema == null) {
+        if (this.GeneratedSdkErrorSchema == null) {
             throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
-        return this.generatedErrorSchema.getReferenceToZurgSchema(context).parse(referenceToRawError);
+        return this.GeneratedSdkErrorSchema.getReferenceToZurgSchema(context).parse(referenceToRawError);
     }
 }

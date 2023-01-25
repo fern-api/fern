@@ -1,14 +1,14 @@
 import {
     WithBaseContextMixin,
     WithEndpointTypesContextMixin,
-    WithErrorContextMixin,
     WithRequestWrapperContextMixin,
+    WithSdkErrorContextMixin,
     WithTypeContextMixin,
 } from "./mixins";
 
 export interface RequestWrapperContext
     extends WithBaseContextMixin,
         WithTypeContextMixin,
-        WithErrorContextMixin,
+        WithSdkErrorContextMixin,
         WithEndpointTypesContextMixin,
         WithRequestWrapperContextMixin {}

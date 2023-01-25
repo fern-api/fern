@@ -8,13 +8,13 @@ import {
     TypeReference,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
+import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasType,
     GeneratedEnumType,
     GeneratedObjectType,
     GeneratedType,
     GeneratedUnionType,
-    Reference,
     TypeContext,
 } from "@fern-typescript/contexts";
 import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";

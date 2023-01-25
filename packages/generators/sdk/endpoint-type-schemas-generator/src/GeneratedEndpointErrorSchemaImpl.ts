@@ -22,13 +22,13 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
 
     private service: HttpService;
     private endpoint: HttpEndpoint;
-    private generatedErrorUnionSchema: GeneratedUnionSchema<EndpointTypeSchemasContext>;
+    private GeneratedSdkErrorUnionSchema: GeneratedUnionSchema<EndpointTypeSchemasContext>;
 
     constructor({ service, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
 
-        this.generatedErrorUnionSchema = new GeneratedUnionSchema<EndpointTypeSchemasContext>({
+        this.GeneratedSdkErrorUnionSchema = new GeneratedUnionSchema<EndpointTypeSchemasContext>({
             typeName: GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME,
             shouldIncludeDefaultCaseInTransform: false,
             discriminant: discriminationStrategy.discriminant,
@@ -59,15 +59,15 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
     }
 
     public writeToFile(context: EndpointTypeSchemasContext): void {
-        this.generatedErrorUnionSchema.writeSchemaToFile(context);
+        this.GeneratedSdkErrorUnionSchema.writeSchemaToFile(context);
     }
 
     public getReferenceToRawShape(context: EndpointTypeSchemasContext): ts.TypeNode {
-        return this.generatedErrorUnionSchema.getReferenceToRawShape(context);
+        return this.GeneratedSdkErrorUnionSchema.getReferenceToRawShape(context);
     }
 
     public getReferenceToZurgSchema(context: EndpointTypeSchemasContext): Zurg.Schema {
-        return this.generatedErrorUnionSchema.getReferenceToZurgSchema(context);
+        return this.GeneratedSdkErrorUnionSchema.getReferenceToZurgSchema(context);
     }
 
     private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointTypesContext> {

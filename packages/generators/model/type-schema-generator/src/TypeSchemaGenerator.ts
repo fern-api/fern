@@ -5,6 +5,7 @@ import {
     TypeReference,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
+import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasTypeSchema,
     GeneratedEnumTypeSchema,
@@ -12,7 +13,6 @@ import {
     GeneratedType,
     GeneratedTypeSchema,
     GeneratedUnionTypeSchema,
-    Reference,
     TypeSchemaContext,
 } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

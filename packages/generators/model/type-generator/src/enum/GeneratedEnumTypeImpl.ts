@@ -1,6 +1,11 @@
 import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-model/types";
-import { getTextOfTsNode, getWriterForMultiLineUnionType, maybeAddDocs } from "@fern-typescript/commons";
-import { GeneratedEnumType, GetReferenceOpts, WithBaseContextMixin } from "@fern-typescript/contexts";
+import {
+    GetReferenceOpts,
+    getTextOfTsNode,
+    getWriterForMultiLineUnionType,
+    maybeAddDocs,
+} from "@fern-typescript/commons";
+import { GeneratedEnumType, WithBaseContextMixin } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 

@@ -1,0 +1,14 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../../commons" },
+    { "path": "../../../contexts" },
+    { "path": "../../../resolvers" },
+    { "path": "../../model/type-generator" },
+    { "path": "../../model/type-reference-converters" },
+    { "path": "../../model/type-reference-example-generator" },
+    { "path": "../../model/type-schema-generator" }
+  ]
+}

@@ -1,10 +1,10 @@
 import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
-import { EndpointTypeSchemasContextMixin, GeneratedEndpointTypeSchemas, Reference } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { EndpointTypeSchemasContextMixin, GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { ImportsManager } from "../../imports-manager/ImportsManager";
 import { getSchemaImportStrategy } from "./getSchemaImportStrategy";
 
 export declare namespace EndpointTypeSchemasContextMixinImpl {

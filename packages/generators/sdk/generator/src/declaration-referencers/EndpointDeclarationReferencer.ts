@@ -1,15 +1,14 @@
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
-import { Reference } from "@fern-typescript/contexts";
-import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
+import { ExportedFilePath, Reference } from "@fern-typescript/commons";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
-import { AbstractServiceDeclarationReferencer } from "./AbstractServiceDeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
-import { ServiceDeclarationReferencer } from "./ServiceDeclarationReferencer";
+import { SdkClientClassDeclarationReferencer } from "./SdkClientClassDeclarationReferencer";
 
 export declare namespace EndpointDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
-        serviceDeclarationReferencer: ServiceDeclarationReferencer;
+        sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
     }
 
     export interface Name {
@@ -17,7 +16,7 @@ export declare namespace EndpointDeclarationReferencer {
         endpoint: HttpEndpoint;
     }
 }
-export class EndpointDeclarationReferencer extends AbstractServiceDeclarationReferencer<EndpointDeclarationReferencer.Name> {
+export class EndpointDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<EndpointDeclarationReferencer.Name> {
     public getExportedFilepath(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: this.getExportedDirectory(name.service),

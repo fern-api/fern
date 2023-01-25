@@ -1,5 +1,5 @@
+import { Reference } from "@fern-typescript/commons";
 import { GeneratedEnvironments } from "../../generated-types";
-import { Reference } from "../../Reference";
 
 export interface EnvironmentsContextMixin {
     getGeneratedEnvironments: () => GeneratedEnvironments;

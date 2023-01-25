@@ -1,16 +1,16 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { ExportedFilePath } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { ExportedFilePath } from "../exports-manager/ExportedFilePath";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
-import { AbstractServiceDeclarationReferencer } from "./AbstractServiceDeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
-import { ServiceDeclarationReferencer } from "./ServiceDeclarationReferencer";
+import { SdkClientClassDeclarationReferencer } from "./SdkClientClassDeclarationReferencer";
 
 export declare namespace RequestWrapperDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
-        serviceDeclarationReferencer: ServiceDeclarationReferencer;
+        sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
     }
 
     export interface Name {
@@ -21,7 +21,7 @@ export declare namespace RequestWrapperDeclarationReferencer {
 
 const REQUESTS_DIRECTORY_NAME = "requests";
 
-export class RequestWrapperDeclarationReferencer extends AbstractServiceDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
+export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [

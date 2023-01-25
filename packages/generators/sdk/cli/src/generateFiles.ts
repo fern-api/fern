@@ -1,11 +1,10 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { SdkGenerator } from "@fern-typescript/sdk-generator";
-import { PRETTIER_COMMAND } from "@fern-typescript/sdk-generator/src/generate-ts-project/generatePackageJson";
+import { PRETTIER_COMMAND, SdkGenerator, SRC_DIRECTORY } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
@@ -50,7 +49,7 @@ export async function generateFiles({
     }
 
     await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
-    await sdkGenerator.copyCoreUtilities({ pathToPackage: directoyOnDiskToWriteTo });
+    await sdkGenerator.copyCoreUtilities({ pathToSrc: join(directoyOnDiskToWriteTo, SRC_DIRECTORY) });
 
     await loggingExeca(logger, "npx", PRETTIER_COMMAND, { cwd: directoyOnDiskToWriteTo });
 

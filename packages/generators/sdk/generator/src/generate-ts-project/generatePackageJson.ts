@@ -1,7 +1,7 @@
+import { DependencyType, PackageDependencies } from "@fern-typescript/commons";
 import produce from "immer";
 import { Volume } from "memfs/lib/volume";
 import { IPackageJson } from "package-json-type";
-import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import {
     API_BUNDLE_FILENAME,
     BROWSER_CJS_DIST_DIRECTORY,

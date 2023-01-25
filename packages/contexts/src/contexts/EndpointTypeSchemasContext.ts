@@ -2,9 +2,9 @@ import {
     WithBaseContextMixin,
     WithEndpointTypeSchemasContextMixin,
     WithEndpointTypesContextMixin,
-    WithErrorContextMixin,
-    WithErrorSchemaContextMixin,
     WithRequestWrapperContextMixin,
+    WithSdkErrorContextMixin,
+    WithSdkErrorSchemaContextMixin,
     WithTypeContextMixin,
     WithTypeSchemaContextMixin,
 } from "./mixins";
@@ -16,5 +16,5 @@ export interface EndpointTypeSchemasContext
         WithEndpointTypeSchemasContextMixin,
         WithTypeContextMixin,
         WithTypeSchemaContextMixin,
-        WithErrorContextMixin,
-        WithErrorSchemaContextMixin {}
+        WithSdkErrorContextMixin,
+        WithSdkErrorSchemaContextMixin {}

@@ -1,2 +1,2 @@
-export { GenericAPIErrorGenerator } from "./generic-api-error/GenericAPIErrorGenerator";
-export { TimeoutErrorGenerator } from "./timeout-error/TimeoutErrorGenerator";
+export { GenericAPISdkErrorGenerator } from "./generic-api-error/GenericAPISdkErrorGenerator";
+export { TimeoutSdkErrorGenerator } from "./timeout-error/TimeoutSdkErrorGenerator";
