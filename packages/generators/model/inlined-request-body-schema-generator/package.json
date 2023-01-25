@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/request-wrapper-generator",
+  "name": "@fern-typescript/inlined-request-schema-generator",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/sdk/request-wrapper-generator"
+    "directory": "packages/generators/model/inlined-request-body-schema-generator"
   },
   "files": [
     "lib"
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@fern-fern/ir-model": "0.0.741",
+    "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "ts-morph": "^15.1.0"

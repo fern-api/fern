@@ -5,7 +5,7 @@ import { GeneratedSdkErrorSchemaImpl } from "./GeneratedSdkErrorSchemaImpl";
 
 export declare namespace SdkErrorSchemaGenerator {
     export interface Init {
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
     }
 
     export namespace generateError {
@@ -17,10 +17,10 @@ export declare namespace SdkErrorSchemaGenerator {
 }
 
 export class SdkErrorSchemaGenerator {
-    private SdkErrorGenerator: SdkErrorGenerator;
+    private sdkErrorGenerator: SdkErrorGenerator;
 
-    constructor({ SdkErrorGenerator }: SdkErrorSchemaGenerator.Init) {
-        this.SdkErrorGenerator = SdkErrorGenerator;
+    constructor({ sdkErrorGenerator }: SdkErrorSchemaGenerator.Init) {
+        this.sdkErrorGenerator = sdkErrorGenerator;
     }
 
     public generateSdkErrorSchema({
@@ -34,7 +34,7 @@ export class SdkErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
-            SdkErrorGenerator: this.SdkErrorGenerator,
+            sdkErrorGenerator: this.sdkErrorGenerator,
         });
     }
 }

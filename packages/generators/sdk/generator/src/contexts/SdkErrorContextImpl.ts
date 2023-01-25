@@ -16,7 +16,7 @@ export declare namespace SdkErrorContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
     }
 }
@@ -30,7 +30,7 @@ export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorCont
         typeDeclarationReferencer,
         typeGenerator,
         errorDeclarationReferencer,
-        SdkErrorGenerator,
+        sdkErrorGenerator,
         errorResolver,
         typeReferenceExampleGenerator,
         ...superInit
@@ -48,7 +48,7 @@ export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorCont
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            SdkErrorGenerator,
+            sdkErrorGenerator,
             errorResolver,
         });
     }

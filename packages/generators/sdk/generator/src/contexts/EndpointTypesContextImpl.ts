@@ -19,7 +19,7 @@ export declare namespace EndpointTypesContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorResolver: ErrorResolver;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
         endpointTypesGenerator: EndpointTypesGenerator;
@@ -37,7 +37,7 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
         typeGenerator,
         typeDeclarationReferencer,
         typeReferenceExampleGenerator,
-        SdkErrorGenerator,
+        sdkErrorGenerator,
         errorResolver,
         errorDeclarationReferencer,
         endpointDeclarationReferencer,
@@ -58,7 +58,7 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            SdkErrorGenerator,
+            sdkErrorGenerator,
             errorResolver,
         });
         this.endpointTypes = new EndpointTypesContextMixinImpl({

@@ -11,7 +11,7 @@ export declare namespace SdkErrorContextMixinImpl {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
     }
 }
@@ -20,20 +20,20 @@ export class SdkErrorContextMixinImpl implements SdkErrorContextMixin {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
     private errorDeclarationReferencer: SdkErrorDeclarationReferencer;
-    private SdkErrorGenerator: SdkErrorGenerator;
+    private sdkErrorGenerator: SdkErrorGenerator;
     private errorResolver: ErrorResolver;
 
     constructor({
         sourceFile,
         importsManager,
         errorDeclarationReferencer,
-        SdkErrorGenerator,
+        sdkErrorGenerator,
         errorResolver,
     }: SdkErrorContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.errorDeclarationReferencer = errorDeclarationReferencer;
-        this.SdkErrorGenerator = SdkErrorGenerator;
+        this.sdkErrorGenerator = sdkErrorGenerator;
         this.errorResolver = errorResolver;
     }
 
@@ -47,7 +47,7 @@ export class SdkErrorContextMixinImpl implements SdkErrorContextMixin {
     }
 
     public getGeneratedSdkError(errorName: DeclaredErrorName): GeneratedSdkError | undefined {
-        return this.SdkErrorGenerator.generateError({
+        return this.sdkErrorGenerator.generateError({
             errorName: this.errorDeclarationReferencer.getExportedName(errorName),
             errorDeclaration: this.getErrorDeclaration(errorName),
         });

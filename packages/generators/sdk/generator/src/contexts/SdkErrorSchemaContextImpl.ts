@@ -24,7 +24,7 @@ export declare namespace SdkErrorSchemaContextImpl {
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
     }
 }
@@ -45,7 +45,7 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
         errorDeclarationReferencer,
         sdkErrorSchemaDeclarationReferencer,
         sdkErrorSchemaGenerator,
-        SdkErrorGenerator,
+        sdkErrorGenerator,
         errorResolver,
         ...superInit
     }: SdkErrorSchemaContextImpl.Init) {
@@ -72,7 +72,7 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            SdkErrorGenerator,
+            sdkErrorGenerator,
             errorResolver,
         });
         this.sdkErrorSchema = new SdkErrorSchemaContextMixinImpl({

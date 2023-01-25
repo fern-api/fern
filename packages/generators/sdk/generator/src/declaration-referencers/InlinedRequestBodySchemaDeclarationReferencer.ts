@@ -1,12 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
-import { ExportedFilePath } from "@fern-typescript/commons";
-import { ts } from "ts-morph";
+import { ExportedFilePath, Reference } from "@fern-typescript/commons";
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
-export declare namespace RequestWrapperDeclarationReferencer {
+export declare namespace InlinedRequestBodySchemaDeclarationReferencer {
     export interface Name {
         service: FernFilepath;
         endpoint: HttpEndpoint;
@@ -15,8 +14,8 @@ export declare namespace RequestWrapperDeclarationReferencer {
 
 const REQUESTS_DIRECTORY_NAME = "requests";
 
-export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<RequestWrapperDeclarationReferencer.Name> {
-    public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
+export class InlinedRequestBodySchemaDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<InlinedRequestBodySchemaDeclarationReferencer.Name> {
+    public getExportedFilepath(name: InlinedRequestBodySchemaDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [
                 ...this.getExportedDirectory(name.service, {
@@ -38,20 +37,20 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
         };
     }
 
-    public getFilename(name: RequestWrapperDeclarationReferencer.Name): string {
+    public getFilename(name: InlinedRequestBodySchemaDeclarationReferencer.Name): string {
         return `${this.getExportedName(name)}.ts`;
     }
 
-    public getExportedName(name: RequestWrapperDeclarationReferencer.Name): string {
-        if (name.endpoint.sdkRequest == null || name.endpoint.sdkRequest.shape.type !== "wrapper") {
-            throw new Error("Cannot get exported name for request wrapper, because endpoint request is not wrapped");
+    public getExportedName(name: InlinedRequestBodySchemaDeclarationReferencer.Name): string {
+        if (name.endpoint.requestBody?.type !== "inlinedRequestBody") {
+            throw new Error("Cannot get exported name for inlined request, because endpoint request is not inlined");
         }
-        return name.endpoint.sdkRequest.shape.wrapperName.pascalCase.unsafeName;
+        return name.endpoint.requestBody.name.pascalCase.unsafeName;
     }
 
-    public getReferenceToRequestWrapperType(
-        args: DeclarationReferencer.getReferenceTo.Options<RequestWrapperDeclarationReferencer.Name>
-    ): ts.TypeNode {
-        return this.getReferenceTo(this.getExportedName(args.name), args).getTypeNode();
+    public getReferenceToInlinedRequestBodySchema(
+        args: DeclarationReferencer.getReferenceTo.Options<InlinedRequestBodySchemaDeclarationReferencer.Name>
+    ): Reference {
+        return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 }

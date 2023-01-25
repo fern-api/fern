@@ -6,6 +6,8 @@
     { "path": "../../../commons" },
     { "path": "../../../contexts" },
     { "path": "../../../resolvers" },
+    { "path": "../../model/inlined-request-body-schema-generator" },
+    { "path": "../../model/request-wrapper-generator" },
     { "path": "../../model/type-generator" },
     { "path": "../../model/type-reference-converters" },
     { "path": "../../model/type-reference-example-generator" },
@@ -16,7 +18,6 @@
     { "path": "../environments-generator" },
     { "path": "../error-generator" },
     { "path": "../error-schema-generator" },
-    { "path": "../generic-error-generators" },
-    { "path": "../request-wrapper-generator" }
+    { "path": "../generic-error-generators" }
   ]
 }

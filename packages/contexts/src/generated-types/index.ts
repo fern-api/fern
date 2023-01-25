@@ -11,6 +11,7 @@ export { type GeneratedEnumTypeSchema } from "./GeneratedEnumTypeSchema";
 export { type GeneratedEnvironments } from "./GeneratedEnvironments";
 export { type GeneratedFile } from "./GeneratedFile";
 export { type GeneratedGenericAPISdkError } from "./GeneratedGenericAPISdkError";
+export { type GeneratedInlinedRequestBodySchema } from "./GeneratedInlinedRequestBodySchema";
 export { type GeneratedObjectType } from "./GeneratedObjectType";
 export { type GeneratedObjectTypeSchema } from "./GeneratedObjectTypeSchema";
 export { type GeneratedRequestWrapper } from "./GeneratedRequestWrapper";

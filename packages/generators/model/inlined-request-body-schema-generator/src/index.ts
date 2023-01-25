@@ -1,0 +1,1 @@
+export { InlinedRequestBodySchemaGenerator } from "./InlinedRequestBodySchemaGenerator";

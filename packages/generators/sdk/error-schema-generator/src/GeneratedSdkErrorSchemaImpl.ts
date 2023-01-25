@@ -10,7 +10,7 @@ export declare namespace GeneratedSdkErrorSchemaImpl {
         errorName: string;
         errorDeclaration: ErrorDeclaration;
         type: TypeReference;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
     }
 }
 
@@ -18,19 +18,19 @@ export class GeneratedSdkErrorSchemaImpl
     extends GeneratedAliasTypeSchemaImpl<SdkErrorSchemaContext>
     implements GeneratedSdkErrorSchema
 {
-    constructor({ errorName, errorDeclaration, type, SdkErrorGenerator }: GeneratedSdkErrorSchemaImpl.Init) {
+    constructor({ errorName, errorDeclaration, type, sdkErrorGenerator }: GeneratedSdkErrorSchemaImpl.Init) {
         super({
             typeName: errorName,
             shape: type,
             getGeneratedType: () => {
-                const generatedSdkError = SdkErrorGenerator.generateError({ errorName, errorDeclaration });
+                const generatedSdkError = sdkErrorGenerator.generateError({ errorName, errorDeclaration });
                 if (generatedSdkError == null) {
                     throw new Error("Error was not generated");
                 }
                 return generatedSdkError.generateErrorBody();
             },
             getReferenceToGeneratedType: (context) => {
-                const GeneratedSdkError = SdkErrorGenerator.generateError({ errorName, errorDeclaration });
+                const GeneratedSdkError = sdkErrorGenerator.generateError({ errorName, errorDeclaration });
                 if (GeneratedSdkError == null) {
                     throw new Error("Error was not generated");
                 }

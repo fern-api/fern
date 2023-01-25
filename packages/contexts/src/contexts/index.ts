@@ -2,6 +2,7 @@ export { type EndpointTypeSchemasContext } from "./EndpointTypeSchemasContext";
 export { type EndpointTypesContext } from "./EndpointTypesContext";
 export { type EnvironmentsContext } from "./EnvironmentsContext";
 export { type GenericAPISdkErrorContext } from "./GenericAPISdkErrorContext";
+export { type InlinedRequestBodySchemaContext } from "./InlinedRequestBodySchemaContext";
 export * from "./mixins";
 export { type RequestWrapperContext } from "./RequestWrapperContext";
 export { type SdkClientClassContext } from "./SdkClientClassContext";

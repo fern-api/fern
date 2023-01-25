@@ -4,6 +4,7 @@ import {
     WithEndpointTypesContextMixin,
     WithEnvironmentsContextMixin,
     WithGenericAPISdkErrorContextMixin,
+    WithInlinedRequestBodySchemaContextMixin,
     WithRequestWrapperContextMixin,
     WithSdkClientClassContextMixin,
     WithSdkErrorContextMixin,
@@ -25,4 +26,5 @@ export interface SdkClientClassContext
         WithEndpointTypeSchemasContextMixin,
         WithEnvironmentsContextMixin,
         WithGenericAPISdkErrorContextMixin,
-        WithTimeoutSdkErrorContextMixin {}
+        WithTimeoutSdkErrorContextMixin,
+        WithInlinedRequestBodySchemaContextMixin {}

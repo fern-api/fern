@@ -9,6 +9,10 @@ export {
     type GenericAPISdkErrorContextMixin,
     type WithGenericAPISdkErrorContextMixin,
 } from "./GenericAPISdkErrorContextMixin";
+export {
+    type InlinedRequestBodySchemaContextMixin,
+    type WithInlinedRequestBodySchemaContextMixin,
+} from "./InlinedRequestBodySchemaContextMixin";
 export { type RequestWrapperContextMixin, type WithRequestWrapperContextMixin } from "./RequestWrapperContextMixin";
 export { type SdkClientClassContextMixin, type WithSdkClientClassContextMixin } from "./SdkClientClassContextMixin";
 export { type SdkErrorContextMixin, type WithSdkErrorContextMixin } from "./SdkErrorContextMixin";

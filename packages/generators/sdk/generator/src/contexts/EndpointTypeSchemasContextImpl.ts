@@ -29,7 +29,7 @@ export declare namespace EndpointTypeSchemasContextImpl {
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
         sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
@@ -60,7 +60,7 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
         typeSchemaGenerator,
         typeSchemaDeclarationReferencer,
         typeReferenceExampleGenerator,
-        SdkErrorGenerator,
+        sdkErrorGenerator,
         errorResolver,
         errorDeclarationReferencer,
         sdkErrorSchemaDeclarationReferencer,
@@ -98,7 +98,7 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            SdkErrorGenerator,
+            sdkErrorGenerator,
             errorResolver,
         });
         this.sdkErrorSchema = new SdkErrorSchemaContextMixinImpl({

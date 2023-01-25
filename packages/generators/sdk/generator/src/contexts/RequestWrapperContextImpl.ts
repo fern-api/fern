@@ -22,7 +22,7 @@ export declare namespace RequestWrapperContextImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         errorResolver: ErrorResolver;
-        SdkErrorGenerator: SdkErrorGenerator;
+        sdkErrorGenerator: SdkErrorGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
         endpointTypesGenerator: EndpointTypesGenerator;
@@ -44,7 +44,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
         typeDeclarationReferencer,
         typeReferenceExampleGenerator,
         errorDeclarationReferencer,
-        SdkErrorGenerator,
+        sdkErrorGenerator,
         errorResolver,
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
@@ -66,7 +66,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            SdkErrorGenerator,
+            sdkErrorGenerator,
             errorResolver,
         });
         this.endpointTypes = new EndpointTypesContextMixinImpl({

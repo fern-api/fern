@@ -1,4 +1,4 @@
-import { HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { EndpointTypeSchemasContext, GeneratedEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -7,7 +7,6 @@ import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
 import { GeneratedEndpointErrorSchemaImpl } from "./GeneratedEndpointErrorSchemaImpl";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
 import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
-import { GeneratedInlinedRequestBodySchema } from "./GeneratedInlinedRequestBodySchema";
 import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscriminatedEndpointErrorSchema";
 
 export declare namespace GeneratedEndpointTypeSchemasImpl {
@@ -35,28 +34,16 @@ export class GeneratedEndpointTypeSchemasImpl implements GeneratedEndpointTypeSc
         errorDiscriminationStrategy,
         shouldGenerateErrors,
     }: GeneratedEndpointTypeSchemasImpl.Init) {
-        this.generatedRequestSchema =
-            endpoint.requestBody != null
-                ? HttpRequestBody._visit<GeneratedEndpointTypeSchema>(endpoint.requestBody, {
-                      inlinedRequestBody: (inlinedRequestBody) =>
-                          new GeneratedInlinedRequestBodySchema({
-                              service,
-                              endpoint,
-                              typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                              inlinedRequestBody,
-                          }),
-                      reference: ({ requestBodyType }) =>
-                          new GeneratedEndpointTypeSchemaImpl({
-                              service,
-                              endpoint,
-                              typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                              type: requestBodyType,
-                          }),
-                      _unknown: () => {
-                          throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type);
-                      },
-                  })
-                : undefined;
+        // only generate request schemas for referenced request bodies.
+        // inlined request bodies are generated separately
+        if (endpoint.requestBody?.type === "reference") {
+            this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
+                service,
+                endpoint,
+                typeName: GeneratedEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
+                type: endpoint.requestBody.requestBodyType,
+            });
+        }
         this.generatedResponseSchema =
             endpoint.response.type != null
                 ? new GeneratedEndpointTypeSchemaImpl({

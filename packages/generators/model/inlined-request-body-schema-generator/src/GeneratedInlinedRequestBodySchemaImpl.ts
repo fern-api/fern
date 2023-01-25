@@ -1,25 +1,51 @@
-import { InlinedRequestBody } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpService, InlinedRequestBody } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
-import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { GeneratedInlinedRequestBodySchema, InlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
-import { AbstractGeneratedEndpointTypeSchema } from "./AbstractGeneratedEndpointTypeSchema";
 
-export declare namespace GeneratedInlinedRequestBodySchema {
-    export interface Init extends AbstractGeneratedEndpointTypeSchema.Init {
+export declare namespace GeneratedInlinedRequestBodySchemaImpl {
+    export interface Init extends AbstractGeneratedSchema.Init {
+        service: HttpService;
+        endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
     }
 }
 
-export class GeneratedInlinedRequestBodySchema extends AbstractGeneratedEndpointTypeSchema {
+export class GeneratedInlinedRequestBodySchemaImpl
+    extends AbstractGeneratedSchema<InlinedRequestBodySchemaContext>
+    implements GeneratedInlinedRequestBodySchema
+{
+    private service: HttpService;
+    private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
 
-    constructor({ inlinedRequestBody, ...superInit }: GeneratedInlinedRequestBodySchema.Init) {
+    constructor({ service, endpoint, inlinedRequestBody, ...superInit }: GeneratedInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
+        this.service = service;
+        this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
     }
 
-    protected generateRawTypeDeclaration(context: EndpointTypeSchemasContext, module: ModuleDeclaration): void {
+    public writeToFile(context: InlinedRequestBodySchemaContext): void {
+        this.writeSchemaToFile(context);
+    }
+
+    public serializeRequest(
+        referenceToParsedRequest: ts.Expression,
+        context: InlinedRequestBodySchemaContext
+    ): ts.Expression {
+        return this.getReferenceToZurgSchema(context).json(referenceToParsedRequest);
+    }
+
+    protected getReferenceToSchema(context: InlinedRequestBodySchemaContext): Reference {
+        return context.inlinedRequestBodySchema.getReferenceToInlinedRequestBodySchema(
+            this.service.name.fernFilepath,
+            this.endpoint.name
+        );
+    }
+
+    protected generateRawTypeDeclaration(context: InlinedRequestBodySchemaContext, module: ModuleDeclaration): void {
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             properties: this.inlinedRequestBody.properties.map((property) => {
@@ -36,7 +62,7 @@ export class GeneratedInlinedRequestBodySchema extends AbstractGeneratedEndpoint
         });
     }
 
-    protected getReferenceToParsedShape(context: EndpointTypeSchemasContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: InlinedRequestBodySchemaContext): ts.TypeNode {
         const referenceToRequestWrapper = context.requestWrapper.getReferenceToRequestWrapper(
             this.service.name.fernFilepath,
             this.endpoint.name
@@ -60,7 +86,7 @@ export class GeneratedInlinedRequestBodySchema extends AbstractGeneratedEndpoint
         }
     }
 
-    protected buildSchema(context: EndpointTypeSchemasContext): Zurg.Schema {
+    protected buildSchema(context: InlinedRequestBodySchemaContext): Zurg.Schema {
         let schema = context.base.coreUtilities.zurg.object(
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {

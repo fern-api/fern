@@ -1,4 +1,11 @@
-import { HttpEndpoint, HttpPath, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/http";
+import {
+    HttpEndpoint,
+    HttpPath,
+    HttpRequestBody,
+    HttpService,
+    PathParameter,
+    SdkRequestShape,
+} from "@fern-fern/ir-model/http";
 import { Fetcher, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
 import {
@@ -258,7 +265,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     }
 
     private getSerializedRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
-        if (this.requestParameter == null) {
+        if (this.requestParameter == null || this.endpoint.requestBody == null) {
             return undefined;
         }
         const referenceToRequestBody = this.requestParameter.getReferenceToRequestBody(context);
@@ -266,7 +273,20 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             return undefined;
         }
 
-        return this.getGeneratedEndpointTypeSchemas(context).serializeRequest(referenceToRequestBody, context);
+        return HttpRequestBody._visit(this.endpoint.requestBody, {
+            inlinedRequestBody: () => {
+                return context.inlinedRequestBodySchema
+                    .getGeneratedInlinedRequestBodySchema(this.service.name.fernFilepath, this.endpoint.name)
+                    .serializeRequest(referenceToRequestBody, context);
+            },
+            reference: () =>
+                context.endpointTypeSchemas
+                    .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, this.endpoint.name)
+                    .serializeRequest(referenceToRequestBody, context),
+            _unknown: () => {
+                throw new Error("Unknown HttpRequestBody type: " + this.endpoint.requestBody?.type);
+            },
+        });
     }
 
     protected getGeneratedEndpointTypeSchemas(context: SdkClientClassContext): GeneratedEndpointTypeSchemas {
