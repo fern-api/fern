@@ -161,7 +161,7 @@ fern generate
 
 And voila! You just built and published a TypeScript SDK.
 
-**Next step:** define _your_ API in Fern. Check out our [docs](https://www.buildwithfern.com/docs/definition) to learn more.
+**Next step:** define _your_ API in Fern. Check out our [docs](https://docs.buildwithfern.com/definition) to learn more.
 
 # CLI reference
 
@@ -194,7 +194,7 @@ latest version.
 ### `fern add <generator>`
 
 `fern add` adds a new generator to your `generators.yml`. You can view the full
-list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).
+list of supported generators in our [docs](https://docs.buildwithfern.com/compiler/generators).
 
 ---
 
@@ -207,11 +207,11 @@ list of supported generators in our [docs](https://www.buildwithfern.com/docs/co
 ### `fern register`
 
 _Advanced feature._ You can register your API so it can be depended on by other
-APIs. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis).
+APIs. Read more in our [docs](https://docs.buildwithfern.com/advanced/depending-on-other-apis).
 
 # Documentation
 
-You can view our documentation [here](https://www.buildwithfern.com/docs).
+You can view our documentation [here](https://docs.buildwithfern.com).
 
 # Community
 
