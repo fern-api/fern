@@ -1,5 +1,5 @@
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { GeneratedEndpointTypes, SdkClientClassContext } from "@fern-typescript/contexts";
+import { GeneratedEndpointErrorUnion, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { AbstractGeneratedEndpointImplementation } from "./AbstractGeneratedEndpointImplementation";
@@ -149,8 +149,8 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
                     return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
                         ts.factory.createReturnStatement(
                             context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                                context.endpointTypes
-                                    .getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name)
+                                context.endpointErrorUnion
+                                    .getGeneratedEndpointErrorUnion(this.service.name.fernFilepath, this.endpoint.name)
                                     .getErrorUnion()
                                     .build({
                                         discriminantValueToBuild: errorDeclaration.statusCode,
@@ -180,7 +180,7 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
     private getReturnResponseForUnknownError(context: SdkClientClassContext): ts.Statement {
         return ts.factory.createReturnStatement(
             context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                this.getGeneratedEndpointTypes(context)
+                this.getGeneratedEndpointErrorUnion(context)
                     .getErrorUnion()
                     .buildUnknown({
                         existingValue: this.getReferenceToError(context),
@@ -195,14 +195,17 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
             this.endpoint.response.type != null
                 ? context.type.getReferenceToType(this.endpoint.response.type).typeNode
                 : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-            context.endpointTypes
-                .getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name)
+            context.endpointErrorUnion
+                .getGeneratedEndpointErrorUnion(this.service.name.fernFilepath, this.endpoint.name)
                 .getErrorUnion()
                 .getReferenceTo(context)
         );
     }
 
-    private getGeneratedEndpointTypes(context: SdkClientClassContext): GeneratedEndpointTypes {
-        return context.endpointTypes.getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name);
+    private getGeneratedEndpointErrorUnion(context: SdkClientClassContext): GeneratedEndpointErrorUnion {
+        return context.endpointErrorUnion.getGeneratedEndpointErrorUnion(
+            this.service.name.fernFilepath,
+            this.endpoint.name
+        );
     }
 }

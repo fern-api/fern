@@ -1,6 +1,6 @@
 import { EndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
-import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
@@ -13,8 +13,8 @@ import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
+import { EndpointErrorUnionContextMixinImpl } from "./mixins/EndpointErrorUnionContextMixinImpl";
 import { EndpointTypeSchemasContextMixinImpl } from "./mixins/EndpointTypeSchemasContextMixinImpl";
-import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "./mixins/RequestWrapperContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "./mixins/SdkErrorContextMixinImpl";
 import { SdkErrorSchemaContextMixinImpl } from "./mixins/SdkErrorSchemaContextMixinImpl";
@@ -35,7 +35,7 @@ export declare namespace EndpointTypeSchemasContextImpl {
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
-        endpointTypesGenerator: EndpointTypesGenerator;
+        endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         requestWrapperGenerator: RequestWrapperGenerator;
         endpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
@@ -49,7 +49,7 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
     public readonly typeSchema: TypeSchemaContextMixinImpl;
     public readonly error: SdkErrorContextMixinImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
-    public readonly endpointTypes: EndpointTypesContextMixinImpl;
+    public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly endpointTypeSchemas: EndpointTypeSchemasContextMixinImpl;
 
@@ -69,7 +69,7 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
         endpointSchemaDeclarationReferencer,
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
-        endpointTypesGenerator,
+        endpointErrorUnionGenerator,
         endpointTypeSchemasGenerator,
         serviceResolver,
         ...superInit
@@ -109,11 +109,11 @@ export class EndpointTypeSchemasContextImpl extends BaseContextImpl implements E
             errorResolver,
             sdkErrorSchemaGenerator,
         });
-        this.endpointTypes = new EndpointTypesContextMixinImpl({
+        this.endpointErrorUnion = new EndpointErrorUnionContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             endpointDeclarationReferencer,
-            endpointTypesGenerator,
+            endpointErrorUnionGenerator,
             serviceResolver,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({

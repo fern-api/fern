@@ -1,7 +1,7 @@
 import {
     WithBaseContextMixin,
+    WithEndpointErrorUnionContextMixin,
     WithEndpointTypeSchemasContextMixin,
-    WithEndpointTypesContextMixin,
     WithEnvironmentsContextMixin,
     WithGenericAPISdkErrorContextMixin,
     WithInlinedRequestBodySchemaContextMixin,
@@ -21,7 +21,7 @@ export interface SdkClientClassContext
         WithSdkErrorContextMixin,
         WithSdkErrorSchemaContextMixin,
         WithSdkClientClassContextMixin,
-        WithEndpointTypesContextMixin,
+        WithEndpointErrorUnionContextMixin,
         WithRequestWrapperContextMixin,
         WithEndpointTypeSchemasContextMixin,
         WithEnvironmentsContextMixin,

@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { EndpointTypesContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -9,7 +9,7 @@ export declare namespace UnknownErrorSingleUnionTypeGenerator {
     }
 }
 
-export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<EndpointTypesContext> {
+export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<EndpointErrorUnionContext> {
     private static CONTENT_PROPERTY_NAME = "content";
     private static BUILDER_PARAMETER_NAME = "fetcherError";
 
@@ -24,7 +24,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
     }
 
     public getNonDiscriminantPropertiesForInterface(
-        context: EndpointTypesContext
+        context: EndpointErrorUnionContext
     ): OptionalKind<PropertySignatureStructure>[] {
         return [
             {
@@ -42,11 +42,11 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [localReferenceToUnionValue];
     }
 
-    public getVisitMethodParameterType(context: EndpointTypesContext): ts.TypeNode | undefined {
+    public getVisitMethodParameterType(context: EndpointErrorUnionContext): ts.TypeNode | undefined {
         return context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
     }
 
-    public getParametersForBuilder(context: EndpointTypesContext): ts.ParameterDeclaration[] {
+    public getParametersForBuilder(context: EndpointErrorUnionContext): ts.ParameterDeclaration[] {
         return [
             ts.factory.createParameterDeclaration(
                 undefined,

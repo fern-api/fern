@@ -1,6 +1,6 @@
 import {
     WithBaseContextMixin,
-    WithEndpointTypesContextMixin,
+    WithEndpointErrorUnionContextMixin,
     WithRequestWrapperContextMixin,
     WithSdkErrorContextMixin,
     WithTypeContextMixin,
@@ -10,5 +10,5 @@ export interface RequestWrapperContext
     extends WithBaseContextMixin,
         WithTypeContextMixin,
         WithSdkErrorContextMixin,
-        WithEndpointTypesContextMixin,
+        WithEndpointErrorUnionContextMixin,
         WithRequestWrapperContextMixin {}

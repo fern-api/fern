@@ -1,5 +1,5 @@
+export { type EndpointErrorUnionContext } from "./EndpointErrorUnionContext";
 export { type EndpointTypeSchemasContext } from "./EndpointTypeSchemasContext";
-export { type EndpointTypesContext } from "./EndpointTypesContext";
 export { type EnvironmentsContext } from "./EnvironmentsContext";
 export { type GenericAPISdkErrorContext } from "./GenericAPISdkErrorContext";
 export { type InlinedRequestBodySchemaContext } from "./InlinedRequestBodySchemaContext";

@@ -10,8 +10,8 @@ import {
     ImportsManager,
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
-import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-error-generators";
@@ -25,8 +25,8 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project, SourceFile } from "ts-morph";
+import { EndpointErrorUnionContextImpl } from "./contexts/EndpointErrorUnionContextImpl";
 import { EndpointTypeSchemasContextImpl } from "./contexts/EndpointTypeSchemasContextImpl";
-import { EndpointTypesContextImpl } from "./contexts/EndpointTypesContextImpl";
 import { EnvironmentsContextImpl } from "./contexts/EnvironmentsContextImpl";
 import { GenericAPISdkErrorContextImpl } from "./contexts/GenericAPISdkErrorContextImpl";
 import { InlinedRequestBodySchemaContextImpl } from "./contexts/InlinedRequestBodySchemaContextImpl";
@@ -103,7 +103,7 @@ export class SdkGenerator {
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     private sdkErrorGenerator: SdkErrorGenerator;
     private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
-    private endpointTypesGenerator: EndpointTypesGenerator;
+    private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
     private requestWrapperGenerator: RequestWrapperGenerator;
     private inlinedRequestBodySchemaGenerator: InlinedRequestBodySchemaGenerator;
     private endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
@@ -226,10 +226,9 @@ export class SdkGenerator {
         this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator({
             sdkErrorGenerator: this.sdkErrorGenerator,
         });
-        this.endpointTypesGenerator = new EndpointTypesGenerator({
+        this.endpointErrorUnionGenerator = new EndpointErrorUnionGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
-            shouldGenerateErrors: config.neverThrowErrors,
         });
         this.endpointTypeSchemasGenerator = new EndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
@@ -268,7 +267,9 @@ export class SdkGenerator {
         this.generateServiceDeclarations();
         this.generateEnvironments();
         this.generateRequestWrappers();
-        this.generateEndpointTypes();
+        if (this.config.neverThrowErrors) {
+            this.generateEndpointErrorUnion();
+        }
         this.generateEndpointTypeSchemas();
         this.generateInlinedRequestBodySchemas();
 
@@ -390,7 +391,7 @@ export class SdkGenerator {
         }
     }
 
-    private generateEndpointTypes() {
+    private generateEndpointErrorUnion() {
         for (const service of this.intermediateRepresentation.services) {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
@@ -399,7 +400,7 @@ export class SdkGenerator {
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
-                        const endpointTypesContext = new EndpointTypesContextImpl({
+                        const endpointErrorUnionContext = new EndpointErrorUnionContextImpl({
                             sourceFile,
                             coreUtilitiesManager: this.coreUtilitiesManager,
                             dependencyManager: this.dependencyManager,
@@ -414,11 +415,11 @@ export class SdkGenerator {
                             errorResolver: this.errorResolver,
                             typeGenerator: this.typeGenerator,
                             serviceResolver: this.serviceResolver,
-                            endpointTypesGenerator: this.endpointTypesGenerator,
+                            endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                         });
-                        endpointTypesContext.endpointTypes
-                            .getGeneratedEndpointTypes(service.name.fernFilepath, endpoint.name)
-                            .writeToFile(endpointTypesContext);
+                        endpointErrorUnionContext.endpointErrorUnion
+                            .getGeneratedEndpointErrorUnion(service.name.fernFilepath, endpoint.name)
+                            .writeToFile(endpointErrorUnionContext);
                     },
                 });
             }
@@ -448,7 +449,7 @@ export class SdkGenerator {
                             sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
                             endpointSchemaDeclarationReferencer: this.endpointSchemaDeclarationReferencer,
                             endpointDeclarationReferencer: this.endpointDeclarationReferencer,
-                            endpointTypesGenerator: this.endpointTypesGenerator,
+                            endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                             requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                             requestWrapperGenerator: this.requestWrapperGenerator,
                             typeGenerator: this.typeGenerator,
@@ -493,7 +494,7 @@ export class SdkGenerator {
                                 errorResolver: this.errorResolver,
                                 serviceResolver: this.serviceResolver,
                                 endpointDeclarationReferencer: this.endpointDeclarationReferencer,
-                                endpointTypesGenerator: this.endpointTypesGenerator,
+                                endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                                 requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                                 requestWrapperGenerator: this.requestWrapperGenerator,
                             });
@@ -567,7 +568,7 @@ export class SdkGenerator {
                         sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
                         endpointDeclarationReferencer: this.endpointDeclarationReferencer,
                         endpointSchemaDeclarationReferencer: this.endpointSchemaDeclarationReferencer,
-                        endpointTypesGenerator: this.endpointTypesGenerator,
+                        endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                         requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                         requestWrapperGenerator: this.requestWrapperGenerator,
                         inlinedRequestBodySchemaDeclarationReferencer:

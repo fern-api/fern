@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
 import { Zurg } from "@fern-typescript/commons";
-import { EndpointTypeSchemasContext, EndpointTypesContext, GeneratedUnion } from "@fern-typescript/contexts";
+import { EndpointErrorUnionContext, EndpointTypeSchemasContext, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ts } from "ts-morph";
@@ -70,9 +70,9 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
         return this.GeneratedSdkErrorUnionSchema.getReferenceToZurgSchema(context);
     }
 
-    private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointTypesContext> {
-        return context.endpointTypes
-            .getGeneratedEndpointTypes(this.service.name.fernFilepath, this.endpoint.name)
+    private getErrorUnion(context: EndpointTypeSchemasContext): GeneratedUnion<EndpointErrorUnionContext> {
+        return context.endpointErrorUnion
+            .getGeneratedEndpointErrorUnion(this.service.name.fernFilepath, this.endpoint.name)
             .getErrorUnion();
     }
 }

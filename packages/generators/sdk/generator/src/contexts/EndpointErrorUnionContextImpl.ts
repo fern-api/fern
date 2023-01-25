@@ -1,5 +1,5 @@
-import { EndpointTypesContext } from "@fern-typescript/contexts";
-import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
+import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -8,11 +8,11 @@ import { EndpointDeclarationReferencer } from "../declaration-referencers/Endpoi
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
-import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
+import { EndpointErrorUnionContextMixinImpl } from "./mixins/EndpointErrorUnionContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "./mixins/SdkErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
 
-export declare namespace EndpointTypesContextImpl {
+export declare namespace EndpointErrorUnionContextImpl {
     export interface Init extends BaseContextImpl.Init {
         typeResolver: TypeResolver;
         typeGenerator: TypeGenerator;
@@ -22,15 +22,15 @@ export declare namespace EndpointTypesContextImpl {
         sdkErrorGenerator: SdkErrorGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
-        endpointTypesGenerator: EndpointTypesGenerator;
+        endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         serviceResolver: ServiceResolver;
     }
 }
 
-export class EndpointTypesContextImpl extends BaseContextImpl implements EndpointTypesContext {
+export class EndpointErrorUnionContextImpl extends BaseContextImpl implements EndpointErrorUnionContext {
     public readonly type: TypeContextMixinImpl;
     public readonly error: SdkErrorContextMixinImpl;
-    public readonly endpointTypes: EndpointTypesContextMixinImpl;
+    public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
 
     constructor({
         typeResolver,
@@ -41,10 +41,10 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
         errorResolver,
         errorDeclarationReferencer,
         endpointDeclarationReferencer,
-        endpointTypesGenerator,
+        endpointErrorUnionGenerator,
         serviceResolver,
         ...superInit
-    }: EndpointTypesContextImpl.Init) {
+    }: EndpointErrorUnionContextImpl.Init) {
         super(superInit);
         this.type = new TypeContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -61,11 +61,11 @@ export class EndpointTypesContextImpl extends BaseContextImpl implements Endpoin
             sdkErrorGenerator,
             errorResolver,
         });
-        this.endpointTypes = new EndpointTypesContextMixinImpl({
+        this.endpointErrorUnion = new EndpointErrorUnionContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             endpointDeclarationReferencer,
-            endpointTypesGenerator,
+            endpointErrorUnionGenerator,
             serviceResolver,
         });
     }

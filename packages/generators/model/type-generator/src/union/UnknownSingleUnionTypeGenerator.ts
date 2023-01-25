@@ -1,8 +1,8 @@
-import { EndpointTypesContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
-export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<EndpointTypesContext> {
+export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator<EndpointErrorUnionContext> {
     private static BUILDER_PARAMETER_NAME = "value";
 
     public getExtendsForInterface(): ts.TypeNode[] {
@@ -22,7 +22,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
     }
 
     public getVisitMethodParameterType(
-        _context: EndpointTypesContext,
+        _context: EndpointErrorUnionContext,
         { discriminant }: { discriminant: string }
     ): ts.TypeNode | undefined {
         return ts.factory.createTypeLiteralNode([
@@ -36,7 +36,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
     }
 
     public getParametersForBuilder(
-        _context: EndpointTypesContext,
+        _context: EndpointErrorUnionContext,
         { discriminant }: { discriminant: string }
     ): ts.ParameterDeclaration[] {
         return [

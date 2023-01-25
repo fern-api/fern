@@ -101,12 +101,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/generators/sdk/client-class-generator"\
       },\
       {\
-        "name": "@fern-typescript/endpoint-type-schemas-generator",\
-        "reference": "workspace:packages/generators/sdk/endpoint-type-schemas-generator"\
+        "name": "@fern-typescript/endpoint-error-union-generator",\
+        "reference": "workspace:packages/generators/sdk/endpoint-error-union-generator"\
       },\
       {\
-        "name": "@fern-typescript/endpoint-types-generator",\
-        "reference": "workspace:packages/generators/sdk/endpoint-types-generator"\
+        "name": "@fern-typescript/endpoint-type-schemas-generator",\
+        "reference": "workspace:packages/generators/sdk/endpoint-type-schemas-generator"\
       },\
       {\
         "name": "@fern-typescript/environments-generator",\
@@ -142,8 +142,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/base-core-utilities", ["workspace:packages/core-utilities/base"]],\
       ["@fern-typescript/commons", ["workspace:packages/commons"]],\
       ["@fern-typescript/contexts", ["workspace:packages/contexts"]],\
+      ["@fern-typescript/endpoint-error-union-generator", ["workspace:packages/generators/sdk/endpoint-error-union-generator"]],\
       ["@fern-typescript/endpoint-type-schemas-generator", ["workspace:packages/generators/sdk/endpoint-type-schemas-generator"]],\
-      ["@fern-typescript/endpoint-types-generator", ["workspace:packages/generators/sdk/endpoint-types-generator"]],\
       ["@fern-typescript/environments-generator", ["workspace:packages/generators/sdk/environments-generator"]],\
       ["@fern-typescript/error-schema-generator", ["workspace:packages/generators/sdk/error-schema-generator"]],\
       ["@fern-typescript/express-generator", ["workspace:packages/generators/express/generator"]],\
@@ -3254,6 +3254,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-typescript/endpoint-error-union-generator", [\
+        ["workspace:packages/generators/sdk/endpoint-error-union-generator", {\
+          "packageLocation": "./packages/generators/sdk/endpoint-error-union-generator/",\
+          "packageDependencies": [\
+            ["@fern-typescript/endpoint-error-union-generator", "workspace:packages/generators/sdk/endpoint-error-union-generator"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-fern/ir-model", "npm:0.0.741"],\
+            ["@fern-typescript/commons", "workspace:packages/commons"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
+            ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
+            ["@fern-typescript/union-generator", "workspace:packages/generators/model/union-generator"],\
+            ["@types/jest", "npm:28.1.6"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.23.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["ts-morph", "npm:15.1.0"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-typescript/endpoint-type-schemas-generator", [\
         ["workspace:packages/generators/sdk/endpoint-type-schemas-generator", {\
           "packageLocation": "./packages/generators/sdk/endpoint-type-schemas-generator/",\
@@ -3269,31 +3294,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@fern-typescript/union-schema-generator", "workspace:packages/generators/model/union-schema-generator"],\
-            ["@types/jest", "npm:28.1.6"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.23.1"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["prettier", "npm:2.7.1"],\
-            ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-typescript/endpoint-types-generator", [\
-        ["workspace:packages/generators/sdk/endpoint-types-generator", {\
-          "packageLocation": "./packages/generators/sdk/endpoint-types-generator/",\
-          "packageDependencies": [\
-            ["@fern-typescript/endpoint-types-generator", "workspace:packages/generators/sdk/endpoint-types-generator"],\
-            ["@babel/core", "npm:7.19.1"],\
-            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
-            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-fern/ir-model", "npm:0.0.741"],\
-            ["@fern-typescript/commons", "workspace:packages/commons"],\
-            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
-            ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
-            ["@fern-typescript/union-generator", "workspace:packages/generators/model/union-generator"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3605,8 +3605,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-model", "npm:0.0.741"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
+            ["@fern-typescript/endpoint-error-union-generator", "workspace:packages/generators/sdk/endpoint-error-union-generator"],\
             ["@fern-typescript/endpoint-type-schemas-generator", "workspace:packages/generators/sdk/endpoint-type-schemas-generator"],\
-            ["@fern-typescript/endpoint-types-generator", "workspace:packages/generators/sdk/endpoint-types-generator"],\
             ["@fern-typescript/environments-generator", "workspace:packages/generators/sdk/environments-generator"],\
             ["@fern-typescript/error-schema-generator", "workspace:packages/generators/sdk/error-schema-generator"],\
             ["@fern-typescript/generic-error-generators", "workspace:packages/generators/sdk/generic-error-generators"],\

@@ -7,8 +7,8 @@ import {
     SdkClientClassContextMixin,
     TimeoutSdkErrorContextMixin,
 } from "@fern-typescript/contexts";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
-import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-error-generators";
@@ -30,8 +30,8 @@ import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErr
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
+import { EndpointErrorUnionContextMixinImpl } from "./mixins/EndpointErrorUnionContextMixinImpl";
 import { EndpointTypeSchemasContextMixinImpl } from "./mixins/EndpointTypeSchemasContextMixinImpl";
-import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
 import { EnvironmentsContextMixinImpl } from "./mixins/EnvironmentsContextMixinImpl";
 import { GenericAPISdkErrorContextMixinImpl } from "./mixins/GenericAPISdkErrorContextMixinImpl";
 import { InlinedRequestBodySchemaContextMixinImpl } from "./mixins/InlinedRequestBodySchemaContextMixinImpl";
@@ -63,7 +63,7 @@ export declare namespace SdkClientClassContextImpl {
         requestWrapperGenerator: RequestWrapperGenerator;
         inlinedRequestBodySchemaDeclarationReferencer: InlinedRequestBodySchemaDeclarationReferencer;
         inlinedRequestBodySchemaGenerator: InlinedRequestBodySchemaGenerator;
-        endpointTypesGenerator: EndpointTypesGenerator;
+        endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
         SdkClientClassGenerator: SdkClientClassGenerator;
@@ -82,7 +82,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
     public readonly typeSchema: TypeSchemaContextMixinImpl;
     public readonly error: SdkErrorContextMixinImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
-    public readonly endpointTypes: EndpointTypesContextMixinImpl;
+    public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly inlinedRequestBodySchema: InlinedRequestBodySchemaContextMixin;
     public readonly endpointTypeSchemas: EndpointTypeSchemasContextMixinImpl;
@@ -106,7 +106,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
         sdkErrorSchemaGenerator,
         endpointDeclarationReferencer,
         endpointSchemaDeclarationReferencer,
-        endpointTypesGenerator,
+        endpointErrorUnionGenerator,
         endpointTypeSchemasGenerator,
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
@@ -158,11 +158,11 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             errorResolver,
             sdkErrorSchemaGenerator,
         });
-        this.endpointTypes = new EndpointTypesContextMixinImpl({
+        this.endpointErrorUnion = new EndpointErrorUnionContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             endpointDeclarationReferencer,
-            endpointTypesGenerator,
+            endpointErrorUnionGenerator,
             serviceResolver,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({

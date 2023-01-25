@@ -1,5 +1,5 @@
 import { RequestWrapperContext } from "@fern-typescript/contexts";
-import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
@@ -10,7 +10,7 @@ import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "./BaseContextImpl";
-import { EndpointTypesContextMixinImpl } from "./mixins/EndpointTypesContextMixinImpl";
+import { EndpointErrorUnionContextMixinImpl } from "./mixins/EndpointErrorUnionContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "./mixins/RequestWrapperContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "./mixins/SdkErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "./mixins/TypeContextMixinImpl";
@@ -25,7 +25,7 @@ export declare namespace RequestWrapperContextImpl {
         sdkErrorGenerator: SdkErrorGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
-        endpointTypesGenerator: EndpointTypesGenerator;
+        endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         requestWrapperGenerator: RequestWrapperGenerator;
         serviceResolver: ServiceResolver;
@@ -35,7 +35,7 @@ export declare namespace RequestWrapperContextImpl {
 export class RequestWrapperContextImpl extends BaseContextImpl implements RequestWrapperContext {
     public readonly type: TypeContextMixinImpl;
     public readonly error: SdkErrorContextMixinImpl;
-    public readonly endpointTypes: EndpointTypesContextMixinImpl;
+    public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
 
     constructor({
@@ -50,7 +50,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
         requestWrapperGenerator,
         serviceResolver,
         endpointDeclarationReferencer,
-        endpointTypesGenerator,
+        endpointErrorUnionGenerator,
         ...superInit
     }: RequestWrapperContextImpl.Init) {
         super(superInit);
@@ -69,11 +69,11 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
             sdkErrorGenerator,
             errorResolver,
         });
-        this.endpointTypes = new EndpointTypesContextMixinImpl({
+        this.endpointErrorUnion = new EndpointErrorUnionContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             endpointDeclarationReferencer,
-            endpointTypesGenerator,
+            endpointErrorUnionGenerator,
             serviceResolver,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({

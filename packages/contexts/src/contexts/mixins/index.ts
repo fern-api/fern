@@ -1,9 +1,12 @@
 export { type BaseContextMixin, type WithBaseContextMixin } from "./BaseContextMixin";
 export {
+    type EndpointErrorUnionContextMixin,
+    type WithEndpointErrorUnionContextMixin,
+} from "./EndpointErrorUnionContextMixin";
+export {
     type EndpointTypeSchemasContextMixin,
     type WithEndpointTypeSchemasContextMixin,
 } from "./EndpointTypeSchemasContextMixin";
-export { type EndpointTypesContextMixin, type WithEndpointTypesContextMixin } from "./EndpointTypesContextMixin";
 export { type EnvironmentsContextMixin, type WithEnvironmentsContextMixin } from "./EnvironmentsContextMixin";
 export {
     type GenericAPISdkErrorContextMixin,

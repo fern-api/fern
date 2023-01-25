@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/endpoint-types-generator",
+  "name": "@fern-typescript/endpoint-error-union-generator",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/sdk/endpoint-types-generator"
+    "directory": "packages/generators/sdk/endpoint-error-union-generator"
   },
   "files": [
     "lib"

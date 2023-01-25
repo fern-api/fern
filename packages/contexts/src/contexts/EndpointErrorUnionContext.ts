@@ -1,12 +1,12 @@
 import {
     WithBaseContextMixin,
-    WithEndpointTypesContextMixin,
+    WithEndpointErrorUnionContextMixin,
     WithSdkErrorContextMixin,
     WithTypeContextMixin,
 } from "./mixins";
 
-export interface EndpointTypesContext
+export interface EndpointErrorUnionContext
     extends WithBaseContextMixin,
-        WithEndpointTypesContextMixin,
+        WithEndpointErrorUnionContextMixin,
         WithTypeContextMixin,
         WithSdkErrorContextMixin {}

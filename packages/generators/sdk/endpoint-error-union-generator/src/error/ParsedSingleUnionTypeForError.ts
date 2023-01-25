@@ -1,7 +1,7 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { ResponseError } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { EndpointTypesContext } from "@fern-typescript/contexts";
+import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
     AbstractKnownSingleUnionType,
@@ -18,7 +18,7 @@ export declare namespace ParsedSingleUnionTypeForError {
     }
 }
 
-export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<EndpointTypesContext> {
+export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<EndpointErrorUnionContext> {
     private errorDeclaration: ErrorDeclaration;
     private responseError: ResponseError;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
@@ -71,7 +71,7 @@ function getSingleUnionTypeGenerator({
     error: ResponseError;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
-}): SingleUnionTypeGenerator<EndpointTypesContext> {
+}): SingleUnionTypeGenerator<EndpointErrorUnionContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
     }
@@ -84,7 +84,7 @@ function getSingleUnionTypeGenerator({
         },
     });
 
-    return new SinglePropertySingleUnionTypeGenerator<EndpointTypesContext>({
+    return new SinglePropertySingleUnionTypeGenerator<EndpointErrorUnionContext>({
         propertyName,
         getReferenceToPropertyType: (context) => {
             const typeNode = context.error.getReferenceToError(error.error).getTypeNode();

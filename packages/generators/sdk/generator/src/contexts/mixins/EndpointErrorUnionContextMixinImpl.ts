@@ -1,43 +1,43 @@
 import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
-import { EndpointTypesContextMixin, GeneratedEndpointTypes } from "@fern-typescript/contexts";
-import { EndpointTypesGenerator } from "@fern-typescript/endpoint-types-generator";
+import { EndpointErrorUnionContextMixin, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
+import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { ServiceResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 
-export declare namespace EndpointTypesContextMixinImpl {
+export declare namespace EndpointErrorUnionContextMixinImpl {
     export interface Init {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         endpointDeclarationReferencer: EndpointDeclarationReferencer;
-        endpointTypesGenerator: EndpointTypesGenerator;
+        endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         serviceResolver: ServiceResolver;
     }
 }
 
-export class EndpointTypesContextMixinImpl implements EndpointTypesContextMixin {
+export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionContextMixin {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
     private endpointDeclarationReferencer: EndpointDeclarationReferencer;
-    private endpointTypesGenerator: EndpointTypesGenerator;
+    private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
     private serviceResolver: ServiceResolver;
 
     constructor({
         sourceFile,
         importsManager,
         endpointDeclarationReferencer,
-        endpointTypesGenerator,
+        endpointErrorUnionGenerator,
         serviceResolver,
-    }: EndpointTypesContextMixinImpl.Init) {
+    }: EndpointErrorUnionContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.endpointDeclarationReferencer = endpointDeclarationReferencer;
-        this.endpointTypesGenerator = endpointTypesGenerator;
+        this.endpointErrorUnionGenerator = endpointErrorUnionGenerator;
         this.serviceResolver = serviceResolver;
     }
 
-    public getGeneratedEndpointTypes(service: FernFilepath, endpointName: Name): GeneratedEndpointTypes {
+    public getGeneratedEndpointErrorUnion(service: FernFilepath, endpointName: Name): GeneratedEndpointErrorUnion {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         if (serviceDeclaration.originalService == null) {
             throw new Error("Service is a wrapper");
@@ -48,7 +48,7 @@ export class EndpointTypesContextMixinImpl implements EndpointTypesContextMixin 
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
-        return this.endpointTypesGenerator.generateEndpointTypes({
+        return this.endpointErrorUnionGenerator.generateEndpointErrorUnion({
             service: serviceDeclaration.originalService,
             endpoint,
         });

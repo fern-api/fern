@@ -1,7 +1,7 @@
 import {
     WithBaseContextMixin,
+    WithEndpointErrorUnionContextMixin,
     WithEndpointTypeSchemasContextMixin,
-    WithEndpointTypesContextMixin,
     WithRequestWrapperContextMixin,
     WithSdkErrorContextMixin,
     WithSdkErrorSchemaContextMixin,
@@ -11,7 +11,7 @@ import {
 
 export interface EndpointTypeSchemasContext
     extends WithBaseContextMixin,
-        WithEndpointTypesContextMixin,
+        WithEndpointErrorUnionContextMixin,
         WithRequestWrapperContextMixin,
         WithEndpointTypeSchemasContextMixin,
         WithTypeContextMixin,

@@ -1,17 +1,16 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { GeneratedEndpointTypes } from "@fern-typescript/contexts";
+import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
-import { GeneratedEndpointTypesImpl } from "./GeneratedEndpointTypesImpl";
+import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl";
 
-export declare namespace EndpointTypesGenerator {
+export declare namespace EndpointErrorUnionGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         errorResolver: ErrorResolver;
-        shouldGenerateErrors: boolean;
     }
 
-    export namespace generateEndpointTypes {
+    export namespace generateEndpointErrorUnion {
         export interface Args {
             service: HttpService;
             endpoint: HttpEndpoint;
@@ -19,27 +18,24 @@ export declare namespace EndpointTypesGenerator {
     }
 }
 
-export class EndpointTypesGenerator {
+export class EndpointErrorUnionGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private errorResolver: ErrorResolver;
-    private shouldGenerateErrors: boolean;
 
-    constructor({ intermediateRepresentation, errorResolver, shouldGenerateErrors }: EndpointTypesGenerator.Init) {
+    constructor({ intermediateRepresentation, errorResolver }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
-        this.shouldGenerateErrors = shouldGenerateErrors;
     }
 
-    public generateEndpointTypes({
+    public generateEndpointErrorUnion({
         service,
         endpoint,
-    }: EndpointTypesGenerator.generateEndpointTypes.Args): GeneratedEndpointTypes {
-        return new GeneratedEndpointTypesImpl({
+    }: EndpointErrorUnionGenerator.generateEndpointErrorUnion.Args): GeneratedEndpointErrorUnion {
+        return new GeneratedEndpointErrorUnionImpl({
             service,
             endpoint,
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
-            shouldGenerateErrors: this.shouldGenerateErrors,
         });
     }
 }
