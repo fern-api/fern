@@ -88,7 +88,7 @@ function getCollectionItems({
         for (const fernFilepathPart of httpService.name.fernFilepathV2) {
             const existingContainerForFernFilepathPart = rootItems
                 .filter((item): item is PostmanCollectionItem.Container => item.type === "container")
-                .find((item) => item.name === fernFilepathPart.unsafeName.originalValue);
+                .find((item) => item.name === startCase(fernFilepathPart.unsafeName.originalValue));
             if (existingContainerForFernFilepathPart != null) {
                 container = existingContainerForFernFilepathPart.item;
             } else {
