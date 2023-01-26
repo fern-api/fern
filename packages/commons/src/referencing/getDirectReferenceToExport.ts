@@ -32,7 +32,7 @@ export function getDirectReferenceToExport({
             namedImports: [
                 {
                     name: exportedName,
-                    alias: importAlias,
+                    alias: importAlias !== exportedName ? importAlias : undefined,
                 },
             ],
         });

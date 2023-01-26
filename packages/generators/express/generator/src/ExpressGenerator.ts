@@ -14,6 +14,8 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
+import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator";
+import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
 import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
@@ -23,10 +25,14 @@ import { Directory, Project, SourceFile } from "ts-morph";
 import { ExpressEndpointTypeSchemasContextImpl } from "./contexts/express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
 import { ExpressInlinedRequestBodySchemaContextImpl } from "./contexts/express-inlined-request-body-schema/ExpressInlinedRequestBodySchemaContextImpl";
 import { ExpressInlinedRequestBodyContextImpl } from "./contexts/express-inlined-request-body/ExpressInlinedRequestBodyContextImpl";
+import { ExpressRegisterContextImpl } from "./contexts/express-register/ExpressRegisterContextImpl";
+import { ExpressServiceContextImpl } from "./contexts/express-service/ExpressServiceContextImpl";
 import { TypeSchemaContextImpl } from "./contexts/type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./contexts/type/TypeContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
+import { ExpressRegisterDeclarationReferencer } from "./declaration-referencers/ExpressRegisterDeclarationReferencer";
+import { ExpressServiceDeclarationReferencer } from "./declaration-referencers/ExpressServiceDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 
 const FILE_HEADER = `/**
@@ -64,6 +70,8 @@ export class ExpressGenerator {
     private expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
     private expressInlinedRequestBodySchemaDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
     private expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
+    private expressServiceDeclarationReferencer: ExpressServiceDeclarationReferencer;
+    private expressRegisterDeclarationReferencer: ExpressRegisterDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
@@ -71,6 +79,8 @@ export class ExpressGenerator {
     private expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
     private expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
     private expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
+    private expressServiceGenerator: ExpressServiceGenerator;
+    private expressRegisterGenerator: ExpressRegisterGenerator;
 
     private generatePackage: () => Promise<void>;
 
@@ -121,6 +131,14 @@ export class ExpressGenerator {
             containingDirectory: schemaDirectory,
             apiName,
         });
+        this.expressServiceDeclarationReferencer = new ExpressServiceDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            apiName,
+        });
+        this.expressRegisterDeclarationReferencer = new ExpressRegisterDeclarationReferencer({
+            containingDirectory: [],
+            apiName,
+        });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.typeSchemaGenerator = new TypeSchemaGenerator();
@@ -128,6 +146,11 @@ export class ExpressGenerator {
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator();
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator();
+        this.expressServiceGenerator = new ExpressServiceGenerator();
+        this.expressRegisterGenerator = new ExpressRegisterGenerator({
+            intermediateRepresentation: this.intermediateRepresentation,
+            registerFunctionName: this.expressRegisterDeclarationReferencer.getRegisterFunctionName(),
+        });
 
         this.generatePackage = async () => {
             await writeProjectToVolume(project, volume, "/");
@@ -140,6 +163,8 @@ export class ExpressGenerator {
         this.generateInlinedRequestBodies();
         this.generateInlinedRequestBodySchemas();
         this.generateEndpointTypeSchemas();
+        this.generateExpressServices();
+        this.generateExpressRegister();
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
@@ -305,6 +330,78 @@ export class ExpressGenerator {
                 });
             }
         }
+    }
+
+    private generateExpressServices() {
+        for (const service of this.intermediateRepresentation.services) {
+            this.withSourceFile({
+                filepath: this.expressServiceDeclarationReferencer.getExportedFilepath(service.name),
+                run: ({ sourceFile, importsManager }) => {
+                    const expressServiceContext = new ExpressServiceContextImpl({
+                        sourceFile,
+                        coreUtilitiesManager: this.coreUtilitiesManager,
+                        dependencyManager: this.dependencyManager,
+                        fernConstants: this.intermediateRepresentation.constants,
+                        importsManager,
+                        typeResolver: this.typeResolver,
+                        typeDeclarationReferencer: this.typeDeclarationReferencer,
+                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        expressEndpointSchemaDeclarationReferencer: this.expressEndpointSchemaDeclarationReferencer,
+                        typeGenerator: this.typeGenerator,
+                        serviceResolver: this.serviceResolver,
+                        expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
+                        typeSchemaGenerator: this.typeSchemaGenerator,
+                        expressInlinedRequestBodyDeclarationReferencer:
+                            this.expressInlinedRequestBodyDeclarationReferencer,
+                        expressInlinedRequestBodyGenerator: this.expressInlinedRequestBodyGenerator,
+                        expressInlinedRequestBodySchemaDeclarationReferencer:
+                            this.expressInlinedRequestBodySchemaDeclarationReferencer,
+                        expressInlinedRequestBodySchemaGenerator: this.expressInlinedRequestBodySchemaGenerator,
+                        expressServiceDeclarationReferencer: this.expressServiceDeclarationReferencer,
+                        expressServiceGenerator: this.expressServiceGenerator,
+                    });
+                    expressServiceContext.expressService
+                        .getGeneratedExpressService(service.name.fernFilepath)
+                        .writeToFile(expressServiceContext);
+                },
+            });
+        }
+    }
+
+    private generateExpressRegister() {
+        this.withSourceFile({
+            filepath: this.expressRegisterDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const expressRegisterContext = new ExpressRegisterContextImpl({
+                    sourceFile,
+                    coreUtilitiesManager: this.coreUtilitiesManager,
+                    dependencyManager: this.dependencyManager,
+                    fernConstants: this.intermediateRepresentation.constants,
+                    importsManager,
+                    typeResolver: this.typeResolver,
+                    typeDeclarationReferencer: this.typeDeclarationReferencer,
+                    typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                    typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                    expressEndpointSchemaDeclarationReferencer: this.expressEndpointSchemaDeclarationReferencer,
+                    typeGenerator: this.typeGenerator,
+                    serviceResolver: this.serviceResolver,
+                    expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
+                    typeSchemaGenerator: this.typeSchemaGenerator,
+                    expressInlinedRequestBodyDeclarationReferencer: this.expressInlinedRequestBodyDeclarationReferencer,
+                    expressInlinedRequestBodyGenerator: this.expressInlinedRequestBodyGenerator,
+                    expressInlinedRequestBodySchemaDeclarationReferencer:
+                        this.expressInlinedRequestBodySchemaDeclarationReferencer,
+                    expressInlinedRequestBodySchemaGenerator: this.expressInlinedRequestBodySchemaGenerator,
+                    expressServiceDeclarationReferencer: this.expressServiceDeclarationReferencer,
+                    expressServiceGenerator: this.expressServiceGenerator,
+                    expressRegisterGenerator: this.expressRegisterGenerator,
+                });
+                expressRegisterContext.expressRegister
+                    .getGeneratedExpressRegister()
+                    .writeToFile(expressRegisterContext);
+            },
+        });
     }
 
     private withSourceFile({

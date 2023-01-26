@@ -5,6 +5,8 @@ export * from "./environments";
 export * from "./express-endpoint-type-schemas";
 export * from "./express-inlined-request-body";
 export * from "./express-inlined-request-body-schema";
+export * from "./express-register";
+export * from "./express-service";
 export { type GeneratorContext } from "./GeneratorContext";
 export * from "./generic-api-sdk-error";
 export * from "./request-wrapper";

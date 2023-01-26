@@ -42,10 +42,7 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
         endpointName: Name
     ): GeneratedExpressInlinedRequestBody {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {
@@ -65,10 +62,7 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
 
     public getReferenceToInlinedRequestBodyType(service: FernFilepath, endpointName: Name): Reference {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {

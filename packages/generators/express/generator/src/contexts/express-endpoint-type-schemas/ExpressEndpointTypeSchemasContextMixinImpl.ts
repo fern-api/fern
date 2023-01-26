@@ -43,17 +43,14 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
         endpointName: Name
     ): GeneratedExpressEndpointTypeSchemas {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.expressEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
-            service: serviceDeclaration.originalService,
+            service: serviceDeclaration,
             endpoint,
         });
     }
@@ -64,10 +61,7 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
         export_: string | string[]
     ): Reference {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {

@@ -12,6 +12,8 @@
     { "path": "../../model/type-schema-generator" },
     { "path": "../express-endpoint-type-schemas-generator" },
     { "path": "../express-inlined-request-body-generator" },
-    { "path": "../express-inlined-request-body-schema-generator" }
+    { "path": "../express-inlined-request-body-schema-generator" },
+    { "path": "../express-register-generator" },
+    { "path": "../express-service-generator" }
   ]
 }

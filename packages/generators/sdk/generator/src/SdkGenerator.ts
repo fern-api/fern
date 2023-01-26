@@ -582,7 +582,7 @@ export class SdkGenerator {
                         timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
                         timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
                     });
-                    sdkClientClassContext.service
+                    sdkClientClassContext.sdkClientClass
                         .getGeneratedSdkClientClass(service.fernFilepath)
                         .writeToFile(sdkClientClassContext);
                 },

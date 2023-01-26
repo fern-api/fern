@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ExportedFilePath, Reference } from "@fern-typescript/commons";
-import { AbstractExpressClassDeclarationReferencer } from "./AbstractExpressClassDeclarationReferencer";
+import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
@@ -14,7 +14,7 @@ export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
 
 const REQUESTS_DIRECTORY_NAME = "requests";
 
-export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpressClassDeclarationReferencer<ExpressInlinedRequestBodyDeclarationReferencer.Name> {
+export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<ExpressInlinedRequestBodyDeclarationReferencer.Name> {
     public getExportedFilepath(name: ExpressInlinedRequestBodyDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [

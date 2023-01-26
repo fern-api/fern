@@ -7,8 +7,8 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
+import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type/TypeSchemaContextMixinImpl";
 import { ExpressEndpointTypeSchemasContextMixinImpl } from "./ExpressEndpointTypeSchemasContextMixinImpl";
 
 export declare namespace ExpressEndpointTypeSchemasContextImpl {

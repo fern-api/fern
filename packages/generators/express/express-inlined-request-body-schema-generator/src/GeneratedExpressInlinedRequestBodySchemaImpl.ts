@@ -39,11 +39,11 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         this.writeSchemaToFile(context);
     }
 
-    public serializeRequest(
-        referenceToParsedRequest: ts.Expression,
+    public deserializeRequest(
+        referenceToRawRequest: ts.Expression,
         context: ExpressInlinedRequestBodySchemaContext
     ): ts.Expression {
-        return this.getReferenceToZurgSchema(context).json(referenceToParsedRequest);
+        return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest);
     }
 
     protected getReferenceToSchema(context: ExpressInlinedRequestBodySchemaContext): Reference {

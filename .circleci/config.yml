@@ -95,6 +95,11 @@ jobs:
           command: |
             projectVersion=$(./scripts/git-version.sh)
             yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
+      - run:
+          name: Build fern-typescript-express Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$projectVersion"
 
   publish-dockers:
     machine:
@@ -111,6 +116,13 @@ jobs:
             yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript-sdk:"$projectVersion"
+      - run:
+          name: Publish fern-typescript-express Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript-express:"$projectVersion"
 
   publish:
     docker:

@@ -4,8 +4,8 @@ import { ExpressInlinedRequestBodySchemaContext } from "./ExpressInlinedRequestB
 
 export interface GeneratedExpressInlinedRequestBodySchema
     extends GeneratedFile<ExpressInlinedRequestBodySchemaContext> {
-    serializeRequest: (
-        referenceToParsedRequest: ts.Expression,
+    deserializeRequest: (
+        referenceToRawRequest: ts.Expression,
         context: ExpressInlinedRequestBodySchemaContext
     ) => ts.Expression;
 }

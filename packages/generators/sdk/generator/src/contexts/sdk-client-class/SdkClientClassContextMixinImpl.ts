@@ -39,12 +39,12 @@ export class SdkClientClassContextMixinImpl implements SdkClientClassContextMixi
 
     public getGeneratedSdkClientClass(service: FernFilepath): GeneratedSdkClientClass {
         return this.sdkClientClassGenerator.generateService({
-            service: this.serviceResolver.getServiceDeclarationFromName(service),
+            service: this.serviceResolver.getAugmentedServiceFromName(service),
             serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(service),
         });
     }
 
-    public getReferenceToService(service: FernFilepath, { importAlias }: { importAlias: string }): Reference {
+    public getReferenceToClientClass(service: FernFilepath, { importAlias }: { importAlias: string }): Reference {
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
             name: service,
             referencedIn: this.sourceFile,

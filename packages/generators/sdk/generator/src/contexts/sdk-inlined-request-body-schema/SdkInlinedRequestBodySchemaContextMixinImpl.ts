@@ -46,20 +46,17 @@ export class SdkInlinedRequestBodySchemaContextMixinImpl implements SdkInlinedRe
         endpointName: Name
     ): GeneratedSdkInlinedRequestBodySchema {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.sdkInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema({
-            service: serviceDeclaration.originalService,
+            service: serviceDeclaration,
             endpoint,
             typeName: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
-                service: serviceDeclaration.originalService.name.fernFilepath,
+                service: serviceDeclaration.name.fernFilepath,
                 endpoint,
             }),
         });
@@ -67,10 +64,7 @@ export class SdkInlinedRequestBodySchemaContextMixinImpl implements SdkInlinedRe
 
     public getReferenceToInlinedRequestBody(service: FernFilepath, endpointName: Name): Reference {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {

@@ -22,7 +22,7 @@ export class GeneratedWrappedService {
 
     public addToServiceClass(class_: ClassDeclaration, context: SdkClientClassContext): void {
         const referenceToWrapped = this.getReferenceToWrappedService(context);
-        const generatedWrappedService = context.service.getGeneratedSdkClientClass(this.wrappedService);
+        const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass(this.wrappedService);
 
         class_.addProperty({
             name: this.getCachedMemberName(),
@@ -81,7 +81,7 @@ export class GeneratedWrappedService {
     }
 
     private getReferenceToWrappedService(context: SdkClientClassContext): Reference {
-        return context.service.getReferenceToService(this.wrappedService, {
+        return context.sdkClientClass.getReferenceToClientClass(this.wrappedService, {
             importAlias: this.getImportAlias(),
         });
     }

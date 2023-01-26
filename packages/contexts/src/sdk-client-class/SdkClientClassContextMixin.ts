@@ -4,9 +4,9 @@ import { GeneratedSdkClientClass } from "./GeneratedSdkClientClass";
 
 export interface SdkClientClassContextMixin {
     getGeneratedSdkClientClass: (service: FernFilepath) => GeneratedSdkClientClass;
-    getReferenceToService: (service: FernFilepath, options: { importAlias: string }) => Reference;
+    getReferenceToClientClass: (service: FernFilepath, options: { importAlias: string }) => Reference;
 }
 
 export interface WithSdkClientClassContextMixin {
-    service: SdkClientClassContextMixin;
+    sdkClientClass: SdkClientClassContextMixin;
 }

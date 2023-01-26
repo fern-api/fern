@@ -86,7 +86,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContextMixin;
     public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextMixinImpl;
-    public readonly service: SdkClientClassContextMixin;
+    public readonly sdkClientClass: SdkClientClassContextMixin;
     public readonly environments: EnvironmentsContextMixin;
     public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
     public readonly timeoutSdkError: TimeoutSdkErrorContextMixin;
@@ -186,7 +186,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
         });
-        this.service = new SdkClientClassContextMixinImpl({
+        this.sdkClientClass = new SdkClientClassContextMixinImpl({
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
             sdkClientClassDeclarationReferencer,

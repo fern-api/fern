@@ -39,17 +39,14 @@ export class RequestWrapperContextMixinImpl implements RequestWrapperContextMixi
 
     public getGeneratedRequestWrapper(service: FernFilepath, endpointName: Name): GeneratedRequestWrapper {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.requestWrapperGenerator.generateRequestWrapper({
-            service: serviceDeclaration.originalService,
+            service: serviceDeclaration,
             endpoint,
             wrapperName: this.requestWrapperDeclarationReferencer.getExportedName({
                 service,
@@ -60,10 +57,7 @@ export class RequestWrapperContextMixinImpl implements RequestWrapperContextMixi
 
     public getReferenceToRequestWrapper(service: FernFilepath, endpointName: Name): ts.TypeNode {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
-        if (serviceDeclaration.originalService == null) {
-            throw new Error("Service is a wrapper");
-        }
-        const endpoint = serviceDeclaration.originalService.endpoints.find(
+        const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
         if (endpoint == null) {

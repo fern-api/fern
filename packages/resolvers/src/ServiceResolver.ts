@@ -1,4 +1,5 @@
 import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { AugmentedService } from "@fern-typescript/commons";
 import { isEqual } from "lodash-es";
@@ -15,12 +16,20 @@ export class ServiceResolver {
         return Object.values(this.resolvedServices);
     }
 
-    public getServiceDeclarationFromName(service: FernFilepath): AugmentedService {
+    public getAugmentedServiceFromName(service: FernFilepath): AugmentedService {
         const resolvedService = this.resolvedServices[stringifyFernFilepath(service)];
         if (resolvedService == null) {
             throw new Error("Service not found: " + serviceNameToString(service));
         }
         return resolvedService;
+    }
+
+    public getServiceDeclarationFromName(service: FernFilepath): HttpService {
+        const resolvedService = this.resolvedServices[stringifyFernFilepath(service)];
+        if (resolvedService?.originalService == null) {
+            throw new Error("Service not found: " + serviceNameToString(service));
+        }
+        return resolvedService.originalService;
     }
 }
 

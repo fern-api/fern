@@ -10,6 +10,7 @@ export async function writeProjectToVolume(
     for (const file of project.getSourceFiles()) {
         const filepath = path.join(directoryOnVolume, file.getFilePath());
         await volume.promises.mkdir(path.dirname(filepath), { recursive: true });
+        file.formatText();
         await volume.promises.writeFile(filepath, file.getFullText());
     }
 }

@@ -1887,6 +1887,8 @@ __metadata:
     "@fern-typescript/express-endpoint-type-schemas-generator": "workspace:*"
     "@fern-typescript/express-inlined-request-body-generator": "workspace:*"
     "@fern-typescript/express-inlined-request-schema-generator": "workspace:*"
+    "@fern-typescript/express-register-generator": "workspace:*"
+    "@fern-typescript/express-service-generator": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@fern-typescript/type-generator": "workspace:*"
     "@fern-typescript/type-reference-converters": "workspace:*"
@@ -1933,6 +1935,48 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.741
     "@fern-typescript/abstract-schema-generator": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/express-register-generator@workspace:*, @fern-typescript/express-register-generator@workspace:packages/generators/express/express-register-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/express-register-generator@workspace:packages/generators/express/express-register-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.741
+    "@fern-typescript/commons": "workspace:*"
+    "@fern-typescript/contexts": "workspace:*"
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/express-service-generator@workspace:*, @fern-typescript/express-service-generator@workspace:packages/generators/express/express-service-generator":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/express-service-generator@workspace:packages/generators/express/express-service-generator"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-fern/ir-model": 0.0.741
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^28.1.6

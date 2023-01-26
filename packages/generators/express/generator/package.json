@@ -33,6 +33,8 @@
     "@fern-typescript/express-endpoint-type-schemas-generator": "workspace:*",
     "@fern-typescript/express-inlined-request-body-generator": "workspace:*",
     "@fern-typescript/express-inlined-request-schema-generator": "workspace:*",
+    "@fern-typescript/express-register-generator": "workspace:*",
+    "@fern-typescript/express-service-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "@fern-typescript/type-generator": "workspace:*",
     "@fern-typescript/type-reference-converters": "workspace:*",

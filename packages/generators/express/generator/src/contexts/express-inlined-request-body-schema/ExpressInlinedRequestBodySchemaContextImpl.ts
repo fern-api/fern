@@ -9,8 +9,8 @@ import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaratio
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
 import { ExpressInlinedRequestBodyContextMixinImpl } from "../express-inlined-request-body/ExpressInlinedRequestBodyContextMixinImpl.ts";
+import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type/TypeSchemaContextMixinImpl";
 import { ExpressInlinedRequestBodySchemaContextMixinImpl } from "./ExpressInlinedRequestBodySchemaContextMixinImpl";
 
 export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
