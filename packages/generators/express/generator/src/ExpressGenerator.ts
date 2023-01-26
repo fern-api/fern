@@ -11,6 +11,7 @@ import {
     writeProjectToVolume,
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
+import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
@@ -19,10 +20,12 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project, SourceFile } from "ts-morph";
+import { ExpressEndpointTypeSchemasContextImpl } from "./contexts/express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
 import { ExpressInlinedRequestBodySchemaContextImpl } from "./contexts/express-inlined-request-body-schema/ExpressInlinedRequestBodySchemaContextImpl";
 import { ExpressInlinedRequestBodyContextImpl } from "./contexts/express-inlined-request-body/ExpressInlinedRequestBodyContextImpl";
 import { TypeSchemaContextImpl } from "./contexts/type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./contexts/type/TypeContextImpl";
+import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 
@@ -60,12 +63,14 @@ export class ExpressGenerator {
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
     private expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
     private expressInlinedRequestBodySchemaDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
+    private expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     private expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
     private expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
+    private expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
 
     private generatePackage: () => Promise<void>;
 
@@ -112,12 +117,17 @@ export class ExpressGenerator {
             containingDirectory: schemaDirectory,
             apiName,
         });
+        this.expressEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
+            containingDirectory: schemaDirectory,
+            apiName,
+        });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.typeSchemaGenerator = new TypeSchemaGenerator();
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator();
+        this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator();
 
         this.generatePackage = async () => {
             await writeProjectToVolume(project, volume, "/");
@@ -129,6 +139,7 @@ export class ExpressGenerator {
         this.generateTypeSchemas();
         this.generateInlinedRequestBodies();
         this.generateInlinedRequestBodySchemas();
+        this.generateEndpointTypeSchemas();
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
@@ -258,6 +269,40 @@ export class ExpressGenerator {
                         },
                     });
                 }
+            }
+        }
+    }
+
+    private generateEndpointTypeSchemas() {
+        for (const service of this.intermediateRepresentation.services) {
+            for (const endpoint of service.endpoints) {
+                this.withSourceFile({
+                    filepath: this.expressEndpointSchemaDeclarationReferencer.getExportedFilepath({
+                        service: service.name.fernFilepath,
+                        endpoint,
+                    }),
+                    run: ({ sourceFile, importsManager }) => {
+                        const endpointTypeSchemasContext = new ExpressEndpointTypeSchemasContextImpl({
+                            sourceFile,
+                            coreUtilitiesManager: this.coreUtilitiesManager,
+                            dependencyManager: this.dependencyManager,
+                            fernConstants: this.intermediateRepresentation.constants,
+                            importsManager,
+                            typeResolver: this.typeResolver,
+                            typeDeclarationReferencer: this.typeDeclarationReferencer,
+                            typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                            typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                            expressEndpointSchemaDeclarationReferencer: this.expressEndpointSchemaDeclarationReferencer,
+                            typeGenerator: this.typeGenerator,
+                            serviceResolver: this.serviceResolver,
+                            expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
+                            typeSchemaGenerator: this.typeSchemaGenerator,
+                        });
+                        endpointTypeSchemasContext.expressEndpointTypeSchemas
+                            .getGeneratedEndpointTypeSchemas(service.name.fernFilepath, endpoint.name)
+                            .writeToFile(endpointTypeSchemasContext);
+                    },
+                });
             }
         }
     }

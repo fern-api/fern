@@ -7,7 +7,7 @@ import {
     SdkRequestShape,
 } from "@fern-fern/ir-model/http";
 import { Fetcher, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
+import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
     OptionalKind,
@@ -280,7 +280,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                     .serializeRequest(referenceToRequestBody, context);
             },
             reference: () =>
-                context.endpointTypeSchemas
+                context.sdkEndpointTypeSchemas
                     .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context),
             _unknown: () => {
@@ -289,8 +289,8 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         });
     }
 
-    protected getGeneratedEndpointTypeSchemas(context: SdkClientClassContext): GeneratedEndpointTypeSchemas {
-        return context.endpointTypeSchemas.getGeneratedEndpointTypeSchemas(
+    protected getGeneratedEndpointTypeSchemas(context: SdkClientClassContext): GeneratedSdkEndpointTypeSchemas {
+        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(
             this.service.name.fernFilepath,
             this.endpoint.name
         );

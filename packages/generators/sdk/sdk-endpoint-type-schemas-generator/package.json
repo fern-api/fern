@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/express-generator",
+  "name": "@fern-typescript/sdk-endpoint-type-schemas-generator",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/express/generator"
+    "directory": "packages/generators/sdk/sdk-endpoint-type-schemas-generator"
   },
   "files": [
     "lib"
@@ -26,19 +26,12 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
-    "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-fern/ir-model": "0.0.741",
+    "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
-    "@fern-typescript/express-endpoint-type-schemas-generator": "workspace:*",
-    "@fern-typescript/express-inlined-request-body-generator": "workspace:*",
-    "@fern-typescript/express-inlined-request-schema-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
-    "@fern-typescript/type-generator": "workspace:*",
-    "@fern-typescript/type-reference-converters": "workspace:*",
-    "@fern-typescript/type-reference-example-generator": "workspace:*",
-    "@fern-typescript/type-schema-generator": "workspace:*",
-    "memfs": "^3.4.1",
+    "@fern-typescript/union-schema-generator": "workspace:*",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

@@ -6,7 +6,6 @@
     { "path": "../../../commons" },
     { "path": "../../../contexts" },
     { "path": "../../../resolvers" },
-    { "path": "../../model/endpoint-type-schemas-generator" },
     { "path": "../../model/type-generator" },
     { "path": "../../model/type-reference-converters" },
     { "path": "../../model/type-reference-example-generator" },
@@ -18,6 +17,7 @@
     { "path": "../error-schema-generator" },
     { "path": "../generic-error-generators" },
     { "path": "../request-wrapper-generator" },
+    { "path": "../sdk-endpoint-type-schemas-generator" },
     { "path": "../sdk-inlined-request-body-schema-generator" }
   ]
 }

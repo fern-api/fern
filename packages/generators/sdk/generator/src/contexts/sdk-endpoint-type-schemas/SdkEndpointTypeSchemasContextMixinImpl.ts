@@ -1,43 +1,44 @@
 import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
-import { EndpointErrorUnionContextMixin, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
-import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
+import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContextMixin } from "@fern-typescript/contexts";
 import { ServiceResolver } from "@fern-typescript/resolvers";
+import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
-export declare namespace EndpointErrorUnionContextMixinImpl {
+export declare namespace SdkEndpointTypeSchemasContextMixinImpl {
     export interface Init {
+        sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
+        sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
+        serviceResolver: ServiceResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
-        endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
-        endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
-        serviceResolver: ServiceResolver;
     }
 }
 
-export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionContextMixin {
+export class SdkEndpointTypeSchemasContextMixinImpl implements SdkEndpointTypeSchemasContextMixin {
+    private sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
+    private serviceResolver: ServiceResolver;
+    private sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
-    private endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
-    private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
-    private serviceResolver: ServiceResolver;
 
     constructor({
         sourceFile,
         importsManager,
-        endpointErrorUnionDeclarationReferencer,
-        endpointErrorUnionGenerator,
+        sdkEndpointTypeSchemasGenerator,
+        sdkEndpointSchemaDeclarationReferencer,
         serviceResolver,
-    }: EndpointErrorUnionContextMixinImpl.Init) {
+    }: SdkEndpointTypeSchemasContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
-        this.endpointErrorUnionDeclarationReferencer = endpointErrorUnionDeclarationReferencer;
-        this.endpointErrorUnionGenerator = endpointErrorUnionGenerator;
         this.serviceResolver = serviceResolver;
+        this.sdkEndpointTypeSchemasGenerator = sdkEndpointTypeSchemasGenerator;
+        this.sdkEndpointSchemaDeclarationReferencer = sdkEndpointSchemaDeclarationReferencer;
     }
 
-    public getGeneratedEndpointErrorUnion(service: FernFilepath, endpointName: Name): GeneratedEndpointErrorUnion {
+    public getGeneratedEndpointTypeSchemas(service: FernFilepath, endpointName: Name): GeneratedSdkEndpointTypeSchemas {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         if (serviceDeclaration.originalService == null) {
             throw new Error("Service is a wrapper");
@@ -48,13 +49,13 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
-        return this.endpointErrorUnionGenerator.generateEndpointErrorUnion({
+        return this.sdkEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
             service: serviceDeclaration.originalService,
             endpoint,
         });
     }
 
-    public getReferenceToEndpointTypeExport(
+    public getReferenceToEndpointTypeSchemaExport(
         service: FernFilepath,
         endpointName: Name,
         export_: string | string[]
@@ -69,11 +70,11 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
-        return this.endpointErrorUnionDeclarationReferencer.getReferenceToEndpointExport({
+        return this.sdkEndpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
             name: { service, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            importStrategy: { type: "fromRoot" },
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
             subImport: typeof export_ === "string" ? [export_] : export_,
         });
     }

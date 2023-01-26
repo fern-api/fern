@@ -8,19 +8,19 @@ import {
     TimeoutSdkErrorContextMixin,
 } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
-import { EndpointTypeSchemasGenerator } from "@fern-typescript/endpoint-type-schemas-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { EndpointErrorUnionDeclarationReferencer } from "../../declaration-referencers/EndpointErrorUnionDeclarationReferencer";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
@@ -31,10 +31,10 @@ import { TimeoutSdkErrorDeclarationReferencer } from "../../declaration-referenc
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
 import { EndpointErrorUnionContextMixinImpl } from "../endpoint-error-union/EndpointErrorUnionContextMixinImpl";
-import { EndpointTypeSchemasContextMixinImpl } from "../endpoint-type-schemas/EndpointTypeSchemasContextMixinImpl";
 import { EnvironmentsContextMixinImpl } from "../environments/EnvironmentsContextMixinImpl";
 import { GenericAPISdkErrorContextMixinImpl } from "../generic-api-sdk-error/GenericAPISdkErrorContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "../request-wrapper/RequestWrapperContextMixinImpl";
+import { SdkEndpointTypeSchemasContextMixinImpl } from "../sdk-endpoint-type-schemas/SdkEndpointTypeSchemasContextMixinImpl";
 import { SdkErrorSchemaContextMixinImpl } from "../sdk-error-schema/SdkErrorSchemaContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "../sdk-error/SdkErrorContextMixinImpl";
 import { SdkInlinedRequestBodySchemaContextMixinImpl } from "../sdk-inlined-request-body-schema/SdkInlinedRequestBodySchemaContextMixinImpl";
@@ -57,16 +57,16 @@ export declare namespace SdkClientClassContextImpl {
         sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
-        endpointErrorUnionDeclarationReferencer: EndpointErrorUnionDeclarationReferencer;
-        endpointSchemaDeclarationReferencer: EndpointErrorUnionDeclarationReferencer;
+        endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
+        sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         requestWrapperGenerator: RequestWrapperGenerator;
         sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
         sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
-        endpointTypeSchemasGenerator: EndpointTypeSchemasGenerator;
+        sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
-        SdkClientClassGenerator: SdkClientClassGenerator;
+        sdkClientClassGenerator: SdkClientClassGenerator;
         serviceResolver: ServiceResolver;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
@@ -85,7 +85,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
     public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContextMixin;
-    public readonly endpointTypeSchemas: EndpointTypeSchemasContextMixinImpl;
+    public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextMixinImpl;
     public readonly service: SdkClientClassContextMixin;
     public readonly environments: EnvironmentsContextMixin;
     public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
@@ -105,16 +105,16 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
         sdkErrorSchemaDeclarationReferencer,
         sdkErrorSchemaGenerator,
         endpointErrorUnionDeclarationReferencer,
-        endpointSchemaDeclarationReferencer,
+        sdkEndpointSchemaDeclarationReferencer,
         endpointErrorUnionGenerator,
-        endpointTypeSchemasGenerator,
+        sdkEndpointTypeSchemasGenerator,
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         sdkInlinedRequestBodySchemaGenerator,
         serviceResolver,
         sdkClientClassDeclarationReferencer,
-        SdkClientClassGenerator,
+        sdkClientClassGenerator,
         environmentsGenerator,
         environmentsDeclarationReferencer,
         genericAPISdkErrorDeclarationReferencer,
@@ -179,10 +179,10 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             sdkInlinedRequestBodySchemaDeclarationReferencer,
             sdkInlinedRequestBodySchemaGenerator,
         });
-        this.endpointTypeSchemas = new EndpointTypeSchemasContextMixinImpl({
+        this.sdkEndpointTypeSchemas = new SdkEndpointTypeSchemasContextMixinImpl({
             serviceResolver,
-            endpointTypeSchemasGenerator,
-            endpointSchemaDeclarationReferencer,
+            sdkEndpointTypeSchemasGenerator,
+            sdkEndpointSchemaDeclarationReferencer,
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
         });
@@ -190,7 +190,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
             sdkClientClassDeclarationReferencer,
-            SdkClientClassGenerator,
+            sdkClientClassGenerator,
             serviceResolver,
         });
         this.environments = new EnvironmentsContextMixinImpl({

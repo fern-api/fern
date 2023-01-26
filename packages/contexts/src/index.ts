@@ -1,14 +1,15 @@
 export * from "./base";
 export * from "./commons";
 export * from "./endpoint-error-union";
-export * from "./endpoint-type-schemas";
 export * from "./environments";
+export * from "./express-endpoint-type-schemas";
 export * from "./express-inlined-request-body";
 export * from "./express-inlined-request-body-schema";
 export { type GeneratorContext } from "./GeneratorContext";
 export * from "./generic-api-sdk-error";
 export * from "./request-wrapper";
 export * from "./sdk-client-class";
+export * from "./sdk-endpoint-type-schemas";
 export * from "./sdk-error";
 export * from "./sdk-error-schema";
 export * from "./sdk-inlined-request-body-schema";

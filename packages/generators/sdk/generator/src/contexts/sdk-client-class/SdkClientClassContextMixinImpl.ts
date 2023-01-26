@@ -11,7 +11,7 @@ export declare namespace SdkClientClassContextMixinImpl {
         sourceFile: SourceFile;
         importsManager: ImportsManager;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
-        SdkClientClassGenerator: SdkClientClassGenerator;
+        sdkClientClassGenerator: SdkClientClassGenerator;
         serviceResolver: ServiceResolver;
     }
 }
@@ -19,26 +19,26 @@ export declare namespace SdkClientClassContextMixinImpl {
 export class SdkClientClassContextMixinImpl implements SdkClientClassContextMixin {
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
-    private SdkClientClassGenerator: SdkClientClassGenerator;
+    private sdkClientClassGenerator: SdkClientClassGenerator;
     private sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
     private serviceResolver: ServiceResolver;
 
     constructor({
         sourceFile,
         importsManager,
-        SdkClientClassGenerator,
+        sdkClientClassGenerator,
         sdkClientClassDeclarationReferencer,
         serviceResolver,
     }: SdkClientClassContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
-        this.SdkClientClassGenerator = SdkClientClassGenerator;
+        this.sdkClientClassGenerator = sdkClientClassGenerator;
         this.sdkClientClassDeclarationReferencer = sdkClientClassDeclarationReferencer;
         this.serviceResolver = serviceResolver;
     }
 
     public getGeneratedSdkClientClass(service: FernFilepath): GeneratedSdkClientClass {
-        return this.SdkClientClassGenerator.generateService({
+        return this.sdkClientClassGenerator.generateService({
             service: this.serviceResolver.getServiceDeclarationFromName(service),
             serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(service),
         });

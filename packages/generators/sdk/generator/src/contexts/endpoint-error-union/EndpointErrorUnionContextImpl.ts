@@ -4,7 +4,7 @@ import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/r
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { EndpointErrorUnionDeclarationReferencer } from "../../declaration-referencers/EndpointErrorUnionDeclarationReferencer";
+import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
@@ -21,7 +21,7 @@ export declare namespace EndpointErrorUnionContextImpl {
         errorResolver: ErrorResolver;
         sdkErrorGenerator: SdkErrorGenerator;
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
-        endpointErrorUnionDeclarationReferencer: EndpointErrorUnionDeclarationReferencer;
+        endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         serviceResolver: ServiceResolver;
     }
