@@ -1,0 +1,10 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../express-inlined-request-body-generator/lib",
+    "rootDir": "../express-inlined-request-body-generator/src"
+  },
+  "include": ["../express-inlined-request-body-generator/src"],
+  "references": [{ "path": "../../../commons" }, { "path": "../../../contexts" }]
+}

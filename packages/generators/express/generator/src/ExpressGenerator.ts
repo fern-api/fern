@@ -11,14 +11,17 @@ import {
     writeProjectToVolume,
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { TypeResolver } from "@fern-typescript/resolvers";
+import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
+import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project, SourceFile } from "ts-morph";
-import { TypeContextImpl } from "./contexts/TypeContextImpl";
-import { TypeSchemaContextImpl } from "./contexts/TypeSchemaContextImpl";
+import { ExpressInlinedRequestBodyContextImpl } from "./contexts/express-inlined-request-body/ExpressInlinedRequestBodyContextImpl";
+import { TypeSchemaContextImpl } from "./contexts/type-schema/TypeSchemaContextImpl";
+import { TypeContextImpl } from "./contexts/type/TypeContextImpl";
+import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 
 const FILE_HEADER = `/**
@@ -49,13 +52,16 @@ export class ExpressGenerator {
     private dependencyManager = new DependencyManager();
     private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
+    private serviceResolver: ServiceResolver;
 
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
+    private expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
+    private expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
 
     private generatePackage: () => Promise<void>;
 
@@ -71,6 +77,7 @@ export class ExpressGenerator {
         });
         this.rootDirectory = project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
+        this.serviceResolver = new ServiceResolver(intermediateRepresentation);
 
         const apiDirectory: ExportedDirectory[] = [
             {
@@ -93,10 +100,15 @@ export class ExpressGenerator {
             containingDirectory: schemaDirectory,
             apiName,
         });
+        this.expressInlinedRequestBodyDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            apiName,
+        });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.typeSchemaGenerator = new TypeSchemaGenerator();
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
+        this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
 
         this.generatePackage = async () => {
             await writeProjectToVolume(project, volume, "/");
@@ -106,6 +118,7 @@ export class ExpressGenerator {
     public async generate(): Promise<void> {
         this.generateTypeDeclarations();
         this.generateTypeSchemas();
+        this.generateInlinedRequestBodies();
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
@@ -161,6 +174,41 @@ export class ExpressGenerator {
                         .writeToFile(typeSchemaContext);
                 },
             });
+        }
+    }
+
+    private generateInlinedRequestBodies() {
+        for (const service of this.intermediateRepresentation.services) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    this.withSourceFile({
+                        filepath: this.expressInlinedRequestBodyDeclarationReferencer.getExportedFilepath({
+                            service: service.name.fernFilepath,
+                            endpoint,
+                        }),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = new ExpressInlinedRequestBodyContextImpl({
+                                sourceFile,
+                                coreUtilitiesManager: this.coreUtilitiesManager,
+                                dependencyManager: this.dependencyManager,
+                                fernConstants: this.intermediateRepresentation.constants,
+                                importsManager,
+                                typeResolver: this.typeResolver,
+                                typeDeclarationReferencer: this.typeDeclarationReferencer,
+                                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                                typeGenerator: this.typeGenerator,
+                                expressInlinedRequestBodyDeclarationReferencer:
+                                    this.expressInlinedRequestBodyDeclarationReferencer,
+                                expressInlinedRequestBodyGenerator: this.expressInlinedRequestBodyGenerator,
+                                serviceResolver: this.serviceResolver,
+                            });
+                            context.expressInlinedRequestBody
+                                .getGeneratedInlinedRequestBody(service.name.fernFilepath, endpoint.name)
+                                .writeToFile(context);
+                        },
+                    });
+                }
+            }
         }
     }
 

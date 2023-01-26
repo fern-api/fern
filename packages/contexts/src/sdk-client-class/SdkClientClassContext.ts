@@ -3,10 +3,10 @@ import { WithEndpointErrorUnionContextMixin } from "../endpoint-error-union/Endp
 import { WithEndpointTypeSchemasContextMixin } from "../endpoint-type-schemas/EndpointTypeSchemasContextMixin";
 import { WithEnvironmentsContextMixin } from "../environments/EnvironmentsContextMixin";
 import { WithGenericAPISdkErrorContextMixin } from "../generic-api-sdk-error/GenericAPISdkErrorContextMixin";
-import { WithInlinedRequestBodySchemaContextMixin } from "../inlined-request-body-schema/InlinedRequestBodySchemaContextMixin";
 import { WithRequestWrapperContextMixin } from "../request-wrapper/RequestWrapperContextMixin";
 import { WithSdkErrorSchemaContextMixin } from "../sdk-error-schema/SdkErrorSchemaContextMixin";
 import { WithSdkErrorContextMixin } from "../sdk-error/SdkErrorContextMixin";
+import { WithSdkInlinedRequestBodySchemaContextMixin } from "../sdk-inlined-request-body-schema/SdkInlinedRequestBodySchemaContextMixin";
 import { WithTimeoutSdkErrorContextMixin } from "../timeout-sdk-error/TimeoutSdkErrorContextMixin";
 import { WithTypeSchemaContextMixin } from "../type-schema/TypeSchemaContextMixin";
 import { WithTypeContextMixin } from "../type/TypeContextMixin";
@@ -25,4 +25,4 @@ export interface SdkClientClassContext
         WithEnvironmentsContextMixin,
         WithGenericAPISdkErrorContextMixin,
         WithTimeoutSdkErrorContextMixin,
-        WithInlinedRequestBodySchemaContextMixin {}
+        WithSdkInlinedRequestBodySchemaContextMixin {}

@@ -275,7 +275,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
 
         return HttpRequestBody._visit(this.endpoint.requestBody, {
             inlinedRequestBody: () => {
-                return context.inlinedRequestBodySchema
+                return context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.service.name.fernFilepath, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
             },

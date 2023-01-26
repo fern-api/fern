@@ -6,18 +6,18 @@
     { "path": "../../../commons" },
     { "path": "../../../contexts" },
     { "path": "../../../resolvers" },
-    { "path": "../../model/inlined-request-body-schema-generator" },
-    { "path": "../../model/request-wrapper-generator" },
+    { "path": "../../model/endpoint-type-schemas-generator" },
     { "path": "../../model/type-generator" },
     { "path": "../../model/type-reference-converters" },
     { "path": "../../model/type-reference-example-generator" },
     { "path": "../../model/type-schema-generator" },
     { "path": "../client-class-generator" },
     { "path": "../endpoint-error-union-generator" },
-    { "path": "../endpoint-type-schemas-generator" },
     { "path": "../environments-generator" },
     { "path": "../error-generator" },
     { "path": "../error-schema-generator" },
-    { "path": "../generic-error-generators" }
+    { "path": "../generic-error-generators" },
+    { "path": "../request-wrapper-generator" },
+    { "path": "../sdk-inlined-request-body-schema-generator" }
   ]
 }

@@ -3,13 +3,10 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../../abstract-schema-generator" },
     { "path": "../../../commons" },
     { "path": "../../../contexts" },
     { "path": "../../../resolvers" },
-    { "path": "../../model/type-generator" },
-    { "path": "../../model/type-reference-converters" },
-    { "path": "../../model/type-reference-example-generator" },
-    { "path": "../../model/type-schema-generator" },
-    { "path": "../express-inlined-request-body-generator" }
+    { "path": "../union-schema-generator" }
   ]
 }
