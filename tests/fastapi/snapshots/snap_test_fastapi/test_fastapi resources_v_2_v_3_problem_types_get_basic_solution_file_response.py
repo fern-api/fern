@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -166,3 +167,4 @@ class GetBasicSolutionFileResponse(pydantic.BaseModel):
         frozen = True
         allow_population_by_field_name = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}

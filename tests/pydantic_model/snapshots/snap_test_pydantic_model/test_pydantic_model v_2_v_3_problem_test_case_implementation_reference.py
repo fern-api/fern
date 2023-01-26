@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -111,6 +112,7 @@ class TestCaseImplementationReference(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _TestCaseImplementationReference:
@@ -120,12 +122,14 @@ class _TestCaseImplementationReference:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Implementation(TestCaseImplementation):
         type: typing_extensions.Literal["implementation"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _TestCaseImplementationReference.Implementation.update_forward_refs(

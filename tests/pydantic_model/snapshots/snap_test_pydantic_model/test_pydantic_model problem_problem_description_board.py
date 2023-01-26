@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -123,6 +124,7 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _ProblemDescriptionBoard:
@@ -132,6 +134,7 @@ class _ProblemDescriptionBoard:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Variable(pydantic.BaseModel):
         type: typing_extensions.Literal["variable"]
@@ -139,6 +142,7 @@ class _ProblemDescriptionBoard:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class TestCaseId(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseId"]
@@ -146,6 +150,7 @@ class _ProblemDescriptionBoard:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 ProblemDescriptionBoard.update_forward_refs()

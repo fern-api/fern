@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -98,6 +99,7 @@ class ErrorInfo(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _ErrorInfo:
@@ -106,18 +108,21 @@ class _ErrorInfo:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class RuntimeError(resources_submission_types_runtime_error_RuntimeError):
         type: typing_extensions.Literal["runtimeError"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class InternalError(resources_submission_types_internal_error_InternalError):
         type: typing_extensions.Literal["internalError"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 ErrorInfo.update_forward_refs()

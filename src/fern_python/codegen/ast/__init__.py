@@ -15,6 +15,7 @@ from .nodes import (
     CodeWriter,
     CodeWriterFunction,
     Declaration,
+    DictionaryInstantiation,
     Docstring,
     Expression,
     ExpressionSpread,
@@ -70,4 +71,5 @@ __all__ = [
     "FunctionSignature",
     "Docstring",
     "AstNodeMetadata",
+    "DictionaryInstantiation",
 ]

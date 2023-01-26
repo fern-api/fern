@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -86,6 +87,7 @@ class CreateProblemResponse(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _CreateProblemResponse:
@@ -95,6 +97,7 @@ class _CreateProblemResponse:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Error(pydantic.BaseModel):
         type: typing_extensions.Literal["error"]
@@ -102,6 +105,7 @@ class _CreateProblemResponse:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 CreateProblemResponse.update_forward_refs()

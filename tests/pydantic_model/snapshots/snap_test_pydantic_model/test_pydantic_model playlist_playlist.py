@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -280,3 +281,4 @@ class Playlist(PlaylistCreateRequest):
     class Config:
         frozen = True
         allow_population_by_field_name = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}

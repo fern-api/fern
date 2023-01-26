@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -72,6 +73,7 @@ class CreateProblemError(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _CreateProblemError:
@@ -81,6 +83,7 @@ class _CreateProblemError:
         class Config:
             frozen = True
             allow_population_by_field_name = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 CreateProblemError.update_forward_refs()

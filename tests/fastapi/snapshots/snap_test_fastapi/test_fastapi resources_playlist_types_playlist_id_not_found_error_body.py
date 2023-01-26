@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -81,6 +82,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _PlaylistIdNotFoundErrorBody:
@@ -90,6 +92,7 @@ class _PlaylistIdNotFoundErrorBody:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 PlaylistIdNotFoundErrorBody.update_forward_refs()

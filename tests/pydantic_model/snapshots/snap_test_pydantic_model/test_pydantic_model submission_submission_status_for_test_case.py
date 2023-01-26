@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -132,6 +133,7 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _SubmissionStatusForTestCase:
@@ -140,6 +142,7 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class GradedV2(pydantic.BaseModel):
         type: typing_extensions.Literal["gradedV2"]
@@ -147,12 +150,14 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Traced(TracedTestCase):
         type: typing_extensions.Literal["traced"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _SubmissionStatusForTestCase.Graded.update_forward_refs(

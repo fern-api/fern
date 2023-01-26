@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -83,6 +84,7 @@ class ExceptionV2(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _ExceptionV2:
@@ -91,12 +93,14 @@ class _ExceptionV2:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Timeout(pydantic.BaseModel):
         type: typing_extensions.Literal["timeout"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 ExceptionV2.update_forward_refs()

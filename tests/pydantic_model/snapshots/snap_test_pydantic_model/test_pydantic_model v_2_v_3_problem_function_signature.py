@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -126,6 +127,7 @@ class FunctionSignature(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _FunctionSignature:
@@ -134,18 +136,21 @@ class _FunctionSignature:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class NonVoid(NonVoidFunctionSignature):
         type: typing_extensions.Literal["nonVoid"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing_extensions.Literal["voidThatTakesActualResult"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _FunctionSignature.Void.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

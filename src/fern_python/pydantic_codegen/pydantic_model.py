@@ -37,6 +37,7 @@ class PydanticModel:
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._forbid_extra_fields = forbid_extra_fields
+        self._serialize_datetime = False
         self.frozen = True
         self.name = name
 
@@ -276,6 +277,27 @@ class PydanticModel:
                     initializer=Pydantic.Extra.forbid,
                 )
             )
+
+        config.add_class_var(
+            AST.VariableDeclaration(
+                name="json_encoders",
+                initializer=AST.Expression(
+                    AST.DictionaryInstantiation(
+                        entries=[
+                            (
+                                AST.Expression(
+                                    AST.ClassReference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in("datetime"), alias="dt"),
+                                        qualified_name_excluding_import=("datetime",),
+                                    )
+                                ),
+                                AST.Expression("lambda v: v.isoformat()"),
+                            )
+                        ]
+                    ),
+                ),
+            )
+        )
 
         if len(config.statements) > 0:
             self._class_declaration.add_class(declaration=config)

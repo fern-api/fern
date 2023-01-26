@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -152,6 +153,7 @@ class DebugMapValue(pydantic.BaseModel):
         frozen = True
         allow_population_by_field_name = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -107,6 +108,7 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _TestCaseImplementationDescriptionBoard:
@@ -116,6 +118,7 @@ class _TestCaseImplementationDescriptionBoard:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ParamId(pydantic.BaseModel):
         type: typing_extensions.Literal["paramId"]
@@ -123,6 +126,7 @@ class _TestCaseImplementationDescriptionBoard:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 TestCaseImplementationDescriptionBoard.update_forward_refs()

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -268,6 +269,7 @@ class DebugVariableValue(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
@@ -281,6 +283,7 @@ class _DebugVariableValue:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class BooleanValue(pydantic.BaseModel):
         type: typing_extensions.Literal["booleanValue"]
@@ -288,6 +291,7 @@ class _DebugVariableValue:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class DoubleValue(pydantic.BaseModel):
         type: typing_extensions.Literal["doubleValue"]
@@ -295,6 +299,7 @@ class _DebugVariableValue:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class StringValue(pydantic.BaseModel):
         type: typing_extensions.Literal["stringValue"]
@@ -302,6 +307,7 @@ class _DebugVariableValue:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class CharValue(pydantic.BaseModel):
         type: typing_extensions.Literal["charValue"]
@@ -309,12 +315,14 @@ class _DebugVariableValue:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class MapValue(DebugMapValue):
         type: typing_extensions.Literal["mapValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ListValue(pydantic.BaseModel):
         type: typing_extensions.Literal["listValue"]
@@ -322,42 +330,49 @@ class _DebugVariableValue:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
         type: typing_extensions.Literal["binaryTreeNodeValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["singlyLinkedListNodeValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["doublyLinkedListNodeValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class UndefinedValue(pydantic.BaseModel):
         type: typing_extensions.Literal["undefinedValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class NullValue(pydantic.BaseModel):
         type: typing_extensions.Literal["nullValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class GenericValue(commons_generic_value_GenericValue):
         type: typing_extensions.Literal["genericValue"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _DebugVariableValue.MapValue.update_forward_refs(

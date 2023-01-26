@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -179,6 +180,7 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _TestSubmissionUpdateInfo:
@@ -188,12 +190,14 @@ class _TestSubmissionUpdateInfo:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
@@ -201,24 +205,28 @@ class _TestSubmissionUpdateInfo:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class GradedTestCase(GradedTestCaseUpdate):
         type: typing_extensions.Literal["gradedTestCase"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class RecordedTestCase(RecordedTestCaseUpdate):
         type: typing_extensions.Literal["recordedTestCase"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _TestSubmissionUpdateInfo.GradedTestCase.update_forward_refs(

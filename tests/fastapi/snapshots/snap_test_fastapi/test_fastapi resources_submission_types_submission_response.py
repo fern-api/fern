@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -182,6 +183,7 @@ class SubmissionResponse(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _SubmissionResponse:
@@ -190,6 +192,7 @@ class _SubmissionResponse:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ProblemInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["problemInitialized"]
@@ -197,18 +200,21 @@ class _SubmissionResponse:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class WorkspaceInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["workspaceInitialized"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ServerErrored(ExceptionInfo):
         type: typing_extensions.Literal["serverErrored"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class CodeExecutionUpdate(pydantic.BaseModel):
         type: typing_extensions.Literal["codeExecutionUpdate"]
@@ -216,12 +222,14 @@ class _SubmissionResponse:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Terminated(TerminatedResponse):
         type: typing_extensions.Literal["terminated"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 SubmissionResponse.update_forward_refs()

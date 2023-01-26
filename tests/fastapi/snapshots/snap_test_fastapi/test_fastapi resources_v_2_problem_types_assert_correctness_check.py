@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -93,6 +94,7 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _AssertCorrectnessCheck:
@@ -101,12 +103,14 @@ class _AssertCorrectnessCheck:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing_extensions.Literal["custom"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _AssertCorrectnessCheck.Custom.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

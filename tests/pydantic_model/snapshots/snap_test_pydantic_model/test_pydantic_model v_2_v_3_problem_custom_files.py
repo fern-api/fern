@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -90,6 +91,7 @@ class CustomFiles(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _CustomFiles:
@@ -98,6 +100,7 @@ class _CustomFiles:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Custom(pydantic.BaseModel):
         type: typing_extensions.Literal["custom"]
@@ -105,6 +108,7 @@ class _CustomFiles:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _CustomFiles.Basic.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

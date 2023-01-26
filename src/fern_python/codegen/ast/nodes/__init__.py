@@ -13,6 +13,7 @@ from .declarations import (
 from .docstring import Docstring
 from .expressions import (
     ClassInstantiation,
+    DictionaryInstantiation,
     Expression,
     ExpressionSpread,
     FunctionInvocation,
@@ -40,4 +41,5 @@ __all__ = [
     "ReferenceNode",
     "FunctionSignature",
     "Docstring",
+    "DictionaryInstantiation",
 ]

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
@@ -95,6 +96,7 @@ class SubmissionStatusV2(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
+        json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 class _SubmissionStatusV2:
@@ -103,12 +105,14 @@ class _SubmissionStatusV2:
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing_extensions.Literal["workspace"]
 
         class Config:
             frozen = True
+            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _SubmissionStatusV2.Test.update_forward_refs(
