@@ -11,6 +11,7 @@ import typing_extensions
 from ...commons.list_type import ListType
 from ...commons.map_type import MapType
 from ...commons.variable_type import VariableType
+from ...core.datetime_utils import serialize_datetime
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
@@ -93,7 +94,7 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _AssertCorrectnessCheck:
@@ -102,14 +103,12 @@ class _AssertCorrectnessCheck:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing_extensions.Literal["custom"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _AssertCorrectnessCheck.Custom.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

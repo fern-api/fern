@@ -10,6 +10,7 @@ import typing_extensions
 
 from ..commons.problem_id import ProblemId
 from ..commons.test_case import TestCase
+from ..core.datetime_utils import serialize_datetime
 from .test_submission_status import TestSubmissionStatus
 
 
@@ -338,4 +339,4 @@ class TestSubmissionState(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

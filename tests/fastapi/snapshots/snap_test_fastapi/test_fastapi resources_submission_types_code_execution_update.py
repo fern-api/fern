@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from ...commons.types.key_value_pair import KeyValuePair
 from ...commons.types.map_value import MapValue
 from ...commons.types.variable_value import VariableValue
@@ -250,7 +251,7 @@ class CodeExecutionUpdate(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CodeExecutionUpdate:
@@ -259,77 +260,66 @@ class _CodeExecutionUpdate:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Running(RunningResponse):
         type: typing_extensions.Literal["running"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Errored(ErroredResponse):
         type: typing_extensions.Literal["errored"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Stopped(StoppedResponse):
         type: typing_extensions.Literal["stopped"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Graded(GradedResponse):
         type: typing_extensions.Literal["graded"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class GradedV2(GradedResponseV2):
         type: typing_extensions.Literal["gradedV2"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class WorkspaceRan(WorkspaceRanResponse):
         type: typing_extensions.Literal["workspaceRan"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Recording(RecordingResponseNotification):
         type: typing_extensions.Literal["recording"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Recorded(RecordedResponseNotification):
         type: typing_extensions.Literal["recorded"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class InvalidRequest(InvalidRequestResponse):
         type: typing_extensions.Literal["invalidRequest"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Finished(FinishedResponse):
         type: typing_extensions.Literal["finished"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _CodeExecutionUpdate.Graded.update_forward_refs(

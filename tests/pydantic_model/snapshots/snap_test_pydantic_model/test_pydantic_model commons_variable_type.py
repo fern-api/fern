@@ -8,6 +8,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
+
 T_Result = typing.TypeVar("T_Result")
 
 
@@ -219,7 +221,7 @@ class VariableType(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 from .list_type import ListType as commons_list_type_ListType  # noqa: E402
@@ -232,70 +234,60 @@ class _VariableType:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class DoubleType(pydantic.BaseModel):
         type: typing_extensions.Literal["doubleType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class BooleanType(pydantic.BaseModel):
         type: typing_extensions.Literal["booleanType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class StringType(pydantic.BaseModel):
         type: typing_extensions.Literal["stringType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class CharType(pydantic.BaseModel):
         type: typing_extensions.Literal["charType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ListType(commons_list_type_ListType):
         type: typing_extensions.Literal["listType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class MapType(commons_map_type_MapType):
         type: typing_extensions.Literal["mapType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class BinaryTreeType(pydantic.BaseModel):
         type: typing_extensions.Literal["binaryTreeType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class SinglyLinkedListType(pydantic.BaseModel):
         type: typing_extensions.Literal["singlyLinkedListType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class DoublyLinkedListType(pydantic.BaseModel):
         type: typing_extensions.Literal["doublyLinkedListType"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _VariableType.ListType.update_forward_refs(

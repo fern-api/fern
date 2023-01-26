@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.language import Language
+from ..core.datetime_utils import serialize_datetime
 from .problem_files import ProblemFiles
 
 
@@ -161,4 +162,4 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

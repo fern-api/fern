@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .exception_info import ExceptionInfo
 
 T_Result = typing.TypeVar("T_Result")
@@ -84,7 +85,7 @@ class ExceptionV2(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _ExceptionV2:
@@ -93,14 +94,12 @@ class _ExceptionV2:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Timeout(pydantic.BaseModel):
         type: typing_extensions.Literal["timeout"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 ExceptionV2.update_forward_refs()

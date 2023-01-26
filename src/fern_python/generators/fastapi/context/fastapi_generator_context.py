@@ -21,8 +21,9 @@ class FastApiGeneratorContext(ABC):
         self.generator_config = generator_config
         self.filepath_creator = FastApiFilepathCreator(ir=ir, generator_config=generator_config)
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
-            intermediate_representation=ir,
+            ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(filepath_creator=self.filepath_creator),
+            generator_config=generator_config,
         )
         self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
 

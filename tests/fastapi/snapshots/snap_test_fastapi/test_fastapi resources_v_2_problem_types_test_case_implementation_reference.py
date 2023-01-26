@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from .....core.datetime_utils import serialize_datetime
 from ....commons.types.list_type import ListType
 from ....commons.types.map_type import MapType
 from ....commons.types.variable_type import VariableType
@@ -113,7 +114,7 @@ class TestCaseImplementationReference(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _TestCaseImplementationReference:
@@ -123,14 +124,12 @@ class _TestCaseImplementationReference:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Implementation(TestCaseImplementation):
         type: typing_extensions.Literal["implementation"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _TestCaseImplementationReference.Implementation.update_forward_refs(

@@ -11,6 +11,7 @@ import typing_extensions
 from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
 from ..commons.variable_value import VariableValue
+from ..core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
@@ -179,7 +180,7 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _TestSubmissionUpdateInfo:
@@ -189,14 +190,12 @@ class _TestSubmissionUpdateInfo:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
@@ -204,28 +203,24 @@ class _TestSubmissionUpdateInfo:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class GradedTestCase(GradedTestCaseUpdate):
         type: typing_extensions.Literal["gradedTestCase"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class RecordedTestCase(RecordedTestCaseUpdate):
         type: typing_extensions.Literal["recordedTestCase"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _TestSubmissionUpdateInfo.GradedTestCase.update_forward_refs(

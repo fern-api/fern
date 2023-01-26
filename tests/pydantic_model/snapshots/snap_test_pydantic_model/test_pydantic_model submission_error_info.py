@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .compile_error import CompileError as submission_compile_error_CompileError
 from .internal_error import InternalError as submission_internal_error_InternalError
 from .runtime_error import RuntimeError as submission_runtime_error_RuntimeError
@@ -98,7 +99,7 @@ class ErrorInfo(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _ErrorInfo:
@@ -107,21 +108,18 @@ class _ErrorInfo:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class RuntimeError(submission_runtime_error_RuntimeError):
         type: typing_extensions.Literal["runtimeError"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class InternalError(submission_internal_error_InternalError):
         type: typing_extensions.Literal["internalError"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 ErrorInfo.update_forward_refs()

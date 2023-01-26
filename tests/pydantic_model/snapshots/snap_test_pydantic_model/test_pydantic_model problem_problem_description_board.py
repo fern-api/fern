@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.variable_value import VariableValue
+from ..core.datetime_utils import serialize_datetime
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -124,7 +125,7 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _ProblemDescriptionBoard:
@@ -134,7 +135,6 @@ class _ProblemDescriptionBoard:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Variable(pydantic.BaseModel):
         type: typing_extensions.Literal["variable"]
@@ -142,7 +142,6 @@ class _ProblemDescriptionBoard:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class TestCaseId(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseId"]
@@ -150,7 +149,6 @@ class _ProblemDescriptionBoard:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 ProblemDescriptionBoard.update_forward_refs()

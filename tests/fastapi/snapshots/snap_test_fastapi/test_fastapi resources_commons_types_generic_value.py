@@ -8,6 +8,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
+
 
 class GenericValue(pydantic.BaseModel):
     stringified_type: typing.Optional[str] = pydantic.Field(alias="stringifiedType")
@@ -209,4 +211,4 @@ class GenericValue(pydantic.BaseModel):
         frozen = True
         allow_population_by_field_name = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

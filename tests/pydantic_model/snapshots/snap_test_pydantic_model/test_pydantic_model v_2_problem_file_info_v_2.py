@@ -8,6 +8,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ...core.datetime_utils import serialize_datetime
+
 
 class FileInfoV2(pydantic.BaseModel):
     filename: str
@@ -277,4 +279,4 @@ class FileInfoV2(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

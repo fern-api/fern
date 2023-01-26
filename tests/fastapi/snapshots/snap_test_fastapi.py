@@ -14,6 +14,8 @@ snapshots['test_fastapi core___init__'] = FileSnapshot('snap_test_fastapi/test_f
 
 snapshots['test_fastapi core_abstract_fern_service'] = FileSnapshot('snap_test_fastapi/test_fastapi core_abstract_fern_service.py')
 
+snapshots['test_fastapi core_datetime_utils'] = FileSnapshot('snap_test_fastapi/test_fastapi core_datetime_utils.py')
+
 snapshots['test_fastapi core_exceptions___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi core_exceptions___init__.py')
 
 snapshots['test_fastapi core_exceptions_fern_http_exception'] = FileSnapshot('snap_test_fastapi/test_fastapi core_exceptions_fern_http_exception.py')
@@ -32,6 +34,7 @@ snapshots['test_fastapi filepaths'] = [
     '__init__.py',
     'core/__init__.py',
     'core/abstract_fern_service.py',
+    'core/datetime_utils.py',
     'core/exceptions/__init__.py',
     'core/exceptions/fern_http_exception.py',
     'core/exceptions/handlers.py',

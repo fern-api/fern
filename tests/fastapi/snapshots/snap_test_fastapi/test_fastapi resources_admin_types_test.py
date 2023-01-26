@@ -8,6 +8,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
+
 T_Result = typing.TypeVar("T_Result")
 
 
@@ -70,7 +72,7 @@ class Test(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Test:
@@ -80,7 +82,6 @@ class _Test:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Or(pydantic.BaseModel):
         type: typing_extensions.Literal["or"]
@@ -88,7 +89,6 @@ class _Test:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 Test.update_forward_refs()

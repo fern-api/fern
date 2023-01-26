@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import abc
-import datetime as dt
 import http
 import typing
 import uuid
@@ -29,7 +28,6 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         class Config:
             frozen = True
             allow_population_by_field_name = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     def to_json_response(self) -> fastapi.responses.JSONResponse:
         body = FernHTTPException.Body(

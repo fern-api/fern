@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.debug_variable_value import DebugVariableValue
+from ..core.datetime_utils import serialize_datetime
 from .expression_location import ExpressionLocation
 from .stack_information import StackInformation
 from .submission_id import SubmissionId
@@ -481,4 +482,4 @@ class TraceResponseV2(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

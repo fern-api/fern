@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.problem_id import ProblemId
+from ..core.datetime_utils import serialize_datetime
 from .code_execution_update import CodeExecutionUpdate as submission_code_execution_update_CodeExecutionUpdate
 from .exception_info import ExceptionInfo
 from .terminated_response import TerminatedResponse
@@ -176,7 +177,7 @@ class SubmissionResponse(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionResponse:
@@ -185,7 +186,6 @@ class _SubmissionResponse:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ProblemInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["problemInitialized"]
@@ -193,21 +193,18 @@ class _SubmissionResponse:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class WorkspaceInitialized(pydantic.BaseModel):
         type: typing_extensions.Literal["workspaceInitialized"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class ServerErrored(ExceptionInfo):
         type: typing_extensions.Literal["serverErrored"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class CodeExecutionUpdate(pydantic.BaseModel):
         type: typing_extensions.Literal["codeExecutionUpdate"]
@@ -215,14 +212,12 @@ class _SubmissionResponse:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Terminated(TerminatedResponse):
         type: typing_extensions.Literal["terminated"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 SubmissionResponse.update_forward_refs()

@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ...commons.language import Language
+from ...core.datetime_utils import serialize_datetime
 from .basic_test_case_template import BasicTestCaseTemplate
 from .files import Files
 from .non_void_function_signature import NonVoidFunctionSignature
@@ -337,4 +338,4 @@ class BasicCustomFiles(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

@@ -5,11 +5,27 @@ from dataclasses import dataclass
 from typing import Callable, Optional, Set, Tuple
 
 import fern.ir.pydantic as ir_types
+from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
+from fern_python.generators.pydantic_model.pydantic_filepath_creator import (
+    PydanticFilepathCreator,
+)
+
+from ..core_utilities import CoreUtilities
 
 
 class PydanticGeneratorContext(ABC):
+    def __init__(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        generator_config: GeneratorConfig,
+    ):
+        self.ir = ir
+        self.generator_config = generator_config
+        self.filepath_creator = PydanticFilepathCreator(ir=ir, generator_config=generator_config)
+        self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
+
     @abstractmethod
     def get_type_hint_for_type_reference(
         self,

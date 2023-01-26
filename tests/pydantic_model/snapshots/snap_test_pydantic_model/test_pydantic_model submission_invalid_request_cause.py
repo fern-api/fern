@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as submission_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -146,7 +147,7 @@ class InvalidRequestCause(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _InvalidRequestCause:
@@ -155,21 +156,18 @@ class _InvalidRequestCause:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class CustomTestCasesUnsupported(submission_custom_test_cases_unsupported_CustomTestCasesUnsupported):
         type: typing_extensions.Literal["customTestCasesUnsupported"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing_extensions.Literal["unexpectedLanguage"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 InvalidRequestCause.update_forward_refs()

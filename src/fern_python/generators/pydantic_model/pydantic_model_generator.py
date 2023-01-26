@@ -22,19 +22,22 @@ class PydanticModelGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
+        context = PydanticGeneratorContextImpl(
+            ir=ir,
+            type_declaration_referencer=TypeDeclarationReferencer(
+                generator_config=generator_config,
+                ir=ir,
+            ),
+            generator_config=generator_config,
+        )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
             ir=ir,
             custom_config=custom_config,
             project=project,
-            context=PydanticGeneratorContextImpl(
-                intermediate_representation=ir,
-                type_declaration_referencer=TypeDeclarationReferencer(
-                    generator_config=generator_config,
-                    ir=ir,
-                ),
-            ),
+            context=context,
         )
+        context.core_utilities.copy_to_project(project=project)
 
     def generate_types(
         self,

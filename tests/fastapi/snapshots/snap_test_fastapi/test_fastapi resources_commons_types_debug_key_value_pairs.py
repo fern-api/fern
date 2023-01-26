@@ -8,6 +8,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
+
 
 class DebugKeyValuePairs(pydantic.BaseModel):
     key: DebugVariableValue
@@ -192,7 +194,7 @@ class DebugKeyValuePairs(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 from .debug_variable_value import DebugVariableValue  # noqa: E402

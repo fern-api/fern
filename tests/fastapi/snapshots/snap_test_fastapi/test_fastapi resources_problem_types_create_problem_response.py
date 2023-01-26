@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from ...commons.types.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
 
@@ -88,7 +89,7 @@ class CreateProblemResponse(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CreateProblemResponse:
@@ -98,7 +99,6 @@ class _CreateProblemResponse:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Error(pydantic.BaseModel):
         type: typing_extensions.Literal["error"]
@@ -106,7 +106,6 @@ class _CreateProblemResponse:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 CreateProblemResponse.update_forward_refs()

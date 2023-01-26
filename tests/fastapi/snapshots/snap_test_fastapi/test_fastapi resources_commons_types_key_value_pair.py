@@ -8,6 +8,8 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
+
 
 class KeyValuePair(pydantic.BaseModel):
     key: VariableValue
@@ -182,7 +184,7 @@ class KeyValuePair(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 from .variable_value import VariableValue  # noqa: E402

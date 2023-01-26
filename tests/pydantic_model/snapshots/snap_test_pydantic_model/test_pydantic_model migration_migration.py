@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .migration_status import MigrationStatus
 
 
@@ -183,4 +184,4 @@ class Migration(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

@@ -1,7 +1,9 @@
+from typing import Tuple
+
 import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
 
-from fern_python.codegen import Filepath
+from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
 from .pydantic_filepath_creator import PydanticFilepathCreator
@@ -18,6 +20,18 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
             ),
             file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),
         )
+
+    def _get_directories_for_fern_filepath(
+        self,
+        *,
+        fern_filepath: ir_types.FernFilepath,
+    ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
+        return (
+            Filepath.DirectoryFilepathPart(
+                module_name="resources",
+                export_strategy=ExportStrategy.EXPORT_ALL,
+            ),
+        ) + super()._get_directories_for_fern_filepath(fern_filepath=fern_filepath)
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
         return name.name.original_name

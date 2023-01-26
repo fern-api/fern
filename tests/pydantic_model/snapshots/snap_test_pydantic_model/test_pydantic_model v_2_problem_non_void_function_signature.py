@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ...commons.variable_type import VariableType
+from ...core.datetime_utils import serialize_datetime
 from .parameter import Parameter
 
 
@@ -216,4 +217,4 @@ class NonVoidFunctionSignature(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

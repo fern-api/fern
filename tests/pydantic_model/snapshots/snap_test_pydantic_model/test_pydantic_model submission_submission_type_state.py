@@ -11,6 +11,7 @@ import typing_extensions
 from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
 from ..commons.variable_value import VariableValue
+from ..core.datetime_utils import serialize_datetime
 from .test_submission_state import TestSubmissionState
 from .workspace_submission_state import WorkspaceSubmissionState
 
@@ -92,7 +93,7 @@ class SubmissionTypeState(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionTypeState:
@@ -101,14 +102,12 @@ class _SubmissionTypeState:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Workspace(WorkspaceSubmissionState):
         type: typing_extensions.Literal["workspace"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _SubmissionTypeState.Test.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

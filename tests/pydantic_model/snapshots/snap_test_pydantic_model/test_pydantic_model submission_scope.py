@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.debug_variable_value import DebugVariableValue
+from ..core.datetime_utils import serialize_datetime
 
 
 class Scope(pydantic.BaseModel):
@@ -142,4 +143,4 @@ class Scope(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

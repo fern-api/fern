@@ -11,6 +11,7 @@ import typing_extensions
 from ..commons.key_value_pair import KeyValuePair
 from ..commons.map_value import MapValue
 from ..commons.variable_value import VariableValue
+from ..core.datetime_utils import serialize_datetime
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
@@ -133,7 +134,7 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionStatusForTestCase:
@@ -142,7 +143,6 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class GradedV2(pydantic.BaseModel):
         type: typing_extensions.Literal["gradedV2"]
@@ -150,14 +150,12 @@ class _SubmissionStatusForTestCase:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Traced(TracedTestCase):
         type: typing_extensions.Literal["traced"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _SubmissionStatusForTestCase.Graded.update_forward_refs(

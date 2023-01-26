@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
@@ -158,7 +159,7 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _WorkspaceSubmissionStatus:
@@ -167,7 +168,6 @@ class _WorkspaceSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
@@ -175,7 +175,6 @@ class _WorkspaceSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
@@ -183,21 +182,18 @@ class _WorkspaceSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Ran(WorkspaceRunDetails):
         type: typing_extensions.Literal["ran"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Traced(WorkspaceRunDetails):
         type: typing_extensions.Literal["traced"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 WorkspaceSubmissionStatus.update_forward_refs()

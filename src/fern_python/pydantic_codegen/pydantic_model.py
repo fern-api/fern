@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import Iterable, List, Optional, Sequence, Type, Union
+from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
@@ -40,6 +40,7 @@ class PydanticModel:
         self._serialize_datetime = False
         self.frozen = True
         self.name = name
+        self.json_encoders: List[Tuple[AST.Expression, AST.Expression]] = []
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -187,6 +188,9 @@ class PydanticModel:
             ),
         )
 
+    def add_json_encoder(self, key: AST.Expression, value: AST.Expression) -> None:
+        self.json_encoders.append((key, value))
+
     def add_inner_class(self, inner_class: AST.ClassDeclaration) -> None:
         self._class_declaration.add_class(declaration=inner_class)
 
@@ -278,26 +282,15 @@ class PydanticModel:
                 )
             )
 
-        config.add_class_var(
-            AST.VariableDeclaration(
-                name="json_encoders",
-                initializer=AST.Expression(
-                    AST.DictionaryInstantiation(
-                        entries=[
-                            (
-                                AST.Expression(
-                                    AST.ClassReference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in("datetime"), alias="dt"),
-                                        qualified_name_excluding_import=("datetime",),
-                                    )
-                                ),
-                                AST.Expression("lambda v: v.isoformat()"),
-                            )
-                        ]
+        if len(self.json_encoders) > 0:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="json_encoders",
+                    initializer=AST.Expression(
+                        AST.DictionaryInstantiation(entries=self.json_encoders),
                     ),
-                ),
+                )
             )
-        )
 
         if len(config.statements) > 0:
             self._class_declaration.add_class(declaration=config)

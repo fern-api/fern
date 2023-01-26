@@ -11,6 +11,7 @@ import typing_extensions
 from ...commons.list_type import ListType
 from ...commons.map_type import MapType
 from ...commons.variable_type import VariableType
+from ...core.datetime_utils import serialize_datetime
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
@@ -127,7 +128,7 @@ class FunctionSignature(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _FunctionSignature:
@@ -136,21 +137,18 @@ class _FunctionSignature:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class NonVoid(NonVoidFunctionSignature):
         type: typing_extensions.Literal["nonVoid"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing_extensions.Literal["voidThatTakesActualResult"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _FunctionSignature.Void.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

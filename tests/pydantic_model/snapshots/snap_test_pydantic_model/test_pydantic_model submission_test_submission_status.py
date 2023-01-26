@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .submission_status_for_test_case import SubmissionStatusForTestCase
@@ -147,7 +148,7 @@ class TestSubmissionStatus(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _TestSubmissionStatus:
@@ -156,7 +157,6 @@ class _TestSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
@@ -164,7 +164,6 @@ class _TestSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
@@ -172,7 +171,6 @@ class _TestSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class TestCaseIdToState(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseIdToState"]
@@ -180,7 +178,6 @@ class _TestSubmissionStatus:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 TestSubmissionStatus.update_forward_refs()

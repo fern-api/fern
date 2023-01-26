@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from ...commons.types.key_value_pair import KeyValuePair
 from ...commons.types.map_value import MapValue
 from ...commons.types.variable_value import VariableValue
@@ -91,7 +92,7 @@ class TestCaseGrade(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _TestCaseGrade:
@@ -100,14 +101,12 @@ class _TestCaseGrade:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class NonHidden(TestCaseNonHiddenGrade):
         type: typing_extensions.Literal["nonHidden"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _TestCaseGrade.NonHidden.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

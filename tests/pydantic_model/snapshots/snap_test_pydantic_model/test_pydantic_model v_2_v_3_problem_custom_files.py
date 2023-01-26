@@ -12,6 +12,7 @@ from ....commons.language import Language
 from ....commons.list_type import ListType
 from ....commons.map_type import MapType
 from ....commons.variable_type import VariableType
+from ....core.datetime_utils import serialize_datetime
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
 
@@ -91,7 +92,7 @@ class CustomFiles(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CustomFiles:
@@ -100,7 +101,6 @@ class _CustomFiles:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Custom(pydantic.BaseModel):
         type: typing_extensions.Literal["custom"]
@@ -108,7 +108,6 @@ class _CustomFiles:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 _CustomFiles.Basic.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

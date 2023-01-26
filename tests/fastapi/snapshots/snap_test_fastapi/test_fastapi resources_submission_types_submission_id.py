@@ -8,6 +8,8 @@ import uuid
 
 import pydantic
 
+from ....core.datetime_utils import serialize_datetime
+
 
 class SubmissionId(pydantic.BaseModel):
     __root__: uuid.UUID
@@ -52,4 +54,4 @@ class SubmissionId(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
@@ -191,7 +192,7 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
 
     class Config:
         frozen = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _WorkspaceSubmissionUpdateInfo:
@@ -201,35 +202,30 @@ class _WorkspaceSubmissionUpdateInfo:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Ran(WorkspaceRunDetails):
         type: typing_extensions.Literal["ran"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Traced(pydantic.BaseModel):
         type: typing_extensions.Literal["traced"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class TracedV2(WorkspaceTracedUpdate):
         type: typing_extensions.Literal["tracedV2"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
@@ -237,14 +233,12 @@ class _WorkspaceSubmissionUpdateInfo:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 WorkspaceSubmissionUpdateInfo.update_forward_refs()

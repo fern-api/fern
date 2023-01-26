@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from .initialize_problem_request import (
     InitializeProblemRequest as resources_submission_types_initialize_problem_request_InitializeProblemRequest,
 )
@@ -170,7 +171,7 @@ class SubmissionRequest(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionRequest:
@@ -179,35 +180,30 @@ class _SubmissionRequest:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class InitializeWorkspaceRequest(pydantic.BaseModel):
         type: typing_extensions.Literal["initializeWorkspaceRequest"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class SubmitV2(SubmitRequestV2):
         type: typing_extensions.Literal["submitV2"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing_extensions.Literal["workspaceSubmit"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
     class Stop(StopRequest):
         type: typing_extensions.Literal["stop"]
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 SubmissionRequest.update_forward_refs()

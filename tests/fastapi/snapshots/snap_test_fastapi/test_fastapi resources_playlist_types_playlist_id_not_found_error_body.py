@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_PlaylistId
 
 T_Result = typing.TypeVar("T_Result")
@@ -82,7 +83,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _PlaylistIdNotFoundErrorBody:
@@ -92,7 +93,6 @@ class _PlaylistIdNotFoundErrorBody:
 
         class Config:
             frozen = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 PlaylistIdNotFoundErrorBody.update_forward_refs()

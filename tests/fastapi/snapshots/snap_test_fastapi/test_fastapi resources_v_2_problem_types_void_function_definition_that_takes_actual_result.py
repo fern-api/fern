@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from .....core.datetime_utils import serialize_datetime
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .parameter import Parameter
 
@@ -247,4 +248,4 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         frozen = True
         allow_population_by_field_name = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

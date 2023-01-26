@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ..core.datetime_utils import serialize_datetime
 from .doubly_linked_list_value import DoublyLinkedListValue
 from .node_id import NodeId
 
@@ -225,4 +226,4 @@ class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

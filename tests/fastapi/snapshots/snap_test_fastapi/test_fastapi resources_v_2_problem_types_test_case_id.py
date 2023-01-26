@@ -7,6 +7,8 @@ import typing
 
 import pydantic
 
+from .....core.datetime_utils import serialize_datetime
+
 
 class TestCaseId(pydantic.BaseModel):
     __root__: str
@@ -51,4 +53,4 @@ class TestCaseId(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

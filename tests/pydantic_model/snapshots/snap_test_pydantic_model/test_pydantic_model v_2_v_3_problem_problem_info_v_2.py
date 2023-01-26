@@ -10,6 +10,7 @@ import typing_extensions
 
 from ....commons.language import Language
 from ....commons.problem_id import ProblemId
+from ....core.datetime_utils import serialize_datetime
 from ....problem.problem_description import ProblemDescription
 from .custom_files import CustomFiles
 from .generated_files import GeneratedFiles
@@ -670,4 +671,4 @@ class ProblemInfoV2(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

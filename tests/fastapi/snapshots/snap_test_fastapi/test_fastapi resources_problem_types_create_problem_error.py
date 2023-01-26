@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from .generic_create_problem_error import GenericCreateProblemError
 
 T_Result = typing.TypeVar("T_Result")
@@ -74,7 +75,7 @@ class CreateProblemError(pydantic.BaseModel):
     class Config:
         frozen = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CreateProblemError:
@@ -84,7 +85,6 @@ class _CreateProblemError:
         class Config:
             frozen = True
             allow_population_by_field_name = True
-            json_encoders = {dt.datetime: lambda v: v.isoformat()}
 
 
 CreateProblemError.update_forward_refs()

@@ -8,6 +8,7 @@ import typing
 import pydantic
 import typing_extensions
 
+from ....core.datetime_utils import serialize_datetime
 from ...commons.types.language import Language
 from ...commons.types.test_case_with_expected_result import TestCaseWithExpectedResult
 from ...commons.types.variable_type import VariableType
@@ -513,4 +514,4 @@ class CreateProblemRequest(pydantic.BaseModel):
         frozen = True
         allow_population_by_field_name = True
         extra = pydantic.Extra.forbid
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

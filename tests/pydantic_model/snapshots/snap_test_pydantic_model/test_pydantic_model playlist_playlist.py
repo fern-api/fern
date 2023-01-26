@@ -10,6 +10,7 @@ import typing_extensions
 
 from ..commons.problem_id import ProblemId
 from ..commons.user_id import UserId
+from ..core.datetime_utils import serialize_datetime
 from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
 
@@ -281,4 +282,4 @@ class Playlist(PlaylistCreateRequest):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

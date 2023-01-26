@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 
 from ..commons.variable_value import VariableValue
+from ..core.datetime_utils import serialize_datetime
 from .exception_v_2 import ExceptionV2
 
 
@@ -325,4 +326,4 @@ class TestCaseNonHiddenGrade(pydantic.BaseModel):
     class Config:
         frozen = True
         allow_population_by_field_name = True
-        json_encoders = {dt.datetime: lambda v: v.isoformat()}
+        json_encoders = {dt.datetime: serialize_datetime}

@@ -58,6 +58,15 @@ class FernAwarePydanticModel:
             docstring=docstring,
             forbid_extra_fields=custom_config.forbid_extra_fields,
         )
+        self._pydantic_model.add_json_encoder(
+            key=AST.Expression(
+                AST.ClassReference(
+                    import_=AST.ReferenceImport(module=AST.Module.built_in("datetime"), alias="dt"),
+                    qualified_name_excluding_import=("datetime",),
+                )
+            ),
+            value=AST.Expression(self._context.core_utilities.get_serialize_datetime()),
+        )
         self._model_contains_forward_refs = False
 
     def to_reference(self) -> LocalClassReference:

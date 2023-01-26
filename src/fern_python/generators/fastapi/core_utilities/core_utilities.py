@@ -119,6 +119,15 @@ class CoreUtilities:
             ),
             exports={"route_args"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="datetime_utils.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="datetime_utils"),
+            ),
+            exports={"serialize_datetime"},
+        )
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
 
@@ -192,6 +201,14 @@ class CoreUtilities:
                 args=[endpoint_method],
                 kwargs=[("default_tag", AST.Expression(f'"{default_tag}"'))],
             )
+        )
+
+    def get_serialize_datetime(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
+            ),
         )
 
     def BearerToken(self) -> AST.ClassReference:
