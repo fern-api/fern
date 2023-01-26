@@ -36,7 +36,7 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
         }
     }
 
-    private getPropertyKey(property: InlinedRequestBodyProperty): string {
+    public getPropertyKey(property: InlinedRequestBodyProperty): string {
         return property.name.name.camelCase.unsafeName;
     }
 }

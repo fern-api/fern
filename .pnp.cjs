@@ -61,6 +61,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/generators/express/express-inlined-request-body-generator"\
       },\
       {\
+        "name": "@fern-typescript/express-inlined-request-schema-generator",\
+        "reference": "workspace:packages/generators/express/express-inlined-request-body-schema-generator"\
+      },\
+      {\
         "name": "@fern-typescript/express-generator",\
         "reference": "workspace:packages/generators/express/generator"\
       },\
@@ -153,6 +157,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/express-generator", ["workspace:packages/generators/express/generator"]],\
       ["@fern-typescript/express-generator-cli", ["workspace:packages/generators/express/cli"]],\
       ["@fern-typescript/express-inlined-request-body-generator", ["workspace:packages/generators/express/express-inlined-request-body-generator"]],\
+      ["@fern-typescript/express-inlined-request-schema-generator", ["workspace:packages/generators/express/express-inlined-request-body-schema-generator"]],\
       ["@fern-typescript/fetcher", ["workspace:packages/core-utilities/fetcher"]],\
       ["@fern-typescript/generic-error-generators", ["workspace:packages/generators/sdk/generic-error-generators"]],\
       ["@fern-typescript/request-wrapper-generator", ["workspace:packages/generators/sdk/request-wrapper-generator"]],\
@@ -3372,6 +3377,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/express-inlined-request-body-generator", "workspace:packages/generators/express/express-inlined-request-body-generator"],\
+            ["@fern-typescript/express-inlined-request-schema-generator", "workspace:packages/generators/express/express-inlined-request-body-schema-generator"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@fern-typescript/type-generator", "workspace:packages/generators/model/type-generator"],\
             ["@fern-typescript/type-reference-converters", "workspace:packages/generators/model/type-reference-converters"],\
@@ -3451,6 +3457,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.23.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-typescript/express-inlined-request-schema-generator", [\
+        ["workspace:packages/generators/express/express-inlined-request-body-schema-generator", {\
+          "packageLocation": "./packages/generators/express/express-inlined-request-body-schema-generator/",\
+          "packageDependencies": [\
+            ["@fern-typescript/express-inlined-request-schema-generator", "workspace:packages/generators/express/express-inlined-request-body-schema-generator"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-fern/ir-model", "npm:0.0.741"],\
+            ["@fern-typescript/abstract-schema-generator", "workspace:packages/abstract-schema-generator"],\
+            ["@fern-typescript/commons", "workspace:packages/commons"],\
+            ["@fern-typescript/contexts", "workspace:packages/contexts"],\
+            ["@types/jest", "npm:28.1.6"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.23.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
           ],\
           "linkType": "SOFT"\
