@@ -4,6 +4,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.JAVA]: {
         version: "0.0.122",
     },
+    [GeneratorName.TYPESCRIPT_EXPRESS]: {
+        version: "0.0.264",
+        output: {
+            location: "local-file-system",
+            path: "../../src/fern",
+        },
+    },
     [GeneratorName.JAVA_MODEL]: {
         version: "0.0.132",
     },
