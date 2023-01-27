@@ -20,6 +20,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.257-2-g46fe4ff",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,

@@ -12,6 +12,7 @@ export const V3_TO_V2_MIGRATION: IrMigration<
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.249",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
