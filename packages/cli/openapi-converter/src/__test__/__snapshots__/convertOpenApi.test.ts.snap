@@ -40,7 +40,9 @@ exports[`open api converter covie simple 1`] = `
       "types": {
         "AccountWithConfig": {
           "extends": undefined,
-          "properties": {},
+          "properties": {
+            "account": "optional<map<string, unknown>>",
+          },
         },
       },
     },
@@ -335,6 +337,10 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Represents an event delivered via webhook on the occurrence of certain policy changes.",
           "extends": undefined,
           "properties": {
+            "_embedded": {
+              "docs": "A collection of the objects in which this event applies to.",
+              "type": "optional<map<string, unknown>>",
+            },
             "_links": "optional<_InlinedType78>",
             "event_type": {
               "docs": "An enumerated string representing the type of event that occurred.",
@@ -385,6 +391,7 @@ exports[`open api converter covie simple 1`] = `
               "docs": "A descriptive name of the integration.",
               "type": "optional<string>",
             },
+            "policy_requirements": "optional<map<string, unknown>>",
             "status": {
               "docs": "String representation of the current status of the integration.",
               "type": "optional<_InlinedType85>",
@@ -434,6 +441,10 @@ exports[`open api converter covie simple 1`] = `
             "is_tracked": {
               "docs": "A flag indicating if the policies provided by this link should be tracked by Covie's monitoring service.",
               "type": "optional<boolean>",
+            },
+            "metadata": {
+              "docs": "Arbitrary key value pairs set on link creation or PATCH. Keys are alphanumeric plus _, -, ., and space, at most 64 characters. Values are at most 256 characters. You can have at most 32 metadata keys on a link.",
+              "type": "optional<map<string, unknown>>",
             },
             "object": {
               "docs": "String representing the object’s type. Objects of the same type share the same value.",
@@ -758,6 +769,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
               "type": "optional<string>",
             },
             "event_types": "optional<list<_InlinedType116>>",
+            "headers": {
+              "docs": "List of the headers and their values that should be included in the request.",
+              "type": "optional<map<string, unknown>>",
+            },
             "id": {
               "docs": "Unique identifier for the Webhook object.",
               "type": "optional<string>",
@@ -1511,6 +1526,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
             "queued_at": {
               "docs": "Date/Time the broadcast was prepared for delivery.",
               "type": "optional<string>",
+            },
+            "request_headers": {
+              "docs": "Custom headers used to send the broadcast.",
+              "type": "optional<map<string, unknown>>",
             },
             "request_uri": {
               "docs": "URI the broadcast was sent to.",
@@ -2277,6 +2296,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "body": {
                     "extends": undefined,
                     "properties": {
+                      "metadata": {
+                        "docs": "Arbitrary key value pairs. The entire object is replaced on-update (missing keys in the request body will be removed). Keys are alphanumeric plus _, -, ., and space, at most 64 characters. Values are at most 256 characters. You can have at most 32 metadata keys on a link.",
+                        "type": "optional<map<string, unknown>>",
+                      },
                       "provider_id": {
                         "docs": "If supplied, selects the insurance carrier associated with the link. If the link is resumed from the embed, the insured will land on that carrier's login page. If policy documents are uploaded, parsing will be attempted based on the selected carrier.",
                         "type": "optional<string>",
@@ -2313,6 +2336,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "body": {
                     "extends": undefined,
                     "properties": {
+                      "metadata": {
+                        "docs": "Arbitrary key value pairs. The entire object is replaced on-update (missing keys in the request body will be removed). Keys are alphanumeric plus _, -, ., and space, at most 64 characters. Values are at most 256 characters. You can have at most 32 metadata keys on a link.",
+                        "type": "optional<map<string, unknown>>",
+                      },
                       "tracking_frequency": {
                         "docs": "The frequency of which tracking should be performed. This value is \`never\` when tracking is disabled.",
                         "type": "optional<_InlinedType32>",
@@ -2684,6 +2711,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                     "extends": undefined,
                     "properties": {
                       "event_types": "optional<list<_InlinedType50>>",
+                      "headers": {
+                        "docs": "List of the headers and their values that should be included in the request.",
+                        "type": "optional<map<string, unknown>>",
+                      },
                       "uri": {
                         "docs": "URI the webhook should make a request to when the event is triggered.",
                         "type": "optional<string>",
@@ -2773,6 +2804,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                     "extends": undefined,
                     "properties": {
                       "event_types": "optional<list<_InlinedType51>>",
+                      "headers": {
+                        "docs": "List of the headers and their values that should be included in the request.",
+                        "type": "optional<map<string, unknown>>",
+                      },
                       "is_enabled": "optional<boolean>",
                       "uri": {
                         "docs": "URI the webhook should make a request to when the event is triggered.",
@@ -5439,6 +5474,10 @@ exports[`open api converter partnerstack simple 1`] = `
                         "docs": "The customers email, must be a valid email",
                         "type": "optional<string>",
                       },
+                      "meta": {
+                        "docs": "Additional custom fields for the customer that is configured in your PartnerStack dashboard.",
+                        "type": "optional<map<string, unknown>>",
+                      },
                       "name": {
                         "docs": "Should be either the customer's name, or the company name",
                         "type": "optional<string>",
@@ -5519,6 +5558,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "email": {
               "docs": "The customers email, must be a valid email",
               "type": "optional<string>",
+            },
+            "meta": {
+              "docs": "Additional custom fields for the customer that is configured in your PartnerStack dashboard.",
+              "type": "optional<map<string, unknown>>",
             },
             "name": {
               "docs": "Should be either the customer's name, or the company name",
@@ -5891,6 +5934,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
                         "docs": "Reference that can be used in place of the key.",
                         "type": "optional<string>",
                       },
+                      "field_data": "optional<map<string, unknown>>",
                       "fields": "optional<list<_InlinedType52>>",
                       "group_key": {
                         "docs": "The unique key of the group in which this deals's partner is in",
@@ -5900,6 +5944,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
                         "docs": "Reason for which the deal was lost.",
                         "type": "optional<string>",
                       },
+                      "meta": "optional<map<string, unknown>>",
                       "mold_key": "optional<string>",
                       "partner_key": {
                         "docs": "The unique key of the partner who owns this deal",
@@ -6027,7 +6072,9 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Last name of the account's contact",
               "type": "string",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType17>>",
+            "meta": "optional<map<string, unknown>>",
             "source": {
               "docs": "Source of the deal, either 'partner' or 'vendor', defaults to 'partner' if not specified",
               "type": "optional<_InlinedType18>",
@@ -6094,6 +6141,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reference that can be used in place of the key.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType21>>",
             "group_key": {
               "docs": "The unique key of the group in which this deals's partner is in",
@@ -6103,6 +6151,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reason for which the deal was lost.",
               "type": "optional<string>",
             },
+            "meta": "optional<map<string, unknown>>",
             "mold_key": "optional<string>",
             "partner_key": {
               "docs": "The unique key of the partner who owns this deal",
@@ -6256,6 +6305,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reference that can be used in place of the key.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType5>>",
             "group_key": {
               "docs": "The unique key of the group in which this deals's partner is in",
@@ -6265,6 +6315,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reason for which the deal was lost.",
               "type": "optional<string>",
             },
+            "meta": "optional<map<string, unknown>>",
             "mold_key": "optional<string>",
             "partner_key": {
               "docs": "The unique key of the partner who owns this deal",
@@ -6312,6 +6363,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reference that can be used in place of the key.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType41>>",
             "group_key": {
               "docs": "The unique key of the group in which this deals's partner is in",
@@ -6321,6 +6373,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reason for which the deal was lost.",
               "type": "optional<string>",
             },
+            "meta": "optional<map<string, unknown>>",
             "mold_key": "optional<string>",
             "partner_key": {
               "docs": "The unique key of the partner who owns this deal",
@@ -6390,6 +6443,10 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
             "name": {
               "docs": "Name of field that is presented",
               "type": "optional<string>",
+            },
+            "options": {
+              "docs": "Options to select from if this field is a picklist/checkbox",
+              "type": "optional<map<string, unknown>>",
             },
             "placeholder_text": {
               "docs": "The text of the placeholder that is provided for this field",
@@ -6540,6 +6597,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reference that can be used in place of the key.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType62>>",
             "group_key": {
               "docs": "The unique key of the group in which this deals's partner is in",
@@ -6549,6 +6607,7 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
               "docs": "Reason for which the deal was lost.",
               "type": "optional<string>",
             },
+            "meta": "optional<map<string, unknown>>",
             "mold_key": "optional<string>",
             "partner_key": {
               "docs": "The unique key of the partner who owns this deal",
@@ -6870,6 +6929,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "Whether this is the default Group for partners to join",
               "type": "optional<boolean>",
             },
+            "features": {
+              "docs": "Features that partners within this group have access too",
+              "type": "optional<map<string, unknown>>",
+            },
             "name": {
               "docs": "The name of this Group as presented to partners",
               "type": "optional<string>",
@@ -7036,6 +7099,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                         "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
                         "type": "optional<string>",
                       },
+                      "field_data": "optional<map<string, unknown>>",
                       "fields": "optional<list<_InlinedType191>>",
                       "group_key": "optional<string>",
                       "meta": {
@@ -7128,6 +7192,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType161>>",
             "group_key": "optional<string>",
             "meta": {
@@ -7182,6 +7247,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
               "type": "string",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType168>>",
             "group_key": "optional<string>",
             "meta": {
@@ -7237,6 +7303,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType172>>",
             "group_key": "optional<string>",
             "meta": {
@@ -7362,6 +7429,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType186>>",
             "group_key": "optional<string>",
             "meta": {
@@ -7432,6 +7500,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "Name of field that is presented",
               "type": "optional<string>",
             },
+            "options": {
+              "docs": "Options to select from if this field is a picklist/checkbox",
+              "type": "optional<map<string, unknown>>",
+            },
             "placeholder_text": {
               "docs": "The text of the placeholder that is provided for this field",
               "type": "optional<string>",
@@ -7498,6 +7570,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
               "type": "optional<string>",
             },
+            "field_data": "optional<map<string, unknown>>",
             "fields": "optional<list<_InlinedType195>>",
             "group_key": "optional<string>",
             "meta": {
@@ -7981,9 +8054,17 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "partnership's manager information if applicable",
               "type": "optional<_InlinedType221>",
             },
+            "mdata": {
+              "docs": "partnership metadata",
+              "type": "optional<map<string, unknown>>",
+            },
             "partner_key": {
               "docs": "key used externally when referencing the partnership",
               "type": "optional<string>",
+            },
+            "stats": {
+              "docs": "latest stats data for partnership",
+              "type": "optional<map<string, unknown>>",
             },
             "tags": {
               "docs": "List of tags associated with the partnership",
@@ -8028,6 +8109,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "The email of the partner.",
               "type": "optional<string>",
             },
+            "field_data": {
+              "docs": "DEPRECATED 'fields' should be the source of truth",
+              "type": "optional<map<string, unknown>>",
+            },
             "fields": "optional<list<_InlinedType228>>",
             "first_name": {
               "docs": "The first name of the partner.",
@@ -8044,6 +8129,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "manager_name": {
               "docs": "The name of the Partner Manager who you wish to manage this partner.",
               "type": "optional<string>",
+            },
+            "meta": {
+              "docs": "DEPRECATED 'fields' should be the source of truth",
+              "type": "optional<map<string, unknown>>",
             },
             "partner_key": {
               "docs": "The \`partner_key\` you wish to use for this partner. If included, **must** be unique to this partner. For more information on \`partner_key\` see PartnerStackJS.",
@@ -8172,6 +8261,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "The email of the partner.",
               "type": "optional<string>",
             },
+            "field_data": {
+              "docs": "DEPRECATED 'fields' should be the source of truth",
+              "type": "optional<map<string, unknown>>",
+            },
             "fields": "optional<list<_InlinedType258>>",
             "first_name": {
               "docs": "The first name of the partner.",
@@ -8188,6 +8281,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "manager_name": {
               "docs": "The name of the Partner Manager who you wish to manage this partner.",
               "type": "optional<string>",
+            },
+            "meta": {
+              "docs": "DEPRECATED 'fields' should be the source of truth",
+              "type": "optional<map<string, unknown>>",
             },
             "partner_key": {
               "docs": "The \`partner_key\` you wish to use for this partner. If included, **must** be unique to this partner. For more information on \`partner_key\` see PartnerStackJS.",
@@ -8624,6 +8721,7 @@ These customer reference fields are required, but mutually exclusive
               "docs": "Customer info.",
               "type": "optional<_InlinedType312>",
             },
+            "extension": "optional<map<string, unknown>>",
           },
         },
         "_InlinedType313": {
@@ -8672,6 +8770,10 @@ These customer reference fields are required, but mutually exclusive
             "key": {
               "docs": "Key of transaction record in PartnerStack.",
               "type": "optional<string>",
+            },
+            "metadata": {
+              "docs": "Additional data that can be provided for the transaction on creation. Note that you can only store a maximum of 25 metadata attributes. The value of each attribute cannot exceed 100 characters, and the name of each attribute cannot exceed 30 characters.",
+              "type": "optional<map<string, unknown>>",
             },
             "product_key": {
               "docs": "Key of transaction product.",
@@ -9725,6 +9827,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             },
           },
         },
+        "middleware.Metadata": "map<string, unknown>",
         "partnercentersubmission.AzureAudience": {
           "extends": undefined,
           "properties": {

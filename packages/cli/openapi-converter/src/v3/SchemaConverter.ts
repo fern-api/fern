@@ -204,6 +204,8 @@ export class SchemaConverter {
                 };
             } else if (extendedObjects.length > 0) {
                 typeDeclaration = { extends: extendedObjects };
+            } else {
+                typeDeclaration = "map<string, unknown>";
             }
         } else if (isListOfStrings(schema.type)) {
             const types: string[] = schema.type;
