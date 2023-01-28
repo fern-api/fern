@@ -12,32 +12,8 @@ describe("no-duplicate-declarations", () => {
         expect(violations).toEqual([
             {
                 message: "C is already declared in this file",
-                nodePath: ["types", "C"],
-                relativeFilepath: "1.yml",
-                severity: "error",
-            },
-            {
-                message: "TwoService is already declared in 2.yml",
-                nodePath: ["types", "TwoService"],
-                relativeFilepath: "1.yml",
-                severity: "error",
-            },
-            {
-                message: "OneService is already declared in 2.yml",
-                nodePath: ["services", "http", "OneService"],
-                relativeFilepath: "1.yml",
-                severity: "error",
-            },
-            {
-                message: "C is already declared in this file",
                 nodePath: ["errors", "C"],
                 relativeFilepath: "1.yml",
-                severity: "error",
-            },
-            {
-                message: "InlinedRequest is already declared in this file",
-                nodePath: ["types", "InlinedRequest"],
-                relativeFilepath: "2.yml",
                 severity: "error",
             },
             {
@@ -49,6 +25,18 @@ describe("no-duplicate-declarations", () => {
             {
                 message: "TwoService is already declared in 1.yml",
                 nodePath: ["services", "http", "TwoService"],
+                relativeFilepath: "2.yml",
+                severity: "error",
+            },
+            {
+                message: "InlinedRequest is already declared in this file",
+                nodePath: ["services", "http", "TwoService", "endpoints", "get"],
+                relativeFilepath: "2.yml",
+                severity: "error",
+            },
+            {
+                message: "UpdateRequest is already declared in this file",
+                nodePath: ["services", "http", "TwoService", "endpoints", "updateV2"],
                 relativeFilepath: "2.yml",
                 severity: "error",
             },

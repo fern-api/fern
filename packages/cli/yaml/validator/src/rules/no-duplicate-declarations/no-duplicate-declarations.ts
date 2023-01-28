@@ -14,6 +14,9 @@ export const NoDuplicateDeclarationsRule: Rule = {
     create: async ({ workspace, logger }) => {
         const declarations = await getDeclarations(workspace);
 
+        // keep track of seen types, so we only warn starting on the second instance
+        const seenTypes: Record<RelativeDirectoryPath, Set<DeclaredName>> = {};
+
         const getRuleViolations = ({
             declaredName,
             relativeFilepath,
@@ -27,6 +30,13 @@ export const NoDuplicateDeclarationsRule: Rule = {
                 logger.error(
                     `Could not find declarations for name: ${declaredName}. This is an error in the Fern validator.`
                 );
+                return [];
+            }
+
+            // only warn starting on the second instance
+            const seenTypesForFilepath = (seenTypes[relativeDirectoryPath] ??= new Set());
+            if (!seenTypesForFilepath.has(declaredName)) {
+                seenTypesForFilepath.add(declaredName);
                 return [];
             }
 
@@ -48,6 +58,13 @@ export const NoDuplicateDeclarationsRule: Rule = {
                     getRuleViolations({ declaredName: errorName, relativeFilepath }),
                 httpService: ({ serviceName }, { relativeFilepath }) =>
                     getRuleViolations({ declaredName: serviceName, relativeFilepath }),
+                httpEndpoint: ({ endpoint }, { relativeFilepath }) => {
+                    if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
+                        return getRuleViolations({ declaredName: endpoint.request.name, relativeFilepath });
+                    } else {
+                        return [];
+                    }
+                },
             },
         };
     },
