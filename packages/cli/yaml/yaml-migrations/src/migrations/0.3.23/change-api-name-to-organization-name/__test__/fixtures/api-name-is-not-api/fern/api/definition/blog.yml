@@ -1,0 +1,23 @@
+types:
+  # alias without examples
+  AliasWithoutExamples: string
+  # object without examples
+  ObjectWithoutExamples:
+    properties:
+      foo: string
+  # alias with examples
+  AliasWithExamples:
+    type: string
+    examples:
+      # example 1
+      - foo
+      # example 2
+      - bar
+  ObjectWithExamples:
+    properties:
+      foo: string
+    examples:
+      # example 1
+      - foo: hello
+      # example 2
+      - foo: world
