@@ -68,7 +68,7 @@ export class GlobalHeaderScanner {
 
             const isSchemaReference = isReferenceObject(parameterSchema);
             const resolvedSchema = isSchemaReference
-                ? this.openApiV3Context.maybeResolveSchemaReference(parameterSchema)?.schemaObject
+                ? this.openApiV3Context.maybeResolveReference(parameterSchema)?.schemaObject
                 : parameterSchema;
             if (resolvedSchema == null) {
                 continue;

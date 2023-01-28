@@ -80,14 +80,14 @@ export class OpenApiV3Context {
 
         const referenceGroups = this.referenceObjectToTags.getGroups();
         for (const untaggedReference of referenceGroups.untaggedReferences) {
-            const resolvedSchemaReference = this.maybeResolveSchemaReference(untaggedReference);
+            const resolvedSchemaReference = this.maybeResolveReference(untaggedReference);
             if (resolvedSchemaReference != null) {
                 this.untaggedSchemas.push(resolvedSchemaReference);
             }
         }
 
         for (const multiTaggedReference of referenceGroups.multiTaggedReferences) {
-            const resolvedSchemaReference = this.maybeResolveSchemaReference(multiTaggedReference);
+            const resolvedSchemaReference = this.maybeResolveReference(multiTaggedReference);
             if (resolvedSchemaReference != null) {
                 this.multiTaggedSchemas.push(resolvedSchemaReference);
             }
@@ -96,7 +96,7 @@ export class OpenApiV3Context {
         Object.entries(referenceGroups.tagToReferences).forEach(([tag, reference]) => {
             const resolvedSchemaReferences: OpenAPIV3Schema[] = [];
             reference.forEach((schemaReference) => {
-                const resolvedSchemaReference = this.maybeResolveSchemaReference(schemaReference);
+                const resolvedSchemaReference = this.maybeResolveReference(schemaReference);
                 if (resolvedSchemaReference != null) {
                     resolvedSchemaReferences.push(resolvedSchemaReference);
                 }
@@ -155,7 +155,7 @@ export class OpenApiV3Context {
         return resolvedParameter;
     }
 
-    public maybeResolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3Schema | undefined {
+    public maybeResolveReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3Schema | undefined {
         if (this.document.components == null) {
             return undefined;
         }
@@ -169,7 +169,7 @@ export class OpenApiV3Context {
                 return undefined;
             }
             if (isReferenceObject(resolvedSchema)) {
-                return this.maybeResolveSchemaReference(resolvedSchema);
+                return this.maybeResolveReference(resolvedSchema);
             }
             return {
                 name: schemaKey,
@@ -185,7 +185,7 @@ export class OpenApiV3Context {
                 return undefined;
             }
             if (isReferenceObject(resolvedSchema)) {
-                return this.maybeResolveSchemaReference(resolvedSchema);
+                return this.maybeResolveReference(resolvedSchema);
             }
 
             const requestBodySchema = resolvedSchema.content[APPLICATION_JSON_CONTENT]?.schema;
@@ -193,7 +193,7 @@ export class OpenApiV3Context {
                 return undefined;
             }
             if (isReferenceObject(requestBodySchema)) {
-                return this.maybeResolveSchemaReference(requestBodySchema);
+                return this.maybeResolveReference(requestBodySchema);
             }
             return {
                 name: requestKey,
@@ -209,7 +209,7 @@ export class OpenApiV3Context {
                 return undefined;
             }
             if (isReferenceObject(resolvedSchema)) {
-                return this.maybeResolveSchemaReference(resolvedSchema);
+                return this.maybeResolveReference(resolvedSchema);
             }
 
             if (resolvedSchema.content == null) {
@@ -220,11 +220,36 @@ export class OpenApiV3Context {
                 return undefined;
             }
             if (isReferenceObject(responseBodySchema)) {
-                return this.maybeResolveSchemaReference(responseBodySchema);
+                return this.maybeResolveReference(responseBodySchema);
             }
             return {
                 name: responseKey,
                 schemaObject: responseBodySchema,
+            };
+        } else if (!schema.$ref.startsWith(PARAMETER_REFERENCE_PREFIX)) {
+            if (this.document.components.parameters == null) {
+                return undefined;
+            }
+            const parameterKey = schema.$ref.substring(PARAMETER_REFERENCE_PREFIX.length);
+
+            const resolvedParameter = this.document.components.parameters[parameterKey];
+            if (resolvedParameter == null) {
+                return undefined;
+            }
+            if (isReferenceObject(resolvedParameter)) {
+                return this.maybeResolveReference(resolvedParameter);
+            }
+
+            if (resolvedParameter.schema == null) {
+                return undefined;
+            }
+            const parameterSchema = resolvedParameter.schema;
+            if (isReferenceObject(parameterSchema)) {
+                return this.maybeResolveReference(parameterSchema);
+            }
+            return {
+                name: parameterKey,
+                schemaObject: parameterSchema,
             };
         }
         return undefined;
@@ -267,6 +292,17 @@ export class OpenApiV3Context {
                 }
             }
 
+            if (endpoint.definition.parameters != null) {
+                for (const parameter of endpoint.definition.parameters) {
+                    if (isReferenceObject(parameter)) {
+                        this.referenceObjectToTags.add(parameter, tag);
+                        this.addAllReferencedSchemas(parameter, referencedSchemas);
+                    } else if (parameter.schema != null && isReferenceObject(parameter.schema)) {
+                        this.addAllReferencedSchemas(parameter.schema, referencedSchemas);
+                    }
+                }
+            }
+
             for (const referencedSchema of referencedSchemas) {
                 this.referenceObjectToTags.add(referencedSchema, tag);
             }
@@ -277,9 +313,7 @@ export class OpenApiV3Context {
         schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
         referencedSchemas: Set<OpenAPIV3.ReferenceObject>
     ) {
-        const resolvedSchema = isReferenceObject(schema)
-            ? this.maybeResolveSchemaReference(schema)?.schemaObject
-            : schema;
+        const resolvedSchema = isReferenceObject(schema) ? this.maybeResolveReference(schema)?.schemaObject : schema;
         if (resolvedSchema == null) {
             return;
         }
@@ -300,7 +334,7 @@ export class OpenApiV3Context {
                         continue; // skip because schema reference has already been explored
                     }
                     schemaReferences.add(propertySchema);
-                    const resolvedSchema = this.maybeResolveSchemaReference(propertySchema);
+                    const resolvedSchema = this.maybeResolveReference(propertySchema);
                     if (resolvedSchema != null) {
                         this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
                     }
@@ -318,7 +352,7 @@ export class OpenApiV3Context {
             !schemaReferences.has(schema.items)
         ) {
             schemaReferences.add(schema.items);
-            const resolvedSchema = this.maybeResolveSchemaReference(schema.items);
+            const resolvedSchema = this.maybeResolveReference(schema.items);
             if (resolvedSchema != null) {
                 this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
             }
@@ -331,7 +365,7 @@ export class OpenApiV3Context {
             !schemaReferences.has(schema.additionalProperties)
         ) {
             schemaReferences.add(schema.additionalProperties);
-            const resolvedSchema = this.maybeResolveSchemaReference(schema.additionalProperties);
+            const resolvedSchema = this.maybeResolveReference(schema.additionalProperties);
             if (resolvedSchema != null) {
                 this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
             }
@@ -341,7 +375,7 @@ export class OpenApiV3Context {
             for (const allOfElement of schema.allOf) {
                 if (isReferenceObject(allOfElement)) {
                     schemaReferences.add(allOfElement);
-                    const resolvedSchema = this.maybeResolveSchemaReference(allOfElement);
+                    const resolvedSchema = this.maybeResolveReference(allOfElement);
                     if (resolvedSchema != null) {
                         this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
                     }
@@ -353,7 +387,7 @@ export class OpenApiV3Context {
             for (const oneOfElement of schema.oneOf) {
                 if (isReferenceObject(oneOfElement)) {
                     schemaReferences.add(oneOfElement);
-                    const resolvedSchema = this.maybeResolveSchemaReference(oneOfElement);
+                    const resolvedSchema = this.maybeResolveReference(oneOfElement);
                     if (resolvedSchema != null) {
                         this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
                     }
