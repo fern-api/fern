@@ -119,6 +119,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
 
         let urlSearchParamsVariable: ts.Expression | undefined;
         if (this.requestParameter != null) {
+            statements.push(...this.requestParameter.getInitialStatements(context).map(getTextOfTsNode));
             const queryParameters = this.requestParameter.getAllQueryParameters(context);
             if (queryParameters.length > 0) {
                 statements.push({

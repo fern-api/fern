@@ -1,4 +1,4 @@
-import { itSchema } from "../../../__test__/utils/itSchema";
+import { itParse, itSchema } from "../../../__test__/utils/itSchema";
 import { string } from "../../primitives";
 import { optional } from "../getSchemaUtils";
 
@@ -8,14 +8,16 @@ describe("optional", () => {
         parsed: "string",
     });
 
-    itSchema("functions as identity when value is undefined", optional(string()), {
-        raw: undefined,
+    itSchema("converts between raw null and parsed undefined", optional(string()), {
+        raw: null,
         parsed: undefined,
     });
 
-    it("raw null is converted to undefined", () => {
-        const schema = optional(string());
-        expect(schema.parse(null)).toBeUndefined();
+    describe("parse()", () => {
+        itParse("raw undefined is converted to undefined", optional(string()), {
+            raw: undefined,
+            parsed: undefined,
+        });
     });
 
     describe("compile", () => {
@@ -35,7 +37,7 @@ describe("optional", () => {
                 const schema = optional(string());
 
                 // @ts-expect-error
-                () => schema.jsson(42);
+                () => schema.json(42);
             });
 
             // eslint-disable-next-line jest/expect-expect

@@ -17,6 +17,10 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         this.requestBodyReference = requestBodyReference;
     }
 
+    public getInitialStatements(): ts.Statement[] {
+        return [];
+    }
+
     public getReferenceToRequestBody(): ts.Expression {
         return ts.factory.createIdentifier(this.getRequestParameterName());
     }

@@ -8496,7 +8496,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (property != null) {
                     const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
-                } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+                } else if (!skipUnknownKeysOnParse) {
                     parsed[rawKey] = rawPropertyValue;
                 }
             }
@@ -8518,7 +8518,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
-                } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+                } else if (includeUnknownKeysOnJson) {
                     raw[parsedKey] = parsedPropertyValue;
                 }
             }
@@ -8921,7 +8921,7 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
 export function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed> {
     const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
         parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : undefined),
+        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
     };
 
     return {
@@ -9161,15 +9161,15 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
             "contents": Array [
               Object {
                 "contents": "export type addQuestionMarksToNullableProperties<T> = {
-    [K in OptionalKeys<T>]?: undefined extends T[K] ? T[K] : never;
+    [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : never;
+    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : K;
+    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
 }[keyof T];
 ",
                 "name": "addQuestionMarksToNullableProperties.ts",

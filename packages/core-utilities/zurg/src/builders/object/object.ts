@@ -64,7 +64,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (property != null) {
                     const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
-                } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+                } else if (!skipUnknownKeysOnParse) {
                     parsed[rawKey] = rawPropertyValue;
                 }
             }
@@ -86,7 +86,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
-                } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+                } else if (includeUnknownKeysOnJson) {
                     raw[parsedKey] = parsedPropertyValue;
                 }
             }

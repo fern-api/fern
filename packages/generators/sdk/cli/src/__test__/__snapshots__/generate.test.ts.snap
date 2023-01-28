@@ -359,12 +359,7 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment, \\"/api/remote-gen/create-job\\"),
             method: \\"POST\\",
-            body: await serializers.CreateJobRequest.json({
-                apiName: request.apiName,
-                organizationName: request.organizationName,
-                version: request.version,
-                generators: request.generators,
-            }),
+            body: await serializers.CreateJobRequest.json(request),
         });
         if (_response.ok) {
             return {
@@ -401,13 +396,7 @@ export class Client {
         const _response = await core.fetcher({
             url: urlJoin(this.options.environment, \\"/api/remote-gen/create-job-v2\\"),
             method: \\"POST\\",
-            body: await serializers.CreateJobRequestV2.json({
-                apiName: request.apiName,
-                organizationName: request.organizationName,
-                version: request.version,
-                generators: request.generators,
-                uploadToS3: request.uploadToS3,
-            }),
+            body: await serializers.CreateJobRequestV2.json(request),
         });
         if (_response.ok) {
             return {
@@ -2663,7 +2652,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (property != null) {
                     const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
-                } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+                } else if (!skipUnknownKeysOnParse) {
                     parsed[rawKey] = rawPropertyValue;
                 }
             }
@@ -2685,7 +2674,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
-                } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+                } else if (includeUnknownKeysOnJson) {
                     raw[parsedKey] = parsedPropertyValue;
                 }
             }
@@ -3088,7 +3077,7 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
 export function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed> {
     const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
         parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : undefined),
+        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
     };
 
     return {
@@ -3328,15 +3317,15 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
                 "contents": Array [
                   Object {
                     "contents": "export type addQuestionMarksToNullableProperties<T> = {
-    [K in OptionalKeys<T>]?: undefined extends T[K] ? T[K] : never;
+    [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : never;
+    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : K;
+    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
 }[keyof T];
 ",
                     "name": "addQuestionMarksToNullableProperties.ts",
@@ -5394,10 +5383,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.CreateOwnerRequest.json({
-                ownerId: request.ownerId,
-                data: request.data,
-            }),
+            body: await serializers.CreateOwnerRequest.json(request),
         });
         if (_response.ok) {
             return;
@@ -5492,9 +5478,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.UpdateOwnerRequest.json({
-                data: request.data,
-            }),
+            body: await serializers.UpdateOwnerRequest.json(request),
         });
         if (_response.ok) {
             return await serializers.Owner.parse(_response.body as serializers.Owner.Raw);
@@ -5958,10 +5942,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.CreateTokenRequest.json({
-                ownerId: request.ownerId,
-                description: request.description,
-            }),
+            body: await serializers.CreateTokenRequest.json(request),
         });
         if (_response.ok) {
             return await serializers.CreateTokenResponse.parse(_response.body as serializers.CreateTokenResponse.Raw);
@@ -6007,9 +5988,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.GetTokenMetadataRequest.json({
-                token: request.token,
-            }),
+            body: await serializers.GetTokenMetadataRequest.json(request),
         });
         if (_response.ok) {
             return await serializers.TokenMetadata.parse(_response.body as serializers.TokenMetadata.Raw);
@@ -6930,7 +6909,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (property != null) {
                     const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
-                } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+                } else if (!skipUnknownKeysOnParse) {
                     parsed[rawKey] = rawPropertyValue;
                 }
             }
@@ -6952,7 +6931,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
-                } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+                } else if (includeUnknownKeysOnJson) {
                     raw[parsedKey] = parsedPropertyValue;
                 }
             }
@@ -7355,7 +7334,7 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
 export function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed> {
     const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
         parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : undefined),
+        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
     };
 
     return {
@@ -7595,15 +7574,15 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
                 "contents": Array [
                   Object {
                     "contents": "export type addQuestionMarksToNullableProperties<T> = {
-    [K in OptionalKeys<T>]?: undefined extends T[K] ? T[K] : never;
+    [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : never;
+    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : K;
+    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
 }[keyof T];
 ",
                     "name": "addQuestionMarksToNullableProperties.ts",
@@ -8800,10 +8779,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.CreateOwnerRequest.json({
-                ownerId: request.ownerId,
-                data: request.data,
-            }),
+            body: await serializers.CreateOwnerRequest.json(request),
         });
         if (_response.ok) {
             return;
@@ -8898,9 +8874,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.UpdateOwnerRequest.json({
-                data: request.data,
-            }),
+            body: await serializers.UpdateOwnerRequest.json(request),
         });
         if (_response.ok) {
             return await serializers.Owner.parse(_response.body as serializers.Owner.Raw);
@@ -9364,10 +9338,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.CreateTokenRequest.json({
-                ownerId: request.ownerId,
-                description: request.description,
-            }),
+            body: await serializers.CreateTokenRequest.json(request),
         });
         if (_response.ok) {
             return await serializers.CreateTokenResponse.parse(_response.body as serializers.CreateTokenResponse.Raw);
@@ -9413,9 +9384,7 @@ export class Client {
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
-            body: await serializers.GetTokenMetadataRequest.json({
-                token: request.token,
-            }),
+            body: await serializers.GetTokenMetadataRequest.json(request),
         });
         if (_response.ok) {
             return await serializers.TokenMetadata.parse(_response.body as serializers.TokenMetadata.Raw);
@@ -10336,7 +10305,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (property != null) {
                     const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
-                } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+                } else if (!skipUnknownKeysOnParse) {
                     parsed[rawKey] = rawPropertyValue;
                 }
             }
@@ -10358,7 +10327,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
-                } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+                } else if (includeUnknownKeysOnJson) {
                     raw[parsedKey] = parsedPropertyValue;
                 }
             }
@@ -10761,7 +10730,7 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
 export function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed> {
     const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
         parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : undefined),
+        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
     };
 
     return {
@@ -11001,15 +10970,15 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
                 "contents": Array [
                   Object {
                     "contents": "export type addQuestionMarksToNullableProperties<T> = {
-    [K in OptionalKeys<T>]?: undefined extends T[K] ? T[K] : never;
+    [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : never;
+    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : K;
+    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
 }[keyof T];
 ",
                     "name": "addQuestionMarksToNullableProperties.ts",
@@ -12282,7 +12251,7 @@ export function object<
         if (property != null) {
           const value = await property.valueSchema.parse(rawPropertyValue);
           parsed[property.parsedKey] = value;
-        } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+        } else if (!skipUnknownKeysOnParse) {
           parsed[rawKey] = rawPropertyValue;
         }
       }
@@ -12308,7 +12277,7 @@ export function object<
             );
             raw[parsedKey] = value;
           }
-        } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+        } else if (includeUnknownKeysOnJson) {
           raw[parsedKey] = parsedPropertyValue;
         }
       }
@@ -12767,8 +12736,7 @@ export function optional<Raw, Parsed>(
 ): OptionalSchema<Raw, Parsed> {
   const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
     parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-    json: (parsed, opts) =>
-      parsed != null ? schema.json(parsed, opts) : undefined,
+    json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
   };
 
   return {
@@ -13060,15 +13028,19 @@ export {
             "contents": Array [
               Object {
                 "contents": "export type addQuestionMarksToNullableProperties<T> = {
-  [K in OptionalKeys<T>]?: undefined extends T[K] ? T[K] : never;
+  [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-  [K in keyof T]: undefined extends T[K] ? K : never;
+  [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = {
-  [K in keyof T]: undefined extends T[K] ? never : K;
+  [K in keyof T]: undefined extends T[K]
+    ? never
+    : null extends T[K]
+    ? never
+    : K;
 }[keyof T];
 ",
                 "name": "addQuestionMarksToNullableProperties.ts",
@@ -13617,9 +13589,10 @@ export class Client {
         testCaseId: string,
         request: TraceApi.StoreTracedTestCaseRequest
     ): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCase.Error>> {
+        const { someQueryParam, ..._body } = request;
         const _queryParams = new URLSearchParams();
-        if (request.someQueryParam != null) {
-            _queryParams.append(\\"some-query-param\\", request.someQueryParam);
+        if (someQueryParam != null) {
+            _queryParams.append(\\"some-query-param\\", someQueryParam);
         }
 
         const _response = await core.fetcher({
@@ -13632,10 +13605,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             queryParameters: _queryParams,
-            body: await serializers.StoreTracedTestCaseRequest.json({
-                result: request.result,
-                traceResponses: request.traceResponses,
-            }),
+            body: await serializers.StoreTracedTestCaseRequest.json(_body),
         });
         if (_response.ok) {
             return {
@@ -13692,10 +13662,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.StoreTracedWorkspaceRequest.json({
-                workspaceRunDetails: request.workspaceRunDetails,
-                traceResponses: request.traceResponses,
-            }),
+            body: await serializers.StoreTracedWorkspaceRequest.json(request),
         });
         if (_response.ok) {
             return {
@@ -16043,22 +16010,23 @@ export class Client {
         serviceParam: number,
         request: TraceApi.PlaylistCreateRequestWrapper
     ): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.createPlaylist.Error>> {
+        const { multiple, multipleOptional, body: _body } = request;
         const _queryParams = new URLSearchParams();
-        if (Array.isArray(request.multiple)) {
-            for (const _item of request.multiple) {
+        if (Array.isArray(multiple)) {
+            for (const _item of multiple) {
                 _queryParams.append(\\"multiple\\", _item.toString());
             }
         } else {
-            _queryParams.append(\\"multiple\\", request.multiple.toString());
+            _queryParams.append(\\"multiple\\", multiple.toString());
         }
 
-        if (request.multipleOptional != null) {
-            if (Array.isArray(request.multipleOptional)) {
-                for (const _item of request.multipleOptional) {
+        if (multipleOptional != null) {
+            if (Array.isArray(multipleOptional)) {
+                for (const _item of multipleOptional) {
                     _queryParams.append(\\"multipleOptional\\", _item.toString());
                 }
             } else {
-                _queryParams.append(\\"multipleOptional\\", request.multipleOptional.toString());
+                _queryParams.append(\\"multipleOptional\\", multipleOptional.toString());
             }
         }
 
@@ -16072,7 +16040,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             queryParameters: _queryParams,
-            body: await serializers.PlaylistCreateRequest.json(request.body),
+            body: await serializers.PlaylistCreateRequest.json(_body),
         });
         if (_response.ok) {
             return {
@@ -16094,12 +16062,13 @@ export class Client {
         serviceParam: number,
         request: TraceApi.GetPlaylistsRequest
     ): Promise<core.APIResponse<TraceApi.Playlist[], TraceApi.playlist.getPlaylists.Error>> {
+        const { limit, otherField } = request;
         const _queryParams = new URLSearchParams();
-        if (request.limit != null) {
-            _queryParams.append(\\"limit\\", request.limit.toString());
+        if (limit != null) {
+            _queryParams.append(\\"limit\\", limit.toString());
         }
 
-        _queryParams.append(\\"otherField\\", request.otherField);
+        _queryParams.append(\\"otherField\\", otherField);
         const _response = await core.fetcher({
             url: urlJoin(
                 this.options.environment ?? environments.TraceApiEnvironment.Prod,
@@ -17120,11 +17089,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
-            body: await serializers.GetDefaultStarterFilesRequest.json({
-                inputParams: request.inputParams,
-                outputType: request.outputType,
-                methodName: request.methodName,
-            }),
+            body: await serializers.GetDefaultStarterFilesRequest.json(request),
         });
         if (_response.ok) {
             return {
@@ -25638,7 +25603,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 if (property != null) {
                     const value = await property.valueSchema.parse(rawPropertyValue);
                     parsed[property.parsedKey] = value;
-                } else if (!skipUnknownKeysOnParse && rawPropertyValue != null) {
+                } else if (!skipUnknownKeysOnParse) {
                     parsed[rawKey] = rawPropertyValue;
                 }
             }
@@ -25660,7 +25625,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         const value = await schemaOrObjectProperty.json(parsedPropertyValue);
                         raw[parsedKey] = value;
                     }
-                } else if (includeUnknownKeysOnJson && parsedPropertyValue != null) {
+                } else if (includeUnknownKeysOnJson) {
                     raw[parsedKey] = parsedPropertyValue;
                 }
             }
@@ -26063,7 +26028,7 @@ export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Sc
 export function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed> {
     const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
         parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : undefined),
+        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
     };
 
     return {
@@ -26303,15 +26268,15 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
                 "contents": Array [
                   Object {
                     "contents": "export type addQuestionMarksToNullableProperties<T> = {
-    [K in OptionalKeys<T>]?: undefined extends T[K] ? T[K] : never;
+    [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : never;
+    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
 }[keyof T];
 
 export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : K;
+    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
 }[keyof T];
 ",
                     "name": "addQuestionMarksToNullableProperties.ts",

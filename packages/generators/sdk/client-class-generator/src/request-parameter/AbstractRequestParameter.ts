@@ -30,6 +30,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
             name: this.getRequestParameterName(),
             type: getTextOfTsNode(type.type),
             hasQuestionToken: type.isOptional,
+            initializer: type.initializer != null ? getTextOfTsNode(type.initializer) : undefined,
         };
     }
 
@@ -37,6 +38,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         return this.sdkRequest.requestParameterName.camelCase.unsafeName;
     }
 
+    public abstract getInitialStatements(context: SdkClientClassContext): ts.Statement[];
     public abstract getAllQueryParameters(context: SdkClientClassContext): QueryParameter[];
     public abstract getAllHeaders(context: SdkClientClassContext): HttpHeader[];
     public abstract getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined;
@@ -46,5 +48,9 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         context: SdkClientClassContext,
         callback: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[];
-    protected abstract getParameterType(contxt: SdkClientClassContext): { type: ts.TypeNode; isOptional: boolean };
+    protected abstract getParameterType(contxt: SdkClientClassContext): {
+        type: ts.TypeNode;
+        isOptional: boolean;
+        initializer?: ts.Expression;
+    };
 }

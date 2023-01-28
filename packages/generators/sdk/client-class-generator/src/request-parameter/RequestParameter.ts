@@ -3,6 +3,7 @@ import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface RequestParameter {
+    getInitialStatements: (context: SdkClientClassContext) => ts.Statement[];
     getParameterDeclaration: (context: SdkClientClassContext) => OptionalKind<ParameterDeclarationStructure>;
     getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
     getAllQueryParameters: (context: SdkClientClassContext) => QueryParameter[];

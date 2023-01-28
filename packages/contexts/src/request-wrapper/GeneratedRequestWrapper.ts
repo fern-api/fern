@@ -5,23 +5,17 @@ import { RequestWrapperContext } from "./RequestWrapperContext";
 
 export interface GeneratedRequestWrapper extends GeneratedFile<RequestWrapperContext> {
     areAllPropertiesOptional: (context: RequestWrapperContext) => boolean;
-    getReferenceToBody: (args: {
-        requestArgument: ts.Expression;
-        isRequestArgumentNullable: boolean;
-        context: RequestWrapperContext;
-    }) => ts.Expression | undefined;
+    areBodyPropertiesInlined: () => boolean;
+    getReferencedBodyPropertyName: () => string;
     getAllQueryParameters: () => QueryParameter[];
     getAllHeaders: () => HttpHeader[];
-    getReferenceToHeader: (args: {
-        header: HttpHeader;
-        requestArgument: ts.Expression;
-        isRequestArgumentNullable: boolean;
-    }) => ts.Expression;
     getNonBodyKeys: () => string[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
+    getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => string;
+    getPropertyNameOfHeader: (header: HttpHeader) => string;
     withQueryParameter: (args: {
         queryParameter: QueryParameter;
-        requestArgument: ts.Expression;
+        referenceToQueryParameterProperty: ts.Expression;
         isRequestArgumentNullable: boolean;
         context: RequestWrapperContext;
         callback: (value: ts.Expression) => ts.Statement[];

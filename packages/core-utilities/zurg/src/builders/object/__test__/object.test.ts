@@ -55,7 +55,7 @@ describe("object", () => {
         );
 
         itParse(
-            "includes unknown values by when skipUnknownKeysOnParse === false",
+            "includes unknown values when skipUnknownKeysOnParse === false",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -80,7 +80,7 @@ describe("object", () => {
         );
 
         itParse(
-            "skip unknown values by when skipUnknownKeysOnParse === true",
+            "skip unknown values when skipUnknownKeysOnParse === true",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -125,7 +125,7 @@ describe("object", () => {
         );
 
         itJson(
-            "skips unknown values by when includeUnknownKeysOnJson === false",
+            "skips unknown values when includeUnknownKeysOnJson === false",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -148,7 +148,7 @@ describe("object", () => {
         );
 
         itJson(
-            "includes unknown values by when includeUnknownKeysOnJson === true",
+            "includes unknown values when includeUnknownKeysOnJson === true",
             object({
                 foo: property("raw_foo", string()),
                 bar: stringLiteral("bar"),
@@ -174,20 +174,40 @@ describe("object", () => {
     });
 
     describe("nullish properties", () => {
-        itSchema("missing properties are not added", object({ foo: string().optional() }), {
+        itSchema("missing properties are not added", object({ foo: property("raw_foo", string().optional()) }), {
             raw: {},
             parsed: {},
         });
 
-        itParse("undefined properties are not dropped", object({ foo: string().optional() }), {
-            raw: { foo: undefined },
+        itSchema("undefined properties are not dropped", object({ foo: property("raw_foo", string().optional()) }), {
+            raw: { raw_foo: null },
             parsed: { foo: undefined },
         });
 
-        describe("parse()", () => {
-            itParse("null properties are not dropped", object({ foo: string().optional() }), {
-                raw: { foo: null },
-                parsed: { foo: undefined },
+        itSchema("null properties are not dropped", object({ foo: property("raw_foo", string().optional()) }), {
+            raw: { raw_foo: null },
+            parsed: { foo: undefined },
+        });
+
+        describe("extensions", () => {
+            itSchema(
+                "undefined properties are not dropped",
+                object({}).extend(object({ foo: property("raw_foo", string().optional()) })),
+                {
+                    raw: { raw_foo: null },
+                    parsed: { foo: undefined },
+                }
+            );
+
+            describe("parse()", () => {
+                itParse(
+                    "null properties are not dropped",
+                    object({}).extend(object({ foo: property("raw_foo", string().optional()) })),
+                    {
+                        raw: { raw_foo: null },
+                        parsed: { foo: undefined },
+                    }
+                );
             });
         });
     });
