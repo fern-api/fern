@@ -38,7 +38,8 @@ services:
 
 types:
   AccountWithConfig:
-    properties: {}
+    properties:
+      account: optional<map<string, unknown>>
 ",
                 "name": "account.yml",
                 "type": "file",
@@ -780,6 +781,9 @@ types:
           The date and time in which the event occurred, represented as an
           ISO-8601 string.
         type: optional<string>
+      _embedded:
+        docs: A collection of the objects in which this event applies to.
+        type: optional<map<string, unknown>>
       _links: optional<_InlinedType78>
 
   _InlinedType76:
@@ -842,6 +846,7 @@ types:
           updated.
         type: optional<string>
       configuration: optional<_InlinedType90>
+      policy_requirements: optional<map<string, unknown>>
 
   _InlinedType79:
     docs: String representation of the current status of the integration.
@@ -1217,6 +1222,13 @@ types:
           The date and time, in ISO-8601 format, when the link was first
           created.
         type: optional<string>
+      metadata:
+        docs: >-
+          Arbitrary key value pairs set on link creation or PATCH. Keys are
+          alphanumeric plus _, -, ., and space, at most 64 characters. Values
+          are at most 256 characters. You can have at most 32 metadata keys on a
+          link.
+        type: optional<map<string, unknown>>
       _links: optional<_InlinedType114>
 
   _InlinedType102:
@@ -1337,6 +1349,11 @@ types:
       uri:
         docs: URI the webhook should make a request to when the event is triggered.
         type: optional<string>
+      headers:
+        docs: >-
+          List of the headers and their values that should be included in the
+          request.
+        type: optional<map<string, unknown>>
       is_enabled: optional<boolean>
       event_types: optional<list<_InlinedType116>>
       last_response_body:
@@ -1415,6 +1432,9 @@ types:
       request_uri:
         docs: URI the broadcast was sent to.
         type: optional<string>
+      request_headers:
+        docs: Custom headers used to send the broadcast.
+        type: optional<map<string, unknown>>
       response_code:
         docs: Response code from the URI.
         type: optional<integer>
@@ -1926,6 +1946,14 @@ services:
           request:
             body:
               properties:
+                metadata:
+                  docs: >-
+                    Arbitrary key value pairs. The entire object is replaced
+                    on-update (missing keys in the request body will be
+                    removed). Keys are alphanumeric plus _, -, ., and space, at
+                    most 64 characters. Values are at most 256 characters. You
+                    can have at most 32 metadata keys on a link.
+                  type: optional<map<string, unknown>>
                 tracking_frequency:
                   docs: >-
                     The frequency of which tracking should be performed. This
@@ -2073,6 +2101,14 @@ services:
           request:
             body:
               properties:
+                metadata:
+                  docs: >-
+                    Arbitrary key value pairs. The entire object is replaced
+                    on-update (missing keys in the request body will be
+                    removed). Keys are alphanumeric plus _, -, ., and space, at
+                    most 64 characters. Values are at most 256 characters. You
+                    can have at most 32 metadata keys on a link.
+                  type: optional<map<string, unknown>>
                 provider_id:
                   docs: >-
                     If supplied, selects the insurance carrier associated with
@@ -2500,6 +2536,11 @@ services:
                     URI the webhook should make a request to when the event is
                     triggered.
                   type: optional<string>
+                headers:
+                  docs: >-
+                    List of the headers and their values that should be included
+                    in the request.
+                  type: optional<map<string, unknown>>
                 event_types: optional<list<_InlinedType50>>
 
         getWebhook:
@@ -2530,6 +2571,11 @@ services:
                     URI the webhook should make a request to when the event is
                     triggered.
                   type: optional<string>
+                headers:
+                  docs: >-
+                    List of the headers and their values that should be included
+                    in the request.
+                  type: optional<map<string, unknown>>
                 is_enabled: optional<boolean>
                 event_types: optional<list<_InlinedType51>>
           response: commons.Webhook_2
