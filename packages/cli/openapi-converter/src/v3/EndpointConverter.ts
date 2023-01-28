@@ -248,7 +248,8 @@ export class EndpointConverter {
 
         if (convertedSchema != null && isRawEnumDefinition(convertedSchema.typeDeclaration)) {
             if (isReferenceObject(parameter.schema)) {
-                return getFernReferenceForSchema(parameter.schema, this.context, this.tag, this.imports);
+                const ref = getFernReferenceForSchema(parameter.schema, this.context, this.tag, this.imports);
+                return required ? ref : `optional<${ref}>`;
             }
             const inlinedName = this.inlinedTypeNamer.getName();
             this.additionalTypeDeclarations = {
