@@ -223,8 +223,9 @@ export class EndpointConverter {
     }
 
     private convertParameterSchema(parameter: OpenAPIV3.ParameterObject): string | undefined {
+        const required = parameter.required ?? false;
         if (parameter.schema == null) {
-            return "string";
+            return required ? "string" : "optional<string>";
         }
 
         const resolvedParameterSchema = isReferenceObject(parameter.schema)
@@ -232,7 +233,7 @@ export class EndpointConverter {
             : parameter.schema;
 
         if (resolvedParameterSchema == null) {
-            return "string";
+            return required ? "string" : "optional<string>";
         }
 
         const schemaConverter = new SchemaConverter({
@@ -254,15 +255,17 @@ export class EndpointConverter {
                 ...this.additionalTypeDeclarations,
                 [this.inlinedTypeNamer.getName()]: convertedSchema.typeDeclaration,
             };
-            return inlinedName;
+            return required ? inlinedName : `optional<${inlinedName}>`;
         } else if (
             convertedSchema != null &&
             isRawAliasDefinition(convertedSchema.typeDeclaration) &&
             isPrimitive(convertedSchema.typeDeclaration)
         ) {
-            return typeof convertedSchema.typeDeclaration === "string"
-                ? convertedSchema.typeDeclaration
-                : convertedSchema.typeDeclaration.type;
+            const boxedType =
+                typeof convertedSchema.typeDeclaration === "string"
+                    ? convertedSchema.typeDeclaration
+                    : convertedSchema.typeDeclaration.type;
+            return required ? boxedType : `optional<${boxedType}>`;
         } else if (convertedSchema != null) {
             this.taskContext.logger.warn(
                 `Path parameter had non-primitive schema: ${JSON.stringify(resolvedParameterSchema)}`

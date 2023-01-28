@@ -75,50 +75,50 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               provider:
                 docs: Partial name of a provider to search against
-                type: string
+                type: optional<string>
               created_since:
                 docs: Limit results to links created on or after this date.
-                type: string
+                type: optional<string>
               created_until:
                 docs: Limit results to links created on or before this date.
-                type: string
+                type: optional<string>
               updated_since:
                 docs: Limit results to links last updated on or since this date.
-                type: string
+                type: optional<string>
               updated_until:
                 docs: Limit results to links last updated on or before this date.
-                type: string
+                type: optional<string>
               synced_since:
                 docs: Limit results to links last synced on or after this date.
-                type: string
+                type: optional<string>
               synced_until:
                 docs: Limit results to links last synced on or before this date.
-                type: string
+                type: optional<string>
               q:
                 docs: Search for link via ID
-                type: string
+                type: optional<string>
               status:
                 docs: >-
                   Filter link status; separate multiple statuses (OR'd) with
                   commas
-                type: _InlinedType43
+                type: optional<_InlinedType43>
               has_metadata:
                 docs: Filter whether a link has metadata attached
-                type: boolean
+                type: optional<boolean>
               policy_type:
                 docs: The type of policy linked.
-                type: _InlinedType45
+                type: optional<_InlinedType45>
               integration_ids:
                 docs: >-
                   If provided, only show items with any of the specified
                   integration IDs, comma-separated.
-                type: string
+                type: optional<string>
           response: commons.Links
 
         getApplicationPolicies:
@@ -132,13 +132,13 @@ services:
                 docs: >-
                   If provided, only show items with any of the specified
                   integration IDs, comma-separated.
-                type: string
+                type: optional<string>
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
           response: commons.Policies
 
 types:
@@ -1461,10 +1461,10 @@ services:
                 docs: >-
                   Partial integration name, ID, or integration key to search
                   against, with or without leading in_/ik_
-                type: string
+                type: optional<string>
               status:
                 docs: Filter active or archived integrations
-                type: _InlinedType16
+                type: optional<_InlinedType16>
           response: Integrations
 
         createIntegration:
@@ -1551,10 +1551,10 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
           response: commons.Policies
 
         getIntegrationProviders:
@@ -1578,7 +1578,7 @@ services:
                   A pipe delineated list of policy types desired. Providers who
                   do not support at least one required policy type will be
                   excluded.
-                type: string
+                type: optional<string>
           response: Providers
 
         regenerateIntegrationKey:
@@ -1946,10 +1946,10 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
           response: commons.Policies
 
         getLinkEvents:
@@ -1965,13 +1965,13 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               event_type:
                 docs: Filter events by type.
-                type: _InlinedType33
+                type: optional<_InlinedType33>
           response: commons.Events
 
         attachLinkDocument:
@@ -2014,45 +2014,45 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               provider:
                 docs: Partial name of a provider to search against
-                type: string
+                type: optional<string>
               created_since:
                 docs: Limit results to links created on or after this date.
-                type: string
+                type: optional<string>
               created_until:
                 docs: Limit results to links created on or before this date.
-                type: string
+                type: optional<string>
               updated_since:
                 docs: Limit results to links last updated on or since this date.
-                type: string
+                type: optional<string>
               updated_until:
                 docs: Limit results to links last updated on or before this date.
-                type: string
+                type: optional<string>
               synced_since:
                 docs: Limit results to links last synced on or after this date.
-                type: string
+                type: optional<string>
               synced_until:
                 docs: Limit results to links last synced on or before this date.
-                type: string
+                type: optional<string>
               q:
                 docs: Search for link via ID
-                type: string
+                type: optional<string>
               status:
                 docs: >-
                   Filter link status; separate multiple statuses (OR'd) with
                   commas
-                type: _InlinedType35
+                type: optional<_InlinedType35>
               has_metadata:
                 docs: Filter whether a link has metadata attached
-                type: boolean
+                type: optional<boolean>
               policy_type:
                 docs: The type of policy linked.
-                type: _InlinedType37
+                type: optional<_InlinedType37>
           response: commons.Links
 
         initializeLinkViaIntegration:
@@ -2101,40 +2101,40 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               provider:
                 docs: Partial name of a provider to search against
-                type: string
+                type: optional<string>
               created_since:
                 docs: Limit results to links created on or after this date.
-                type: string
+                type: optional<string>
               created_until:
                 docs: Limit results to links created on or before this date.
-                type: string
+                type: optional<string>
               updated_since:
                 docs: Limit results to links last updated on or since this date.
-                type: string
+                type: optional<string>
               updated_until:
                 docs: Limit results to links last updated on or before this date.
-                type: string
+                type: optional<string>
               synced_since:
                 docs: Limit results to links last synced on or after this date.
-                type: string
+                type: optional<string>
               synced_until:
                 docs: Limit results to links last synced on or before this date.
-                type: string
+                type: optional<string>
               policy_type:
                 docs: The type of policy linked.
-                type: _InlinedType39
+                type: optional<_InlinedType39>
               policy_filter_type:
                 docs: >-
                   Show only these types of policies within each link. Does not
                   affect which links are shown. Comma-separate to allow multiple
                   policy types.
-                type: _InlinedType41
+                type: optional<_InlinedType41>
           response: LinksWithPolicies
 
 types:
@@ -2273,13 +2273,13 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               event_type:
                 docs: Filter events by type.
-                type: _InlinedType8
+                type: optional<_InlinedType8>
           response: commons.Events
 
 types:
@@ -2478,13 +2478,13 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               event_type:
                 docs: Filter events by type.
-                type: _InlinedType48
+                type: optional<_InlinedType48>
           response: Webhooks
 
         createWebhook:
@@ -2547,13 +2547,13 @@ services:
             query-parameters:
               limit:
                 docs: Number of results to return.
-                type: integer
+                type: optional<integer>
               offset:
                 docs: Specifies the offset of the first result to return.
-                type: integer
+                type: optional<integer>
               event_type:
                 docs: Filter events by type.
-                type: _InlinedType52
+                type: optional<_InlinedType52>
           response: commons.Events
 
 types:
@@ -3590,18 +3590,18 @@ services:
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType3
 
         devicesRetrieve:
@@ -3720,27 +3720,27 @@ services:
             query-parameters:
               sim:
                 docs: The unique identifier for the sim to be filtered by.
-                type: string
+                type: optional<string>
               user:
                 docs: The unique identifier for the user to be filtered by.
-                type: string
+                type: optional<string>
               after:
                 docs: >-
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType5
 
         devicesCreate:
@@ -3992,18 +3992,18 @@ services:
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType9
 
 types:
@@ -4205,18 +4205,18 @@ services:
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType10
 
         portingsCreate:
@@ -4325,7 +4325,7 @@ services:
                 docs: >-
                   Only return service providers that have the given network
                   provider as supported porting recipient.
-                type: string
+                type: optional<string>
           response: _InlinedType11
 
 types:
@@ -4432,24 +4432,24 @@ services:
             query-parameters:
               organization:
                 docs: The unique identifier for the organization to be filtered by.
-                type: string
+                type: optional<string>
               after:
                 docs: >-
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType13
 
 types:
@@ -4557,27 +4557,27 @@ services:
             query-parameters:
               type:
                 docs: The type for the sim to be filtered by.
-                type: _InlinedType17
+                type: optional<_InlinedType17>
               user:
                 docs: The unique identifier for the user to be filtered by.
-                type: string
+                type: optional<string>
               after:
                 docs: >-
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType19
 
 types:
@@ -4740,30 +4740,30 @@ services:
             query-parameters:
               user:
                 docs: The unique identifier for the user to be filtered by.
-                type: string
+                type: optional<string>
               plan:
                 docs: The unique identifier for the plan to be filtered by.
-                type: string
+                type: optional<string>
               sim:
                 docs: The unique identifier for the sim to be filtered by.
-                type: string
+                type: optional<string>
               after:
                 docs: >-
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType21
 
         subscriptionsCreate:
@@ -4875,23 +4875,23 @@ services:
                   Limits the usage data returned to the subscription period
                   provided. This option is incompatible with the \`start\` and
                   \`end\` parameters.
-                type: integer
+                type: optional<integer>
               start:
                 docs: >-
                   Limits the usage data to dates greater than or equal to the
                   provided date. Can only be used in combination with \`end\`.
-                type: string
+                type: optional<string>
               end:
                 docs: >-
                   Limits the usage data to dates up to and including the
                   provided date. Can only be used in combination with \`start\`.
-                type: string
+                type: optional<string>
               aggregation:
                 docs: >-
                   Determines the aggregation method used, defaulting to \`daily\`.
                   \`period\` provides a single aggregated value for the time range
                   or period requested.
-                type: _InlinedType22
+                type: optional<_InlinedType22>
           response: _InlinedType24
 
 types:
@@ -5168,18 +5168,18 @@ services:
                   A cursor for use in pagination. The \`after\` parameter takes an
                   object ID that defines the position in the list, only items
                   immediately following the item with that ID will be returned.
-                type: string
+                type: optional<string>
               before:
                 docs: >-
                   A cursor for use in pagination. The \`before\` parameter takes
                   an object ID that defines the position in the list, only items
                   immediately preceding the item with that ID will be returned.
-                type: string
+                type: optional<string>
               limit:
                 docs: >-
                   The limit of items to be returned in the list, between 0 and
                   200.
-                type: integer
+                type: optional<integer>
           response: _InlinedType27
 
         usersCreate:

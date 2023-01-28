@@ -63,59 +63,59 @@ exports[`open api converter covie simple 1`] = `
                   "query-parameters": {
                     "created_since": {
                       "docs": "Limit results to links created on or after this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "created_until": {
                       "docs": "Limit results to links created on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "has_metadata": {
                       "docs": "Filter whether a link has metadata attached",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "integration_ids": {
                       "docs": "If provided, only show items with any of the specified integration IDs, comma-separated.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "policy_type": {
                       "docs": "The type of policy linked.",
-                      "type": "_InlinedType45",
+                      "type": "optional<_InlinedType45>",
                     },
                     "provider": {
                       "docs": "Partial name of a provider to search against",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "q": {
                       "docs": "Search for link via ID",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "status": {
                       "docs": "Filter link status; separate multiple statuses (OR'd) with commas",
-                      "type": "_InlinedType43",
+                      "type": "optional<_InlinedType43>",
                     },
                     "synced_since": {
                       "docs": "Limit results to links last synced on or after this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "synced_until": {
                       "docs": "Limit results to links last synced on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "updated_since": {
                       "docs": "Limit results to links last updated on or since this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "updated_until": {
                       "docs": "Limit results to links last updated on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -130,15 +130,15 @@ exports[`open api converter covie simple 1`] = `
                   "query-parameters": {
                     "integration_ids": {
                       "docs": "If provided, only show items with any of the specified integration IDs, comma-separated.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -1652,11 +1652,11 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -1677,7 +1677,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "required_policy_types": {
                       "docs": "A pipe delineated list of policy types desired. Providers who do not support at least one required policy type will be excluded. ",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -1728,11 +1728,11 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "q": {
                       "docs": "Partial integration name, ID, or integration key to search against, with or without leading in_/ik_",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "status": {
                       "docs": "Filter active or archived integrations",
-                      "type": "_InlinedType16",
+                      "type": "optional<_InlinedType16>",
                     },
                   },
                 },
@@ -2080,55 +2080,55 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "created_since": {
                       "docs": "Limit results to links created on or after this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "created_until": {
                       "docs": "Limit results to links created on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "has_metadata": {
                       "docs": "Filter whether a link has metadata attached",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "policy_type": {
                       "docs": "The type of policy linked.",
-                      "type": "_InlinedType37",
+                      "type": "optional<_InlinedType37>",
                     },
                     "provider": {
                       "docs": "Partial name of a provider to search against",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "q": {
                       "docs": "Search for link via ID",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "status": {
                       "docs": "Filter link status; separate multiple statuses (OR'd) with commas",
-                      "type": "_InlinedType35",
+                      "type": "optional<_InlinedType35>",
                     },
                     "synced_since": {
                       "docs": "Limit results to links last synced on or after this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "synced_until": {
                       "docs": "Limit results to links last synced on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "updated_since": {
                       "docs": "Limit results to links last updated on or since this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "updated_until": {
                       "docs": "Limit results to links last updated on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -2149,47 +2149,47 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "created_since": {
                       "docs": "Limit results to links created on or after this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "created_until": {
                       "docs": "Limit results to links created on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "policy_filter_type": {
                       "docs": "Show only these types of policies within each link. Does not affect which links are shown. Comma-separate to allow multiple policy types.",
-                      "type": "_InlinedType41",
+                      "type": "optional<_InlinedType41>",
                     },
                     "policy_type": {
                       "docs": "The type of policy linked.",
-                      "type": "_InlinedType39",
+                      "type": "optional<_InlinedType39>",
                     },
                     "provider": {
                       "docs": "Partial name of a provider to search against",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "synced_since": {
                       "docs": "Limit results to links last synced on or after this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "synced_until": {
                       "docs": "Limit results to links last synced on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "updated_since": {
                       "docs": "Limit results to links last updated on or since this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "updated_until": {
                       "docs": "Limit results to links last updated on or before this date.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -2223,15 +2223,15 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "event_type": {
                       "docs": "Filter events by type.",
-                      "type": "_InlinedType33",
+                      "type": "optional<_InlinedType33>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -2252,11 +2252,11 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -2471,15 +2471,15 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "event_type": {
                       "docs": "Filter events by type.",
-                      "type": "_InlinedType8",
+                      "type": "optional<_InlinedType8>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -2720,15 +2720,15 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "event_type": {
                       "docs": "Filter events by type.",
-                      "type": "_InlinedType52",
+                      "type": "optional<_InlinedType52>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -2743,15 +2743,15 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
                   "query-parameters": {
                     "event_type": {
                       "docs": "Filter events by type.",
-                      "type": "_InlinedType48",
+                      "type": "optional<_InlinedType48>",
                     },
                     "limit": {
                       "docs": "Number of results to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "Specifies the offset of the first result to return.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -3044,11 +3044,11 @@ Here are some of the most used payload fields explained (you can find the full p
                   "query-parameters": {
                     "validateDestinationUserId": {
                       "docs": "Boolean string whether Flagright should validate if provided destinationUserId exist. True by default",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "validateOriginUserId": {
                       "docs": "Boolean string whether Flagright should validate if provided originUserId exist. True by default",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -4918,43 +4918,43 @@ exports[`open api converter partnerstack simple 1`] = `
                   "query-parameters": {
                     "action_type": {
                       "docs": "Will filter for actions with the specified name.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "order_by": {
                       "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
-                      "type": "_InlinedType82",
+                      "type": "optional<_InlinedType82>",
                     },
                     "partnership_key": {
                       "docs": "Partnership key in which the results are filtered by.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5337,39 +5337,39 @@ exports[`open api converter partnerstack simple 1`] = `
                   "query-parameters": {
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "group": {
                       "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "partner_key": {
                       "docs": "Will filter to a specific partnership's \`partner_key\`, which can be found using the partnership's get endpoint or from the partnership view in your PartnerStack dashboard.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5755,39 +5755,39 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "group": {
                       "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "partner_key": {
                       "docs": "Will filter to a specific partnership's \`partner_key\`, which can be found using the partnership's get endpoint or from the partnership view in your PartnerStack dashboard.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -5814,9 +5814,9 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "path": "/v2/deals/form-templates",
                 "request": {
                   "query-parameters": {
-                    "group_key": "string",
-                    "mold_key": "string",
-                    "partner_key": "string",
+                    "group_key": "optional<string>",
+                    "mold_key": "optional<string>",
+                    "partner_key": "optional<string>",
                   },
                 },
                 "response": "_InlinedType38",
@@ -6663,43 +6663,43 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "group": {
                       "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "mold_keys": {
                       "docs": "The keys of the molds to filter by. If empty, returns fields for all molds.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "target_type": {
                       "docs": "The molds' target type. If empty, filter by all types.",
-                      "type": "_InlinedType143",
+                      "type": "optional<_InlinedType143>",
                     },
                   },
                 },
@@ -6804,31 +6804,31 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -6921,27 +6921,27 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "group": {
                       "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "partner_key": {
                       "docs": "Will filter to a specific partnership's \`partner_key\`, which can be found using the partnership's get endpoint or from the partnership view in your PartnerStack dashboard.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -6968,8 +6968,8 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "path": "/form-templates",
                 "request": {
                   "query-parameters": {
-                    "group_key": "string",
-                    "mold_key": "string",
+                    "group_key": "optional<string>",
+                    "mold_key": "optional<string>",
                   },
                 },
                 "response": "_InlinedType183",
@@ -7590,27 +7590,27 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "category": {
                       "docs": "Marketplace category of the programs",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -7771,43 +7771,43 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "email": {
                       "docs": "The email of the user with the partnership you're looking for.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "group": {
                       "docs": "Will filter for partnerships who are in a group with the specified name. Name must have spaces and special characters removed.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_updated": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_updated": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`updated_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "order_by": {
                       "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
-                      "type": "_InlinedType215",
+                      "type": "optional<_InlinedType215>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -8289,83 +8289,83 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "customer_key": {
                       "docs": "Customer key in which the results are filtered by",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "decline_reason": {
                       "docs": "Text that the decline_reason must contain",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "description": {
                       "docs": "Text that the description must contain",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "distinct_decline_reason": {
                       "docs": "Flag the returned results should have distinct decline reasons or not",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "distinct_description": {
                       "docs": "Flag the returned results should have distinct descriptions or not",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "empty_line_id": {
                       "docs": "Flag if drip rewards returned have a line_id (invoice) attached or not",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "exclude_drip_rewards": {
                       "docs": "Flag if drip rewards should be included into the results",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "group_key": {
                       "docs": "Group key in which the results are filtered by",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "hide_archived_rewards": {
                       "docs": "Flag to hide rewards that have been archived",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "invoice_key": {
                       "docs": "Invoice key in which the results are filtered by",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "invoiceable": {
                       "docs": "Flag if the returned results should have only pending and approved rewards which do not have an associated payment line.",
-                      "type": "boolean",
+                      "type": "optional<boolean>",
                     },
                     "keywords": {
                       "docs": "Free keywords that will filter on the followingReward key, Customer name, Partner first name, Partner last name, Partner email, Partner key",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "max_created": {
                       "docs": "Applies a maximum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "min_created": {
                       "docs": "Applies a minimum epoch timestamp (ms) filter to the response \`created_at\`.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "order_by": {
                       "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
-                      "type": "_InlinedType278",
+                      "type": "optional<_InlinedType278>",
                     },
                     "partnership_key": {
                       "docs": "Partnership key in which the results are filtered by.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "status": {
                       "docs": "The status of the rewards",
-                      "type": "_InlinedType280",
+                      "type": "optional<_InlinedType280>",
                     },
                   },
                 },
@@ -8553,27 +8553,27 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   "query-parameters": {
                     "customer_email": {
                       "docs": "Customer's email address.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "customer_external_key": {
                       "docs": "An external key that can be used to reference the customer.                 This is the same as the \`customer_key\` value used when creating the customer                 with PartnerStackJS.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "customer_key": {
                       "docs": "Key of customer who made the transaction.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -8719,15 +8719,15 @@ These customer reference fields are required, but mutually exclusive
                   "query-parameters": {
                     "ending_before": {
                       "docs": "A cursor for use in pagination, \`ending_before\` takes in an item key and the subsequent call will return the prior items in the list. This is mutually exclusive with \`starting_after\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "limit": {
                       "docs": "A limit on the number of items to be returned. Limits can range between 1 and 250, and the default is 10.",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "starting_after": {
                       "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -11897,11 +11897,11 @@ the same customer, dimension, and time, but a different quantity.",
                   "query-parameters": {
                     "limit": {
                       "docs": "List pagination size, default 20",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "List pagination offset, default 0",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -11938,7 +11938,7 @@ the same customer, dimension, and time, but a different quantity.",
                   "query-parameters": {
                     "entitlementTermId": {
                       "docs": "The Entitlement Term ID, if not given, return the UsageRecordReports of all Entitlement Terms under the Entitlement",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
@@ -11959,11 +11959,11 @@ the same customer, dimension, and time, but a different quantity.",
                   "query-parameters": {
                     "limit": {
                       "docs": "List pagination size, default 20",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "List pagination offset, default 0",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -11978,11 +11978,11 @@ the same customer, dimension, and time, but a different quantity.",
                   "query-parameters": {
                     "limit": {
                       "docs": "List pagination size, default 20",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                     "offset": {
                       "docs": "List pagination offset, default 0",
-                      "type": "integer",
+                      "type": "optional<integer>",
                     },
                   },
                 },
@@ -12214,11 +12214,11 @@ the same customer, dimension, and time, but a different quantity.",
                   "query-parameters": {
                     "entitlementId": {
                       "docs": "filter by entitlementId",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                     "offerId": {
                       "docs": "filter by offerId",
-                      "type": "string",
+                      "type": "optional<string>",
                     },
                   },
                 },
