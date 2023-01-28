@@ -29,7 +29,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         return {
             name: this.getRequestParameterName(),
             type: getTextOfTsNode(type.type),
-            hasQuestionToken: type.isOptional,
+            hasQuestionToken: type.hasQuestionToken,
             initializer: type.initializer != null ? getTextOfTsNode(type.initializer) : undefined,
         };
     }
@@ -50,7 +50,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     ): ts.Statement[];
     protected abstract getParameterType(contxt: SdkClientClassContext): {
         type: ts.TypeNode;
-        isOptional: boolean;
+        hasQuestionToken: boolean;
         initializer?: ts.Expression;
     };
 }

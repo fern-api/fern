@@ -90,6 +90,10 @@ services:
           auth: false
           path-parameters:
             playlistId: PlaylistId
+          request:
+            name: GetPlaylistRequest
+            query-parameters:
+              optionalQueryParam: optional<integer>
           response: Playlist
           errors:
             - PlaylistIdNotFoundError

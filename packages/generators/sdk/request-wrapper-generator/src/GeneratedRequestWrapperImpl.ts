@@ -104,13 +104,11 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public withQueryParameter({
         queryParameter,
         referenceToQueryParameterProperty,
-        isRequestArgumentNullable,
         context,
         callback,
     }: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
-        isRequestArgumentNullable: boolean;
         context: RequestWrapperContext;
         callback: (value: ts.Expression) => ts.Statement[];
     }): ts.Statement[] {
@@ -159,7 +157,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
         const resolvedType = context.type.resolveTypeReference(queryParameter.valueType);
         const isQueryParamOptional = resolvedType._type === "container" && resolvedType.container._type === "optional";
-        if (isRequestArgumentNullable || isQueryParamOptional) {
+        if (isQueryParamOptional) {
             statements = [
                 ts.factory.createIfStatement(
                     ts.factory.createBinaryExpression(

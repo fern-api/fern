@@ -8,7 +8,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     protected getParameterType(context: SdkClientClassContext): {
         type: ts.TypeNode;
-        isOptional: boolean;
+        hasQuestionToken: boolean;
         initializer?: ts.Expression;
     } {
         const isOptional = this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
@@ -17,7 +17,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                 this.service.name.fernFilepath,
                 this.endpoint.name
             ),
-            isOptional,
+            hasQuestionToken: false,
             initializer: isOptional ? ts.factory.createObjectLiteralExpression([], false) : undefined,
         };
     }
@@ -98,7 +98,6 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             referenceToQueryParameterProperty: ts.factory.createIdentifier(
                 generatedRequestWrapper.getPropertyNameOfHeader(queryParameter)
             ),
-            isRequestArgumentNullable: this.getParameterType(context).isOptional,
             context,
             callback,
         });

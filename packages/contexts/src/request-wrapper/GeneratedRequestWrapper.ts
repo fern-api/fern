@@ -16,7 +16,6 @@ export interface GeneratedRequestWrapper extends GeneratedFile<RequestWrapperCon
     withQueryParameter: (args: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
-        isRequestArgumentNullable: boolean;
         context: RequestWrapperContext;
         callback: (value: ts.Expression) => ts.Statement[];
     }) => ts.Statement[];
