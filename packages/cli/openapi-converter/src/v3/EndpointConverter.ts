@@ -1,5 +1,5 @@
 import { TaskContext } from "@fern-api/task-context";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawAliasDefinition, isRawEnumDefinition, isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
@@ -9,9 +9,9 @@ import { SchemaConverter } from "./SchemaConverter";
 import {
     APPLICATION_JSON_CONTENT,
     COMMONS_SERVICE_FILE_NAME,
-    convertParameterSchema,
     diff,
     getFernReferenceForSchema,
+    isPrimitive,
     isReferenceObject,
     maybeGetAliasReference,
     REQUEST_REFERENCE_PREFIX,
@@ -37,6 +37,7 @@ export class EndpointConverter {
     private tag: string;
     private imports = new Set<string>();
     private serviceBasePath: ServiceBasePath;
+    private additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
 
     constructor(
         endpoint: OpenAPIV3Endpoint,
@@ -88,7 +89,8 @@ export class EndpointConverter {
                 : undefined;
         const successResponse = this.endpoint.definition.responses[TWO_HUNDRED_STATUS_CODE];
         const responseBody = successResponse != null ? this.convertResponseBody(successResponse) : undefined;
-        const additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {
+        this.additionalTypeDeclarations = {
+            ...this.additionalTypeDeclarations,
             ...requestBody?.additionalTypes,
             ...responseBody?.additionalTypes,
         };
@@ -137,7 +139,7 @@ export class EndpointConverter {
 
         return {
             endpoint,
-            additionalTypeDeclarations,
+            additionalTypeDeclarations: this.additionalTypeDeclarations,
             imports: this.imports,
         };
     }
@@ -149,10 +151,12 @@ export class EndpointConverter {
                 if (this.serviceBasePath.pathParameters.includes(parameter.name)) {
                     continue;
                 }
+
                 const parameterType = this.convertParameterSchema(parameter);
                 if (parameterType == null) {
                     continue;
                 }
+
                 const schema =
                     parameter.description != null
                         ? {
@@ -219,7 +223,52 @@ export class EndpointConverter {
     }
 
     private convertParameterSchema(parameter: OpenAPIV3.ParameterObject): string | undefined {
-        return convertParameterSchema(parameter, this.context, this.taskContext, this.endpoint);
+        if (parameter.schema == null) {
+            return "string";
+        }
+
+        const resolvedParameterSchema = isReferenceObject(parameter.schema)
+            ? this.context.maybeResolveReference(parameter.schema)?.schemaObject
+            : parameter.schema;
+
+        if (resolvedParameterSchema == null) {
+            return "string";
+        }
+
+        const schemaConverter = new SchemaConverter({
+            schema: resolvedParameterSchema,
+            taskContext: this.taskContext,
+            inlinedTypeNamer: this.inlinedTypeNamer,
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            tag: this.tag,
+        });
+        const convertedSchema = schemaConverter.convert();
+
+        if (convertedSchema != null && isRawEnumDefinition(convertedSchema.typeDeclaration)) {
+            if (isReferenceObject(parameter.schema)) {
+                return getFernReferenceForSchema(parameter.schema, this.context, this.tag, this.imports);
+            }
+            const inlinedName = this.inlinedTypeNamer.getName();
+            this.additionalTypeDeclarations = {
+                ...this.additionalTypeDeclarations,
+                [this.inlinedTypeNamer.getName()]: convertedSchema.typeDeclaration,
+            };
+            return inlinedName;
+        } else if (
+            convertedSchema != null &&
+            isRawAliasDefinition(convertedSchema.typeDeclaration) &&
+            isPrimitive(convertedSchema.typeDeclaration)
+        ) {
+            return typeof convertedSchema.typeDeclaration === "string"
+                ? convertedSchema.typeDeclaration
+                : convertedSchema.typeDeclaration.type;
+        } else if (convertedSchema != null) {
+            this.taskContext.logger.warn(
+                `Path parameter had non-primitive schema: ${JSON.stringify(resolvedParameterSchema)}`
+            );
+        }
+        return undefined;
     }
 
     private convertRequestBody(

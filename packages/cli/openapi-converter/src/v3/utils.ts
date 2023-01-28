@@ -1,5 +1,5 @@
 import { TaskContext } from "@fern-api/task-context";
-import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { RawSchemas, visitRawTypeDeclaration, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
 
@@ -30,6 +30,20 @@ export function maybeConvertSchemaToPrimitive(schemaObject: OpenAPIV3.SchemaObje
         return "string";
     }
     return undefined;
+}
+
+export function isPrimitive(typeReference: RawSchemas.TypeReferenceSchema): boolean {
+    const rawTypeReference = typeof typeReference === "string" ? typeReference : typeReference.type;
+    return visitRawTypeReference(rawTypeReference, {
+        primitive: () => true,
+        map: () => false,
+        list: () => false,
+        set: () => false,
+        optional: (valueType) => isPrimitive(valueType),
+        literal: () => false,
+        named: () => false,
+        unknown: () => false,
+    });
 }
 
 export const COMMONS_SERVICE_FILE_NAME = "commons";
@@ -78,7 +92,7 @@ export function convertParameterSchema(
     }
 
     const resolvedSchema = isReferenceObject(parameter.schema)
-        ? context.maybeResolveSchemaReference(parameter.schema)?.schemaObject
+        ? context.maybeResolveReference(parameter.schema)?.schemaObject
         : parameter.schema;
     if (resolvedSchema == null) {
         return undefined;
@@ -92,7 +106,6 @@ export function convertParameterSchema(
             } has non primitive schema: ${JSON.stringify(resolvedSchema, undefined, 2)}`
         );
     }
-
     const parameterType =
         parameter.required != null && parameter.required ? convertedPrimitive : `optional<${convertedPrimitive}>`;
     return parameterType;
