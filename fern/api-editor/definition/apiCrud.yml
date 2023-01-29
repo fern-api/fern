@@ -24,34 +24,36 @@ types:
       types: list<commons.TypeId>
       errors: list<commons.ErrorId>
 
-service:
-  auth: false
-  base-path: /{apiId}
-  path-parameters:
-    apiId: commons.ApiId
-  endpoints:
-    create:
-      method: POST
-      path: /
-      request:
-        name: CreateApiRequest
-        body:
-          properties:
-            apiName: string
-      response: commons.ApiId
-    get:
-      method: GET
-      path: /
-      response: Api
-    update:
-      method: PUT
-      path: /
-      request:
-        name: UpdateApiRequest
-        body:
-          properties:
-            apiName: string
-            packages: list<Package>
-    delete:
-      method: DELETE
-      path: /
+services:
+  http:
+    ApiCrudService:
+      auth: false
+      base-path: /{apiId}
+      path-parameters:
+        apiId: commons.ApiId
+      endpoints:
+        create:
+          method: POST
+          path: /
+          request:
+            name: CreateApiRequest
+            body:
+              properties:
+                apiName: string
+          response: commons.ApiId
+        get:
+          method: GET
+          path: /
+          response: Api
+        update:
+          method: PUT
+          path: /
+          request:
+            name: UpdateApiRequest
+            body:
+              properties:
+                apiName: string
+                packages: list<Package>
+        delete:
+          method: DELETE
+          path: /
