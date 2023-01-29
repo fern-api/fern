@@ -64,6 +64,7 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             useBrandedStringAliases: true,
             neverThrowErrors: true,
+            namespaceExport: "Fiddle",
         },
     },
 ];

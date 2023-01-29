@@ -10,19 +10,19 @@ import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
-        apiName: string;
+        namespaceExport: string;
         aliasOfRoot: string | undefined;
         containingDirectory: ExportedDirectory[];
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
-    protected apiName: string;
+    protected namespaceExport: string;
     protected aliasOfRoot: string | undefined;
     protected containingDirectory: ExportedDirectory[];
 
-    constructor({ apiName, containingDirectory, aliasOfRoot }: AbstractDeclarationReferencer.Init) {
-        this.apiName = apiName;
+    constructor({ namespaceExport, containingDirectory, aliasOfRoot }: AbstractDeclarationReferencer.Init) {
+        this.namespaceExport = namespaceExport;
         this.aliasOfRoot = aliasOfRoot;
         this.containingDirectory = containingDirectory;
     }

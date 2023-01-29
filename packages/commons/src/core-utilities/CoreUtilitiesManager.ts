@@ -27,7 +27,7 @@ export class CoreUtilitiesManager {
     private aliasOfRoot: string | undefined;
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
 
-    constructor({ aliasOfRoot }: { apiName: string; aliasOfRoot: string | undefined }) {
+    constructor({ aliasOfRoot }: { aliasOfRoot: string | undefined }) {
         this.aliasOfRoot = aliasOfRoot;
     }
 

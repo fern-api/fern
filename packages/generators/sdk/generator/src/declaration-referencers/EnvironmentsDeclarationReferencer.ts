@@ -44,11 +44,11 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     public getExportedNameOfEnvironmentsEnum(): string {
-        return `${this.apiName}Environment`;
+        return `${this.namespaceExport}Environment`;
     }
 
     public getExportedNameOfEnvironmentUrls(): string {
-        return `${this.apiName}EnvironmentUrls`;
+        return `${this.namespaceExport}EnvironmentUrls`;
     }
 
     public getReferenceToEnvironmentsEnum({

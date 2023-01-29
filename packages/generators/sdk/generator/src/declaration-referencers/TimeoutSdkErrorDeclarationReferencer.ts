@@ -2,6 +2,6 @@ import { AbstractSdkErrorDeclarationReferencer } from "./AbstractSdkErrorDeclara
 
 export class TimeoutSdkErrorDeclarationReferencer extends AbstractSdkErrorDeclarationReferencer {
     public getExportedName(): string {
-        return `${this.apiName}TimeoutError`;
+        return `${this.namespaceExport}TimeoutError`;
     }
 }

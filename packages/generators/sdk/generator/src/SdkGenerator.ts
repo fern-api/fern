@@ -57,7 +57,7 @@ const FILE_HEADER = `/**
 
 export declare namespace SdkGenerator {
     export interface Init {
-        apiName: string;
+        namespaceExport: string;
         intermediateRepresentation: IntermediateRepresentation;
         context: GeneratorContext;
         volume: Volume;
@@ -114,7 +114,14 @@ export class SdkGenerator {
 
     private finish: () => Promise<void>;
 
-    constructor({ apiName, intermediateRepresentation, context, volume, npmPackage, config }: SdkGenerator.Init) {
+    constructor({
+        namespaceExport,
+        intermediateRepresentation,
+        context,
+        volume,
+        npmPackage,
+        config,
+    }: SdkGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
@@ -122,7 +129,7 @@ export class SdkGenerator {
         const aliasOfRoot = npmPackage?.packageName;
 
         this.exportsManager = new ExportsManager({ aliasOfRoot });
-        this.coreUtilitiesManager = new CoreUtilitiesManager({ apiName, aliasOfRoot });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({ aliasOfRoot });
 
         const project = new Project({
             useInMemoryFileSystem: true,
@@ -135,7 +142,7 @@ export class SdkGenerator {
         const apiDirectory: ExportedDirectory[] = [
             {
                 nameOnDisk: "api",
-                exportDeclaration: { namespaceExport: apiName },
+                exportDeclaration: { namespaceExport },
             },
         ];
 
@@ -148,63 +155,63 @@ export class SdkGenerator {
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.errorDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.sdkErrorSchemaDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
-            apiName,
             containingDirectory: apiDirectory,
             aliasOfRoot,
+            namespaceExport,
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.sdkEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             aliasOfRoot,
-            apiName,
+            namespaceExport,
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
             aliasOfRoot,
-            apiName,
+            namespaceExport,
         });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });

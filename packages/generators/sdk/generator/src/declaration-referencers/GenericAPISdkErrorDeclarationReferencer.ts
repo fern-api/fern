@@ -2,6 +2,6 @@ import { AbstractSdkErrorDeclarationReferencer } from "./AbstractSdkErrorDeclara
 
 export class GenericAPISdkErrorDeclarationReferencer extends AbstractSdkErrorDeclarationReferencer {
     public getExportedName(): string {
-        return `${this.apiName}Error`;
+        return `${this.namespaceExport}Error`;
     }
 }

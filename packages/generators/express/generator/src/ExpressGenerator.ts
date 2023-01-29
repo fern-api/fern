@@ -42,7 +42,7 @@ const FILE_HEADER = `/**
 
 export declare namespace ExpressGenerator {
     export interface Init {
-        apiName: string;
+        namespaceExport: string;
         intermediateRepresentation: IntermediateRepresentation;
         context: GeneratorContext;
         volume: Volume;
@@ -84,12 +84,12 @@ export class ExpressGenerator {
 
     private generatePackage: () => Promise<void>;
 
-    constructor({ apiName, intermediateRepresentation, context, volume, config }: ExpressGenerator.Init) {
+    constructor({ namespaceExport, intermediateRepresentation, context, volume, config }: ExpressGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
 
         this.exportsManager = new ExportsManager({ aliasOfRoot: undefined });
-        this.coreUtilitiesManager = new CoreUtilitiesManager({ apiName, aliasOfRoot: undefined });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({ aliasOfRoot: undefined });
 
         const project = new Project({
             useInMemoryFileSystem: true,
@@ -101,7 +101,7 @@ export class ExpressGenerator {
         const apiDirectory: ExportedDirectory[] = [
             {
                 nameOnDisk: "api",
-                exportDeclaration: { namespaceExport: apiName },
+                exportDeclaration: { namespaceExport },
             },
         ];
 
@@ -113,31 +113,31 @@ export class ExpressGenerator {
 
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            apiName,
+            namespaceExport,
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            apiName,
+            namespaceExport,
         });
         this.expressInlinedRequestBodyDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
             containingDirectory: apiDirectory,
-            apiName,
+            namespaceExport,
         });
         this.expressInlinedRequestBodySchemaDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            apiName,
+            namespaceExport,
         });
         this.expressEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            apiName,
+            namespaceExport,
         });
         this.expressServiceDeclarationReferencer = new ExpressServiceDeclarationReferencer({
             containingDirectory: apiDirectory,
-            apiName,
+            namespaceExport,
         });
         this.expressRegisterDeclarationReferencer = new ExpressRegisterDeclarationReferencer({
             containingDirectory: [],
-            apiName,
+            namespaceExport,
         });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });

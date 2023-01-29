@@ -30,7 +30,7 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
     }
 
     public getExportedName(service: FernFilepath): string {
-        return this.isRootClient(service) ? `${this.apiName}Client` : "Client";
+        return this.isRootClient(service) ? `${this.namespaceExport}Client` : "Client";
     }
 
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<FernFilepath>): Reference {
