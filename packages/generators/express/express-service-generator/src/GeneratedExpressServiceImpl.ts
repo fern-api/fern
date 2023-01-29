@@ -176,12 +176,15 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     type: getTextOfTsNode(context.base.externalDependencies.express.RequestHandler()),
                 },
             ],
-            returnType: "void",
+            returnType: getTextOfTsNode(ts.factory.createThisTypeNode()),
             statements: [
-                context.base.externalDependencies.express.Router.use({
-                    referenceToRouter: this.getReferenceToRouter(),
-                    handlers: [ts.factory.createIdentifier(HANDLER_PARAMETER_NAME)],
-                }),
+                ts.factory.createExpressionStatement(
+                    context.base.externalDependencies.express.Router.use({
+                        referenceToRouter: this.getReferenceToRouter(),
+                        handlers: [ts.factory.createIdentifier(HANDLER_PARAMETER_NAME)],
+                    })
+                ),
+                ts.factory.createReturnStatement(ts.factory.createThis()),
             ].map(getTextOfTsNode),
         });
     }

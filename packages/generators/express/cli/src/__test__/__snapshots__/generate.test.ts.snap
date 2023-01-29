@@ -70,8 +70,9 @@ export abstract class AbstractAdminService {
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.TraceResponseV2[], never, never>): Promise<void>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -1442,8 +1443,9 @@ export abstract class AbstractHomepageProblemService {
 
     public abstract setHomepageProblems(request: express.Request<never, never, TraceApi.ProblemId[], never, never>): Promise<void>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -1588,8 +1590,9 @@ export abstract class AbstractMigrationInfoService {
 
     public abstract getAttemptedMigrations(request: express.Request<never, TraceApi.Migration[], never, never, never>): Promise<TraceApi.Migration[]>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -1724,8 +1727,9 @@ export abstract class AbstractPlaylistCrudService {
         playlist_id: serializers.PlaylistId.Raw;
     }, never, never, never, never>): Promise<void>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -2148,8 +2152,9 @@ export abstract class AbstractProblemCrudService {
 
     public abstract getDefaultStarterFiles(request: express.Request<never, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, never, never>): Promise<TraceApi.GetDefaultStarterFilesResponse>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -2722,8 +2727,9 @@ export abstract class AbstractExecutionSesssionManagementService {
 
     public abstract getExecutionSessionsState(request: express.Request<never, TraceApi.GetExecutionSessionStateResponse, never, never, never>): Promise<TraceApi.GetExecutionSessionStateResponse>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -5766,8 +5772,9 @@ export abstract class AbstractSysPropCrudService {
 
     public abstract getNumWarmInstances(request: express.Request<never, Record<TraceApi.Language, number | undefined>, never, never, never>): Promise<Record<TraceApi.Language, number | undefined>>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -5868,8 +5875,9 @@ export abstract class AbstractProblemInfoServicV2 {
         problemVersion: number;
     }, TraceApi.v2.ProblemInfoV2, never, never, never>): Promise<TraceApi.v2.ProblemInfoV2>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
@@ -7106,8 +7114,9 @@ export abstract class AbstractProblemInfoServicV2 {
         problemVersion: number;
     }, TraceApi.v2.v3.ProblemInfoV2, never, never, never>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
 
-    public addMiddleware(handler: express.RequestHandler): void {
-        this.router.use(handler)
+    public addMiddleware(handler: express.RequestHandler): this {
+        this.router.use(handler);
+        return this;
     }
 
     public toRouter(): express.Router {
