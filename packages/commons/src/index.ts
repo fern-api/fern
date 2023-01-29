@@ -3,6 +3,7 @@ export * from "./core-utilities";
 export { type Zurg } from "./core-utilities/zurg/Zurg";
 export { DependencyManager, DependencyType, type PackageDependencies } from "./dependency-manager/DependencyManager";
 export * from "./exports-manager";
+export * from "./express";
 export { type ExpressionReferenceNode } from "./ExpressionReferenceNode";
 export * from "./external-dependencies";
 export * from "./imports-manager";

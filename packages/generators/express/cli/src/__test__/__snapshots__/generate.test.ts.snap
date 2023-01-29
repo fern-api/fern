@@ -32,44 +32,43 @@ import * as serializers from \\"../../../../serialization\\";
 import { TraceApi } from \\"../../../..\\";
 
 export abstract class AbstractAdminService {
-    static ROUTE = \\"/admin\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
     public abstract updateTestSubmissionStatus(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, undefined, TraceApi.TestSubmissionStatus, {}>): Promise<void>;
+    }, never, TraceApi.TestSubmissionStatus, never, never>): Promise<void>;
 
     public abstract sendTestSubmissionUpdate(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, undefined, TraceApi.TestSubmissionUpdate, {}>): Promise<void>;
+    }, never, TraceApi.TestSubmissionUpdate, never, never>): Promise<void>;
 
     public abstract updateWorkspaceSubmissionStatus(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, undefined, TraceApi.WorkspaceSubmissionStatus, {}>): Promise<void>;
+    }, never, TraceApi.WorkspaceSubmissionStatus, never, never>): Promise<void>;
 
     public abstract sendWorkspaceSubmissionUpdate(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, undefined, TraceApi.WorkspaceSubmissionUpdate, {}>): Promise<void>;
+    }, never, TraceApi.WorkspaceSubmissionUpdate, never, never>): Promise<void>;
 
     public abstract storeTracedTestCase(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: string;
-    }, undefined, TraceApi.StoreTracedTestCaseRequest, {
+    }, never, TraceApi.StoreTracedTestCaseRequest, {
         \\"some-query-param\\"?: string | null;
-    }>): Promise<void>;
+    }, never>): Promise<void>;
 
     public abstract storeTracedTestCaseV2(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: serializers.v2.TestCaseId.Raw;
-    }, undefined, TraceApi.TraceResponseV2[], {}>): Promise<void>;
+    }, never, TraceApi.TraceResponseV2[], never, never>): Promise<void>;
 
     public abstract storeTracedWorkspace(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, undefined, TraceApi.StoreTracedWorkspaceRequest, {}>): Promise<void>;
+    }, never, TraceApi.StoreTracedWorkspaceRequest, never, never>): Promise<void>;
 
     public abstract storeTracedWorkspaceV2(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, undefined, TraceApi.TraceResponseV2[], {}>): Promise<void>;
+    }, never, TraceApi.TraceResponseV2[], never, never>): Promise<void>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -77,51 +76,99 @@ export abstract class AbstractAdminService {
 
     public toRouter(): express.Router {
         this.router.post(\\"/store-test-submission-status/:submissionId\\", async (req, res, next) => {
-            req.body = await serializers.TestSubmissionStatus.parse(req.body);
-            await this.updateTestSubmissionStatus(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.TestSubmissionStatus.parse(req.body);
+                await this.updateTestSubmissionStatus(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-test-submission-status-v2/:submissionId\\", async (req, res, next) => {
-            req.body = await serializers.TestSubmissionUpdate.parse(req.body);
-            await this.sendTestSubmissionUpdate(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.TestSubmissionUpdate.parse(req.body);
+                await this.sendTestSubmissionUpdate(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-workspace-submission-status/:submissionId\\", async (req, res, next) => {
-            req.body = await serializers.WorkspaceSubmissionStatus.parse(req.body);
-            await this.updateWorkspaceSubmissionStatus(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.WorkspaceSubmissionStatus.parse(req.body);
+                await this.updateWorkspaceSubmissionStatus(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-workspace-submission-status-v2/:submissionId\\", async (req, res, next) => {
-            req.body = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
-            await this.sendWorkspaceSubmissionUpdate(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
+                await this.sendWorkspaceSubmissionUpdate(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-test-trace/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
-            req.body = await serializers.StoreTracedTestCaseRequest.parse(req.body);
-            await this.storeTracedTestCase(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.StoreTracedTestCaseRequest.parse(req.body);
+                await this.storeTracedTestCase(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
-            req.body = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
-            await this.storeTracedTestCaseV2(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
+                await this.storeTracedTestCaseV2(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-workspace-trace/submission/:submissionId\\", async (req, res, next) => {
-            req.body = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
-            await this.storeTracedWorkspace(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
+                await this.storeTracedWorkspace(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/store-workspace-trace-v2/submission/:submissionId\\", async (req, res, next) => {
-            req.body = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
-            await this.storeTracedWorkspaceV2(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
+                await this.storeTracedWorkspaceV2(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -1389,12 +1436,11 @@ import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
 
 export abstract class AbstractHomepageProblemService {
-    static ROUTE = \\"/homepage-problems\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
-    public abstract getHomepageProblems(request: express.Request<{}, TraceApi.ProblemId[], undefined, {}>): Promise<TraceApi.ProblemId[]>;
+    public abstract getHomepageProblems(request: express.Request<never, TraceApi.ProblemId[], never, never, never>): Promise<TraceApi.ProblemId[]>;
 
-    public abstract setHomepageProblems(request: express.Request<{}, undefined, TraceApi.ProblemId[], {}>): Promise<void>;
+    public abstract setHomepageProblems(request: express.Request<never, never, TraceApi.ProblemId[], never, never>): Promise<void>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -1402,14 +1448,26 @@ export abstract class AbstractHomepageProblemService {
 
     public toRouter(): express.Router {
         this.router.get(\\"/\\", async (req, res, next) => {
-            const response = await this.getHomepageProblems(req);
-            res.send(await serializers.homepage.getHomepageProblems.Response.json(response));
+            try {
+                const response = await this.getHomepageProblems(req);
+                res.send(await serializers.homepage.getHomepageProblems.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/\\", async (req, res, next) => {
-            req.body = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
-            await this.setHomepageProblems(req);
-            res.sendStatus(204);
+            try {
+                req.body = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
+                await this.setHomepageProblems(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -1526,10 +1584,9 @@ import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
 
 export abstract class AbstractMigrationInfoService {
-    static ROUTE = \\"/migration-info\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
-    public abstract getAttemptedMigrations(request: express.Request<{}, TraceApi.Migration[], undefined, {}>): Promise<TraceApi.Migration[]>;
+    public abstract getAttemptedMigrations(request: express.Request<never, TraceApi.Migration[], never, never, never>): Promise<TraceApi.Migration[]>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -1537,8 +1594,14 @@ export abstract class AbstractMigrationInfoService {
 
     public toRouter(): express.Router {
         this.router.get(\\"/all\\", async (req, res, next) => {
-            const response = await this.getAttemptedMigrations(req);
-            res.send(await serializers.migration.getAttemptedMigrations.Response.json(response));
+            try {
+                const response = await this.getAttemptedMigrations(req);
+                res.send(await serializers.migration.getAttemptedMigrations.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -1630,37 +1693,36 @@ import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
 
 export abstract class AbstractPlaylistCrudService {
-    static ROUTE = \\"/v2/playlist/:serviceParam\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
     public abstract createPlaylist(request: express.Request<{
         serviceParam: number;
     }, TraceApi.Playlist, TraceApi.PlaylistCreateRequest, {
         \\"multiple\\": number;
         \\"multipleOptional\\"?: boolean | null;
-    }>): Promise<TraceApi.Playlist>;
+    }, never>): Promise<TraceApi.Playlist>;
 
     public abstract getPlaylists(request: express.Request<{
         serviceParam: number;
-    }, TraceApi.Playlist[], undefined, {
+    }, TraceApi.Playlist[], never, {
         \\"limit\\"?: number | null;
         \\"otherField\\": string;
-    }>): Promise<TraceApi.Playlist[]>;
+    }, never>): Promise<TraceApi.Playlist[]>;
 
     public abstract getPlaylist(request: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
-    }, TraceApi.Playlist, undefined, {}>): Promise<TraceApi.Playlist>;
+    }, TraceApi.Playlist, never, never, never>): Promise<TraceApi.Playlist>;
 
     public abstract updatePlaylist(request: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
-    }, TraceApi.Playlist | undefined, TraceApi.UpdatePlaylistRequest | undefined, {}>): Promise<TraceApi.Playlist | undefined>;
+    }, TraceApi.Playlist | undefined, TraceApi.UpdatePlaylistRequest | undefined, never, never>): Promise<TraceApi.Playlist | undefined>;
 
     public abstract deletePlaylist(request: express.Request<{
         serviceParam: number;
         playlist_id: serializers.PlaylistId.Raw;
-    }, undefined, undefined, {}>): Promise<void>;
+    }, never, never, never, never>): Promise<void>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -1668,30 +1730,60 @@ export abstract class AbstractPlaylistCrudService {
 
     public toRouter(): express.Router {
         this.router.post(\\"/create\\", async (req, res, next) => {
-            req.body = await serializers.PlaylistCreateRequest.parse(req.body);
-            const response = await this.createPlaylist(req);
-            res.send(await serializers.Playlist.json(response));
+            try {
+                req.body = await serializers.PlaylistCreateRequest.parse(req.body);
+                const response = await this.createPlaylist(req);
+                res.send(await serializers.Playlist.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/all\\", async (req, res, next) => {
-            const response = await this.getPlaylists(req);
-            res.send(await serializers.playlist.getPlaylists.Response.json(response));
+            try {
+                const response = await this.getPlaylists(req);
+                res.send(await serializers.playlist.getPlaylists.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
-            const response = await this.getPlaylist(req);
-            res.send(await serializers.Playlist.json(response));
+            try {
+                const response = await this.getPlaylist(req);
+                res.send(await serializers.Playlist.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.put(\\"/:playlistId\\", async (req, res, next) => {
-            req.body = await serializers.playlist.updatePlaylist.Request.parse(req.body);
-            const response = await this.updatePlaylist(req);
-            res.send(await serializers.playlist.updatePlaylist.Response.json(response));
+            try {
+                req.body = await serializers.playlist.updatePlaylist.Request.parse(req.body);
+                const response = await this.updatePlaylist(req);
+                res.send(await serializers.playlist.updatePlaylist.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.delete(\\"/:playlist_id\\", async (req, res, next) => {
-            await this.deletePlaylist(req);
-            res.sendStatus(204);
+            try {
+                await this.deletePlaylist(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -2042,20 +2134,19 @@ import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
 
 export abstract class AbstractProblemCrudService {
-    static ROUTE = \\"/problem-crud\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
-    public abstract createProblem(request: express.Request<{}, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, {}>): Promise<TraceApi.CreateProblemResponse>;
+    public abstract createProblem(request: express.Request<never, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, never, never>): Promise<TraceApi.CreateProblemResponse>;
 
     public abstract updateProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.UpdateProblemResponse, TraceApi.CreateProblemRequest, {}>): Promise<TraceApi.UpdateProblemResponse>;
+    }, TraceApi.UpdateProblemResponse, TraceApi.CreateProblemRequest, never, never>): Promise<TraceApi.UpdateProblemResponse>;
 
     public abstract deleteProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, undefined, undefined, {}>): Promise<void>;
+    }, never, never, never, never>): Promise<void>;
 
-    public abstract getDefaultStarterFiles(request: express.Request<{}, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, {}>): Promise<TraceApi.GetDefaultStarterFilesResponse>;
+    public abstract getDefaultStarterFiles(request: express.Request<never, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, never, never>): Promise<TraceApi.GetDefaultStarterFilesResponse>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -2063,26 +2154,50 @@ export abstract class AbstractProblemCrudService {
 
     public toRouter(): express.Router {
         this.router.post(\\"/create\\", async (req, res, next) => {
-            req.body = await serializers.CreateProblemRequest.parse(req.body);
-            const response = await this.createProblem(req);
-            res.send(await serializers.CreateProblemResponse.json(response));
+            try {
+                req.body = await serializers.CreateProblemRequest.parse(req.body);
+                const response = await this.createProblem(req);
+                res.send(await serializers.CreateProblemResponse.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/update/:problemId\\", async (req, res, next) => {
-            req.body = await serializers.CreateProblemRequest.parse(req.body);
-            const response = await this.updateProblem(req);
-            res.send(await serializers.UpdateProblemResponse.json(response));
+            try {
+                req.body = await serializers.CreateProblemRequest.parse(req.body);
+                const response = await this.updateProblem(req);
+                res.send(await serializers.UpdateProblemResponse.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.delete(\\"/delete/:problemId\\", async (req, res, next) => {
-            await this.deleteProblem(req);
-            res.sendStatus(204);
+            try {
+                await this.deleteProblem(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.post(\\"/default-starter-files\\", async (req, res, next) => {
-            req.body = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
-            const response = await this.getDefaultStarterFiles(req);
-            res.send(await serializers.GetDefaultStarterFilesResponse.json(response));
+            try {
+                req.body = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
+                const response = await this.getDefaultStarterFiles(req);
+                res.send(await serializers.GetDefaultStarterFilesResponse.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -2591,22 +2706,21 @@ import { TraceApi } from \\"../../../..\\";
  * Responsible for spinning up and spinning down execution.
  */
 export abstract class AbstractExecutionSesssionManagementService {
-    static ROUTE = \\"/sessions\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
     public abstract createExecutionSession(request: express.Request<{
         language: serializers.Language.Raw;
-    }, TraceApi.ExecutionSessionResponse, undefined, {}>): Promise<TraceApi.ExecutionSessionResponse>;
+    }, TraceApi.ExecutionSessionResponse, never, never, never>): Promise<TraceApi.ExecutionSessionResponse>;
 
     public abstract getExecutionSession(request: express.Request<{
         sessionId: string;
-    }, TraceApi.ExecutionSessionResponse | undefined, undefined, {}>): Promise<TraceApi.ExecutionSessionResponse | undefined>;
+    }, TraceApi.ExecutionSessionResponse | undefined, never, never, never>): Promise<TraceApi.ExecutionSessionResponse | undefined>;
 
     public abstract stopExecutionSession(request: express.Request<{
         sessionId: string;
-    }, undefined, undefined, {}>): Promise<void>;
+    }, never, never, never, never>): Promise<void>;
 
-    public abstract getExecutionSessionsState(request: express.Request<{}, TraceApi.GetExecutionSessionStateResponse, undefined, {}>): Promise<TraceApi.GetExecutionSessionStateResponse>;
+    public abstract getExecutionSessionsState(request: express.Request<never, TraceApi.GetExecutionSessionStateResponse, never, never, never>): Promise<TraceApi.GetExecutionSessionStateResponse>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -2614,23 +2728,47 @@ export abstract class AbstractExecutionSesssionManagementService {
 
     public toRouter(): express.Router {
         this.router.post(\\"/create-session/:language\\", async (req, res, next) => {
-            const response = await this.createExecutionSession(req);
-            res.send(await serializers.ExecutionSessionResponse.json(response));
+            try {
+                const response = await this.createExecutionSession(req);
+                res.send(await serializers.ExecutionSessionResponse.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
-            const response = await this.getExecutionSession(req);
-            res.send(await serializers.submission.getExecutionSession.Response.json(response));
+            try {
+                const response = await this.getExecutionSession(req);
+                res.send(await serializers.submission.getExecutionSession.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.delete(\\"/stop/:sessionId\\", async (req, res, next) => {
-            await this.stopExecutionSession(req);
-            res.sendStatus(204);
+            try {
+                await this.stopExecutionSession(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
-            const response = await this.getExecutionSessionsState(req);
-            res.send(await serializers.GetExecutionSessionStateResponse.json(response));
+            try {
+                const response = await this.getExecutionSessionsState(req);
+                res.send(await serializers.GetExecutionSessionStateResponse.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -5619,15 +5757,14 @@ import * as serializers from \\"../../../../serialization\\";
 import { TraceApi } from \\"../../../..\\";
 
 export abstract class AbstractSysPropCrudService {
-    static ROUTE = \\"/sysprop\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
     public abstract setNumWarmInstances(request: express.Request<{
         language: serializers.Language.Raw;
         numWarmInstances: number;
-    }, undefined, undefined, {}>): Promise<void>;
+    }, never, never, never, never>): Promise<void>;
 
-    public abstract getNumWarmInstances(request: express.Request<{}, Record<TraceApi.Language, number | undefined>, undefined, {}>): Promise<Record<TraceApi.Language, number | undefined>>;
+    public abstract getNumWarmInstances(request: express.Request<never, Record<TraceApi.Language, number | undefined>, never, never, never>): Promise<Record<TraceApi.Language, number | undefined>>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -5635,13 +5772,25 @@ export abstract class AbstractSysPropCrudService {
 
     public toRouter(): express.Router {
         this.router.put(\\"/num-warm-instances/:language/:numWarmInstances\\", async (req, res, next) => {
-            await this.setNumWarmInstances(req);
-            res.sendStatus(204);
+            try {
+                await this.setNumWarmInstances(req);
+                res.sendStatus(204);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
-            const response = await this.getNumWarmInstances(req);
-            res.send(await serializers.sysprop.getNumWarmInstances.Response.json(response));
+            try {
+                const response = await this.getNumWarmInstances(req);
+                res.send(await serializers.sysprop.getNumWarmInstances.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -5704,21 +5853,20 @@ import { TraceApi } from \\"../../../../../..\\";
 import * as serializers from \\"../../../../../../serialization\\";
 
 export abstract class AbstractProblemInfoServicV2 {
-    static ROUTE = \\"/problems-v2\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
-    public abstract getLightweightProblems(request: express.Request<{}, TraceApi.v2.LightweightProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.LightweightProblemInfoV2[]>;
+    public abstract getLightweightProblems(request: express.Request<never, TraceApi.v2.LightweightProblemInfoV2[], never, never, never>): Promise<TraceApi.v2.LightweightProblemInfoV2[]>;
 
-    public abstract getProblems(request: express.Request<{}, TraceApi.v2.ProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.ProblemInfoV2[]>;
+    public abstract getProblems(request: express.Request<never, TraceApi.v2.ProblemInfoV2[], never, never, never>): Promise<TraceApi.v2.ProblemInfoV2[]>;
 
     public abstract getLatestProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.v2.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.ProblemInfoV2>;
+    }, TraceApi.v2.ProblemInfoV2, never, never, never>): Promise<TraceApi.v2.ProblemInfoV2>;
 
     public abstract getProblemVersion(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
-    }, TraceApi.v2.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.ProblemInfoV2>;
+    }, TraceApi.v2.ProblemInfoV2, never, never, never>): Promise<TraceApi.v2.ProblemInfoV2>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -5726,23 +5874,47 @@ export abstract class AbstractProblemInfoServicV2 {
 
     public toRouter(): express.Router {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
-            const response = await this.getLightweightProblems(req);
-            res.send(await serializers.v2.problem.getLightweightProblems.Response.json(response));
+            try {
+                const response = await this.getLightweightProblems(req);
+                res.send(await serializers.v2.problem.getLightweightProblems.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
-            const response = await this.getProblems(req);
-            res.send(await serializers.v2.problem.getProblems.Response.json(response));
+            try {
+                const response = await this.getProblems(req);
+                res.send(await serializers.v2.problem.getProblems.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
-            const response = await this.getLatestProblem(req);
-            res.send(await serializers.v2.ProblemInfoV2.json(response));
+            try {
+                const response = await this.getLatestProblem(req);
+                res.send(await serializers.v2.ProblemInfoV2.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
-            const response = await this.getProblemVersion(req);
-            res.send(await serializers.v2.ProblemInfoV2.json(response));
+            try {
+                const response = await this.getProblemVersion(req);
+                res.send(await serializers.v2.ProblemInfoV2.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -6919,21 +7091,20 @@ import { TraceApi } from \\"../../../../../../../..\\";
 import * as serializers from \\"../../../../../../../../serialization\\";
 
 export abstract class AbstractProblemInfoServicV2 {
-    static ROUTE = \\"/problems-v2\\";
-    router = express.Router();
+    private router = express.Router().use(express.json());
 
-    public abstract getLightweightProblems(request: express.Request<{}, TraceApi.v2.v3.LightweightProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.v3.LightweightProblemInfoV2[]>;
+    public abstract getLightweightProblems(request: express.Request<never, TraceApi.v2.v3.LightweightProblemInfoV2[], never, never, never>): Promise<TraceApi.v2.v3.LightweightProblemInfoV2[]>;
 
-    public abstract getProblems(request: express.Request<{}, TraceApi.v2.v3.ProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2[]>;
+    public abstract getProblems(request: express.Request<never, TraceApi.v2.v3.ProblemInfoV2[], never, never, never>): Promise<TraceApi.v2.v3.ProblemInfoV2[]>;
 
     public abstract getLatestProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.v2.v3.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
+    }, TraceApi.v2.v3.ProblemInfoV2, never, never, never>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
 
     public abstract getProblemVersion(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
-    }, TraceApi.v2.v3.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
+    }, TraceApi.v2.v3.ProblemInfoV2, never, never, never>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -6941,23 +7112,47 @@ export abstract class AbstractProblemInfoServicV2 {
 
     public toRouter(): express.Router {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
-            const response = await this.getLightweightProblems(req);
-            res.send(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
+            try {
+                const response = await this.getLightweightProblems(req);
+                res.send(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
-            const response = await this.getProblems(req);
-            res.send(await serializers.v2.v3.problem.getProblems.Response.json(response));
+            try {
+                const response = await this.getProblems(req);
+                res.send(await serializers.v2.v3.problem.getProblems.Response.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
-            const response = await this.getLatestProblem(req);
-            res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
+            try {
+                const response = await this.getLatestProblem(req);
+                res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
-            const response = await this.getProblemVersion(req);
-            res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
+            try {
+                const response = await this.getProblemVersion(req);
+                res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).send(\\"Internal Server Error\\");
+            }
             next();
         });
         return this.router;
@@ -9273,15 +9468,15 @@ export function register(expressApp: express.Express, services: {
         };
     };
 }): void {
-    expressApp.use(AbstractAdminService.ROUTE, services.admin.toRouter());
-    expressApp.use(AbstractHomepageProblemService.ROUTE, services.homepage.toRouter());
-    expressApp.use(AbstractMigrationInfoService.ROUTE, services.migration.toRouter());
-    expressApp.use(AbstractPlaylistCrudService.ROUTE, services.playlist.toRouter());
-    expressApp.use(AbstractProblemCrudService.ROUTE, services.problem.toRouter());
-    expressApp.use(AbstractExecutionSesssionManagementService.ROUTE, services.submission.toRouter());
-    expressApp.use(AbstractSysPropCrudService.ROUTE, services.sysprop.toRouter());
-    expressApp.use(v2_AbstractProblemInfoServicV2.ROUTE, services.v2.problem.toRouter());
-    expressApp.use(v2_v3_AbstractProblemInfoServicV2.ROUTE, services.v2.v3.problem.toRouter());
+    expressApp.use(\\"/admin\\", services.admin.toRouter());
+    expressApp.use(\\"/homepage-problems\\", services.homepage.toRouter());
+    expressApp.use(\\"/migration-info\\", services.migration.toRouter());
+    expressApp.use(\\"/v2/playlist/:serviceParam\\", services.playlist.toRouter());
+    expressApp.use(\\"/problem-crud\\", services.problem.toRouter());
+    expressApp.use(\\"/sessions\\", services.submission.toRouter());
+    expressApp.use(\\"/sysprop\\", services.sysprop.toRouter());
+    expressApp.use(\\"/problems-v2\\", services.v2.problem.toRouter());
+    expressApp.use(\\"/problems-v2\\", services.v2.v3.problem.toRouter());
 }
 ",
     "name": "register.ts",

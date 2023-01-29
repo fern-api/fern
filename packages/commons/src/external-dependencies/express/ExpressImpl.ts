@@ -24,10 +24,11 @@ export class ExpressImpl extends ExternalDependency implements Express {
                     return ts.factory.createTypeReferenceNode(
                         ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Request"),
                         [
-                            pathParameters ?? ts.factory.createTypeLiteralNode([]),
-                            response ?? ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("undefined")),
-                            request ?? ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("undefined")),
-                            queryParameters ?? ts.factory.createTypeLiteralNode([]),
+                            pathParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+                            response ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+                            request ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+                            queryParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                         ]
                     );
                 }
@@ -47,6 +48,19 @@ export class ExpressImpl extends ExternalDependency implements Express {
                 ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "send"),
                 undefined,
                 [valueToSend]
+            );
+        },
+        status: ({
+            referenceToExpressResponse,
+            status,
+        }: {
+            referenceToExpressResponse: ts.Expression;
+            status: number;
+        }): ts.Expression => {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "status"),
+                undefined,
+                [ts.factory.createNumericLiteral(status)]
             );
         },
         sendStatus: ({
@@ -192,4 +206,14 @@ export class ExpressImpl extends ExternalDependency implements Express {
             );
         },
     };
+
+    public readonly json = this.withDefaultImport("express", (withImport, express) =>
+        withImport(() => {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "json"),
+                undefined,
+                undefined
+            );
+        })
+    );
 }

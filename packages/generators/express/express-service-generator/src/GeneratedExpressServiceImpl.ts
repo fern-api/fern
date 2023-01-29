@@ -1,12 +1,5 @@
-import {
-    HttpEndpoint,
-    HttpMethod,
-    HttpPath,
-    HttpRequestBody,
-    HttpService,
-    PathParameter,
-} from "@fern-fern/ir-model/http";
-import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { HttpEndpoint, HttpMethod, HttpRequestBody, HttpService, PathParameter } from "@fern-fern/ir-model/http";
+import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ExpressServiceContext, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ClassDeclaration, Scope, ts } from "ts-morph";
 
@@ -18,7 +11,6 @@ export declare namespace GeneratedExpressServiceImpl {
 }
 
 export class GeneratedExpressServiceImpl implements GeneratedExpressService {
-    private static ROUTE_STATIC_PROPERTY_NAME = "ROUTE";
     private static ROUTER_PROPERTY_NAME = "router";
     private static ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
     private static TO_ROUTER_METHOD_NAME = "toRouter";
@@ -40,14 +32,14 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         maybeAddDocs(serviceClass, this.service.docs);
 
         serviceClass.addProperty({
-            isStatic: true,
-            name: GeneratedExpressServiceImpl.ROUTE_STATIC_PROPERTY_NAME,
-            initializer: `"${this.getPathAsExpressRouteString(this.service.basePath)}"`,
-        });
-
-        serviceClass.addProperty({
+            scope: Scope.Private,
             name: GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME,
-            initializer: getTextOfTsNode(context.base.externalDependencies.express.Router._instantiate()),
+            initializer: getTextOfTsNode(
+                context.base.externalDependencies.express.Router.use({
+                    referenceToRouter: context.base.externalDependencies.express.Router._instantiate(),
+                    handlers: [context.base.externalDependencies.express.json()],
+                })
+            ),
         });
 
         for (const endpoint of this.service.endpoints) {
@@ -70,13 +62,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 ),
             ].map(getTextOfTsNode),
         });
-    }
-
-    public getRoute(referenceToAbstractClass: ts.Expression): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(
-            referenceToAbstractClass,
-            GeneratedExpressServiceImpl.ROUTE_STATIC_PROPERTY_NAME
-        );
     }
 
     public toRouter(referenceToService: ts.Expression): ts.Expression {
@@ -201,19 +186,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         });
     }
 
-    private getPathAsExpressRouteString(path: HttpPath): string {
-        return path.parts.reduce((acc, part) => {
-            return `${acc}:${part.pathParameter}${part.tail}`;
-        }, path.head);
-    }
-
     private getEndpointMethodName(endpoint: HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
     private addRouteToRouter(endpoint: HttpEndpoint, context: ExpressServiceContext): ts.Statement {
-        const RESPONSE_VARIABLE_NAME = "response";
-
         return context.base.externalDependencies.express.Router._addRoute({
             referenceToRouter: this.getReferenceToRouter(),
             method: HttpMethod._visit<"get" | "post" | "put" | "patch" | "delete">(endpoint.method, {
@@ -226,87 +203,151 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     throw new Error("Unknown ");
                 },
             }),
-            path: this.getPathAsExpressRouteString(endpoint.path),
+            path: convertHttpPathToExpressRoute(endpoint.path),
             buildHandler: ({ expressRequest, expressResponse, next }) => {
-                const statements: ts.Statement[] = [];
-
-                // deserialize request
-                if (endpoint.requestBody != null) {
-                    const referenceToExpressBody = ts.factory.createPropertyAccessExpression(
-                        expressRequest,
-                        context.base.externalDependencies.express.Request.body
-                    );
-                    statements.push(
-                        ts.factory.createExpressionStatement(
-                            ts.factory.createBinaryExpression(
-                                referenceToExpressBody,
-                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                this.deserializeRequest({
-                                    endpoint,
-                                    requestBodyType: endpoint.requestBody,
-                                    referenceToBody: referenceToExpressBody,
-                                    context,
-                                })
-                            )
-                        )
-                    );
-                }
-
-                // call impl and maybe store response in RESPONSE_VARIABLE_NAME
-                const implCall = ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createThis(),
-                            this.getEndpointMethodName(endpoint)
+                return ts.factory.createBlock(
+                    [
+                        ts.factory.createTryStatement(
+                            ts.factory.createBlock(
+                                this.getStatementsForTryBlock({ expressRequest, expressResponse, endpoint, context }),
+                                true
+                            ),
+                            this.getCatchClause({ expressResponse, context }),
+                            undefined
                         ),
-                        undefined,
-                        [expressRequest]
-                    )
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createCallExpression(next, undefined, undefined)
+                        ),
+                    ],
+                    true
                 );
-                statements.push(
-                    endpoint.response.type != null
-                        ? ts.factory.createVariableStatement(
-                              undefined,
-                              ts.factory.createVariableDeclarationList(
-                                  [
-                                      ts.factory.createVariableDeclaration(
-                                          ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                                          undefined,
-                                          undefined,
-                                          implCall
-                                      ),
-                                  ],
-                                  ts.NodeFlags.Const
-                              )
-                          )
-                        : ts.factory.createExpressionStatement(implCall)
-                );
-
-                // send response
-                statements.push(
-                    ts.factory.createExpressionStatement(
-                        endpoint.response.type != null
-                            ? context.base.externalDependencies.express.Response.json({
-                                  referenceToExpressResponse: expressResponse,
-                                  valueToSend: context.expressEndpointTypeSchemas
-                                      .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, endpoint.name)
-                                      .serializeResponse(ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME), context),
-                              })
-                            : context.base.externalDependencies.express.Response.sendStatus({
-                                  referenceToExpressResponse: expressResponse,
-                                  status: 204,
-                              })
-                    )
-                );
-
-                // call next()
-                statements.push(
-                    ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))
-                );
-
-                return ts.factory.createBlock(statements, true);
             },
         });
+    }
+
+    private getStatementsForTryBlock({
+        expressRequest,
+        expressResponse,
+        endpoint,
+        context,
+    }: {
+        expressRequest: ts.Expression;
+        expressResponse: ts.Expression;
+        endpoint: HttpEndpoint;
+        context: ExpressServiceContext;
+    }): ts.Statement[] {
+        const RESPONSE_VARIABLE_NAME = "response";
+
+        const statements: ts.Statement[] = [];
+
+        // deserialize request
+        if (endpoint.requestBody != null) {
+            const referenceToExpressBody = ts.factory.createPropertyAccessExpression(
+                expressRequest,
+                context.base.externalDependencies.express.Request.body
+            );
+            statements.push(
+                ts.factory.createExpressionStatement(
+                    ts.factory.createBinaryExpression(
+                        referenceToExpressBody,
+                        ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                        this.deserializeRequest({
+                            endpoint,
+                            requestBodyType: endpoint.requestBody,
+                            referenceToBody: referenceToExpressBody,
+                            context,
+                        })
+                    )
+                )
+            );
+        }
+
+        // call impl and maybe store response in RESPONSE_VARIABLE_NAME
+        const implCall = ts.factory.createAwaitExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createThis(),
+                    this.getEndpointMethodName(endpoint)
+                ),
+                undefined,
+                [expressRequest]
+            )
+        );
+        statements.push(
+            endpoint.response.type != null
+                ? ts.factory.createVariableStatement(
+                      undefined,
+                      ts.factory.createVariableDeclarationList(
+                          [
+                              ts.factory.createVariableDeclaration(
+                                  ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
+                                  undefined,
+                                  undefined,
+                                  implCall
+                              ),
+                          ],
+                          ts.NodeFlags.Const
+                      )
+                  )
+                : ts.factory.createExpressionStatement(implCall)
+        );
+
+        // send response
+        statements.push(
+            ts.factory.createExpressionStatement(
+                endpoint.response.type != null
+                    ? context.base.externalDependencies.express.Response.json({
+                          referenceToExpressResponse: expressResponse,
+                          valueToSend: context.expressEndpointTypeSchemas
+                              .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, endpoint.name)
+                              .serializeResponse(ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME), context),
+                      })
+                    : context.base.externalDependencies.express.Response.sendStatus({
+                          referenceToExpressResponse: expressResponse,
+                          status: 204,
+                      })
+            )
+        );
+
+        return statements;
+    }
+
+    private getCatchClause({
+        expressResponse,
+        context,
+    }: {
+        expressResponse: ts.Expression;
+        context: ExpressServiceContext;
+    }): ts.CatchClause {
+        const ERROR_NAME = "error";
+
+        return ts.factory.createCatchClause(
+            ts.factory.createVariableDeclaration(ts.factory.createIdentifier(ERROR_NAME)),
+            ts.factory.createBlock(
+                [
+                    ts.factory.createExpressionStatement(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("console"),
+                                ts.factory.createIdentifier("error")
+                            ),
+                            undefined,
+                            [ts.factory.createIdentifier(ERROR_NAME)]
+                        )
+                    ),
+                    ts.factory.createExpressionStatement(
+                        context.base.externalDependencies.express.Response.json({
+                            referenceToExpressResponse: context.base.externalDependencies.express.Response.status({
+                                referenceToExpressResponse: expressResponse,
+                                status: 500,
+                            }),
+                            valueToSend: ts.factory.createStringLiteral("Internal Server Error"),
+                        })
+                    ),
+                ],
+                true
+            )
+        );
     }
 
     private getReferenceToRouter(): ts.Expression {

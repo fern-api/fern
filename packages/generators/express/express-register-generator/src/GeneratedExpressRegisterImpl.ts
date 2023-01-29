@@ -1,7 +1,7 @@
 import { Name } from "@fern-fern/ir-model/commons";
 import { HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { convertHttpPathToExpressRoute, getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressRegisterContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -48,13 +48,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             referenceToApp: ts.factory.createIdentifier(
                                 GeneratedExpressRegisterImpl.EXPRESS_APP_PARAMETER_NAME
                             ),
-                            path: context.expressService.getGeneratedExpressService(service.name.fernFilepath).getRoute(
-                                context.expressService
-                                    .getReferenceToExpressService(service.name.fernFilepath, {
-                                        importAlias: this.getImportAliasForService(service),
-                                    })
-                                    .getExpression()
-                            ),
+                            path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService
                                 .getGeneratedExpressService(service.name.fernFilepath)
                                 .toRouter(this.getReferenceToServiceArgument(service)),

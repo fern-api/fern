@@ -16,6 +16,7 @@ export interface Express {
     };
     Response: {
         json: (args: { referenceToExpressResponse: ts.Expression; valueToSend: ts.Expression }) => ts.Expression;
+        status: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
         sendStatus: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
     };
     App: {
@@ -36,4 +37,5 @@ export interface Express {
             }) => ts.ConciseBody;
         }) => ts.Statement;
     };
+    json: () => ts.Expression;
 }
