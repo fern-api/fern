@@ -3388,7 +3388,6 @@ export { FiddleClient } from \\"./Client\\";
               Object {
                 "contents": "export * as remoteGen from \\"./remoteGen\\";
 export * from \\"./remoteGen/types\\";
-export * from \\"./remoteGen/errors\\";
 export * from \\"./remoteGen/client/requests\\";
 ",
                 "name": "index.ts",
@@ -3414,16 +3413,24 @@ export const Error: core.serialization.Schema<
     .union(\\"error\\", {
         IllegalApiNameError: core.serialization.object({}),
         GeneratorsDoNotExistError: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).GeneratorsDoNotExistError),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).GeneratorsDoNotExistErrorBodyType
+            ),
         }),
         CannotPublishToNpmScope: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).CannotPublishToNpmScope),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).CannotPublishToNpmScopeDetails
+            ),
         }),
         CannotPublishToMavenGroup: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).CannotPublishToMavenGroup),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).CannotPublishToMavenGroupDetails
+            ),
         }),
         InsufficientPermissions: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).InsufficientPermissions),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).InsufficientPermissionsDetails
+            ),
         }),
     })
     .transform<Fiddle.remoteGen.createJob.Error>({
@@ -3458,22 +3465,22 @@ export declare namespace Error {
 
     interface GeneratorsDoNotExistError {
         error: \\"GeneratorsDoNotExistError\\";
-        content: serializers.GeneratorsDoNotExistError.Raw;
+        content: serializers.GeneratorsDoNotExistErrorBodyType.Raw;
     }
 
     interface CannotPublishToNpmScope {
         error: \\"CannotPublishToNpmScope\\";
-        content: serializers.CannotPublishToNpmScope.Raw;
+        content: serializers.CannotPublishToNpmScopeDetails.Raw;
     }
 
     interface CannotPublishToMavenGroup {
         error: \\"CannotPublishToMavenGroup\\";
-        content: serializers.CannotPublishToMavenGroup.Raw;
+        content: serializers.CannotPublishToMavenGroupDetails.Raw;
     }
 
     interface InsufficientPermissions {
         error: \\"InsufficientPermissions\\";
-        content: serializers.InsufficientPermissions.Raw;
+        content: serializers.InsufficientPermissionsDetails.Raw;
     }
 }
 ",
@@ -3496,16 +3503,24 @@ export const Error: core.serialization.Schema<
     .union(\\"error\\", {
         IllegalApiNameError: core.serialization.object({}),
         GeneratorsDoNotExistError: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).GeneratorsDoNotExistError),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).GeneratorsDoNotExistErrorBodyType
+            ),
         }),
         CannotPublishToNpmScope: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).CannotPublishToNpmScope),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).CannotPublishToNpmScopeDetails
+            ),
         }),
         CannotPublishToMavenGroup: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).CannotPublishToMavenGroup),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).CannotPublishToMavenGroupDetails
+            ),
         }),
         InsufficientPermissions: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).InsufficientPermissions),
+            content: core.serialization.lazyObject(
+                async () => (await import(\\"../../..\\")).InsufficientPermissionsDetails
+            ),
         }),
     })
     .transform<Fiddle.remoteGen.createJobV2.Error>({
@@ -3540,22 +3555,22 @@ export declare namespace Error {
 
     interface GeneratorsDoNotExistError {
         error: \\"GeneratorsDoNotExistError\\";
-        content: serializers.GeneratorsDoNotExistError.Raw;
+        content: serializers.GeneratorsDoNotExistErrorBodyType.Raw;
     }
 
     interface CannotPublishToNpmScope {
         error: \\"CannotPublishToNpmScope\\";
-        content: serializers.CannotPublishToNpmScope.Raw;
+        content: serializers.CannotPublishToNpmScopeDetails.Raw;
     }
 
     interface CannotPublishToMavenGroup {
         error: \\"CannotPublishToMavenGroup\\";
-        content: serializers.CannotPublishToMavenGroup.Raw;
+        content: serializers.CannotPublishToMavenGroupDetails.Raw;
     }
 
     interface InsufficientPermissions {
         error: \\"InsufficientPermissions\\";
-        content: serializers.InsufficientPermissions.Raw;
+        content: serializers.InsufficientPermissionsDetails.Raw;
     }
 }
 ",
@@ -3679,107 +3694,7 @@ export { CreateJobRequestV2 } from \\"./CreateJobRequestV2\\";
                     "type": "directory",
                   },
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const CannotPublishToMavenGroup: core.serialization.Schema<
-    serializers.CannotPublishToMavenGroup.Raw,
-    Fiddle.CannotPublishToMavenGroup
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CannotPublishToMavenGroupDetails);
-
-export declare namespace CannotPublishToMavenGroup {
-    type Raw = serializers.CannotPublishToMavenGroupDetails.Raw;
-}
-",
-                        "name": "CannotPublishToMavenGroup.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const CannotPublishToNpmScope: core.serialization.Schema<
-    serializers.CannotPublishToNpmScope.Raw,
-    Fiddle.CannotPublishToNpmScope
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).CannotPublishToNpmScopeDetails);
-
-export declare namespace CannotPublishToNpmScope {
-    type Raw = serializers.CannotPublishToNpmScopeDetails.Raw;
-}
-",
-                        "name": "CannotPublishToNpmScope.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const GeneratorsDoNotExistError: core.serialization.Schema<
-    serializers.GeneratorsDoNotExistError.Raw,
-    Fiddle.GeneratorsDoNotExistError
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).GeneratorsDoNotExistErrorBodyType);
-
-export declare namespace GeneratorsDoNotExistError {
-    type Raw = serializers.GeneratorsDoNotExistErrorBodyType.Raw;
-}
-",
-                        "name": "GeneratorsDoNotExistError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const InsufficientPermissions: core.serialization.Schema<
-    serializers.InsufficientPermissions.Raw,
-    Fiddle.InsufficientPermissions
-> = core.serialization.lazyObject(async () => (await import(\\"../../..\\")).InsufficientPermissionsDetails);
-
-export declare namespace InsufficientPermissions {
-    type Raw = serializers.InsufficientPermissionsDetails.Raw;
-}
-",
-                        "name": "InsufficientPermissions.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * from \\"./GeneratorsDoNotExistError\\";
-export * from \\"./CannotPublishToNpmScope\\";
-export * from \\"./CannotPublishToMavenGroup\\";
-export * from \\"./InsufficientPermissions\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "errors",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./types\\";
-export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                     "name": "index.ts",
@@ -5360,9 +5275,7 @@ export class Client {
             switch ((_response.error.body as any)?.[\\"errorName\\"]) {
                 case \\"OwnerAlreadyExistsError\\":
                     throw new FernApi.OwnerAlreadyExistsError(
-                        await serializers.OwnerAlreadyExistsError.parse(
-                            _response.error.body as serializers.OwnerAlreadyExistsError.Raw
-                        )
+                        await serializers.OwnerId.parse(_response.error.body as serializers.OwnerId.Raw)
                     );
                 default:
                     throw new errors.FernApiError({
@@ -5990,6 +5903,7 @@ export class Client {
 
     /**
      * @throws {FernApi.OwnerNotFoundError}
+     * @throws {FernApi.UnknownError}
      */
     public async getTokensForOwner(ownerId: FernApi.OwnerId): Promise<FernApi.TokenMetadata[]> {
         const _response = await core.fetcher({
@@ -6012,6 +5926,8 @@ export class Client {
             switch ((_response.error.body as any)?.[\\"errorName\\"]) {
                 case \\"OwnerNotFoundError\\":
                     throw new FernApi.OwnerNotFoundError();
+                case \\"UnknownError\\":
+                    throw new FernApi.UnknownError(_response.error.body);
                 default:
                     throw new errors.FernApiError({
                         statusCode: _response.error.statusCode,
@@ -6107,7 +6023,26 @@ export class TokenNotFoundError extends Error {
                         "type": "file",
                       },
                       Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export class UnknownError extends Error {
+    readonly body?: unknown;
+
+    constructor(body?: unknown) {
+        super();
+        Object.setPrototypeOf(this, UnknownError.prototype);
+        this.body = body;
+    }
+}
+",
+                        "name": "UnknownError.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "export * from \\"./TokenNotFoundError\\";
+export * from \\"./UnknownError\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -7733,7 +7668,6 @@ export * as package_ from \\"./package\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
 export * from \\"./package/types\\";
-export * from \\"./owner/errors\\";
 export * from \\"./owner/client/requests\\";
 export * from \\"./token/client/requests\\";
 ",
@@ -7820,41 +7754,7 @@ export { UpdateOwnerRequest } from \\"./UpdateOwnerRequest\\";
                     "type": "directory",
                   },
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const OwnerAlreadyExistsError: core.serialization.Schema<
-    serializers.OwnerAlreadyExistsError.Raw,
-    FernApi.OwnerId
-> = core.serialization.lazy(async () => (await import(\\"../../..\\")).OwnerId);
-
-export declare namespace OwnerAlreadyExistsError {
-    type Raw = serializers.OwnerId.Raw;
-}
-",
-                        "name": "OwnerAlreadyExistsError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * from \\"./OwnerAlreadyExistsError\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "errors",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./types\\";
-export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                     "name": "index.ts",
@@ -8756,9 +8656,7 @@ export class Client {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new FernApi.OwnerAlreadyExistsError(
-                        await serializers.OwnerAlreadyExistsError.parse(
-                            _response.error.body as serializers.OwnerAlreadyExistsError.Raw
-                        )
+                        await serializers.OwnerId.parse(_response.error.body as serializers.OwnerId.Raw)
                     );
                 default:
                     throw new errors.FernApiError({
@@ -9386,6 +9284,7 @@ export class Client {
 
     /**
      * @throws {FernApi.OwnerNotFoundError}
+     * @throws {FernApi.UnknownError}
      */
     public async getTokensForOwner(ownerId: FernApi.OwnerId): Promise<FernApi.TokenMetadata[]> {
         const _response = await core.fetcher({
@@ -9408,6 +9307,8 @@ export class Client {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new FernApi.OwnerNotFoundError();
+                case 500:
+                    throw new FernApi.UnknownError(_response.error.body);
                 default:
                     throw new errors.FernApiError({
                         statusCode: _response.error.statusCode,
@@ -9503,7 +9404,26 @@ export class TokenNotFoundError extends Error {
                         "type": "file",
                       },
                       Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export class UnknownError extends Error {
+    readonly body?: unknown;
+
+    constructor(body?: unknown) {
+        super();
+        Object.setPrototypeOf(this, UnknownError.prototype);
+        this.body = body;
+    }
+}
+",
+                        "name": "UnknownError.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "export * from \\"./TokenNotFoundError\\";
+export * from \\"./UnknownError\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -11129,7 +11049,6 @@ export * as package_ from \\"./package\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
 export * from \\"./package/types\\";
-export * from \\"./owner/errors\\";
 export * from \\"./owner/client/requests\\";
 export * from \\"./token/client/requests\\";
 ",
@@ -11216,41 +11135,7 @@ export { UpdateOwnerRequest } from \\"./UpdateOwnerRequest\\";
                     "type": "directory",
                   },
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"@fern/api\\";
-import * as core from \\"../../../../core\\";
-
-export const OwnerAlreadyExistsError: core.serialization.Schema<
-    serializers.OwnerAlreadyExistsError.Raw,
-    FernApi.OwnerId
-> = core.serialization.lazy(async () => (await import(\\"../../..\\")).OwnerId);
-
-export declare namespace OwnerAlreadyExistsError {
-    type Raw = serializers.OwnerId.Raw;
-}
-",
-                        "name": "OwnerAlreadyExistsError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * from \\"./OwnerAlreadyExistsError\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "errors",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./types\\";
-export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                     "name": "index.ts",
@@ -16613,7 +16498,37 @@ export type PlaylistIdNotFoundError = TraceApi.PlaylistIdNotFoundErrorBody;
                         "type": "file",
                       },
                       Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import { TraceApi } from \\"@fern-trace/api-sdk\\";
+
+export type StringError = string & {
+    StringError: void;
+};
+
+export function StringError(value: string): TraceApi.StringError {
+    return value as unknown as TraceApi.StringError;
+}
+",
+                        "name": "StringError.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export type UnknownError = unknown;
+",
+                        "name": "UnknownError.ts",
+                        "type": "file",
+                      },
+                      Object {
                         "contents": "export * from \\"./PlaylistIdNotFoundError\\";
+export * from \\"./UnknownError\\";
+export * from \\"./StringError\\";
 ",
                         "name": "index.ts",
                         "type": "file",
@@ -27699,7 +27614,6 @@ export * from \\"./problem/types\\";
 export * as submission from \\"./submission\\";
 export * from \\"./submission/types\\";
 export * as v2 from \\"./v2\\";
-export * from \\"./playlist/errors\\";
 export * as admin from \\"./admin\\";
 export * as homepage from \\"./homepage\\";
 export * as sysprop from \\"./sysprop\\";
@@ -27906,7 +27820,7 @@ export const Error: core.serialization.Schema<
 > = core.serialization
     .union(\\"errorName\\", {
         PlaylistIdNotFoundError: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).PlaylistIdNotFoundError),
+            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).PlaylistIdNotFoundErrorBody),
         }),
         UnauthorizedError: core.serialization.object({}),
     })
@@ -27927,7 +27841,7 @@ export declare namespace Error {
 
     interface PlaylistIdNotFoundError {
         errorName: \\"PlaylistIdNotFoundError\\";
-        content: serializers.PlaylistIdNotFoundError.Raw;
+        content: serializers.PlaylistIdNotFoundErrorBody.Raw;
     }
 
     interface UnauthorizedError {
@@ -27998,7 +27912,7 @@ export const Error: core.serialization.Schema<
 > = core.serialization
     .union(\\"errorName\\", {
         PlaylistIdNotFoundError: core.serialization.object({
-            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).PlaylistIdNotFoundError),
+            content: core.serialization.lazy(async () => (await import(\\"../../..\\")).PlaylistIdNotFoundErrorBody),
         }),
     })
     .transform<TraceApi.playlist.updatePlaylist.Error>({
@@ -28016,7 +27930,7 @@ export declare namespace Error {
 
     interface PlaylistIdNotFoundError {
         errorName: \\"PlaylistIdNotFoundError\\";
-        content: serializers.PlaylistIdNotFoundError.Raw;
+        content: serializers.PlaylistIdNotFoundErrorBody.Raw;
     }
 }
 ",
@@ -28028,41 +27942,7 @@ export declare namespace Error {
                     "type": "directory",
                   },
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-import * as core from \\"../../../../core\\";
-
-export const PlaylistIdNotFoundError: core.serialization.Schema<
-    serializers.PlaylistIdNotFoundError.Raw,
-    TraceApi.PlaylistIdNotFoundError
-> = core.serialization.lazy(async () => (await import(\\"../../..\\")).PlaylistIdNotFoundErrorBody);
-
-export declare namespace PlaylistIdNotFoundError {
-    type Raw = serializers.PlaylistIdNotFoundErrorBody.Raw;
-}
-",
-                        "name": "PlaylistIdNotFoundError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * from \\"./PlaylistIdNotFoundError\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "errors",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./types\\";
-export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                     "name": "index.ts",

@@ -125,3 +125,9 @@ errors:
     status-code: 404
   UnauthorizedError:
     status-code: 401
+  UnknownError:
+    status-code: 401
+    type: unknown
+  StringError:
+    status-code: 401
+    type: string

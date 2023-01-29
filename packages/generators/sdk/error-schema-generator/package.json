@@ -29,7 +29,8 @@
     "@fern-fern/ir-model": "0.0.741",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/sdk-error-generator": "workspace:*",
-    "@fern-typescript/type-schema-generator": "workspace:*"
+    "@fern-typescript/type-schema-generator": "workspace:*",
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

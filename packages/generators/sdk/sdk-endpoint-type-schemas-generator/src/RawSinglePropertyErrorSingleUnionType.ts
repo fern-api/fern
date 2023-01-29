@@ -29,14 +29,18 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     protected getNonDiscriminantPropertiesForInterface(
         context: SdkEndpointTypeSchemasContext
     ): OptionalKind<PropertySignatureStructure>[] {
-        const sdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(this.errorName);
-        if (sdkErrorSchema == null) {
-            throw new Error("Error schema does not exist");
+        const errorDeclaration = context.error.getErrorDeclaration(this.errorName);
+        if (errorDeclaration.type == null) {
+            throw new Error(
+                `Cannot generate single-property error because ${this.errorName.name.originalName} does not have a type.`
+            );
         }
+        const type = context.typeSchema.getReferenceToRawType(errorDeclaration.type).typeNode;
+
         return [
             {
                 name: `"${this.discriminationStrategy.contentProperty.wireValue}"`,
-                type: getTextOfTsNode(sdkErrorSchema.getReferenceToRawShape(context)),
+                type: getTextOfTsNode(type),
             },
         ];
     }
@@ -44,6 +48,13 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     protected getNonDiscriminantPropertiesForSchema(
         context: SdkEndpointTypeSchemasContext
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
+        const errorDeclaration = context.error.getErrorDeclaration(this.errorName);
+        if (errorDeclaration.type == null) {
+            throw new Error(
+                `Cannot generate single-property error because ${this.errorName.name.originalName} does not have a type.`
+            );
+        }
+
         return {
             isInline: true,
             properties: [
@@ -52,7 +63,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
                         parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,
                         raw: this.discriminationStrategy.contentProperty.wireValue,
                     },
-                    value: context.sdkErrorSchema.getSchemaOfError(this.errorName),
+                    value: context.typeSchema.getSchemaOfTypeReference(errorDeclaration.type),
                 },
             ],
         };

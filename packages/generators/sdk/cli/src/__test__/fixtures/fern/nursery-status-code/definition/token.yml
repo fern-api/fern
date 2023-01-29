@@ -64,7 +64,11 @@ services:
           response: list<TokenMetadata>
           errors:
             - owner.OwnerNotFoundError
+            - UnknownError
 
 errors:
   TokenNotFoundError:
     status-code: 404
+  UnknownError:
+    status-code: 500
+    type: unknown

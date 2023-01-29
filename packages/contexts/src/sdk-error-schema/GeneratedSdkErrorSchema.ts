@@ -3,5 +3,5 @@ import { GeneratedFile } from "../commons/GeneratedFile";
 import { SdkErrorSchemaContext } from "./SdkErrorSchemaContext";
 
 export interface GeneratedSdkErrorSchema extends GeneratedFile<SdkErrorSchemaContext> {
-    getReferenceToRawShape: (context: SdkErrorSchemaContext) => ts.TypeNode;
+    deserializeBody: (context: SdkErrorSchemaContext, args: { referenceToBody: ts.Expression }) => ts.Expression;
 }

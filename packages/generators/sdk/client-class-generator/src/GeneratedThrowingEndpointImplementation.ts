@@ -86,26 +86,17 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
                                       if (generatedSdkError?.type !== "class") {
                                           throw new Error("Cannot throw error because it's not a class");
                                       }
-                                      const GeneratedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(
+                                      const generatedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(
                                           error.error
                                       );
                                       return [
                                           ts.factory.createThrowStatement(
                                               generatedSdkError.build(context, {
                                                   referenceToBody:
-                                                      GeneratedSdkErrorSchema != null
-                                                          ? context.base.coreUtilities.zurg.Schema._fromExpression(
-                                                                context.sdkErrorSchema
-                                                                    .getReferenceToSdkErrorSchema(error.error)
-                                                                    .getExpression()
-                                                            ).parse(
-                                                                ts.factory.createAsExpression(
-                                                                    referenceToErrorBody,
-                                                                    GeneratedSdkErrorSchema.getReferenceToRawShape(
-                                                                        context
-                                                                    )
-                                                                )
-                                                            )
+                                                      generatedSdkErrorSchema != null
+                                                          ? generatedSdkErrorSchema.deserializeBody(context, {
+                                                                referenceToBody: referenceToErrorBody,
+                                                            })
                                                           : undefined,
                                               })
                                           ),

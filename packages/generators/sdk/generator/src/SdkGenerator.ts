@@ -262,19 +262,18 @@ export class SdkGenerator {
         this.generateTypeDeclarations();
         this.generateTypeSchemas();
         this.generateErrorDeclarations();
-        this.generateSdkErrorSchemas();
         this.generateServiceDeclarations();
         this.generateEnvironments();
         this.generateRequestWrappers();
-        if (this.config.neverThrowErrors) {
-            this.generateEndpointErrorUnion();
-        }
         this.generateEndpointTypeSchemas();
         this.generateInlinedRequestBodySchemas();
 
-        if (!this.config.neverThrowErrors) {
+        if (this.config.neverThrowErrors) {
+            this.generateEndpointErrorUnion();
+        } else {
             this.generateGenericAPISdkError();
             this.generateTimeoutSdkError();
+            this.generateSdkErrorSchemas();
         }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
@@ -445,7 +444,6 @@ export class SdkGenerator {
                             typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                             typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                             errorDeclarationReferencer: this.errorDeclarationReferencer,
-                            sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
                             sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
                             endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
                             endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
@@ -457,7 +455,6 @@ export class SdkGenerator {
                             serviceResolver: this.serviceResolver,
                             sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
                             typeSchemaGenerator: this.typeSchemaGenerator,
-                            sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
                         });
                         endpointTypeSchemasContext.sdkEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(service.name.fernFilepath, endpoint.name)

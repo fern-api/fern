@@ -145,7 +145,7 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
             ts.factory.createCaseBlock(
                 this.endpoint.errors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
-                    const GeneratedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(error.error);
+                    const generatedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(error.error);
                     return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
                         ts.factory.createReturnStatement(
                             context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
@@ -155,17 +155,10 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
                                     .build({
                                         discriminantValueToBuild: errorDeclaration.statusCode,
                                         builderArgument:
-                                            GeneratedSdkErrorSchema != null
-                                                ? context.base.coreUtilities.zurg.Schema._fromExpression(
-                                                      context.sdkErrorSchema
-                                                          .getReferenceToSdkErrorSchema(error.error)
-                                                          .getExpression()
-                                                  ).parse(
-                                                      ts.factory.createAsExpression(
-                                                          this.getReferenceToErrorBody(context),
-                                                          GeneratedSdkErrorSchema.getReferenceToRawShape(context)
-                                                      )
-                                                  )
+                                            generatedSdkErrorSchema != null
+                                                ? generatedSdkErrorSchema.deserializeBody(context, {
+                                                      referenceToBody: this.getReferenceToErrorBody(context),
+                                                  })
                                                 : undefined,
                                         context,
                                     })
