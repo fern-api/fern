@@ -1,12 +1,10 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { NOOP_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { visitFernRootApiFileYamlAst, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import { loadWorkspace } from "@fern-api/workspace-loader";
 import stripAnsi from "strip-ansi";
-import { createRootApiFileAstVisitorForRules } from "../createRootApiFileAstVisitorForRules";
-import { createServiceFileAstVisitorForRules } from "../createServiceFileAstVisitorForRules";
 import { Rule } from "../Rule";
+import { runRulesOnWorkspace } from "../validateWorkspace";
 import { ValidationViolation } from "../ValidationViolation";
 
 export declare namespace getViolationsForRule {
@@ -29,30 +27,10 @@ export async function getViolationsForRule({
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
     }
 
-    const ruleVisitors = await rule.create({ workspace: parseResult.workspace, logger: NOOP_LOGGER });
-    const violations: ValidationViolation[] = [];
-
-    const rootApiFileVisitor = createRootApiFileAstVisitorForRules({
-        relativeFilepath: "api.yml",
-        contents: parseResult.workspace.rootApiFile.contents,
-        allRuleVisitors: [ruleVisitors],
-        addViolations: (newViolations) => {
-            violations.push(...newViolations);
-        },
-    });
-
-    await visitFernRootApiFileYamlAst(parseResult.workspace.rootApiFile.contents, rootApiFileVisitor);
-
-    await visitAllServiceFiles(parseResult.workspace, async (relativeFilepath, file) => {
-        const visitor = createServiceFileAstVisitorForRules({
-            relativeFilepath,
-            contents: file,
-            allRuleVisitors: [ruleVisitors],
-            addViolations: (newViolations) => {
-                violations.push(...newViolations);
-            },
-        });
-        await visitFernServiceFileYamlAst(file, visitor);
+    const violations = await runRulesOnWorkspace({
+        workspace: parseResult.workspace,
+        logger: CONSOLE_LOGGER,
+        rules: [rule],
     });
 
     return violations.map((violation) => ({

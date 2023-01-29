@@ -11,24 +11,38 @@ import {
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
 import { createServiceFileAstVisitorForRules } from "./createServiceFileAstVisitorForRules";
 import { getAllEnabledRules } from "./getAllRules";
+import { Rule, RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateWorkspace(workspace: Workspace, logger: Logger): Promise<ValidationViolation[]> {
+    return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });
+}
+
+// exported for testing
+export async function runRulesOnWorkspace({
+    workspace,
+    rules,
+    logger,
+}: {
+    workspace: Workspace;
+    rules: Rule[];
+    logger: Logger;
+}): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
+    const allRuleVisitors = await Promise.all(rules.map((rule) => rule.create({ workspace, logger })));
+
     const violationsForRoot = await validateRootApiFile({
-        workspace,
         contents: workspace.rootApiFile.contents,
-        logger,
+        allRuleVisitors,
     });
     violations.push(...violationsForRoot);
 
     await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
         const violationsForFile = await validateServiceFile({
-            workspace,
             relativeFilepath,
             contents: file,
-            logger,
+            allRuleVisitors,
         });
         violations.push(...violationsForFile);
     });
@@ -37,18 +51,15 @@ export async function validateWorkspace(workspace: Workspace, logger: Logger): P
 }
 
 async function validateServiceFile({
-    workspace,
     relativeFilepath,
     contents,
-    logger,
+    allRuleVisitors,
 }: {
-    workspace: Workspace;
     relativeFilepath: RelativeFilePath;
     contents: ServiceFileSchema;
-    logger: Logger;
+    allRuleVisitors: RuleVisitors[];
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const allRuleVisitors = await Promise.all(getAllEnabledRules().map((rule) => rule.create({ workspace, logger })));
 
     const astVisitor = createServiceFileAstVisitorForRules({
         relativeFilepath,
@@ -64,16 +75,13 @@ async function validateServiceFile({
 }
 
 async function validateRootApiFile({
-    workspace,
     contents,
-    logger,
+    allRuleVisitors,
 }: {
-    workspace: Workspace;
     contents: RootApiFileSchema;
-    logger: Logger;
+    allRuleVisitors: RuleVisitors[];
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
-    const allRuleVisitors = await Promise.all(getAllEnabledRules().map((rule) => rule.create({ workspace, logger })));
 
     const astVisitor = createRootApiFileAstVisitorForRules({
         relativeFilepath: ROOT_API_FILENAME,
