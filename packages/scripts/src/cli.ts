@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { cwd, resolve } from "@fern-api/fs-utils";
 import { writeFernJsonSchema } from "@fern-api/json-schema";
 import { noop } from "lodash-es";
 import { hideBin } from "yargs/helpers";
@@ -10,13 +10,15 @@ void yargs(hideBin(process.argv))
     .scriptName(process.env.CLI_NAME ?? "fern-scripts")
     .strict()
     .command(
-        "write-json-schema",
+        "write-json-schema <filepath>",
         "Write the Fern API JSON schema to the root of the repo",
-        () => {
-            /* no-op */
-        },
-        async () => {
-            await writeFernJsonSchema(join(AbsoluteFilePath.of(__dirname), "../../../fern.schema.json"));
+        (yargs) =>
+            yargs.positional("filepath", {
+                type: "string",
+                demandOption: true,
+            }),
+        async (argv) => {
+            await writeFernJsonSchema(resolve(cwd(), argv.filepath));
         }
     )
     .command(
