@@ -10,6 +10,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
+import { kebabCase } from "lodash-es";
 import path from "path";
 import { createWorkspace } from "./createWorkspace";
 
@@ -33,7 +34,7 @@ export async function initialize({
                 return context.failAndThrow("You must be logged in to initialize Fern.");
             }
             const user = await getCurrentUser({ token, context });
-            organization = user.username;
+            organization = kebabCase(user.username);
             const didCreateOrganization = await createOrganizationIfDoesNotExist({
                 organization,
                 token,
