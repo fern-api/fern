@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { upperFirst } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
@@ -38,8 +39,7 @@ export const V7_TO_V6_MIGRATION: IrMigration<
                 const snakeCase =
                     lastFernFilepathPart != null ? `${lastFernFilepathPart.originalName}_service` : "service";
                 const screamingSnakeCase = snakeCase.toUpperCase();
-                const pascalCase =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.originalName}Service` : "Service";
+                const pascalCase = upperFirst(camelCase);
 
                 return {
                     ...service,
