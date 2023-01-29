@@ -10,9 +10,7 @@ errors:
   C:
     status-code: 400
 
-services:
-  http:
-    OneService:
-      auth: false
-      base-path: /
-      endpoints: {}
+service:
+  auth: false
+  base-path: /
+  endpoints: {}

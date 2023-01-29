@@ -12,28 +12,26 @@ Each **Fern Definition** file may define:
 ## An example of a Fern Definition
 
 ```yml imdb.yml
-services:
-  http:
-    MoviesService:
-      auth: false
-      base-path: /movies
-      endpoints:
-        createMovie:
-          docs: Add a movie to the database
-          method: POST
-          path: /create-movie
-          request: CreateMovieRequest
-          response: MovieId
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
 
-        getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
-          response: Movie
-          errors:
-            - NotFoundError
-            - UnauthorizedError
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - NotFoundError
+        - UnauthorizedError
 
 types:
   Movie:

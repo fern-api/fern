@@ -175,11 +175,7 @@ export class OpenAPIConverter {
                 endpoints: convertedEndpoints,
             };
 
-            serviceFile.services = {
-                http: {
-                    [serviceName]: service,
-                },
-            };
+            serviceFile.service = service;
         }
 
         if (size(types) > 0) {

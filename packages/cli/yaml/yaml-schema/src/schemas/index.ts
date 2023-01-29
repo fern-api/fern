@@ -36,7 +36,6 @@ export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { PropertyErrorDiscriminationSchema } from "./PropertyErrorDiscriminationSchema";
 export { ResponseErrorsSchema } from "./ResponseErrorsSchema";
-export { ServicesSchema } from "./ServicesSchema";
 export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema";
 export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";

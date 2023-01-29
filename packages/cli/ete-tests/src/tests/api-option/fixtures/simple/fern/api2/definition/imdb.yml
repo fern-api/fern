@@ -12,22 +12,20 @@ types:
 errors:
   NotFoundError:
     status-code: 404
-services:
-  http:
-    MoviesService:
-      auth: false
-      base-path: /movies
-      endpoints:
-        createMovie:
-          method: POST
-          path: /
-          request: CreateMovieRequest
-          response: MovieId
-        getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
-          response: Movie
-          errors:
-            - NotFoundError
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    createMovie:
+      method: POST
+      path: /
+      request: CreateMovieRequest
+      response: MovieId
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - NotFoundError

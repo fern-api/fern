@@ -1,39 +1,37 @@
-services:
-  http:
-    Service:
-      auth: false
-      base-path: /{foo}/{request}
+service:
+  auth: false
+  base-path: /{foo}/{request}
+  path-parameters:
+    foo: string
+    bar: string
+    request: string
+  headers:
+    foo: string
+    bar: string
+    baz: string
+  endpoints:
+    a:
+      path: /
+      method: POST
+    b:
+      path: /{request}
       path-parameters:
-        foo: string
-        bar: string
         request: string
-      headers:
-        foo: string
-        bar: string
-        baz: string
-      endpoints:
-        a:
-          path: /
-          method: POST
-        b:
-          path: /{request}
-          path-parameters:
-            request: string
-        c:
-          path: /
-          request:
-            query-parameters:
-              foo: string
-              body: string
-        d:
-          path: /
-          request:
-            headers:
-              baz: boolean
-            body:
-              extends: ObjectWithFoo
-              properties:
-                bar: string
+    c:
+      path: /
+      request:
+        query-parameters:
+          foo: string
+          body: string
+    d:
+      path: /
+      request:
+        headers:
+          baz: boolean
+        body:
+          extends: ObjectWithFoo
+          properties:
+            bar: string
 
 types:
   ObjectWithFoo:

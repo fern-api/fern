@@ -2990,25 +2990,6 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"java"} 1`] = 
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MyService",
-                    "camelCase": {
-                        "unsafeName": "myService",
-                        "safeName": "myService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "my_service",
-                        "safeName": "my_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MY_SERVICE",
-                        "safeName": "MY_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MyService",
-                        "safeName": "MyService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "app",
@@ -3214,25 +3195,6 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"python"} 1`] 
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MyService",
-                    "camelCase": {
-                        "unsafeName": "myService",
-                        "safeName": "myService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "my_service",
-                        "safeName": "my_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MY_SERVICE",
-                        "safeName": "MY_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MyService",
-                        "safeName": "MyService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "app",
@@ -3438,25 +3400,6 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"typescript"} 
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MyService",
-                    "camelCase": {
-                        "unsafeName": "myService",
-                        "safeName": "myService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "my_service",
-                        "safeName": "my_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MY_SERVICE",
-                        "safeName": "MY_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MyService",
-                        "safeName": "MyService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "app",
@@ -3662,25 +3605,6 @@ exports[`ir {"fixtureName":"multiple-environment-urls"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MyService",
-                    "camelCase": {
-                        "unsafeName": "myService",
-                        "safeName": "myService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "my_service",
-                        "safeName": "my_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MY_SERVICE",
-                        "safeName": "MY_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MyService",
-                        "safeName": "MyService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "app",
@@ -4262,25 +4186,6 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "NestedService",
-                    "camelCase": {
-                        "unsafeName": "nestedService",
-                        "safeName": "nestedService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "nested_service",
-                        "safeName": "nested_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NESTED_SERVICE",
-                        "safeName": "NESTED_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NestedService",
-                        "safeName": "NestedService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "nested",
@@ -5142,25 +5047,6 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "NestedService",
-                    "camelCase": {
-                        "unsafeName": "nestedService",
-                        "safeName": "nestedService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "nested_service",
-                        "safeName": "nested_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NESTED_SERVICE",
-                        "safeName": "NESTED_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NestedService",
-                        "safeName": "NestedService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "nested",
@@ -6022,25 +5908,6 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "NestedService",
-                    "camelCase": {
-                        "unsafeName": "nestedService",
-                        "safeName": "nestedService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "nested_service",
-                        "safeName": "nested_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NESTED_SERVICE",
-                        "safeName": "NESTED_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NestedService",
-                        "safeName": "NestedService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "nested",
@@ -6902,25 +6769,6 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "NestedService",
-                    "camelCase": {
-                        "unsafeName": "nestedService",
-                        "safeName": "nestedService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "nested_service",
-                        "safeName": "nested_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "NESTED_SERVICE",
-                        "safeName": "NESTED_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "NestedService",
-                        "safeName": "NestedService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "nested",
@@ -7747,25 +7595,6 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "RootService",
-                    "camelCase": {
-                        "unsafeName": "rootService",
-                        "safeName": "rootService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_service",
-                        "safeName": "root_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SERVICE",
-                        "safeName": "ROOT_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootService",
-                        "safeName": "RootService"
-                    }
-                },
                 "fernFilepath": []
             },
             "basePath": {
@@ -7781,25 +7610,6 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "PackageService",
-                    "camelCase": {
-                        "unsafeName": "packageService",
-                        "safeName": "packageService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_service",
-                        "safeName": "package_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_SERVICE",
-                        "safeName": "PACKAGE_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageService",
-                        "safeName": "PackageService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "package",
@@ -8239,25 +8049,6 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "RootService",
-                    "camelCase": {
-                        "unsafeName": "rootService",
-                        "safeName": "rootService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_service",
-                        "safeName": "root_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SERVICE",
-                        "safeName": "ROOT_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootService",
-                        "safeName": "RootService"
-                    }
-                },
                 "fernFilepath": []
             },
             "basePath": {
@@ -8273,25 +8064,6 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "PackageService",
-                    "camelCase": {
-                        "unsafeName": "packageService",
-                        "safeName": "packageService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_service",
-                        "safeName": "package_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_SERVICE",
-                        "safeName": "PACKAGE_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageService",
-                        "safeName": "PackageService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "package",
@@ -8731,25 +8503,6 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "RootService",
-                    "camelCase": {
-                        "unsafeName": "rootService",
-                        "safeName": "rootService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_service",
-                        "safeName": "root_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SERVICE",
-                        "safeName": "ROOT_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootService",
-                        "safeName": "RootService"
-                    }
-                },
                 "fernFilepath": []
             },
             "basePath": {
@@ -8765,25 +8518,6 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "PackageService",
-                    "camelCase": {
-                        "unsafeName": "packageService",
-                        "safeName": "packageService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_service",
-                        "safeName": "package_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_SERVICE",
-                        "safeName": "PACKAGE_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageService",
-                        "safeName": "PackageService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "package",
@@ -9223,25 +8957,6 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "RootService",
-                    "camelCase": {
-                        "unsafeName": "rootService",
-                        "safeName": "rootService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_service",
-                        "safeName": "root_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_SERVICE",
-                        "safeName": "ROOT_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootService",
-                        "safeName": "RootService"
-                    }
-                },
                 "fernFilepath": []
             },
             "basePath": {
@@ -9257,25 +8972,6 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "PackageService",
-                    "camelCase": {
-                        "unsafeName": "packageService",
-                        "safeName": "packageService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_service",
-                        "safeName": "package_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_SERVICE",
-                        "safeName": "PACKAGE_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageService",
-                        "safeName": "PackageService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "package",
@@ -9804,25 +9500,6 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -14813,25 +14490,6 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -17072,25 +16730,6 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -22081,25 +21720,6 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -24340,25 +23960,6 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -29349,25 +28950,6 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -35265,25 +34847,6 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",
@@ -41181,25 +40744,6 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "name": {
-                    "originalName": "MoviesService",
-                    "camelCase": {
-                        "unsafeName": "moviesService",
-                        "safeName": "moviesService"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "movies_service",
-                        "safeName": "movies_service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "MOVIES_SERVICE",
-                        "safeName": "MOVIES_SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "MoviesService",
-                        "safeName": "MoviesService"
-                    }
-                },
                 "fernFilepath": [
                     {
                         "originalName": "imdb",

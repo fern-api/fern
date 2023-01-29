@@ -1,7 +1,7 @@
 import { visitObject } from "@fern-api/core-utils";
 import { ServiceFileSchema } from "../schemas";
 import { FernServiceFileAstVisitor } from "./FernServiceFileAstVisitor";
-import { visitServices } from "./visitors/services/visitServices";
+import { visitHttpService } from "./visitors/services/visitHttpService";
 import { visitErrorDeclarations } from "./visitors/visitErrorDeclarations";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
@@ -17,8 +17,10 @@ export async function visitFernServiceFileYamlAst(
         types: async (types) => {
             await visitTypeDeclarations({ typeDeclarations: types, visitor, nodePath: ["types"] });
         },
-        services: async (services) => {
-            await visitServices({ services, visitor, nodePath: ["services"] });
+        service: async (service) => {
+            if (service != null) {
+                await visitHttpService({ service, visitor, nodePath: ["service"] });
+            }
         },
         errors: async (errors) => {
             await visitErrorDeclarations({ errorDeclarations: errors, visitor, nodePath: ["errors"] });

@@ -13,17 +13,15 @@ types:
       - name: Example2
         value: hello world
 
-services:
-  http:
-    MyService:
-      base-path: /
-      auth: true
-      endpoints:
-        get:
-          path: /
-          method: GET
-          examples:
-            - name: Example1
-            - name: Example2
-            - name: Example3
-            - name: Example2
+service:
+  base-path: /
+  auth: true
+  endpoints:
+    get:
+      path: /
+      method: GET
+      examples:
+        - name: Example1
+        - name: Example2
+        - name: Example3
+        - name: Example2

@@ -15,9 +15,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required header "serviceHeader"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -32,9 +30,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required header "endpointHeader"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -49,9 +45,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required header "serviceHeader"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -66,9 +60,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required header "endpointHeader"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -83,9 +75,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Unexpected header "extraHeader"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -102,9 +92,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required path parameter "servicePathParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -119,9 +107,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required path parameter "endpointPathParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -136,9 +122,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required path parameter "servicePathParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -153,9 +137,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required path parameter "endpointPathParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -170,9 +152,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Unexpected path parameter "extraParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -189,9 +169,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required query parameter "queryParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -206,9 +184,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required query parameter "queryParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -223,9 +199,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Unexpected query parameter "extraParam"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "get",
                     {
@@ -242,9 +216,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Unexpected request in example.",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -259,9 +231,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Expected example to be a string. Example is: undefined",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "c",
                     {
@@ -276,9 +246,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Expected example to be a string. Example is: 123",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "c",
                     {
@@ -293,9 +261,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Expected example to be an object. Example is: 123",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "d",
                     {
@@ -310,9 +276,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Example is missing required property "bar"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "d",
                     {
@@ -328,9 +292,7 @@ describe("valid-example-endpoint-call", () => {
                 message:
                     'Example is missing required property "foo". <Inlined Request> -> (extends) ObjectWithFoo -> foo',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "d",
                     {
@@ -345,9 +307,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Unexpected property "extraProperty"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "d",
                     {
@@ -364,9 +324,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Expected example to be a boolean. Example is: undefined",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -381,9 +339,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: 'Expected example to be a boolean. Example is: "hello"',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -398,9 +354,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Expected example to be a string. Example is: undefined",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -415,9 +369,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Expected example to be a string. Example is: true",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -432,9 +384,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Unexpected response in example. ErrorWithNoBody does not have a body.",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -450,9 +400,7 @@ describe("valid-example-endpoint-call", () => {
                 message:
                     'NotFoundError is not specified as an allowed error for this endpoint. Add NotFoundError to the endpoint\'s "errors" list.',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -468,9 +416,7 @@ describe("valid-example-endpoint-call", () => {
                 message:
                     'NotFoundError is not specified as an allowed error for this endpoint. Add NotFoundError to the endpoint\'s "errors" list.',
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -485,9 +431,7 @@ describe("valid-example-endpoint-call", () => {
             {
                 message: "Unexpected response in example. NotFoundError does not have a body.",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "a",
                     {
@@ -503,9 +447,7 @@ describe("valid-example-endpoint-call", () => {
                 message:
                     "Unexpected response in example. If you're adding an example of an error response, set the \"error\" property to the error's name",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "b",
                     {

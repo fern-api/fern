@@ -15,14 +15,12 @@ import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertHttpService({
     serviceDefinition,
-    serviceId,
     file,
     errorResolver,
     typeResolver,
     exampleResolver,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
-    serviceId: string;
     file: FernFileContext;
     errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
@@ -30,10 +28,7 @@ export function convertHttpService({
 }): HttpService {
     return {
         ...convertDeclaration(serviceDefinition),
-        name: {
-            name: file.casingsGenerator.generateName(serviceId),
-            fernFilepath: file.fernFilepath,
-        },
+        name: { fernFilepath: file.fernFilepath },
         baseUrl: serviceDefinition.url,
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:

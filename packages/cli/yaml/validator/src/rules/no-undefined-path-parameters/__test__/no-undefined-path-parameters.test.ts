@@ -12,25 +12,25 @@ describe("no-undefined-path-parameters", () => {
         expect(violations).toEqual([
             {
                 message: "Service has missing path-parameter: baseParameter.",
-                nodePath: ["services", "http", "SimpleService"],
+                nodePath: ["service"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
             },
             {
                 message: "Path parameter is unreferenced in service: fakeBaseParameter.",
-                nodePath: ["services", "http", "SimpleService"],
+                nodePath: ["service"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
             },
             {
                 message: "Endpoint has missing path-parameter: parameter2.",
-                nodePath: ["services", "http", "SimpleService", "endpoints", "missingPathParameters"],
+                nodePath: ["service", "endpoints", "missingPathParameters"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
             },
             {
                 message: "Path parameter is unreferenced in endpoint: parameter1.",
-                nodePath: ["services", "http", "SimpleService", "endpoints", "unusedPathParameters"],
+                nodePath: ["service", "endpoints", "unusedPathParameters"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
             },

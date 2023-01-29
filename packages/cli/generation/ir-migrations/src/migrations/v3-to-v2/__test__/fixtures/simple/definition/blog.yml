@@ -1,13 +1,11 @@
-services:
-  http:
-    BlogService:
-      base-path: /blog
-      auth: true
-      endpoints:
-        create:
-          path: /
-          method: POST
-          request: Blog
+service:
+  base-path: /blog
+  auth: true
+  endpoints:
+    create:
+      path: /
+      method: POST
+      request: Blog
 
 types:
   Blog:

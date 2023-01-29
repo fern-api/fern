@@ -7,6 +7,7 @@ import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
+import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
 import { AlwaysRunMigration, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
@@ -160,6 +161,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V7_TO_V6_MIGRATION)
     .withMigration(V6_TO_V5_MIGRATION)
     .withMigration(V5_TO_V4_MIGRATION)
     .withMigration(V4_TO_V3_MIGRATION)

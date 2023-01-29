@@ -12,13 +12,13 @@ describe("no-duplicate-declarations", () => {
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
-                nodePath: ["services", "http", "OneService", "endpoints", "get"],
+                nodePath: ["service", "endpoints", "get"],
                 message: "Multiple errors have status-code 401: D, D",
             },
             {
                 severity: "error",
                 relativeFilepath: "1.yml",
-                nodePath: ["services", "http", "OneService", "endpoints", "update"],
+                nodePath: ["service", "endpoints", "update"],
                 message: "Multiple errors have status-code 403: E, F",
             },
         ]);

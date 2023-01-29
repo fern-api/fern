@@ -44,12 +44,12 @@ export async function processPackageMarkers({
             if (packageMarker.contents.export == null) {
                 packageMarkers[pathOfPackageMarker] = packageMarker;
             } else {
-                const { types = {}, errors = {}, services: { http = {} } = {} } = packageMarker.contents;
+                const { types = {}, errors = {}, service } = packageMarker.contents;
                 const pathToPackage = dirname(pathOfPackageMarker);
                 const areDefinitionsDefinedInPackage =
                     size(types) > 0 ||
                     size(errors) > 0 ||
-                    size(http) ||
+                    service != null ||
                     keys(structuralValidationResult.serviceFiles).some(
                         (filepath) => filepath !== pathOfPackageMarker && filepath.startsWith(pathToPackage)
                     );

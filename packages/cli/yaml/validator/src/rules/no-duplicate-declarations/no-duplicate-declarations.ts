@@ -56,8 +56,6 @@ export const NoDuplicateDeclarationsRule: Rule = {
                     getRuleViolations({ declaredName: typeName, relativeFilepath }),
                 errorDeclaration: ({ errorName }, { relativeFilepath }) =>
                     getRuleViolations({ declaredName: errorName, relativeFilepath }),
-                httpService: ({ serviceName }, { relativeFilepath }) =>
-                    getRuleViolations({ declaredName: serviceName, relativeFilepath }),
                 httpEndpoint: ({ endpoint }, { relativeFilepath }) => {
                     if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
                         return getRuleViolations({ declaredName: endpoint.request.name, relativeFilepath });
@@ -87,9 +85,6 @@ async function getDeclarations(workspace: Workspace): Promise<Declarations> {
             },
             errorDeclaration: ({ errorName }) => {
                 addDeclaration(errorName);
-            },
-            httpService: ({ serviceName }) => {
-                addDeclaration(serviceName);
             },
             httpEndpoint: ({ endpoint }) => {
                 if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {

@@ -56,19 +56,17 @@ types:
       renameError: error.RenameErrorTransaction
       deleteError: error.DeleteErrorTransaction
 
-services:
-  http:
-    TransactionService:
-      auth: false
-      base-path: /{apiId}/transactions
-      path-parameters:
-        apiId: commons.ApiId
-      endpoints:
-        add:
-          method: POST
-          path: /
-          request:
-            name: AddTransactionsRequest
-            body:
-              properties:
-                transactions: list<Transaction>
+service:
+  auth: false
+  base-path: /{apiId}/transactions
+  path-parameters:
+    apiId: commons.ApiId
+  endpoints:
+    add:
+      method: POST
+      path: /
+      request:
+        name: AddTransactionsRequest
+        body:
+          properties:
+            transactions: list<Transaction>

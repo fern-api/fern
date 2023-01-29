@@ -13,26 +13,24 @@ types:
       - RED
       - BLACK
 
-services:
-  http:
-    MyService:
-      auth: false
-      base-path: /
-      endpoints:
-        foo:
-          path: /
-          method: POST
-        bar:
-          path: /
-          method: POST
-          request:
-            query-parameters:
-              a: string
-              b: optional<string>
-              c: list<string>
-              d: unknown
-              e: optional<AliasOfPrimitive>
-              f: optional<AliasOfAliasOfPrimitive>
-              g: optional<AliasOfAliasOfObject>
-              h: MadeUpType
-              i: optional<Color>
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    foo:
+      path: /
+      method: POST
+    bar:
+      path: /
+      method: POST
+      request:
+        query-parameters:
+          a: string
+          b: optional<string>
+          c: list<string>
+          d: unknown
+          e: optional<AliasOfPrimitive>
+          f: optional<AliasOfAliasOfPrimitive>
+          g: optional<AliasOfAliasOfObject>
+          h: MadeUpType
+          i: optional<Color>

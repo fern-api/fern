@@ -13,14 +13,14 @@ describe("no-conflicting-endpoint-parameters", () => {
             {
                 message:
                     "Path parameter request is not suitable for code generation, because it can conflict with the request body parameter.",
-                nodePath: ["services", "http", "Service", "path-parameters", "request"],
+                nodePath: ["service", "path-parameters", "request"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },
             {
                 message:
                     "Path parameter request is not suitable for code generation, because it can conflict with the request body parameter.",
-                nodePath: ["services", "http", "Service", "endpoints", "b", "path-parameters", "request"],
+                nodePath: ["service", "endpoints", "b", "path-parameters", "request"],
                 relativeFilepath: "a.yml",
                 severity: "error",
             },

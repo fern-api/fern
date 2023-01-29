@@ -109,47 +109,42 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            services: (services) => {
-                if (services == null) {
+            service: (service) => {
+                if (service == null) {
                     return;
                 }
 
-                if (services.http != null) {
-                    for (const [serviceId, serviceDefinition] of Object.entries(services.http)) {
-                        const convertedHttpService = convertHttpService({
-                            serviceDefinition,
-                            serviceId,
-                            file,
-                            errorResolver,
-                            typeResolver,
-                            exampleResolver,
-                        });
-                        intermediateRepresentation.services.push(convertedHttpService);
+                const convertedHttpService = convertHttpService({
+                    serviceDefinition: service,
+                    file,
+                    errorResolver,
+                    typeResolver,
+                    exampleResolver,
+                });
+                intermediateRepresentation.services.push(convertedHttpService);
 
-                        const convertedEndpoints: Record<string, HttpEndpoint> = {};
-                        convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                            audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
-                            convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
-                        });
-                        if (serviceDefinition.audiences != null) {
-                            audienceIrGraph?.markEndpointForAudience(
-                                convertedHttpService.name,
-                                convertedHttpService.endpoints,
-                                serviceDefinition.audiences
-                            );
-                        }
-                        Object.entries(serviceDefinition.endpoints).map(([endpointId, endpoint]) => {
-                            const convertedEndpoint = convertedEndpoints[endpointId];
-                            if (convertedEndpoint != null && endpoint.audiences != null) {
-                                audienceIrGraph?.markEndpointForAudience(
-                                    convertedHttpService.name,
-                                    [convertedEndpoint],
-                                    endpoint.audiences
-                                );
-                            }
-                        });
-                    }
+                const convertedEndpoints: Record<string, HttpEndpoint> = {};
+                convertedHttpService.endpoints.forEach((httpEndpoint) => {
+                    audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
+                    convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
+                });
+                if (service.audiences != null) {
+                    audienceIrGraph?.markEndpointForAudience(
+                        convertedHttpService.name,
+                        convertedHttpService.endpoints,
+                        service.audiences
+                    );
                 }
+                Object.entries(service.endpoints).map(([endpointId, endpoint]) => {
+                    const convertedEndpoint = convertedEndpoints[endpointId];
+                    if (convertedEndpoint != null && endpoint.audiences != null) {
+                        audienceIrGraph?.markEndpointForAudience(
+                            convertedHttpService.name,
+                            [convertedEndpoint],
+                            endpoint.audiences
+                        );
+                    }
+                });
             },
         });
     };

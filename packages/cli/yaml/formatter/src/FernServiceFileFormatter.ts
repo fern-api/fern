@@ -117,7 +117,7 @@ export class FernServiceFileFormatter {
             switch (castedKey) {
                 case "imports":
                 case "types":
-                case "services":
+                case "service":
                 case "errors":
                     return castedKey;
                 default:
@@ -133,9 +133,9 @@ export class FernServiceFileFormatter {
         switch (previousLocation) {
             case "imports":
                 return undefined;
-            case "services":
+            case "service":
             case "endpoint":
-                if (indent === 4) {
+                if (indent === 2) {
                     return "endpoint";
                 }
                 return undefined;

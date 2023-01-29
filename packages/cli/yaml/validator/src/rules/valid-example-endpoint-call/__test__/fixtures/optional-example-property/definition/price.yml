@@ -3,21 +3,19 @@
 imports:
   commons: commons.yml
 
-services:
-  http:
-    PriceService:
-      base-path: /prices
-      auth: true
-      endpoints:
-        calculate:
-          method: POST
-          path: /
-          request:
-            name: CalculatePriceRequest
-            body:
-              properties:
-                user_id:
-                  type: optional<commons.UserId>
-          examples:
-            - request:
-                user_id: $commons.UserId.Example
+service:
+  base-path: /prices
+  auth: true
+  endpoints:
+    calculate:
+      method: POST
+      path: /
+      request:
+        name: CalculatePriceRequest
+        body:
+          properties:
+            user_id:
+              type: optional<commons.UserId>
+      examples:
+        - request:
+            user_id: $commons.UserId.Example

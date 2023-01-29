@@ -12,8 +12,8 @@ describe("valid-service-urls", () => {
         const expectedViolations: ValidationViolation[] = [
             {
                 message: '"url" cannot be configured unless you specify multiple URLs for each environment in api.yml',
-                nodePath: ["services", "http", "ServiceWithUrl"],
-                relativeFilepath: "service.yml",
+                nodePath: ["service"],
+                relativeFilepath: "with-url.yml",
                 severity: "error",
             },
         ];
@@ -29,21 +29,21 @@ describe("valid-service-urls", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: `"url" is missing. Please specify one of the configured environment URLs:
-  - A
-  - B
-  - C`,
-                nodePath: ["services", "http", "ServiceWithoutUrl"],
-                relativeFilepath: "service.yml",
-                severity: "error",
-            },
-            {
                 message: `URL InvalidUrl is not recognized. Please add it to your environments in api.yml or specify one of the configured environment URLs:
   - A
   - B
   - C`,
-                nodePath: ["services", "http", "ServiceWithInvalidUrl"],
-                relativeFilepath: "service.yml",
+                nodePath: ["service"],
+                relativeFilepath: "with-invalid-url.yml",
+                severity: "error",
+            },
+            {
+                message: `"url" is missing. Please specify one of the configured environment URLs:
+  - A
+  - B
+  - C`,
+                nodePath: ["service"],
+                relativeFilepath: "without-url.yml",
                 severity: "error",
             },
         ];

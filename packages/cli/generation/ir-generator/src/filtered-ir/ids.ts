@@ -26,15 +26,13 @@ export interface EndpointNode {
 
 export function getEndpointId(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): ErrorId {
     const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
-    const serviceName = declaredServiceName.name;
     const endpointId = httpEndpoint.name.originalName;
-    return `endpoint_${joinedFernFilePath}:${serviceName.originalName}.${endpointId}`;
+    return `endpoint_${joinedFernFilePath}.${endpointId}`;
 }
 
 export function getServiceId(declaredServiceName: DeclaredServiceName): ServiceId {
     const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
-    const serviceName = declaredServiceName.name;
-    return `endpoint_${joinedFernFilePath}:${serviceName.originalName}`;
+    return `endpoint_${joinedFernFilePath}`;
 }
 
 export function getErrorId(declaredErrorName: DeclaredErrorName): ErrorId {

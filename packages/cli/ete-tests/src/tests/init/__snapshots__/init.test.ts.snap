@@ -11,30 +11,28 @@ exports[`fern init covie openapi 1`] = `
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-services:
-  http:
-    AccountService:
-      auth: true
-      base-path: /accounts/{account_id}/mfa_requirements
-      path-parameters:
-        account_id:
-          docs: Unique identifier of the account.
-          type: string
-      endpoints:
-        enableAccountMfaRequired:
-          path: ""
-          method: POST
-          docs: Require all account users to have an MFA application configured
-          display-name: Enable Account MFA Requirement
-          response: AccountWithConfig
+service:
+  auth: true
+  base-path: /accounts/{account_id}/mfa_requirements
+  path-parameters:
+    account_id:
+      docs: Unique identifier of the account.
+      type: string
+  endpoints:
+    enableAccountMfaRequired:
+      path: ""
+      method: POST
+      docs: Require all account users to have an MFA application configured
+      display-name: Enable Account MFA Requirement
+      response: AccountWithConfig
 
-        disableAccountMfaRequired:
-          path: ""
-          method: DELETE
-          docs: >-
-            Remove requirement for all account users to have an MFA application
-            configured
-          display-name: Disable Account MFA Requirement
+    disableAccountMfaRequired:
+      path: ""
+      method: DELETE
+      docs: >-
+        Remove requirement for all account users to have an MFA application
+        configured
+      display-name: Disable Account MFA Requirement
 
 types:
   AccountWithConfig:
@@ -57,90 +55,86 @@ headers: {}
 imports:
   commons: commons.yml
 
-services:
-  http:
-    ApplicationService:
-      auth: true
-      base-path: /applications/{application_id}
-      path-parameters:
-        application_id:
-          docs: Unique identifier of the application.
-          type: string
-      endpoints:
-        getApplicationLinks:
-          path: /links
-          method: GET
-          docs: Lists an application's links.
-          display-name: List Application Links
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              provider:
-                docs: Partial name of a provider to search against
-                type: optional<string>
-              created_since:
-                docs: Limit results to links created on or after this date.
-                type: optional<string>
-              created_until:
-                docs: Limit results to links created on or before this date.
-                type: optional<string>
-              updated_since:
-                docs: Limit results to links last updated on or since this date.
-                type: optional<string>
-              updated_until:
-                docs: Limit results to links last updated on or before this date.
-                type: optional<string>
-              synced_since:
-                docs: Limit results to links last synced on or after this date.
-                type: optional<string>
-              synced_until:
-                docs: Limit results to links last synced on or before this date.
-                type: optional<string>
-              q:
-                docs: Search for link via ID
-                type: optional<string>
-              status:
-                docs: >-
-                  Filter link status; separate multiple statuses (OR'd) with
-                  commas
-                type: optional<_InlinedType43>
-              has_metadata:
-                docs: Filter whether a link has metadata attached
-                type: optional<boolean>
-              policy_type:
-                docs: The type of policy linked.
-                type: optional<_InlinedType45>
-              integration_ids:
-                docs: >-
-                  If provided, only show items with any of the specified
-                  integration IDs, comma-separated.
-                type: optional<string>
-          response: commons.Links
+service:
+  auth: true
+  base-path: /applications/{application_id}
+  path-parameters:
+    application_id:
+      docs: Unique identifier of the application.
+      type: string
+  endpoints:
+    getApplicationLinks:
+      path: /links
+      method: GET
+      docs: Lists an application's links.
+      display-name: List Application Links
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          provider:
+            docs: Partial name of a provider to search against
+            type: optional<string>
+          created_since:
+            docs: Limit results to links created on or after this date.
+            type: optional<string>
+          created_until:
+            docs: Limit results to links created on or before this date.
+            type: optional<string>
+          updated_since:
+            docs: Limit results to links last updated on or since this date.
+            type: optional<string>
+          updated_until:
+            docs: Limit results to links last updated on or before this date.
+            type: optional<string>
+          synced_since:
+            docs: Limit results to links last synced on or after this date.
+            type: optional<string>
+          synced_until:
+            docs: Limit results to links last synced on or before this date.
+            type: optional<string>
+          q:
+            docs: Search for link via ID
+            type: optional<string>
+          status:
+            docs: Filter link status; separate multiple statuses (OR'd) with commas
+            type: optional<_InlinedType43>
+          has_metadata:
+            docs: Filter whether a link has metadata attached
+            type: optional<boolean>
+          policy_type:
+            docs: The type of policy linked.
+            type: optional<_InlinedType45>
+          integration_ids:
+            docs: >-
+              If provided, only show items with any of the specified integration
+              IDs, comma-separated.
+            type: optional<string>
+      response: commons.Links
 
-        getApplicationPolicies:
-          path: /policies
-          method: GET
-          docs: Lists an application's policies.
-          display-name: List Application Policies
-          request:
-            query-parameters:
-              integration_ids:
-                docs: >-
-                  If provided, only show items with any of the specified
-                  integration IDs, comma-separated.
-                type: optional<string>
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-          response: commons.Policies
+    getApplicationPolicies:
+      path: /policies
+      method: GET
+      docs: Lists an application's policies.
+      display-name: List Application Policies
+      request:
+        query-parameters:
+          integration_ids:
+            docs: >-
+              If provided, only show items with any of the specified integration
+              IDs, comma-separated.
+            type: optional<string>
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+      response: commons.Policies
 
 types:
   _InlinedType44:
@@ -1401,20 +1395,18 @@ types:
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-services:
-  http:
-    EventService:
-      auth: true
-      base-path: /events/{event_id}/broadcasts
-      path-parameters:
-        event_id: string
-      endpoints:
-        postEventsEventIdBroadcasts:
-          path: ""
-          method: POST
-          docs: Rebroadcast an event.
-          display-name: Rebroadcast Event
-          response: _InlinedType55
+service:
+  auth: true
+  base-path: /events/{event_id}/broadcasts
+  path-parameters:
+    event_id: string
+  endpoints:
+    postEventsEventIdBroadcasts:
+      path: ""
+      method: POST
+      docs: Rebroadcast an event.
+      display-name: Rebroadcast Event
+      response: _InlinedType55
 
 types:
   EventBroadcast:
@@ -1464,278 +1456,271 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    IntegrationService:
-      auth: true
-      base-path: /integrations
-      endpoints:
-        listIntegrations:
-          path: ""
-          method: GET
-          docs: List integrations associated to an application
-          display-name: List Integrations
-          request:
-            query-parameters:
-              q:
-                docs: >-
-                  Partial integration name, ID, or integration key to search
-                  against, with or without leading in_/ik_
-                type: optional<string>
-              status:
-                docs: Filter active or archived integrations
-                type: optional<_InlinedType16>
-          response: Integrations
+service:
+  auth: true
+  base-path: /integrations
+  endpoints:
+    listIntegrations:
+      path: ""
+      method: GET
+      docs: List integrations associated to an application
+      display-name: List Integrations
+      request:
+        query-parameters:
+          q:
+            docs: >-
+              Partial integration name, ID, or integration key to search
+              against, with or without leading in_/ik_
+            type: optional<string>
+          status:
+            docs: Filter active or archived integrations
+            type: optional<_InlinedType16>
+      response: Integrations
 
-        createIntegration:
-          path: ""
-          method: POST
-          docs: Creates a new integration.
-          display-name: Create Integration
-          request:
-            body:
-              properties:
-                name:
-                  docs: Descriptive name of the integration
-                  type: string
-                policyRequirements: optional<_InlinedType18>
-                configuration: optional<_InlinedType21>
-
-        getIntegration:
-          path: /{integration_id}
-          method: GET
-          docs: Retrieve the details of an integration.
-          display-name: Get Integration
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
+    createIntegration:
+      path: ""
+      method: POST
+      docs: Creates a new integration.
+      display-name: Create Integration
+      request:
+        body:
+          properties:
+            name:
+              docs: Descriptive name of the integration
               type: string
-          response: commons.Integration_2
+            policyRequirements: optional<_InlinedType18>
+            configuration: optional<_InlinedType21>
 
-        deleteIntegration:
-          path: /{integration_id}
-          method: DELETE
-          docs: Deletes an integration.
-          display-name: Delete Integration
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-
-        updateIntegration:
-          path: /{integration_id}
-          method: PATCH
-          docs: Edit the name and archived status of an integration.
-          display-name: Update Integration
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          request:
-            body:
-              properties:
-                name:
-                  docs: A descriptive name of the integration
-                  type: optional<string>
-                status:
-                  docs: >-
-                    String representation of the current status of the
-                    integration.
-                  type: optional<_InlinedType22>
-                configuration: optional<_InlinedType25>
-                policy_requirements: optional<_InlinedType26>
-          response: commons.Integration_2
-
-        getIntegrationPolicies:
-          path: /{integration_id}/policies
-          method: GET
-          docs: List all policies that have been linked to an integration.
-          display-name: List Integration Policies
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-          response: commons.Policies
-
-        getIntegrationProviders:
-          path: /{integration_id}/providers
-          method: GET
+    getIntegration:
+      path: /{integration_id}
+      method: GET
+      docs: Retrieve the details of an integration.
+      display-name: Get Integration
+      path-parameters:
+        integration_id:
           docs: >-
-            Retrieve a list of supported carriers for a given integration, along
-            with their identifiers.
-          display-name: Supported Providers List
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          request:
-            query-parameters:
-              required_policy_types:
-                docs: >-
-                  A pipe delineated list of policy types desired. Providers who
-                  do not support at least one required policy type will be
-                  excluded.
-                type: optional<string>
-          response: Providers
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      response: commons.Integration_2
 
-        regenerateIntegrationKey:
-          path: /{integration_id}/regenerate_key
-          method: POST
+    deleteIntegration:
+      path: /{integration_id}
+      method: DELETE
+      docs: Deletes an integration.
+      display-name: Delete Integration
+      path-parameters:
+        integration_id:
           docs: >-
-            Replaces the existing integration key with a new randomly generated
-            key.
-          display-name: Regenerate Integration Key
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          response: commons.Integration_2
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
 
-        getIntegrationsIntegrationIdAgencyLogo:
-          path: /{integration_id}/agency_logo
-          method: GET
-          docs: View the agency logo for the hosted integration.
-          display-name: View Agency Logo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
+    updateIntegration:
+      path: /{integration_id}
+      method: PATCH
+      docs: Edit the name and archived status of an integration.
+      display-name: Update Integration
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      request:
+        body:
+          properties:
+            name:
+              docs: A descriptive name of the integration
+              type: optional<string>
+            status:
+              docs: String representation of the current status of the integration.
+              type: optional<_InlinedType22>
+            configuration: optional<_InlinedType25>
+            policy_requirements: optional<_InlinedType26>
+      response: commons.Integration_2
 
-        putIntegrationsIntegrationIdAgencyLogo:
-          path: /{integration_id}/agency_logo
-          method: PUT
-          docs: Upload the agency logo for the hosted integration.
-          display-name: Update Agency Logo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          response: _InlinedType27
+    getIntegrationPolicies:
+      path: /{integration_id}/policies
+      method: GET
+      docs: List all policies that have been linked to an integration.
+      display-name: List Integration Policies
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+      response: commons.Policies
 
-        deleteIntegrationsIntegrationIdAgencyLogo:
-          path: /{integration_id}/agency_logo
-          method: DELETE
-          docs: Delete the agency logo and/or config if present.
-          display-name: Delete Agency Logo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
+    getIntegrationProviders:
+      path: /{integration_id}/providers
+      method: GET
+      docs: >-
+        Retrieve a list of supported carriers for a given integration, along
+        with their identifiers.
+      display-name: Supported Providers List
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      request:
+        query-parameters:
+          required_policy_types:
+            docs: >-
+              A pipe delineated list of policy types desired. Providers who do
+              not support at least one required policy type will be excluded.
+            type: optional<string>
+      response: Providers
 
-        getIntegrationsIntegrationIdAgentPhoto:
-          path: /{integration_id}/agent_photo
-          method: GET
-          docs: View the agent photo for the hosted integration.
-          display-name: View Agent Photo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
+    regenerateIntegrationKey:
+      path: /{integration_id}/regenerate_key
+      method: POST
+      docs: Replaces the existing integration key with a new randomly generated key.
+      display-name: Regenerate Integration Key
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      response: commons.Integration_2
 
-        putIntegrationsIntegrationIdAgentPhoto:
-          path: /{integration_id}/agent_photo
-          method: PUT
-          docs: Upload an agent photo for the hosted integration.
-          display-name: Update Agent Photo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          response: _InlinedType28
+    getIntegrationsIntegrationIdAgencyLogo:
+      path: /{integration_id}/agency_logo
+      method: GET
+      docs: View the agency logo for the hosted integration.
+      display-name: View Agency Logo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
 
-        deleteIntegrationsIntegrationIdAgentPhoto:
-          path: /{integration_id}/agent_photo
-          method: DELETE
-          docs: Delete the agent photo and/or config if present.
-          display-name: Delete Agent Photo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
+    putIntegrationsIntegrationIdAgencyLogo:
+      path: /{integration_id}/agency_logo
+      method: PUT
+      docs: Upload the agency logo for the hosted integration.
+      display-name: Update Agency Logo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      response: _InlinedType27
 
-        getIntegrationsIntegrationIdBrandLogo:
-          path: /{integration_id}/brand_logo
-          method: GET
-          docs: View the brand logo for the integration.
-          display-name: View Brand Logo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
+    deleteIntegrationsIntegrationIdAgencyLogo:
+      path: /{integration_id}/agency_logo
+      method: DELETE
+      docs: Delete the agency logo and/or config if present.
+      display-name: Delete Agency Logo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
 
-        putIntegrationsIntegrationIdBrandLogo:
-          path: /{integration_id}/brand_logo
-          method: PUT
-          docs: Upload the brand logo for the hosted integration.
-          display-name: Update Brand Logo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          response: _InlinedType29
+    getIntegrationsIntegrationIdAgentPhoto:
+      path: /{integration_id}/agent_photo
+      method: GET
+      docs: View the agent photo for the hosted integration.
+      display-name: View Agent Photo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
 
-        deleteIntegrationsIntegrationIdBrandLogo:
-          path: /{integration_id}/brand_logo
-          method: DELETE
-          docs: Delete the brand logo and/or config if present.
-          display-name: Delete Brand Logo
-          path-parameters:
-            integration_id:
-              docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
+    putIntegrationsIntegrationIdAgentPhoto:
+      path: /{integration_id}/agent_photo
+      method: PUT
+      docs: Upload an agent photo for the hosted integration.
+      display-name: Update Agent Photo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      response: _InlinedType28
+
+    deleteIntegrationsIntegrationIdAgentPhoto:
+      path: /{integration_id}/agent_photo
+      method: DELETE
+      docs: Delete the agent photo and/or config if present.
+      display-name: Delete Agent Photo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+
+    getIntegrationsIntegrationIdBrandLogo:
+      path: /{integration_id}/brand_logo
+      method: GET
+      docs: View the brand logo for the integration.
+      display-name: View Brand Logo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+
+    putIntegrationsIntegrationIdBrandLogo:
+      path: /{integration_id}/brand_logo
+      method: PUT
+      docs: Upload the brand logo for the hosted integration.
+      display-name: Update Brand Logo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      response: _InlinedType29
+
+    deleteIntegrationsIntegrationIdBrandLogo:
+      path: /{integration_id}/brand_logo
+      method: DELETE
+      docs: Delete the brand logo and/or config if present.
+      display-name: Delete Brand Logo
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
 
 types:
   Integrations:
@@ -1908,270 +1893,264 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    LinkService:
-      auth: true
-      base-path: ""
-      endpoints:
-        getLink:
-          path: /links/{id}
-          method: GET
-          docs: Retrieves a Link
-          display-name: Retrieve link
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
-          response: commons.Link
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    getLink:
+      path: /links/{id}
+      method: GET
+      docs: Retrieves a Link
+      display-name: Retrieve link
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
+      response: commons.Link
 
-        deleteLink:
-          path: /links/{id}
-          method: DELETE
-          docs: Deletes a link.
-          display-name: Delete Link
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
+    deleteLink:
+      path: /links/{id}
+      method: DELETE
+      docs: Deletes a link.
+      display-name: Delete Link
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
 
-        updateLinkSettings:
-          path: /links/{id}
-          method: PATCH
-          display-name: Update Link Settings
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
-          request:
-            body:
-              properties:
-                metadata:
-                  docs: >-
-                    Arbitrary key value pairs. The entire object is replaced
-                    on-update (missing keys in the request body will be
-                    removed). Keys are alphanumeric plus _, -, ., and space, at
-                    most 64 characters. Values are at most 256 characters. You
-                    can have at most 32 metadata keys on a link.
-                  type: optional<map<string, unknown>>
-                tracking_frequency:
-                  docs: >-
-                    The frequency of which tracking should be performed. This
-                    value is \`never\` when tracking is disabled.
-                  type: optional<_InlinedType32>
-          response: commons.Link
-
-        getLinkPolicies:
-          path: /links/{id}/policies
-          method: GET
-          docs: Retrieves a list of policies associated with the requested link
-          display-name: List Link Policies
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-          response: commons.Policies
-
-        getLinkEvents:
-          path: /links/{id}/events
-          method: GET
-          docs: Retrieves a list of events triggered for the requested link
-          display-name: List Link Events
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              event_type:
-                docs: Filter events by type.
-                type: optional<_InlinedType33>
-          response: commons.Events
-
-        attachLinkDocument:
-          path: /links/{id}/documents
-          method: POST
-          docs: >-
-            Attach a policy document to a Link. If the document can be parsed,
-            select the parsed policy for sharing.
-          display-name: Upload Document To Link
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
-
-        syncLinkManually:
-          path: /links/{id}/syncs
-          method: POST
-          docs: >-
-            Sync a tracked link with the provider using the stored user
-            credentials
-          display-name: Manually Sync Link
-          path-parameters:
-            id:
-              docs: The unique identifier of the link being inspected.
-              type: string
-
-        getIntegrationLinks:
-          path: /integrations/{integration_id}/links
-          method: GET
-          docs: Retrieves a list of links associated to the requested integration
-          display-name: List Integration Links
-          path-parameters:
-            integration_id:
+    updateLinkSettings:
+      path: /links/{id}
+      method: PATCH
+      display-name: Update Link Settings
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
+      request:
+        body:
+          properties:
+            metadata:
               docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              provider:
-                docs: Partial name of a provider to search against
-                type: optional<string>
-              created_since:
-                docs: Limit results to links created on or after this date.
-                type: optional<string>
-              created_until:
-                docs: Limit results to links created on or before this date.
-                type: optional<string>
-              updated_since:
-                docs: Limit results to links last updated on or since this date.
-                type: optional<string>
-              updated_until:
-                docs: Limit results to links last updated on or before this date.
-                type: optional<string>
-              synced_since:
-                docs: Limit results to links last synced on or after this date.
-                type: optional<string>
-              synced_until:
-                docs: Limit results to links last synced on or before this date.
-                type: optional<string>
-              q:
-                docs: Search for link via ID
-                type: optional<string>
-              status:
-                docs: >-
-                  Filter link status; separate multiple statuses (OR'd) with
-                  commas
-                type: optional<_InlinedType35>
-              has_metadata:
-                docs: Filter whether a link has metadata attached
-                type: optional<boolean>
-              policy_type:
-                docs: The type of policy linked.
-                type: optional<_InlinedType37>
-          response: commons.Links
-
-        initializeLinkViaIntegration:
-          path: /integrations/{integration_id}/links
-          method: POST
-          docs: >-
-            Creates a link and optionally sets metadata and selects a carrier,
-            allowing for seeding initial data before an insured continues the
-            linking process via the embed
-          display-name: Initialize link
-          path-parameters:
-            integration_id:
+                Arbitrary key value pairs. The entire object is replaced
+                on-update (missing keys in the request body will be removed).
+                Keys are alphanumeric plus _, -, ., and space, at most 64
+                characters. Values are at most 256 characters. You can have at
+                most 32 metadata keys on a link.
+              type: optional<map<string, unknown>>
+            tracking_frequency:
               docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          request:
-            body:
-              properties:
-                metadata:
-                  docs: >-
-                    Arbitrary key value pairs. The entire object is replaced
-                    on-update (missing keys in the request body will be
-                    removed). Keys are alphanumeric plus _, -, ., and space, at
-                    most 64 characters. Values are at most 256 characters. You
-                    can have at most 32 metadata keys on a link.
-                  type: optional<map<string, unknown>>
-                provider_id:
-                  docs: >-
-                    If supplied, selects the insurance carrier associated with
-                    the link. If the link is resumed from the embed, the insured
-                    will land on that carrier's login page. If policy documents
-                    are uploaded, parsing will be attempted based on the
-                    selected carrier.
-                  type: optional<string>
-          response: commons.Link
+                The frequency of which tracking should be performed. This value
+                is \`never\` when tracking is disabled.
+              type: optional<_InlinedType32>
+      response: commons.Link
 
-        getIntegrationLinksWithPolicies:
-          path: /integrations/{integration_id}/links_with_policies
-          method: GET
+    getLinkPolicies:
+      path: /links/{id}/policies
+      method: GET
+      docs: Retrieves a list of policies associated with the requested link
+      display-name: List Link Policies
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+      response: commons.Policies
+
+    getLinkEvents:
+      path: /links/{id}/events
+      method: GET
+      docs: Retrieves a list of events triggered for the requested link
+      display-name: List Link Events
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          event_type:
+            docs: Filter events by type.
+            type: optional<_InlinedType33>
+      response: commons.Events
+
+    attachLinkDocument:
+      path: /links/{id}/documents
+      method: POST
+      docs: >-
+        Attach a policy document to a Link. If the document can be parsed,
+        select the parsed policy for sharing.
+      display-name: Upload Document To Link
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
+
+    syncLinkManually:
+      path: /links/{id}/syncs
+      method: POST
+      docs: Sync a tracked link with the provider using the stored user credentials
+      display-name: Manually Sync Link
+      path-parameters:
+        id:
+          docs: The unique identifier of the link being inspected.
+          type: string
+
+    getIntegrationLinks:
+      path: /integrations/{integration_id}/links
+      method: GET
+      docs: Retrieves a list of links associated to the requested integration
+      display-name: List Integration Links
+      path-parameters:
+        integration_id:
           docs: >-
-            Retrieves a list of links and selected policies associated to the
-            requested integration
-          display-name: List Integration Links With Policies
-          path-parameters:
-            integration_id:
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          provider:
+            docs: Partial name of a provider to search against
+            type: optional<string>
+          created_since:
+            docs: Limit results to links created on or after this date.
+            type: optional<string>
+          created_until:
+            docs: Limit results to links created on or before this date.
+            type: optional<string>
+          updated_since:
+            docs: Limit results to links last updated on or since this date.
+            type: optional<string>
+          updated_until:
+            docs: Limit results to links last updated on or before this date.
+            type: optional<string>
+          synced_since:
+            docs: Limit results to links last synced on or after this date.
+            type: optional<string>
+          synced_until:
+            docs: Limit results to links last synced on or before this date.
+            type: optional<string>
+          q:
+            docs: Search for link via ID
+            type: optional<string>
+          status:
+            docs: Filter link status; separate multiple statuses (OR'd) with commas
+            type: optional<_InlinedType35>
+          has_metadata:
+            docs: Filter whether a link has metadata attached
+            type: optional<boolean>
+          policy_type:
+            docs: The type of policy linked.
+            type: optional<_InlinedType37>
+      response: commons.Links
+
+    initializeLinkViaIntegration:
+      path: /integrations/{integration_id}/links
+      method: POST
+      docs: >-
+        Creates a link and optionally sets metadata and selects a carrier,
+        allowing for seeding initial data before an insured continues the
+        linking process via the embed
+      display-name: Initialize link
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      request:
+        body:
+          properties:
+            metadata:
               docs: >-
-                The unique identifier of the integration being inspected. Must
-                be a valid integration under the application associated with the
-                authenticated Client ID and Secret.
-              type: string
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              provider:
-                docs: Partial name of a provider to search against
-                type: optional<string>
-              created_since:
-                docs: Limit results to links created on or after this date.
-                type: optional<string>
-              created_until:
-                docs: Limit results to links created on or before this date.
-                type: optional<string>
-              updated_since:
-                docs: Limit results to links last updated on or since this date.
-                type: optional<string>
-              updated_until:
-                docs: Limit results to links last updated on or before this date.
-                type: optional<string>
-              synced_since:
-                docs: Limit results to links last synced on or after this date.
-                type: optional<string>
-              synced_until:
-                docs: Limit results to links last synced on or before this date.
-                type: optional<string>
-              policy_type:
-                docs: The type of policy linked.
-                type: optional<_InlinedType39>
-              policy_filter_type:
-                docs: >-
-                  Show only these types of policies within each link. Does not
-                  affect which links are shown. Comma-separate to allow multiple
-                  policy types.
-                type: optional<_InlinedType41>
-          response: LinksWithPolicies
+                Arbitrary key value pairs. The entire object is replaced
+                on-update (missing keys in the request body will be removed).
+                Keys are alphanumeric plus _, -, ., and space, at most 64
+                characters. Values are at most 256 characters. You can have at
+                most 32 metadata keys on a link.
+              type: optional<map<string, unknown>>
+            provider_id:
+              docs: >-
+                If supplied, selects the insurance carrier associated with the
+                link. If the link is resumed from the embed, the insured will
+                land on that carrier's login page. If policy documents are
+                uploaded, parsing will be attempted based on the selected
+                carrier.
+              type: optional<string>
+      response: commons.Link
+
+    getIntegrationLinksWithPolicies:
+      path: /integrations/{integration_id}/links_with_policies
+      method: GET
+      docs: >-
+        Retrieves a list of links and selected policies associated to the
+        requested integration
+      display-name: List Integration Links With Policies
+      path-parameters:
+        integration_id:
+          docs: >-
+            The unique identifier of the integration being inspected. Must be a
+            valid integration under the application associated with the
+            authenticated Client ID and Secret.
+          type: string
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          provider:
+            docs: Partial name of a provider to search against
+            type: optional<string>
+          created_since:
+            docs: Limit results to links created on or after this date.
+            type: optional<string>
+          created_until:
+            docs: Limit results to links created on or before this date.
+            type: optional<string>
+          updated_since:
+            docs: Limit results to links last updated on or since this date.
+            type: optional<string>
+          updated_until:
+            docs: Limit results to links last updated on or before this date.
+            type: optional<string>
+          synced_since:
+            docs: Limit results to links last synced on or after this date.
+            type: optional<string>
+          synced_until:
+            docs: Limit results to links last synced on or before this date.
+            type: optional<string>
+          policy_type:
+            docs: The type of policy linked.
+            type: optional<_InlinedType39>
+          policy_filter_type:
+            docs: >-
+              Show only these types of policies within each link. Does not
+              affect which links are shown. Comma-separate to allow multiple
+              policy types.
+            type: optional<_InlinedType41>
+      response: LinksWithPolicies
 
 types:
   LinksWithPolicies:
@@ -2272,51 +2251,49 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    PolicyService:
-      auth: true
-      base-path: /policies/{policy_id}
+service:
+  auth: true
+  base-path: /policies/{policy_id}
+  path-parameters:
+    policy_id:
+      docs: The unique identifier of the policy object being sought.
+      type: string
+  endpoints:
+    getPoliciesPolicyId:
+      path: ""
+      method: GET
+      docs: Retrieve a Policy object that was previously connected via a Link
+      display-name: Retrieve Policy
+      response: Policy_2
+
+    getPolicyDocument:
+      path: /documents/{document_type}
+      method: GET
+      docs: Retrieve the contents of a Policy document
+      display-name: Retrieve Policy Document
       path-parameters:
-        policy_id:
-          docs: The unique identifier of the policy object being sought.
-          type: string
-      endpoints:
-        getPoliciesPolicyId:
-          path: ""
-          method: GET
-          docs: Retrieve a Policy object that was previously connected via a Link
-          display-name: Retrieve Policy
-          response: Policy_2
+        document_type:
+          docs: The document type being requested.
+          type: _InlinedType6
+      response: FileContents
 
-        getPolicyDocument:
-          path: /documents/{document_type}
-          method: GET
-          docs: Retrieve the contents of a Policy document
-          display-name: Retrieve Policy Document
-          path-parameters:
-            document_type:
-              docs: The document type being requested.
-              type: _InlinedType6
-          response: FileContents
-
-        listPolicyEvents:
-          path: /events
-          method: GET
-          docs: List all events that have been triggered for the selected policy
-          display-name: List Policy Events
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              event_type:
-                docs: Filter events by type.
-                type: optional<_InlinedType8>
-          response: commons.Events
+    listPolicyEvents:
+      path: /events
+      method: GET
+      docs: List all events that have been triggered for the selected policy
+      display-name: List Policy Events
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          event_type:
+            docs: Filter events by type.
+            type: optional<_InlinedType8>
+      response: commons.Events
 
 types:
   Policy:
@@ -2499,108 +2476,106 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    WebhookService:
-      auth: true
-      base-path: /webhooks
-      endpoints:
-        listWebhooks:
-          path: ""
-          method: GET
-          docs: List an application's configured webhooks.
-          display-name: List Webhooks
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              event_type:
-                docs: Filter events by type.
-                type: optional<_InlinedType48>
-          response: Webhooks
+service:
+  auth: true
+  base-path: /webhooks
+  endpoints:
+    listWebhooks:
+      path: ""
+      method: GET
+      docs: List an application's configured webhooks.
+      display-name: List Webhooks
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          event_type:
+            docs: Filter events by type.
+            type: optional<_InlinedType48>
+      response: Webhooks
 
-        createWebhook:
-          path: ""
-          method: POST
-          docs: Create a new webhook
-          display-name: Create Webhook
-          request:
-            body:
-              properties:
-                uri:
-                  docs: >-
-                    URI the webhook should make a request to when the event is
-                    triggered.
-                  type: optional<string>
-                headers:
-                  docs: >-
-                    List of the headers and their values that should be included
-                    in the request.
-                  type: optional<map<string, unknown>>
-                event_types: optional<list<_InlinedType50>>
+    createWebhook:
+      path: ""
+      method: POST
+      docs: Create a new webhook
+      display-name: Create Webhook
+      request:
+        body:
+          properties:
+            uri:
+              docs: >-
+                URI the webhook should make a request to when the event is
+                triggered.
+              type: optional<string>
+            headers:
+              docs: >-
+                List of the headers and their values that should be included in
+                the request.
+              type: optional<map<string, unknown>>
+            event_types: optional<list<_InlinedType50>>
 
-        getWebhook:
-          path: /{webhook_id}
-          method: GET
-          docs: Get the details of a webhook.
-          display-name: Get Webhook
-          path-parameters:
-            webhook_id:
-              docs: Unique identifier of the webhook.
-              type: string
-          response: commons.Webhook_2
+    getWebhook:
+      path: /{webhook_id}
+      method: GET
+      docs: Get the details of a webhook.
+      display-name: Get Webhook
+      path-parameters:
+        webhook_id:
+          docs: Unique identifier of the webhook.
+          type: string
+      response: commons.Webhook_2
 
-        updateWebhook:
-          path: /{webhook_id}
-          method: PATCH
-          docs: Update a webhook.
-          display-name: Update Webhook
-          path-parameters:
-            webhook_id:
-              docs: Unique identifier of the webhook.
-              type: string
-          request:
-            body:
-              properties:
-                uri:
-                  docs: >-
-                    URI the webhook should make a request to when the event is
-                    triggered.
-                  type: optional<string>
-                headers:
-                  docs: >-
-                    List of the headers and their values that should be included
-                    in the request.
-                  type: optional<map<string, unknown>>
-                is_enabled: optional<boolean>
-                event_types: optional<list<_InlinedType51>>
-          response: commons.Webhook_2
+    updateWebhook:
+      path: /{webhook_id}
+      method: PATCH
+      docs: Update a webhook.
+      display-name: Update Webhook
+      path-parameters:
+        webhook_id:
+          docs: Unique identifier of the webhook.
+          type: string
+      request:
+        body:
+          properties:
+            uri:
+              docs: >-
+                URI the webhook should make a request to when the event is
+                triggered.
+              type: optional<string>
+            headers:
+              docs: >-
+                List of the headers and their values that should be included in
+                the request.
+              type: optional<map<string, unknown>>
+            is_enabled: optional<boolean>
+            event_types: optional<list<_InlinedType51>>
+      response: commons.Webhook_2
 
-        listWebhookEvents:
-          path: /{webhook_id}/events
-          method: GET
-          docs: List the events that have been triggered for a webhook.
-          display-name: List Webhook Events
-          path-parameters:
-            webhook_id:
-              docs: Unique identifier of the webhook.
-              type: string
-          request:
-            query-parameters:
-              limit:
-                docs: Number of results to return.
-                type: optional<integer>
-              offset:
-                docs: Specifies the offset of the first result to return.
-                type: optional<integer>
-              event_type:
-                docs: Filter events by type.
-                type: optional<_InlinedType52>
-          response: commons.Events
+    listWebhookEvents:
+      path: /{webhook_id}/events
+      method: GET
+      docs: List the events that have been triggered for a webhook.
+      display-name: List Webhook Events
+      path-parameters:
+        webhook_id:
+          docs: Unique identifier of the webhook.
+          type: string
+      request:
+        query-parameters:
+          limit:
+            docs: Number of results to return.
+            type: optional<integer>
+          offset:
+            docs: Specifies the offset of the first result to return.
+            type: optional<integer>
+          event_type:
+            docs: Filter events by type.
+            type: optional<_InlinedType52>
+      response: commons.Events
 
 types:
   Webhooks:
@@ -3589,234 +3564,223 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    DevicesService:
-      auth: true
-      base-path: ""
-      endpoints:
-        deviceModelsRetrieve:
-          path: /deviceModels/{id}
-          method: GET
-          docs: Retrieves the details of an existing device model.
-          display-name: Retrieve a device model
-          path-parameters:
-            id:
-              docs: The unique identifier for the device model.
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    deviceModelsRetrieve:
+      path: /deviceModels/{id}
+      method: GET
+      docs: Retrieves the details of an existing device model.
+      display-name: Retrieve a device model
+      path-parameters:
+        id:
+          docs: The unique identifier for the device model.
+          type: string
+      response: commons.deviceModel
+
+    deviceModelsSearch:
+      path: /deviceModels/search
+      method: POST
+      docs: Searches for existing devices models matching the given parameters.
+      display-name: Search for device models
+      request:
+        body:
+          properties:
+            imei:
+              docs: >-
+                The IMEI (international mobile equipment identity) of the
+                corresponding device.
               type: string
-          response: commons.deviceModel
+      response: _InlinedType0
 
-        deviceModelsSearch:
-          path: /deviceModels/search
-          method: POST
-          docs: Searches for existing devices models matching the given parameters.
-          display-name: Search for device models
-          request:
-            body:
-              properties:
-                imei:
-                  docs: >-
-                    The IMEI (international mobile equipment identity) of the
-                    corresponding device.
-                  type: string
-          response: _InlinedType0
+    deviceModelsList:
+      path: /deviceModels
+      method: GET
+      docs: >-
+        Returns a list of device models. The models returned are sorted by
+        creation date, with the most recently created models appearing first.
+      display-name: List all device models
+      request:
+        query-parameters:
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType3
 
-        deviceModelsList:
-          path: /deviceModels
-          method: GET
+    devicesRetrieve:
+      path: /projects/{project}/devices/{id}
+      method: GET
+      docs: >-
+        Retrieves the details of an existing device owned by the authenticated
+        user.
+      display-name: Retrieve a device
+      path-parameters:
+        project:
           docs: >-
-            Returns a list of device models. The models returned are sorted by
-            creation date, with the most recently created models appearing
-            first.
-          display-name: List all device models
-          request:
-            query-parameters:
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType3
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+        id:
+          docs: The unique identifier for the device.
+          type: string
+      response: commons.device
 
-        devicesRetrieve:
-          path: /projects/{project}/devices/{id}
-          method: GET
+    devicesDelete:
+      path: /projects/{project}/devices/{id}
+      method: DELETE
+      docs: Retrieves the details of an existing device and deletes it.
+      display-name: Delete a device
+      path-parameters:
+        project:
           docs: >-
-            Retrieves the details of an existing device owned by the
-            authenticated user.
-          display-name: Retrieve a device
-          path-parameters:
-            project:
-              docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-            id:
-              docs: The unique identifier for the device.
-              type: string
-          response: commons.device
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+        id:
+          docs: The unique identifier for the device.
+          type: string
+      response: commons.device
 
-        devicesDelete:
-          path: /projects/{project}/devices/{id}
-          method: DELETE
-          docs: Retrieves the details of an existing device and deletes it.
-          display-name: Delete a device
-          path-parameters:
-            project:
-              docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-            id:
-              docs: The unique identifier for the device.
-              type: string
-          response: commons.device
-
-        devicesUpdate:
-          path: /projects/{project}/devices/{id}
-          method: PATCH
-          docs: >
-            Updates the given properties of an existing device.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Update a device
-          path-parameters:
-            project:
-              docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-            id:
-              docs: The unique identifier for the device.
-              type: string
-          request:
-            body:
-              properties:
-                name:
-                  docs: An optional custom name for the device.
-                  type: optional<string>
-                sims:
-                  docs: >-
-                    List of identifiers for all SIMs currently attached to the
-                    device.
-                  type: optional<list<string>>
-                user:
-                  docs: Unique user identifier for the device owner.
-                  type: optional<string>
-          response: commons.device
-
-        devicesSearch:
-          path: /projects/{project}/devices/search
-          method: POST
+    devicesUpdate:
+      path: /projects/{project}/devices/{id}
+      method: PATCH
+      docs: |
+        Updates the given properties of an existing device.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Update a device
+      path-parameters:
+        project:
           docs: >-
-            Searches for existing devices matching the given parameters. The
-            search will only return factory devices not yet assigned to any
-            user, or devices already owned by the current user.
-          display-name: Search for devices
-          path-parameters:
-            project:
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+        id:
+          docs: The unique identifier for the device.
+          type: string
+      request:
+        body:
+          properties:
+            name:
+              docs: An optional custom name for the device.
+              type: optional<string>
+            sims:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-          request:
-            body:
-              properties:
-                imei:
-                  docs: >-
-                    The IMEI (international mobile equipment identity) of the
-                    device.
-                  type: string
-          response: _InlinedType4
+                List of identifiers for all SIMs currently attached to the
+                device.
+              type: optional<list<string>>
+            user:
+              docs: Unique user identifier for the device owner.
+              type: optional<string>
+      response: commons.device
 
-        devicesList:
-          path: /projects/{project}/devices
-          method: GET
+    devicesSearch:
+      path: /projects/{project}/devices/search
+      method: POST
+      docs: >-
+        Searches for existing devices matching the given parameters. The search
+        will only return factory devices not yet assigned to any user, or
+        devices already owned by the current user.
+      display-name: Search for devices
+      path-parameters:
+        project:
           docs: >-
-            Returns a list of devices. The devices returned are sorted by
-            creation date, with the most recently created devices appearing
-            first.
-          display-name: List all devices
-          path-parameters:
-            project:
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      request:
+        body:
+          properties:
+            imei:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+                The IMEI (international mobile equipment identity) of the
+                device.
               type: string
-          request:
-            query-parameters:
-              sim:
-                docs: The unique identifier for the sim to be filtered by.
-                type: optional<string>
-              user:
-                docs: The unique identifier for the user to be filtered by.
-                type: optional<string>
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType5
+      response: _InlinedType4
 
-        devicesCreate:
-          path: /projects/{project}/devices
-          method: POST
-          docs: Creates a new device with the given parameters.
-          display-name: Create a device
-          path-parameters:
-            project:
+    devicesList:
+      path: /projects/{project}/devices
+      method: GET
+      docs: >-
+        Returns a list of devices. The devices returned are sorted by creation
+        date, with the most recently created devices appearing first.
+      display-name: List all devices
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      request:
+        query-parameters:
+          sim:
+            docs: The unique identifier for the sim to be filtered by.
+            type: optional<string>
+          user:
+            docs: The unique identifier for the user to be filtered by.
+            type: optional<string>
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType5
+
+    devicesCreate:
+      path: /projects/{project}/devices
+      method: POST
+      docs: Creates a new device with the given parameters.
+      display-name: Create a device
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      request:
+        body:
+          properties:
+            imei:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+                The IMEI (international mobile equipment identity) of the
+                device.
               type: string
-          request:
-            body:
-              properties:
-                imei:
-                  docs: >-
-                    The IMEI (international mobile equipment identity) of the
-                    device.
-                  type: string
-                user:
-                  docs: Unique user identifier for the device owner.
-                  type: string
-                sims:
-                  docs: List of identifiers for all SIMs to attach to the device.
-                  type: optional<list<string>>
-                name:
-                  docs: An optional custom name for the device.
-                  type: optional<string>
+            user:
+              docs: Unique user identifier for the device owner.
+              type: string
+            sims:
+              docs: List of identifiers for all SIMs to attach to the device.
+              type: optional<list<string>>
+            name:
+              docs: An optional custom name for the device.
+              type: optional<string>
 
 types:
   _InlinedType0:
@@ -3904,153 +3868,141 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    PlansService:
-      auth: true
-      base-path: /projects/{project}/plans
+service:
+  auth: true
+  base-path: /projects/{project}/plans
+  path-parameters:
+    project:
+      docs: >-
+        The unique identifier for the
+        [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+      type: string
+  endpoints:
+    plansArchive:
+      path: /{id}/archive
+      method: POST
+      docs: >
+        Set the status of a plan to archived. An archived plan can not be used
+        to create new subscriptions.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Archive a plan
       path-parameters:
-        project:
-          docs: >-
-            The unique identifier for the
-            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+        id:
+          docs: The unique identifier for the plan.
           type: string
-      endpoints:
-        plansArchive:
-          path: /{id}/archive
-          method: POST
-          docs: >
-            Set the status of a plan to archived. An archived plan can not be
-            used to create new subscriptions.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Archive a plan
-          path-parameters:
-            id:
-              docs: The unique identifier for the plan.
-              type: string
-          response: commons.plan
+      response: commons.plan
 
-        planDocumentRetrieve:
-          path: /{plan}/documents/{id}
-          method: GET
-          docs: Retrieves the details of an existing document for a given plan.
-          display-name: Retrieve a plan document
-          path-parameters:
-            plan:
-              docs: The unique identifier for the plan.
-              type: string
-            id:
-              docs: The unique identifier for the document.
-              type: string
-          response: commons.planDocument
+    planDocumentRetrieve:
+      path: /{plan}/documents/{id}
+      method: GET
+      docs: Retrieves the details of an existing document for a given plan.
+      display-name: Retrieve a plan document
+      path-parameters:
+        plan:
+          docs: The unique identifier for the plan.
+          type: string
+        id:
+          docs: The unique identifier for the document.
+          type: string
+      response: commons.planDocument
 
-        planDocumentsList:
-          path: /{plan}/documents
-          method: GET
-          docs: >-
-            Returns a list of documents related to the given plan. The documents
-            returned are sorted by creation date, with the most recently created
-            documents appearing first.
-          display-name: List all plan documents
-          path-parameters:
-            plan:
-              docs: The unique identifier for the plan.
-              type: string
-          response: _InlinedType6
+    planDocumentsList:
+      path: /{plan}/documents
+      method: GET
+      docs: >-
+        Returns a list of documents related to the given plan. The documents
+        returned are sorted by creation date, with the most recently created
+        documents appearing first.
+      display-name: List all plan documents
+      path-parameters:
+        plan:
+          docs: The unique identifier for the plan.
+          type: string
+      response: _InlinedType6
 
-        plansRetrieve:
-          path: /{id}
-          method: GET
-          docs: Retrieve the details of an existing plan.
-          display-name: Retrieve a plan
-          path-parameters:
-            id:
-              docs: The unique identifier for the plan.
-              type: string
-          response: commons.plan
+    plansRetrieve:
+      path: /{id}
+      method: GET
+      docs: Retrieve the details of an existing plan.
+      display-name: Retrieve a plan
+      path-parameters:
+        id:
+          docs: The unique identifier for the plan.
+          type: string
+      response: commons.plan
 
-        plansUpdate:
-          path: /{id}
-          method: PATCH
-          docs: >-
-            Updates the specified plan by setting the values of the parameters
-            passed.
-          display-name: Update a plan
-          path-parameters:
-            id:
-              docs: The unique identifier for the plan.
-              type: string
-          request:
-            body:
-              properties:
-                name:
-                  docs: The plan's name, meant to be displayable to the users.
-                  type: optional<string>
-                description:
-                  docs: >-
-                    The plan's description, meant to be displayable to the
-                    users.
-                  type: optional<string>
-                image:
-                  docs: The plan's image, meant to be displayable to the users.
-                  type: optional<string>
-          response: commons.plan
+    plansUpdate:
+      path: /{id}
+      method: PATCH
+      docs: >-
+        Updates the specified plan by setting the values of the parameters
+        passed.
+      display-name: Update a plan
+      path-parameters:
+        id:
+          docs: The unique identifier for the plan.
+          type: string
+      request:
+        body:
+          properties:
+            name:
+              docs: The plan's name, meant to be displayable to the users.
+              type: optional<string>
+            description:
+              docs: The plan's description, meant to be displayable to the users.
+              type: optional<string>
+            image:
+              docs: The plan's image, meant to be displayable to the users.
+              type: optional<string>
+      response: commons.plan
 
-        plansPublish:
-          path: /{id}/publish
-          method: POST
-          docs: >
-            Set the status of a plan to available. Available plans can be used
-            to create new subscriptions.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Publish a plan
-          path-parameters:
-            id:
-              docs: The unique identifier for the plan.
-              type: string
-          response: commons.plan
+    plansPublish:
+      path: /{id}/publish
+      method: POST
+      docs: >
+        Set the status of a plan to available. Available plans can be used to
+        create new subscriptions.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Publish a plan
+      path-parameters:
+        id:
+          docs: The unique identifier for the plan.
+          type: string
+      response: commons.plan
 
-        plansList:
-          path: ""
-          method: GET
-          docs: Returns a list of plans.
-          display-name: List all plans
-          request:
-            query-parameters:
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType9
+    plansList:
+      path: ""
+      method: GET
+      docs: Returns a list of plans.
+      display-name: List all plans
+      request:
+        query-parameters:
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType9
 
 types:
   _InlinedType6:
@@ -4100,279 +4052,253 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    PortingsService:
-      auth: true
-      base-path: ""
-      endpoints:
-        portingCancel:
-          path: /projects/{project}/portings/{id}/cancel
-          method: POST
-          docs: >
-            Retrieves the details of an existing porting and cancels it. Only
-            portings that have not yet being completed can be canceled.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Cancel a porting
-          path-parameters:
-            project:
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    portingCancel:
+      path: /projects/{project}/portings/{id}/cancel
+      method: POST
+      docs: >
+        Retrieves the details of an existing porting and cancels it. Only
+        portings that have not yet being completed can be canceled.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Cancel a porting
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+        id:
+          docs: The unique identifier for the porting.
+          type: string
+      response: commons.porting
+
+    portingRetrieve:
+      path: /projects/{project}/portings/{id}
+      method: GET
+      docs: |
+        Retrieves the details of an existing porting.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Retrieve a Porting
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+        id:
+          docs: The unique identifier for the porting.
+          type: string
+      response: commons.porting
+
+    portingUpdate:
+      path: /projects/{project}/portings/{id}
+      method: PATCH
+      docs: >
+        Updates the specified porting by setting the values of the parameters
+        passed.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Update a porting
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+        id:
+          docs: The unique identifier for the porting.
+          type: string
+      request:
+        body:
+          properties:
+            accountNumber:
+              docs: The account number on the donor service provider.
+              type: optional<string>
+            accountPin:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-            id:
-              docs: The unique identifier for the porting.
-              type: string
-          response: commons.porting
-
-        portingRetrieve:
-          path: /projects/{project}/portings/{id}
-          method: GET
-          docs: >
-            Retrieves the details of an existing porting.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Retrieve a Porting
-          path-parameters:
-            project:
+                The pin for the account on the donor service provider. This will
+                be used only for the porting.
+              type: optional<string>
+            birthday:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-            id:
-              docs: The unique identifier for the porting.
-              type: string
-          response: commons.porting
-
-        portingUpdate:
-          path: /projects/{project}/portings/{id}
-          method: PATCH
-          docs: >
-            Updates the specified porting by setting the values of the
-            parameters passed.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Update a porting
-          path-parameters:
-            project:
+                The birthday of the account holder on the donor service
+                provider.
+              type: optional<string>
+            donorProvider:
+              docs: The unique identifier of the donor service provider.
+              type: optional<string>
+            firstName:
+              docs: The first name of the account holder.
+              type: optional<string>
+            lastName:
+              docs: The last name of the account holder.
+              type: optional<string>
+            phoneNumber:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-            id:
-              docs: The unique identifier for the porting.
-              type: string
-          request:
-            body:
-              properties:
-                accountNumber:
-                  docs: The account number on the donor service provider.
-                  type: optional<string>
-                accountPin:
-                  docs: >-
-                    The pin for the account on the donor service provider. This
-                    will be used only for the porting.
-                  type: optional<string>
-                birthday:
-                  docs: >-
-                    The birthday of the account holder on the donor service
-                    provider.
-                  type: optional<string>
-                donorProvider:
-                  docs: The unique identifier of the donor service provider.
-                  type: optional<string>
-                firstName:
-                  docs: The first name of the account holder.
-                  type: optional<string>
-                lastName:
-                  docs: The last name of the account holder.
-                  type: optional<string>
-                phoneNumber:
-                  docs: >-
-                    The phone number to port in E.164 format. This is only
-                    updatable when the porting is in a status of: draft
-                  type: optional<string>
-                provider:
-                  docs: >-
-                    The ID of the recipient network provider. This is only
-                    updatable when the porting is in a status of: draft
-                  type: optional<string>
-          response: commons.porting
-
-        portingsList:
-          path: /projects/{project}/portings
-          method: GET
-          docs: >
-            Returns a list of portings. The portings returned are sorted by
-            creation date, with the most recently created portings appearing
-            first.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: List all portings
-          path-parameters:
-            project:
+                The phone number to port in E.164 format. This is only updatable
+                when the porting is in a status of: draft
+              type: optional<string>
+            provider:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-          request:
-            query-parameters:
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType10
+                The ID of the recipient network provider. This is only updatable
+                when the porting is in a status of: draft
+              type: optional<string>
+      response: commons.porting
 
-        portingsCreate:
-          path: /projects/{project}/portings
-          method: POST
-          docs: >
-            Creates a new porting with the parameters passed. The porting will
-            be created in \`draft\` status and can be later used to create an
-            order or subscription for the given network provider.
-            Only some of the fields are required during creation creation, but
-            all of the ones required by the network provider must be set before
-            submitting the porting.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Create a porting
-          path-parameters:
-            project:
+    portingsList:
+      path: /projects/{project}/portings
+      method: GET
+      docs: >
+        Returns a list of portings. The portings returned are sorted by creation
+        date, with the most recently created portings appearing first.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: List all portings
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      request:
+        query-parameters:
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType10
+
+    portingsCreate:
+      path: /projects/{project}/portings
+      method: POST
+      docs: >
+        Creates a new porting with the parameters passed. The porting will be
+        created in \`draft\` status and can be later used to create an order or
+        subscription for the given network provider.
+        Only some of the fields are required during creation creation, but all
+        of the ones required by the network provider must be set before
+        submitting the porting.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Create a porting
+      path-parameters:
+        project:
+          docs: >-
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      request:
+        body:
+          properties:
+            accountNumber:
+              docs: The account number on the donor service provider.
+              type: optional<string>
+            accountPin:
               docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+                The pin for the account on the donor service provider. This will
+                be used only for the porting.
+              type: optional<string>
+            birthday:
+              docs: >-
+                The birthday of the account holder on the donor service
+                provider.
+              type: optional<string>
+            donorProvider:
+              docs: The unique identifier of the donor service provider.
+              type: optional<string>
+            firstName:
+              docs: The first name of the account holder.
+              type: optional<string>
+            lastName:
+              docs: The last name of the account holder.
+              type: optional<string>
+            phoneNumber:
+              docs: The phone number to port in E.164 format.
               type: string
-          request:
-            body:
-              properties:
-                accountNumber:
-                  docs: The account number on the donor service provider.
-                  type: optional<string>
-                accountPin:
-                  docs: >-
-                    The pin for the account on the donor service provider. This
-                    will be used only for the porting.
-                  type: optional<string>
-                birthday:
-                  docs: >-
-                    The birthday of the account holder on the donor service
-                    provider.
-                  type: optional<string>
-                donorProvider:
-                  docs: The unique identifier of the donor service provider.
-                  type: optional<string>
-                firstName:
-                  docs: The first name of the account holder.
-                  type: optional<string>
-                lastName:
-                  docs: The last name of the account holder.
-                  type: optional<string>
-                phoneNumber:
-                  docs: The phone number to port in E.164 format.
-                  type: string
-                provider:
-                  docs: The name of the receiving network provider.
-                  type: string
-                user:
-                  docs: >-
-                    The unique identifier for an existing
-                    [user](https://developers.gigs.com/docs/api/b3A6MzMwODcxNDM-retrieve-a-user)
-                    the porting should be created for.
-                  type: string
-
-        serviceProviderRetrieve:
-          path: /serviceProviders/{id}
-          method: GET
-          docs: >
-            Retrieves the details of a service provider.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Retrieve a service provider
-          path-parameters:
-            id:
-              docs: The unique identifier for the service provider.
+            provider:
+              docs: The name of the receiving network provider.
               type: string
-          response: commons.serviceProvider
+            user:
+              docs: >-
+                The unique identifier for an existing
+                [user](https://developers.gigs.com/docs/api/b3A6MzMwODcxNDM-retrieve-a-user)
+                the porting should be created for.
+              type: string
 
-        serviceProvidersList:
-          path: /serviceProviders
-          method: GET
-          docs: >
-            Returns a list of service providers.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: List all service providers
-          request:
-            query-parameters:
-              recipientProvider:
-                docs: >-
-                  Only return service providers that have the given network
-                  provider as supported porting recipient.
-                type: optional<string>
-          response: _InlinedType11
+    serviceProviderRetrieve:
+      path: /serviceProviders/{id}
+      method: GET
+      docs: |
+        Retrieves the details of a service provider.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Retrieve a service provider
+      path-parameters:
+        id:
+          docs: The unique identifier for the service provider.
+          type: string
+      response: commons.serviceProvider
+
+    serviceProvidersList:
+      path: /serviceProviders
+      method: GET
+      docs: |
+        Returns a list of service providers.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: List all service providers
+      request:
+        query-parameters:
+          recipientProvider:
+            docs: >-
+              Only return service providers that have the given network provider
+              as supported porting recipient.
+            type: optional<string>
+      response: _InlinedType11
 
 types:
   _InlinedType10:
@@ -4422,81 +4348,73 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    ProjectsService:
-      auth: true
-      base-path: /projects
-      endpoints:
-        projectsRetrieve:
-          path: /{project}
-          method: GET
+service:
+  auth: true
+  base-path: /projects
+  endpoints:
+    projectsRetrieve:
+      path: /{project}
+      method: GET
+      docs: >-
+        Retrieves the details of an existing project accessible by the API
+        client.
+      display-name: Retrieve a project
+      path-parameters:
+        project:
           docs: >-
-            Retrieves the details of an existing project accessible by the API
-            client.
-          display-name: Retrieve a project
-          path-parameters:
-            project:
-              docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-          response: commons.project
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      response: commons.project
 
-        projectsCredentialsRetrieve:
-          path: /{project}/credentials
-          method: GET
-          docs: >
-            Retrieve the credentials of an existing project.
-            <!-- theme: info -->
-            > #### Preview
-            >
-            > This endpoint is currently in preview and might change in the
-            future.
-            > We’re excited to hear your feedback and ideas. Please send an
-            email
-            > to [support@gigs.com](mailto:support@gigs.com) to share your
-            thoughts.
-          display-name: Retrieve the project credentials
-          path-parameters:
-            project:
-              docs: >-
-                The unique identifier for the
-                [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-              type: string
-          response: _InlinedType12
-
-        projectsList:
-          path: ""
-          method: GET
+    projectsCredentialsRetrieve:
+      path: /{project}/credentials
+      method: GET
+      docs: |
+        Retrieve the credentials of an existing project.
+        <!-- theme: info -->
+        > #### Preview
+        >
+        > This endpoint is currently in preview and might change in the future.
+        > We’re excited to hear your feedback and ideas. Please send an email
+        > to [support@gigs.com](mailto:support@gigs.com) to share your thoughts.
+      display-name: Retrieve the project credentials
+      path-parameters:
+        project:
           docs: >-
-            Returns a list of projects. The projects returned are sorted by
-            creation date, with the most recently created projects appearing
-            first.
-          display-name: List all projects
-          request:
-            query-parameters:
-              organization:
-                docs: The unique identifier for the organization to be filtered by.
-                type: optional<string>
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType13
+            The unique identifier for the
+            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+          type: string
+      response: _InlinedType12
+
+    projectsList:
+      path: ""
+      method: GET
+      docs: >-
+        Returns a list of projects. The projects returned are sorted by creation
+        date, with the most recently created projects appearing first.
+      display-name: List all projects
+      request:
+        query-parameters:
+          organization:
+            docs: The unique identifier for the organization to be filtered by.
+            type: optional<string>
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType13
 
 types:
   _InlinedType12:
@@ -4536,95 +4454,89 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    SiMsService:
-      auth: true
-      base-path: /projects/{project}/sims
+service:
+  auth: true
+  base-path: /projects/{project}/sims
+  path-parameters:
+    project:
+      docs: >-
+        The unique identifier for the
+        [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+      type: string
+  endpoints:
+    siMsCredentialsRetrieve:
+      path: /{id}/credentials
+      method: GET
+      docs: Retrieve the credentials of an existing SIM.
+      display-name: Retrieve the SIM credentials
       path-parameters:
-        project:
-          docs: >-
-            The unique identifier for the
-            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+        id:
+          docs: The unique identifier for the SIM.
           type: string
-      endpoints:
-        siMsCredentialsRetrieve:
-          path: /{id}/credentials
-          method: GET
-          docs: Retrieve the credentials of an existing SIM.
-          display-name: Retrieve the SIM credentials
-          path-parameters:
-            id:
-              docs: The unique identifier for the SIM.
+      response: simCredentials
+
+    siMsRetrieve:
+      path: /{id}
+      method: GET
+      docs: >-
+        Retrieve the details of an existing SIM which the authenticated user is
+        authorized to view.
+      display-name: Retrieve a SIM
+      path-parameters:
+        id:
+          docs: The unique identifier for the SIM.
+          type: string
+      response: commons.sim
+
+    siMsSearch:
+      path: /search
+      method: POST
+      docs: Searches for existing SIMs matching the given parameters.
+      display-name: Search for SIMs
+      request:
+        body:
+          properties:
+            iccid:
+              docs: >-
+                The ICCID (integrated circuit card identifier) associated with
+                the SIM.
               type: string
-          response: simCredentials
+            type:
+              docs: Optional type of the SIM card, either \`eSIM\`, \`pSIM\` or both.
+              type: optional<list<_InlinedType14>>
+      response: _InlinedType15
 
-        siMsRetrieve:
-          path: /{id}
-          method: GET
-          docs: >-
-            Retrieve the details of an existing SIM which the authenticated user
-            is authorized to view.
-          display-name: Retrieve a SIM
-          path-parameters:
-            id:
-              docs: The unique identifier for the SIM.
-              type: string
-          response: commons.sim
-
-        siMsSearch:
-          path: /search
-          method: POST
-          docs: Searches for existing SIMs matching the given parameters.
-          display-name: Search for SIMs
-          request:
-            body:
-              properties:
-                iccid:
-                  docs: >-
-                    The ICCID (integrated circuit card identifier) associated
-                    with the SIM.
-                  type: string
-                type:
-                  docs: >-
-                    Optional type of the SIM card, either \`eSIM\`, \`pSIM\` or
-                    both.
-                  type: optional<list<_InlinedType14>>
-          response: _InlinedType15
-
-        siMsList:
-          path: ""
-          method: GET
-          docs: >-
-            Returns a list of SIMs. The SIMs returned are sorted by creation
-            date, with the most recently created SIMs appearing first.
-          display-name: List all SIMs
-          request:
-            query-parameters:
-              type:
-                docs: The type for the sim to be filtered by.
-                type: optional<_InlinedType17>
-              user:
-                docs: The unique identifier for the user to be filtered by.
-                type: optional<string>
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType19
+    siMsList:
+      path: ""
+      method: GET
+      docs: >-
+        Returns a list of SIMs. The SIMs returned are sorted by creation date,
+        with the most recently created SIMs appearing first.
+      display-name: List all SIMs
+      request:
+        query-parameters:
+          type:
+            docs: The type for the sim to be filtered by.
+            type: optional<_InlinedType17>
+          user:
+            docs: The unique identifier for the user to be filtered by.
+            type: optional<string>
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType19
 
 types:
   simCredentials:
@@ -4706,163 +4618,159 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    SubscriptionsService:
-      auth: true
-      base-path: /projects/{project}/subscriptions
+service:
+  auth: true
+  base-path: /projects/{project}/subscriptions
+  path-parameters:
+    project:
+      docs: >-
+        The unique identifier for the
+        [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+      type: string
+  endpoints:
+    subscriptionsCancel:
+      path: /{id}/cancel
+      method: POST
+      docs: >-
+        Retrieves the details of an existing subscription and schedules
+        termination of the plan at the end of the next renewal date. You need
+        only supply the unique subscription identifier that was returned upon
+        purchasing a plan.
+      display-name: Cancel an active subscription
       path-parameters:
-        project:
-          docs: >-
-            The unique identifier for the
-            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+        id:
+          docs: The unique identifier for the subscription.
           type: string
-      endpoints:
-        subscriptionsCancel:
-          path: /{id}/cancel
-          method: POST
-          docs: >-
-            Retrieves the details of an existing subscription and schedules
-            termination of the plan at the end of the next renewal date. You
-            need only supply the unique subscription identifier that was
-            returned upon purchasing a plan.
-          display-name: Cancel an active subscription
-          path-parameters:
-            id:
-              docs: The unique identifier for the subscription.
+      response: commons.subscription
+
+    subscriptionsRetrieve:
+      path: /{id}
+      method: GET
+      docs: >-
+        Retrieves the details of an existing subscription. You need only supply
+        the unique subscription identifier that was returned upon purchasing a
+        plan.
+      display-name: Retrieve a subscription
+      path-parameters:
+        id:
+          docs: The unique identifier for the subscription.
+          type: string
+      response: commons.subscription
+
+    subscriptionsEnd:
+      path: /{id}
+      method: DELETE
+      docs: >-
+        Ends an active plan subscription immediately. You only need to supply
+        the unique subscription identifier that was returned upon purchasing a
+        plan.
+      display-name: End an active subscription
+      path-parameters:
+        id:
+          docs: The unique identifier for the subscription.
+          type: string
+      response: commons.subscription
+
+    subscriptionsResume:
+      path: /{id}/resume
+      method: POST
+      docs: >-
+        Removes the cancellation and end times of the subscription. The
+        subscription will continue to auto-renew until canceled again.
+      display-name: Resume a canceled subscription
+      path-parameters:
+        id:
+          docs: The unique identifier for the subscription.
+          type: string
+      response: commons.subscription
+
+    subscriptionsList:
+      path: ""
+      method: GET
+      docs: >-
+        Returns a list of subscriptions. The subscriptions returned are sorted
+        by creation date, with the most recently created subscriptions appearing
+        first.
+      display-name: List all subscriptions
+      request:
+        query-parameters:
+          user:
+            docs: The unique identifier for the user to be filtered by.
+            type: optional<string>
+          plan:
+            docs: The unique identifier for the plan to be filtered by.
+            type: optional<string>
+          sim:
+            docs: The unique identifier for the sim to be filtered by.
+            type: optional<string>
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType21
+
+    subscriptionsCreate:
+      path: ""
+      method: POST
+      docs: >-
+        Creates a new subscription for an existing user in the specified
+        project.
+      display-name: Create a subscription
+      request:
+        body:
+          properties:
+            plan:
+              docs: >-
+                The unique identifier for the existing
+                [plan](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzA-retrieve-a-plan)
+                to be used for the subscription.
               type: string
-          response: commons.subscription
-
-        subscriptionsRetrieve:
-          path: /{id}
-          method: GET
-          docs: >-
-            Retrieves the details of an existing subscription. You need only
-            supply the unique subscription identifier that was returned upon
-            purchasing a plan.
-          display-name: Retrieve a subscription
-          path-parameters:
-            id:
-              docs: The unique identifier for the subscription.
+            sim:
+              docs: >-
+                The unique identifier for the existing
+                [SIM](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzQ-retrieve-a-sim)
+                to be used for the subscription. In combination with an eSIM
+                plan, it can be omitted to request a new eSIM.
+              type: optional<string>
+            userAddress:
+              docs: >-
+                The unique identifier for the existing [user
+                address](https://developers.gigs.com/docs/api/b3A6MzMwODcxNDk-retrieve-a-user-address)
+                to be used for the subscription. Only needed if the plan
+                requires an address.
+              type: optional<string>
+            user:
+              docs: >-
+                The unique identifier for the existing
+                [user](https://developers.gigs.com/docs/api/b3A6MzMwODcxNDM-retrieve-a-user)
+                to which the subscription will be assigned.
               type: string
-          response: commons.subscription
-
-        subscriptionsEnd:
-          path: /{id}
-          method: DELETE
-          docs: >-
-            Ends an active plan subscription immediately. You only need to
-            supply the unique subscription identifier that was returned upon
-            purchasing a plan.
-          display-name: End an active subscription
-          path-parameters:
-            id:
-              docs: The unique identifier for the subscription.
-              type: string
-          response: commons.subscription
-
-        subscriptionsResume:
-          path: /{id}/resume
-          method: POST
-          docs: >-
-            Removes the cancellation and end times of the subscription. The
-            subscription will continue to auto-renew until canceled again.
-          display-name: Resume a canceled subscription
-          path-parameters:
-            id:
-              docs: The unique identifier for the subscription.
-              type: string
-          response: commons.subscription
-
-        subscriptionsList:
-          path: ""
-          method: GET
-          docs: >-
-            Returns a list of subscriptions. The subscriptions returned are
-            sorted by creation date, with the most recently created
-            subscriptions appearing first.
-          display-name: List all subscriptions
-          request:
-            query-parameters:
-              user:
-                docs: The unique identifier for the user to be filtered by.
-                type: optional<string>
-              plan:
-                docs: The unique identifier for the plan to be filtered by.
-                type: optional<string>
-              sim:
-                docs: The unique identifier for the sim to be filtered by.
-                type: optional<string>
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType21
-
-        subscriptionsCreate:
-          path: ""
-          method: POST
-          docs: >-
-            Creates a new subscription for an existing user in the specified
-            project.
-          display-name: Create a subscription
-          request:
-            body:
-              properties:
-                plan:
-                  docs: >-
-                    The unique identifier for the existing
-                    [plan](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzA-retrieve-a-plan)
-                    to be used for the subscription.
-                  type: string
-                sim:
-                  docs: >-
-                    The unique identifier for the existing
-                    [SIM](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzQ-retrieve-a-sim)
-                    to be used for the subscription. In combination with an eSIM
-                    plan, it can be omitted to request a new eSIM.
-                  type: optional<string>
-                userAddress:
-                  docs: >-
-                    The unique identifier for the existing [user
-                    address](https://developers.gigs.com/docs/api/b3A6MzMwODcxNDk-retrieve-a-user-address)
-                    to be used for the subscription. Only needed if the plan
-                    requires an address.
-                  type: optional<string>
-                user:
-                  docs: >-
-                    The unique identifier for the existing
-                    [user](https://developers.gigs.com/docs/api/b3A6MzMwODcxNDM-retrieve-a-user)
-                    to which the subscription will be assigned.
-                  type: string
-                porting:
-                  docs: >
-                    The unique identifier for the existing draft
-                    [porting](https://developers.gigs.com/docs/api/bea041f643438-retrieve-a-porting)
-                    to be used for the subscription.
-                    <!-- theme: info -->
-                    > #### Preview
-                    >
-                    > This property is currently in preview and might change in
-                    the future.
-                    > We’re excited to hear your feedback and ideas. Please send
-                    an email
-                    > to [support@gigs.com](mailto:support@gigs.com) to share
-                    your thoughts.
-                  type: optional<string>
+            porting:
+              docs: >
+                The unique identifier for the existing draft
+                [porting](https://developers.gigs.com/docs/api/bea041f643438-retrieve-a-porting)
+                to be used for the subscription.
+                <!-- theme: info -->
+                > #### Preview
+                >
+                > This property is currently in preview and might change in the
+                future.
+                > We’re excited to hear your feedback and ideas. Please send an
+                email
+                > to [support@gigs.com](mailto:support@gigs.com) to share your
+                thoughts.
+              type: optional<string>
 
 types:
   _InlinedType21:
@@ -4890,55 +4798,52 @@ types:
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-services:
-  http:
-    UsageService:
-      auth: true
-      base-path: /projects/{project}/subscriptions/{id}/usage
-      path-parameters:
-        project:
-          docs: >-
-            The unique identifier for the
-            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
-          type: string
+service:
+  auth: true
+  base-path: /projects/{project}/subscriptions/{id}/usage
+  path-parameters:
+    project:
+      docs: >-
+        The unique identifier for the
+        [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+      type: string
 
-        id:
-          docs: The unique identifier for the subscription.
-          type: string
-      endpoints:
-        subscriptionUsageRecordList:
-          path: ""
-          method: GET
-          docs: >-
-            Lists usage records in ascending order for a subscription,
-            defaulting to \`daily\` aggregation for the latest subscription
-            period.
-          display-name: List subscription usage records
-          request:
-            query-parameters:
-              period:
-                docs: >-
-                  Limits the usage data returned to the subscription period
-                  provided. This option is incompatible with the \`start\` and
-                  \`end\` parameters.
-                type: optional<integer>
-              start:
-                docs: >-
-                  Limits the usage data to dates greater than or equal to the
-                  provided date. Can only be used in combination with \`end\`.
-                type: optional<string>
-              end:
-                docs: >-
-                  Limits the usage data to dates up to and including the
-                  provided date. Can only be used in combination with \`start\`.
-                type: optional<string>
-              aggregation:
-                docs: >-
-                  Determines the aggregation method used, defaulting to \`daily\`.
-                  \`period\` provides a single aggregated value for the time range
-                  or period requested.
-                type: optional<_InlinedType22>
-          response: _InlinedType24
+    id:
+      docs: The unique identifier for the subscription.
+      type: string
+  endpoints:
+    subscriptionUsageRecordList:
+      path: ""
+      method: GET
+      docs: >-
+        Lists usage records in ascending order for a subscription, defaulting to
+        \`daily\` aggregation for the latest subscription period.
+      display-name: List subscription usage records
+      request:
+        query-parameters:
+          period:
+            docs: >-
+              Limits the usage data returned to the subscription period
+              provided. This option is incompatible with the \`start\` and \`end\`
+              parameters.
+            type: optional<integer>
+          start:
+            docs: >-
+              Limits the usage data to dates greater than or equal to the
+              provided date. Can only be used in combination with \`end\`.
+            type: optional<string>
+          end:
+            docs: >-
+              Limits the usage data to dates up to and including the provided
+              date. Can only be used in combination with \`start\`.
+            type: optional<string>
+          aggregation:
+            docs: >-
+              Determines the aggregation method used, defaulting to \`daily\`.
+              \`period\` provides a single aggregated value for the time range or
+              period requested.
+            type: optional<_InlinedType22>
+      response: _InlinedType24
 
 types:
   usageRecord:
@@ -5001,92 +4906,89 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    UserAddressesService:
-      auth: true
-      base-path: /projects/{project}/users/{user}/addresses
+service:
+  auth: true
+  base-path: /projects/{project}/users/{user}/addresses
+  path-parameters:
+    project:
+      docs: >-
+        The unique identifier for the
+        [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+      type: string
+
+    user:
+      docs: The unique identifier for the user.
+      type: string
+  endpoints:
+    userAddressesList:
+      path: ""
+      method: GET
+      docs: >-
+        Returns a list of addresses owned by the given user. The addresses
+        returned are sorted by creation date, with the most recently created
+        addresses appearing first.
+      display-name: List all user addresses
+      response: _InlinedType25
+
+    userAddressesCreate:
+      path: ""
+      method: POST
+      docs: Create a new address for the given user with the given parameters.
+      display-name: Create a user address
+      request:
+        body:
+          properties:
+            object:
+              docs: Type of object is always \`userAddress\`.
+              type: optional<string>
+            line1:
+              docs: >-
+                The first line of the given street address, e.g. street and
+                house number.
+              type: string
+            line2:
+              docs: >-
+                The second line of the given street address, e.g. Apartment
+                number.
+              type: optional<string>
+            city:
+              docs: The city/municipality of the given street address.
+              type: string
+            state:
+              docs: >-
+                The state/province/region of the given street address. Required
+                for US/CA addresses to be a valid ISO 3166-2 2 letter code.
+              type: optional<string>
+            postalCode:
+              docs: >-
+                The postal code of the given street address. Required for
+                countries with postal codes.
+              type: optional<string>
+            country:
+              docs: The ISO 3166-1 alpha-2 country code for the given address.
+              type: string
+
+    userAddressesRetrieve:
+      path: /{id}
+      method: GET
+      docs: Retrieves the details of an existing address for a given user.
+      display-name: Retrieve a user address
       path-parameters:
-        project:
-          docs: >-
-            The unique identifier for the
-            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+        id:
+          docs: The unique identifier for the address.
           type: string
+      response: commons.userAddress
 
-        user:
-          docs: The unique identifier for the user.
+    userAddressesDelete:
+      path: /{id}
+      method: DELETE
+      docs: Retrieves the details of an existing user address and deletes it.
+      display-name: Delete a user address
+      path-parameters:
+        id:
+          docs: The unique identifier for the address.
           type: string
-      endpoints:
-        userAddressesList:
-          path: ""
-          method: GET
-          docs: >-
-            Returns a list of addresses owned by the given user. The addresses
-            returned are sorted by creation date, with the most recently created
-            addresses appearing first.
-          display-name: List all user addresses
-          response: _InlinedType25
-
-        userAddressesCreate:
-          path: ""
-          method: POST
-          docs: Create a new address for the given user with the given parameters.
-          display-name: Create a user address
-          request:
-            body:
-              properties:
-                object:
-                  docs: Type of object is always \`userAddress\`.
-                  type: optional<string>
-                line1:
-                  docs: >-
-                    The first line of the given street address, e.g. street and
-                    house number.
-                  type: string
-                line2:
-                  docs: >-
-                    The second line of the given street address, e.g. Apartment
-                    number.
-                  type: optional<string>
-                city:
-                  docs: The city/municipality of the given street address.
-                  type: string
-                state:
-                  docs: >-
-                    The state/province/region of the given street address.
-                    Required for US/CA addresses to be a valid ISO 3166-2 2
-                    letter code.
-                  type: optional<string>
-                postalCode:
-                  docs: >-
-                    The postal code of the given street address. Required for
-                    countries with postal codes.
-                  type: optional<string>
-                country:
-                  docs: The ISO 3166-1 alpha-2 country code for the given address.
-                  type: string
-
-        userAddressesRetrieve:
-          path: /{id}
-          method: GET
-          docs: Retrieves the details of an existing address for a given user.
-          display-name: Retrieve a user address
-          path-parameters:
-            id:
-              docs: The unique identifier for the address.
-              type: string
-          response: commons.userAddress
-
-        userAddressesDelete:
-          path: /{id}
-          method: DELETE
-          docs: Retrieves the details of an existing user address and deletes it.
-          display-name: Delete a user address
-          path-parameters:
-            id:
-              docs: The unique identifier for the address.
-              type: string
-          response: commons.userAddress
+      response: commons.userAddress
 
 types:
   _InlinedType25:
@@ -5117,147 +5019,141 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    UsersService:
-      auth: true
-      base-path: /projects/{project}/users
+service:
+  auth: true
+  base-path: /projects/{project}/users
+  path-parameters:
+    project:
+      docs: >-
+        The unique identifier for the
+        [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+      type: string
+  endpoints:
+    usersRetrieve:
+      path: /{id}
+      method: GET
+      docs: >-
+        Retrieves the details of an existing user. You need only supply the
+        unique user identifier that was returned upon user creation.
+      display-name: Retrieve a user
       path-parameters:
-        project:
-          docs: >-
-            The unique identifier for the
-            [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
+        id:
+          docs: The unique identifier for the user.
           type: string
-      endpoints:
-        usersRetrieve:
-          path: /{id}
-          method: GET
-          docs: >-
-            Retrieves the details of an existing user. You need only supply the
-            unique user identifier that was returned upon user creation.
-          display-name: Retrieve a user
-          path-parameters:
-            id:
-              docs: The unique identifier for the user.
+      response: commons.user
+
+    usersDelete:
+      path: /{id}
+      method: DELETE
+      docs: Retrieves the details of an existing user and deletes it.
+      display-name: Delete a user
+      path-parameters:
+        id:
+          docs: The unique identifier for the user.
+          type: string
+      response: commons.user
+
+    usersUpdate:
+      path: /{id}
+      method: PATCH
+      docs: >-
+        Updates the specified user by setting the values of the parameters
+        passed.
+      display-name: Update a user
+      path-parameters:
+        id:
+          docs: The unique identifier for the user.
+          type: string
+      request:
+        body:
+          properties:
+            object:
+              docs: Type of object is always \`user\`.
+              type: optional<string>
+            birthday:
+              docs: The birthday of the user.
+              type: optional<string>
+            email:
+              docs: The primary verified email address of the user.
+              type: optional<string>
+            fullName:
+              docs: The user's full name. Required for some Plans.
+              type: optional<string>
+            preferredLocale:
+              docs: >-
+                The user's locale preference represented as an [IETF language
+                tag](https://en.wikipedia.org/wiki/IETF_language_tag).
+              type: optional<string>
+      response: commons.user
+
+    usersSearch:
+      path: /search
+      method: POST
+      docs: Searches for existing users matching the given parameters.
+      display-name: Search for users
+      request:
+        body:
+          properties:
+            email:
+              docs: The primary email address of the user.
               type: string
-          response: commons.user
+      response: _InlinedType26
 
-        usersDelete:
-          path: /{id}
-          method: DELETE
-          docs: Retrieves the details of an existing user and deletes it.
-          display-name: Delete a user
-          path-parameters:
-            id:
-              docs: The unique identifier for the user.
+    usersList:
+      path: ""
+      method: GET
+      docs: >-
+        Returns a list of users. The users returned are sorted by creation date,
+        with the most recently created users appearing first.
+      display-name: List all users
+      request:
+        query-parameters:
+          after:
+            docs: >-
+              A cursor for use in pagination. The \`after\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately following the item with that ID will be returned.
+            type: optional<string>
+          before:
+            docs: >-
+              A cursor for use in pagination. The \`before\` parameter takes an
+              object ID that defines the position in the list, only items
+              immediately preceding the item with that ID will be returned.
+            type: optional<string>
+          limit:
+            docs: The limit of items to be returned in the list, between 0 and 200.
+            type: optional<integer>
+      response: _InlinedType27
+
+    usersCreate:
+      path: ""
+      method: POST
+      docs: Creates a new user with the given parameters.
+      display-name: Create a user
+      request:
+        body:
+          properties:
+            object:
+              docs: Type of object is always \`user\`.
+              type: optional<string>
+            birthday:
+              docs: The birthday of the user.
+              type: optional<string>
+            email:
+              docs: The primary verified email address of the user.
               type: string
-          response: commons.user
-
-        usersUpdate:
-          path: /{id}
-          method: PATCH
-          docs: >-
-            Updates the specified user by setting the values of the parameters
-            passed.
-          display-name: Update a user
-          path-parameters:
-            id:
-              docs: The unique identifier for the user.
-              type: string
-          request:
-            body:
-              properties:
-                object:
-                  docs: Type of object is always \`user\`.
-                  type: optional<string>
-                birthday:
-                  docs: The birthday of the user.
-                  type: optional<string>
-                email:
-                  docs: The primary verified email address of the user.
-                  type: optional<string>
-                fullName:
-                  docs: The user's full name. Required for some Plans.
-                  type: optional<string>
-                preferredLocale:
-                  docs: >-
-                    The user's locale preference represented as an [IETF
-                    language
-                    tag](https://en.wikipedia.org/wiki/IETF_language_tag).
-                  type: optional<string>
-          response: commons.user
-
-        usersSearch:
-          path: /search
-          method: POST
-          docs: Searches for existing users matching the given parameters.
-          display-name: Search for users
-          request:
-            body:
-              properties:
-                email:
-                  docs: The primary email address of the user.
-                  type: string
-          response: _InlinedType26
-
-        usersList:
-          path: ""
-          method: GET
-          docs: >-
-            Returns a list of users. The users returned are sorted by creation
-            date, with the most recently created users appearing first.
-          display-name: List all users
-          request:
-            query-parameters:
-              after:
-                docs: >-
-                  A cursor for use in pagination. The \`after\` parameter takes an
-                  object ID that defines the position in the list, only items
-                  immediately following the item with that ID will be returned.
-                type: optional<string>
-              before:
-                docs: >-
-                  A cursor for use in pagination. The \`before\` parameter takes
-                  an object ID that defines the position in the list, only items
-                  immediately preceding the item with that ID will be returned.
-                type: optional<string>
-              limit:
-                docs: >-
-                  The limit of items to be returned in the list, between 0 and
-                  200.
-                type: optional<integer>
-          response: _InlinedType27
-
-        usersCreate:
-          path: ""
-          method: POST
-          docs: Creates a new user with the given parameters.
-          display-name: Create a user
-          request:
-            body:
-              properties:
-                object:
-                  docs: Type of object is always \`user\`.
-                  type: optional<string>
-                birthday:
-                  docs: The birthday of the user.
-                  type: optional<string>
-                email:
-                  docs: The primary verified email address of the user.
-                  type: string
-                fullName:
-                  docs: >-
-                    The user's full name. Some plans require the user name to be
-                    present when creating a subscription. Check the plan
-                    requirements for that.
-                  type: optional<string>
-                preferredLocale:
-                  docs: >-
-                    The user's locale preference represented as an [IETF
-                    language
-                    tag](https://en.wikipedia.org/wiki/IETF_language_tag). It
-                    defaults to the project's preferred locale.
-                  type: optional<string>
+            fullName:
+              docs: >-
+                The user's full name. Some plans require the user name to be
+                present when creating a subscription. Check the plan
+                requirements for that.
+              type: optional<string>
+            preferredLocale:
+              docs: >-
+                The user's locale preference represented as an [IETF language
+                tag](https://en.wikipedia.org/wiki/IETF_language_tag). It
+                defaults to the project's preferred locale.
+              type: optional<string>
 
 types:
   _InlinedType26:
@@ -5364,29 +5260,27 @@ types:
       title: string
       rating: double
 
-services:
-  http:
-    MoviesService:
-      auth: false
-      base-path: /movies
-      endpoints:
-        # Here's an HTTP endpoint
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    # Here's an HTTP endpoint
 
-        createMovie:
-          docs: Add a movie to the database
-          method: POST
-          path: /create-movie
-          request: CreateMovieRequest
-          response: MovieId
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
 
-        getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
-          response: Movie
-          errors:
-            - MovieDoesNotExistError
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
 
 errors:
   MovieDoesNotExistError:
@@ -5489,25 +5383,23 @@ types:
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-services:
-  http:
-    SampleCallbackService:
-      auth: true
-      base-path: /callback
-      endpoints:
-        appControllerCallback:
-          path: ""
-          method: POST
-          docs: >-
-            This is a dummy callback endpoint.
-            Please share the POST callback endpoint created in your app's
-            backend with Telematica to get callback requests of this format.
-          display-name: Dummy callback endpoint
-          request:
-            body:
-              properties:
-                user: optional<string>
-                vehicles: optional<list<Callback_DTO>>
+service:
+  auth: true
+  base-path: /callback
+  endpoints:
+    appControllerCallback:
+      path: ""
+      method: POST
+      docs: >-
+        This is a dummy callback endpoint.
+        Please share the POST callback endpoint created in your app's backend
+        with Telematica to get callback requests of this format.
+      display-name: Dummy callback endpoint
+      request:
+        body:
+          properties:
+            user: optional<string>
+            vehicles: optional<list<Callback_DTO>>
 
 types:
   Callback_DTO:
@@ -5524,102 +5416,100 @@ types:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    TestingEndpointsService:
-      auth: true
-      base-path: /vehicle-data
-      endpoints:
-        getSocTest:
-          path: /soc/test
-          method: GET
-          display-name: Test SOC (battery level)
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.SOC_ResponseDTO
+service:
+  auth: true
+  base-path: /vehicle-data
+  endpoints:
+    getSocTest:
+      path: /soc/test
+      method: GET
+      display-name: Test SOC (battery level)
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.SOC_ResponseDTO
 
-        getRangeTest:
-          path: /range/test
-          method: GET
-          display-name: Test range
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.Range_ResponseDTO
+    getRangeTest:
+      path: /range/test
+      method: GET
+      display-name: Test range
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.Range_ResponseDTO
 
-        getRangeSocTest:
-          path: /range-soc/test
-          method: GET
-          display-name: Test range-soc
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.RangeSoc_ResponseDTO
+    getRangeSocTest:
+      path: /range-soc/test
+      method: GET
+      display-name: Test range-soc
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.RangeSoc_ResponseDTO
 
-        getLocationTest:
-          path: /location/test
-          method: GET
-          display-name: Test location
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.Location_ResponseDTO
+    getLocationTest:
+      path: /location/test
+      method: GET
+      display-name: Test location
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.Location_ResponseDTO
 
-        getChargingStatusTest:
-          path: /charging-status/test
-          method: GET
-          display-name: Test charging status
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.ChargingStatus_ResponseDTO
+    getChargingStatusTest:
+      path: /charging-status/test
+      method: GET
+      display-name: Test charging status
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.ChargingStatus_ResponseDTO
 
-        getOdoTest:
-          path: /odo/test
-          method: GET
-          display-name: Test odo
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.Odo_ResponseDTO
+    getOdoTest:
+      path: /odo/test
+      method: GET
+      display-name: Test odo
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.Odo_ResponseDTO
 
-        getStaticAttributesTest:
-          path: /static-attributes/test
-          method: GET
-          display-name: Test static attributes
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.StaticAttributes_ResponseDTO
+    getStaticAttributesTest:
+      path: /static-attributes/test
+      method: GET
+      display-name: Test static attributes
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "testingEndpoints.yml",
                 "type": "file",
@@ -5630,108 +5520,104 @@ services:
 imports:
   commons: commons.yml
 
-services:
-  http:
-    VehicleDataService:
-      auth: true
-      base-path: /vehicle-data
-      endpoints:
-        getSoc:
-          path: /soc
-          method: GET
-          display-name: SOC (battery level)
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.SOC_ResponseDTO
+service:
+  auth: true
+  base-path: /vehicle-data
+  endpoints:
+    getSoc:
+      path: /soc
+      method: GET
+      display-name: SOC (battery level)
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.SOC_ResponseDTO
 
-        getRange:
-          path: /range
-          method: GET
-          display-name: Range
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.Range_ResponseDTO
+    getRange:
+      path: /range
+      method: GET
+      display-name: Range
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.Range_ResponseDTO
 
-        getRangeSoc:
-          path: /range-soc
-          method: GET
-          docs: >-
-            This endpoint returns the SOC and range for the vehicle in a single
-            call
-          display-name: Range-SOC
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.RangeSoc_ResponseDTO
+    getRangeSoc:
+      path: /range-soc
+      method: GET
+      docs: This endpoint returns the SOC and range for the vehicle in a single call
+      display-name: Range-SOC
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.RangeSoc_ResponseDTO
 
-        getLocation:
-          path: /location
-          method: GET
-          display-name: Location
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.Location_ResponseDTO
+    getLocation:
+      path: /location
+      method: GET
+      display-name: Location
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.Location_ResponseDTO
 
-        getChargingStatus:
-          path: /charging-status
-          method: GET
-          display-name: Charging Status
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.ChargingStatus_ResponseDTO
+    getChargingStatus:
+      path: /charging-status
+      method: GET
+      display-name: Charging Status
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.ChargingStatus_ResponseDTO
 
-        getOdo:
-          path: /odo
-          method: GET
-          display-name: Odometer
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.Odo_ResponseDTO
+    getOdo:
+      path: /odo
+      method: GET
+      display-name: Odometer
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.Odo_ResponseDTO
 
-        getStaticAttributes:
-          path: /static-attributes
-          method: GET
-          docs: >-
-            Static vehicle attributes like VIN, registration number, model, year
-            and make
-          display-name: Static attributes
-          request:
-            query-parameters:
-              vehicleId:
-                docs: >-
-                  24-char hex identifier for the vehicle. The owner must have
-                  provided consent through Telematica consent flow
-                type: string
-          response: commons.StaticAttributes_ResponseDTO
+    getStaticAttributes:
+      path: /static-attributes
+      method: GET
+      docs: >-
+        Static vehicle attributes like VIN, registration number, model, year and
+        make
+      display-name: Static attributes
+      request:
+        query-parameters:
+          vehicleId:
+            docs: >-
+              24-char hex identifier for the vehicle. The owner must have
+              provided consent through Telematica consent flow
+            type: string
+      response: commons.StaticAttributes_ResponseDTO
 ",
                 "name": "vehicleData.yml",
                 "type": "file",
