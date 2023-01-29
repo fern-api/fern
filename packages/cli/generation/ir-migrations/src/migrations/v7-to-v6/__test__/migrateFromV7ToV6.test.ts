@@ -52,8 +52,8 @@ describe("migrateFromV7ToV6", () => {
                         },
                         originalName: "blogService",
                         pascalCase: {
-                            safeName: "blogService",
-                            unsafeName: "blogService",
+                            safeName: "BlogService",
+                            unsafeName: "BlogService",
                         },
                         screamingSnakeCase: {
                             safeName: "BLOG_SERVICE",
