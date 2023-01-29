@@ -79,7 +79,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-test-submission-status/:submissionId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.TestSubmissionStatus.parse(req.body);
-                await this.updateTestSubmissionStatus(req);
+                await this.updateTestSubmissionStatus(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -91,7 +91,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-test-submission-status-v2/:submissionId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.TestSubmissionUpdate.parse(req.body);
-                await this.sendTestSubmissionUpdate(req);
+                await this.sendTestSubmissionUpdate(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -103,7 +103,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-workspace-submission-status/:submissionId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.WorkspaceSubmissionStatus.parse(req.body);
-                await this.updateWorkspaceSubmissionStatus(req);
+                await this.updateWorkspaceSubmissionStatus(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -115,7 +115,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-workspace-submission-status-v2/:submissionId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
-                await this.sendWorkspaceSubmissionUpdate(req);
+                await this.sendWorkspaceSubmissionUpdate(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -127,7 +127,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-test-trace/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.StoreTracedTestCaseRequest.parse(req.body);
-                await this.storeTracedTestCase(req);
+                await this.storeTracedTestCase(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -139,7 +139,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
-                await this.storeTracedTestCaseV2(req);
+                await this.storeTracedTestCaseV2(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -151,7 +151,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-workspace-trace/submission/:submissionId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
-                await this.storeTracedWorkspace(req);
+                await this.storeTracedWorkspace(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -163,7 +163,7 @@ export abstract class AbstractAdminService {
         this.router.post(\\"/store-workspace-trace-v2/submission/:submissionId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
-                await this.storeTracedWorkspaceV2(req);
+                await this.storeTracedWorkspaceV2(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -1451,7 +1451,7 @@ export abstract class AbstractHomepageProblemService {
     public toRouter(): express.Router {
         this.router.get(\\"/\\", async (req, res, next) => {
             try {
-                const response = await this.getHomepageProblems(req);
+                const response = await this.getHomepageProblems(req as any);
                 res.send(await serializers.homepage.getHomepageProblems.Response.json(response));
             }
             catch (error) {
@@ -1463,7 +1463,7 @@ export abstract class AbstractHomepageProblemService {
         this.router.post(\\"/\\", async (req, res, next) => {
             try {
                 req.body = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
-                await this.setHomepageProblems(req);
+                await this.setHomepageProblems(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -1598,7 +1598,7 @@ export abstract class AbstractMigrationInfoService {
     public toRouter(): express.Router {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
-                const response = await this.getAttemptedMigrations(req);
+                const response = await this.getAttemptedMigrations(req as any);
                 res.send(await serializers.migration.getAttemptedMigrations.Response.json(response));
             }
             catch (error) {
@@ -1736,7 +1736,7 @@ export abstract class AbstractPlaylistCrudService {
         this.router.post(\\"/create\\", async (req, res, next) => {
             try {
                 req.body = await serializers.PlaylistCreateRequest.parse(req.body);
-                const response = await this.createPlaylist(req);
+                const response = await this.createPlaylist(req as any);
                 res.send(await serializers.Playlist.json(response));
             }
             catch (error) {
@@ -1747,7 +1747,7 @@ export abstract class AbstractPlaylistCrudService {
         });
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
-                const response = await this.getPlaylists(req);
+                const response = await this.getPlaylists(req as any);
                 res.send(await serializers.playlist.getPlaylists.Response.json(response));
             }
             catch (error) {
@@ -1758,7 +1758,7 @@ export abstract class AbstractPlaylistCrudService {
         });
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
             try {
-                const response = await this.getPlaylist(req);
+                const response = await this.getPlaylist(req as any);
                 res.send(await serializers.Playlist.json(response));
             }
             catch (error) {
@@ -1770,7 +1770,7 @@ export abstract class AbstractPlaylistCrudService {
         this.router.put(\\"/:playlistId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.playlist.updatePlaylist.Request.parse(req.body);
-                const response = await this.updatePlaylist(req);
+                const response = await this.updatePlaylist(req as any);
                 res.send(await serializers.playlist.updatePlaylist.Response.json(response));
             }
             catch (error) {
@@ -1781,7 +1781,7 @@ export abstract class AbstractPlaylistCrudService {
         });
         this.router.delete(\\"/:playlist_id\\", async (req, res, next) => {
             try {
-                await this.deletePlaylist(req);
+                await this.deletePlaylist(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -2161,7 +2161,7 @@ export abstract class AbstractProblemCrudService {
         this.router.post(\\"/create\\", async (req, res, next) => {
             try {
                 req.body = await serializers.CreateProblemRequest.parse(req.body);
-                const response = await this.createProblem(req);
+                const response = await this.createProblem(req as any);
                 res.send(await serializers.CreateProblemResponse.json(response));
             }
             catch (error) {
@@ -2173,7 +2173,7 @@ export abstract class AbstractProblemCrudService {
         this.router.post(\\"/update/:problemId\\", async (req, res, next) => {
             try {
                 req.body = await serializers.CreateProblemRequest.parse(req.body);
-                const response = await this.updateProblem(req);
+                const response = await this.updateProblem(req as any);
                 res.send(await serializers.UpdateProblemResponse.json(response));
             }
             catch (error) {
@@ -2184,7 +2184,7 @@ export abstract class AbstractProblemCrudService {
         });
         this.router.delete(\\"/delete/:problemId\\", async (req, res, next) => {
             try {
-                await this.deleteProblem(req);
+                await this.deleteProblem(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -2196,7 +2196,7 @@ export abstract class AbstractProblemCrudService {
         this.router.post(\\"/default-starter-files\\", async (req, res, next) => {
             try {
                 req.body = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
-                const response = await this.getDefaultStarterFiles(req);
+                const response = await this.getDefaultStarterFiles(req as any);
                 res.send(await serializers.GetDefaultStarterFilesResponse.json(response));
             }
             catch (error) {
@@ -2735,7 +2735,7 @@ export abstract class AbstractExecutionSesssionManagementService {
     public toRouter(): express.Router {
         this.router.post(\\"/create-session/:language\\", async (req, res, next) => {
             try {
-                const response = await this.createExecutionSession(req);
+                const response = await this.createExecutionSession(req as any);
                 res.send(await serializers.ExecutionSessionResponse.json(response));
             }
             catch (error) {
@@ -2746,7 +2746,7 @@ export abstract class AbstractExecutionSesssionManagementService {
         });
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
             try {
-                const response = await this.getExecutionSession(req);
+                const response = await this.getExecutionSession(req as any);
                 res.send(await serializers.submission.getExecutionSession.Response.json(response));
             }
             catch (error) {
@@ -2757,7 +2757,7 @@ export abstract class AbstractExecutionSesssionManagementService {
         });
         this.router.delete(\\"/stop/:sessionId\\", async (req, res, next) => {
             try {
-                await this.stopExecutionSession(req);
+                await this.stopExecutionSession(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -2768,7 +2768,7 @@ export abstract class AbstractExecutionSesssionManagementService {
         });
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
             try {
-                const response = await this.getExecutionSessionsState(req);
+                const response = await this.getExecutionSessionsState(req as any);
                 res.send(await serializers.GetExecutionSessionStateResponse.json(response));
             }
             catch (error) {
@@ -5780,7 +5780,7 @@ export abstract class AbstractSysPropCrudService {
     public toRouter(): express.Router {
         this.router.put(\\"/num-warm-instances/:language/:numWarmInstances\\", async (req, res, next) => {
             try {
-                await this.setNumWarmInstances(req);
+                await this.setNumWarmInstances(req as any);
                 res.sendStatus(204);
             }
             catch (error) {
@@ -5791,7 +5791,7 @@ export abstract class AbstractSysPropCrudService {
         });
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
             try {
-                const response = await this.getNumWarmInstances(req);
+                const response = await this.getNumWarmInstances(req as any);
                 res.send(await serializers.sysprop.getNumWarmInstances.Response.json(response));
             }
             catch (error) {
@@ -5883,7 +5883,7 @@ export abstract class AbstractProblemInfoServicV2 {
     public toRouter(): express.Router {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.getLightweightProblems(req);
+                const response = await this.getLightweightProblems(req as any);
                 res.send(await serializers.v2.problem.getLightweightProblems.Response.json(response));
             }
             catch (error) {
@@ -5894,7 +5894,7 @@ export abstract class AbstractProblemInfoServicV2 {
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.getProblems(req);
+                const response = await this.getProblems(req as any);
                 res.send(await serializers.v2.problem.getProblems.Response.json(response));
             }
             catch (error) {
@@ -5905,7 +5905,7 @@ export abstract class AbstractProblemInfoServicV2 {
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
-                const response = await this.getLatestProblem(req);
+                const response = await this.getLatestProblem(req as any);
                 res.send(await serializers.v2.ProblemInfoV2.json(response));
             }
             catch (error) {
@@ -5916,7 +5916,7 @@ export abstract class AbstractProblemInfoServicV2 {
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
-                const response = await this.getProblemVersion(req);
+                const response = await this.getProblemVersion(req as any);
                 res.send(await serializers.v2.ProblemInfoV2.json(response));
             }
             catch (error) {
@@ -7122,7 +7122,7 @@ export abstract class AbstractProblemInfoServicV2 {
     public toRouter(): express.Router {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.getLightweightProblems(req);
+                const response = await this.getLightweightProblems(req as any);
                 res.send(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
             }
             catch (error) {
@@ -7133,7 +7133,7 @@ export abstract class AbstractProblemInfoServicV2 {
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.getProblems(req);
+                const response = await this.getProblems(req as any);
                 res.send(await serializers.v2.v3.problem.getProblems.Response.json(response));
             }
             catch (error) {
@@ -7144,7 +7144,7 @@ export abstract class AbstractProblemInfoServicV2 {
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
-                const response = await this.getLatestProblem(req);
+                const response = await this.getLatestProblem(req as any);
                 res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
             }
             catch (error) {
@@ -7155,7 +7155,7 @@ export abstract class AbstractProblemInfoServicV2 {
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
-                const response = await this.getProblemVersion(req);
+                const response = await this.getProblemVersion(req as any);
                 res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
             }
             catch (error) {

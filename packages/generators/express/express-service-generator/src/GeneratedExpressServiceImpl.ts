@@ -273,7 +273,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     this.getEndpointMethodName(endpoint)
                 ),
                 undefined,
-                [expressRequest]
+                [
+                    ts.factory.createAsExpression(
+                        expressRequest,
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                    ),
+                ]
             )
         );
         statements.push(
