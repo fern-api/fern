@@ -5,7 +5,7 @@ import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
 import { createFiddleService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
-import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { RootApiFileSchema, ServiceFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { createWriteStream } from "fs";
@@ -127,10 +127,27 @@ async function validateDependencyAndGetServiceFiles({
         return undefined;
     }
 
-    // ensure CLI versions are on the same major + minor versions
+    const parsedYamlVersionOfDependency =
+        response.body.yamlSchemaVersion != null ? parseInt(response.body.yamlSchemaVersion) : undefined;
     const parsedCliVersion = parseVersion(cliVersion);
     const parsedCliVersionOfDependency = parseVersion(response.body.cliVersion);
-    if (
+
+    // ensure dependency is on the same YAML_SCHEMA_VERSION
+    if (parsedYamlVersionOfDependency != null) {
+        if (parsedYamlVersionOfDependency > YAML_SCHEMA_VERSION) {
+            context.failWithoutThrowing(
+                `${dependency.organization}/${dependency.apiName}@${dependency.version} on a higher version of fern. Upgrade this workspace to ${response.body.cliVersion}`
+            );
+            return undefined;
+        } else if (parsedYamlVersionOfDependency < YAML_SCHEMA_VERSION) {
+            context.failWithoutThrowing(
+                `${dependency.organization}/${dependency.apiName}@${dependency.version} on a lower version of fern. Upgrade it to ${cliVersion}`
+            );
+            return undefined;
+        }
+    }
+    // otherwise, ensure CLI versions are on the same major + minor versions
+    else if (
         parsedCliVersion.major !== parsedCliVersionOfDependency.major ||
         parsedCliVersion.minor !== parsedCliVersionOfDependency.minor
     ) {

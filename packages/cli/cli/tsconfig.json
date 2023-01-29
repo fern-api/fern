@@ -21,6 +21,7 @@
     { "path": "../workspace-loader" },
     { "path": "../yaml/formatter" },
     { "path": "../yaml/validator" },
-    { "path": "../yaml/yaml-migrations" }
+    { "path": "../yaml/yaml-migrations" },
+    { "path": "../yaml/yaml-schema" }
   ]
 }
