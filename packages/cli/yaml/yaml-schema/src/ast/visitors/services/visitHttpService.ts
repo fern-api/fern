@@ -11,22 +11,24 @@ import { visitTypeDeclaration } from "../visitTypeDeclarations";
 export async function visitHttpService({
     service,
     visitor,
-    nodePathForService,
+    nodePath,
 }: {
     service: HttpServiceSchema;
     visitor: Partial<FernServiceFileAstVisitor>;
-    nodePathForService: NodePath;
+    nodePath: NodePath;
 }): Promise<void> {
+    await visitor.httpService?.(service, nodePath);
+
     await visitObject(service, {
         url: noop,
         "base-path": noop,
-        docs: createDocsVisitor(visitor, nodePathForService),
+        docs: createDocsVisitor(visitor, nodePath),
         availability: noop,
         headers: async (headers) => {
             await visitHeaders({
                 headers,
                 visitor,
-                nodePath: [...nodePathForService, "headers"],
+                nodePath: [...nodePath, "headers"],
             });
         },
         audiences: noop,
@@ -35,12 +37,12 @@ export async function visitHttpService({
             await visitPathParameters({
                 pathParameters,
                 visitor,
-                nodePath: [...nodePathForService, "path-parameters"],
+                nodePath: [...nodePath, "path-parameters"],
             });
         },
         endpoints: async (endpoints) => {
             for (const [endpointId, endpoint] of Object.entries(endpoints)) {
-                const nodePathForEndpoint = [...nodePathForService, "endpoints", endpointId];
+                const nodePathForEndpoint = [...nodePath, "endpoints", endpointId];
                 await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },

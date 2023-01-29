@@ -1,8 +1,6 @@
 types:
   RootString: string
-services:
-  http:
-    RootService:
-      base-path: /
-      auth: false
-      endpoints: {}
+service:
+  base-path: /
+  auth: false
+  endpoints: {}

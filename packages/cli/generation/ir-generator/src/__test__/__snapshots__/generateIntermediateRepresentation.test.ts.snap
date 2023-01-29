@@ -184,25 +184,6 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             },
           },
         ],
-        "name": {
-          "camelCase": {
-            "safeName": "importerService",
-            "unsafeName": "importerService",
-          },
-          "originalName": "ImporterService",
-          "pascalCase": {
-            "safeName": "ImporterService",
-            "unsafeName": "ImporterService",
-          },
-          "screamingSnakeCase": {
-            "safeName": "IMPORTER_SERVICE",
-            "unsafeName": "IMPORTER_SERVICE",
-          },
-          "snakeCase": {
-            "safeName": "importer_service",
-            "unsafeName": "importer_service",
-          },
-        },
       },
       "pathParameters": [],
     },

@@ -17,26 +17,14 @@ describe("no-duplicate-declarations", () => {
                 severity: "error",
             },
             {
-                message: "OneService is already declared in 1.yml",
-                nodePath: ["services", "http", "OneService"],
-                relativeFilepath: "2.yml",
-                severity: "error",
-            },
-            {
-                message: "TwoService is already declared in 1.yml",
-                nodePath: ["services", "http", "TwoService"],
-                relativeFilepath: "2.yml",
-                severity: "error",
-            },
-            {
                 message: "InlinedRequest is already declared in this file",
-                nodePath: ["services", "http", "TwoService", "endpoints", "get"],
+                nodePath: ["service", "endpoints", "get"],
                 relativeFilepath: "2.yml",
                 severity: "error",
             },
             {
                 message: "UpdateRequest is already declared in this file",
-                nodePath: ["services", "http", "TwoService", "endpoints", "updateV2"],
+                nodePath: ["service", "endpoints", "updateV2"],
                 relativeFilepath: "2.yml",
                 severity: "error",
             },

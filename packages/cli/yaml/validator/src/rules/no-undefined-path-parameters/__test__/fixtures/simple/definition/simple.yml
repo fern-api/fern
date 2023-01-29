@@ -1,22 +1,20 @@
-services:
-  http:
-    SimpleService:
-      auth: false
-      base-path: /base/{baseParameter}
+service:
+  auth: false
+  base-path: /base/{baseParameter}
+  path-parameters:
+    fakeBaseParameter: string
+  endpoints:
+    noErrors:
+      path: /path/{parameter}/to/endpoint
       path-parameters:
-        fakeBaseParameter: string
-      endpoints:
-        noErrors:
-          path: /path/{parameter}/to/endpoint
-          path-parameters:
-            parameter: string
+        parameter: string
 
-        missingPathParameters:
-          path: /path/{parameter1}/{parameter2}/to/endpoint
-          path-parameters:
-            parameter1: string
+    missingPathParameters:
+      path: /path/{parameter1}/{parameter2}/to/endpoint
+      path-parameters:
+        parameter1: string
 
-        unusedPathParameters:
-          path: /path/to/endpoint
-          path-parameters:
-            parameter1: string
+    unusedPathParameters:
+      path: /path/to/endpoint
+      path-parameters:
+        parameter1: string

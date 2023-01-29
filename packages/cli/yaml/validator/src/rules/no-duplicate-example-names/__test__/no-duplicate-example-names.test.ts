@@ -18,7 +18,7 @@ describe("no-duplicate-example-names", () => {
             },
             {
                 message: "Duplicate example name: Example2",
-                nodePath: ["services", "http", "MyService", "endpoints", "get"],
+                nodePath: ["service", "endpoints", "get"],
                 relativeFilepath: "1.yml",
                 severity: "error",
             },

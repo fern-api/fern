@@ -14,12 +14,10 @@ Each service defines:
 3. **Endpoints**
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints: {}
+service:
+  base-path: /users
+  auth: false
+  endpoints: {}
 ```
 
 ## Endpoints
@@ -40,15 +38,13 @@ An endpoint includes:
 Each endpoint has a URL path.
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getAllUsers:
-          path: /all # <---
-          method: GET
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getAllUsers:
+      path: /all # <---
+      method: GET
 ```
 
 The full path for the endpoint is the concatenation of:
@@ -62,30 +58,26 @@ The full path for the endpoint is the concatenation of:
 You can supply path parameters for your endpoints to create dynamic URLs.
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getUser:
-          path: /{userId} # <---
-          path-parameters: # <---
-            userId: string
-          method: GET
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUser:
+      path: /{userId} # <---
+      path-parameters: # <---
+        userId: string
+      method: GET
 ```
 
 Services can also have path-parameters:
 
 ```yaml project.yml
-services:
-  http:
-    ProjectService:
-      base-path: /projects/{projectId}
-      path-parameters:
-        projectId: string
-      auth: false
-      endpoints: ...
+service:
+  base-path: /projects/{projectId}
+  path-parameters:
+    projectId: string
+  auth: false
+  endpoints: ...
 ```
 
 ## Query parameters
@@ -93,20 +85,18 @@ services:
 Each endpoint can specify query parameters:
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getAllUsers:
-          path: /all
-          method: GET
-          request:
-            # this name is required for idiomatic SDKs
-            name: GetAllUsersRequest
-            query-parameters:
-              limit: optional<integer>
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getAllUsers:
+      path: /all
+      method: GET
+      request:
+        # this name is required for idiomatic SDKs
+        name: GetAllUsersRequest
+        query-parameters:
+          limit: optional<integer>
 ```
 
 ### `allow-multiple`
@@ -127,41 +117,37 @@ query-parameters:
 Each endpoint can specify request headers:
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getAllUsers:
-          path: /all
-          method: GET
-          request:
-            # this name is required for idiomatic SDKs
-            name: GetAllUsersRequest
-            headers:
-              X-Endpoint-Header: string
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getAllUsers:
+      path: /all
+      method: GET
+      request:
+        # this name is required for idiomatic SDKs
+        name: GetAllUsersRequest
+        headers:
+          X-Endpoint-Header: string
 ```
 
 Services can also specify request headers. These headers will cascade to the service's endpoints.
 
 ```diff user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-+     headers:
-+       X-Service-Header: string
-      endpoints:
-        getAllUsers:
-          path: /all
-          method: GET
-          request:
-            # this name is required for idiomatic SDKs
-            name: GetAllUsersRequest
-            headers:
-              X-Endpoint-Header: string
+ service:
+   base-path: /users
+   auth: false
++    headers:
++      X-Service-Header: string
+   endpoints:
+     getAllUsers:
+       path: /all
+       method: GET
+       request:
+         # this name is required for idiomatic SDKs
+         name: GetAllUsersRequest
+         headers:
+           X-Endpoint-Header: string
 ```
 
 ## Request body
@@ -169,21 +155,19 @@ services:
 Endpoints can specify a request body type.
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        setUserName:
-          path: /{userId}/set-name
-          path-parameters:
-            userId: string
-          method: POST
-          request:
-            # this name is required for idiomatic SDKs
-            name: SetUserNameRequest
-            body: string # <---
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    setUserName:
+      path: /{userId}/set-name
+      path-parameters:
+        userId: string
+      method: POST
+      request:
+        # this name is required for idiomatic SDKs
+        name: SetUserNameRequest
+        body: string # <---
 ```
 
 ### Inlining a request body
@@ -192,21 +176,19 @@ If the request body is an object, you can **inline the type declaration.** This
 makes the generated SDKs a bit more idiomatic.
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        createUser:
-          path: /create
-          method: POST
-          request:
-            # this name is required for idiomatic SDKs
-            name: CreateUserRequest
-            body:
-              properties:
-                userName: string
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    createUser:
+      path: /create
+      method: POST
+      request:
+        # this name is required for idiomatic SDKs
+        name: CreateUserRequest
+        body:
+          properties:
+            userName: string
 ```
 
 ## Success response
@@ -215,16 +197,14 @@ Endpoints can specify a `response`, which is the type of the body that will be
 returned on a successful (200) call.
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getAllUsers:
-          path: /all
-          method: GET
-          response: list<User>
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getAllUsers:
+      path: /all
+      method: GET
+      response: list<User>
 
 types:
   User:
@@ -239,20 +219,18 @@ Endpoints can specify error responses, which detail the non-200 responses that
 the endpoint might return
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getUser:
-          path: /{userId}
-          path-parameters:
-            userId: string
-          method: GET
-          response: User
-          errors:
-            - UserNotFoundError
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUser:
+      path: /{userId}
+      path-parameters:
+        userId: string
+      method: GET
+      response: User
+      errors:
+        - UserNotFoundError
 
 types:
   User:
@@ -274,27 +252,25 @@ endpoint might be used. These are used by the compiler to enhance the generated
 outputs (e.g. examples in the generated Postman Collection).
 
 ```yaml user.yml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: false
-      endpoints:
-        getUser:
-          path: /{userId}
-          path-parameters:
-            userId: string
-          method: GET
-          response: User
-          errors:
-            - UserNotFoundError
-          examples: # <---
-            - path-parameters:
-                userId: alice-user-id
-              response:
-                body:
-                  userId: alice-user-id
-                  name: Alice
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUser:
+      path: /{userId}
+      path-parameters:
+        userId: string
+      method: GET
+      response: User
+      errors:
+        - UserNotFoundError
+      examples: # <---
+        - path-parameters:
+            userId: alice-user-id
+          response:
+            body:
+              userId: alice-user-id
+              name: Alice
 
 types:
   User:
@@ -341,20 +317,18 @@ examples:
 To avoid duplication, you can reference examples from types using `$`.
 
 ```yaml
-services:
-  http:
-    UserService:
-      base-path: /users
-      auth: true
-      endpoints:
-        getUser:
-          method: GET
-          path: /{userId}
-          path-parameters:
-            userId: UserId
-          examples:
-            - path-parameters:
-                userId: $UserId.Example1 # <---
+service:
+  base-path: /users
+  auth: true
+  endpoints:
+    getUser:
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: UserId
+      examples:
+        - path-parameters:
+            userId: $UserId.Example1 # <---
 
 types:
   UserId:

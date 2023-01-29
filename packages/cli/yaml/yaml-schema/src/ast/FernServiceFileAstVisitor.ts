@@ -25,7 +25,7 @@ export interface FernServiceFileAstNodeTypes {
     exampleTypeReference: string;
     typeReference: string;
     typeName: string;
-    httpService: { serviceName: string; service: HttpServiceSchema };
+    httpService: HttpServiceSchema;
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
     exampleHttpEndpointCall: {
         example: ExampleEndpointCallSchema;

@@ -10,7 +10,7 @@ export const ValidServiceUrlsRule: Rule = {
 
         return {
             serviceFile: {
-                httpService: ({ service }) => {
+                httpService: (service) => {
                     if (service.url == null) {
                         if (urlIds.length === 0) {
                             return [];

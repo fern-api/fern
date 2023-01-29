@@ -12,24 +12,14 @@ describe("no-undefined-error-reference", () => {
             {
                 severity: "error",
                 relativeFilepath: "simple.yml",
-                nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
-                    "endpoints",
-                    "referenceNonExistentError",
-                    "errors",
-                    "NonExistentError",
-                ],
+                nodePath: ["service", "endpoints", "referenceNonExistentError", "errors", "NonExistentError"],
                 message: "Error is not defined.",
             },
             {
                 severity: "error",
                 relativeFilepath: "simple.yml",
                 nodePath: [
-                    "services",
-                    "http",
-                    "MyService",
+                    "service",
                     "endpoints",
                     "referenceNonExistentImportedError",
                     "errors",

@@ -9,26 +9,24 @@ errors:
   F:
     status-code: 403
 
-services:
-  http:
-    OneService:
-      auth: false
-      base-path: /base
-      endpoints:
-        get:
-          method: GET
-          path: /get
-          response: string
-          errors:
-            - C
-            - D
-            - D
+service:
+  auth: false
+  base-path: /base
+  endpoints:
+    get:
+      method: GET
+      path: /get
+      response: string
+      errors:
+        - C
+        - D
+        - D
 
-        update:
-          method: PUT
-          path: /put
-          response: string
-          errors:
-            - C
-            - E
-            - F
+    update:
+      method: PUT
+      path: /put
+      response: string
+      errors:
+        - C
+        - E
+        - F

@@ -13,13 +13,13 @@ describe("no-missing-auth", () => {
             {
                 severity: "error",
                 relativeFilepath: "a.yml",
-                nodePath: ["services", "http", "AService", "endpoints", "foo"],
+                nodePath: ["service", "endpoints", "foo"],
                 message: "Endpoint requires auth, but no auth is defined.",
             },
             {
                 severity: "error",
                 relativeFilepath: "b.yml",
-                nodePath: ["services", "http", "BService"],
+                nodePath: ["service"],
                 message: "Service requires auth, but no auth is defined.",
             },
         ]);

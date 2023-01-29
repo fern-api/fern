@@ -15,30 +15,27 @@ types:
       title: string
       rating: double 
 
-services:
-  http:
-  
-    MoviesService:
-      auth: false
-      base-path: /movies
-      endpoints:
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
 
-        # Here's an HTTP endpoint
-        createMovie:
-          docs: Add a movie to the database
-          method: POST
-          path: /create-movie
-          request: CreateMovieRequest
-          response: MovieId
+    # Here's an HTTP endpoint
+    createMovie:
+      docs: Add a movie to the database
+      method: POST
+      path: /create-movie
+      request: CreateMovieRequest
+      response: MovieId
 
-        getMovie:
-          method: GET
-          path: /{movieId}
-          path-parameters:
-            movieId: MovieId
-          response: Movie
-          errors:
-            - MovieDoesNotExistError
+    getMovie:
+      method: GET
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - MovieDoesNotExistError
 
 errors:
   MovieDoesNotExistError:

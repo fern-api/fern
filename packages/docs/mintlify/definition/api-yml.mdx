@@ -107,12 +107,10 @@ environments:
 If you choose to use this feature, you must specify a `url` for each service you define:
 
 ```yaml auth.yml
-services:
-  http:
-    AuthService:
-      url: Auth
-      base-path: /auth
-      ...
+service:
+  url: Auth
+  base-path: /auth
+  ...
 ```
 
 ## Error discrimination strategy

@@ -3,18 +3,16 @@
 imports:
   commons: commons.yml
 
-services:
-  http:
-    ImporterService:
-      auth: false
-      base-path: /
-      endpoints:
-        find:
-          path: /
-          method: POST
-          audiences:
-            - public
-          response: ImportingType
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    find:
+      path: /
+      method: POST
+      audiences:
+        - public
+      response: ImportingType
 
 types:
   ImportingType:
