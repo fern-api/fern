@@ -5,9 +5,18 @@ import { Rule, RuleViolation } from "../../Rule";
 export const ImportFileExistsRule: Rule = {
     name: "import-file-exists",
     create: ({ workspace }) => {
-        const absoluteServiceFilePaths = Object.keys(workspace.serviceFiles).map((relativeFilepath) => {
-            return join(workspace.absolutePathToDefinition, RelativeFilePath.of(relativeFilepath));
+        const relativePaths = [
+            ...Object.keys(workspace.serviceFiles),
+            ...Object.keys(workspace.importedServiceFiles),
+            ...Object.keys(workspace.packageMarkers),
+        ];
+
+        const absolutePaths = new Set<string>();
+        relativePaths.forEach((relativeFilepath) => {
+            const absolutePath = join(workspace.absolutePathToDefinition, RelativeFilePath.of(relativeFilepath));
+            absolutePaths.add(absolutePath);
         });
+
         return {
             serviceFile: {
                 import: async ({ importedAs, importPath }, { relativeFilepath }) => {
@@ -17,7 +26,7 @@ export const ImportFileExistsRule: Rule = {
                         dirname(relativeFilepath),
                         RelativeFilePath.of(importPath)
                     );
-                    const serviceFilePresent = absoluteServiceFilePaths.includes(importAbsoluteFilepath);
+                    const serviceFilePresent = absolutePaths.has(importAbsoluteFilepath);
                     if (!serviceFilePresent) {
                         violations.push({
                             severity: "error",
