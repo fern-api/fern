@@ -1,6 +1,7 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { Project } from "@fern-api/project-loader";
 import { createFiddleService } from "@fern-api/services";
+import { YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { readFile } from "fs/promises";
@@ -38,6 +39,7 @@ export async function registerApiDefinitions({
                     apiId: FernFiddle.ApiId(workspace.rootApiFile.contents.name),
                     version,
                     cliVersion: cliContext.environment.packageVersion,
+                    yamlSchemaVersion: `${YAML_SCHEMA_VERSION}`,
                 });
                 if (!registerApiResponse.ok) {
                     registerApiResponse.error._visit({

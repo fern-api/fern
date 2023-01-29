@@ -11,7 +11,7 @@ export {
 export { type NodePath } from "./ast/NodePath";
 export { visitFernRootApiFileYamlAst } from "./ast/visitFernRootApiFileYamlAst";
 export { visitFernServiceFileYamlAst } from "./ast/visitFernServiceFileYamlAst";
-export { EXAMPLE_REFERENCE_PREFIX } from "./constants";
+export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
 export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
