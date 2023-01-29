@@ -37,39 +37,39 @@ export abstract class AbstractAdminService {
 
     public abstract updateTestSubmissionStatus(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, TraceApi.TestSubmissionStatus, undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.TestSubmissionStatus, {}>): Promise<void>;
 
     public abstract sendTestSubmissionUpdate(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, TraceApi.TestSubmissionUpdate, undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.TestSubmissionUpdate, {}>): Promise<void>;
 
     public abstract updateWorkspaceSubmissionStatus(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, TraceApi.WorkspaceSubmissionStatus, undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.WorkspaceSubmissionStatus, {}>): Promise<void>;
 
     public abstract sendWorkspaceSubmissionUpdate(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, TraceApi.WorkspaceSubmissionUpdate, undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.WorkspaceSubmissionUpdate, {}>): Promise<void>;
 
     public abstract storeTracedTestCase(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: string;
-    }, TraceApi.StoreTracedTestCaseRequest, undefined, {
+    }, undefined, TraceApi.StoreTracedTestCaseRequest, {
         \\"some-query-param\\"?: string | null;
     }>): Promise<void>;
 
     public abstract storeTracedTestCaseV2(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: serializers.v2.TestCaseId.Raw;
-    }, TraceApi.TraceResponseV2[], undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.TraceResponseV2[], {}>): Promise<void>;
 
     public abstract storeTracedWorkspace(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, TraceApi.StoreTracedWorkspaceRequest, undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.StoreTracedWorkspaceRequest, {}>): Promise<void>;
 
     public abstract storeTracedWorkspaceV2(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, TraceApi.TraceResponseV2[], undefined, {}>): Promise<void>;
+    }, undefined, TraceApi.TraceResponseV2[], {}>): Promise<void>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -1392,9 +1392,9 @@ export abstract class AbstractHomepageProblemService {
     static ROUTE = \\"/homepage-problems\\";
     router = express.Router();
 
-    public abstract getHomepageProblems(request: express.Request<{}, undefined, TraceApi.ProblemId[], {}>): Promise<TraceApi.ProblemId[]>;
+    public abstract getHomepageProblems(request: express.Request<{}, TraceApi.ProblemId[], undefined, {}>): Promise<TraceApi.ProblemId[]>;
 
-    public abstract setHomepageProblems(request: express.Request<{}, TraceApi.ProblemId[], undefined, {}>): Promise<void>;
+    public abstract setHomepageProblems(request: express.Request<{}, undefined, TraceApi.ProblemId[], {}>): Promise<void>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -1529,7 +1529,7 @@ export abstract class AbstractMigrationInfoService {
     static ROUTE = \\"/migration-info\\";
     router = express.Router();
 
-    public abstract getAttemptedMigrations(request: express.Request<{}, undefined, TraceApi.Migration[], {}>): Promise<TraceApi.Migration[]>;
+    public abstract getAttemptedMigrations(request: express.Request<{}, TraceApi.Migration[], undefined, {}>): Promise<TraceApi.Migration[]>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -1635,14 +1635,14 @@ export abstract class AbstractPlaylistCrudService {
 
     public abstract createPlaylist(request: express.Request<{
         serviceParam: number;
-    }, TraceApi.PlaylistCreateRequest, TraceApi.Playlist, {
+    }, TraceApi.Playlist, TraceApi.PlaylistCreateRequest, {
         \\"multiple\\": number;
         \\"multipleOptional\\"?: boolean | null;
     }>): Promise<TraceApi.Playlist>;
 
     public abstract getPlaylists(request: express.Request<{
         serviceParam: number;
-    }, undefined, TraceApi.Playlist[], {
+    }, TraceApi.Playlist[], undefined, {
         \\"limit\\"?: number | null;
         \\"otherField\\": string;
     }>): Promise<TraceApi.Playlist[]>;
@@ -1650,12 +1650,12 @@ export abstract class AbstractPlaylistCrudService {
     public abstract getPlaylist(request: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
-    }, undefined, TraceApi.Playlist, {}>): Promise<TraceApi.Playlist>;
+    }, TraceApi.Playlist, undefined, {}>): Promise<TraceApi.Playlist>;
 
     public abstract updatePlaylist(request: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
-    }, TraceApi.UpdatePlaylistRequest | undefined, TraceApi.Playlist | undefined, {}>): Promise<TraceApi.Playlist | undefined>;
+    }, TraceApi.Playlist | undefined, TraceApi.UpdatePlaylistRequest | undefined, {}>): Promise<TraceApi.Playlist | undefined>;
 
     public abstract deletePlaylist(request: express.Request<{
         serviceParam: number;
@@ -2045,17 +2045,17 @@ export abstract class AbstractProblemCrudService {
     static ROUTE = \\"/problem-crud\\";
     router = express.Router();
 
-    public abstract createProblem(request: express.Request<{}, TraceApi.CreateProblemRequest, TraceApi.CreateProblemResponse, {}>): Promise<TraceApi.CreateProblemResponse>;
+    public abstract createProblem(request: express.Request<{}, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, {}>): Promise<TraceApi.CreateProblemResponse>;
 
     public abstract updateProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.CreateProblemRequest, TraceApi.UpdateProblemResponse, {}>): Promise<TraceApi.UpdateProblemResponse>;
+    }, TraceApi.UpdateProblemResponse, TraceApi.CreateProblemRequest, {}>): Promise<TraceApi.UpdateProblemResponse>;
 
     public abstract deleteProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
     }, undefined, undefined, {}>): Promise<void>;
 
-    public abstract getDefaultStarterFiles(request: express.Request<{}, TraceApi.GetDefaultStarterFilesRequest, TraceApi.GetDefaultStarterFilesResponse, {}>): Promise<TraceApi.GetDefaultStarterFilesResponse>;
+    public abstract getDefaultStarterFiles(request: express.Request<{}, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, {}>): Promise<TraceApi.GetDefaultStarterFilesResponse>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -2596,17 +2596,17 @@ export abstract class AbstractExecutionSesssionManagementService {
 
     public abstract createExecutionSession(request: express.Request<{
         language: serializers.Language.Raw;
-    }, undefined, TraceApi.ExecutionSessionResponse, {}>): Promise<TraceApi.ExecutionSessionResponse>;
+    }, TraceApi.ExecutionSessionResponse, undefined, {}>): Promise<TraceApi.ExecutionSessionResponse>;
 
     public abstract getExecutionSession(request: express.Request<{
         sessionId: string;
-    }, undefined, TraceApi.ExecutionSessionResponse | undefined, {}>): Promise<TraceApi.ExecutionSessionResponse | undefined>;
+    }, TraceApi.ExecutionSessionResponse | undefined, undefined, {}>): Promise<TraceApi.ExecutionSessionResponse | undefined>;
 
     public abstract stopExecutionSession(request: express.Request<{
         sessionId: string;
     }, undefined, undefined, {}>): Promise<void>;
 
-    public abstract getExecutionSessionsState(request: express.Request<{}, undefined, TraceApi.GetExecutionSessionStateResponse, {}>): Promise<TraceApi.GetExecutionSessionStateResponse>;
+    public abstract getExecutionSessionsState(request: express.Request<{}, TraceApi.GetExecutionSessionStateResponse, undefined, {}>): Promise<TraceApi.GetExecutionSessionStateResponse>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -5627,7 +5627,7 @@ export abstract class AbstractSysPropCrudService {
         numWarmInstances: number;
     }, undefined, undefined, {}>): Promise<void>;
 
-    public abstract getNumWarmInstances(request: express.Request<{}, undefined, Record<TraceApi.Language, number | undefined>, {}>): Promise<Record<TraceApi.Language, number | undefined>>;
+    public abstract getNumWarmInstances(request: express.Request<{}, Record<TraceApi.Language, number | undefined>, undefined, {}>): Promise<Record<TraceApi.Language, number | undefined>>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -5707,18 +5707,18 @@ export abstract class AbstractProblemInfoServicV2 {
     static ROUTE = \\"/problems-v2\\";
     router = express.Router();
 
-    public abstract getLightweightProblems(request: express.Request<{}, undefined, TraceApi.v2.LightweightProblemInfoV2[], {}>): Promise<TraceApi.v2.LightweightProblemInfoV2[]>;
+    public abstract getLightweightProblems(request: express.Request<{}, TraceApi.v2.LightweightProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.LightweightProblemInfoV2[]>;
 
-    public abstract getProblems(request: express.Request<{}, undefined, TraceApi.v2.ProblemInfoV2[], {}>): Promise<TraceApi.v2.ProblemInfoV2[]>;
+    public abstract getProblems(request: express.Request<{}, TraceApi.v2.ProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.ProblemInfoV2[]>;
 
     public abstract getLatestProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, undefined, TraceApi.v2.ProblemInfoV2, {}>): Promise<TraceApi.v2.ProblemInfoV2>;
+    }, TraceApi.v2.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.ProblemInfoV2>;
 
     public abstract getProblemVersion(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
-    }, undefined, TraceApi.v2.ProblemInfoV2, {}>): Promise<TraceApi.v2.ProblemInfoV2>;
+    }, TraceApi.v2.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.ProblemInfoV2>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)
@@ -6922,18 +6922,18 @@ export abstract class AbstractProblemInfoServicV2 {
     static ROUTE = \\"/problems-v2\\";
     router = express.Router();
 
-    public abstract getLightweightProblems(request: express.Request<{}, undefined, TraceApi.v2.v3.LightweightProblemInfoV2[], {}>): Promise<TraceApi.v2.v3.LightweightProblemInfoV2[]>;
+    public abstract getLightweightProblems(request: express.Request<{}, TraceApi.v2.v3.LightweightProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.v3.LightweightProblemInfoV2[]>;
 
-    public abstract getProblems(request: express.Request<{}, undefined, TraceApi.v2.v3.ProblemInfoV2[], {}>): Promise<TraceApi.v2.v3.ProblemInfoV2[]>;
+    public abstract getProblems(request: express.Request<{}, TraceApi.v2.v3.ProblemInfoV2[], undefined, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2[]>;
 
     public abstract getLatestProblem(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, undefined, TraceApi.v2.v3.ProblemInfoV2, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
+    }, TraceApi.v2.v3.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
 
     public abstract getProblemVersion(request: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
-    }, undefined, TraceApi.v2.v3.ProblemInfoV2, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
+    }, TraceApi.v2.v3.ProblemInfoV2, undefined, {}>): Promise<TraceApi.v2.v3.ProblemInfoV2>;
 
     public addMiddleware(handler: express.RequestHandler): void {
         this.router.use(handler)

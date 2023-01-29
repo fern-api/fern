@@ -25,8 +25,8 @@ export class ExpressImpl extends ExternalDependency implements Express {
                         ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Request"),
                         [
                             pathParameters ?? ts.factory.createTypeLiteralNode([]),
-                            request ?? ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("undefined")),
                             response ?? ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("undefined")),
+                            request ?? ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("undefined")),
                             queryParameters ?? ts.factory.createTypeLiteralNode([]),
                         ]
                     );
