@@ -21,7 +21,8 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
     }
 
     public getExportedName(name: DeclaredServiceName): string {
-        return `Abstract${name.name.pascalCase.unsafeName}`;
+        const lastFernFilepathPart = name.fernFilepath[name.fernFilepath.length - 1];
+        return `Abstract${lastFernFilepathPart != null ? lastFernFilepathPart.pascalCase.unsafeName : "Root"}Service`;
     }
 
     public getReferenceToService(args: DeclarationReferencer.getReferenceTo.Options<DeclaredServiceName>): Reference {

@@ -1,0 +1,89 @@
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    getAll:
+      path: /entities
+      method: GET
+      docs: Get all entities
+      response: list<Entity>
+    create:
+      path: /entity
+      method: POST
+      request: Entity
+      response: Entity
+    get:
+      path: /entity/{entityId}
+      path-parameters:
+        entityId: EntityId
+      method: GET
+      docs: Get entity
+      response: Entity
+    update:
+      path: /entity/{entityId}
+      path-parameters:
+        entityId: EntityId
+      method: POST
+      docs: Update entity
+      request: Entity
+      response: Entity
+    delete:
+      path: /entity/{entityId}
+      path-parameters:
+        entityId: EntityId
+      method: DELETE
+      docs: Delete entity
+    acceptTermsOfService:
+      path: /entity/{entityId}/accept-tos
+      path-parameters:
+        entityId: EntityId
+      method: POST
+      docs: End user accepts Terms of Service
+
+types:
+  Entity:
+    properties:
+      id: optional<EntityId>
+      accountType: string
+      name: optional<string>
+      email: optional<string>
+      profile: Profile
+      moovStatus: optional<string>
+      ownersProvided: optional<boolean>
+      accpetedMoovTos: optional<boolean>
+      createdAt: optional<string>
+      updatedAt: optional<string>
+
+  EntityId: string
+
+  Profile:
+    properties:
+      business: optional<BusinessProfile>
+      individual: optional<IndividualProfile>
+
+  BusinessProfile:
+    properties:
+      email: string
+      phone: commons.PhoneNumber
+      businessType: string
+      legalBusinessName: string
+      doingBusinessAs: string
+      website: string
+      ownersProvided: boolean
+      taxId: TaxID
+      address: commons.Address
+
+  IndividualProfile:
+    properties:
+      email: string
+      phone: commons.PhoneNumber
+      name: commons.FullName
+      birthdate: commons.BirthDate
+      address: commons.Address
+
+  TaxID:
+    properties:
+      ein: string

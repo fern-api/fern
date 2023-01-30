@@ -1,0 +1,74 @@
+imports:
+  commons: commons.yml
+  entity: entity.yml
+service:
+  auth: true
+  base-path: /api/entity/{entityId}
+  path-parameters:
+    entityId: entity.EntityId
+  endpoints:
+    getAll:
+      path: /representatives
+      docs: Get representatives for an entity
+      method: GET
+      response: list<Representative>
+    create:
+      path: /representative
+      docs: Create representative
+      method: POST
+      request: Representative
+      response: Representative
+    get:
+      path: /representative/{representativeId}
+      method: GET
+      docs: Get representative
+      path-parameters:
+        representativeId: RepresentativeId
+      response: Representative
+    delete:
+      path: /representative/{representativeId}
+      method: DELETE
+      docs: Delete representative
+      path-parameters:
+        representativeId: RepresentativeId
+
+types:
+  Representative:
+    properties:
+      id: optional<RepresentativeId>
+      name: commons.FullName
+      phone: commons.PhoneNumber
+      email: string
+      address: commons.Address
+      birthDateProvided: optional<boolean>
+      governmentIDProvided: optional<boolean>
+      birthDate: optional<commons.BirthDate>
+      governmentID: optional<IndividualGovernmentId>
+      responsibilities: optional<Responsibilities>
+      createdOn: optional<string>
+      updatedOn: optional<string>
+      disabledOn: optional<string>
+
+  RepresentativeId: string
+
+  Responsibilities:
+    properties:
+      jobTitle: optional<string>
+      isController: optional<boolean>
+      isOwner: optional<boolean>
+      ownershipPercentage: optional<double>
+
+  IndividualGovernmentId:
+    properties:
+      ssn: SocialSecurityNumber
+      itin: ITIN
+
+  SocialSecurityNumber:
+    properties:
+      full: string
+      lastFour: string
+
+  ITIN:
+    properties:
+      full: string
+      lastFour: string

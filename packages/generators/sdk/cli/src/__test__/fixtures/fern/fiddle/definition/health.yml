@@ -1,9 +1,7 @@
-services:
-  http:
-    HealthCheckService:
-      auth: false
-      base-path: /api/health
-      endpoints:
-        status:
-          method: GET
-          path: /
+service:
+  auth: false
+  base-path: /api/health
+  endpoints:
+    status:
+      method: GET
+      path: /

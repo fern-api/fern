@@ -1,0 +1,77 @@
+imports:
+  entity: entity.yml
+  paymentMethod: payment-method.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    getInvoices:
+      path: /entity/{entityId}/invoices
+      method: GET
+      docs: Get invoices for an entity
+      path-parameters:
+        entityId: entity.EntityId
+      response: list<Invoice>
+    getToken:
+      path: /entity/{entityId}/token
+      method: GET
+      docs: Get JWT token for entity
+      path-parameters:
+        entityId: entity.EntityId
+    create:
+      path: /invoice
+      method: POST
+      docs: Create invoice
+      request:
+        body: Invoice
+      response: Invoice
+    get:
+      path: /invoice/{invoiceId}
+      method: GET
+      docs: Get invoice
+      path-parameters:
+        invoiceId: InvoiceId
+      response: Invoice
+    update:
+      path: /invoice/{invoiceId}
+      method: POST
+      docs: Update invoice
+      path-parameters:
+        invoiceId: InvoiceId
+      request:
+        body: Invoice
+      response: Invoice
+    delete:
+      path: /invoice/{invoiceId}
+      method: DELETE
+      docs: Delete invoice
+      path-parameters:
+        invoiceId: InvoiceId
+    getVendorLink:
+      path: /invoice/{invoiceId}/vendorlink
+      method: GET
+      docs: Get temporary link for vendor to accept payment
+      path-parameters:
+        invoiceId: InvoiceId
+types:
+  Invoice:
+    properties:
+      id: optional<InvoiceId>
+      status: optional<string>
+      amount: optional<double>
+      currency: optional<string>
+      dueDate: optional<string>
+      invoiceNumber: optional<string>
+      noteToSelf: optional<string>
+      createdAt: optional<string>
+      updatedAt: optional<string>
+      vendorId: optional<string>
+      vendor: optional<entity.Entity>
+      payerId: optional<string>
+      payer: optional<entity.Entity>
+      paymentSource: optional<paymentMethod.PaymentMethod>
+      paymentSourceId: optional<string>
+      paymentDestination: optional<paymentMethod.PaymentMethod>
+      paymentDestinationId: optional<string>
+  InvoiceId: string

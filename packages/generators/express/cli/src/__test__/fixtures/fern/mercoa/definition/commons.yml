@@ -1,0 +1,27 @@
+types:
+  FullName:
+    properties:
+      firstName: string
+      middleName: optional<string>
+      lastName: string
+      suffix: optional<string>
+
+  BirthDate:
+    properties:
+      day: optional<integer>
+      month: optional<integer>
+      year: optional<integer>
+
+  Address:
+    properties:
+      addressLine1: string
+      addressLine2: optional<string>
+      city: string
+      stateOrProvince: string
+      postalCode: string
+      country: optional<string>
+
+  PhoneNumber:
+    properties:
+      countryCode: string
+      number: string

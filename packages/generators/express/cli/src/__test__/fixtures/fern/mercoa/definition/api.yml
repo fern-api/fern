@@ -1,0 +1,7 @@
+name: api
+
+default-environment: Production
+environments:
+  Production: https://www.mercoa.com/api
+
+auth: bearer

@@ -104,11 +104,11 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
 
     private getImportAliasForService(service: HttpService): string {
         const allPartsButLast = [...service.name.fernFilepath];
-        allPartsButLast.pop();
+        const lastPart = allPartsButLast.pop();
 
         return [
             ...service.name.fernFilepath.slice(0, -1).map((part) => part.camelCase.unsafeName),
-            `Abstract${service.name.name.pascalCase.unsafeName}`,
+            `Abstract${lastPart != null ? lastPart.pascalCase.unsafeName : "Root"}Service`,
         ].join("_");
     }
 }

@@ -23,48 +23,46 @@ types:
       expired: {}
       revoked: {}
 
-services:
-  http:
-    TokenService:
-      auth: false
-      url: ServerB
-      base-path: /tokens
-      endpoints:
-        create:
-          method: POST
-          path: /create
-          request:
-            name: CreateTokenRequest
-            body:
-              properties:
-                ownerId: owner.OwnerId
-                description: optional<string>
-          response: CreateTokenResponse
-          errors:
-            - owner.OwnerNotFoundError
-
-        getTokenMetadata:
-          method: POST
-          path: /metadata
-          request:
-            name: GetTokenMetadataRequest
-            body:
-              properties:
-                token: string
-          response: TokenMetadata
-          errors:
-            - TokenNotFoundError
-
-        # add paging
-        getTokensForOwner:
-          method: GET
-          path: /owner/{ownerId}
-          path-parameters:
+service:
+  auth: false
+  url: ServerB
+  base-path: /tokens
+  endpoints:
+    create:
+      method: POST
+      path: /create
+      request:
+        name: CreateTokenRequest
+        body:
+          properties:
             ownerId: owner.OwnerId
-          response: list<TokenMetadata>
-          errors:
-            - owner.OwnerNotFoundError
-            - UnknownError
+            description: optional<string>
+      response: CreateTokenResponse
+      errors:
+        - owner.OwnerNotFoundError
+
+    getTokenMetadata:
+      method: POST
+      path: /metadata
+      request:
+        name: GetTokenMetadataRequest
+        body:
+          properties:
+            token: string
+      response: TokenMetadata
+      errors:
+        - TokenNotFoundError
+
+    # add paging
+    getTokensForOwner:
+      method: GET
+      path: /owner/{ownerId}
+      path-parameters:
+        ownerId: owner.OwnerId
+      response: list<TokenMetadata>
+      errors:
+        - owner.OwnerNotFoundError
+        - UnknownError
 
 errors:
   TokenNotFoundError:

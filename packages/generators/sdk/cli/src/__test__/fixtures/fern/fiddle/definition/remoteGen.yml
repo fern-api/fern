@@ -210,66 +210,64 @@ errors:
     type: InsufficientPermissionsDetails
     status-code: 403
 
-services:
-  http:
-    RemoteGenerationService:
-      auth: false
-      base-path: /api/remote-gen
-      endpoints:
-        createJob:
-          method: POST
-          path: /create-job
-          request:
-            name: CreateJobRequest
-            body:
-              properties:
-                apiName: string
-                organizationName: string
-                version: optional<string>
-                generators: list<GeneratorConfig>
-          response: CreateJobResponse
-          errors:
-            - IllegalApiNameError
-            - GeneratorsDoNotExistError
-            - CannotPublishToNpmScope
-            - CannotPublishToMavenGroup
-            - InsufficientPermissions
+service:
+  auth: false
+  base-path: /api/remote-gen
+  endpoints:
+    createJob:
+      method: POST
+      path: /create-job
+      request:
+        name: CreateJobRequest
+        body:
+          properties:
+            apiName: string
+            organizationName: string
+            version: optional<string>
+            generators: list<GeneratorConfig>
+      response: CreateJobResponse
+      errors:
+        - IllegalApiNameError
+        - GeneratorsDoNotExistError
+        - CannotPublishToNpmScope
+        - CannotPublishToMavenGroup
+        - InsufficientPermissions
 
-        createJobV2:
-          method: POST
-          path: /create-job-v2
-          request:
-            name: CreateJobRequestV2
-            body:
-              properties:
-                apiName: string
-                organizationName: string
-                version: optional<string>
-                generators: list<GeneratorConfigV2>
-                uploadToS3:
-                  type: optional<boolean>
-                  docs: defaults to False
-          response: CreateJobResponse
-          errors:
-            - IllegalApiNameError
-            - GeneratorsDoNotExistError
-            - CannotPublishToNpmScope
-            - CannotPublishToMavenGroup
-            - InsufficientPermissions
+    createJobV2:
+      method: POST
+      path: /create-job-v2
+      request:
+        name: CreateJobRequestV2
+        body:
+          properties:
+            apiName: string
+            organizationName: string
+            version: optional<string>
+            generators: list<GeneratorConfigV2>
+            uploadToS3:
+              type: optional<boolean>
+              docs: defaults to False
+      response: CreateJobResponse
+      errors:
+        - IllegalApiNameError
+        - GeneratorsDoNotExistError
+        - CannotPublishToNpmScope
+        - CannotPublishToMavenGroup
+        - InsufficientPermissions
 
-        #        startJob:
-        #          method: POST
-        #          path: /jobs/{jobId}/start
-        #          path-parameters:
-        #            jobId: RemoteGenJobId
-        #          request: File
+    #        startJob:
+    #          method: POST
+    #          path: /jobs/{jobId}/start
+    #          path-parameters:
+    #            jobId: RemoteGenJobId
+    #          request: File
 
-        getJobStatus:
-          method: POST
-          path: /jobs/{jobId}/status
-          path-parameters:
-            jobId: RemoteGenJobId
-          response: map<RemoteGenTaskId, Task>
+    getJobStatus:
+      method: POST
+      path: /jobs/{jobId}/status
+      path-parameters:
+        jobId: RemoteGenJobId
+      response: map<RemoteGenTaskId, Task>
 #        downloadFiles:
 #          method: POST
 #          path: /tasks/{taskId}/download

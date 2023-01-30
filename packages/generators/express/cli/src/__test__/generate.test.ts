@@ -17,13 +17,10 @@ interface FixtureInfo {
 
 const FIXTURES: FixtureInfo[] = [
     {
-        path: "trace",
-        orgName: "trace",
+        path: "mercoa",
+        orgName: "mercoa",
         outputMode: "local",
         apiName: "api",
-        customConfig: {
-            useBrandedStringAliases: true,
-        },
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
