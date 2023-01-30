@@ -10,6 +10,11 @@ const FIXTURES: Fixture[] = [
         generationLanguage: undefined,
         audiences: ["public"],
     },
+    {
+        name: "packages",
+        generationLanguage: undefined,
+        audiences: undefined,
+    },
 ];
 
 interface Fixture {
@@ -41,9 +46,6 @@ describe("generateIntermediateRepresentation", () => {
                 audiences: fixture.audiences,
             });
             expect(intermediateRepresentation).toMatchSnapshot();
-            expect(intermediateRepresentation.types.some((type) => type.name.name.originalName === "Imported")).toBe(
-                true
-            );
         });
     }
 });

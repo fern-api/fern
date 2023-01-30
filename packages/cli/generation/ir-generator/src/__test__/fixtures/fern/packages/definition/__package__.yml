@@ -1,0 +1,4 @@
+imports:
+  commons: commons.yml
+types:
+  MyAlias: commons.CommonType

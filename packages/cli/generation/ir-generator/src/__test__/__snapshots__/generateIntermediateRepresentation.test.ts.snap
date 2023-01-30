@@ -427,3 +427,402 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
   ],
 }
 `;
+
+exports[`generateIntermediateRepresentation packages 1`] = `
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "packages",
+      "unsafeName": "packages",
+    },
+    "originalName": "packages",
+    "pascalCase": {
+      "safeName": "Packages",
+      "unsafeName": "Packages",
+    },
+    "screamingSnakeCase": {
+      "safeName": "PACKAGES",
+      "unsafeName": "PACKAGES",
+    },
+    "snakeCase": {
+      "safeName": "packages",
+      "unsafeName": "packages",
+    },
+  },
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": undefined,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": [],
+  "headers": [],
+  "sdkConfig": {
+    "isAuthMandatory": false,
+  },
+  "services": [],
+  "types": [
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+        "name": {
+          "camelCase": {
+            "safeName": "commonType",
+            "unsafeName": "commonType",
+          },
+          "originalName": "CommonType",
+          "pascalCase": {
+            "safeName": "CommonType",
+            "unsafeName": "CommonType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "COMMON_TYPE",
+            "unsafeName": "COMMON_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "common_type",
+            "unsafeName": "common_type",
+          },
+        },
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": [
+          {
+            "camelCase": {
+              "safeName": "importer",
+              "unsafeName": "importer",
+            },
+            "originalName": "importer",
+            "pascalCase": {
+              "safeName": "Importer",
+              "unsafeName": "Importer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "IMPORTER",
+              "unsafeName": "IMPORTER",
+            },
+            "snakeCase": {
+              "safeName": "importer",
+              "unsafeName": "importer",
+            },
+          },
+        ],
+        "name": {
+          "camelCase": {
+            "safeName": "myOtherAlias",
+            "unsafeName": "myOtherAlias",
+          },
+          "originalName": "MyOtherAlias",
+          "pascalCase": {
+            "safeName": "MyOtherAlias",
+            "unsafeName": "MyOtherAlias",
+          },
+          "screamingSnakeCase": {
+            "safeName": "MY_OTHER_ALIAS",
+            "unsafeName": "MY_OTHER_ALIAS",
+          },
+          "snakeCase": {
+            "safeName": "my_other_alias",
+            "unsafeName": "my_other_alias",
+          },
+        },
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": [],
+          "name": {
+            "camelCase": {
+              "safeName": "myAlias",
+              "unsafeName": "myAlias",
+            },
+            "originalName": "MyAlias",
+            "pascalCase": {
+              "safeName": "MyAlias",
+              "unsafeName": "MyAlias",
+            },
+            "screamingSnakeCase": {
+              "safeName": "MY_ALIAS",
+              "unsafeName": "MY_ALIAS",
+            },
+            "snakeCase": {
+              "safeName": "my_alias",
+              "unsafeName": "my_alias",
+            },
+          },
+        },
+        {
+          "fernFilepath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+          "name": {
+            "camelCase": {
+              "safeName": "commonType",
+              "unsafeName": "commonType",
+            },
+            "originalName": "CommonType",
+            "pascalCase": {
+              "safeName": "CommonType",
+              "unsafeName": "CommonType",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON_TYPE",
+              "unsafeName": "COMMON_TYPE",
+            },
+            "snakeCase": {
+              "safeName": "common_type",
+              "unsafeName": "common_type",
+            },
+          },
+        },
+      ],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "named",
+          "fernFilepath": [],
+          "name": {
+            "camelCase": {
+              "safeName": "myAlias",
+              "unsafeName": "myAlias",
+            },
+            "originalName": "MyAlias",
+            "pascalCase": {
+              "safeName": "MyAlias",
+              "unsafeName": "MyAlias",
+            },
+            "screamingSnakeCase": {
+              "safeName": "MY_ALIAS",
+              "unsafeName": "MY_ALIAS",
+            },
+            "snakeCase": {
+              "safeName": "my_alias",
+              "unsafeName": "my_alias",
+            },
+          },
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": [],
+        "name": {
+          "camelCase": {
+            "safeName": "myAlias",
+            "unsafeName": "myAlias",
+          },
+          "originalName": "MyAlias",
+          "pascalCase": {
+            "safeName": "MyAlias",
+            "unsafeName": "MyAlias",
+          },
+          "screamingSnakeCase": {
+            "safeName": "MY_ALIAS",
+            "unsafeName": "MY_ALIAS",
+          },
+          "snakeCase": {
+            "safeName": "my_alias",
+            "unsafeName": "my_alias",
+          },
+        },
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+          "name": {
+            "camelCase": {
+              "safeName": "commonType",
+              "unsafeName": "commonType",
+            },
+            "originalName": "CommonType",
+            "pascalCase": {
+              "safeName": "CommonType",
+              "unsafeName": "CommonType",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON_TYPE",
+              "unsafeName": "COMMON_TYPE",
+            },
+            "snakeCase": {
+              "safeName": "common_type",
+              "unsafeName": "common_type",
+            },
+          },
+        },
+      ],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "named",
+          "fernFilepath": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
+          "name": {
+            "camelCase": {
+              "safeName": "commonType",
+              "unsafeName": "commonType",
+            },
+            "originalName": "CommonType",
+            "pascalCase": {
+              "safeName": "CommonType",
+              "unsafeName": "CommonType",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON_TYPE",
+              "unsafeName": "COMMON_TYPE",
+            },
+            "snakeCase": {
+              "safeName": "common_type",
+              "unsafeName": "common_type",
+            },
+          },
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+  ],
+}
+`;
