@@ -22,6 +22,7 @@ export async function visitHttpService({
     await visitObject(service, {
         url: noop,
         "base-path": noop,
+        "display-name": noop,
         docs: createDocsVisitor(visitor, nodePath),
         availability: noop,
         headers: async (headers) => {

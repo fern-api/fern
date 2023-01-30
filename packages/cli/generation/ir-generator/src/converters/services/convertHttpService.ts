@@ -29,6 +29,7 @@ export function convertHttpService({
     return {
         ...convertDeclaration(serviceDefinition),
         name: { fernFilepath: file.fernFilepath },
+        displayName: serviceDefinition["display-name"] ?? undefined,
         baseUrl: serviceDefinition.url,
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:

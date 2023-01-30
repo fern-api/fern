@@ -72,6 +72,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         "parts": [],
       },
       "baseUrl": undefined,
+      "displayName": undefined,
       "docs": undefined,
       "endpoints": [
         {
