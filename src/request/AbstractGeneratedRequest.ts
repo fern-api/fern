@@ -1,5 +1,5 @@
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/services/http";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-v4-model/services/http";
+import { TypeDeclaration } from "@fern-fern/ir-v4-model/types";
 import {
     PostmanHeader,
     PostmanMethod,

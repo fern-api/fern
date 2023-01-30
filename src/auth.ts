@@ -1,5 +1,5 @@
-import { AuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpHeader } from "@fern-fern/ir-model/services/http";
+import { AuthScheme } from "@fern-fern/ir-v4-model/auth";
+import { HttpHeader } from "@fern-fern/ir-v4-model/services/http";
 import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/resources";
 import { getReferenceToVariable } from "./utils";
 

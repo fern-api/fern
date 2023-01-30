@@ -1,8 +1,8 @@
-import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/services/http";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import { ApiAuth, AuthScheme } from "@fern-fern/ir-v4-model/auth";
+import { ErrorDeclaration } from "@fern-fern/ir-v4-model/errors";
+import { IntermediateRepresentation } from "@fern-fern/ir-v4-model/ir";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-v4-model/services/http";
+import { TypeDeclaration } from "@fern-fern/ir-v4-model/types";
 import {
     PostmanCollectionEndpointItem,
     PostmanCollectionItem,
@@ -85,12 +85,23 @@ function getCollectionItems({
     const rootItems: PostmanCollectionItem[] = [];
     for (const httpService of ir.services.http) {
         let container = rootItems;
-        for (const fernFilepathPart of httpService.name.fernFilepathV2) {
+        for (let i = 0; i < httpService.name.fernFilepathV2.length; ++i) {
+            const fernFilepathPart = httpService.name.fernFilepathV2[i];
+            if (fernFilepathPart == null) {
+                continue;
+            }
             const existingContainerForFernFilepathPart = rootItems
                 .filter((item): item is PostmanCollectionItem.Container => item.type === "container")
                 .find((item) => item.name === startCase(fernFilepathPart.unsafeName.originalValue));
             if (existingContainerForFernFilepathPart != null) {
                 container = existingContainerForFernFilepathPart.item;
+            } else if (i == httpService.name.fernFilepathV2.length - 1 && httpService.displayName != null) {
+                const newContainer = PostmanCollectionItem.container({
+                    name: httpService.displayName,
+                    item: [],
+                });
+                container.push(newContainer);
+                container = newContainer.item;
             } else {
                 const newContainer = PostmanCollectionItem.container({
                     name: startCase(fernFilepathPart.unsafeName.originalValue),

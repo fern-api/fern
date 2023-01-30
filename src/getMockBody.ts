@@ -1,4 +1,4 @@
-import { HttpRequestBody } from "@fern-fern/ir-model/services/http";
+import { HttpRequestBody } from "@fern-fern/ir-v4-model/services/http";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -8,7 +8,7 @@ import {
     Type,
     TypeDeclaration,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-v4-model/types";
 import { isEqual } from "lodash";
 
 const ISO_DATE = "1994-11-05T13:15:30Z";

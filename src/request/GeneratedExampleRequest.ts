@@ -4,7 +4,7 @@ import {
     ExamplePathParameter,
     HttpHeader,
     PathParameter,
-} from "@fern-fern/ir-model/services/http";
+} from "@fern-fern/ir-v4-model/services/http";
 import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/resources";
 import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
 
