@@ -37,6 +37,15 @@ export class ExpressImpl extends ExternalDependency implements Express {
     };
 
     public readonly Response = {
+        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+            withImport(() => {
+                return ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "Response"),
+                    []
+                );
+            })
+        ),
+
         json: ({
             referenceToExpressResponse,
             valueToSend,

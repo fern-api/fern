@@ -1,5 +1,5 @@
 import { TimeoutSdkErrorContext, TimeoutSdkErrorContextMixin } from "@fern-typescript/contexts";
-import { TimeoutSdkErrorGenerator } from "@fern-typescript/generic-error-generators";
+import { TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { TimeoutSdkErrorDeclarationReferencer } from "../../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
 import { TimeoutSdkErrorContextMixinImpl } from "./TimeoutSdkErrorContextMixinImpl";

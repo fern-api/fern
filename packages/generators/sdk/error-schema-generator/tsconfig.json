@@ -5,6 +5,6 @@
   "references": [
     { "path": "../../../contexts" },
     { "path": "../../model/type-schema-generator" },
-    { "path": "../error-generator" }
+    { "path": "../sdk-error-generator" }
   ]
 }

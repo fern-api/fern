@@ -10,7 +10,7 @@ import {
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
-import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-error-generators";
+import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
@@ -80,7 +80,7 @@ export declare namespace SdkClientClassContextImpl {
 export class SdkClientClassContextImpl extends BaseContextImpl implements SdkClientClassContext {
     public readonly type: TypeContextMixinImpl;
     public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkError: SdkErrorContextMixinImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
@@ -143,7 +143,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             typeGenerator,
             typeSchemaGenerator,
         });
-        this.error = new SdkErrorContextMixinImpl({
+        this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,

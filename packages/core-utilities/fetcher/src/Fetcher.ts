@@ -22,7 +22,6 @@ export declare namespace Fetcher {
     export interface FailedStatusCodeError {
         reason: "status-code";
         statusCode: number;
-        rawBody: string | undefined;
         body: unknown;
     }
 
@@ -98,7 +97,6 @@ export const fetcher: FetchFunction = async (args) => {
                 error: {
                     reason: "status-code",
                     statusCode: response.status,
-                    rawBody: response.data,
                     body,
                 },
             };

@@ -29,7 +29,7 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
 
     protected getAdditionalDocLines(context: SdkClientClassContext): string[] {
         return this.endpoint.errors.map((error) => {
-            const referenceToError = context.error
+            const referenceToError = context.sdkError
                 .getReferenceToError(error.error)
                 .getExpression({ isForComment: true });
             return `@throws {${getTextOfTsNode(referenceToError)}}`;
@@ -59,7 +59,7 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
                 ),
                 responseBody: ts.factory.createPropertyAccessExpression(
                     referenceToError,
-                    context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.rawBody
+                    context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
                 ),
             })
         );
@@ -82,7 +82,7 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
                             ? this.getSwitchStatementForErrors({
                                   context,
                                   generateCaseBody: (error) => {
-                                      const generatedSdkError = context.error.getGeneratedSdkError(error.error);
+                                      const generatedSdkError = context.sdkError.getGeneratedSdkError(error.error);
                                       if (generatedSdkError?.type !== "class") {
                                           throw new Error("Cannot throw error because it's not a class");
                                       }
@@ -165,7 +165,7 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
                 ...this.endpoint.errors.map((error) =>
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.error.getErrorDeclaration(error.error).discriminantValue.wireValue
+                            context.sdkError.getErrorDeclaration(error.error).discriminantValue.wireValue
                         ),
                         generateCaseBody(error)
                     )

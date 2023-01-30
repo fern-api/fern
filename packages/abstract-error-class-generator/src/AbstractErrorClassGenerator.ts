@@ -1,6 +1,12 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { WithBaseContextMixin } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
+import {
+    ClassDeclaration,
+    OptionalKind,
+    ParameterDeclarationStructure,
+    PropertyDeclarationStructure,
+    ts,
+} from "ts-morph";
 
 export declare namespace AbstractErrorClassGenerator {
     export interface Init {
@@ -18,12 +24,11 @@ export abstract class AbstractErrorClassGenerator<Context extends WithBaseContex
     protected writeToSourceFile(context: Context): void {
         const class_ = context.base.sourceFile.addClass({
             name: this.errorClassName,
+            isAbstract: this.isAbstract(),
             isExported: true,
-            extends: "Error",
+            extends: getTextOfTsNode(this.getBaseClass(context)),
             properties: this.getClassProperties(context),
         });
-
-        const referenceToErrorMesssageInsideConstructor = this.getReferenceToErrorMesssageInsideConstructor(context);
 
         class_.addConstructor({
             parameters: this.getConstructorParameters(context),
@@ -32,9 +37,7 @@ export abstract class AbstractErrorClassGenerator<Context extends WithBaseContex
                     ts.factory.createCallExpression(
                         ts.factory.createSuper(),
                         undefined,
-                        referenceToErrorMesssageInsideConstructor != null
-                            ? [referenceToErrorMesssageInsideConstructor]
-                            : []
+                        this.getSuperArguments(context)
                     )
                 ),
                 ts.factory.createExpressionStatement(
@@ -56,10 +59,18 @@ export abstract class AbstractErrorClassGenerator<Context extends WithBaseContex
                 ...this.getConstructorStatements(context),
             ].map(getTextOfTsNode),
         });
+
+        this.addToClass(class_, context);
+    }
+
+    protected getBaseClass(_context: Context): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Error"));
     }
 
     protected abstract getClassProperties(context: Context): OptionalKind<PropertyDeclarationStructure>[];
     protected abstract getConstructorParameters(context: Context): OptionalKind<ParameterDeclarationStructure>[];
-    protected abstract getReferenceToErrorMesssageInsideConstructor(context: Context): ts.Expression | undefined;
+    protected abstract getSuperArguments(context: Context): ts.Expression[];
     protected abstract getConstructorStatements(context: Context): ts.Statement[];
+    protected abstract addToClass(class_: ClassDeclaration, context: Context): void;
+    protected abstract isAbstract(): boolean;
 }

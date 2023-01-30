@@ -12,27 +12,33 @@ import {
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
+import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator";
 import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
-import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators";
+import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Volume } from "memfs/lib/volume";
 import { Directory, Project, SourceFile } from "ts-morph";
 import { ExpressEndpointTypeSchemasContextImpl } from "./contexts/express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
+import { ExpressErrorContextImpl } from "./contexts/express-error/ExpressErrorContextImpl";
 import { ExpressInlinedRequestBodySchemaContextImpl } from "./contexts/express-inlined-request-body-schema/ExpressInlinedRequestBodySchemaContextImpl";
 import { ExpressInlinedRequestBodyContextImpl } from "./contexts/express-inlined-request-body/ExpressInlinedRequestBodyContextImpl";
 import { ExpressRegisterContextImpl } from "./contexts/express-register/ExpressRegisterContextImpl";
 import { ExpressServiceContextImpl } from "./contexts/express-service/ExpressServiceContextImpl";
+import { GenericAPIExpressErrorContextImpl } from "./contexts/generic-api-express-error/GenericAPIExpressErrorContextImpl";
 import { TypeSchemaContextImpl } from "./contexts/type-schema/TypeSchemaContextImpl";
 import { TypeContextImpl } from "./contexts/type/TypeContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
+import { ExpressErrorDeclarationReferencer } from "./declaration-referencers/ExpressErrorDeclarationReferencer";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 import { ExpressRegisterDeclarationReferencer } from "./declaration-referencers/ExpressRegisterDeclarationReferencer";
 import { ExpressServiceDeclarationReferencer } from "./declaration-referencers/ExpressServiceDeclarationReferencer";
+import { GenericAPIExpressErrorDeclarationReferencer } from "./declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 
 const FILE_HEADER = `/**
@@ -63,6 +69,7 @@ export class ExpressGenerator {
     private dependencyManager = new DependencyManager();
     private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
+    private errorResolver: ErrorResolver;
     private serviceResolver: ServiceResolver;
 
     private typeDeclarationReferencer: TypeDeclarationReferencer;
@@ -72,6 +79,8 @@ export class ExpressGenerator {
     private expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private expressServiceDeclarationReferencer: ExpressServiceDeclarationReferencer;
     private expressRegisterDeclarationReferencer: ExpressRegisterDeclarationReferencer;
+    private genericApiExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
+    private expressErrorDeclarationReferencer: ExpressErrorDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
@@ -81,6 +90,8 @@ export class ExpressGenerator {
     private expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
     private expressServiceGenerator: ExpressServiceGenerator;
     private expressRegisterGenerator: ExpressRegisterGenerator;
+    private genericApiExpressErrorGenerator: GenericAPIExpressErrorGenerator;
+    private expressErrorGenerator: ExpressErrorGenerator;
 
     private generatePackage: () => Promise<void>;
 
@@ -96,6 +107,7 @@ export class ExpressGenerator {
         });
         this.rootDirectory = project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
+        this.errorResolver = new ErrorResolver(intermediateRepresentation);
         this.serviceResolver = new ServiceResolver(intermediateRepresentation);
 
         const apiDirectory: ExportedDirectory[] = [
@@ -139,6 +151,14 @@ export class ExpressGenerator {
             containingDirectory: [],
             namespaceExport,
         });
+        this.genericApiExpressErrorDeclarationReferencer = new GenericAPIExpressErrorDeclarationReferencer({
+            containingDirectory: [],
+            namespaceExport,
+        });
+        this.expressErrorDeclarationReferencer = new ExpressErrorDeclarationReferencer({
+            containingDirectory: apiDirectory,
+            namespaceExport,
+        });
 
         this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
         this.typeSchemaGenerator = new TypeSchemaGenerator();
@@ -150,6 +170,10 @@ export class ExpressGenerator {
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             intermediateRepresentation: this.intermediateRepresentation,
             registerFunctionName: this.expressRegisterDeclarationReferencer.getRegisterFunctionName(),
+        });
+        this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
+        this.expressErrorGenerator = new ExpressErrorGenerator({
+            useBrandedStringAliases: config.shouldUseBrandedStringAliases,
         });
 
         this.generatePackage = async () => {
@@ -165,6 +189,8 @@ export class ExpressGenerator {
         this.generateEndpointTypeSchemas();
         this.generateExpressServices();
         this.generateExpressRegister();
+        this.generateGenericApiExpressGenerator();
+        this.generateErrorDeclarations();
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
@@ -218,6 +244,33 @@ export class ExpressGenerator {
                     typeSchemaContext.typeSchema
                         .getGeneratedTypeSchema(typeDeclaration.name)
                         .writeToFile(typeSchemaContext);
+                },
+            });
+        }
+    }
+
+    private generateErrorDeclarations() {
+        for (const errorDeclaration of this.intermediateRepresentation.errors) {
+            this.withSourceFile({
+                filepath: this.expressErrorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                run: ({ sourceFile, importsManager }) => {
+                    const errorContext = new ExpressErrorContextImpl({
+                        sourceFile,
+                        coreUtilitiesManager: this.coreUtilitiesManager,
+                        dependencyManager: this.dependencyManager,
+                        fernConstants: this.intermediateRepresentation.constants,
+                        importsManager,
+                        typeResolver: this.typeResolver,
+                        typeDeclarationReferencer: this.typeDeclarationReferencer,
+                        typeGenerator: this.typeGenerator,
+                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        expressErrorGenerator: this.expressErrorGenerator,
+                        errorDeclarationReferencer: this.expressErrorDeclarationReferencer,
+                        errorResolver: this.errorResolver,
+                        genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
+                        genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
+                    });
+                    errorContext.expressError.getGeneratedExpressError(errorDeclaration.name).writeToFile(errorContext);
                 },
             });
         }
@@ -360,6 +413,11 @@ export class ExpressGenerator {
                         expressInlinedRequestBodySchemaGenerator: this.expressInlinedRequestBodySchemaGenerator,
                         expressServiceDeclarationReferencer: this.expressServiceDeclarationReferencer,
                         expressServiceGenerator: this.expressServiceGenerator,
+                        expressErrorGenerator: this.expressErrorGenerator,
+                        errorDeclarationReferencer: this.expressErrorDeclarationReferencer,
+                        errorResolver: this.errorResolver,
+                        genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
+                        genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
                     });
                     expressServiceContext.expressService
                         .getGeneratedExpressService(service.name.fernFilepath)
@@ -400,6 +458,26 @@ export class ExpressGenerator {
                 expressRegisterContext.expressRegister
                     .getGeneratedExpressRegister()
                     .writeToFile(expressRegisterContext);
+            },
+        });
+    }
+
+    private generateGenericApiExpressGenerator() {
+        this.withSourceFile({
+            filepath: this.genericApiExpressErrorDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const genericAPIExpressErrorContext = new GenericAPIExpressErrorContextImpl({
+                    sourceFile,
+                    coreUtilitiesManager: this.coreUtilitiesManager,
+                    dependencyManager: this.dependencyManager,
+                    fernConstants: this.intermediateRepresentation.constants,
+                    importsManager,
+                    genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
+                    genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
+                });
+                genericAPIExpressErrorContext.genericAPIExpressError
+                    .getGeneratedGenericAPIExpressError()
+                    .writeToFile(genericAPIExpressErrorContext);
             },
         });
     }

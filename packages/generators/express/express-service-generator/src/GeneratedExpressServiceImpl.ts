@@ -14,6 +14,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private static ROUTER_PROPERTY_NAME = "router";
     private static ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
     private static TO_ROUTER_METHOD_NAME = "toRouter";
+    private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
 
     private serviceClassName: string;
     private service: HttpService;
@@ -215,7 +216,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 this.getStatementsForTryBlock({ expressRequest, expressResponse, endpoint, context }),
                                 true
                             ),
-                            this.getCatchClause({ expressResponse, context }),
+                            this.getCatchClause({ expressResponse, context, endpoint }),
                             undefined
                         ),
                         ts.factory.createExpressionStatement(
@@ -323,9 +324,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private getCatchClause({
         expressResponse,
         context,
+        endpoint,
     }: {
         expressResponse: ts.Expression;
         context: ExpressServiceContext;
+        endpoint: HttpEndpoint;
     }): ts.CatchClause {
         const ERROR_NAME = "error";
 
@@ -343,18 +346,123 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             [ts.factory.createIdentifier(ERROR_NAME)]
                         )
                     ),
-                    ts.factory.createExpressionStatement(
-                        context.base.externalDependencies.express.Response.json({
-                            referenceToExpressResponse: context.base.externalDependencies.express.Response.status({
-                                referenceToExpressResponse: expressResponse,
-                                status: 500,
-                            }),
-                            valueToSend: ts.factory.createStringLiteral("Internal Server Error"),
-                        })
+                    ts.factory.createIfStatement(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier(ERROR_NAME),
+                            ts.factory.createToken(ts.SyntaxKind.InstanceOfKeyword),
+                            context.genericAPIExpressError.getReferenceToGenericAPIExpressError().getExpression()
+                        ),
+                        ts.factory.createBlock(
+                            [
+                                this.generateWarnForUnexpectedError(endpoint, context),
+                                ts.factory.createExpressionStatement(
+                                    context.genericAPIExpressError.getGeneratedGenericAPIExpressError().send({
+                                        error: ts.factory.createIdentifier(ERROR_NAME),
+                                        expressResponse,
+                                    })
+                                ),
+                            ],
+                            true
+                        ),
+                        ts.factory.createBlock(
+                            [
+                                ts.factory.createExpressionStatement(
+                                    context.base.externalDependencies.express.Response.json({
+                                        referenceToExpressResponse:
+                                            context.base.externalDependencies.express.Response.status({
+                                                referenceToExpressResponse: expressResponse,
+                                                status: 500,
+                                            }),
+                                        valueToSend: ts.factory.createStringLiteral("Internal Server Error"),
+                                    })
+                                ),
+                            ],
+                            true
+                        )
                     ),
                 ],
                 true
             )
+        );
+    }
+
+    private generateWarnForUnexpectedError(endpoint: HttpEndpoint, context: ExpressServiceContext): ts.Statement {
+        const warnStatement = ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier("console"),
+                    ts.factory.createIdentifier("warn")
+                ),
+                undefined,
+                [
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createTemplateExpression(
+                                ts.factory.createTemplateHead(
+                                    `Endpoint '${endpoint.name.originalName}' unexpectedly threw `
+                                ),
+                                [
+                                    ts.factory.createTemplateSpan(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedExpressServiceImpl.CATCH_BLOCK_ERROR_VARIABLE_NAME
+                                                ),
+                                                ts.factory.createIdentifier("constructor")
+                                            ),
+                                            ts.factory.createIdentifier("name")
+                                        ),
+                                        ts.factory.createTemplateTail(".")
+                                    ),
+                                ]
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                            ts.factory.createTemplateExpression(
+                                ts.factory.createTemplateHead(" If this was intentional, please add "),
+                                [
+                                    ts.factory.createTemplateSpan(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedExpressServiceImpl.CATCH_BLOCK_ERROR_VARIABLE_NAME
+                                                ),
+                                                ts.factory.createIdentifier("constructor")
+                                            ),
+                                            ts.factory.createIdentifier("name")
+                                        ),
+                                        ts.factory.createTemplateTail(" to")
+                                    ),
+                                ]
+                            )
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                        ts.factory.createStringLiteral(" the endpoint's errors list in your Fern Definition.")
+                    ),
+                ]
+            )
+        );
+
+        if (endpoint.errors.length === 0) {
+            return warnStatement;
+        }
+
+        return ts.factory.createSwitchStatement(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier(GeneratedExpressServiceImpl.CATCH_BLOCK_ERROR_VARIABLE_NAME),
+                    ts.factory.createIdentifier("constructor")
+                ),
+                ts.factory.createIdentifier("name")
+            ),
+            ts.factory.createCaseBlock([
+                ...endpoint.errors.map((error, index) =>
+                    ts.factory.createCaseClause(
+                        ts.factory.createStringLiteral(context.expressError.getErrorClassName(error.error)),
+                        index < endpoint.errors.length - 1 ? [] : [ts.factory.createBreakStatement()]
+                    )
+                ),
+                ts.factory.createDefaultClause([warnStatement]),
+            ])
         );
     }
 

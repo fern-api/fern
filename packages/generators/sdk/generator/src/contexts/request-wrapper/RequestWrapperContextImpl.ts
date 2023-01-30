@@ -34,7 +34,7 @@ export declare namespace RequestWrapperContextImpl {
 
 export class RequestWrapperContextImpl extends BaseContextImpl implements RequestWrapperContext {
     public readonly type: TypeContextMixinImpl;
-    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkError: SdkErrorContextMixinImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
 
@@ -62,7 +62,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
             typeGenerator,
             typeReferenceExampleGenerator,
         });
-        this.error = new SdkErrorContextMixinImpl({
+        this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,

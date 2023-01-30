@@ -1,11 +1,14 @@
-import { SdkErrorContext } from "@fern-typescript/contexts";
+import { GenericAPISdkErrorContextMixin, SdkErrorContext } from "@fern-typescript/contexts";
+import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
+import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
+import { GenericAPISdkErrorContextMixinImpl } from "../generic-api-sdk-error/GenericAPISdkErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "./SdkErrorContextMixinImpl";
 
@@ -18,12 +21,15 @@ export declare namespace SdkErrorContextImpl {
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
+        genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
+        genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     }
 }
 
 export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorContext {
     public readonly type: TypeContextMixinImpl;
-    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkError: SdkErrorContextMixinImpl;
+    public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
 
     constructor({
         typeResolver,
@@ -33,6 +39,8 @@ export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorCont
         sdkErrorGenerator,
         errorResolver,
         typeReferenceExampleGenerator,
+        genericAPISdkErrorDeclarationReferencer,
+        genericAPISdkErrorGenerator,
         ...superInit
     }: SdkErrorContextImpl.Init) {
         super(superInit);
@@ -44,12 +52,18 @@ export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorCont
             typeDeclarationReferencer,
             typeReferenceExampleGenerator,
         });
-        this.error = new SdkErrorContextMixinImpl({
+        this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
             sdkErrorGenerator,
             errorResolver,
+        });
+        this.genericAPISdkError = new GenericAPISdkErrorContextMixinImpl({
+            genericAPISdkErrorDeclarationReferencer,
+            genericAPISdkErrorGenerator,
+            importsManager: this.importsManager,
+            sourceFile: this.sourceFile,
         });
     }
 }

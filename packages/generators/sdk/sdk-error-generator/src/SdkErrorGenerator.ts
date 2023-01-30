@@ -1,7 +1,6 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { GeneratedSdkError, SdkErrorContext } from "@fern-typescript/contexts";
 import { TypeGenerator } from "@fern-typescript/type-generator";
-import { GeneratedNoBodySdkErrorClassImpl } from "./GeneratedNoBodySdkErrorClassImpl";
 import { GeneratedSdkErrorClassImpl } from "./GeneratedSdkErrorClassImpl";
 import { GeneratedSdkErrorTypeImpl } from "./GeneratedSdkErrorTypeImpl";
 
@@ -33,14 +32,11 @@ export class SdkErrorGenerator {
         errorName,
     }: SdkErrorGenerator.generateError.Args): GeneratedSdkError | undefined {
         if (!this.neverThrowErrors) {
-            return errorDeclaration.type != null
-                ? new GeneratedSdkErrorClassImpl({
-                      errorClassName: errorName,
-                      errorDeclaration,
-                      type: errorDeclaration.type,
-                      typeGenerator: this.typeGenerator,
-                  })
-                : new GeneratedNoBodySdkErrorClassImpl({ errorClassName: errorName, errorDeclaration });
+            return new GeneratedSdkErrorClassImpl({
+                errorClassName: errorName,
+                errorDeclaration,
+                typeGenerator: this.typeGenerator,
+            });
         }
         if (errorDeclaration.type == null) {
             return undefined;

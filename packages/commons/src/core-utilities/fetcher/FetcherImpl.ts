@@ -35,7 +35,6 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             _reasonLiteralValue: "status-code",
             statusCode: "statusCode",
             body: "body",
-            rawBody: "rawBody",
         },
         NonJsonError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("NonJsonError"),

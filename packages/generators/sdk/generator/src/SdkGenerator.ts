@@ -15,7 +15,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
-import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-error-generators";
+import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
@@ -351,8 +351,10 @@ export class SdkGenerator {
                         errorDeclarationReferencer: this.errorDeclarationReferencer,
                         sdkErrorGenerator: this.sdkErrorGenerator,
                         errorResolver: this.errorResolver,
+                        genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
+                        genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
                     });
-                    errorContext.error.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(errorContext);
+                    errorContext.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(errorContext);
                 },
             });
         }
@@ -380,6 +382,8 @@ export class SdkGenerator {
                         typeSchemaGenerator: this.typeSchemaGenerator,
                         sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
                         sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
+                        genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
+                        genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
                     });
                     sdkErrorSchemaContext.sdkErrorSchema
                         .getGeneratedSdkErrorSchema(errorDeclaration.name)

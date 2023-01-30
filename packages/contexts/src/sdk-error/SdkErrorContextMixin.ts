@@ -9,5 +9,5 @@ export interface SdkErrorContextMixin {
 }
 
 export interface WithSdkErrorContextMixin {
-    error: SdkErrorContextMixin;
+    sdkError: SdkErrorContextMixin;
 }

@@ -8,7 +8,7 @@ export class GeneratedGenericAPISdkErrorImpl
     implements GeneratedGenericAPISdkError
 {
     private static STATUS_CODE_PROPERTY_NAME = "statusCode";
-    private static RESPONSE_BODY_PROPERTY_NAME = "responseBody";
+    private static RESPONSE_BODY_PROPERTY_NAME = "body";
 
     private static MESSAGE_CONSTRUCTOR_PARAMETER_NAME = "message";
     private static STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME = GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME;
@@ -31,6 +31,22 @@ export class GeneratedGenericAPISdkErrorImpl
             responseBody: ts.Expression | undefined;
         }
     ): ts.NewExpression {
+        return ts.factory.createNewExpression(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression(),
+            undefined,
+            this.buildConstructorArguments({ message, statusCode, responseBody })
+        );
+    }
+
+    public buildConstructorArguments({
+        message,
+        statusCode,
+        responseBody,
+    }: {
+        message: ts.Expression | undefined;
+        statusCode: ts.Expression | undefined;
+        responseBody: ts.Expression | undefined;
+    }): ts.Expression[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
         if (message != null) {
             properties.push(
@@ -57,11 +73,7 @@ export class GeneratedGenericAPISdkErrorImpl
             );
         }
 
-        return ts.factory.createNewExpression(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression(),
-            undefined,
-            [ts.factory.createObjectLiteralExpression(properties, true)]
-        );
+        return [ts.factory.createObjectLiteralExpression(properties, true)];
     }
 
     protected getClassProperties(): OptionalKind<PropertyDeclarationStructure>[] {
@@ -131,7 +143,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                 GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
                             ),
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                         ),
                     ])
                 ),
@@ -139,8 +151,8 @@ export class GeneratedGenericAPISdkErrorImpl
         ];
     }
 
-    protected getReferenceToErrorMesssageInsideConstructor(): ts.Expression {
-        return ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME);
+    protected getSuperArguments(): ts.Expression[] {
+        return [ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME)];
     }
 
     protected getConstructorStatements(): ts.Statement[] {
@@ -176,68 +188,37 @@ export class GeneratedGenericAPISdkErrorImpl
                     ts.factory.createIdentifier(
                         GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
                     ),
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                    ts.factory.createIdentifier("undefined")
                 ),
                 ts.factory.createBlock(
                     [
-                        ts.factory.createTryStatement(
-                            ts.factory.createBlock(
-                                [
-                                    ts.factory.createExpressionStatement(
-                                        ts.factory.createBinaryExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createThis(),
-                                                ts.factory.createIdentifier(
-                                                    GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME
-                                                )
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                            ts.factory.createCallExpression(
-                                                ts.factory.createPropertyAccessExpression(
-                                                    ts.factory.createIdentifier("JSON"),
-                                                    ts.factory.createIdentifier("parse")
-                                                ),
-                                                undefined,
-                                                [
-                                                    ts.factory.createIdentifier(
-                                                        GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
-                                                    ),
-                                                ]
-                                            )
-                                        )
-                                    ),
-                                ],
-                                true
-                            ),
-                            ts.factory.createCatchClause(
-                                undefined,
-                                ts.factory.createBlock(
-                                    [
-                                        ts.factory.createExpressionStatement(
-                                            ts.factory.createBinaryExpression(
-                                                ts.factory.createPropertyAccessExpression(
-                                                    ts.factory.createThis(),
-                                                    ts.factory.createIdentifier(
-                                                        GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME
-                                                    )
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                                ts.factory.createIdentifier(
-                                                    GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
-                                                )
-                                            )
-                                        ),
-                                    ],
-                                    false
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    ts.factory.createIdentifier(
+                                        GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME
+                                    )
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createIdentifier(
+                                    GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
                                 )
-                            ),
-                            undefined
+                            )
                         ),
                     ],
                     true
                 )
             ),
         ];
+    }
+
+    protected addToClass(): void {
+        // no-op
+    }
+
+    protected isAbstract(): boolean {
+        return false;
     }
 }

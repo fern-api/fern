@@ -11,4 +11,9 @@ export interface GeneratedGenericAPISdkError extends GeneratedFile<GenericAPISdk
             responseBody: ts.Expression | undefined;
         }
     ) => ts.NewExpression;
+    buildConstructorArguments: (args: {
+        message: ts.Expression | undefined;
+        statusCode: ts.Expression | undefined;
+        responseBody: ts.Expression | undefined;
+    }) => ts.Expression[];
 }

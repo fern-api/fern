@@ -52,7 +52,7 @@ export class GeneratedSdkErrorSchemaImpl implements GeneratedSdkErrorSchema {
                             case "class":
                                 return context.type.getReferenceToType(type).typeNode;
                             case "type":
-                                return context.error.getReferenceToError(errorDeclaration.name).getTypeNode();
+                                return context.sdkError.getReferenceToError(errorDeclaration.name).getTypeNode();
                             default:
                                 assertNever(GeneratedSdkError);
                         }

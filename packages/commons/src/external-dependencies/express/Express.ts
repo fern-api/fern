@@ -18,6 +18,7 @@ export interface Express {
         json: (args: { referenceToExpressResponse: ts.Expression; valueToSend: ts.Expression }) => ts.Expression;
         status: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
         sendStatus: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
+        _getReferenceToType: () => ts.TypeNode;
     };
     App: {
         use: (args: { referenceToApp: ts.Expression; path: ts.Expression; router: ts.Expression }) => ts.Expression;

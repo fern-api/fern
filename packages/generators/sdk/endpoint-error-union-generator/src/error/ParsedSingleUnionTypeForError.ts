@@ -87,7 +87,7 @@ function getSingleUnionTypeGenerator({
     return new SinglePropertySingleUnionTypeGenerator<EndpointErrorUnionContext>({
         propertyName,
         getReferenceToPropertyType: (context) => {
-            const typeNode = context.error.getReferenceToError(error.error).getTypeNode();
+            const typeNode = context.sdkError.getReferenceToError(error.error).getTypeNode();
             return {
                 isOptional: false,
                 typeNode,

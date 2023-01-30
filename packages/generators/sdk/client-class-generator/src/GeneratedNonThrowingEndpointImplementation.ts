@@ -86,10 +86,7 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
         context: SdkClientClassContext;
         propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
     }) {
-        const allErrorsButLast = [...this.endpoint.errors];
-        const lastError = allErrorsButLast.pop();
-
-        if (lastError == null) {
+        if (this.endpoint.errors.length === 0) {
             throw new Error("Cannot generate switch because there are no errors defined");
         }
 
@@ -106,31 +103,27 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
                 propertyErrorDiscriminationStrategy.discriminant.wireValue
             ),
             ts.factory.createCaseBlock([
-                ...allErrorsButLast.map((error) =>
+                ...this.endpoint.errors.map((error, index) =>
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.error.getErrorDeclaration(error.error).discriminantValue.wireValue
+                            context.sdkError.getErrorDeclaration(error.error).discriminantValue.wireValue
                         ),
-                        []
+                        index < this.endpoint.errors.length - 1
+                            ? []
+                            : [
+                                  ts.factory.createReturnStatement(
+                                      context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
+                                          generatedEndpointTypeSchemas.deserializeError(
+                                              ts.factory.createAsExpression(
+                                                  referenceToErrorBody,
+                                                  generatedEndpointTypeSchemas.getReferenceToRawError(context)
+                                              ),
+                                              context
+                                          )
+                                      )
+                                  ),
+                              ]
                     )
-                ),
-                ts.factory.createCaseClause(
-                    ts.factory.createStringLiteral(
-                        context.error.getErrorDeclaration(lastError.error).discriminantValue.wireValue
-                    ),
-                    [
-                        ts.factory.createReturnStatement(
-                            context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
-                                generatedEndpointTypeSchemas.deserializeError(
-                                    ts.factory.createAsExpression(
-                                        referenceToErrorBody,
-                                        generatedEndpointTypeSchemas.getReferenceToRawError(context)
-                                    ),
-                                    context
-                                )
-                            )
-                        ),
-                    ]
                 ),
             ])
         );

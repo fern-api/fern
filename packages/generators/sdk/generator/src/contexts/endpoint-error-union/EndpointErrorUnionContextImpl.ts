@@ -29,7 +29,7 @@ export declare namespace EndpointErrorUnionContextImpl {
 
 export class EndpointErrorUnionContextImpl extends BaseContextImpl implements EndpointErrorUnionContext {
     public readonly type: TypeContextMixinImpl;
-    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkError: SdkErrorContextMixinImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
 
     constructor({
@@ -54,7 +54,7 @@ export class EndpointErrorUnionContextImpl extends BaseContextImpl implements En
             typeGenerator,
             typeReferenceExampleGenerator,
         });
-        this.error = new SdkErrorContextMixinImpl({
+        this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,

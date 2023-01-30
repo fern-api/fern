@@ -26,11 +26,19 @@ export class GeneratedTimeoutSdkErrorImpl
         return [];
     }
 
-    protected getReferenceToErrorMesssageInsideConstructor(): ts.Expression {
-        return ts.factory.createStringLiteral("Timeout");
+    protected getSuperArguments(): ts.Expression[] {
+        return [ts.factory.createStringLiteral("Timeout")];
     }
 
     protected getConstructorStatements(): ts.Statement[] {
         return [];
+    }
+
+    protected addToClass(): void {
+        // no-op
+    }
+
+    protected isAbstract(): boolean {
+        return false;
     }
 }

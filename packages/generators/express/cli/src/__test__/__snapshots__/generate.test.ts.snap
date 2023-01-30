@@ -30,6 +30,7 @@ Array [
 import express from \\"express\\";
 import * as serializers from \\"../../../../serialization\\";
 import { TraceApi } from \\"../../../..\\";
+import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractAdminService {
     private router = express.Router().use(express.json());
@@ -84,7 +85,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'updateTestSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -96,7 +103,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'sendTestSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -108,7 +121,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -120,7 +139,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -132,7 +157,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'storeTracedTestCase' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -144,7 +175,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'storeTracedTestCaseV2' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -156,7 +193,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'storeTracedWorkspace' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -168,7 +211,13 @@ export abstract class AbstractAdminService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'storeTracedWorkspaceV2' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1403,6 +1452,7 @@ export * from \\"./Date\\";
 import express from \\"express\\";
 import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
+import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractHomepageService {
     private router = express.Router().use(express.json());
@@ -1424,7 +1474,13 @@ export abstract class AbstractHomepageService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getHomepageProblems' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1436,7 +1492,13 @@ export abstract class AbstractHomepageService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'setHomepageProblems' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1480,6 +1542,7 @@ export * from \\"./admin/service/requests\\";
 export * from \\"./problem/service/requests\\";
 export * as homepage from \\"./homepage\\";
 export * as sysprop from \\"./sysprop\\";
+export * from \\"./playlist/errors\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -1552,6 +1615,7 @@ export * from \\"./service\\";
 import express from \\"express\\";
 import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
+import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractMigrationService {
     private router = express.Router().use(express.json());
@@ -1571,7 +1635,13 @@ export abstract class AbstractMigrationService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getAttemptedMigrations' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1646,8 +1716,66 @@ export * from \\"./Migration\\";
           Object {
             "contents": Array [
               Object {
+                "contents": Array [
+                  Object {
+                    "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as errors from \\"../../../../errors\\";
+import express from \\"express\\";
+
+export class PlaylistIdNotFoundError extends errors.TraceApiError {
+    constructor() {
+        super();
+        Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
+    }
+
+    public send(res: express.Response): void {
+        res.sendStatus(404);
+    }
+}
+",
+                    "name": "PlaylistIdNotFoundError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as errors from \\"../../../../errors\\";
+import express from \\"express\\";
+
+export class UnauthorizedError extends errors.TraceApiError {
+    constructor() {
+        super();
+        Object.setPrototypeOf(this, UnauthorizedError.prototype);
+    }
+
+    public send(res: express.Response): void {
+        res.sendStatus(401);
+    }
+}
+",
+                    "name": "UnauthorizedError.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export * from \\"./PlaylistIdNotFoundError\\";
+export * from \\"./UnauthorizedError\\";
+",
+                    "name": "index.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "errors",
+                "type": "directory",
+              },
+              Object {
                 "contents": "export * from \\"./types\\";
 export * from \\"./service\\";
+export * from \\"./errors\\";
 ",
                 "name": "index.ts",
                 "type": "file",
@@ -1662,6 +1790,7 @@ export * from \\"./service\\";
 import express from \\"express\\";
 import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
+import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractPlaylistService {
     private router = express.Router().use(express.json());
@@ -1709,7 +1838,13 @@ export abstract class AbstractPlaylistService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'createPlaylist' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1720,7 +1855,13 @@ export abstract class AbstractPlaylistService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getPlaylists' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1731,7 +1872,17 @@ export abstract class AbstractPlaylistService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    switch (error.constructor.name) {
+                        case \\"PlaylistIdNotFoundError\\":
+                        case \\"UnauthorizedError\\": break;
+                        default: console.warn(\`Endpoint 'getPlaylist' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    }
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1743,7 +1894,16 @@ export abstract class AbstractPlaylistService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    switch (error.constructor.name) {
+                        case \\"PlaylistIdNotFoundError\\": break;
+                        default: console.warn(\`Endpoint 'updatePlaylist' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    }
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -1754,7 +1914,13 @@ export abstract class AbstractPlaylistService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'deletePlaylist' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2096,6 +2262,7 @@ export * from \\"./service\\";
 import express from \\"express\\";
 import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
+import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractProblemService {
     private router = express.Router().use(express.json());
@@ -2126,7 +2293,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'createProblem' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2138,7 +2311,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'updateProblem' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2149,7 +2328,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'deleteProblem' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2161,7 +2346,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getDefaultStarterFiles' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2666,6 +2857,7 @@ export * from \\"./service\\";
 import express from \\"express\\";
 import * as serializers from \\"../../../../serialization\\";
 import { TraceApi } from \\"../../../..\\";
+import * as errors from \\"../../../../errors\\";
 
 /**
  * Responsible for spinning up and spinning down execution.
@@ -2700,7 +2892,13 @@ export abstract class AbstractSubmissionService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'createExecutionSession' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2711,7 +2909,13 @@ export abstract class AbstractSubmissionService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getExecutionSession' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2722,7 +2926,13 @@ export abstract class AbstractSubmissionService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'stopExecutionSession' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -2733,7 +2943,13 @@ export abstract class AbstractSubmissionService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getExecutionSessionsState' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -5705,6 +5921,7 @@ export * from \\"./GetSubmissionStateResponse\\";
 import express from \\"express\\";
 import * as serializers from \\"../../../../serialization\\";
 import { TraceApi } from \\"../../../..\\";
+import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractSyspropService {
     private router = express.Router().use(express.json());
@@ -5729,7 +5946,13 @@ export abstract class AbstractSyspropService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'setNumWarmInstances' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -5740,7 +5963,13 @@ export abstract class AbstractSyspropService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getNumWarmInstances' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -5802,6 +6031,7 @@ export * from \\"./service\\";
 import express from \\"express\\";
 import { TraceApi } from \\"../../../../../..\\";
 import * as serializers from \\"../../../../../../serialization\\";
+import * as errors from \\"../../../../../../errors\\";
 
 export abstract class AbstractProblemService {
     private router = express.Router().use(express.json());
@@ -5832,7 +6062,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getLightweightProblems' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -5843,7 +6079,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getProblems' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -5854,7 +6096,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getLatestProblem' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -5865,7 +6113,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getProblemVersion' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -7017,6 +7271,7 @@ export * from \\"./service\\";
 import express from \\"express\\";
 import { TraceApi } from \\"../../../../../../../..\\";
 import * as serializers from \\"../../../../../../../../serialization\\";
+import * as errors from \\"../../../../../../../../errors\\";
 
 export abstract class AbstractProblemService {
     private router = express.Router().use(express.json());
@@ -7047,7 +7302,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getLightweightProblems' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -7058,7 +7319,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getProblems' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -7069,7 +7336,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getLatestProblem' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -7080,7 +7353,13 @@ export abstract class AbstractProblemService {
             }
             catch (error) {
                 console.error(error);
-                res.status(500).send(\\"Internal Server Error\\");
+                if (error instanceof errors.TraceApiError) {
+                    console.warn(\`Endpoint 'getProblemVersion' unexpectedly threw \${error.constructor.name}.\` + \` If this was intentional, please add \${error.constructor.name} to\` + \\" the endpoint's errors list in your Fern Definition.\\");
+                    error.send(res);
+                }
+                else {
+                    res.status(500).send(\\"Internal Server Error\\");
+                }
             }
             next();
         });
@@ -9336,8 +9615,40 @@ export type RequiredKeys<T> = {
     "type": "directory",
   },
   Object {
+    "contents": Array [
+      Object {
+        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import express from \\"express\\";
+
+export abstract class TraceApiError extends Error {
+    constructor() {
+        super();
+        Object.setPrototypeOf(this, TraceApiError.prototype);
+    }
+
+    public abstract send(res: express.Response): void;
+}
+",
+        "name": "TraceApiError.ts",
+        "type": "file",
+      },
+      Object {
+        "contents": "export { TraceApiError } from \\"./TraceApiError\\";
+",
+        "name": "index.ts",
+        "type": "file",
+      },
+    ],
+    "name": "errors",
+    "type": "directory",
+  },
+  Object {
     "contents": "export * as TraceApi from \\"./api\\";
 export { register } from \\"./register\\";
+export { TraceApiError } from \\"./errors\\";
 ",
     "name": "index.ts",
     "type": "file",

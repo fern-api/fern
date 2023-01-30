@@ -12,7 +12,6 @@ export interface Fetcher {
             _reasonLiteralValue: "status-code";
             statusCode: "statusCode";
             body: "body";
-            rawBody: "rawBody";
         };
         NonJsonError: {
             _getReferenceToType: () => ts.TypeNode;

@@ -1,13 +1,16 @@
-import { SdkErrorSchemaContext } from "@fern-typescript/contexts";
+import { GenericAPISdkErrorContextMixin, SdkErrorSchemaContext } from "@fern-typescript/contexts";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
+import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
+import { GenericAPISdkErrorContextMixinImpl } from "../generic-api-sdk-error/GenericAPISdkErrorContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "../sdk-error/SdkErrorContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
 import { TypeSchemaContextMixinImpl } from "../type/TypeSchemaContextMixinImpl";
@@ -26,14 +29,17 @@ export declare namespace SdkErrorSchemaContextImpl {
         sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
         sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
+        genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
+        genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     }
 }
 
 export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErrorSchemaContext {
     public readonly type: TypeContextMixinImpl;
     public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkError: SdkErrorContextMixinImpl;
     public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
+    public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
 
     constructor({
         typeGenerator,
@@ -47,6 +53,8 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
         sdkErrorSchemaGenerator,
         sdkErrorGenerator,
         errorResolver,
+        genericAPISdkErrorDeclarationReferencer,
+        genericAPISdkErrorGenerator,
         ...superInit
     }: SdkErrorSchemaContextImpl.Init) {
         super(superInit);
@@ -68,7 +76,7 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
             typeGenerator,
             typeSchemaGenerator,
         });
-        this.error = new SdkErrorContextMixinImpl({
+        this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
@@ -82,6 +90,12 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
             sdkErrorSchemaDeclarationReferencer,
             sdkErrorSchemaGenerator,
             errorResolver,
+        });
+        this.genericAPISdkError = new GenericAPISdkErrorContextMixinImpl({
+            genericAPISdkErrorDeclarationReferencer,
+            genericAPISdkErrorGenerator,
+            importsManager: this.importsManager,
+            sourceFile: this.sourceFile,
         });
     }
 }

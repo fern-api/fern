@@ -29,7 +29,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     protected getNonDiscriminantPropertiesForInterface(
         context: SdkEndpointTypeSchemasContext
     ): OptionalKind<PropertySignatureStructure>[] {
-        const errorDeclaration = context.error.getErrorDeclaration(this.errorName);
+        const errorDeclaration = context.sdkError.getErrorDeclaration(this.errorName);
         if (errorDeclaration.type == null) {
             throw new Error(
                 `Cannot generate single-property error because ${this.errorName.name.originalName} does not have a type.`
@@ -48,7 +48,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     protected getNonDiscriminantPropertiesForSchema(
         context: SdkEndpointTypeSchemasContext
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
-        const errorDeclaration = context.error.getErrorDeclaration(this.errorName);
+        const errorDeclaration = context.sdkError.getErrorDeclaration(this.errorName);
         if (errorDeclaration.type == null) {
             throw new Error(
                 `Cannot generate single-property error because ${this.errorName.name.originalName} does not have a type.`

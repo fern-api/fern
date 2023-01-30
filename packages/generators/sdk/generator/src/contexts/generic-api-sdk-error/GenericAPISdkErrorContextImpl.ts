@@ -1,5 +1,5 @@
 import { GenericAPISdkErrorContext, GenericAPISdkErrorContextMixin } from "@fern-typescript/contexts";
-import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-error-generators";
+import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
 import { GenericAPISdkErrorContextMixinImpl } from "./GenericAPISdkErrorContextMixinImpl";

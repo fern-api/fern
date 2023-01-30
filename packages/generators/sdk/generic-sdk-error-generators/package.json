@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/sdk-error-generator",
+  "name": "@fern-typescript/generic-sdk-error-generators",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/sdk/error-generator"
+    "directory": "packages/generators/sdk/generic-sdk-error-generators"
   },
   "files": [
     "lib"
@@ -25,11 +25,9 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.909",
     "@fern-typescript/abstract-error-class-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
-    "@fern-typescript/type-generator": "workspace:*",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

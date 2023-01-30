@@ -43,7 +43,7 @@ export declare namespace SdkEndpointTypeSchemasContextImpl {
 export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implements SdkEndpointTypeSchemasContext {
     public readonly type: TypeContextMixinImpl;
     public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly error: SdkErrorContextMixinImpl;
+    public readonly sdkError: SdkErrorContextMixinImpl;
     public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
     public readonly requestWrapper: RequestWrapperContextMixinImpl;
     public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextMixinImpl;
@@ -87,7 +87,7 @@ export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implement
             typeGenerator,
             typeSchemaGenerator,
         });
-        this.error = new SdkErrorContextMixinImpl({
+        this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,

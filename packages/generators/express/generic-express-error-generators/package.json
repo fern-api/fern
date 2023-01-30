@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/generic-error-generators",
+  "name": "@fern-typescript/generic-express-error-generators",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/sdk/generic-error-generators"
+    "directory": "packages/generators/express/generic-express-error-generators"
   },
   "files": [
     "lib"

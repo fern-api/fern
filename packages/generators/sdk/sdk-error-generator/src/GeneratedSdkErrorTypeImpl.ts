@@ -24,7 +24,7 @@ export class GeneratedSdkErrorTypeImpl implements GeneratedSdkErrorType {
             examples: [],
             docs: errorDeclaration.docs ?? undefined,
             fernFilepath: errorDeclaration.name.fernFilepath,
-            getReferenceToSelf: (context) => context.error.getReferenceToError(errorDeclaration.name),
+            getReferenceToSelf: (context) => context.sdkError.getReferenceToError(errorDeclaration.name),
         });
     }
 
