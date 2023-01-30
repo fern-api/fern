@@ -6,7 +6,7 @@ import { Rule, RuleViolation } from "../../Rule";
 export const NoErrorStatusCodeConflictRule: Rule = {
     name: "no-error-status-code-conflict",
     create: async ({ workspace }) => {
-        if (workspace.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
+        if (workspace.definition.rootApiFile.contents["error-discrimination"]?.strategy !== "status-code") {
             return {};
         }
         const errorDeclarations = await getErrorDeclarations(workspace);

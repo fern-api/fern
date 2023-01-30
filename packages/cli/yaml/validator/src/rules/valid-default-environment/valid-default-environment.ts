@@ -3,7 +3,7 @@ import { Rule } from "../../Rule";
 export const ValidDefaultEnvironmentRule: Rule = {
     name: "valid-default-environment",
     create: ({ workspace }) => {
-        const environments = workspace.rootApiFile.contents.environments;
+        const environments = workspace.definition.rootApiFile.contents.environments;
         return {
             rootApiFile: {
                 defaultEnvironment: (defaultEnvironment) => {

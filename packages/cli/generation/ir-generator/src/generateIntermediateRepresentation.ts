@@ -33,21 +33,21 @@ export async function generateIntermediateRepresentation({
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",
-        serviceFile: workspace.rootApiFile.contents,
+        serviceFile: workspace.definition.rootApiFile.contents,
         casingsGenerator,
     });
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig"> = {
         apiName: casingsGenerator.generateName(workspace.name),
-        apiDisplayName: workspace.rootApiFile.contents["display-name"],
-        apiDocs: workspace.rootApiFile.contents.docs,
+        apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
+        apiDocs: workspace.definition.rootApiFile.contents.docs,
         auth: convertApiAuth({
-            rawApiFileSchema: workspace.rootApiFile.contents,
+            rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext,
         }),
         headers:
-            workspace.rootApiFile.contents.headers != null
-                ? Object.entries(workspace.rootApiFile.contents.headers).map(([headerKey, header]) =>
+            workspace.definition.rootApiFile.contents.headers != null
+                ? Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
                       convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
@@ -55,9 +55,12 @@ export async function generateIntermediateRepresentation({
         errors: [],
         services: [],
         constants: generateFernConstants(casingsGenerator),
-        environments: convertEnvironments({ casingsGenerator, rawApiFileSchema: workspace.rootApiFile.contents }),
+        environments: convertEnvironments({
+            casingsGenerator,
+            rawApiFileSchema: workspace.definition.rootApiFile.contents,
+        }),
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
-            workspace.rootApiFile.contents["error-discrimination"],
+            workspace.definition.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
         ),
     };
@@ -94,7 +97,7 @@ export async function generateIntermediateRepresentation({
                 if (errors == null) {
                     return;
                 }
-                const errorDiscriminationSchema = workspace.rootApiFile.contents["error-discrimination"];
+                const errorDiscriminationSchema = workspace.definition.rootApiFile.contents["error-discrimination"];
                 if (errorDiscriminationSchema == null) {
                     throw new Error("error-discrimination is missing in api.yml but there are declared errors.");
                 }
@@ -165,7 +168,7 @@ export async function generateIntermediateRepresentation({
             : intermediateRepresentation;
 
     const isAuthMandatory =
-        workspace.rootApiFile.contents.auth != null &&
+        workspace.definition.rootApiFile.contents.auth != null &&
         intermediateRepresentationForAudiences.services.every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });

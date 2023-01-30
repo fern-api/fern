@@ -33,7 +33,7 @@ export async function runRulesOnWorkspace({
     const allRuleVisitors = await Promise.all(rules.map((rule) => rule.create({ workspace, logger })));
 
     const violationsForRoot = await validateRootApiFile({
-        contents: workspace.rootApiFile.contents,
+        contents: workspace.definition.rootApiFile.contents,
         allRuleVisitors,
     });
     violations.push(...violationsForRoot);

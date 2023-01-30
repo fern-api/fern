@@ -3,7 +3,7 @@ import { Rule } from "../../Rule";
 export const NoMissingAuthRule: Rule = {
     name: "no-missing-auth",
     create: (context) => {
-        const authIsDefined = context.workspace.rootApiFile.contents.auth != null;
+        const authIsDefined = context.workspace.definition.rootApiFile.contents.auth != null;
         return {
             serviceFile: {
                 httpService: (service) => {

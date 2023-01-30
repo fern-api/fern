@@ -1,12 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import { ParsedFernFile } from "../types/FernFile";
-import { Workspace } from "../types/Workspace";
+import { FernDefinition } from "../types/Workspace";
 
-export function getAllServiceFiles(workspace: Workspace): Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> {
+export function getAllServiceFiles(
+    definition: FernDefinition
+): Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> {
     return {
-        ...workspace.serviceFiles,
-        ...workspace.importedServiceFiles,
-        ...workspace.packageMarkers,
+        ...definition.serviceFiles,
+        ...definition.importedServiceFiles,
+        ...definition.packageMarkers,
     };
 }

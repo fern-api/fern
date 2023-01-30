@@ -1,7 +1,7 @@
 import { keys } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { getResolvedPathOfImportedFile } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernDefinition } from "@fern-api/workspace-loader";
 import { Rule } from "../../Rule";
 
 type CircularImports = Record<RelativeFilePath, CircularImport[]>;
@@ -15,7 +15,7 @@ export const NoCircularImportsRule: Rule = {
     name: "no-circular-imports",
     DISABLE_RULE: true,
     create: ({ workspace }) => {
-        const circularImports = findCircularImports(workspace.serviceFiles);
+        const circularImports = findCircularImports(workspace.definition.serviceFiles);
 
         return {
             serviceFile: {
@@ -51,7 +51,7 @@ export const NoCircularImportsRule: Rule = {
     },
 };
 
-function findCircularImports(serviceFiles: Workspace["serviceFiles"]): CircularImports {
+function findCircularImports(serviceFiles: FernDefinition["serviceFiles"]): CircularImports {
     const circularImports: CircularImports = {};
 
     for (const filepath of keys(serviceFiles)) {
@@ -64,7 +64,7 @@ function findCircularImports(serviceFiles: Workspace["serviceFiles"]): CircularI
 function findCircularImportsRecursive(
     filepath: RelativeFilePath,
     path: RelativeFilePath[],
-    serviceFiles: Workspace["serviceFiles"]
+    serviceFiles: FernDefinition["serviceFiles"]
 ): CircularImport[] {
     const circularImports: CircularImport[] = [];
 

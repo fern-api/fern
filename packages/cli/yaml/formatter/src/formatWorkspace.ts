@@ -14,7 +14,7 @@ export async function formatWorkspace({
     context: TaskContext;
     shouldFix: boolean;
 }): Promise<void> {
-    for (const [relativeFilepath, file] of entries(workspace.serviceFiles)) {
+    for (const [relativeFilepath, file] of entries(workspace.definition.serviceFiles)) {
         const formatted = formatServiceFile({
             fileContents: file.rawContents,
             absoluteFilepath: file.absoluteFilepath,
