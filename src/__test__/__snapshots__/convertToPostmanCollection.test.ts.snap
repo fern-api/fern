@@ -147,7 +147,7 @@ exports[`convertToPostman test-api 1`] = `
       },
       {
         \\"key\\": \\"key\\",
-        \\"value\\": \\"{{X-API-Key}}\\",
+        \\"value\\": \\"X-API-Key\\",
         \\"type\\": \\"string\\"
       },
       {

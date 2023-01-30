@@ -1,10 +1,15 @@
 name: blog-post-api
 display-name: Blog Post API
-auth: api-key
+auth: apiKey
 auth-schemes:
-  api-key:
+  apiKey:
     header: X-API-Key
+    type: optional<string>
     name: apiKey
+headers:
+  Authorization:
+    type: optional<string>
+    name: token
 error-discrimination:
   strategy: property
   property-name: error
