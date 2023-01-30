@@ -10,6 +10,7 @@ types:
     extends: declaration.Declaration
     properties:
       name: DeclaredServiceName
+      displayName: optional<string>
       basePath: HttpPath
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>

@@ -22,6 +22,7 @@ export function convertService({
     return {
         docs: service.docs,
         availability: service.availability,
+        displayName: service.displayName,
         name: convertDeclaredServiceName(service.name),
         basePath: convertBasePathToString(service.basePath),
         basePathV2: service.basePath,

@@ -10,6 +10,7 @@ types:
   HttpService:
     extends: declaration.Declaration
     properties:
+      displayName: optional<string>
       name: serviceCommons.DeclaredServiceName
       basePath:
         type: optional<string>

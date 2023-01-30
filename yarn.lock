@@ -3711,9 +3711,9 @@ __metadata:
     "@fern-fern/ir-v1-model": 0.0.1
     "@fern-fern/ir-v2-model": 0.0.2
     "@fern-fern/ir-v3-model": 0.0.4
-    "@fern-fern/ir-v4-model": 0.0.1
-    "@fern-fern/ir-v5-model": 0.0.1
-    "@fern-fern/ir-v6-model": 0.0.1
+    "@fern-fern/ir-v4-model": 0.0.4
+    "@fern-fern/ir-v5-model": 0.0.3
+    "@fern-fern/ir-v6-model": 0.0.33
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -4320,24 +4320,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v4-model@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v4-model@npm:0.0.1"
-  checksum: 23950057e3e5b9b89a3fba880de6a161e743bfd2902c37553102bd33ed0fc1999e884fc21ae81c4597d0c3e30f7e9a1e39ff92ca0c5ba8d3b5b3ce50b326cfbf
+"@fern-fern/ir-v4-model@npm:0.0.4":
+  version: 0.0.4
+  resolution: "@fern-fern/ir-v4-model@npm:0.0.4"
+  checksum: 3d01e18aa9eac9cedb70e516b5db51db089f26f42de2432c1370761f9a231cf08182d971cd3185419be6f6b02c8090df101ec758c1891cb08fc5c3286a876400
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v5-model@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v5-model@npm:0.0.1"
-  checksum: 496c43b715e46cf845c98f457339e6aae7eccea19d87227fb0213ee2b0b3fe0d5cde116cfade34ed1c1370ebb5a250d85cc6f3f26570e4aecb37382f6a136e2c
+"@fern-fern/ir-v5-model@npm:0.0.3":
+  version: 0.0.3
+  resolution: "@fern-fern/ir-v5-model@npm:0.0.3"
+  checksum: 57eb44f7674f27b317d735bdc16fc011745fe2ba57403a0244389d62d83395f22402c05b02a3af0138896713be3e9fc5e136be6a551c78dde4544ea0f89fcf8a
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v6-model@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v6-model@npm:0.0.1"
-  checksum: c81bbafc6d7dc8c01137bb7bcf0ceedf7eb94753d27678b934fb997bf0ec93d50d6b7f7f9d24574c484aa617938631bfbf3a83b58e8bb0ac1dd07f2eec6570ac
+"@fern-fern/ir-v6-model@npm:0.0.33":
+  version: 0.0.33
+  resolution: "@fern-fern/ir-v6-model@npm:0.0.33"
+  checksum: 4909cf519272cb84c1b8fd2a1ac9a71cf6ec1a17acfd22fca731ad0a25bd6891591af8d9c526ed375f978f8892815c6502cd028940450a8a431c8ed685a5a4bf
   languageName: node
   linkType: hard
 

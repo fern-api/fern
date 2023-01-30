@@ -8427,9 +8427,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v1-model", "npm:0.0.1"],\
             ["@fern-fern/ir-v2-model", "npm:0.0.2"],\
             ["@fern-fern/ir-v3-model", "npm:0.0.4"],\
-            ["@fern-fern/ir-v4-model", "npm:0.0.1"],\
-            ["@fern-fern/ir-v5-model", "npm:0.0.1"],\
-            ["@fern-fern/ir-v6-model", "npm:0.0.1"],\
+            ["@fern-fern/ir-v4-model", "npm:0.0.4"],\
+            ["@fern-fern/ir-v5-model", "npm:0.0.3"],\
+            ["@fern-fern/ir-v6-model", "npm:0.0.33"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9090,28 +9090,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/ir-v4-model", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-v4-model-npm-0.0.1-08cc37b157-23950057e3.zip/node_modules/@fern-fern/ir-v4-model/",\
+        ["npm:0.0.4", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v4-model-npm-0.0.4-bbc8c7b7ab-3d01e18aa9.zip/node_modules/@fern-fern/ir-v4-model/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-v4-model", "npm:0.0.1"]\
+            ["@fern-fern/ir-v4-model", "npm:0.0.4"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-fern/ir-v5-model", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-v5-model-npm-0.0.1-03238664e3-496c43b715.zip/node_modules/@fern-fern/ir-v5-model/",\
+        ["npm:0.0.3", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v5-model-npm-0.0.3-97b261314e-57eb44f767.zip/node_modules/@fern-fern/ir-v5-model/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-v5-model", "npm:0.0.1"]\
+            ["@fern-fern/ir-v5-model", "npm:0.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-fern/ir-v6-model", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-v6-model-npm-0.0.1-1982af25c4-c81bbafc6d.zip/node_modules/@fern-fern/ir-v6-model/",\
+        ["npm:0.0.33", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-v6-model-npm-0.0.33-a305d78263-4909cf5192.zip/node_modules/@fern-fern/ir-v6-model/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-v6-model", "npm:0.0.1"]\
+            ["@fern-fern/ir-v6-model", "npm:0.0.33"]\
           ],\
           "linkType": "HARD"\
         }]\
