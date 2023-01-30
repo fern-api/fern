@@ -17,8 +17,8 @@ interface FixtureInfo {
 
 const FIXTURES: FixtureInfo[] = [
     {
-        path: "mercoa",
-        orgName: "mercoa",
+        path: "trace",
+        orgName: "trace",
         outputMode: "local",
         apiName: "api",
     },
