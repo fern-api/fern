@@ -332,6 +332,47 @@ exports[`convertToPostman test-api 1`] = `
       \\"name\\": \\"My Folder\\",
       \\"item\\": [
         {
+          \\"name\\": \\"My Folder\\",
+          \\"item\\": [
+            {
+              \\"name\\": \\"Nested\\",
+              \\"item\\": [
+                {
+                  \\"name\\": \\"get\\",
+                  \\"request\\": {
+                    \\"url\\": {
+                      \\"raw\\": \\"{{baseUrl}}\\",
+                      \\"host\\": [
+                        \\"{{baseUrl}}\\"
+                      ],
+                      \\"path\\": [],
+                      \\"query\\": [],
+                      \\"variable\\": []
+                    },
+                    \\"header\\": [
+                      {
+                        \\"key\\": \\"X-API-Key\\",
+                        \\"value\\": \\"{{X-API-Key}}\\",
+                        \\"type\\": \\"string\\"
+                      },
+                      {
+                        \\"key\\": \\"x-service-header\\",
+                        \\"type\\": \\"text\\",
+                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                      }
+                    ],
+                    \\"method\\": \\"GET\\"
+                  },
+                  \\"response\\": [],
+                  \\"_type\\": \\"endpoint\\"
+                }
+              ],
+              \\"_type\\": \\"container\\"
+            }
+          ],
+          \\"_type\\": \\"container\\"
+        },
+        {
           \\"name\\": \\"Nested\\",
           \\"item\\": [
             {
