@@ -2,12 +2,12 @@ import { entries, keys } from "@fern-api/core-utils";
 import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { PackageMarkerFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { PackageMarkerFileSchema } from "@fern-api/yaml-schema";
 import { size } from "lodash-es";
 import { loadDependency } from "./loadDependency";
 import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { getAllServiceFiles } from "./utils";
+import { FernDefinition } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export declare namespace processPackageMarkers {
@@ -15,8 +15,8 @@ export declare namespace processPackageMarkers {
 
     export interface SuccessfulResult {
         didSucceed: true;
-        importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
+        importedDefinitions: Record<RelativeFilePath, FernDefinition>;
     }
 
     export interface FailedResult {
@@ -37,7 +37,7 @@ export async function processPackageMarkers({
     cliVersion: string;
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
-    const importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> = {};
+    const importedDefinitions: Record<RelativeFilePath, FernDefinition> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -63,13 +63,12 @@ export async function processPackageMarkers({
                     const loadDependencyResult = await loadDependency({
                         dependencyName: packageMarker.contents.export,
                         dependenciesConfiguration,
-                        pathOfPackageMarker,
                         context,
                         rootApiFile: structuralValidationResult.rootApiFile.contents,
                         cliVersion,
                     });
                     if (loadDependencyResult.didSucceed) {
-                        Object.assign(importedServiceFiles, getAllServiceFiles(loadDependencyResult.definition));
+                        importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;
                     } else {
                         failures[pathOfPackageMarker] = loadDependencyResult.failure;
                     }
@@ -87,7 +86,7 @@ export async function processPackageMarkers({
         return {
             didSucceed: true,
             packageMarkers,
-            importedServiceFiles,
+            importedDefinitions,
         };
     }
 }

@@ -57,8 +57,8 @@ export async function loadWorkspace({
             definition: {
                 rootApiFile: structuralValidationResult.rootApiFile,
                 serviceFiles: structuralValidationResult.serviceFiles,
-                importedServiceFiles: processPackageMarkersResult.importedServiceFiles,
                 packageMarkers: processPackageMarkersResult.packageMarkers,
+                importedDefinitions: processPackageMarkersResult.importedDefinitions,
             },
         },
     };

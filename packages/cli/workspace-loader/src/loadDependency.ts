@@ -1,6 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { DependenciesConfiguration, Dependency } from "@fern-api/dependencies-configuration";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
 import { createFiddleService } from "@fern-api/services";
@@ -9,7 +9,7 @@ import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { createWriteStream } from "fs";
-import { isEqual, mapKeys } from "lodash-es";
+import { isEqual } from "lodash-es";
 import path from "path";
 import { pipeline } from "stream/promises";
 import tar from "tar";
@@ -40,23 +40,17 @@ export async function loadDependency({
     context,
     rootApiFile,
     cliVersion,
-    pathOfPackageMarker,
 }: {
     dependencyName: string;
     dependenciesConfiguration: DependenciesConfiguration;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
-    pathOfPackageMarker: RelativeFilePath;
 }): Promise<loadDependency.Return> {
     let definition: FernDefinition | undefined;
     let failure: WorkspaceLoader.DependencyFailure = {
         type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
         dependencyName,
-    };
-
-    const prefixRecordKeysWithDependencyPath = <T>(paths: Record<RelativeFilePath, T>): Record<RelativeFilePath, T> => {
-        return mapKeys(paths, (_value, path) => join(pathOfPackageMarker, RelativeFilePath.of(path)));
     };
 
     // look up dependency in dependencies configuration
@@ -68,23 +62,12 @@ export async function loadDependency({
         };
     } else {
         await context.runInteractiveTask({ name: stringifyDependency(dependency) }, async (contextForDependency) => {
-            const definitionOfDependency = await validateDependencyAndGetDefinition({
+            definition = await validateDependencyAndGetDefinition({
                 context: contextForDependency,
                 rootApiFile,
                 dependency,
                 cliVersion,
             });
-
-            if (definitionOfDependency != null) {
-                definition = {
-                    rootApiFile: definitionOfDependency.rootApiFile,
-                    serviceFiles: prefixRecordKeysWithDependencyPath(definitionOfDependency.serviceFiles),
-                    importedServiceFiles: prefixRecordKeysWithDependencyPath(
-                        definitionOfDependency.importedServiceFiles
-                    ),
-                    packageMarkers: prefixRecordKeysWithDependencyPath(definitionOfDependency.packageMarkers),
-                };
-            }
         });
     }
 
