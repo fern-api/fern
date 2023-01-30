@@ -234,6 +234,7 @@
             "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
             "auth": { "type": "boolean" },
             "url": { "type": "string" },
+            "display-name": { "type": "string" },
             "base-path": { "type": "string" },
             "path-parameters": {
               "type": "object",
