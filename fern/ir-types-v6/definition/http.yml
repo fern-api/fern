@@ -11,6 +11,7 @@ types:
     extends: declaration.Declaration
     properties:
       name: DeclaredServiceName
+      displayName: optional<string>
       baseUrl: optional<environment.EnvironmentBaseUrlId>
       basePath: HttpPath
       endpoints: list<HttpEndpoint>
