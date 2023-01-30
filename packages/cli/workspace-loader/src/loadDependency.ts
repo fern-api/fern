@@ -1,22 +1,22 @@
-import { entries, noop, visitObject } from "@fern-api/core-utils";
+import { noop, visitObject } from "@fern-api/core-utils";
 import { DependenciesConfiguration, Dependency } from "@fern-api/dependencies-configuration";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
 import { createFiddleService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
-import { RootApiFileSchema, ServiceFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
+import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/yaml-schema";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import { createWriteStream } from "fs";
-import { isEqual } from "lodash-es";
+import { isEqual, mapKeys } from "lodash-es";
 import path from "path";
 import { pipeline } from "stream/promises";
 import tar from "tar";
 import tmp from "tmp-promise";
 import { loadWorkspace } from "./loadWorkspace";
-import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
+import { FernDefinition } from "./types/Workspace";
 
 const FIDDLE = createFiddleService();
 
@@ -25,7 +25,7 @@ export declare namespace loadDependency {
 
     export interface SuccessfulResult {
         didSucceed: true;
-        serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
+        definition: FernDefinition;
     }
 
     export interface FailedResult {
@@ -49,8 +49,15 @@ export async function loadDependency({
     cliVersion: string;
     pathOfPackageMarker: RelativeFilePath;
 }): Promise<loadDependency.Return> {
-    const serviceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> = {};
-    let failure: WorkspaceLoader.DependencyFailure | undefined;
+    let definition: FernDefinition | undefined;
+    let failure: WorkspaceLoader.DependencyFailure = {
+        type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
+        dependencyName,
+    };
+
+    const prefixRecordKeysWithDependencyPath = <T>(paths: Record<RelativeFilePath, T>): Record<RelativeFilePath, T> => {
+        return mapKeys(paths, (_value, path) => join(pathOfPackageMarker, RelativeFilePath.of(path)));
+    };
 
     // look up dependency in dependencies configuration
     const dependency = dependenciesConfiguration.dependencies[dependencyName];
@@ -61,37 +68,34 @@ export async function loadDependency({
         };
     } else {
         await context.runInteractiveTask({ name: stringifyDependency(dependency) }, async (contextForDependency) => {
-            const serviceFileFromDependency = await validateDependencyAndGetServiceFiles({
+            const definitionOfDependency = await validateDependencyAndGetDefinition({
                 context: contextForDependency,
                 rootApiFile,
                 dependency,
                 cliVersion,
             });
 
-            if (serviceFileFromDependency == null) {
-                failure = {
-                    type: WorkspaceLoaderFailureType.FAILED_TO_LOAD_DEPENDENCY,
-                    dependencyName,
+            if (definitionOfDependency != null) {
+                definition = {
+                    rootApiFile: definitionOfDependency.rootApiFile,
+                    serviceFiles: prefixRecordKeysWithDependencyPath(definitionOfDependency.serviceFiles),
+                    importedServiceFiles: prefixRecordKeysWithDependencyPath(
+                        definitionOfDependency.importedServiceFiles
+                    ),
+                    packageMarkers: prefixRecordKeysWithDependencyPath(definitionOfDependency.packageMarkers),
                 };
-            } else {
-                for (const [relativeFilePathOfDependencyServiceFile, serviceFile] of entries(
-                    serviceFileFromDependency
-                )) {
-                    serviceFiles[join(dirname(pathOfPackageMarker), relativeFilePathOfDependencyServiceFile)] =
-                        serviceFile;
-                }
             }
         });
     }
 
-    if (failure != null) {
-        return { didSucceed: false, failure };
+    if (definition != null) {
+        return { didSucceed: true, definition };
     } else {
-        return { didSucceed: true, serviceFiles };
+        return { didSucceed: false, failure };
     }
 }
 
-async function validateDependencyAndGetServiceFiles({
+async function validateDependencyAndGetDefinition({
     dependency,
     context,
     rootApiFile,
@@ -101,7 +105,7 @@ async function validateDependencyAndGetServiceFiles({
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
-}): Promise<Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> | undefined> {
+}): Promise<FernDefinition | undefined> {
     // load API
     context.logger.info("Downloading manifest...");
     const response = await FIDDLE.definitionRegistry.get(
@@ -190,12 +194,15 @@ async function validateDependencyAndGetServiceFiles({
         imports: noop,
         "display-name": noop,
         auth: (auth) => {
-            areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.workspace.rootApiFile.contents.auth);
+            areRootApiFilesEquivalent &&= isEqual(
+                auth,
+                workspaceOfDependency.workspace.definition.rootApiFile.contents.auth
+            );
         },
         "auth-schemes": (auth) => {
             areRootApiFilesEquivalent &&= isEqual(
                 auth,
-                workspaceOfDependency.workspace.rootApiFile.contents["auth-schemes"]
+                workspaceOfDependency.workspace.definition.rootApiFile.contents["auth-schemes"]
             );
         },
         docs: noop,
@@ -205,7 +212,7 @@ async function validateDependencyAndGetServiceFiles({
         "error-discrimination": (errorDiscrimination) => {
             areRootApiFilesEquivalent &&= isEqual(
                 errorDiscrimination,
-                workspaceOfDependency.workspace.rootApiFile.contents["error-discrimination"]
+                workspaceOfDependency.workspace.definition.rootApiFile.contents["error-discrimination"]
             );
         },
         audiences: noop,
@@ -217,7 +224,7 @@ async function validateDependencyAndGetServiceFiles({
         return undefined;
     }
 
-    return workspaceOfDependency.workspace.serviceFiles;
+    return workspaceOfDependency.workspace.definition;
 }
 
 async function downloadDependency({

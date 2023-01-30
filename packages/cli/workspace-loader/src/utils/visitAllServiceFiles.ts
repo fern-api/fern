@@ -8,7 +8,7 @@ export async function visitAllServiceFiles(
     workspace: Workspace,
     visitor: (filepath: RelativeFilePath, serviceFile: ServiceFileSchema) => void | Promise<void>
 ): Promise<void> {
-    for (const [relativeFilepath, file] of entries(getAllServiceFiles(workspace))) {
+    for (const [relativeFilepath, file] of entries(getAllServiceFiles(workspace.definition))) {
         await visitor(relativeFilepath, file.contents);
     }
 }

@@ -7,6 +7,7 @@ import { size } from "lodash-es";
 import { loadDependency } from "./loadDependency";
 import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
+import { getAllServiceFiles } from "./utils";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
 export declare namespace processPackageMarkers {
@@ -68,7 +69,7 @@ export async function processPackageMarkers({
                         cliVersion,
                     });
                     if (loadDependencyResult.didSucceed) {
-                        Object.assign(importedServiceFiles, loadDependencyResult.serviceFiles);
+                        Object.assign(importedServiceFiles, getAllServiceFiles(loadDependencyResult.definition));
                     } else {
                         failures[pathOfPackageMarker] = loadDependencyResult.failure;
                     }

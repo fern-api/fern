@@ -7,5 +7,5 @@ export function getServiceFile(
     workspace: Workspace,
     relativeFilepath: RelativeFilePath
 ): ServiceFileSchema | undefined {
-    return getAllServiceFiles(workspace)[relativeFilepath]?.contents;
+    return getAllServiceFiles(workspace.definition)[relativeFilepath]?.contents;
 }

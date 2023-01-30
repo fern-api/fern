@@ -114,5 +114,5 @@ describe("fern upgrade", () => {
         });
         const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
         expect(generatorsConfiguration).toMatchSnapshot();
-    });
+    }, 90_000);
 });

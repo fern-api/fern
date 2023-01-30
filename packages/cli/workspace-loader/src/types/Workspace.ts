@@ -10,6 +10,10 @@ export interface Workspace {
     absolutePathToDefinition: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
     dependenciesConfiguration: DependenciesConfiguration;
+    definition: FernDefinition;
+}
+
+export interface FernDefinition {
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
     serviceFiles: Record<RelativeFilePath, OnDiskServiceFile>;
     importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
