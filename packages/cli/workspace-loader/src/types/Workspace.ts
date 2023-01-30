@@ -16,8 +16,8 @@ export interface Workspace {
 export interface FernDefinition {
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
     serviceFiles: Record<RelativeFilePath, OnDiskServiceFile>;
-    importedServiceFiles: Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
+    importedDefinitions: Record<RelativeFilePath, FernDefinition>;
 }
 
 export interface OnDiskServiceFile extends ParsedFernFile<ServiceFileSchema> {

@@ -113,25 +113,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     },
                     {
-                        "originalName": "__package__",
-                        "camelCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PACKAGE",
-                            "safeName": "PACKAGE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Package",
-                            "safeName": "Package"
-                        }
-                    },
-                    {
                         "originalName": "x",
                         "camelCase": {
                             "unsafeName": "x",
@@ -209,25 +190,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                             "unsafeName": "Imported",
                             "safeName": "Imported"
                         }
-                    },
-                    {
-                        "originalName": "__package__",
-                        "camelCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PACKAGE",
-                            "safeName": "PACKAGE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Package",
-                            "safeName": "Package"
-                        }
                     }
                 ],
                 "name": {
@@ -290,25 +252,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         "pascalCase": {
                             "unsafeName": "Imported",
                             "safeName": "Imported"
-                        }
-                    },
-                    {
-                        "originalName": "__package__",
-                        "camelCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "package",
-                            "safeName": "package"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PACKAGE",
-                            "safeName": "PACKAGE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Package",
-                            "safeName": "Package"
                         }
                     }
                 ]

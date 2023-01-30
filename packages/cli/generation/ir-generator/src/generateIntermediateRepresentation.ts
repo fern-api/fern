@@ -1,4 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { dirname } from "@fern-api/fs-utils";
 import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -152,10 +153,10 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
+    await visitAllServiceFiles(workspace, async (relativeFilepath, file, { isPackageMarker }) => {
         await visitServiceFile(
             constructFernFileContext({
-                relativeFilepath,
+                relativeFilepath: isPackageMarker ? dirname(relativeFilepath) : relativeFilepath,
                 serviceFile: file,
                 casingsGenerator,
             })
