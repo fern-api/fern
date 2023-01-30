@@ -3,4 +3,7 @@ types:
 service:
   base-path: /
   auth: false
-  endpoints: {}
+  endpoints:
+    rootEndpoint:
+      path: /
+      method: GET

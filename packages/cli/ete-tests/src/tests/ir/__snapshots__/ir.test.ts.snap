@@ -7603,7 +7603,44 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
             },
             "headers": [],
             "pathParameters": [],
-            "endpoints": []
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "rootEndpoint",
+                        "camelCase": {
+                            "unsafeName": "rootEndpoint",
+                            "safeName": "rootEndpoint"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "root_endpoint",
+                            "safeName": "root_endpoint"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ROOT_ENDPOINT",
+                            "safeName": "ROOT_ENDPOINT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RootEndpoint",
+                            "safeName": "RootEndpoint"
+                        }
+                    },
+                    "auth": false,
+                    "method": "GET",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {},
+                    "errors": [],
+                    "examples": []
+                }
+            ]
         },
         {
             "availability": {
@@ -8057,7 +8094,44 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
             },
             "headers": [],
             "pathParameters": [],
-            "endpoints": []
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "rootEndpoint",
+                        "camelCase": {
+                            "unsafeName": "rootEndpoint",
+                            "safeName": "rootEndpoint"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "root_endpoint",
+                            "safeName": "root_endpoint"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ROOT_ENDPOINT",
+                            "safeName": "ROOT_ENDPOINT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RootEndpoint",
+                            "safeName": "RootEndpoint"
+                        }
+                    },
+                    "auth": false,
+                    "method": "GET",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {},
+                    "errors": [],
+                    "examples": []
+                }
+            ]
         },
         {
             "availability": {
@@ -8511,7 +8585,44 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
             },
             "headers": [],
             "pathParameters": [],
-            "endpoints": []
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "rootEndpoint",
+                        "camelCase": {
+                            "unsafeName": "rootEndpoint",
+                            "safeName": "rootEndpoint"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "root_endpoint",
+                            "safeName": "root_endpoint"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ROOT_ENDPOINT",
+                            "safeName": "ROOT_ENDPOINT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RootEndpoint",
+                            "safeName": "RootEndpoint"
+                        }
+                    },
+                    "auth": false,
+                    "method": "GET",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {},
+                    "errors": [],
+                    "examples": []
+                }
+            ]
         },
         {
             "availability": {
@@ -8965,7 +9076,44 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
             },
             "headers": [],
             "pathParameters": [],
-            "endpoints": []
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "rootEndpoint",
+                        "camelCase": {
+                            "unsafeName": "rootEndpoint",
+                            "safeName": "rootEndpoint"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "root_endpoint",
+                            "safeName": "root_endpoint"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ROOT_ENDPOINT",
+                            "safeName": "ROOT_ENDPOINT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RootEndpoint",
+                            "safeName": "RootEndpoint"
+                        }
+                    },
+                    "auth": false,
+                    "method": "GET",
+                    "path": {
+                        "head": "/",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {},
+                    "errors": [],
+                    "examples": []
+                }
+            ]
         },
         {
             "availability": {
