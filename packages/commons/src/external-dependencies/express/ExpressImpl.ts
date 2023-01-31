@@ -4,7 +4,7 @@ import { Express, ExpressHttpVerb } from "./Express";
 
 export class ExpressImpl extends ExternalDependency implements Express {
     protected override PACKAGE = { name: "express", version: "4.18.2" };
-    protected override TYPES_PACKAGE = { name: "@types/express", version: "4.17.6" };
+    protected override TYPES_PACKAGE = { name: "@types/express", version: "4.17.16" };
 
     public Request = {
         body: "body" as const,
@@ -28,7 +28,6 @@ export class ExpressImpl extends ExternalDependency implements Express {
                             response ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             request ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             queryParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                         ]
                     );
                 }

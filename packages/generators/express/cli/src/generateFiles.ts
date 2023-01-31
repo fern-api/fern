@@ -1,13 +1,16 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { writeVolumeToDisk } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { ExpressGenerator } from "@fern-typescript/express-generator";
+import { ExpressGenerator, LIB_DIRECTORY, PackageJsonScript, SRC_DIRECTORY } from "@fern-typescript/express-generator";
+import { cp } from "fs/promises";
 import { camelCase, upperFirst } from "lodash-es";
 import { Volume } from "memfs/lib/volume";
+import tmp from "tmp-promise";
 import { ExpressCustomConfig } from "./custom-config/ExpressCustomConfig";
 import { loadIntermediateRepresentation } from "./utils/loadIntermediateRepresentation";
+import { createYarnRunner } from "./yarnRunner";
 
 export async function generateFiles({
     config,
@@ -18,7 +21,7 @@ export async function generateFiles({
     customConfig: ExpressCustomConfig;
     logger: Logger;
 }): Promise<{ writtenTo: AbsoluteFilePath }> {
-    const directoyOnDiskToWriteTo = AbsoluteFilePath.of(config.output.path);
+    const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
     const generatorContext = new GeneratorContextImpl(logger);
     const volume = new Volume();
 
@@ -42,10 +45,21 @@ export async function generateFiles({
         throw new Error("Failed to generate TypeScript project.");
     }
 
-    await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
-    await sdkGenerator.copyCoreUtilities({ pathToSrc: directoyOnDiskToWriteTo });
+    await writeVolumeToDisk(volume, directoryOnDiskToWriteTo);
+    await sdkGenerator.copyCoreUtilities({ pathToSrc: join(directoryOnDiskToWriteTo, SRC_DIRECTORY) });
 
-    return { writtenTo: directoyOnDiskToWriteTo };
+    const yarnRunner = createYarnRunner(logger, directoryOnDiskToWriteTo);
+    await yarnRunner(["install"], {
+        env: {
+            // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+            YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
+        },
+    });
+    await yarnRunner([PackageJsonScript.FORMAT]);
+    await yarnRunner([PackageJsonScript.BUILD]);
+    await cp(join(directoryOnDiskToWriteTo, LIB_DIRECTORY), config.output.path, { recursive: true });
+
+    return { writtenTo: directoryOnDiskToWriteTo };
 }
 
 class GeneratorContextImpl implements GeneratorContext {

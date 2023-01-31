@@ -22,7 +22,7 @@ export async function generateFiles({
     npmPackage: NpmPackage | undefined;
     logger: Logger;
 }): Promise<{ writtenTo: AbsoluteFilePath }> {
-    const directoyOnDiskToWriteTo = AbsoluteFilePath.of(config.output.path);
+    const directoryOnDiskToWriteTo = AbsoluteFilePath.of(config.output.path);
     const generatorContext = new GeneratorContextImpl(logger);
     const volume = new Volume();
 
@@ -49,10 +49,10 @@ export async function generateFiles({
         throw new Error("Failed to generate TypeScript project.");
     }
 
-    await writeVolumeToDisk(volume, directoyOnDiskToWriteTo);
+    await writeVolumeToDisk(volume, directoryOnDiskToWriteTo);
 
     await sdkGenerator.copyCoreUtilities({
-        pathToSrc: npmPackage != null ? join(directoyOnDiskToWriteTo, SRC_DIRECTORY) : directoyOnDiskToWriteTo,
+        pathToSrc: npmPackage != null ? join(directoryOnDiskToWriteTo, SRC_DIRECTORY) : directoryOnDiskToWriteTo,
     });
 
     await loggingExeca(
@@ -60,11 +60,11 @@ export async function generateFiles({
         "npx",
         ["prettier", "--write", npmPackage != null ? `${SRC_DIRECTORY}/**/*.ts` : "**/*.ts"],
         {
-            cwd: directoyOnDiskToWriteTo,
+            cwd: directoryOnDiskToWriteTo,
         }
     );
 
-    return { writtenTo: directoyOnDiskToWriteTo };
+    return { writtenTo: directoryOnDiskToWriteTo };
 }
 
 class GeneratorContextImpl implements GeneratorContext {
