@@ -49,6 +49,7 @@ class EndpointPathTreeNode {
     public insert(paths: PathPart[], endpointReference: EndpointReference): void {
         const [firstPath, ...remainingPaths] = paths;
         if (firstPath == null) {
+            this.endpointsThatEndWithThisNode.push(endpointReference);
             return;
         }
 
@@ -56,11 +57,7 @@ class EndpointPathTreeNode {
             ? (this.childPathParam ??= new EndpointPathTreeNode())
             : (this.childPaths[firstPath] ??= new EndpointPathTreeNode());
 
-        if (remainingPaths.length > 0) {
-            nextNode.insert(remainingPaths, endpointReference);
-        } else {
-            nextNode.endpointsThatEndWithThisNode.push(endpointReference);
-        }
+        nextNode.insert(remainingPaths, endpointReference);
     }
 
     public getMatchingEndpoints(paths: PathPart[]): EndpointReference[] {
