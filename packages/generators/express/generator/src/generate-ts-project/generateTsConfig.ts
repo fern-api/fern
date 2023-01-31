@@ -7,7 +7,7 @@ export async function generateTsConfig(volume: Volume): Promise<void> {
     const compilerOptions: CompilerOptions = {
         strict: true,
         target: "esnext" as unknown as ScriptTarget,
-        module: "esnext" as unknown as ModuleKind,
+        module: "CommonJS" as unknown as ModuleKind,
         moduleResolution: "node" as unknown as ModuleResolutionKind,
         esModuleInterop: true,
         skipLibCheck: true,
