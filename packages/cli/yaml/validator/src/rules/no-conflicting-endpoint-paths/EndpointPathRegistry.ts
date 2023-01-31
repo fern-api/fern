@@ -19,11 +19,14 @@ export class EndpointPathRegistry {
     public getConflictingEndpoints(endpointReference: EndpointReference): EndpointReference[] {
         return this.root
             .getMatchingEndpoints(this.getPathPartsForEndpoint(endpointReference))
-            .filter(
-                (matchingEndpoint) =>
-                    matchingEndpoint.relativeFilepath !== endpointReference.relativeFilepath ||
-                    matchingEndpoint.endpointId !== endpointReference.endpointId
-            );
+            .filter((matchingEndpoint) => {
+                const isEqualToQueryEndpoint =
+                    matchingEndpoint.relativeFilepath === endpointReference.relativeFilepath &&
+                    matchingEndpoint.endpointId === endpointReference.endpointId;
+                return (
+                    !isEqualToQueryEndpoint && matchingEndpoint.endpoint.method === endpointReference.endpoint.method
+                );
+            });
     }
 
     private getPathPartsForEndpoint(endpointReference: EndpointReference): PathPart[] {

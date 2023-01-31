@@ -10,3 +10,8 @@ service:
       path-parameters:
         pathParam: string
       method: GET
+    samePathDifferentMethod:
+      path: /{pathParam}
+      path-parameters:
+        pathParam: string
+      method: POST
