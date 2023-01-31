@@ -323,7 +323,6 @@ export const Error = {
               Object {
                 "contents": "export * as remoteGen from \\"./remoteGen\\";
 export * from \\"./remoteGen/types\\";
-export * from \\"./remoteGen/errors\\";
 export * as health from \\"./health\\";
 export * from \\"./remoteGen/client/requests\\";
 ",
@@ -476,22 +475,22 @@ export declare namespace Error {
 
     interface GeneratorsDoNotExistError extends _Utils {
         error: \\"GeneratorsDoNotExistError\\";
-        content: Fiddle.GeneratorsDoNotExistError;
+        content: Fiddle.GeneratorsDoNotExistErrorBodyType;
     }
 
     interface CannotPublishToNpmScope extends _Utils {
         error: \\"CannotPublishToNpmScope\\";
-        content: Fiddle.CannotPublishToNpmScope;
+        content: Fiddle.CannotPublishToNpmScopeDetails;
     }
 
     interface CannotPublishToMavenGroup extends _Utils {
         error: \\"CannotPublishToMavenGroup\\";
-        content: Fiddle.CannotPublishToMavenGroup;
+        content: Fiddle.CannotPublishToMavenGroupDetails;
     }
 
     interface InsufficientPermissions extends _Utils {
         error: \\"InsufficientPermissions\\";
-        content: Fiddle.InsufficientPermissions;
+        content: Fiddle.InsufficientPermissionsDetails;
     }
 
     interface _Unknown extends _Utils {
@@ -505,10 +504,10 @@ export declare namespace Error {
 
     interface _Visitor<_Result> {
         illegalApiNameError: () => _Result;
-        generatorsDoNotExistError: (value: Fiddle.GeneratorsDoNotExistError) => _Result;
-        cannotPublishToNpmScope: (value: Fiddle.CannotPublishToNpmScope) => _Result;
-        cannotPublishToMavenGroup: (value: Fiddle.CannotPublishToMavenGroup) => _Result;
-        insufficientPermissions: (value: Fiddle.InsufficientPermissions) => _Result;
+        generatorsDoNotExistError: (value: Fiddle.GeneratorsDoNotExistErrorBodyType) => _Result;
+        cannotPublishToNpmScope: (value: Fiddle.CannotPublishToNpmScopeDetails) => _Result;
+        cannotPublishToMavenGroup: (value: Fiddle.CannotPublishToMavenGroupDetails) => _Result;
+        insufficientPermissions: (value: Fiddle.InsufficientPermissionsDetails) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -527,7 +526,7 @@ export const Error = {
     },
 
     generatorsDoNotExistError: (
-        value: Fiddle.GeneratorsDoNotExistError
+        value: Fiddle.GeneratorsDoNotExistErrorBodyType
     ): Fiddle.remoteGen.createJob.Error.GeneratorsDoNotExistError => {
         return {
             content: value,
@@ -542,7 +541,7 @@ export const Error = {
     },
 
     cannotPublishToNpmScope: (
-        value: Fiddle.CannotPublishToNpmScope
+        value: Fiddle.CannotPublishToNpmScopeDetails
     ): Fiddle.remoteGen.createJob.Error.CannotPublishToNpmScope => {
         return {
             content: value,
@@ -557,7 +556,7 @@ export const Error = {
     },
 
     cannotPublishToMavenGroup: (
-        value: Fiddle.CannotPublishToMavenGroup
+        value: Fiddle.CannotPublishToMavenGroupDetails
     ): Fiddle.remoteGen.createJob.Error.CannotPublishToMavenGroup => {
         return {
             content: value,
@@ -572,7 +571,7 @@ export const Error = {
     },
 
     insufficientPermissions: (
-        value: Fiddle.InsufficientPermissions
+        value: Fiddle.InsufficientPermissionsDetails
     ): Fiddle.remoteGen.createJob.Error.InsufficientPermissions => {
         return {
             content: value,
@@ -646,22 +645,22 @@ export declare namespace Error {
 
     interface GeneratorsDoNotExistError extends _Utils {
         error: \\"GeneratorsDoNotExistError\\";
-        content: Fiddle.GeneratorsDoNotExistError;
+        content: Fiddle.GeneratorsDoNotExistErrorBodyType;
     }
 
     interface CannotPublishToNpmScope extends _Utils {
         error: \\"CannotPublishToNpmScope\\";
-        content: Fiddle.CannotPublishToNpmScope;
+        content: Fiddle.CannotPublishToNpmScopeDetails;
     }
 
     interface CannotPublishToMavenGroup extends _Utils {
         error: \\"CannotPublishToMavenGroup\\";
-        content: Fiddle.CannotPublishToMavenGroup;
+        content: Fiddle.CannotPublishToMavenGroupDetails;
     }
 
     interface InsufficientPermissions extends _Utils {
         error: \\"InsufficientPermissions\\";
-        content: Fiddle.InsufficientPermissions;
+        content: Fiddle.InsufficientPermissionsDetails;
     }
 
     interface _Unknown extends _Utils {
@@ -675,10 +674,10 @@ export declare namespace Error {
 
     interface _Visitor<_Result> {
         illegalApiNameError: () => _Result;
-        generatorsDoNotExistError: (value: Fiddle.GeneratorsDoNotExistError) => _Result;
-        cannotPublishToNpmScope: (value: Fiddle.CannotPublishToNpmScope) => _Result;
-        cannotPublishToMavenGroup: (value: Fiddle.CannotPublishToMavenGroup) => _Result;
-        insufficientPermissions: (value: Fiddle.InsufficientPermissions) => _Result;
+        generatorsDoNotExistError: (value: Fiddle.GeneratorsDoNotExistErrorBodyType) => _Result;
+        cannotPublishToNpmScope: (value: Fiddle.CannotPublishToNpmScopeDetails) => _Result;
+        cannotPublishToMavenGroup: (value: Fiddle.CannotPublishToMavenGroupDetails) => _Result;
+        insufficientPermissions: (value: Fiddle.InsufficientPermissionsDetails) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
@@ -697,7 +696,7 @@ export const Error = {
     },
 
     generatorsDoNotExistError: (
-        value: Fiddle.GeneratorsDoNotExistError
+        value: Fiddle.GeneratorsDoNotExistErrorBodyType
     ): Fiddle.remoteGen.createJobV2.Error.GeneratorsDoNotExistError => {
         return {
             content: value,
@@ -712,7 +711,7 @@ export const Error = {
     },
 
     cannotPublishToNpmScope: (
-        value: Fiddle.CannotPublishToNpmScope
+        value: Fiddle.CannotPublishToNpmScopeDetails
     ): Fiddle.remoteGen.createJobV2.Error.CannotPublishToNpmScope => {
         return {
             content: value,
@@ -727,7 +726,7 @@ export const Error = {
     },
 
     cannotPublishToMavenGroup: (
-        value: Fiddle.CannotPublishToMavenGroup
+        value: Fiddle.CannotPublishToMavenGroupDetails
     ): Fiddle.remoteGen.createJobV2.Error.CannotPublishToMavenGroup => {
         return {
             content: value,
@@ -742,7 +741,7 @@ export const Error = {
     },
 
     insufficientPermissions: (
-        value: Fiddle.InsufficientPermissions
+        value: Fiddle.InsufficientPermissionsDetails
     ): Fiddle.remoteGen.createJobV2.Error.InsufficientPermissions => {
         return {
             content: value,
@@ -908,71 +907,7 @@ export { CreateJobRequestV2 } from \\"./CreateJobRequestV2\\";
                     "type": "directory",
                   },
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-
-export type CannotPublishToMavenGroup = Fiddle.CannotPublishToMavenGroupDetails;
-",
-                        "name": "CannotPublishToMavenGroup.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-
-export type CannotPublishToNpmScope = Fiddle.CannotPublishToNpmScopeDetails;
-",
-                        "name": "CannotPublishToNpmScope.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-
-export type GeneratorsDoNotExistError = Fiddle.GeneratorsDoNotExistErrorBodyType;
-",
-                        "name": "GeneratorsDoNotExistError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { Fiddle } from \\"@fern-fern/fiddle-sdk\\";
-
-export type InsufficientPermissions = Fiddle.InsufficientPermissionsDetails;
-",
-                        "name": "InsufficientPermissions.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * from \\"./GeneratorsDoNotExistError\\";
-export * from \\"./CannotPublishToNpmScope\\";
-export * from \\"./CannotPublishToMavenGroup\\";
-export * from \\"./InsufficientPermissions\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "errors",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./types\\";
-export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                     "name": "index.ts",
@@ -15598,7 +15533,6 @@ export * from \\"./problem/types\\";
 export * as submission from \\"./submission\\";
 export * from \\"./submission/types\\";
 export * as v2 from \\"./v2\\";
-export * from \\"./playlist/errors\\";
 export * as admin from \\"./admin\\";
 export * as homepage from \\"./homepage\\";
 export * as sysprop from \\"./sysprop\\";
@@ -16200,7 +16134,7 @@ export type Error =
 export declare namespace Error {
     interface PlaylistIdNotFoundError extends _Utils {
         errorName: \\"PlaylistIdNotFoundError\\";
-        content: TraceApi.PlaylistIdNotFoundError;
+        content: TraceApi.PlaylistIdNotFoundErrorBody;
     }
 
     interface UnauthorizedError extends _Utils {
@@ -16217,7 +16151,7 @@ export declare namespace Error {
     }
 
     interface _Visitor<_Result> {
-        playlistIdNotFoundError: (value: TraceApi.PlaylistIdNotFoundError) => _Result;
+        playlistIdNotFoundError: (value: TraceApi.PlaylistIdNotFoundErrorBody) => _Result;
         unauthorizedError: () => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
@@ -16225,7 +16159,7 @@ export declare namespace Error {
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: TraceApi.PlaylistIdNotFoundError
+        value: TraceApi.PlaylistIdNotFoundErrorBody
     ): TraceApi.playlist.getPlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,
@@ -16416,7 +16350,7 @@ export type Error =
 export declare namespace Error {
     interface PlaylistIdNotFoundError extends _Utils {
         errorName: \\"PlaylistIdNotFoundError\\";
-        content: TraceApi.PlaylistIdNotFoundError;
+        content: TraceApi.PlaylistIdNotFoundErrorBody;
     }
 
     interface _Unknown extends _Utils {
@@ -16429,14 +16363,14 @@ export declare namespace Error {
     }
 
     interface _Visitor<_Result> {
-        playlistIdNotFoundError: (value: TraceApi.PlaylistIdNotFoundError) => _Result;
+        playlistIdNotFoundError: (value: TraceApi.PlaylistIdNotFoundErrorBody) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: TraceApi.PlaylistIdNotFoundError
+        value: TraceApi.PlaylistIdNotFoundErrorBody
     ): TraceApi.playlist.updatePlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,
@@ -16484,62 +16418,7 @@ export const Error = {
                     "type": "directory",
                   },
                   Object {
-                    "contents": Array [
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-
-export type PlaylistIdNotFoundError = TraceApi.PlaylistIdNotFoundErrorBody;
-",
-                        "name": "PlaylistIdNotFoundError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import { TraceApi } from \\"@fern-trace/api-sdk\\";
-
-export type StringError = string & {
-    StringError: void;
-};
-
-export function StringError(value: string): TraceApi.StringError {
-    return value as unknown as TraceApi.StringError;
-}
-",
-                        "name": "StringError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-export type UnknownError = unknown;
-",
-                        "name": "UnknownError.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "export * from \\"./PlaylistIdNotFoundError\\";
-export * from \\"./UnknownError\\";
-export * from \\"./StringError\\";
-",
-                        "name": "index.ts",
-                        "type": "file",
-                      },
-                    ],
-                    "name": "errors",
-                    "type": "directory",
-                  },
-                  Object {
                     "contents": "export * from \\"./types\\";
-export * from \\"./errors\\";
 export * from \\"./client\\";
 ",
                     "name": "index.ts",

@@ -173,9 +173,7 @@ export class ExpressGenerator {
             registerFunctionName: this.expressRegisterDeclarationReferencer.getRegisterFunctionName(),
         });
         this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
-        this.expressErrorGenerator = new ExpressErrorGenerator({
-            useBrandedStringAliases: config.shouldUseBrandedStringAliases,
-        });
+        this.expressErrorGenerator = new ExpressErrorGenerator();
     }
 
     public async generate(): Promise<void> {

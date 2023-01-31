@@ -5,7 +5,6 @@
   "references": [
     { "path": "../../../abstract-error-class-generator" },
     { "path": "../../../commons" },
-    { "path": "../../../contexts" },
-    { "path": "../../model/type-generator" }
+    { "path": "../../../contexts" }
   ]
 }

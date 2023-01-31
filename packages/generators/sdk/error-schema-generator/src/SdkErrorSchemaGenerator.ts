@@ -1,13 +1,8 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { GeneratedSdkErrorSchema } from "@fern-typescript/contexts";
-import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { GeneratedSdkErrorSchemaImpl } from "./GeneratedSdkErrorSchemaImpl";
 
 export declare namespace SdkErrorSchemaGenerator {
-    export interface Init {
-        sdkErrorGenerator: SdkErrorGenerator;
-    }
-
     export namespace generateError {
         export interface Args {
             errorName: string;
@@ -17,12 +12,6 @@ export declare namespace SdkErrorSchemaGenerator {
 }
 
 export class SdkErrorSchemaGenerator {
-    private sdkErrorGenerator: SdkErrorGenerator;
-
-    constructor({ sdkErrorGenerator }: SdkErrorSchemaGenerator.Init) {
-        this.sdkErrorGenerator = sdkErrorGenerator;
-    }
-
     public generateSdkErrorSchema({
         errorDeclaration,
         errorName,
@@ -34,7 +23,6 @@ export class SdkErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
-            sdkErrorGenerator: this.sdkErrorGenerator,
         });
     }
 }

@@ -218,12 +218,9 @@ export class SdkGenerator {
         this.typeSchemaGenerator = new TypeSchemaGenerator();
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.sdkErrorGenerator = new SdkErrorGenerator({
-            useBrandedStringAliases: config.shouldUseBrandedStringAliases,
             neverThrowErrors: config.neverThrowErrors,
         });
-        this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator({
-            sdkErrorGenerator: this.sdkErrorGenerator,
-        });
+        this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator();
         this.endpointErrorUnionGenerator = new EndpointErrorUnionGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,

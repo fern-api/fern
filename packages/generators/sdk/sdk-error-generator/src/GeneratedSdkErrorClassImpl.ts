@@ -1,15 +1,13 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedAliasType, GeneratedSdkErrorClass, GeneratedType, SdkErrorContext } from "@fern-typescript/contexts";
-import { TypeGenerator } from "@fern-typescript/type-generator";
+import { GeneratedSdkErrorClass, SdkErrorContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkErrorClassImpl {
     export interface Init {
         errorClassName: string;
         errorDeclaration: ErrorDeclaration;
-        typeGenerator: TypeGenerator<SdkErrorContext>;
     }
 }
 
@@ -21,34 +19,15 @@ export class GeneratedSdkErrorClassImpl
 
     private static BODY_CONSTRUCTOR_PARAMETER_NAME = "body";
 
-    private generatedType: GeneratedAliasType<SdkErrorContext> | undefined;
     private errorDeclaration: ErrorDeclaration;
 
-    constructor({ errorClassName, errorDeclaration, typeGenerator }: GeneratedSdkErrorClassImpl.Init) {
+    constructor({ errorClassName, errorDeclaration }: GeneratedSdkErrorClassImpl.Init) {
         super({ errorClassName });
         this.errorDeclaration = errorDeclaration;
-        this.generatedType =
-            errorDeclaration.type != null
-                ? typeGenerator.generateAlias({
-                      typeName: errorClassName,
-                      aliasOf: errorDeclaration.type,
-                      examples: [],
-                      docs: errorDeclaration.docs ?? undefined,
-                      fernFilepath: errorDeclaration.name.fernFilepath,
-                      getReferenceToSelf: (context) => context.sdkError.getReferenceToError(errorDeclaration.name),
-                  })
-                : undefined;
     }
 
     public writeToFile(context: SdkErrorContext): void {
         super.writeToSourceFile(context);
-    }
-
-    public generateErrorBody(): GeneratedType<SdkErrorContext> {
-        if (this.generatedType == null) {
-            throw new Error("Cannot generate error body because error has no type");
-        }
-        return this.generatedType;
     }
 
     public build(

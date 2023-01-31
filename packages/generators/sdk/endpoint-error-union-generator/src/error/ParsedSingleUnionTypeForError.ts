@@ -26,7 +26,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     constructor({ error, errorDiscriminationStrategy, errorResolver }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
-            singleUnionType: getSingleUnionTypeGenerator({ error, errorDiscriminationStrategy, errorDeclaration }),
+            singleUnionType: getSingleUnionTypeGenerator({ errorDiscriminationStrategy, errorDeclaration }),
         });
 
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
@@ -64,17 +64,16 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
 const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
 
 function getSingleUnionTypeGenerator({
-    error,
     errorDiscriminationStrategy,
     errorDeclaration,
 }: {
-    error: ResponseError;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
 }): SingleUnionTypeGenerator<EndpointErrorUnionContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
     }
+    const { type } = errorDeclaration;
 
     const propertyName = ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         property: ({ contentProperty }) => contentProperty.name.camelCase.unsafeName,
@@ -86,13 +85,6 @@ function getSingleUnionTypeGenerator({
 
     return new SinglePropertySingleUnionTypeGenerator<EndpointErrorUnionContext>({
         propertyName,
-        getReferenceToPropertyType: (context) => {
-            const typeNode = context.sdkError.getReferenceToError(error.error).getTypeNode();
-            return {
-                isOptional: false,
-                typeNode,
-                typeNodeWithoutUndefined: typeNode,
-            };
-        },
+        getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
     });
 }

@@ -29,7 +29,6 @@
     "@fern-typescript/abstract-error-class-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
-    "@fern-typescript/type-generator": "workspace:*",
     "ts-morph": "^15.1.0"
   },
   "devDependencies": {

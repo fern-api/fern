@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../contexts" },
-    { "path": "../../model/type-schema-generator" },
-    { "path": "../sdk-error-generator" }
+    { "path": "../../../abstract-schema-generator" },
+    { "path": "../../../commons" },
+    { "path": "../../../contexts" }
   ]
 }

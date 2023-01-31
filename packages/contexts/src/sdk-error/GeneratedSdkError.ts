@@ -1,6 +1,5 @@
 import { ts } from "ts-morph";
 import { GeneratedFile } from "../commons/GeneratedFile";
-import { GeneratedType } from "../type/GeneratedType";
 import { SdkErrorContext } from "./SdkErrorContext";
 
 export type GeneratedSdkError = GeneratedSdkErrorType | GeneratedSdkErrorClass;
@@ -14,6 +13,4 @@ export interface GeneratedSdkErrorClass extends BaseGeneratedSdkError {
     build: (context: SdkErrorContext, args: { referenceToBody: ts.Expression | undefined }) => ts.NewExpression;
 }
 
-export interface BaseGeneratedSdkError extends GeneratedFile<SdkErrorContext> {
-    generateErrorBody: () => GeneratedType<SdkErrorContext>;
-}
+export interface BaseGeneratedSdkError extends GeneratedFile<SdkErrorContext> {}

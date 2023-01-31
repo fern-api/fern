@@ -1,12 +1,9 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { GeneratedSdkError, SdkErrorContext } from "@fern-typescript/contexts";
-import { TypeGenerator } from "@fern-typescript/type-generator";
+import { GeneratedSdkError } from "@fern-typescript/contexts";
 import { GeneratedSdkErrorClassImpl } from "./GeneratedSdkErrorClassImpl";
-import { GeneratedSdkErrorTypeImpl } from "./GeneratedSdkErrorTypeImpl";
 
 export declare namespace SdkErrorGenerator {
     export interface Init {
-        useBrandedStringAliases: boolean;
         neverThrowErrors: boolean;
     }
 
@@ -19,11 +16,9 @@ export declare namespace SdkErrorGenerator {
 }
 
 export class SdkErrorGenerator {
-    private typeGenerator: TypeGenerator<SdkErrorContext>;
     private neverThrowErrors: boolean;
 
-    constructor({ useBrandedStringAliases, neverThrowErrors }: SdkErrorGenerator.Init) {
-        this.typeGenerator = new TypeGenerator({ useBrandedStringAliases });
+    constructor({ neverThrowErrors }: SdkErrorGenerator.Init) {
         this.neverThrowErrors = neverThrowErrors;
     }
 
@@ -31,21 +26,13 @@ export class SdkErrorGenerator {
         errorDeclaration,
         errorName,
     }: SdkErrorGenerator.generateError.Args): GeneratedSdkError | undefined {
-        if (!this.neverThrowErrors) {
-            return new GeneratedSdkErrorClassImpl({
-                errorClassName: errorName,
-                errorDeclaration,
-                typeGenerator: this.typeGenerator,
-            });
-        }
-        if (errorDeclaration.type == null) {
+        if (this.neverThrowErrors) {
             return undefined;
         }
-        return new GeneratedSdkErrorTypeImpl({
+
+        return new GeneratedSdkErrorClassImpl({
+            errorClassName: errorName,
             errorDeclaration,
-            type: errorDeclaration.type,
-            errorName,
-            typeGenerator: this.typeGenerator,
         });
     }
 }

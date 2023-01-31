@@ -2,7 +2,6 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
-import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
     ClassDeclaration,
     OptionalKind,
@@ -18,7 +17,6 @@ export declare namespace GeneratedExpressErrorImpl {
     export interface Init {
         errorClassName: string;
         errorDeclaration: ErrorDeclaration;
-        typeGenerator: TypeGenerator<ExpressErrorContext>;
     }
 }
 

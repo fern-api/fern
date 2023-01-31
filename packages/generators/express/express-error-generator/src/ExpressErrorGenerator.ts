@@ -1,13 +1,8 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
-import { TypeGenerator } from "@fern-typescript/type-generator";
+import { GeneratedExpressError } from "@fern-typescript/contexts";
 import { GeneratedExpressErrorImpl } from "./GeneratedExpressErrorImpl";
 
 export declare namespace ExpressErrorGenerator {
-    export interface Init {
-        useBrandedStringAliases: boolean;
-    }
-
     export namespace generateError {
         export interface Args {
             errorName: string;
@@ -17,12 +12,6 @@ export declare namespace ExpressErrorGenerator {
 }
 
 export class ExpressErrorGenerator {
-    private typeGenerator: TypeGenerator<ExpressErrorContext>;
-
-    constructor({ useBrandedStringAliases }: ExpressErrorGenerator.Init) {
-        this.typeGenerator = new TypeGenerator({ useBrandedStringAliases });
-    }
-
     public generateError({
         errorDeclaration,
         errorName,
@@ -30,7 +19,6 @@ export class ExpressErrorGenerator {
         return new GeneratedExpressErrorImpl({
             errorClassName: errorName,
             errorDeclaration,
-            typeGenerator: this.typeGenerator,
         });
     }
 }

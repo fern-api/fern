@@ -1794,9 +1794,9 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": 0.0.248-7-gb4189be0
     "@fern-fern/ir-model": 0.0.909
+    "@fern-typescript/abstract-schema-generator": "workspace:*"
+    "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@fern-typescript/sdk-error-generator": "workspace:*"
-    "@fern-typescript/type-schema-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -1842,7 +1842,6 @@ __metadata:
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@fern-typescript/type-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2183,7 +2182,6 @@ __metadata:
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@fern-typescript/type-generator": "workspace:*"
     "@types/jest": ^28.1.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
