@@ -54,7 +54,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
                                                 service: conflictingEndpoint.service,
                                                 endpoint: conflictingEndpoint.endpoint,
                                             })
-                                        )})`
+                                        )}`
                                 ),
                             ].join("\n"),
                         },
