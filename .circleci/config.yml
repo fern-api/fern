@@ -348,6 +348,7 @@ workflows:
           context:
             - npm
             - auth0-prod
+            - posthog
 
       - publish:
           filters:
