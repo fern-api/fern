@@ -9,21 +9,25 @@ service:
   endpoints:
     referenceNonExistentError:
       path: /a
+      method: GET
       errors:
         - NonExistentError
 
     referenceNonExistentImportedError:
       path: /b
+      method: GET
       errors:
         - other.NonExistentError
 
     referenceError:
       path: /c
+      method: GET
       errors:
         - GenericError
 
     referenceImportedError:
       path: /d
+      method: GET
       errors:
         - other.OtherError
 

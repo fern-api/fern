@@ -107,7 +107,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             },
           },
           "path": {
-            "head": "/",
+            "head": "",
             "parts": [],
           },
           "pathParameters": [],

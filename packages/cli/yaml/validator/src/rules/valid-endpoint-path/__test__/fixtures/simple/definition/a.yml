@@ -5,6 +5,9 @@ service:
     empty:
       path: ""
       method: GET
+    slash:
+      path: /
+      method: GET
     noLeadingSlash:
       path: hello
       method: GET

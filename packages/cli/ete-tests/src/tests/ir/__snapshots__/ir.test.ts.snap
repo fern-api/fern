@@ -4241,7 +4241,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                     "auth": true,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -5102,7 +5102,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                     "auth": true,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -5963,7 +5963,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                     "auth": true,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -6824,7 +6824,7 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                     "auth": true,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -7630,7 +7630,7 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                     "auth": false,
                     "method": "GET",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8121,7 +8121,7 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                     "auth": false,
                     "method": "GET",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -8612,7 +8612,7 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                     "auth": false,
                     "method": "GET",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -9103,7 +9103,7 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                     "auth": false,
                     "method": "GET",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -9703,7 +9703,7 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -14693,7 +14693,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -16933,7 +16933,7 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -21923,7 +21923,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -24163,7 +24163,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -29153,7 +29153,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -35050,7 +35050,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -40947,7 +40947,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                     "auth": false,
                     "method": "POST",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],

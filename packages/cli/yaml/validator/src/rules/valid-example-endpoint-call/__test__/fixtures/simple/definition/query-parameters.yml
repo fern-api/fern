@@ -4,7 +4,7 @@ service:
   endpoints:
     get:
       method: GET
-      path: /
+      path: ""
       request:
         name: GetThingRequest
         query-parameters:

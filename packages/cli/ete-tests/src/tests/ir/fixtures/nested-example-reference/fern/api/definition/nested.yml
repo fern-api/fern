@@ -6,7 +6,7 @@ service:
   endpoints:
     calculate:
       method: POST
-      path: /
+      path: ""
       response: Response
       examples:
         - response:

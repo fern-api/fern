@@ -3,5 +3,5 @@ service:
   base-path: /
   endpoints:
     foo:
-      path: /
+      path: ""
       method: POST

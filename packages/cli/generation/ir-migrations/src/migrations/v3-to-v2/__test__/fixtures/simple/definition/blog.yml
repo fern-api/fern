@@ -3,7 +3,7 @@ service:
   auth: true
   endpoints:
     create:
-      path: /
+      path: ""
       method: POST
       request: Blog
 

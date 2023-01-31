@@ -12,6 +12,12 @@ describe("valid-endpoint-path", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
+                message: "path cannot end with a slash.",
+                nodePath: ["service", "endpoints", "slash"],
+                relativeFilepath: "a.yml",
+                severity: "error",
+            },
+            {
                 message: "path must be the empty string, or start with a slash.",
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: "a.yml",
@@ -25,32 +31,6 @@ describe("valid-endpoint-path", () => {
             },
         ];
 
-        expect(violations).toMatchInlineSnapshot(
-            expectedViolations,
-            `
-            [
-              {
-                "message": "path must be the empty string, or start with a slash.",
-                "nodePath": [
-                  "service",
-                  "endpoints",
-                  "noLeadingSlash",
-                ],
-                "relativeFilepath": "a.yml",
-                "severity": "error",
-              },
-              {
-                "message": "path cannot end with a slash.",
-                "nodePath": [
-                  "service",
-                  "endpoints",
-                  "trailingSlash",
-                ],
-                "relativeFilepath": "a.yml",
-                "severity": "error",
-              },
-            ]
-        `
-        );
+        expect(violations).toEqual(expectedViolations);
     });
 });

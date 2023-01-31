@@ -6,11 +6,11 @@ services:
       endpoints:
         # i'm endpoint A
         a:
-          path: /
+          path: ""
           method: GET
         # i'm endpoint B
         b:
-          path: /
+          path: ""
           method: GET
           # i'm some query parameters
           query-parameters:
@@ -18,7 +18,7 @@ services:
             foo: string
         # i'm endpoint C
         c:
-          path: /
+          path: ""
           method: GET
           # i'm some query parameters
           query-parameters:
@@ -30,7 +30,7 @@ services:
             foo: string
         # i'm endpoint D
         d:
-          path: /
+          path: ""
           method: GET
           # i'm some query parameters
           query-parameters:
@@ -44,7 +44,7 @@ services:
           request: string
         # i'm endpoint E
         e:
-          path: /
+          path: ""
           method: GET
           # i'm some query parameters
           query-parameters:
@@ -62,7 +62,7 @@ services:
             type: string
         # i'm endpoint F
         f:
-          path: /
+          path: ""
           method: GET
           # i'm a request referencing a non-object named type
           request:
@@ -72,7 +72,7 @@ services:
             type: StringAlias
         # i'm endpoint G
         g:
-          path: /
+          path: ""
           method: GET
           # i'm a request referencing an object named type
           request:

@@ -5,5 +5,5 @@ service:
   auth: false
   endpoints:
     rootEndpoint:
-      path: /
+      path: ""
       method: GET

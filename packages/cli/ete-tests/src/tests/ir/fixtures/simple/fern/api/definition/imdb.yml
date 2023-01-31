@@ -85,7 +85,7 @@ service:
   endpoints:
     createMovie:
       method: POST
-      path: /
+      path: ""
       request: CreateMovieRequest
       response: MovieId
       audiences:

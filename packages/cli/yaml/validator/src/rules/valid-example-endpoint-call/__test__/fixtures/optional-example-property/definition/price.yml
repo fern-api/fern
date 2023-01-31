@@ -9,7 +9,7 @@ service:
   endpoints:
     calculate:
       method: POST
-      path: /
+      path: ""
       request:
         name: CalculatePriceRequest
         body:

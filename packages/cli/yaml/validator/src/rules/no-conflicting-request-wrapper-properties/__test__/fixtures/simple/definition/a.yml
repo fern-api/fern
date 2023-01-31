@@ -11,20 +11,23 @@ service:
     baz: string
   endpoints:
     a:
-      path: /
+      path: ""
       method: POST
     b:
       path: /{request}
       path-parameters:
         request: string
+      method: POST
     c:
-      path: /
+      path: ""
+      method: POST
       request:
         query-parameters:
           foo: string
           body: string
     d:
-      path: /
+      path: ""
+      method: POST
       request:
         headers:
           baz: boolean

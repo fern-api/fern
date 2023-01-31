@@ -10,19 +10,22 @@ service:
     request: string
   endpoints:
     a:
-      path: /
+      path: ""
       method: POST
     b:
       path: /{request}
       path-parameters:
         request: string
+      method: POST
     c:
-      path: /
+      path: ""
       request:
         query-parameters:
           request: string
+      method: POST
     d:
-      path: /
+      path: ""
       request:
         headers:
           request: string
+      method: POST

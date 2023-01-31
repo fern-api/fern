@@ -3,7 +3,7 @@ service:
   base-path: /
   endpoints:
     get:
-      path: /
+      path: ""
       method: GET
       request:
         name: InlinedRequest
@@ -11,7 +11,7 @@ service:
           properties:
             foo: string
     updateV1:
-      path: /
+      path: ""
       method: POST
       request:
         name: UpdateRequest
