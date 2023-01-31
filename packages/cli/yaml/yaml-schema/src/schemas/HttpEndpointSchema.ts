@@ -7,7 +7,7 @@ import { HttpResponseSchema } from "./HttpResponseSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 
 export const HttpEndpointSchema = DeclarationSchema.extend({
-    method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
+    method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
     "display-name": z.optional(z.string()),
     path: z.string(),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
