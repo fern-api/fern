@@ -4,6 +4,7 @@ import { MatchingEnvironmentUrlsRule } from "./rules/matching-environment-urls";
 import { NoCircularImportsRule } from "./rules/no-circular-imports";
 import { NoComplexQueryParamsRule } from "./rules/no-complex-query-params";
 import { NoConflictingEndpointParametersRule } from "./rules/no-conflicting-endpoint-parameters";
+import { NoConflictingEndpointPathsRule } from "./rules/no-conflicting-endpoint-paths";
 import { NoConflictingRequestWrapperPropertiesRule } from "./rules/no-conflicting-request-wrapper-properties";
 import { NoDuplicateDeclarationsRule } from "./rules/no-duplicate-declarations";
 import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
@@ -19,7 +20,9 @@ import { NoUndefinedErrorReferenceRule } from "./rules/no-undefined-error-refere
 import { NoUndefinedExampleReferenceRule } from "./rules/no-undefined-example-reference";
 import { NoUndefinedPathParametersRule } from "./rules/no-undefined-path-parameters";
 import { NoUndefinedTypeReferenceRule } from "./rules/no-undefined-type-reference";
+import { ValidBasePathRule } from "./rules/valid-base-path";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment";
+import { ValidEndpointPathRule } from "./rules/valid-endpoint-path";
 import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-call";
 import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
@@ -52,6 +55,9 @@ export function getAllRules(): Rule[] {
         NoUndefinedExampleReferenceRule,
         MatchingEnvironmentUrlsRule,
         ValidServiceUrlsRule,
+        ValidBasePathRule,
+        ValidEndpointPathRule,
+        NoConflictingEndpointPathsRule,
     ];
 }
 

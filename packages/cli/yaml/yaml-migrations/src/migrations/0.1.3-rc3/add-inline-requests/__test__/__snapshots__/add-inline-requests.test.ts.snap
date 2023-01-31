@@ -9,11 +9,11 @@ exports[`add-inline-requests simple 1`] = `
       endpoints:
         # i'm endpoint A
         a:
-          path: /
+          path: ""
           method: GET
         # i'm endpoint B
         b:
-          path: /
+          path: ""
           method: GET
           request:
             query-parameters:
@@ -21,7 +21,7 @@ exports[`add-inline-requests simple 1`] = `
               foo: string
         # i'm endpoint C
         c:
-          path: /
+          path: ""
           method: GET
           request:
             query-parameters:
@@ -32,7 +32,7 @@ exports[`add-inline-requests simple 1`] = `
               foo: string
         # i'm endpoint D
         d:
-          path: /
+          path: ""
           method: GET
           # i'm a request
           request:
@@ -46,7 +46,7 @@ exports[`add-inline-requests simple 1`] = `
               foo: string
         # i'm endpoint E
         e:
-          path: /
+          path: ""
           method: GET
           # i'm a request with docs
           request:
@@ -61,7 +61,7 @@ exports[`add-inline-requests simple 1`] = `
               foo: string
         # i'm endpoint F
         f:
-          path: /
+          path: ""
           method: GET
           # i'm a request referencing a non-object named type
           request:
@@ -70,7 +70,7 @@ exports[`add-inline-requests simple 1`] = `
               type: StringAlias
         # i'm endpoint G
         g:
-          path: /
+          path: ""
           method: GET
           # i'm a request referencing an object named type
           request:

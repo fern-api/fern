@@ -8,7 +8,7 @@ service:
   base-path: /
   endpoints:
     find:
-      path: /
+      path: ""
       method: POST
       audiences:
         - public

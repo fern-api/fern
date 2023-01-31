@@ -18,10 +18,10 @@ service:
   base-path: /
   endpoints:
     foo:
-      path: /
+      path: ""
       method: POST
     bar:
-      path: /
+      path: ""
       method: POST
       request:
         query-parameters:

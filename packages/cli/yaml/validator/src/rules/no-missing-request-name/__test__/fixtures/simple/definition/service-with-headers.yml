@@ -5,10 +5,10 @@ service:
   auth: false
   endpoints:
     get:
-      path: /
+      path: ""
       method: GET
     get2:
-      path: /
+      path: ""
       method: GET
       request:
         name: Get2Request

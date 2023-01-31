@@ -289,7 +289,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "auth": false,
                     "method": "GET",
                     "path": {
-                        "head": "/",
+                        "head": "",
                         "parts": []
                     },
                     "pathParameters": [],

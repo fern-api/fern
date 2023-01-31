@@ -3,32 +3,32 @@ service:
   base-path: /
   endpoints:
     foo:
-      path: /
+      path: ""
       method: POST
     foo2:
-      path: /
+      path: ""
       method: POST
       request: string
     bar:
-      path: /
+      path: ""
       method: GET
       request:
         body: string
     baz:
-      path: /
+      path: ""
       method: GET
       request:
         body:
           properties:
             foo: string
     bing:
-      path: /
+      path: ""
       method: GET
       request:
         query-parameters:
           foo: string
     bat:
-      path: /
+      path: ""
       method: GET
       request:
         headers:

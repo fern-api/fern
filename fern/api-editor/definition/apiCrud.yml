@@ -34,7 +34,7 @@ services:
       endpoints:
         create:
           method: POST
-          path: /
+          path: ""
           request:
             name: CreateApiRequest
             body:
@@ -43,11 +43,11 @@ services:
           response: commons.ApiId
         get:
           method: GET
-          path: /
+          path: ""
           response: Api
         update:
           method: PUT
-          path: /
+          path: ""
           request:
             name: UpdateApiRequest
             body:
@@ -56,4 +56,4 @@ services:
                 packages: list<Package>
         delete:
           method: DELETE
-          path: /
+          path: ""

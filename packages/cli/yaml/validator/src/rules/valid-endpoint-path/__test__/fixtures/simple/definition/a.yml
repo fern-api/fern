@@ -1,0 +1,16 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    empty:
+      path: ""
+      method: GET
+    slash:
+      path: /
+      method: GET
+    noLeadingSlash:
+      path: hello
+      method: GET
+    trailingSlash:
+      path: /hello/
+      method: GET

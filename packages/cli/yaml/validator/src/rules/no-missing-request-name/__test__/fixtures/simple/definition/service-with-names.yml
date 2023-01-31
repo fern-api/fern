@@ -3,18 +3,18 @@ service:
   base-path: /
   endpoints:
     foo:
-      path: /
+      path: ""
       method: POST
       request:
         name: FooRequest
     foo2:
-      path: /
+      path: ""
       method: POST
       request:
         name: Foo2Request
         body: string
     baz:
-      path: /
+      path: ""
       method: GET
       request:
         name: BazRequest
@@ -22,14 +22,14 @@ service:
           properties:
             foo: string
     bing:
-      path: /
+      path: ""
       method: GET
       request:
         name: BingRequest
         query-parameters:
           foo: string
     bat:
-      path: /
+      path: ""
       method: GET
       request:
         name: BatRequest

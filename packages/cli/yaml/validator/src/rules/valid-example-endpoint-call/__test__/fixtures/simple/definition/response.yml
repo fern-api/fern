@@ -5,7 +5,7 @@ service:
   auth: true
   endpoints:
     a:
-      path: /
+      path: ""
       method: GET
       errors:
         - errors.ErrorWithStringBody
@@ -36,7 +36,7 @@ service:
             error: NotFoundError
             body: hello
     b:
-      path: /
+      path: ""
       method: GET
       examples:
         - response:

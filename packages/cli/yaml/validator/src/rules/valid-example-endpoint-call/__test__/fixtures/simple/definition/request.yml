@@ -3,20 +3,20 @@ service:
   auth: true
   endpoints:
     a:
-      path: /
+      path: ""
       method: GET
       examples:
         - {}
         - request: 123
     b:
-      path: /
+      path: ""
       method: GET
       request: optional<integer>
       examples:
         - {}
         - request: 123
     c:
-      path: /
+      path: ""
       method: GET
       request:
         body: string
@@ -25,7 +25,7 @@ service:
         - request: 123
         - request: hello
     d:
-      path: /
+      path: ""
       method: GET
       request:
         body:
