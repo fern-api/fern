@@ -90,7 +90,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -108,7 +108,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -126,7 +126,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -144,7 +144,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -162,7 +162,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -180,7 +180,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -198,7 +198,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -216,7 +216,7 @@ export abstract class AbstractAdminService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1470,7 +1470,7 @@ export abstract class AbstractHomepageService {
         this.router.get(\\"/\\", async (req, res, next) => {
             try {
                 const response = await this.getHomepageProblems(req as any);
-                res.send(await serializers.homepage.getHomepageProblems.Response.json(response));
+                res.json(await serializers.homepage.getHomepageProblems.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -1479,7 +1479,7 @@ export abstract class AbstractHomepageService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1497,7 +1497,7 @@ export abstract class AbstractHomepageService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1631,7 +1631,7 @@ export abstract class AbstractMigrationService {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.getAttemptedMigrations(req as any);
-                res.send(await serializers.migration.getAttemptedMigrations.Response.json(response));
+                res.json(await serializers.migration.getAttemptedMigrations.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -1640,7 +1640,7 @@ export abstract class AbstractMigrationService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1834,7 +1834,7 @@ export abstract class AbstractPlaylistService {
             try {
                 req.body = await serializers.PlaylistCreateRequest.parse(req.body);
                 const response = await this.createPlaylist(req as any);
-                res.send(await serializers.Playlist.json(response));
+                res.json(await serializers.Playlist.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -1843,7 +1843,7 @@ export abstract class AbstractPlaylistService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1851,7 +1851,7 @@ export abstract class AbstractPlaylistService {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.getPlaylists(req as any);
-                res.send(await serializers.playlist.getPlaylists.Response.json(response));
+                res.json(await serializers.playlist.getPlaylists.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -1860,7 +1860,7 @@ export abstract class AbstractPlaylistService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1868,7 +1868,7 @@ export abstract class AbstractPlaylistService {
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
             try {
                 const response = await this.getPlaylist(req as any);
-                res.send(await serializers.Playlist.json(response));
+                res.json(await serializers.Playlist.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -1881,7 +1881,7 @@ export abstract class AbstractPlaylistService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1890,7 +1890,7 @@ export abstract class AbstractPlaylistService {
             try {
                 req.body = await serializers.playlist.updatePlaylist.Request.parse(req.body);
                 const response = await this.updatePlaylist(req as any);
-                res.send(await serializers.playlist.updatePlaylist.Response.json(response));
+                res.json(await serializers.playlist.updatePlaylist.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -1902,7 +1902,7 @@ export abstract class AbstractPlaylistService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -1919,7 +1919,7 @@ export abstract class AbstractPlaylistService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2289,7 +2289,7 @@ export abstract class AbstractProblemService {
             try {
                 req.body = await serializers.CreateProblemRequest.parse(req.body);
                 const response = await this.createProblem(req as any);
-                res.send(await serializers.CreateProblemResponse.json(response));
+                res.json(await serializers.CreateProblemResponse.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -2298,7 +2298,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2307,7 +2307,7 @@ export abstract class AbstractProblemService {
             try {
                 req.body = await serializers.CreateProblemRequest.parse(req.body);
                 const response = await this.updateProblem(req as any);
-                res.send(await serializers.UpdateProblemResponse.json(response));
+                res.json(await serializers.UpdateProblemResponse.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -2316,7 +2316,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2333,7 +2333,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2342,7 +2342,7 @@ export abstract class AbstractProblemService {
             try {
                 req.body = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
                 const response = await this.getDefaultStarterFiles(req as any);
-                res.send(await serializers.GetDefaultStarterFilesResponse.json(response));
+                res.json(await serializers.GetDefaultStarterFilesResponse.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -2351,7 +2351,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2888,7 +2888,7 @@ export abstract class AbstractSubmissionService {
         this.router.post(\\"/create-session/:language\\", async (req, res, next) => {
             try {
                 const response = await this.createExecutionSession(req as any);
-                res.send(await serializers.ExecutionSessionResponse.json(response));
+                res.json(await serializers.ExecutionSessionResponse.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -2897,7 +2897,7 @@ export abstract class AbstractSubmissionService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2905,7 +2905,7 @@ export abstract class AbstractSubmissionService {
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
             try {
                 const response = await this.getExecutionSession(req as any);
-                res.send(await serializers.submission.getExecutionSession.Response.json(response));
+                res.json(await serializers.submission.getExecutionSession.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -2914,7 +2914,7 @@ export abstract class AbstractSubmissionService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2931,7 +2931,7 @@ export abstract class AbstractSubmissionService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -2939,7 +2939,7 @@ export abstract class AbstractSubmissionService {
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
             try {
                 const response = await this.getExecutionSessionsState(req as any);
-                res.send(await serializers.GetExecutionSessionStateResponse.json(response));
+                res.json(await serializers.GetExecutionSessionStateResponse.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -2948,7 +2948,7 @@ export abstract class AbstractSubmissionService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -5951,7 +5951,7 @@ export abstract class AbstractSyspropService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -5959,7 +5959,7 @@ export abstract class AbstractSyspropService {
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
             try {
                 const response = await this.getNumWarmInstances(req as any);
-                res.send(await serializers.sysprop.getNumWarmInstances.Response.json(response));
+                res.json(await serializers.sysprop.getNumWarmInstances.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -5968,7 +5968,7 @@ export abstract class AbstractSyspropService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -6058,7 +6058,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.getLightweightProblems(req as any);
-                res.send(await serializers.v2.problem.getLightweightProblems.Response.json(response));
+                res.json(await serializers.v2.problem.getLightweightProblems.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -6067,7 +6067,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -6075,7 +6075,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.getProblems(req as any);
-                res.send(await serializers.v2.problem.getProblems.Response.json(response));
+                res.json(await serializers.v2.problem.getProblems.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -6084,7 +6084,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -6092,7 +6092,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.getLatestProblem(req as any);
-                res.send(await serializers.v2.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.ProblemInfoV2.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -6101,7 +6101,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -6109,7 +6109,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.getProblemVersion(req as any);
-                res.send(await serializers.v2.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.ProblemInfoV2.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -6118,7 +6118,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -7298,7 +7298,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.getLightweightProblems(req as any);
-                res.send(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
+                res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -7307,7 +7307,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -7315,7 +7315,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.getProblems(req as any);
-                res.send(await serializers.v2.v3.problem.getProblems.Response.json(response));
+                res.json(await serializers.v2.v3.problem.getProblems.Response.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -7324,7 +7324,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -7332,7 +7332,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.getLatestProblem(req as any);
-                res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.v3.ProblemInfoV2.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -7341,7 +7341,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
@@ -7349,7 +7349,7 @@ export abstract class AbstractProblemService {
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.getProblemVersion(req as any);
-                res.send(await serializers.v2.v3.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.v3.ProblemInfoV2.json(response));
             }
             catch (error) {
                 console.error(error);
@@ -7358,7 +7358,7 @@ export abstract class AbstractProblemService {
                     error.send(res);
                 }
                 else {
-                    res.status(500).send(\\"Internal Server Error\\");
+                    res.status(500).json(\\"Internal Server Error\\");
                 }
             }
             next();
