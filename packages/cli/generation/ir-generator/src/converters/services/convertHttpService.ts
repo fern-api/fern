@@ -54,7 +54,7 @@ export function convertHttpService({
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
-                method: convertHttpMethod(endpoint.method),
+                method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
                 pathParameters:
                     endpoint["path-parameters"] != null
