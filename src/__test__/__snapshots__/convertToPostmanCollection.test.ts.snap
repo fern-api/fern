@@ -23,7 +23,7 @@ exports[`convertToPostman any-auth 1`] = `
       \\"type\\": \\"string\\"
     },
     {
-      \\"key\\": \\"My-Header\\",
+      \\"key\\": \\"myHeader\\",
       \\"value\\": \\"\\",
       \\"type\\": \\"string\\"
     }
@@ -64,7 +64,7 @@ exports[`convertToPostman any-auth 1`] = `
             \\"header\\": [
               {
                 \\"key\\": \\"My-Header\\",
-                \\"value\\": \\"{{My-Header}}\\",
+                \\"value\\": \\"{{myHeader}}\\",
                 \\"type\\": \\"string\\"
               }
             ],
@@ -104,7 +104,7 @@ exports[`convertToPostman any-auth 1`] = `
             \\"header\\": [
               {
                 \\"key\\": \\"My-Header\\",
-                \\"value\\": \\"{{My-Header}}\\",
+                \\"value\\": \\"{{myHeader}}\\",
                 \\"type\\": \\"string\\"
               }
             ],
@@ -133,7 +133,7 @@ exports[`convertToPostman test-api 1`] = `
       \\"type\\": \\"string\\"
     },
     {
-      \\"key\\": \\"X-API-Key\\",
+      \\"key\\": \\"apiKey\\",
       \\"value\\": \\"\\",
       \\"type\\": \\"string\\"
     }
@@ -142,7 +142,7 @@ exports[`convertToPostman test-api 1`] = `
     \\"apikey\\": [
       {
         \\"key\\": \\"value\\",
-        \\"value\\": \\"{{X-API-Key}}\\",
+        \\"value\\": \\"{{apiKey}}\\",
         \\"type\\": \\"string\\"
       },
       {
@@ -180,7 +180,7 @@ exports[`convertToPostman test-api 1`] = `
             \\"header\\": [
               {
                 \\"key\\": \\"X-API-Key\\",
-                \\"value\\": \\"{{X-API-Key}}\\",
+                \\"value\\": \\"{{apiKey}}\\",
                 \\"type\\": \\"string\\"
               },
               {
@@ -232,7 +232,7 @@ exports[`convertToPostman test-api 1`] = `
             \\"header\\": [
               {
                 \\"key\\": \\"X-API-Key\\",
-                \\"value\\": \\"{{X-API-Key}}\\",
+                \\"value\\": \\"{{apiKey}}\\",
                 \\"type\\": \\"string\\"
               },
               {
@@ -269,7 +269,7 @@ exports[`convertToPostman test-api 1`] = `
                 \\"header\\": [
                   {
                     \\"key\\": \\"X-API-Key\\",
-                    \\"value\\": \\"{{X-API-Key}}\\",
+                    \\"value\\": \\"{{apiKey}}\\",
                     \\"type\\": \\"string\\"
                   },
                   {
@@ -308,7 +308,7 @@ exports[`convertToPostman test-api 1`] = `
                 \\"header\\": [
                   {
                     \\"key\\": \\"X-API-Key\\",
-                    \\"value\\": \\"{{X-API-Key}}\\",
+                    \\"value\\": \\"{{apiKey}}\\",
                     \\"type\\": \\"string\\"
                   },
                   {
@@ -352,7 +352,7 @@ exports[`convertToPostman test-api 1`] = `
                     \\"header\\": [
                       {
                         \\"key\\": \\"X-API-Key\\",
-                        \\"value\\": \\"{{X-API-Key}}\\",
+                        \\"value\\": \\"{{apiKey}}\\",
                         \\"type\\": \\"string\\"
                       },
                       {
@@ -390,7 +390,7 @@ exports[`convertToPostman test-api 1`] = `
                 \\"header\\": [
                   {
                     \\"key\\": \\"X-API-Key\\",
-                    \\"value\\": \\"{{X-API-Key}}\\",
+                    \\"value\\": \\"{{apiKey}}\\",
                     \\"type\\": \\"string\\"
                   },
                   {

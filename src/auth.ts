@@ -118,5 +118,5 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
 }
 
 function getVariableForAuthHeader(header: HttpHeader): string {
-    return header.name.wireValue;
+    return header.name.camelCase;
 }
