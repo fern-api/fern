@@ -101,6 +101,16 @@ function getCollectionItems({
                     item: [],
                 });
                 container.push(newContainer);
+                container.sort((a, b) => {
+                    if (a.type == "container" && b.type == "container") {
+                        return a.name.localeCompare(b.name);
+                    } else if (a.type == "container" && b.type == "endpoint") {
+                        return -1;
+                    } else if (a.type == "endpoint" && b.type == "container") {
+                        return 1;
+                    }
+                    return -1;
+                });
                 container = newContainer.item;
             } else {
                 const newContainer = PostmanCollectionItem.container({
@@ -108,6 +118,16 @@ function getCollectionItems({
                     item: [],
                 });
                 container.push(newContainer);
+                container.sort((a, b) => {
+                    if (a.type == "container" && b.type == "container") {
+                        return a.name.localeCompare(b.name);
+                    } else if (a.type == "container" && b.type == "endpoint") {
+                        return -1;
+                    } else if (a.type == "endpoint" && b.type == "container") {
+                        return 1;
+                    }
+                    return -1;
+                });
                 container = newContainer.item;
             }
         }
