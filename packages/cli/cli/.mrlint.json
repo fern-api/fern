@@ -18,7 +18,8 @@
       "DEFAULT_FIDDLE_ORIGIN",
       "DEFAULT_VENUS_ORIGIN",
       "VENUS_AUDIENCE",
-      "LOCAL_STORAGE_FOLDER"
+      "LOCAL_STORAGE_FOLDER",
+      "POSTHOG_API_KEY"
     ]
   },
   "private": false

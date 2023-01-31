@@ -30,6 +30,31 @@ export async function generateWorkspaces({
         });
     }
 
+    await cliContext.instrumentPostHogEvent({
+        orgId: project.config.organization,
+        command: "generate",
+        properties: {
+            workspaces: project.workspaces.map((workspace) => {
+                return {
+                    name: workspace.name,
+                    group: groupName,
+                    generators: workspace.generatorsConfiguration.groups
+                        .filter((group) => group.groupName === groupName)
+                        .map((group) => {
+                            return group.generators.map((generator) => {
+                                return {
+                                    name: generator.name,
+                                    version: generator.version,
+                                    outputMode: generator.outputMode.type,
+                                    config: generator.config,
+                                };
+                            });
+                        }),
+                };
+            }),
+        },
+    });
+
     await Promise.all(
         project.workspaces.map(async (workspace) =>
             cliContext.runTaskForWorkspace(workspace, async (context) =>

@@ -5,4 +5,5 @@ export { createOrganizationIfDoesNotExist } from "./orgs/createOrganizationIfDoe
 export { getOrganizationNameValidationError } from "./orgs/getOrganizationNameValidationError";
 export { getAccessToken, getToken, getUserToken } from "./persistence/getToken";
 export { getCurrentUser } from "./users/getCurrentUser";
+export { getUserIdFromToken } from "./verify/getPropertiesFromJwtToken";
 export { isLoggedIn } from "./verify/isLoggedIn";
