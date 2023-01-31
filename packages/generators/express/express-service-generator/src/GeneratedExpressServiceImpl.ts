@@ -37,7 +37,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             name: GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME,
             initializer: getTextOfTsNode(
                 context.base.externalDependencies.express.Router.use({
-                    referenceToRouter: context.base.externalDependencies.express.Router._instantiate(),
+                    referenceToRouter: context.base.externalDependencies.express.Router._instantiate({
+                        mergeParams: true,
+                    }),
                     handlers: [context.base.externalDependencies.express.json()],
                 })
             ),

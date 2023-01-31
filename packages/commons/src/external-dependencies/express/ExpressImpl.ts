@@ -119,11 +119,23 @@ export class ExpressImpl extends ExternalDependency implements Express {
         },
 
         _instantiate: this.withDefaultImport("express", (withImport, express) =>
-            withImport(() => {
+            withImport(({ mergeParams }: { mergeParams?: boolean } = {}) => {
                 return ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "Router"),
                     undefined,
-                    []
+                    mergeParams != null
+                        ? [
+                              ts.factory.createObjectLiteralExpression(
+                                  [
+                                      ts.factory.createPropertyAssignment(
+                                          ts.factory.createIdentifier("mergeParams"),
+                                          mergeParams ? ts.factory.createTrue() : ts.factory.createFalse()
+                                      ),
+                                  ],
+                                  false
+                              ),
+                          ]
+                        : []
                 );
             })
         ),

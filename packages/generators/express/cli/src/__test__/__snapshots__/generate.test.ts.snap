@@ -33,7 +33,7 @@ import { TraceApi } from \\"../../../..\\";
 import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractAdminService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract updateTestSubmissionStatus(request: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
@@ -1455,7 +1455,7 @@ import * as serializers from \\"../../../../serialization\\";
 import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractHomepageService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract getHomepageProblems(request: express.Request<never, TraceApi.ProblemId[], never, never, never>): Promise<TraceApi.ProblemId[]>;
 
@@ -1618,7 +1618,7 @@ import * as serializers from \\"../../../../serialization\\";
 import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractMigrationService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract getAttemptedMigrations(request: express.Request<never, TraceApi.Migration[], never, never, never>): Promise<TraceApi.Migration[]>;
 
@@ -1793,7 +1793,7 @@ import * as serializers from \\"../../../../serialization\\";
 import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractPlaylistService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract createPlaylist(request: express.Request<{
         serviceParam: number;
@@ -2265,7 +2265,7 @@ import * as serializers from \\"../../../../serialization\\";
 import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractProblemService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract createProblem(request: express.Request<never, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, never, never>): Promise<TraceApi.CreateProblemResponse>;
 
@@ -2863,7 +2863,7 @@ import * as errors from \\"../../../../errors\\";
  * Responsible for spinning up and spinning down execution.
  */
 export abstract class AbstractSubmissionService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract createExecutionSession(request: express.Request<{
         language: serializers.Language.Raw;
@@ -5924,7 +5924,7 @@ import { TraceApi } from \\"../../../..\\";
 import * as errors from \\"../../../../errors\\";
 
 export abstract class AbstractSyspropService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract setNumWarmInstances(request: express.Request<{
         language: serializers.Language.Raw;
@@ -6034,7 +6034,7 @@ import * as serializers from \\"../../../../../../serialization\\";
 import * as errors from \\"../../../../../../errors\\";
 
 export abstract class AbstractProblemService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract getLightweightProblems(request: express.Request<never, TraceApi.v2.LightweightProblemInfoV2[], never, never, never>): Promise<TraceApi.v2.LightweightProblemInfoV2[]>;
 
@@ -7274,7 +7274,7 @@ import * as serializers from \\"../../../../../../../../serialization\\";
 import * as errors from \\"../../../../../../../../errors\\";
 
 export abstract class AbstractProblemService {
-    private router = express.Router().use(express.json());
+    private router = express.Router({ mergeParams: true }).use(express.json());
 
     public abstract getLightweightProblems(request: express.Request<never, TraceApi.v2.v3.LightweightProblemInfoV2[], never, never, never>): Promise<TraceApi.v2.v3.LightweightProblemInfoV2[]>;
 

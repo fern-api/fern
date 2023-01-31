@@ -25,7 +25,7 @@ export interface Express {
     };
     Router: {
         use: (args: { referenceToRouter: ts.Expression; handlers: ts.Expression[] }) => ts.Expression;
-        _instantiate: () => ts.Expression;
+        _instantiate: (args?: { mergeParams?: boolean }) => ts.Expression;
         _getReferenceToType: () => ts.TypeNode;
         _addRoute: (args: {
             referenceToRouter: ts.Expression;
