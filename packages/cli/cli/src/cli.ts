@@ -250,7 +250,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
     );
 }
 
-async function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "ir <path-to-output>",
         false, // hide from help message
