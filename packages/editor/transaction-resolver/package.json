@@ -37,7 +37,7 @@
     "@fern-api/transaction-generator": "workspace:*",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
-    "@types/uuid": "^8.3.4",
+    "@types/uuid": "^9.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.0.3",

@@ -26,6 +26,7 @@ async function main() {
             "process.env.DEFAULT_VENUS_ORIGIN": getEnvironmentVariable("DEFAULT_VENUS_ORIGIN"),
             "process.env.VENUS_AUDIENCE": getEnvironmentVariable("VENUS_AUDIENCE"),
             "process.env.LOCAL_STORAGE_FOLDER": getEnvironmentVariable("LOCAL_STORAGE_FOLDER"),
+            "process.env.POSTHOG_API_KEY": getEnvironmentVariable("POSTHOG_API_KEY"),
         },
     };
 

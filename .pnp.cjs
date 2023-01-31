@@ -300,7 +300,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.107"],\
+            ["mrlint", "npm:0.0.108"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -8012,6 +8012,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tar", "npm:6.1.3"],\
+            ["@types/uuid", "npm:9.0.0"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.12"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
@@ -8030,10 +8031,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["latest-version", "npm:7.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["ora", "npm:6.1.2"],\
+            ["posthog-node", "npm:2.3.0"],\
             ["prettier", "npm:2.7.1"],\
             ["tar", "npm:6.1.13"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["uuid", "npm:9.0.0"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
             ["yargs", "npm:17.5.1"]\
           ],\
@@ -8259,7 +8262,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/api-editor-sdk", "npm:0.0.38"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/uuid", "npm:8.3.4"],\
+            ["@types/uuid", "npm:9.0.0"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
@@ -8806,7 +8809,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/api-editor-sdk", "npm:0.0.38"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/uuid", "npm:8.3.4"],\
+            ["@types/uuid", "npm:9.0.0"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
@@ -8830,7 +8833,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/api-editor-sdk", "npm:0.0.38"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/uuid", "npm:8.3.4"],\
+            ["@types/uuid", "npm:9.0.0"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["immer", "npm:9.0.15"],\
@@ -9172,7 +9175,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
-            ["@types/uuid", "npm:8.3.4"],\
+            ["@types/uuid", "npm:9.0.0"],\
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -11918,10 +11921,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/uuid", [\
-        ["npm:8.3.4", {\
-          "packageLocation": "./.yarn/cache/@types-uuid-npm-8.3.4-7547f4402c-6f11f3ff70.zip/node_modules/@types/uuid/",\
+        ["npm:9.0.0", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.0-979023c16f-59ae56d954.zip/node_modules/@types/uuid/",\
           "packageDependencies": [\
-            ["@types/uuid", "npm:8.3.4"]\
+            ["@types/uuid", "npm:9.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -18090,7 +18093,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.107"],\
+            ["mrlint", "npm:0.0.108"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -22355,10 +22358,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.107", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.107-3214dc43fa-949308fe8c.zip/node_modules/mrlint/",\
+        ["npm:0.0.108", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.108-d27fef4755-e719681acb.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.107"]\
+            ["mrlint", "npm:0.0.108"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -24960,6 +24963,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@docusaurus/core",\
             "@types/docusaurus__core"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["posthog-node", [\
+        ["npm:2.3.0", {\
+          "packageLocation": "./.yarn/cache/posthog-node-npm-2.3.0-4c8ab80524-f4d530f719.zip/node_modules/posthog-node/",\
+          "packageDependencies": [\
+            ["posthog-node", "npm:2.3.0"],\
+            ["axios", "npm:0.27.2"]\
           ],\
           "linkType": "HARD"\
         }]\
