@@ -21,7 +21,7 @@ const FIXTURES: FixtureInfo[] = [
     {
         path: "trace",
         orgName: "trace",
-        outputMode: "github",
+        outputMode: "local",
         apiName: "api",
     },
 ];

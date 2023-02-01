@@ -31,7 +31,7 @@ const FIXTURES: FixtureInfo[] = [
     {
         path: "reserved-keywords",
         orgName: "fern",
-        outputMode: "github",
+        outputMode: "local",
         apiName: "api",
         customConfig: {
             neverThrowErrors: true,

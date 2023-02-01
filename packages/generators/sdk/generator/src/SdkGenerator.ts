@@ -69,6 +69,7 @@ export declare namespace SdkGenerator {
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
         neverThrowErrors: boolean;
+        aliasOfRoot: string | undefined;
     }
 }
 
@@ -120,7 +121,7 @@ export class SdkGenerator {
         this.config = config;
         this.npmPackage = npmPackage;
 
-        const aliasOfRoot = npmPackage.packageName;
+        const { aliasOfRoot } = config;
 
         this.exportsManager = new ExportsManager({ aliasOfRoot });
         this.coreUtilitiesManager = new CoreUtilitiesManager({ aliasOfRoot });
