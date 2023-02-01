@@ -16,6 +16,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
+            outputEsm: parsed?.outputEsm ?? false,
         };
     }
 
@@ -47,6 +48,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 neverThrowErrors: customConfig.neverThrowErrors,
                 shouldBundle: config.output.mode.type !== "downloadFiles",
                 aliasOfRoot: config.output.mode.type !== "downloadFiles" ? npmPackage.packageName : undefined,
+                outputEsm: customConfig.outputEsm,
             },
         });
 

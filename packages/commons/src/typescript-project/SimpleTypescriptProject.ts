@@ -10,6 +10,7 @@ export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage;
         dependencies: PackageDependencies;
+        outputEsm: boolean;
     }
 }
 
@@ -19,11 +20,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private npmPackage: NpmPackage;
     private dependencies: PackageDependencies;
+    private outputEsm: boolean;
 
-    constructor({ npmPackage, dependencies, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, outputEsm, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
+        this.outputEsm = outputEsm;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -76,7 +79,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         const compilerOptions: CompilerOptions = {
             strict: true,
             target: "esnext" as unknown as ScriptTarget,
-            module: "CommonJS" as unknown as ModuleKind,
+            module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
             moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,
             skipLibCheck: true,

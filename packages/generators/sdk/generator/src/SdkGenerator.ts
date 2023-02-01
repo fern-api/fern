@@ -70,6 +70,7 @@ export declare namespace SdkGenerator {
         isPackagePrivate: boolean;
         neverThrowErrors: boolean;
         aliasOfRoot: string | undefined;
+        outputEsm: boolean;
     }
 }
 
@@ -268,6 +269,7 @@ export class SdkGenerator {
                   npmPackage: this.npmPackage,
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
+                  outputEsm: this.config.outputEsm,
               });
     }
 
