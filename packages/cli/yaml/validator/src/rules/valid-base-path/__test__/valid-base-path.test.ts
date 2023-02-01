@@ -12,7 +12,7 @@ describe("valid-base-path", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: "base-path must start with a slash.",
+                message: "base-path must be empty or start with a slash.",
                 nodePath: ["service"],
                 relativeFilepath: "no-leading-slash.yml",
                 severity: "error",

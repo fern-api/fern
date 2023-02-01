@@ -15,7 +15,7 @@ export const ValidBasePathRule: Rule = {
                     if (!service["base-path"].startsWith("/")) {
                         violations.push({
                             severity: "error",
-                            message: "base-path must start with a slash.",
+                            message: "base-path must be empty or start with a slash.",
                         });
                     }
 
