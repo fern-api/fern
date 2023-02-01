@@ -11573,16 +11573,250 @@ Array [
   Object {
     "contents": Array [
       Object {
-        "contents": "export * from \\"./resources\\";
+        "contents": Array [
+          Object {
+            "contents": "name: ci
+
+on: [push]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses: actions/setup-node@v3
+
+      - name: Compile
+        run: yarn && yarn build
+  
+  publish:
+    needs: [ compile ]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses: actions/setup-node@v3
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish to npm
+        run: |
+          npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
+          npm publish --ignore-scripts --access public
+        env:
+          NPM_TOKEN: \${{ secrets.NPM_TOKEN }}",
+            "name": "ci.yml",
+            "type": "file",
+          },
+        ],
+        "name": "workflows",
+        "type": "directory",
+      },
+    ],
+    "name": ".github",
+    "type": "directory",
+  },
+  Object {
+    "contents": "node_modules
+.DS_Store
+*.d.ts
+dist/
+
+# yarn berry
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions",
+    "name": ".gitignore",
+    "type": "file",
+  },
+  Object {
+    "contents": "tabWidth: 4
+printWidth: 120
 ",
-        "name": "index.ts",
+    "name": ".prettierrc.yml",
+    "type": "file",
+  },
+  Object {
+    "contents": Array [
+      Object {
+        "contents": "{
+  \\"recommendations\\": [
+    \\"arcanis.vscode-zipfs\\",
+    \\"esbenp.prettier-vscode\\"
+  ]
+}
+",
+        "name": "extensions.json",
         "type": "file",
       },
       Object {
+        "contents": "{
+  \\"search.exclude\\": {
+    \\"**/.yarn\\": true,
+    \\"**/.pnp.*\\": true
+  },
+  \\"prettier.prettierPath\\": \\".yarn/sdks/prettier/index.js\\",
+  \\"typescript.tsdk\\": \\".yarn/sdks/typescript/lib\\",
+  \\"typescript.enablePromptUseWorkspaceTsdk\\": true
+}
+",
+        "name": "settings.json",
+        "type": "file",
+      },
+    ],
+    "name": ".vscode",
+    "type": "directory",
+  },
+  Object {
+    "contents": "nodeLinker: pnp
+
+yarnPath: .yarn/releases/yarn-3.2.4.cjs
+",
+    "name": ".yarnrc.yml",
+    "type": "file",
+  },
+  Object {
+    "contents": "const { build } = require(\\"esbuild\\");
+
+void main();
+
+async function main() {
+    await bundle({
+        platform: \\"node\\",
+        target: \\"node14\\",
+        format: \\"cjs\\",
+        outdir: \\"node\\",
+    });
+    await bundle({
+        platform: \\"browser\\",
+        format: \\"esm\\",
+        outdir: \\"browser/esm\\",
+    });
+    await bundle({
+        platform: \\"browser\\",
+        format: \\"cjs\\",
+        outdir: \\"browser/cjs\\",
+    });
+}
+
+async function bundle({ platform, target, format, outdir }) {
+    await runEsbuild({
+        platform,
+        target,
+        format,
+        entryPoint: \\"./src/index.ts\\",
+        outfile: \`./dist/\${outdir}/index.js\`,
+    });
+    await runEsbuild({
+        platform,
+        target,
+        format,
+        entryPoint: \\"./src/core/index.ts\\",
+        outfile: \`./dist/\${outdir}/core.js\`,
+    });
+    await runEsbuild({
+        platform,
+        target,
+        format,
+        entryPoint: \\"./src/serialization/index.ts\\",
+        outfile: \`./dist/\${outdir}/serialization.js\`,
+    });
+}
+
+async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
+    await build({
+        platform,
+        target,
+        format,
+        entryPoints: [entryPoint],
+        outfile,
+        bundle: true,
+        alias: {
+            // matches up with tsconfig paths
+            \\"@fern/api\\": \\"./src\\",
+        }
+    }).catch(() => process.exit(1));
+}
+",
+    "name": "build.js",
+    "type": "file",
+  },
+  Object {
+    "contents": "{
+    \\"name\\": \\"@fern/api\\",
+    \\"version\\": \\"0.0.1\\",
+    \\"repository\\": \\"https://github.com/fern/api}\\",
+    \\"files\\": [
+        \\"dist\\",
+        \\"types\\",
+        \\"core.d.ts\\",
+        \\"serialization.d.ts\\"
+    ],
+    \\"exports\\": {
+        \\".\\": {
+            \\"node\\": \\"./dist/node/index.js\\",
+            \\"import\\": \\"./dist/browser/esm/index.js\\",
+            \\"require\\": \\"./dist/browser/cjs/index.js\\",
+            \\"default\\": \\"./dist/browser/cjs/index.js\\",
+            \\"types\\": \\"./types/index.d.ts\\"
+        },
+        \\"./core\\": {
+            \\"node\\": \\"./dist/node/core.js\\",
+            \\"import\\": \\"./dist/browser/esm/core.js\\",
+            \\"require\\": \\"./dist/browser/cjs/core.js\\",
+            \\"default\\": \\"./dist/browser/cjs/core.js\\",
+            \\"types\\": \\"./types/core/index.d.ts\\"
+        },
+        \\"./serialization\\": {
+            \\"node\\": \\"./dist/node/serialization.js\\",
+            \\"import\\": \\"./dist/browser/esm/serialization.js\\",
+            \\"require\\": \\"./dist/browser/cjs/serialization.js\\",
+            \\"default\\": \\"./dist/browser/cjs/serialization.js\\",
+            \\"types\\": \\"./types/serialization/index.d.ts\\"
+        }
+    },
+    \\"types\\": \\"./types/index.d.ts\\",
+    \\"scripts\\": {
+        \\"format\\": \\"prettier --write src/**/*.ts\\",
+        \\"compile\\": \\"tsc && tsc-alias\\",
+        \\"bundle\\": \\"node build.js\\",
+        \\"build\\": \\"yarn compile && yarn bundle\\"
+    },
+    \\"devDependencies\\": {
+        \\"@types/node\\": \\"17.0.33\\",
+        \\"esbuild\\": \\"0.16.15\\",
+        \\"prettier\\": \\"2.7.1\\",
+        \\"tsc-alias\\": \\"^1.7.1\\",
+        \\"typescript\\": \\"4.6.4\\"
+    },
+    \\"packageManager\\": \\"yarn@3.2.4\\"
+}
+",
+    "name": "package.json",
+    "type": "file",
+  },
+  Object {
+    "contents": Array [
+      Object {
         "contents": Array [
           Object {
-            "contents": "export * as package_ from \\"./package\\";
-export * from \\"./package/types\\";
+            "contents": "export * from \\"./resources\\";
 ",
             "name": "index.ts",
             "type": "file",
@@ -11590,7 +11824,8 @@ export * from \\"./package/types\\";
           Object {
             "contents": Array [
               Object {
-                "contents": "export * from \\"./types\\";
+                "contents": "export * as package_ from \\"./package\\";
+export * from \\"./package/types\\";
 ",
                 "name": "index.ts",
                 "type": "file",
@@ -11598,185 +11833,186 @@ export * from \\"./package/types\\";
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-export interface Package {
-  name: string;
-}
-",
-                    "name": "Package.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export * from \\"./Package\\";
+                    "contents": "export * from \\"./types\\";
 ",
                     "name": "index.ts",
                     "type": "file",
                   },
+                  Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+export interface Package {
+    name: string;
+}
+",
+                        "name": "Package.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export * from \\"./Package\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "types",
+                    "type": "directory",
+                  },
                 ],
-                "name": "types",
+                "name": "package",
                 "type": "directory",
               },
             ],
-            "name": "package",
+            "name": "resources",
             "type": "directory",
           },
         ],
-        "name": "resources",
+        "name": "api",
         "type": "directory",
-      },
-    ],
-    "name": "api",
-    "type": "directory",
-  },
-  Object {
-    "contents": Array [
-      Object {
-        "contents": "export * as serialization from \\"./schemas\\";
-",
-        "name": "index.ts",
-        "type": "file",
       },
       Object {
         "contents": Array [
           Object {
-            "contents": "import { SchemaUtils } from \\"./builders\\";
-
-export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> &
-  SchemaUtils<Raw, Parsed>;
-
-export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any>
-  ? Raw
-  : never;
-export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed>
-  ? Parsed
-  : never;
-
-export interface BaseSchema<Raw, Parsed> {
-  parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
-  json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
-}
-
-export interface SchemaOptions {
-  /**
-   * @default false
-   */
-  skipUnknownKeysOnParse?: boolean;
-
-  /**
-   * @default false
-   */
-  includeUnknownKeysOnJson?: boolean;
-}
+            "contents": "export * as serialization from \\"./schemas\\";
 ",
-            "name": "Schema.ts",
+            "name": "index.ts",
             "type": "file",
           },
           Object {
             "contents": Array [
               Object {
+                "contents": "import { SchemaUtils } from \\"./builders\\";
+
+export type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
+
+export type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
+export type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
+
+export interface BaseSchema<Raw, Parsed> {
+    parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
+    json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
+}
+
+export interface SchemaOptions {
+    /**
+     * @default false
+     */
+    skipUnknownKeysOnParse?: boolean;
+
+    /**
+     * @default false
+     */
+    includeUnknownKeysOnJson?: boolean;
+}
+",
+                "name": "Schema.ts",
+                "type": "file",
+              },
+              Object {
                 "contents": Array [
                   Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function date(): Schema<string, Date> {
-  const baseSchema: BaseSchema<string, Date> = {
-    parse: (raw) => new Date(raw),
-    json: (date) => date.toISOString(),
-  };
+    const baseSchema: BaseSchema<string, Date> = {
+        parse: (raw) => new Date(raw),
+        json: (date) => date.toISOString(),
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 ",
-                    "name": "date.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { date } from \\"./date\\";
+                        "name": "date.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { date } from \\"./date\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "date",
+                    "type": "directory",
                   },
-                ],
-                "name": "date",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "import { Schema } from \\"../../Schema\\";
 import { createIdentitySchemaCreator } from \\"../identity\\";
 
-export function enum_<U extends string, E extends Readonly<[U, ...U[]]>>(
-  _values: E
-): Schema<E[number], E[number]> {
-  return createIdentitySchemaCreator<E[number]>()();
+export function enum_<U extends string, E extends Readonly<[U, ...U[]]>>(_values: E): Schema<E[number], E[number]> {
+    return createIdentitySchemaCreator<E[number]>()();
 }
 ",
-                    "name": "enum.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { enum_ } from \\"./enum\\";
+                        "name": "enum.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { enum_ } from \\"./enum\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "enum",
+                    "type": "directory",
                   },
-                ],
-                "name": "enum",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "import { Schema } from \\"../../Schema\\";
 import { identity } from \\"./identity\\";
 
 export function createIdentitySchemaCreator<T>(): () => Schema<T, T> {
-  return <T>() => identity<T>();
+    return <T>() => identity<T>();
 }
 ",
-                    "name": "createIdentitySchemaCreator.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                        "name": "createIdentitySchemaCreator.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
 export function identity<T>(): Schema<T, T> {
-  const baseSchema: BaseSchema<T, T> = {
-    parse: (raw) => raw,
-    json: (parsed) => parsed,
-  };
+    const baseSchema: BaseSchema<T, T> = {
+        parse: (raw) => raw,
+        json: (parsed) => parsed,
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 ",
-                    "name": "identity.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { createIdentitySchemaCreator } from \\"./createIdentitySchemaCreator\\";
+                        "name": "identity.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { createIdentitySchemaCreator } from \\"./createIdentitySchemaCreator\\";
 export { identity } from \\"./identity\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "identity",
+                    "type": "directory",
                   },
-                ],
-                "name": "identity",
-                "type": "directory",
-              },
-              Object {
-                "contents": "export * from \\"./date\\";
+                  Object {
+                    "contents": "export * from \\"./date\\";
 export * from \\"./enum\\";
 export * from \\"./identity\\";
 export * from \\"./lazy\\";
@@ -11790,182 +12026,165 @@ export * from \\"./schema-utils\\";
 export * from \\"./set\\";
 export * from \\"./union\\";
 ",
-                "name": "index.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": Array [
-                  Object {
-                    "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
-export { lazyObject } from \\"./lazyObject\\";
-",
                     "name": "index.ts",
                     "type": "file",
                   },
                   Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
+export { lazyObject } from \\"./lazyObject\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-export type SchemaGetter<SchemaType extends Schema<any, any>> = () =>
-  | SchemaType
-  | Promise<SchemaType>;
+export type SchemaGetter<SchemaType extends Schema<any, any>> = () => SchemaType | Promise<SchemaType>;
 
-export function lazy<Raw, Parsed>(
-  getter: SchemaGetter<Schema<Raw, Parsed>>
-): Schema<Raw, Parsed> {
-  const baseSchema = constructLazyBaseSchema(getter);
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+export function lazy<Raw, Parsed>(getter: SchemaGetter<Schema<Raw, Parsed>>): Schema<Raw, Parsed> {
+    const baseSchema = constructLazyBaseSchema(getter);
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 
 export function constructLazyBaseSchema<Raw, Parsed>(
-  getter: SchemaGetter<Schema<Raw, Parsed>>
+    getter: SchemaGetter<Schema<Raw, Parsed>>
 ): BaseSchema<Raw, Parsed> {
-  return {
-    parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
-    json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
-  };
+    return {
+        parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
+        json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
+    };
 }
 
-type MemoizedGetter<SchemaType extends Schema<any, any>> =
-  SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
+type MemoizedGetter<SchemaType extends Schema<any, any>> = SchemaGetter<SchemaType> & { __zurg_memoized?: SchemaType };
 
 export async function getMemoizedSchema<SchemaType extends Schema<any, any>>(
-  getter: SchemaGetter<SchemaType>
+    getter: SchemaGetter<SchemaType>
 ): Promise<SchemaType> {
-  const castedGetter = getter as MemoizedGetter<SchemaType>;
-  if (castedGetter.__zurg_memoized == null) {
-    castedGetter.__zurg_memoized = await getter();
-  }
-  return castedGetter.__zurg_memoized;
+    const castedGetter = getter as MemoizedGetter<SchemaType>;
+    if (castedGetter.__zurg_memoized == null) {
+        castedGetter.__zurg_memoized = await getter();
+    }
+    return castedGetter.__zurg_memoized;
 }
 ",
-                    "name": "lazy.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { getObjectUtils } from \\"../object\\";
+                        "name": "lazy.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { getObjectUtils } from \\"../object\\";
 import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
 import { BaseObjectSchema, ObjectSchema } from \\"../object/types\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
-import {
-  constructLazyBaseSchema,
-  getMemoizedSchema,
-  SchemaGetter,
-} from \\"./lazy\\";
+import { constructLazyBaseSchema, getMemoizedSchema, SchemaGetter } from \\"./lazy\\";
 
-export function lazyObject<Raw, Parsed>(
-  getter: SchemaGetter<ObjectSchema<Raw, Parsed>>
-): ObjectSchema<Raw, Parsed> {
-  const baseSchema: BaseObjectSchema<Raw, Parsed> = {
-    ...OBJECT_LIKE_BRAND,
-    ...constructLazyBaseSchema(getter),
-    _getRawProperties: async () =>
-      (await getMemoizedSchema(getter))._getRawProperties(),
-    _getParsedProperties: async () =>
-      (await getMemoizedSchema(getter))._getParsedProperties(),
-  };
+export function lazyObject<Raw, Parsed>(getter: SchemaGetter<ObjectSchema<Raw, Parsed>>): ObjectSchema<Raw, Parsed> {
+    const baseSchema: BaseObjectSchema<Raw, Parsed> = {
+        ...OBJECT_LIKE_BRAND,
+        ...constructLazyBaseSchema(getter),
+        _getRawProperties: async () => (await getMemoizedSchema(getter))._getRawProperties(),
+        _getParsedProperties: async () => (await getMemoizedSchema(getter))._getParsedProperties(),
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-    ...getObjectLikeUtils(baseSchema),
-    ...getObjectUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+        ...getObjectLikeUtils(baseSchema),
+        ...getObjectUtils(baseSchema),
+    };
 }
 ",
-                    "name": "lazyObject.ts",
-                    "type": "file",
+                        "name": "lazyObject.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "lazy",
+                    "type": "directory",
                   },
-                ],
-                "name": "lazy",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "export { list } from \\"./list\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "export { list } from \\"./list\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-export function list<Raw, Parsed>(
-  schema: Schema<Raw, Parsed>
-): Schema<Raw[], Parsed[]> {
-  const baseSchema: BaseSchema<Raw[], Parsed[]> = {
-    parse: (raw, opts) =>
-      Promise.all(raw.map((item) => schema.parse(item, opts))),
-    json: (parsed, opts) =>
-      Promise.all(parsed.map((item) => schema.json(item, opts))),
-  };
+export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
+    const baseSchema: BaseSchema<Raw[], Parsed[]> = {
+        parse: (raw, opts) => Promise.all(raw.map((item) => schema.parse(item, opts))),
+        json: (parsed, opts) => Promise.all(parsed.map((item) => schema.json(item, opts))),
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 ",
-                    "name": "list.ts",
-                    "type": "file",
+                        "name": "list.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "list",
+                    "type": "directory",
                   },
-                ],
-                "name": "list",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "export { stringLiteral } from \\"./stringLiteral\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "export { stringLiteral } from \\"./stringLiteral\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { Schema } from \\"../../Schema\\";
 import { createIdentitySchemaCreator } from \\"../identity\\";
 
 export function stringLiteral<V extends string>(_value: V): Schema<V, V> {
-  return createIdentitySchemaCreator<V>()();
+    return createIdentitySchemaCreator<V>()();
 }
 ",
-                    "name": "stringLiteral.ts",
-                    "type": "file",
+                        "name": "stringLiteral.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "literals",
+                    "type": "directory",
                   },
-                ],
-                "name": "literals",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "export { getObjectUtils, object } from \\"./object\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "export { getObjectUtils, object } from \\"./object\\";
 export { isProperty, property, type Property } from \\"./property\\";
 export {
-  type BaseObjectSchema,
-  type inferObjectSchemaFromPropertySchemas,
-  type inferParsedObject,
-  type inferParsedObjectFromPropertySchemas,
-  type inferParsedPropertySchema,
-  type inferRawKey,
-  type inferRawObject,
-  type inferRawObjectFromPropertySchemas,
-  type inferRawPropertySchema,
-  type ObjectSchema,
-  type ObjectUtils,
-  type PropertySchemas,
+    type BaseObjectSchema,
+    type inferObjectSchemaFromPropertySchemas,
+    type inferParsedObject,
+    type inferParsedObjectFromPropertySchemas,
+    type inferParsedPropertySchema,
+    type inferRawKey,
+    type inferRawObject,
+    type inferRawObjectFromPropertySchemas,
+    type inferRawPropertySchema,
+    type ObjectSchema,
+    type ObjectUtils,
+    type PropertySchemas,
 } from \\"./types\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { Schema } from \\"../../Schema\\";
 import { entries } from \\"../../utils/entries\\";
 import { filterObject } from \\"../../utils/filterObject\\";
 import { keys } from \\"../../utils/keys\\";
@@ -11974,309 +12193,269 @@ import { getObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"../object-like\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { isProperty } from \\"./property\\";
 import {
-  BaseObjectSchema,
-  inferObjectSchemaFromPropertySchemas,
-  inferParsedObjectFromPropertySchemas,
-  inferRawObjectFromPropertySchemas,
-  ObjectSchema,
-  ObjectUtils,
-  PropertySchemas,
+    BaseObjectSchema,
+    inferObjectSchemaFromPropertySchemas,
+    inferParsedObjectFromPropertySchemas,
+    inferRawObjectFromPropertySchemas,
+    ObjectSchema,
+    ObjectUtils,
+    PropertySchemas,
 } from \\"./types\\";
 
 interface ObjectPropertyWithRawKey {
-  rawKey: string;
-  parsedKey: string | number | symbol;
-  valueSchema: Schema<any, any>;
+    rawKey: string;
+    parsedKey: string | number | symbol;
+    valueSchema: Schema<any, any>;
 }
 
-export function object<
-  ParsedKeys extends string,
-  T extends PropertySchemas<ParsedKeys>
->(schemas: T): inferObjectSchemaFromPropertySchemas<T> {
-  const baseSchema: BaseObjectSchema<
-    inferRawObjectFromPropertySchemas<T>,
-    inferParsedObjectFromPropertySchemas<T>
-  > = {
-    ...OBJECT_LIKE_BRAND,
-    _getRawProperties: () =>
-      Promise.resolve(
-        Object.entries(schemas).map(([parsedKey, propertySchema]) =>
-          isProperty(propertySchema) ? propertySchema.rawKey : parsedKey
-        ) as unknown as (keyof inferRawObjectFromPropertySchemas<T>)[]
-      ),
-    _getParsedProperties: () =>
-      Promise.resolve(
-        keys(
-          schemas
-        ) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[]
-      ),
-
-    parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
-      const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
-
-      for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
-        const rawKey = isProperty(schemaOrObjectProperty)
-          ? schemaOrObjectProperty.rawKey
-          : parsedKey;
-
-        const property: ObjectPropertyWithRawKey = {
-          rawKey,
-          parsedKey,
-          valueSchema: isProperty(schemaOrObjectProperty)
-            ? schemaOrObjectProperty.valueSchema
-            : schemaOrObjectProperty,
-        };
-
-        rawKeyToProperty[rawKey] = property;
-      }
-
-      const parsed: Record<string | number | symbol, any> = {};
-
-      for (const [rawKey, rawPropertyValue] of Object.entries(raw)) {
-        const property = rawKeyToProperty[rawKey];
-
-        if (property != null) {
-          const value = await property.valueSchema.parse(rawPropertyValue);
-          parsed[property.parsedKey] = value;
-        } else if (!skipUnknownKeysOnParse) {
-          parsed[rawKey] = rawPropertyValue;
-        }
-      }
-
-      return parsed as inferParsedObjectFromPropertySchemas<T>;
-    },
-
-    json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
-      const raw: Record<string | number | symbol, any> = {};
-
-      for (const [parsedKey, parsedPropertyValue] of entries(parsed)) {
-        const schemaOrObjectProperty = schemas[parsedKey as keyof T];
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (schemaOrObjectProperty != null) {
-          if (isProperty(schemaOrObjectProperty)) {
-            const value = await schemaOrObjectProperty.valueSchema.json(
-              parsedPropertyValue
-            );
-            raw[schemaOrObjectProperty.rawKey] = value;
-          } else {
-            const value = await schemaOrObjectProperty.json(
-              parsedPropertyValue
-            );
-            raw[parsedKey] = value;
-          }
-        } else if (includeUnknownKeysOnJson) {
-          raw[parsedKey] = parsedPropertyValue;
-        }
-      }
-
-      return raw as inferRawObjectFromPropertySchemas<T>;
-    },
-  };
-
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-    ...getObjectLikeUtils(baseSchema),
-    ...getObjectUtils(baseSchema),
-  };
-}
-
-export function getObjectUtils<Raw, Parsed>(
-  schema: BaseObjectSchema<Raw, Parsed>
-): ObjectUtils<Raw, Parsed> {
-  return {
-    extend: <RawExtension, ParsedExtension>(
-      extension: ObjectSchema<RawExtension, ParsedExtension>
-    ) => {
-      const baseSchema: BaseObjectSchema<
-        Raw & RawExtension,
-        Parsed & ParsedExtension
-      > = {
+export function object<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
+    schemas: T
+): inferObjectSchemaFromPropertySchemas<T> {
+    const baseSchema: BaseObjectSchema<
+        inferRawObjectFromPropertySchemas<T>,
+        inferParsedObjectFromPropertySchemas<T>
+    > = {
         ...OBJECT_LIKE_BRAND,
-        _getParsedProperties: async () => [
-          ...(await schema._getParsedProperties()),
-          ...(await extension._getParsedProperties()),
-        ],
-        _getRawProperties: async () => [
-          ...(await schema._getRawProperties()),
-          ...(await extension._getRawProperties()),
-        ],
-        parse: async (raw, opts) => {
-          const rawExtensionPropertiesSet = new Set(
-            await extension._getRawProperties()
-          );
-          const [extensionProperties, otherProperties] = partition(
-            keys(raw),
-            (key) => rawExtensionPropertiesSet.has(key as keyof RawExtension)
-          );
-          return {
-            ...(await schema.parse(filterObject(raw, otherProperties), opts)),
-            ...(await extension.parse(
-              filterObject(raw, extensionProperties),
-              opts
-            )),
-          };
-        },
-        json: async (parsed, opts) => {
-          const parsedExtensionPropertiesSet = new Set(
-            await extension._getParsedProperties()
-          );
-          const [extensionProperties, otherProperties] = partition(
-            keys(parsed),
-            (key) =>
-              parsedExtensionPropertiesSet.has(key as keyof ParsedExtension)
-          );
-          return {
-            ...(await schema.json(filterObject(parsed, otherProperties), opts)),
-            ...(await extension.json(
-              filterObject(parsed, extensionProperties),
-              opts
-            )),
-          };
-        },
-      };
+        _getRawProperties: () =>
+            Promise.resolve(
+                Object.entries(schemas).map(([parsedKey, propertySchema]) =>
+                    isProperty(propertySchema) ? propertySchema.rawKey : parsedKey
+                ) as unknown as (keyof inferRawObjectFromPropertySchemas<T>)[]
+            ),
+        _getParsedProperties: () =>
+            Promise.resolve(keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[]),
 
-      return {
+        parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
+            const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
+
+            for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
+                const rawKey = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.rawKey : parsedKey;
+
+                const property: ObjectPropertyWithRawKey = {
+                    rawKey,
+                    parsedKey,
+                    valueSchema: isProperty(schemaOrObjectProperty)
+                        ? schemaOrObjectProperty.valueSchema
+                        : schemaOrObjectProperty,
+                };
+
+                rawKeyToProperty[rawKey] = property;
+            }
+
+            const parsed: Record<string | number | symbol, any> = {};
+
+            for (const [rawKey, rawPropertyValue] of Object.entries(raw)) {
+                const property = rawKeyToProperty[rawKey];
+
+                if (property != null) {
+                    const value = await property.valueSchema.parse(rawPropertyValue);
+                    parsed[property.parsedKey] = value;
+                } else if (!skipUnknownKeysOnParse) {
+                    parsed[rawKey] = rawPropertyValue;
+                }
+            }
+
+            return parsed as inferParsedObjectFromPropertySchemas<T>;
+        },
+
+        json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
+            const raw: Record<string | number | symbol, any> = {};
+
+            for (const [parsedKey, parsedPropertyValue] of entries(parsed)) {
+                const schemaOrObjectProperty = schemas[parsedKey as keyof T];
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                if (schemaOrObjectProperty != null) {
+                    if (isProperty(schemaOrObjectProperty)) {
+                        const value = await schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
+                        raw[schemaOrObjectProperty.rawKey] = value;
+                    } else {
+                        const value = await schemaOrObjectProperty.json(parsedPropertyValue);
+                        raw[parsedKey] = value;
+                    }
+                } else if (includeUnknownKeysOnJson) {
+                    raw[parsedKey] = parsedPropertyValue;
+                }
+            }
+
+            return raw as inferRawObjectFromPropertySchemas<T>;
+        },
+    };
+
+    return {
         ...baseSchema,
         ...getSchemaUtils(baseSchema),
         ...getObjectLikeUtils(baseSchema),
         ...getObjectUtils(baseSchema),
-      };
-    },
-  };
+    };
+}
+
+export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed>): ObjectUtils<Raw, Parsed> {
+    return {
+        extend: <RawExtension, ParsedExtension>(extension: ObjectSchema<RawExtension, ParsedExtension>) => {
+            const baseSchema: BaseObjectSchema<Raw & RawExtension, Parsed & ParsedExtension> = {
+                ...OBJECT_LIKE_BRAND,
+                _getParsedProperties: async () => [
+                    ...(await schema._getParsedProperties()),
+                    ...(await extension._getParsedProperties()),
+                ],
+                _getRawProperties: async () => [
+                    ...(await schema._getRawProperties()),
+                    ...(await extension._getRawProperties()),
+                ],
+                parse: async (raw, opts) => {
+                    const rawExtensionPropertiesSet = new Set(await extension._getRawProperties());
+                    const [extensionProperties, otherProperties] = partition(keys(raw), (key) =>
+                        rawExtensionPropertiesSet.has(key as keyof RawExtension)
+                    );
+                    return {
+                        ...(await schema.parse(filterObject(raw, otherProperties), opts)),
+                        ...(await extension.parse(filterObject(raw, extensionProperties), opts)),
+                    };
+                },
+                json: async (parsed, opts) => {
+                    const parsedExtensionPropertiesSet = new Set(await extension._getParsedProperties());
+                    const [extensionProperties, otherProperties] = partition(keys(parsed), (key) =>
+                        parsedExtensionPropertiesSet.has(key as keyof ParsedExtension)
+                    );
+                    return {
+                        ...(await schema.json(filterObject(parsed, otherProperties), opts)),
+                        ...(await extension.json(filterObject(parsed, extensionProperties), opts)),
+                    };
+                },
+            };
+
+            return {
+                ...baseSchema,
+                ...getSchemaUtils(baseSchema),
+                ...getObjectLikeUtils(baseSchema),
+                ...getObjectUtils(baseSchema),
+            };
+        },
+    };
 }
 ",
-                    "name": "object.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
+                        "name": "object.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { Schema } from \\"../../Schema\\";
 
 export function property<RawKey extends string, RawValue, ParsedValue>(
-  rawKey: RawKey,
-  valueSchema: Schema<RawValue, ParsedValue>
+    rawKey: RawKey,
+    valueSchema: Schema<RawValue, ParsedValue>
 ): Property<RawKey, RawValue, ParsedValue> {
-  return {
-    rawKey,
-    valueSchema,
-    isProperty: true,
-  };
+    return {
+        rawKey,
+        valueSchema,
+        isProperty: true,
+    };
 }
 
 export interface Property<RawKey extends string, RawValue, ParsedValue> {
-  rawKey: RawKey;
-  valueSchema: Schema<RawValue, ParsedValue>;
-  isProperty: true;
+    rawKey: RawKey;
+    valueSchema: Schema<RawValue, ParsedValue>;
+    isProperty: true;
 }
 
-export function isProperty<O extends Property<any, any, any>>(
-  maybeProperty: unknown
-): maybeProperty is O {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  return (maybeProperty as O).isProperty;
+export function isProperty<O extends Property<any, any, any>>(maybeProperty: unknown): maybeProperty is O {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (maybeProperty as O).isProperty;
 }
 ",
-                    "name": "property.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { inferParsed, inferRaw, Schema } from \\"../../Schema\\";
+                        "name": "property.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { inferParsed, inferRaw, Schema } from \\"../../Schema\\";
 import { addQuestionMarksToNullableProperties } from \\"../../utils/addQuestionMarksToNullableProperties\\";
 import { BaseObjectLikeSchema, ObjectLikeSchema } from \\"../object-like\\";
 import { Property } from \\"./property\\";
 
 export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
-  ObjectLikeSchema<Raw, Parsed> &
-  ObjectUtils<Raw, Parsed>;
+    ObjectLikeSchema<Raw, Parsed> &
+    ObjectUtils<Raw, Parsed>;
 
-export interface BaseObjectSchema<Raw, Parsed>
-  extends BaseObjectLikeSchema<Raw, Parsed> {
-  _getRawProperties: () => Promise<(keyof Raw)[]>;
-  _getParsedProperties: () => Promise<(keyof Parsed)[]>;
+export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+    _getRawProperties: () => Promise<(keyof Raw)[]>;
+    _getParsedProperties: () => Promise<(keyof Parsed)[]>;
 }
 
 export interface ObjectUtils<Raw, Parsed> {
-  extend: <RawExtension, ParsedExtension>(
-    schemas: ObjectSchema<RawExtension, ParsedExtension>
-  ) => ObjectSchema<Raw & RawExtension, Parsed & ParsedExtension>;
+    extend: <RawExtension, ParsedExtension>(
+        schemas: ObjectSchema<RawExtension, ParsedExtension>
+    ) => ObjectSchema<Raw & RawExtension, Parsed & ParsedExtension>;
 }
 
-export type inferRawObject<O extends ObjectSchema<any, any>> =
-  O extends ObjectSchema<infer Raw, any> ? Raw : never;
+export type inferRawObject<O extends ObjectSchema<any, any>> = O extends ObjectSchema<infer Raw, any> ? Raw : never;
 
-export type inferParsedObject<O extends ObjectSchema<any, any>> =
-  O extends ObjectSchema<any, infer Parsed> ? Parsed : never;
+export type inferParsedObject<O extends ObjectSchema<any, any>> = O extends ObjectSchema<any, infer Parsed>
+    ? Parsed
+    : never;
 
-export type inferObjectSchemaFromPropertySchemas<
-  T extends PropertySchemas<keyof T>
-> = ObjectSchema<
-  inferRawObjectFromPropertySchemas<T>,
-  inferParsedObjectFromPropertySchemas<T>
+export type inferObjectSchemaFromPropertySchemas<T extends PropertySchemas<keyof T>> = ObjectSchema<
+    inferRawObjectFromPropertySchemas<T>,
+    inferParsedObjectFromPropertySchemas<T>
 >;
 
-export type inferRawObjectFromPropertySchemas<
-  T extends PropertySchemas<keyof T>
-> = addQuestionMarksToNullableProperties<{
-  [ParsedKey in keyof T as inferRawKey<
-    ParsedKey,
-    T[ParsedKey]
-  >]: inferRawPropertySchema<T[ParsedKey]>;
-}>;
+export type inferRawObjectFromPropertySchemas<T extends PropertySchemas<keyof T>> =
+    addQuestionMarksToNullableProperties<{
+        [ParsedKey in keyof T as inferRawKey<ParsedKey, T[ParsedKey]>]: inferRawPropertySchema<T[ParsedKey]>;
+    }>;
 
-export type inferParsedObjectFromPropertySchemas<
-  T extends PropertySchemas<keyof T>
-> = addQuestionMarksToNullableProperties<{
-  [K in keyof T]: inferParsedPropertySchema<T[K]>;
-}>;
+export type inferParsedObjectFromPropertySchemas<T extends PropertySchemas<keyof T>> =
+    addQuestionMarksToNullableProperties<{
+        [K in keyof T]: inferParsedPropertySchema<T[K]>;
+    }>;
 
-export type PropertySchemas<ParsedKeys extends string | number | symbol> =
-  Record<ParsedKeys, Property<any, any, any> | Schema<any, any>>;
+export type PropertySchemas<ParsedKeys extends string | number | symbol> = Record<
+    ParsedKeys,
+    Property<any, any, any> | Schema<any, any>
+>;
 
-export type inferRawPropertySchema<
-  P extends Property<any, any, any> | Schema<any, any>
-> = P extends Property<any, infer Raw, any>
-  ? Raw
-  : P extends Schema<any, any>
-  ? inferRaw<P>
-  : never;
+export type inferRawPropertySchema<P extends Property<any, any, any> | Schema<any, any>> = P extends Property<
+    any,
+    infer Raw,
+    any
+>
+    ? Raw
+    : P extends Schema<any, any>
+    ? inferRaw<P>
+    : never;
 
-export type inferParsedPropertySchema<
-  P extends Property<any, any, any> | Schema<any, any>
-> = P extends Property<any, any, infer Parsed>
-  ? Parsed
-  : P extends Schema<any, any>
-  ? inferParsed<P>
-  : never;
+export type inferParsedPropertySchema<P extends Property<any, any, any> | Schema<any, any>> = P extends Property<
+    any,
+    any,
+    infer Parsed
+>
+    ? Parsed
+    : P extends Schema<any, any>
+    ? inferParsed<P>
+    : never;
 
 export type inferRawKey<
-  ParsedKey extends string | number | symbol,
-  P extends Property<any, any, any> | Schema<any, any>
+    ParsedKey extends string | number | symbol,
+    P extends Property<any, any, any> | Schema<any, any>
 > = P extends Property<infer Raw, any, any> ? Raw : ParsedKey;
 ",
-                    "name": "types.ts",
-                    "type": "file",
+                        "name": "types.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "object",
+                    "type": "directory",
                   },
-                ],
-                "name": "object",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
-import {
-  BaseObjectLikeSchema,
-  ObjectLikeSchema,
-  ObjectLikeUtils,
-  OBJECT_LIKE_BRAND,
-} from \\"./types\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "import { getSchemaUtils } from \\"../schema-utils\\";
+import { BaseObjectLikeSchema, ObjectLikeSchema, ObjectLikeUtils, OBJECT_LIKE_BRAND } from \\"./types\\";
 
 export function getObjectLikeUtils<Raw, Parsed>(
-  schema: BaseObjectLikeSchema<Raw, Parsed>
+    schema: BaseObjectLikeSchema<Raw, Parsed>
 ): ObjectLikeUtils<Raw, Parsed> {
-  return {
-    withProperties: (properties) => withProperties(schema, properties),
-  };
+    return {
+        withProperties: (properties) => withProperties(schema, properties),
+    };
 }
 
 /**
@@ -12284,648 +12463,450 @@ export function getObjectLikeUtils<Raw, Parsed>(
  */
 
 export function withProperties<RawObjectShape, ParsedObjectShape, Properties>(
-  objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>,
-  properties: {
-    [K in keyof Properties]:
-      | Properties[K]
-      | ((parsed: ParsedObjectShape) => Properties[K]);
-  }
+    objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>,
+    properties: { [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]) }
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
-  const objectSchema: BaseObjectLikeSchema<
-    RawObjectShape,
-    ParsedObjectShape & Properties
-  > = {
-    ...OBJECT_LIKE_BRAND,
-    parse: async (raw, opts) => {
-      const parsedObject = await objectLike.parse(raw, opts);
-      const additionalProperties = Object.entries(properties).reduce<
-        Record<string, any>
-      >((processed, [key, value]) => {
-        return {
-          ...processed,
-          [key]: typeof value === \\"function\\" ? value(parsedObject) : value,
-        };
-      }, {});
+    const objectSchema: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> = {
+        ...OBJECT_LIKE_BRAND,
+        parse: async (raw, opts) => {
+            const parsedObject = await objectLike.parse(raw, opts);
+            const additionalProperties = Object.entries(properties).reduce<Record<string, any>>(
+                (processed, [key, value]) => {
+                    return {
+                        ...processed,
+                        [key]: typeof value === \\"function\\" ? value(parsedObject) : value,
+                    };
+                },
+                {}
+            );
 
-      return {
-        ...parsedObject,
-        ...(additionalProperties as Properties),
-      };
-    },
-    json: (parsed, opts) => {
-      // strip out added properties
-      const addedPropertyKeys = new Set(Object.keys(properties));
-      const parsedWithoutAddedProperties = Object.entries(parsed).reduce<
-        Record<string, any>
-      >((filtered, [key, value]) => {
-        if (!addedPropertyKeys.has(key)) {
-          filtered[key] = value;
-        }
-        return filtered;
-      }, {});
+            return {
+                ...parsedObject,
+                ...(additionalProperties as Properties),
+            };
+        },
+        json: (parsed, opts) => {
+            // strip out added properties
+            const addedPropertyKeys = new Set(Object.keys(properties));
+            const parsedWithoutAddedProperties = Object.entries(parsed).reduce<Record<string, any>>(
+                (filtered, [key, value]) => {
+                    if (!addedPropertyKeys.has(key)) {
+                        filtered[key] = value;
+                    }
+                    return filtered;
+                },
+                {}
+            );
 
-      return objectLike.json(
-        parsedWithoutAddedProperties as ParsedObjectShape,
-        opts
-      );
-    },
-  };
+            return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts);
+        },
+    };
 
-  return {
-    ...objectSchema,
-    ...getSchemaUtils(objectSchema),
-    ...getObjectLikeUtils(objectSchema),
-  };
+    return {
+        ...objectSchema,
+        ...getSchemaUtils(objectSchema),
+        ...getObjectLikeUtils(objectSchema),
+    };
 }
 ",
-                    "name": "getObjectLikeUtils.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
-export {
-  OBJECT_LIKE_BRAND,
-  type BaseObjectLikeSchema,
-  type ObjectLikeSchema,
-  type ObjectLikeUtils,
-} from \\"./types\\";
+                        "name": "getObjectLikeUtils.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
+export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 
 export type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> &
-  BaseObjectLikeSchema<Raw, Parsed> &
-  ObjectLikeUtils<Raw, Parsed>;
+    BaseObjectLikeSchema<Raw, Parsed> &
+    ObjectLikeUtils<Raw, Parsed>;
 
 export type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
-  _objectLike: void;
+    _objectLike: void;
 };
 
 export interface ObjectLikeUtils<Raw, Parsed> {
-  withProperties: <T extends Record<string, any>>(properties: {
-    [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
-  }) => ObjectLikeSchema<Raw, Parsed & T>;
+    withProperties: <T extends Record<string, any>>(properties: {
+        [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
+    }) => ObjectLikeSchema<Raw, Parsed & T>;
 }
 
 export const OBJECT_LIKE_BRAND = undefined as unknown as { _objectLike: void };
 ",
-                    "name": "types.ts",
-                    "type": "file",
+                        "name": "types.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "object-like",
+                    "type": "directory",
                   },
-                ],
-                "name": "object-like",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
 
 export const any = createIdentitySchemaCreator<any>();
 ",
-                    "name": "any.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
+                        "name": "any.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
 
 export const boolean = createIdentitySchemaCreator<boolean>();
 ",
-                    "name": "boolean.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { any } from \\"./any\\";
+                        "name": "boolean.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { any } from \\"./any\\";
 export { boolean } from \\"./boolean\\";
 export { number } from \\"./number\\";
 export { string } from \\"./string\\";
 export { unknown } from \\"./unknown\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
 
 export const number = createIdentitySchemaCreator<number>();
 ",
-                    "name": "number.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
+                        "name": "number.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
 
 export const string = createIdentitySchemaCreator<string>();
 ",
-                    "name": "string.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
+                        "name": "string.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { createIdentitySchemaCreator } from \\"../identity\\";
 
 export const unknown = createIdentitySchemaCreator<unknown>();
 ",
-                    "name": "unknown.ts",
-                    "type": "file",
+                        "name": "unknown.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "primitives",
+                    "type": "directory",
                   },
-                ],
-                "name": "primitives",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "export { record } from \\"./record\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "export { record } from \\"./record\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { entries } from \\"../../utils/entries\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-export function record<
-  RawKey extends string | number,
-  ParsedKey extends string | number,
-  RawValue,
-  ParsedValue
->(
-  keySchema: Schema<RawKey, ParsedKey>,
-  valueSchema: Schema<RawValue, ParsedValue>
+export function record<RawKey extends string | number, ParsedKey extends string | number, RawValue, ParsedValue>(
+    keySchema: Schema<RawKey, ParsedKey>,
+    valueSchema: Schema<RawValue, ParsedValue>
 ): Schema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> {
-  const baseSchema: BaseSchema<
-    Record<RawKey, RawValue>,
-    Record<ParsedKey, ParsedValue>
-  > = {
-    parse: (raw, opts) => {
-      return entries(raw).reduce(async (parsedPromise, [key, value]) => {
-        const parsed: Record<ParsedKey, ParsedValue> = await parsedPromise;
-        const parsedKey = await keySchema.parse(key, opts);
-        parsed[parsedKey] = await valueSchema.parse(value, opts);
-        return parsedPromise;
-      }, Promise.resolve({} as Record<ParsedKey, ParsedValue>));
-    },
-    json: (parsed, opts) => {
-      return entries(parsed).reduce(async (rawPromise, [key, value]) => {
-        const raw: Record<RawKey, RawValue> = await rawPromise;
-        const rawKey = await keySchema.json(key, opts);
-        raw[rawKey] = await valueSchema.json(value, opts);
-        return rawPromise;
-      }, Promise.resolve({} as Record<RawKey, RawValue>));
-    },
-  };
+    const baseSchema: BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>> = {
+        parse: (raw, opts) => {
+            return entries(raw).reduce(async (parsedPromise, [key, value]) => {
+                const parsed: Record<ParsedKey, ParsedValue> = await parsedPromise;
+                const parsedKey = await keySchema.parse(key, opts);
+                parsed[parsedKey] = await valueSchema.parse(value, opts);
+                return parsedPromise;
+            }, Promise.resolve({} as Record<ParsedKey, ParsedValue>));
+        },
+        json: (parsed, opts) => {
+            return entries(parsed).reduce(async (rawPromise, [key, value]) => {
+                const raw: Record<RawKey, RawValue> = await rawPromise;
+                const rawKey = await keySchema.json(key, opts);
+                raw[rawKey] = await valueSchema.json(value, opts);
+                return rawPromise;
+            }, Promise.resolve({} as Record<RawKey, RawValue>));
+        },
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 ",
-                    "name": "record.ts",
-                    "type": "file",
+                        "name": "record.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "record",
+                    "type": "directory",
                   },
-                ],
-                "name": "record",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { OptionalSchema, OPTIONAL_BRAND } from \\"./types\\";
 
 export interface SchemaUtils<Raw, Parsed> {
-  optional: () => OptionalSchema<Raw, Parsed>;
-  transform: <PostTransform>(
-    transformer: BaseSchema<Parsed, PostTransform>
-  ) => Schema<Raw, PostTransform>;
+    optional: () => OptionalSchema<Raw, Parsed>;
+    transform: <PostTransform>(transformer: BaseSchema<Parsed, PostTransform>) => Schema<Raw, PostTransform>;
 }
 
-export function getSchemaUtils<Raw, Parsed>(
-  schema: BaseSchema<Raw, Parsed>
-): SchemaUtils<Raw, Parsed> {
-  return {
-    optional: () => optional(schema),
-    transform: (transformer) => transform(schema, transformer),
-  };
+export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
+    return {
+        optional: () => optional(schema),
+        transform: (transformer) => transform(schema, transformer),
+    };
 }
 
 /**
  * schema utils are defined in one file to resolve issues with circular imports
  */
 
-export function optional<Raw, Parsed>(
-  schema: BaseSchema<Raw, Parsed>
-): OptionalSchema<Raw, Parsed> {
-  const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
-    parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-    json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
-  };
+export function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed> {
+    const baseSchema: BaseSchema<Raw | null | undefined, Parsed | undefined> = {
+        parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
+        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
+    };
 
-  return {
-    ...OPTIONAL_BRAND,
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...OPTIONAL_BRAND,
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 
 export function transform<PreTransformRaw, PreTransformParsed, PostTransform>(
-  schema: BaseSchema<PreTransformRaw, PreTransformParsed>,
-  transformer: BaseSchema<PreTransformParsed, PostTransform>
+    schema: BaseSchema<PreTransformRaw, PreTransformParsed>,
+    transformer: BaseSchema<PreTransformParsed, PostTransform>
 ): Schema<PreTransformRaw, PostTransform> {
-  const baseSchema: BaseSchema<PreTransformRaw, PostTransform> = {
-    parse: async (raw, opts) => {
-      const postTransformParsed = await schema.parse(raw, opts);
-      return transformer.parse(postTransformParsed, opts);
-    },
-    json: async (parsed, opts) => {
-      const preTransformParsed = await transformer.json(parsed, opts);
-      return schema.json(preTransformParsed, opts);
-    },
-  };
+    const baseSchema: BaseSchema<PreTransformRaw, PostTransform> = {
+        parse: async (raw, opts) => {
+            const postTransformParsed = await schema.parse(raw, opts);
+            return transformer.parse(postTransformParsed, opts);
+        },
+        json: async (parsed, opts) => {
+            const preTransformParsed = await transformer.json(parsed, opts);
+            return schema.json(preTransformParsed, opts);
+        },
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 ",
-                    "name": "getSchemaUtils.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export {
-  getSchemaUtils,
-  optional,
-  transform,
-  type SchemaUtils,
-} from \\"./getSchemaUtils\\";
+                        "name": "getSchemaUtils.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { getSchemaUtils, optional, transform, type SchemaUtils } from \\"./getSchemaUtils\\";
 export { OPTIONAL_BRAND, type OptionalSchema } from \\"./types\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { Schema } from \\"../../Schema\\";
 
 export const OPTIONAL_BRAND = undefined as unknown as { _isOptional: void };
 
-export type OptionalSchema<Raw, Parsed> = Schema<
-  Raw | null | undefined,
-  Parsed | undefined
-> & {
-  _isOptional: void;
+export type OptionalSchema<Raw, Parsed> = Schema<Raw | null | undefined, Parsed | undefined> & {
+    _isOptional: void;
 };
 ",
-                    "name": "types.ts",
-                    "type": "file",
+                        "name": "types.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "schema-utils",
+                    "type": "directory",
                   },
-                ],
-                "name": "schema-utils",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "export { set } from \\"./set\\";
+                    "contents": Array [
+                      Object {
+                        "contents": "export { set } from \\"./set\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 
-export function set<Raw, Parsed>(
-  schema: Schema<Raw, Parsed>
-): Schema<Raw[], Set<Parsed>> {
-  const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
-    parse: async (raw, opts) =>
-      new Set(await Promise.all(raw.map((item) => schema.parse(item, opts)))),
-    json: (parsed, opts) =>
-      Promise.all([...parsed].map((item) => schema.json(item, opts))),
-  };
+export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set<Parsed>> {
+    const baseSchema: BaseSchema<Raw[], Set<Parsed>> = {
+        parse: async (raw, opts) => new Set(await Promise.all(raw.map((item) => schema.parse(item, opts)))),
+        json: (parsed, opts) => Promise.all([...parsed].map((item) => schema.json(item, opts))),
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+    };
 }
 ",
-                    "name": "set.ts",
-                    "type": "file",
+                        "name": "set.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "set",
+                    "type": "directory",
                   },
-                ],
-                "name": "set",
-                "type": "directory",
-              },
-              Object {
-                "contents": Array [
                   Object {
-                    "contents": "export function discriminant<
-  RawDiscriminant extends string,
-  ParsedDiscriminant extends string
->(
-  parsedDiscriminant: ParsedDiscriminant,
-  rawDiscriminant: RawDiscriminant
+                    "contents": Array [
+                      Object {
+                        "contents": "export function discriminant<RawDiscriminant extends string, ParsedDiscriminant extends string>(
+    parsedDiscriminant: ParsedDiscriminant,
+    rawDiscriminant: RawDiscriminant
 ): Discriminant<RawDiscriminant, ParsedDiscriminant> {
-  return {
-    parsedDiscriminant,
-    rawDiscriminant,
-  };
+    return {
+        parsedDiscriminant,
+        rawDiscriminant,
+    };
 }
 
-export interface Discriminant<
-  RawDiscriminant extends string,
-  ParsedDiscriminant extends string
-> {
-  parsedDiscriminant: ParsedDiscriminant;
-  rawDiscriminant: RawDiscriminant;
+export interface Discriminant<RawDiscriminant extends string, ParsedDiscriminant extends string> {
+    parsedDiscriminant: ParsedDiscriminant;
+    rawDiscriminant: RawDiscriminant;
 }
 ",
-                    "name": "discriminant.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { discriminant, type Discriminant } from \\"./discriminant\\";
+                        "name": "discriminant.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export { discriminant, type Discriminant } from \\"./discriminant\\";
 export {
-  type inferParsedDiscriminant,
-  type inferParsedUnion,
-  type inferRawDiscriminant,
-  type inferRawUnion,
-  type UnionSubtypes,
+    type inferParsedDiscriminant,
+    type inferParsedUnion,
+    type inferRawDiscriminant,
+    type inferRawUnion,
+    type UnionSubtypes,
 } from \\"./types\\";
 export { union } from \\"./union\\";
 ",
-                    "name": "index.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { inferParsedObject, inferRawObject, ObjectSchema } from \\"../object\\";
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { inferParsedObject, inferRawObject, ObjectSchema } from \\"../object\\";
 import { Discriminant } from \\"./discriminant\\";
 
-export type UnionSubtypes<DiscriminantValues extends string | number | symbol> =
-  {
+export type UnionSubtypes<DiscriminantValues extends string | number | symbol> = {
     [K in DiscriminantValues]: ObjectSchema<any, any>;
-  };
+};
 
-export type inferRawUnion<
-  D extends string | Discriminant<any, any>,
-  U extends UnionSubtypes<keyof U>
-> = {
-  [K in keyof U]: Record<inferRawDiscriminant<D>, K> & inferRawObject<U[K]>;
+export type inferRawUnion<D extends string | Discriminant<any, any>, U extends UnionSubtypes<keyof U>> = {
+    [K in keyof U]: Record<inferRawDiscriminant<D>, K> & inferRawObject<U[K]>;
 }[keyof U];
 
-export type inferParsedUnion<
-  D extends string | Discriminant<any, any>,
-  U extends UnionSubtypes<keyof U>
-> = {
-  [K in keyof U]: Record<inferParsedDiscriminant<D>, K> &
-    inferParsedObject<U[K]>;
+export type inferParsedUnion<D extends string | Discriminant<any, any>, U extends UnionSubtypes<keyof U>> = {
+    [K in keyof U]: Record<inferParsedDiscriminant<D>, K> & inferParsedObject<U[K]>;
 }[keyof U];
 
-export type inferRawDiscriminant<D extends string | Discriminant<any, any>> =
-  D extends string ? D : D extends Discriminant<infer Raw, any> ? Raw : never;
+export type inferRawDiscriminant<D extends string | Discriminant<any, any>> = D extends string
+    ? D
+    : D extends Discriminant<infer Raw, any>
+    ? Raw
+    : never;
 
-export type inferParsedDiscriminant<D extends string | Discriminant<any, any>> =
-  D extends string
+export type inferParsedDiscriminant<D extends string | Discriminant<any, any>> = D extends string
     ? D
     : D extends Discriminant<any, infer Parsed>
     ? Parsed
     : never;
 ",
-                    "name": "types.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import {
-  BaseObjectLikeSchema,
-  getObjectLikeUtils,
-  ObjectLikeSchema,
-  OBJECT_LIKE_BRAND,
-} from \\"../object-like\\";
+                        "name": "types.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { BaseObjectLikeSchema, getObjectLikeUtils, ObjectLikeSchema, OBJECT_LIKE_BRAND } from \\"../object-like\\";
 import { getSchemaUtils } from \\"../schema-utils\\";
 import { Discriminant } from \\"./discriminant\\";
-import {
-  inferParsedDiscriminant,
-  inferParsedUnion,
-  inferRawDiscriminant,
-  inferRawUnion,
-  UnionSubtypes,
-} from \\"./types\\";
+import { inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion, UnionSubtypes } from \\"./types\\";
 
-export function union<
-  D extends string | Discriminant<any, any>,
-  U extends UnionSubtypes<any>
->(
-  discriminant: D,
-  union: U
+export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(
+    discriminant: D,
+    union: U
 ): ObjectLikeSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> {
-  const rawDiscriminant =
-    typeof discriminant === \\"string\\"
-      ? discriminant
-      : (discriminant.rawDiscriminant as inferRawDiscriminant<D>);
-  const parsedDiscriminant =
-    typeof discriminant === \\"string\\"
-      ? discriminant
-      : (discriminant.parsedDiscriminant as inferParsedDiscriminant<D>);
+    const rawDiscriminant =
+        typeof discriminant === \\"string\\" ? discriminant : (discriminant.rawDiscriminant as inferRawDiscriminant<D>);
+    const parsedDiscriminant =
+        typeof discriminant === \\"string\\"
+            ? discriminant
+            : (discriminant.parsedDiscriminant as inferParsedDiscriminant<D>);
 
-  const baseSchema: BaseObjectLikeSchema<
-    inferRawUnion<D, U>,
-    inferParsedUnion<D, U>
-  > = {
-    ...OBJECT_LIKE_BRAND,
+    const baseSchema: BaseObjectLikeSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> = {
+        ...OBJECT_LIKE_BRAND,
 
-    parse: async (raw, opts) => {
-      const { [rawDiscriminant]: discriminantValue, ...additionalProperties } =
-        raw;
-      const additionalPropertySchemas = union[discriminantValue];
+        parse: async (raw, opts) => {
+            const { [rawDiscriminant]: discriminantValue, ...additionalProperties } = raw;
+            const additionalPropertySchemas = union[discriminantValue];
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (additionalPropertySchemas == null) {
-        return {
-          ...additionalProperties,
-          [parsedDiscriminant]: discriminantValue,
-        } as inferParsedUnion<D, U>;
-      }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (additionalPropertySchemas == null) {
+                return {
+                    ...additionalProperties,
+                    [parsedDiscriminant]: discriminantValue,
+                } as inferParsedUnion<D, U>;
+            }
 
-      return {
-        ...(await additionalPropertySchemas.parse(additionalProperties, opts)),
-        [parsedDiscriminant]: discriminantValue,
-      } as inferParsedUnion<D, U>;
-    },
+            return {
+                ...(await additionalPropertySchemas.parse(additionalProperties, opts)),
+                [parsedDiscriminant]: discriminantValue,
+            } as inferParsedUnion<D, U>;
+        },
 
-    json: async (parsed, opts) => {
-      const {
-        [parsedDiscriminant]: discriminantValue,
-        ...additionalProperties
-      } = parsed;
-      const additionalPropertySchemas = union[discriminantValue];
+        json: async (parsed, opts) => {
+            const { [parsedDiscriminant]: discriminantValue, ...additionalProperties } = parsed;
+            const additionalPropertySchemas = union[discriminantValue];
 
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (additionalPropertySchemas == null) {
-        return {
-          ...additionalProperties,
-          [rawDiscriminant]: discriminantValue,
-        } as unknown as inferRawUnion<D, U>;
-      }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (additionalPropertySchemas == null) {
+                return {
+                    ...additionalProperties,
+                    [rawDiscriminant]: discriminantValue,
+                } as unknown as inferRawUnion<D, U>;
+            }
 
-      return {
-        ...(await additionalPropertySchemas.json(additionalProperties, opts)),
-        [rawDiscriminant]: discriminantValue,
-      } as inferRawUnion<D, U>;
-    },
-  };
+            return {
+                ...(await additionalPropertySchemas.json(additionalProperties, opts)),
+                [rawDiscriminant]: discriminantValue,
+            } as inferRawUnion<D, U>;
+        },
+    };
 
-  return {
-    ...baseSchema,
-    ...getSchemaUtils(baseSchema),
-    ...getObjectLikeUtils(baseSchema),
-  };
+    return {
+        ...baseSchema,
+        ...getSchemaUtils(baseSchema),
+        ...getObjectLikeUtils(baseSchema),
+    };
 }
 ",
-                    "name": "union.ts",
-                    "type": "file",
+                        "name": "union.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "union",
+                    "type": "directory",
                   },
                 ],
-                "name": "union",
+                "name": "builders",
                 "type": "directory",
               },
-            ],
-            "name": "builders",
-            "type": "directory",
-          },
-          Object {
-            "contents": "export * from \\"./builders\\";
-export {
-  type inferParsed,
-  type inferRaw,
-  type Schema,
-  type SchemaOptions,
-} from \\"./Schema\\";
-",
-            "name": "index.ts",
-            "type": "file",
-          },
-          Object {
-            "contents": Array [
               Object {
-                "contents": "export type addQuestionMarksToNullableProperties<T> = {
-  [K in OptionalKeys<T>]?: T[K];
-} & Pick<T, RequiredKeys<T>>;
-
-export type OptionalKeys<T> = {
-  [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
-}[keyof T];
-
-export type RequiredKeys<T> = {
-  [K in keyof T]: undefined extends T[K]
-    ? never
-    : null extends T[K]
-    ? never
-    : K;
-}[keyof T];
-",
-                "name": "addQuestionMarksToNullableProperties.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export function entries<T>(object: T): [keyof T, T[keyof T]][] {
-  return Object.entries(object) as [keyof T, T[keyof T]][];
-}
-",
-                "name": "entries.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export function filterObject<T, K extends keyof T>(
-  obj: T,
-  keysToInclude: K[]
-): Pick<T, K> {
-  const keysToIncludeSet = new Set(keysToInclude);
-  return Object.entries(obj).reduce((acc, [key, value]) => {
-    if (keysToIncludeSet.has(key as K)) {
-      acc[key as K] = value;
-    }
-    return acc;
-    // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-  }, {} as Pick<T, K>);
-}
-",
-                "name": "filterObject.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export function keys<T>(object: T): (keyof T)[] {
-  return Object.keys(object) as (keyof T)[];
-}
-",
-                "name": "keys.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "export function partition<T>(
-  items: readonly T[],
-  predicate: (item: T) => boolean
-): [T[], T[]] {
-  const trueItems: T[] = [],
-    falseItems: T[] = [];
-  for (const item of items) {
-    if (predicate(item)) {
-      trueItems.push(item);
-    } else {
-      falseItems.push(item);
-    }
-  }
-  return [trueItems, falseItems];
-}
-",
-                "name": "partition.ts",
-                "type": "file",
-              },
-            ],
-            "name": "utils",
-            "type": "directory",
-          },
-        ],
-        "name": "schemas",
-        "type": "directory",
-      },
-    ],
-    "name": "core",
-    "type": "directory",
-  },
-  Object {
-    "contents": "export * as FernApi from \\"./api\\";
-",
-    "name": "index.ts",
-    "type": "file",
-  },
-  Object {
-    "contents": Array [
-      Object {
-        "contents": "export * from \\"./resources\\";
-",
-        "name": "index.ts",
-        "type": "file",
-      },
-      Object {
-        "contents": Array [
-          Object {
-            "contents": "export * as package_ from \\"./package\\";
-export * from \\"./package/types\\";
-",
-            "name": "index.ts",
-            "type": "file",
-          },
-          Object {
-            "contents": Array [
-              Object {
-                "contents": "export * from \\"./types\\";
+                "contents": "export * from \\"./builders\\";
+export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from \\"./Schema\\";
 ",
                 "name": "index.ts",
                 "type": "file",
@@ -12933,51 +12914,193 @@ export * from \\"./package/types\\";
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
+                    "contents": "export type addQuestionMarksToNullableProperties<T> = {
+    [K in OptionalKeys<T>]?: T[K];
+} & Pick<T, RequiredKeys<T>>;
 
-import * as serializers from \\"../../..\\";
-import { FernApi } from \\"../../../..\\";
-import * as core from \\"../../../../core\\";
+export type OptionalKeys<T> = {
+    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+}[keyof T];
 
-export const Package: core.serialization.ObjectSchema<
-  serializers.Package.Raw,
-  FernApi.Package
-> = core.serialization.object({
-  name: core.serialization.string(),
-});
-
-export declare namespace Package {
-  interface Raw {
-    name: string;
-  }
-}
+export type RequiredKeys<T> = {
+    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
+}[keyof T];
 ",
-                    "name": "Package.ts",
+                    "name": "addQuestionMarksToNullableProperties.ts",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export * from \\"./Package\\";
+                    "contents": "export function entries<T>(object: T): [keyof T, T[keyof T]][] {
+    return Object.entries(object) as [keyof T, T[keyof T]][];
+}
+",
+                    "name": "entries.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export function filterObject<T, K extends keyof T>(obj: T, keysToInclude: K[]): Pick<T, K> {
+    const keysToIncludeSet = new Set(keysToInclude);
+    return Object.entries(obj).reduce((acc, [key, value]) => {
+        if (keysToIncludeSet.has(key as K)) {
+            acc[key as K] = value;
+        }
+        return acc;
+        // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+    }, {} as Pick<T, K>);
+}
+",
+                    "name": "filterObject.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export function keys<T>(object: T): (keyof T)[] {
+    return Object.keys(object) as (keyof T)[];
+}
+",
+                    "name": "keys.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "export function partition<T>(items: readonly T[], predicate: (item: T) => boolean): [T[], T[]] {
+    const trueItems: T[] = [],
+        falseItems: T[] = [];
+    for (const item of items) {
+        if (predicate(item)) {
+            trueItems.push(item);
+        } else {
+            falseItems.push(item);
+        }
+    }
+    return [trueItems, falseItems];
+}
+",
+                    "name": "partition.ts",
+                    "type": "file",
+                  },
+                ],
+                "name": "utils",
+                "type": "directory",
+              },
+            ],
+            "name": "schemas",
+            "type": "directory",
+          },
+        ],
+        "name": "core",
+        "type": "directory",
+      },
+      Object {
+        "contents": "export * as FernApi from \\"./api\\";
+",
+        "name": "index.ts",
+        "type": "file",
+      },
+      Object {
+        "contents": Array [
+          Object {
+            "contents": "export * from \\"./resources\\";
+",
+            "name": "index.ts",
+            "type": "file",
+          },
+          Object {
+            "contents": Array [
+              Object {
+                "contents": "export * as package_ from \\"./package\\";
+export * from \\"./package/types\\";
+",
+                "name": "index.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": Array [
+                  Object {
+                    "contents": "export * from \\"./types\\";
 ",
                     "name": "index.ts",
                     "type": "file",
                   },
+                  Object {
+                    "contents": Array [
+                      Object {
+                        "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+
+import * as serializers from \\"../../..\\";
+import { FernApi } from \\"@fern/api\\";
+import * as core from \\"../../../../core\\";
+
+export const Package: core.serialization.ObjectSchema<serializers.Package.Raw, FernApi.Package> =
+    core.serialization.object({
+        name: core.serialization.string(),
+    });
+
+export declare namespace Package {
+    interface Raw {
+        name: string;
+    }
+}
+",
+                        "name": "Package.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "export * from \\"./Package\\";
+",
+                        "name": "index.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "types",
+                    "type": "directory",
+                  },
                 ],
-                "name": "types",
+                "name": "package",
                 "type": "directory",
               },
             ],
-            "name": "package",
+            "name": "resources",
             "type": "directory",
           },
         ],
-        "name": "resources",
+        "name": "serialization",
         "type": "directory",
       },
     ],
-    "name": "serialization",
+    "name": "src",
     "type": "directory",
+  },
+  Object {
+    "contents": "{
+    \\"compilerOptions\\": {
+        \\"strict\\": true,
+        \\"target\\": \\"esnext\\",
+        \\"module\\": \\"esnext\\",
+        \\"moduleResolution\\": \\"node\\",
+        \\"esModuleInterop\\": true,
+        \\"skipLibCheck\\": true,
+        \\"declaration\\": true,
+        \\"emitDeclarationOnly\\": true,
+        \\"sourceMap\\": true,
+        \\"noUnusedLocals\\": true,
+        \\"noUnusedParameters\\": true,
+        \\"outDir\\": \\"types\\",
+        \\"rootDir\\": \\"src\\",
+        \\"baseUrl\\": \\"src\\",
+        \\"paths\\": {
+            \\"@fern/api\\": [
+                \\".\\"
+            ]
+        }
+    },
+    \\"include\\": [
+        \\"src\\"
+    ],
+    \\"exclude\\": []
+}",
+    "name": "tsconfig.json",
+    "type": "file",
   },
 ]
 `;

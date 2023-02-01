@@ -1,16 +1,15 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 
 export async function writeGitHubWorkflows({
     config,
     githubOutputMode,
-    customConfig,
+    isPackagePrivate,
 }: {
     config: FernGeneratorExec.GeneratorConfig;
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
-    customConfig: SdkCustomConfig;
+    isPackagePrivate: boolean;
 }): Promise<void> {
     if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
         throw new Error(
@@ -19,18 +18,19 @@ export async function writeGitHubWorkflows({
     }
     const workflowYaml = constructWorkflowYaml({
         publishInfo: githubOutputMode.publishInfo,
-        customConfig,
+        isPackagePrivate,
     });
     const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
     await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml);
 }
+
 function constructWorkflowYaml({
     publishInfo,
-    customConfig,
+    isPackagePrivate,
 }: {
     publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
-    customConfig: SdkCustomConfig;
+    isPackagePrivate: boolean;
 }) {
     let workflowYaml = `name: ci
 
@@ -74,7 +74,7 @@ jobs:
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-          npm publish --ignore-scripts --access ${customConfig.isPackagePrivate ? "restricted" : "public"}
+          npm publish --ignore-scripts --access ${isPackagePrivate ? "restricted" : "public"}
         env:
           NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
     }

@@ -1,8 +1,3 @@
-import { runGenerator } from "./runGenerator";
+import { SdkGeneratorCli } from "./SdkGeneratorCli";
 
-const pathToJson = process.argv[process.argv.length - 1];
-if (pathToJson == null) {
-    throw new Error("No argument for config filepath.");
-}
-
-void runGenerator(pathToJson);
+void new SdkGeneratorCli().runCli();

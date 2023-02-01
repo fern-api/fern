@@ -1,14 +1,13 @@
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { FileOrDirectory } from "@fern-api/fs-utils/lib/getDirectoryContents";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { PackageJsonScript } from "@fern-typescript/sdk-generator/src/generate-ts-project/generatePackageJson";
 import decompress from "decompress";
 import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { SdkCustomConfigSchema } from "../custom-config/schema/SdkCustomConfigSchema";
-import { runGenerator } from "../runGenerator";
+import { SdkGeneratorCli } from "../SdkGeneratorCli";
 
 interface FixtureInfo {
     path: string;
@@ -32,7 +31,7 @@ const FIXTURES: FixtureInfo[] = [
     {
         path: "reserved-keywords",
         orgName: "fern",
-        outputMode: "local",
+        outputMode: "github",
         apiName: "api",
         customConfig: {
             neverThrowErrors: true,
@@ -115,7 +114,7 @@ describe("runGenerator", () => {
                     cwd: FIXTURES_PATH,
                 });
 
-                await runGenerator(configJsonPath);
+                await new SdkGeneratorCli().run(configJsonPath);
 
                 let directoryContents: FileOrDirectory[];
 
@@ -132,16 +131,6 @@ describe("runGenerator", () => {
                             env,
                         });
                     };
-
-                    if (fixture.outputMode !== "publish") {
-                        await runCommandInOutputDirectory("yarn", undefined, {
-                            env: {
-                                // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                                YARN_ENABLE_IMMUTABLE_INSTALLS: "false",
-                            },
-                        });
-                        await runCommandInOutputDirectory("yarn", [PackageJsonScript.BUILD]);
-                    }
 
                     // check that the non-git-ignored files match snapshot
                     const pathToGitArchive = path.join(outputPath, "archive.zip");

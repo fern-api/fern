@@ -1,11 +1,13 @@
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
+import { FileOrDirectory } from "@fern-api/fs-utils/lib/getDirectoryContents";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import decompress from "decompress";
 import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { ExpressCustomConfigSchema } from "../custom-config/schema/ExpressCustomConfigSchema";
-import { runGenerator } from "../runGenerator";
+import { ExpressGeneratorCli } from "../ExpressGeneratorCli";
 
 interface FixtureInfo {
     path: string;
@@ -19,7 +21,7 @@ const FIXTURES: FixtureInfo[] = [
     {
         path: "trace",
         orgName: "trace",
-        outputMode: "local",
+        outputMode: "github",
         apiName: "api",
     },
 ];
@@ -70,9 +72,38 @@ describe("runGenerator", () => {
                     cwd: FIXTURES_PATH,
                 });
 
-                await runGenerator(configJsonPath);
+                await new ExpressGeneratorCli().run(configJsonPath);
 
-                const directoryContents = await getDirectoryContents(AbsoluteFilePath.of(outputPath));
+                let directoryContents: FileOrDirectory[];
+
+                if (fixture.outputMode === "local") {
+                    directoryContents = await getDirectoryContents(AbsoluteFilePath.of(outputPath));
+                } else {
+                    const runCommandInOutputDirectory = async (
+                        command: string,
+                        args?: string[],
+                        { env }: { env?: Record<string, string> } = {}
+                    ) => {
+                        await execa(command, args, {
+                            cwd: outputPath,
+                            env,
+                        });
+                    };
+
+                    // check that the non-git-ignored files match snapshot
+                    const pathToGitArchive = path.join(outputPath, "archive.zip");
+                    await runCommandInOutputDirectory("git", ["init", "--initial-branch=main"]);
+                    await runCommandInOutputDirectory("git", ["add", "."]);
+                    await runCommandInOutputDirectory("git", ["commit", "-m", '"Initial commit"']);
+                    await runCommandInOutputDirectory("git", ["archive", "--output", pathToGitArchive, "main"]);
+
+                    const unzippedGitArchive = (await tmp.dir()).path;
+                    await decompress(pathToGitArchive, unzippedGitArchive);
+                    await rm(path.join(unzippedGitArchive, ".yarn"), { recursive: true, force: true });
+                    await rm(path.join(unzippedGitArchive, "yarn.lock"), { recursive: true, force: true });
+                    directoryContents = await getDirectoryContents(AbsoluteFilePath.of(unzippedGitArchive));
+                }
+
                 expect(directoryContents).toMatchSnapshot();
             },
             180_000

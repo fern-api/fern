@@ -3,5 +3,10 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../../../commons" }, { "path": "../../../contexts" }, { "path": "../generator" }]
+  "references": [
+    { "path": "../../../abstract-generator-cli" },
+    { "path": "../../../commons" },
+    { "path": "../../../contexts" },
+    { "path": "../generator" }
+  ]
 }
