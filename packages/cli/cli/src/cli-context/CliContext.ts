@@ -230,7 +230,7 @@ export class CliContext {
             instrumentPostHogEvent: (event) => {
                 this.instrumentPostHogEvent(event);
             },
-            shouldBufferLogs: this.logLevel !== LogLevel.Debug,
+            shouldBufferLogs: false,
         };
     }
 
