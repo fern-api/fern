@@ -27,6 +27,7 @@ export class CliContext {
 
     private numTasks = 0;
     private ttyAwareLogger: TtyAwareLogger;
+    private posthogManager: AbstractPosthogManager | undefined;
 
     private logLevel: LogLevel = LogLevel.Info;
 
@@ -94,6 +95,7 @@ export class CliContext {
             await this.nudgeUpgradeIfAvaialable();
         }
         this.ttyAwareLogger.finish();
+        this.posthogManager?.flush();
         this.exitProgram();
     }
 
@@ -184,7 +186,6 @@ export class CliContext {
         void this.instrumentPostHogEventAsync(event);
     }
 
-    private posthogManager: AbstractPosthogManager | undefined;
     private async instrumentPostHogEventAsync(event: PosthogEvent): Promise<void> {
         if (this.posthogManager == null) {
             this.posthogManager = await getPosthogManager();

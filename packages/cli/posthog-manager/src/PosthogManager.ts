@@ -43,6 +43,10 @@ export class PosthogManager extends AbstractPosthogManager {
         this.posthog.capture(eventMessage);
     }
 
+    public flush(): void {
+        this.posthog.flush();
+    }
+
     private persistedDistinctId: string | undefined;
     private async getPersistedDistinctId(): Promise<string> {
         if (this.persistedDistinctId == null) {
