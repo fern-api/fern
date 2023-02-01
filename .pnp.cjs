@@ -8075,8 +8075,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/local-workspace-runner", "workspace:packages/cli/generation/local-generation/local-workspace-runner"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
+            ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
             ["@fern-api/openapi-converter", "workspace:packages/cli/openapi-converter"],\
+            ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
