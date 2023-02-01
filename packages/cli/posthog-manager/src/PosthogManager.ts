@@ -31,7 +31,7 @@ export class PosthogManager extends AbstractPosthogManager {
     }
 
     public async sendEvent(event: PosthogEvent): Promise<void> {
-        const eventMessage = {
+        this.posthog.capture({
             distinctId: this.userId ?? (await this.getPersistedDistinctId()),
             event: "CLI",
             properties: {
@@ -39,8 +39,7 @@ export class PosthogManager extends AbstractPosthogManager {
                 ...event,
                 ...event.properties,
             },
-        };
-        this.posthog.capture(eventMessage);
+        });
     }
 
     public flush(): void {
