@@ -10,8 +10,11 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
     }
 
     const violations = await validateWorkspace(workspace, context.logger);
-
+    let violationsContainError = false;
     for (const violation of violations) {
+        if (!violationsContainError && violation.severity === "error") {
+            violationsContainError = true;
+        }
         context.logger.log(
             getLogLevelForSeverity(violation.severity),
             formatLog({
@@ -30,7 +33,7 @@ export async function validateWorkspaceAndLogIssues(workspace: Workspace, contex
         );
     }
 
-    if (violations.length > 0) {
+    if (violationsContainError) {
         context.failAndThrow();
     }
 }
