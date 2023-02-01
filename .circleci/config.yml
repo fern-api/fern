@@ -315,6 +315,7 @@ workflows:
           context:
             - auth0-dev
             - fern-tokens
+            - posthog
 
       - publish-dev:
           filters:
