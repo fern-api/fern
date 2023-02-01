@@ -85,8 +85,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/logger"\
       },\
       {\
+        "name": "@fern-api/login",\
+        "reference": "workspace:packages/cli/login"\
+      },\
+      {\
         "name": "@fern-api/openapi-converter",\
         "reference": "workspace:packages/cli/openapi-converter"\
+      },\
+      {\
+        "name": "@fern-api/posthog-manager",\
+        "reference": "workspace:packages/cli/posthog-manager"\
       },\
       {\
         "name": "@fern-api/project-loader",\
@@ -237,8 +245,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/local-workspace-runner", ["workspace:packages/cli/generation/local-generation/local-workspace-runner"]],\
       ["@fern-api/logger", ["workspace:packages/cli/logger"]],\
       ["@fern-api/logging-execa", ["workspace:packages/commons/logging-execa"]],\
+      ["@fern-api/login", ["workspace:packages/cli/login"]],\
       ["@fern-api/manage-generator", ["workspace:packages/cli/config-management/manage-generator"]],\
       ["@fern-api/openapi-converter", ["workspace:packages/cli/openapi-converter"]],\
+      ["@fern-api/posthog-manager", ["workspace:packages/cli/posthog-manager"]],\
       ["@fern-api/project-configuration", ["workspace:packages/cli/config-management/project-configuration"]],\
       ["@fern-api/project-loader", ["workspace:packages/cli/project-loader"]],\
       ["@fern-api/remote-workspace-runner", ["workspace:packages/cli/generation/remote-generation/remote-workspace-runner"]],\
@@ -7954,19 +7964,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
-            ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/jsonwebtoken", "npm:9.0.0"],\
             ["@types/node", "npm:18.7.18"],\
-            ["axios", "npm:0.27.2"],\
-            ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
-            ["inquirer", "npm:9.1.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["jsonwebtoken", "npm:9.0.0"],\
             ["jwks-rsa", "npm:3.0.0"],\
-            ["open", "npm:8.4.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
@@ -7989,7 +7994,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
+            ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
+            ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
@@ -8012,7 +8019,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tar", "npm:6.1.3"],\
-            ["@types/uuid", "npm:9.0.0"],\
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.12"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
@@ -8031,12 +8037,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["latest-version", "npm:7.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["ora", "npm:6.1.2"],\
-            ["posthog-node", "npm:2.3.0"],\
             ["prettier", "npm:2.7.1"],\
             ["tar", "npm:6.1.13"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
-            ["uuid", "npm:9.0.0"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
             ["yargs", "npm:17.5.1"]\
           ],\
@@ -8071,8 +8075,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/local-workspace-runner", "workspace:packages/cli/generation/local-generation/local-workspace-runner"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
+            ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
             ["@fern-api/openapi-converter", "workspace:packages/cli/openapi-converter"],\
+            ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
@@ -8361,6 +8367,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
+            ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/openapi-converter", "workspace:packages/cli/openapi-converter"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -8560,6 +8567,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/login", [\
+        ["workspace:packages/cli/login", {\
+          "packageLocation": "./packages/cli/login/",\
+          "packageDependencies": [\
+            ["@fern-api/login", "workspace:packages/cli/login"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/auth", "workspace:packages/cli/auth"],\
+            ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@types/inquirer", "npm:9.0.1"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["axios", "npm:0.27.2"],\
+            ["chalk", "npm:5.0.1"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["inquirer", "npm:9.1.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["open", "npm:8.4.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/manage-generator", [\
         ["workspace:packages/cli/config-management/manage-generator", {\
           "packageLocation": "./packages/cli/config-management/manage-generator/",\
@@ -8606,6 +8640,31 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["openapi-types", "npm:12.1.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/posthog-manager", [\
+        ["workspace:packages/cli/posthog-manager", {\
+          "packageLocation": "./packages/cli/posthog-manager/",\
+          "packageDependencies": [\
+            ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/auth", "workspace:packages/cli/auth"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/uuid", "npm:9.0.0"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["posthog-node", "npm:2.3.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
+            ["uuid", "npm:9.0.0"]\
           ],\
           "linkType": "SOFT"\
         }]\

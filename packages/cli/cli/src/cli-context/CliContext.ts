@@ -1,11 +1,10 @@
 import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { AbstractPosthogManager, getPosthogManager } from "@fern-api/posthog-manager";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
-import { AbstractPosthogManager } from "../posthog/AbstractPosthogManager";
-import { getPosthogManager } from "../posthog/getPosthogManager";
 import { CliEnvironment } from "./CliEnvironment";
 import { Log } from "./Log";
 import { logErrorMessage } from "./logErrorMessage";
@@ -28,10 +27,9 @@ export class CliContext {
 
     private numTasks = 0;
     private ttyAwareLogger: TtyAwareLogger;
+    private posthogManager: AbstractPosthogManager | undefined;
 
     private logLevel: LogLevel = LogLevel.Info;
-
-    private posthogManager: AbstractPosthogManager | undefined;
 
     constructor(stream: NodeJS.WriteStream) {
         this.ttyAwareLogger = new TtyAwareLogger(stream);
@@ -47,7 +45,6 @@ export class CliContext {
             packageVersion,
             cliName,
         };
-        this.posthogManager = undefined;
     }
 
     private getPackageName() {
@@ -98,6 +95,7 @@ export class CliContext {
             await this.nudgeUpgradeIfAvaialable();
         }
         this.ttyAwareLogger.finish();
+        this.posthogManager?.flush();
         this.exitProgram();
     }
 
@@ -184,11 +182,15 @@ export class CliContext {
         return result;
     }
 
-    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
+    public instrumentPostHogEvent(event: PosthogEvent): void {
+        void this.instrumentPostHogEventAsync(event);
+    }
+
+    private async instrumentPostHogEventAsync(event: PosthogEvent): Promise<void> {
         if (this.posthogManager == null) {
             this.posthogManager = await getPosthogManager();
         }
-        await this.posthogManager.sendEvent(event);
+        this.posthogManager.sendEvent(event);
     }
 
     public readonly logger = createLogger(this.log.bind(this));
@@ -225,8 +227,8 @@ export class CliContext {
                     this.didSucceed = false;
                 }
             },
-            instrumentPostHogEvent: async (event) => {
-                return this.instrumentPostHogEvent(event);
+            instrumentPostHogEvent: (event) => {
+                this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: this.logLevel !== LogLevel.Debug,
         };

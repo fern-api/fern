@@ -16,5 +16,5 @@ export async function getPosthogManager(): Promise<AbstractPosthogManager> {
     if (accessToken != null) {
         return new NoopPosthogManager();
     }
-    return new PosthogManager(userToken, posthogApiKey);
+    return new PosthogManager(undefined, posthogApiKey);
 }

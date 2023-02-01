@@ -30,18 +30,13 @@
     "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.0.14",
-    "axios": "^0.27.2",
-    "chalk": "^5.0.1",
-    "inquirer": "^9.1.0",
     "jsonwebtoken": "^9.0.0",
-    "jwks-rsa": "^3.0.0",
-    "open": "^8.4.0"
+    "jwks-rsa": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
-    "@types/inquirer": "^9.0.1",
     "@types/jest": "^29.0.3",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^18.7.18",

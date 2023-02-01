@@ -101,5 +101,6 @@ module.exports = {
         "no-console": "error",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
+        "@typescript-eslint/await-thenable": "error",
     },
 };
