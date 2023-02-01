@@ -6,7 +6,7 @@ export const ValidBasePathRule: Rule = {
         return {
             serviceFile: {
                 httpService: (service) => {
-                    if (service["base-path"] === "/") {
+                    if (service["base-path"] === "/" || service["base-path"].length === 0) {
                         return [];
                     }
 
