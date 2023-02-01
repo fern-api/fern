@@ -1,24 +1,26 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DependencyType, NpmPackage, PackageDependencies, TypescriptProject } from "@fern-typescript/commons";
 import produce from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
+import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
+import { NpmPackage } from "../NpmPackage";
+import { TypescriptProject } from "./TypescriptProject";
 
-export declare namespace SdkTypescriptProject {
+export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage;
         dependencies: PackageDependencies;
     }
 }
 
-export class SdkTypescriptProject extends TypescriptProject {
+export class BundledTypescriptProject extends TypescriptProject {
     private static TYPES_DIRECTORY = "types" as const;
     private static BUILD_SCRIPT_FILENAME = "build.js" as const;
     private static NODE_DIST_DIRECTORY = "node" as const;
     private static BROWSER_DIST_DIRECTORY = "browser" as const;
-    private static BROWSER_ESM_DIST_DIRECTORY = `${SdkTypescriptProject.BROWSER_DIST_DIRECTORY}/esm` as const;
-    private static BROWSER_CJS_DIST_DIRECTORY = `${SdkTypescriptProject.BROWSER_DIST_DIRECTORY}/cjs` as const;
+    private static BROWSER_ESM_DIST_DIRECTORY = `${BundledTypescriptProject.BROWSER_DIST_DIRECTORY}/esm` as const;
+    private static BROWSER_CJS_DIST_DIRECTORY = `${BundledTypescriptProject.BROWSER_DIST_DIRECTORY}/cjs` as const;
     private static API_BUNDLE_FILENAME = "index.js" as const;
     private static NON_EXPORTED_FOLDERS = ["core", "serialization"] as const;
 
@@ -30,14 +32,14 @@ export class SdkTypescriptProject extends TypescriptProject {
     private npmPackage: NpmPackage;
     private dependencies: PackageDependencies;
 
-    constructor({ npmPackage, dependencies, ...superInit }: SdkTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, ...superInit }: BundledTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
     }
 
     protected async addFilesToVolume(): Promise<void> {
-        await this.writeFileToVolume(SdkTypescriptProject.BUILD_SCRIPT_FILENAME, this.getBuildScriptContents());
+        await this.writeFileToVolume(BundledTypescriptProject.BUILD_SCRIPT_FILENAME, this.getBuildScriptContents());
         await this.generateGitIgnore();
         await this.generatePrettierRc();
         await this.generateStubTypeDeclarations();
@@ -46,11 +48,11 @@ export class SdkTypescriptProject extends TypescriptProject {
     }
 
     protected getYarnFormatCommand(): string[] {
-        return [SdkTypescriptProject.FORMAT_SCRIPT_NAME];
+        return [BundledTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
     protected getYarnBuildCommand(): string[] {
-        return [SdkTypescriptProject.BUILD_SCRIPT_NAME];
+        return [BundledTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
     private getBuildScriptContents(): string {
@@ -63,17 +65,17 @@ async function main() {
         platform: "node",
         target: "node14",
         format: "cjs",
-        outdir: "${SdkTypescriptProject.NODE_DIST_DIRECTORY}",
+        outdir: "${BundledTypescriptProject.NODE_DIST_DIRECTORY}",
     });
     await bundle({
         platform: "browser",
         format: "esm",
-        outdir: "${SdkTypescriptProject.BROWSER_ESM_DIST_DIRECTORY}",
+        outdir: "${BundledTypescriptProject.BROWSER_ESM_DIST_DIRECTORY}",
     });
     await bundle({
         platform: "browser",
         format: "cjs",
-        outdir: "${SdkTypescriptProject.BROWSER_CJS_DIST_DIRECTORY}",
+        outdir: "${BundledTypescriptProject.BROWSER_CJS_DIST_DIRECTORY}",
     });
 }
 
@@ -82,16 +84,20 @@ async function bundle({ platform, target, format, outdir }) {
         platform,
         target,
         format,
-        entryPoint: "./${SdkTypescriptProject.SRC_DIRECTORY}/index.ts",
-        outfile: \`./${SdkTypescriptProject.DIST_DIRECTORY}/\${outdir}/${SdkTypescriptProject.API_BUNDLE_FILENAME}\`,
+        entryPoint: "./${BundledTypescriptProject.SRC_DIRECTORY}/index.ts",
+        outfile: \`./${BundledTypescriptProject.DIST_DIRECTORY}/\${outdir}/${
+            BundledTypescriptProject.API_BUNDLE_FILENAME
+        }\`,
     });
-    ${SdkTypescriptProject.NON_EXPORTED_FOLDERS.map(
+    ${BundledTypescriptProject.NON_EXPORTED_FOLDERS.map(
         (folder) => `await runEsbuild({
         platform,
         target,
         format,
-        entryPoint: "./${SdkTypescriptProject.SRC_DIRECTORY}/${folder}/index.ts",
-        outfile: \`./${SdkTypescriptProject.DIST_DIRECTORY}/\${outdir}/${this.getBundleForNonExportedFolder(folder)}\`,
+        entryPoint: "./${BundledTypescriptProject.SRC_DIRECTORY}/${folder}/index.ts",
+        outfile: \`./${BundledTypescriptProject.DIST_DIRECTORY}/\${outdir}/${this.getBundleForNonExportedFolder(
+            folder
+        )}\`,
     });`
     ).join("\n    ")}
 }
@@ -106,7 +112,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         bundle: true,
         alias: {
             // matches up with tsconfig paths
-            "${this.npmPackage.packageName}": "./${SdkTypescriptProject.SRC_DIRECTORY}",
+            "${this.npmPackage.packageName}": "./${BundledTypescriptProject.SRC_DIRECTORY}",
         }
     }).catch(() => process.exit(1));
 }
@@ -149,19 +155,19 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     }
 
     private async generateStubTypeDeclarations(): Promise<void> {
-        for (const folder of SdkTypescriptProject.NON_EXPORTED_FOLDERS) {
+        for (const folder of BundledTypescriptProject.NON_EXPORTED_FOLDERS) {
             await this.writeFileToVolume(
                 this.getPathForStubTypesDeclarationFile(folder),
                 `// this is needed for older versions of TypeScript
 // that don't read the "exports" field in package.json
-export * from "./${SdkTypescriptProject.TYPES_DIRECTORY}/${folder}";
+export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             `
             );
         }
     }
 
     private getAllStubTypeFiles(): RelativeFilePath[] {
-        return SdkTypescriptProject.NON_EXPORTED_FOLDERS.map((folder) =>
+        return BundledTypescriptProject.NON_EXPORTED_FOLDERS.map((folder) =>
             this.getPathForStubTypesDeclarationFile(folder)
         );
     }
@@ -183,9 +189,9 @@ export * from "./${SdkTypescriptProject.TYPES_DIRECTORY}/${folder}";
             sourceMap: true,
             noUnusedLocals: true,
             noUnusedParameters: true,
-            outDir: SdkTypescriptProject.TYPES_DIRECTORY,
-            rootDir: SdkTypescriptProject.SRC_DIRECTORY,
-            baseUrl: SdkTypescriptProject.SRC_DIRECTORY,
+            outDir: BundledTypescriptProject.TYPES_DIRECTORY,
+            rootDir: BundledTypescriptProject.SRC_DIRECTORY,
+            baseUrl: BundledTypescriptProject.SRC_DIRECTORY,
             paths: {
                 // matches up with esbuild alias
                 [this.npmPackage.packageName]: ["."],
@@ -197,7 +203,7 @@ export * from "./${SdkTypescriptProject.TYPES_DIRECTORY}/${folder}";
             JSON.stringify(
                 {
                     compilerOptions,
-                    include: [SdkTypescriptProject.SRC_DIRECTORY],
+                    include: [BundledTypescriptProject.SRC_DIRECTORY],
                     exclude: [],
                 },
                 undefined,
@@ -217,32 +223,32 @@ export * from "./${SdkTypescriptProject.TYPES_DIRECTORY}/${folder}";
             private: this.npmPackage.private,
             repository: this.npmPackage.repoUrl,
             files: [
-                SdkTypescriptProject.DIST_DIRECTORY,
-                SdkTypescriptProject.TYPES_DIRECTORY,
+                BundledTypescriptProject.DIST_DIRECTORY,
+                BundledTypescriptProject.TYPES_DIRECTORY,
                 ...this.getAllStubTypeFiles(),
             ],
             exports: {
-                ".": this.getExportsForBundle(SdkTypescriptProject.API_BUNDLE_FILENAME, {
-                    pathToTypesFile: `./${SdkTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
+                ".": this.getExportsForBundle(BundledTypescriptProject.API_BUNDLE_FILENAME, {
+                    pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
                 }),
-                ...SdkTypescriptProject.NON_EXPORTED_FOLDERS.reduce(
+                ...BundledTypescriptProject.NON_EXPORTED_FOLDERS.reduce(
                     (acc, folder) => ({
                         ...acc,
                         [`./${folder}`]: this.getExportsForBundle(`${this.getBundleForNonExportedFolder(folder)}`, {
-                            pathToTypesFile: `./${SdkTypescriptProject.TYPES_DIRECTORY}/${folder}/index.d.ts`,
+                            pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}/index.d.ts`,
                         }),
                     }),
                     {}
                 ),
             },
-            types: `./${SdkTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
+            types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
-                [SdkTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write ${SdkTypescriptProject.SRC_DIRECTORY}/**/*.ts`,
-                [SdkTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc && tsc-alias",
-                [SdkTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${SdkTypescriptProject.BUILD_SCRIPT_FILENAME}`,
-                [SdkTypescriptProject.BUILD_SCRIPT_NAME]: [
-                    `yarn ${SdkTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `yarn ${SdkTypescriptProject.BUNDLE_SCRIPT_NAME}`,
+                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write ${BundledTypescriptProject.SRC_DIRECTORY}/**/*.ts`,
+                [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc && tsc-alias",
+                [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
+                [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
+                    `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
+                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`,
                 ].join(" && "),
             },
         };
@@ -274,19 +280,19 @@ export * from "./${SdkTypescriptProject.TYPES_DIRECTORY}/${folder}";
     }
 
     private getPathToNodeDistFile(filename: string) {
-        return this.getPathToDistFile({ outdir: SdkTypescriptProject.NODE_DIST_DIRECTORY, filename });
+        return this.getPathToDistFile({ outdir: BundledTypescriptProject.NODE_DIST_DIRECTORY, filename });
     }
 
     private getPathToBrowserEsmDistFile(filename: string) {
-        return this.getPathToDistFile({ outdir: SdkTypescriptProject.BROWSER_ESM_DIST_DIRECTORY, filename });
+        return this.getPathToDistFile({ outdir: BundledTypescriptProject.BROWSER_ESM_DIST_DIRECTORY, filename });
     }
 
     private getPathToBrowserCjsDistFile(filename: string) {
-        return this.getPathToDistFile({ outdir: SdkTypescriptProject.BROWSER_CJS_DIST_DIRECTORY, filename });
+        return this.getPathToDistFile({ outdir: BundledTypescriptProject.BROWSER_CJS_DIST_DIRECTORY, filename });
     }
 
     private getPathToDistFile({ outdir, filename }: { outdir: string; filename: string }) {
-        return `./${SdkTypescriptProject.DIST_DIRECTORY}/${outdir}/${filename}`;
+        return `./${BundledTypescriptProject.DIST_DIRECTORY}/${outdir}/${filename}`;
     }
 
     private getDevDependencies(): Record<string, string> {

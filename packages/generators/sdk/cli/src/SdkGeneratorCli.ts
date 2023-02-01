@@ -45,6 +45,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
                 neverThrowErrors: customConfig.neverThrowErrors,
+                shouldBundle: config.output.mode.type !== "downloadFiles",
             },
         });
 

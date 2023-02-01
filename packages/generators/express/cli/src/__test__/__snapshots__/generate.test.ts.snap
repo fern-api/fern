@@ -19181,7 +19181,7 @@ export * from \\"./GetGeneratedTestCaseTemplateFileRequest\\";
     \\"compilerOptions\\": {
         \\"strict\\": true,
         \\"target\\": \\"esnext\\",
-        \\"module\\": \\"esnext\\",
+        \\"module\\": \\"CommonJS\\",
         \\"moduleResolution\\": \\"node\\",
         \\"esModuleInterop\\": true,
         \\"skipLibCheck\\": true,

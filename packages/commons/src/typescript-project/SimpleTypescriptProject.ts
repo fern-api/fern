@@ -1,24 +1,26 @@
-import { DependencyType, NpmPackage, PackageDependencies, TypescriptProject } from "@fern-typescript/commons";
 import produce from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
+import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
+import { NpmPackage } from "../NpmPackage";
+import { TypescriptProject } from "./TypescriptProject";
 
-export declare namespace ExpressTypescriptProject {
+export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage;
         dependencies: PackageDependencies;
     }
 }
 
-export class ExpressTypescriptProject extends TypescriptProject {
+export class SimpleTypescriptProject extends TypescriptProject {
     private static FORMAT_SCRIPT_NAME = "format";
     private static BUILD_SCRIPT_NAME = "build";
 
     private npmPackage: NpmPackage;
     private dependencies: PackageDependencies;
 
-    constructor({ npmPackage, dependencies, ...superInit }: ExpressTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
@@ -32,11 +34,11 @@ export class ExpressTypescriptProject extends TypescriptProject {
     }
 
     protected getYarnFormatCommand(): string[] {
-        return [ExpressTypescriptProject.FORMAT_SCRIPT_NAME];
+        return [SimpleTypescriptProject.FORMAT_SCRIPT_NAME];
     }
 
     protected getYarnBuildCommand(): string[] {
-        return [ExpressTypescriptProject.BUILD_SCRIPT_NAME];
+        return [SimpleTypescriptProject.BUILD_SCRIPT_NAME];
     }
 
     private async generateGitIgnore(): Promise<void> {
@@ -74,16 +76,16 @@ export class ExpressTypescriptProject extends TypescriptProject {
         const compilerOptions: CompilerOptions = {
             strict: true,
             target: "esnext" as unknown as ScriptTarget,
-            module: "esnext" as unknown as ModuleKind,
+            module: "CommonJS" as unknown as ModuleKind,
             moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,
             skipLibCheck: true,
             declaration: true,
             noUnusedLocals: true,
             noUnusedParameters: true,
-            outDir: ExpressTypescriptProject.DIST_DIRECTORY,
-            rootDir: ExpressTypescriptProject.SRC_DIRECTORY,
-            baseUrl: ExpressTypescriptProject.SRC_DIRECTORY,
+            outDir: SimpleTypescriptProject.DIST_DIRECTORY,
+            rootDir: SimpleTypescriptProject.SRC_DIRECTORY,
+            baseUrl: SimpleTypescriptProject.SRC_DIRECTORY,
         };
 
         await this.writeFileToVolume(
@@ -91,7 +93,7 @@ export class ExpressTypescriptProject extends TypescriptProject {
             JSON.stringify(
                 {
                     compilerOptions,
-                    include: [ExpressTypescriptProject.SRC_DIRECTORY],
+                    include: [SimpleTypescriptProject.SRC_DIRECTORY],
                     exclude: [],
                 },
                 undefined,
@@ -110,11 +112,11 @@ export class ExpressTypescriptProject extends TypescriptProject {
             ...packageJson,
             private: this.npmPackage.private,
             repository: this.npmPackage.repoUrl,
-            files: [ExpressTypescriptProject.DIST_DIRECTORY],
-            types: `./${ExpressTypescriptProject.DIST_DIRECTORY}/index.d.ts`,
+            files: [SimpleTypescriptProject.DIST_DIRECTORY],
+            types: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.d.ts`,
             scripts: {
-                [ExpressTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write ${ExpressTypescriptProject.SRC_DIRECTORY}/**/*.ts`,
-                [ExpressTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
+                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write ${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts`,
+                [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
             },
         };
 

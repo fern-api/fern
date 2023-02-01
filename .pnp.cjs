@@ -3283,6 +3283,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-model", "npm:0.0.909"],\
             ["@types/esutils", "npm:2.0.0"],\
             ["@types/jest", "npm:28.1.6"],\
+            ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -3290,8 +3291,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["esutils", "npm:2.0.3"],\
             ["glob", "npm:8.0.3"],\
             ["glob-promise", "virtual:ed8d3b741aca6d7f72e87e186271880a21d6274efa50e516039b37f16c5f2bee49ab26b2472ba74ced210e3eaa3fe652d463400f1a2b2c8b59898c168b6831bb#npm:5.0.0"],\
+            ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["js-yaml", "npm:4.1.0"],\
             ["memfs", "npm:3.4.7"],\
+            ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["ts-morph", "npm:15.1.0"],\
@@ -3472,14 +3476,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/model/type-reference-example-generator"],\
             ["@fern-typescript/type-schema-generator", "workspace:packages/generators/model/type-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
-            ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["js-yaml", "npm:4.1.0"],\
-            ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
@@ -3840,14 +3840,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/type-reference-example-generator", "workspace:packages/generators/model/type-reference-example-generator"],\
             ["@fern-typescript/type-schema-generator", "workspace:packages/generators/model/type-schema-generator"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
-            ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
-            ["js-yaml", "npm:4.1.0"],\
-            ["package-json-type", "npm:1.0.3"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
