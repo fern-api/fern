@@ -11,7 +11,7 @@ export interface TaskContext {
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ) => Promise<boolean>;
-    instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
+    instrumentPostHogEvent: (event: PosthogEvent) => void;
 }
 
 export interface InteractiveTaskContext extends TaskContext {

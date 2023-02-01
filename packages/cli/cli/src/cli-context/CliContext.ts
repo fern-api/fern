@@ -180,8 +180,12 @@ export class CliContext {
         return result;
     }
 
+    public instrumentPostHogEvent(event: PosthogEvent): void {
+        void this.instrumentPostHogEventAsync(event);
+    }
+
     private posthogManager: AbstractPosthogManager | undefined;
-    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
+    private async instrumentPostHogEventAsync(event: PosthogEvent): Promise<void> {
         if (this.posthogManager == null) {
             this.posthogManager = await getPosthogManager();
         }

@@ -31,7 +31,7 @@ export async function generateWorkspaces({
         });
     }
 
-    await cliContext.instrumentPostHogEvent({
+    cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
         command: "fern generate",
         properties: {

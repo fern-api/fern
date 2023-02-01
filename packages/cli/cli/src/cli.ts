@@ -62,7 +62,7 @@ async function runCli() {
             });
         }
     } catch (error) {
-        await cliContext.instrumentPostHogEvent({
+        cliContext.instrumentPostHogEvent({
             command: process.argv.join(" "),
             properties: {
                 failed: true,
@@ -387,7 +387,7 @@ function addUpgradeCommand({
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("login", "Log in to Fern via GitHub", noop, async () => {
         await cliContext.runTask(async (context) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern login",
             });
             await login(context);
@@ -411,7 +411,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
-            await cliContext.instrumentPostHogEvent({
+            cliContext.instrumentPostHogEvent({
                 command: "fern format",
             });
             await formatWorkspaces({

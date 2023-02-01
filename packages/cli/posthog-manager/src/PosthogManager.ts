@@ -1,8 +1,9 @@
 import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { PosthogEvent } from "@fern-api/task-context";
-import { readFile, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import { homedir } from "os";
+import { dirname } from "path";
 import { PostHog } from "posthog-node";
 import { v4 as uuidv4 } from "uuid";
 import { AbstractPosthogManager } from "./AbstractPosthogManager";
@@ -50,6 +51,7 @@ export class PosthogManager extends AbstractPosthogManager {
                 DISTINCT_ID_FILENAME
             );
             if (!(await doesPathExist(pathToFile))) {
+                await mkdir(dirname(pathToFile), { recursive: true });
                 await writeFile(pathToFile, uuidv4());
             }
             this.persistedDistinctId = (await readFile(pathToFile)).toString();
