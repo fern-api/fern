@@ -32,10 +32,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         const configStr = await readFile(pathToConfig);
         const rawConfig = JSON.parse(configStr.toString());
         const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig);
-        const customConfig = this.parseCustomConfig(config.customConfig);
         const generatorNotificationService = new GeneratorNotificationService(config);
 
         try {
+            const customConfig = this.parseCustomConfig(config.customConfig);
+
             const logger = createLogger((level, ...message) => {
                 // eslint-disable-next-line no-console
                 console.log(...message);
