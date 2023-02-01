@@ -1,7 +1,7 @@
 FROM node:18.1.0-alpine
 
 COPY packages/generators/sdk/cli/docker/cache_heavy_dependencies.sh /
-RUN /cache_heavy_dependencies.sh
+RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
 
 COPY packages/core-utilities/fetcher/src/ /assets/fetcher
 COPY packages/core-utilities/auth/src/ /assets/auth
