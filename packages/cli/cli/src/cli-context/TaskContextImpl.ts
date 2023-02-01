@@ -5,6 +5,7 @@ import {
     FernCliError,
     Finishable,
     InteractiveTaskContext,
+    PosthogEvent,
     Startable,
     TaskContext,
     TaskResult,
@@ -23,6 +24,7 @@ export declare namespace TaskContextImpl {
          */
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
+        instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
     }
 }
 
@@ -35,19 +37,21 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     private bufferedLogs: Log[] = [];
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
-
+    private instrumentPostHogEventImpl: (event: PosthogEvent) => Promise<void>;
     public constructor({
         logImmediately,
         logPrefix,
         takeOverTerminal,
         onResult,
         shouldBufferLogs,
+        instrumentPostHogEvent,
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
         this.logPrefix = logPrefix ?? "";
         this.takeOverTerminal = takeOverTerminal;
         this.onResult = onResult;
         this.shouldBufferLogs = shouldBufferLogs;
+        this.instrumentPostHogEventImpl = instrumentPostHogEvent;
     }
 
     public start(): Finishable & TaskContext {
@@ -84,6 +88,10 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public getResult(): TaskResult {
         return this.result;
+    }
+
+    public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
+        await this.instrumentPostHogEventImpl(event);
     }
 
     protected logAtLevel(level: LogLevel, ...parts: string[]): void {
@@ -125,6 +133,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             takeOverTerminal: this.takeOverTerminal,
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
+            instrumentPostHogEvent: this.instrumentPostHogEventImpl,
         });
         this.subtasks.push(subtask);
         return subtask;

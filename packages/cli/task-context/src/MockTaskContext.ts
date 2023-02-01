@@ -32,6 +32,9 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
         runInteractiveTask: () => {
             throw new Error("Not implemented");
         },
+        instrumentPostHogEvent: () => {
+            throw new Error("Not implemented");
+        },
     };
     return context;
 }

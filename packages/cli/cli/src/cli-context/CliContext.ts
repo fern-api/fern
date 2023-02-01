@@ -1,6 +1,6 @@
 import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { isVersionAhead } from "@fern-api/semver-utils";
-import { FernCliError, Finishable, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
+import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
@@ -19,12 +19,6 @@ const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE
 export interface FernCliUpgradeInfo {
     isUpgradeAvailable: boolean;
     latestVersion: string;
-}
-
-export interface PosthogEvent {
-    orgId?: string;
-    command?: string;
-    properties?: Record<string | number, unknown>;
 }
 
 export class CliContext {
@@ -230,6 +224,9 @@ export class CliContext {
                 if (result === TaskResult.Failure) {
                     this.didSucceed = false;
                 }
+            },
+            instrumentPostHogEvent: async (event) => {
+                return this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: this.logLevel !== LogLevel.Debug,
         };

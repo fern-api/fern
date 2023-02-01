@@ -1,4 +1,4 @@
-import { PosthogEvent } from "../cli-context/CliContext";
+import { PosthogEvent } from "@fern-api/task-context";
 import { AbstractPosthogManager } from "./AbstractPosthogManager";
 
 export class NoopPosthogManager extends AbstractPosthogManager {
