@@ -16,14 +16,14 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> foo /{pathParam}/foo`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: "a.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path /a/bar conflicts with other endpoints:
   - b.yml -> bar /{pathParam}/bar`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: "a.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path /{pathParam}/foo conflicts with other endpoints:
@@ -32,7 +32,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - c.yml -> bar /c/{pathParam}`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: "b.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path /{pathParam}/bar conflicts with other endpoints:
@@ -40,7 +40,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - c.yml -> bar /c/{pathParam}`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: "b.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path /c/foo conflicts with other endpoints:
@@ -48,7 +48,7 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> foo /{pathParam}/foo`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: "c.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path /c/{pathParam} conflicts with other endpoints:
@@ -57,21 +57,21 @@ describe("no-conflicting-endpoint-paths", () => {
   - b.yml -> bar /{pathParam}/bar`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: "c.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path / conflicts with other endpoints:
   - d.yml -> bar /`,
                 nodePath: ["service", "endpoints", "foo"],
                 relativeFilepath: "d.yml",
-                severity: "error",
+                severity: "warning",
             },
             {
                 message: `Endpoint path / conflicts with other endpoints:
   - d.yml -> foo /`,
                 nodePath: ["service", "endpoints", "bar"],
                 relativeFilepath: "d.yml",
-                severity: "error",
+                severity: "warning",
             },
         ];
 
