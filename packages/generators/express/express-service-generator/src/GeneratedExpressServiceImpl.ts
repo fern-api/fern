@@ -87,7 +87,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         serviceClass: ClassDeclaration;
         context: ExpressServiceContext;
     }) {
-        const REQUEST_PARAMETER_NAME = "request";
+        const REQUEST_PARAMETER_NAME = "req";
 
         const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters];
         serviceClass.addMethod({
