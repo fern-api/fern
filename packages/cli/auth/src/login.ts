@@ -10,7 +10,7 @@ const AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID ?? "syaWnk6SjNoo5xBf1omfvziU
 const VENUS_AUDIENCE = process.env.VENUS_AUDIENCE ?? "venus-prod";
 
 export async function login(context: TaskContext): Promise<FernUserToken> {
-    context.instrumentPostHogEvent({
+    await context.instrumentPostHogEvent({
         command: "Login initiated",
     });
     const token = await doAuth0LoginFlow({
