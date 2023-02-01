@@ -11,6 +11,7 @@ export interface TaskContext {
         params: CreateInteractiveTaskParams,
         run: (context: InteractiveTaskContext) => void | Promise<void>
     ) => Promise<boolean>;
+    instrumentPostHogEvent: (event: PosthogEvent) => Promise<void>;
 }
 
 export interface InteractiveTaskContext extends TaskContext {
@@ -20,6 +21,12 @@ export interface InteractiveTaskContext extends TaskContext {
 export interface CreateInteractiveTaskParams {
     name: string;
     subtitle?: string;
+}
+
+export interface PosthogEvent {
+    orgId?: string;
+    command?: string;
+    properties?: Record<string | number, unknown>;
 }
 
 // TODO change to boolean representation

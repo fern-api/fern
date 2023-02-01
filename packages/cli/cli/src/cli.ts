@@ -62,6 +62,13 @@ async function runCli() {
             });
         }
     } catch (error) {
+        await cliContext.instrumentPostHogEvent({
+            command: process.argv.join(" "),
+            properties: {
+                failed: true,
+                error,
+            },
+        });
         if (error instanceof FernCliError) {
             // thrower is responsible for logging, so we generally don't need to log here.
             cliContext.failWithoutThrowing();
@@ -380,6 +387,9 @@ function addUpgradeCommand({
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("login", "Log in to Fern via GitHub", noop, async () => {
         await cliContext.runTask(async (context) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern login",
+            });
             await login(context);
         });
     });
@@ -401,6 +411,9 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API",
                 }),
         async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern format",
+            });
             await formatWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,

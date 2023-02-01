@@ -32,14 +32,14 @@ export async function generateWorkspaces({
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "generate",
+        command: "fern generate",
         properties: {
             workspaces: project.workspaces.map((workspace) => {
                 return {
                     name: workspace.name,
                     group: groupName,
                     generators: workspace.generatorsConfiguration.groups
-                        .filter((group) => group.groupName === groupName)
+                        .filter((group) => (groupName == null ? true : group.groupName === groupName))
                         .map((group) => {
                             return group.generators.map((generator) => {
                                 return {

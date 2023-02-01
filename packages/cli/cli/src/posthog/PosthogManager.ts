@@ -1,7 +1,7 @@
 import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
+import { PosthogEvent } from "@fern-api/task-context";
 import { PostHog } from "posthog-node";
 import { v4 as uuidv4 } from "uuid";
-import { PosthogEvent } from "../cli-context/CliContext";
 import { AbstractPosthogManager } from "./AbstractPosthogManager";
 
 export class PosthogManager extends AbstractPosthogManager {
@@ -18,8 +18,9 @@ export class PosthogManager extends AbstractPosthogManager {
     async sendEvent(event: PosthogEvent): Promise<void> {
         await this.posthog.capture({
             distinctId: this.distinctId,
-            event: "cli",
+            event: "CLI",
             properties: {
+                version: process.env.CLI_VERSION,
                 ...event,
                 ...event.properties,
             },
