@@ -14,6 +14,8 @@
     { "path": "../generation/remote-generation/remote-workspace-runner" },
     { "path": "../init" },
     { "path": "../logger" },
+    { "path": "../login" },
+    { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../semver-utils" },
     { "path": "../services" },

@@ -1,4 +1,5 @@
-import { askToLogin, createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateWorkspace } from "./generateWorkspace";

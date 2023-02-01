@@ -1,11 +1,10 @@
 import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { AbstractPosthogManager, getPosthogManager } from "@fern-api/posthog-manager";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
-import { AbstractPosthogManager } from "../posthog/AbstractPosthogManager";
-import { getPosthogManager } from "../posthog/getPosthogManager";
 import { CliEnvironment } from "./CliEnvironment";
 import { Log } from "./Log";
 import { logErrorMessage } from "./logErrorMessage";
@@ -31,8 +30,6 @@ export class CliContext {
 
     private logLevel: LogLevel = LogLevel.Info;
 
-    private posthogManager: AbstractPosthogManager | undefined;
-
     constructor(stream: NodeJS.WriteStream) {
         this.ttyAwareLogger = new TtyAwareLogger(stream);
 
@@ -47,7 +44,6 @@ export class CliContext {
             packageVersion,
             cliName,
         };
-        this.posthogManager = undefined;
     }
 
     private getPackageName() {
@@ -184,11 +180,12 @@ export class CliContext {
         return result;
     }
 
+    private posthogManager: AbstractPosthogManager | undefined;
     public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
         if (this.posthogManager == null) {
             this.posthogManager = await getPosthogManager();
         }
-        await this.posthogManager.sendEvent(event);
+        this.posthogManager.sendEvent(event);
     }
 
     public readonly logger = createLogger(this.log.bind(this));

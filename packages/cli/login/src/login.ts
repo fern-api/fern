@@ -1,8 +1,8 @@
+import { FernUserToken, storeToken } from "@fern-api/auth";
+import { getPosthogManager } from "@fern-api/posthog-manager";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { doAuth0LoginFlow } from "./auth0-login/doAuth0LoginFlow";
-import { FernUserToken } from "./FernToken";
-import { storeToken } from "./persistence/storeToken";
 
 // these are client-side safe values
 const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN ?? "fern-prod.us.auth0.com";
@@ -19,7 +19,11 @@ export async function login(context: TaskContext): Promise<FernUserToken> {
         audience: VENUS_AUDIENCE,
     });
     await storeToken(token);
+
     context.logger.info(chalk.green("Logged in!"));
+
+    (await getPosthogManager()).identify();
+
     return {
         type: "user",
         value: token,

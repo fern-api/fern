@@ -8,6 +8,7 @@
     { "path": "../auth" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
+    { "path": "../login" },
     { "path": "../openapi-converter" },
     { "path": "../task-context" },
     { "path": "../yaml/formatter" },

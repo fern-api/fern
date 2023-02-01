@@ -1,5 +1,6 @@
-import { askToLogin, createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
+import { askToLogin } from "@fern-api/login";
 import { convertOpenApi, FernDefinition } from "@fern-api/openapi-converter";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
