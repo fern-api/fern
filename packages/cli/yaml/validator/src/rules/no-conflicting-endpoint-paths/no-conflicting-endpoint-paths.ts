@@ -39,7 +39,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
 
                     return [
                         {
-                            severity: "error",
+                            severity: "warning",
                             message: [
                                 `Endpoint path ${getFullEndpointPath({
                                     service,
