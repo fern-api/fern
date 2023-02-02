@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 import fern.ir.pydantic as ir_types
 
-from fern_python.codegen import Filepath
+from fern_python.codegen import ExportStrategy, Filepath
 
 from ..fastapi_filepath_creator import FastApiFilepathCreator
 from .fastapi_declaration_referencer import FastApiDeclarationReferencer
@@ -31,7 +31,10 @@ class InlinedRequestDeclarationReferencer(FastApiDeclarationReferencer[ServiceNa
         name: ServiceNameAndInlinedRequestBody,
     ) -> Filepath:
         return Filepath(
-            directories=self._service_declaration_handler.get_filepath(name=name.service_name).directories,
+            directories=self._service_declaration_handler._get_directories_for_service(
+                name=name.service_name,
+                service_directory_export_strategy=ExportStrategy.EXPORT_ALL,
+            ),
             file=Filepath.FilepathPart(module_name=name.request.name.snake_case.unsafe_name),
         )
 
