@@ -118,6 +118,27 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "type": {
               "_type": "named",
               "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                    "originalName": "foo",
+                    "pascalCase": {
+                      "safeName": "Foo",
+                      "unsafeName": "Foo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOO",
+                      "unsafeName": "FOO",
+                    },
+                    "snakeCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                  },
+                ],
                 "file": {
                   "camelCase": {
                     "safeName": "foo",
@@ -166,6 +187,27 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "headers": [],
       "name": {
         "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+              "originalName": "foo",
+              "pascalCase": {
+                "safeName": "Foo",
+                "unsafeName": "Foo",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOO",
+                "unsafeName": "FOO",
+              },
+              "snakeCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+            },
+          ],
           "file": {
             "camelCase": {
               "safeName": "foo",
@@ -201,6 +243,27 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "examples": [],
       "name": {
         "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
           "file": {
             "camelCase": {
               "safeName": "commons",
@@ -264,6 +327,27 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "examples": [],
       "name": {
         "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+              "originalName": "foo",
+              "pascalCase": {
+                "safeName": "Foo",
+                "unsafeName": "Foo",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOO",
+                "unsafeName": "FOO",
+              },
+              "snakeCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+            },
+          ],
           "file": {
             "camelCase": {
               "safeName": "foo",
@@ -308,6 +392,27 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "referencedTypes": [
         {
           "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
             "file": {
               "camelCase": {
                 "safeName": "commons",
@@ -385,6 +490,27 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "valueType": {
               "_type": "named",
               "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                    "originalName": "commons",
+                    "pascalCase": {
+                      "safeName": "Commons",
+                      "unsafeName": "Commons",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "COMMONS",
+                      "unsafeName": "COMMONS",
+                    },
+                    "snakeCase": {
+                      "safeName": "commons",
+                      "unsafeName": "commons",
+                    },
+                  },
+                ],
                 "file": {
                   "camelCase": {
                     "safeName": "commons",
@@ -506,6 +632,27 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "examples": [],
       "name": {
         "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+          ],
           "file": {
             "camelCase": {
               "safeName": "commons",
@@ -569,6 +716,27 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "examples": [],
       "name": {
         "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "importer",
+                "unsafeName": "importer",
+              },
+              "originalName": "importer",
+              "pascalCase": {
+                "safeName": "Importer",
+                "unsafeName": "Importer",
+              },
+              "screamingSnakeCase": {
+                "safeName": "IMPORTER",
+                "unsafeName": "IMPORTER",
+              },
+              "snakeCase": {
+                "safeName": "importer",
+                "unsafeName": "importer",
+              },
+            },
+          ],
           "file": {
             "camelCase": {
               "safeName": "importer",
@@ -613,6 +781,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "referencedTypes": [
         {
           "fernFilepath": {
+            "allParts": [],
             "file": undefined,
             "packagePath": [],
           },
@@ -638,6 +807,27 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
         {
           "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
             "file": {
               "camelCase": {
                 "safeName": "commons",
@@ -685,6 +875,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         "aliasOf": {
           "_type": "named",
           "fernFilepath": {
+            "allParts": [],
             "file": undefined,
             "packagePath": [],
           },
@@ -723,6 +914,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "examples": [],
       "name": {
         "fernFilepath": {
+          "allParts": [],
           "file": undefined,
           "packagePath": [],
         },
@@ -749,6 +941,27 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "referencedTypes": [
         {
           "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
             "file": {
               "camelCase": {
                 "safeName": "commons",
@@ -796,6 +1009,27 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         "aliasOf": {
           "_type": "named",
           "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
             "file": {
               "camelCase": {
                 "safeName": "commons",

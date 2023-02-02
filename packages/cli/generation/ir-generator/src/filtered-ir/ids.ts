@@ -49,9 +49,5 @@ export function getTypeId(declaredTypeName: DeclaredTypeName): TypeId {
 }
 
 function stringifyFernFilepath(fernFilepath: FernFilepath): string {
-    const parts = [...fernFilepath.packagePath];
-    if (fernFilepath.file != null) {
-        parts.push(fernFilepath.file);
-    }
-    return parts.map((part) => part.originalName).join("/");
+    return fernFilepath.allParts.map((part) => part.originalName).join("/");
 }
