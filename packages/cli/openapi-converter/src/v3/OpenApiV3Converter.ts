@@ -91,12 +91,13 @@ export class OpenAPIConverter {
         const imports = new Set<string>();
         const filename = `${camelCasedTag}.yml`;
         schemas.forEach((schema) => {
+            const breadcrumbs = [...SCHEMAS_BREADCRUMBS, schema.name];
             const schemaConverter = new SchemaConverter({
                 schema: schema.schemaObject,
                 taskContext: this.taskContext,
                 inlinedTypeNamer: this.inlinedTypeNamer,
                 context: this.context,
-                breadcrumbs: [...SCHEMAS_BREADCRUMBS, schema.name],
+                breadcrumbs,
                 tag,
             });
             const convertedSchema = schemaConverter.convert();
@@ -108,7 +109,7 @@ export class OpenAPIConverter {
                 };
                 convertedSchema.imports.forEach((fernImport) => imports.add(fernImport));
             } else {
-                this.taskContext.logger.debug();
+                this.taskContext.logger.warn(breadcrumbs.join(" -> "), " Failed to convert. Skipping.");
             }
         });
 
