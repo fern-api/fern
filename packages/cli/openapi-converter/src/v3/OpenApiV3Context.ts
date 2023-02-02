@@ -379,6 +379,8 @@ export class OpenApiV3Context {
                     if (resolvedSchema != null) {
                         this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
                     }
+                } else {
+                    this.getAllReferencedSchemas(allOfElement, schemaReferences);
                 }
             }
         }
