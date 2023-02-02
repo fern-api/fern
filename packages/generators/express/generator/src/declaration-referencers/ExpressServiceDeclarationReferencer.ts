@@ -9,23 +9,20 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
             directories: [...this.getExportedDirectory(name)],
             file: {
                 nameOnDisk: this.getFilename(name),
-                exportDeclaration: {
-                    namedExports: [this.getExportedName(name)],
-                },
             },
         };
     }
 
     public getFilename(name: DeclaredServiceName): string {
-        return `${this.getExportedName(name)}.ts`;
+        return `${this.getExportedNameOfService(name)}.ts`;
     }
 
-    public getExportedName(name: DeclaredServiceName): string {
+    public getExportedNameOfService(name: DeclaredServiceName): string {
         const lastFernFilepathPart = name.fernFilepath.allParts[name.fernFilepath.allParts.length - 1];
-        return `Abstract${lastFernFilepathPart != null ? lastFernFilepathPart.pascalCase.unsafeName : "Root"}Service`;
+        return `${lastFernFilepathPart != null ? lastFernFilepathPart.pascalCase.unsafeName : "Root"}Service`;
     }
 
     public getReferenceToService(args: DeclarationReferencer.getReferenceTo.Options<DeclaredServiceName>): Reference {
-        return this.getReferenceTo(this.getExportedName(args.name), args);
+        return this.getReferenceTo(this.getExportedNameOfService(args.name), args);
     }
 }

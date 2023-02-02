@@ -41,7 +41,9 @@ export class ExpressServiceContextMixinImpl implements ExpressServiceContextMixi
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         return this.expressServiceGenerator.generateService({
             service: serviceDeclaration,
-            serviceClassName: this.expressServiceDeclarationReferencer.getExportedName(serviceDeclaration.name),
+            serviceClassName: this.expressServiceDeclarationReferencer.getExportedNameOfService(
+                serviceDeclaration.name
+            ),
         });
     }
 

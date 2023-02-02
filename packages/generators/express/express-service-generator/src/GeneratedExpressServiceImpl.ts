@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpMethod, HttpRequestBody, HttpService, PathParameter } from "@fern-fern/ir-model/http";
 import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { ExpressServiceContext, GeneratedExpressService } from "@fern-typescript/contexts";
-import { ClassDeclaration, Scope, ts } from "ts-morph";
+import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 
 export declare namespace GeneratedExpressServiceImpl {
     export interface Init {
@@ -12,6 +12,7 @@ export declare namespace GeneratedExpressServiceImpl {
 
 export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private static ROUTER_PROPERTY_NAME = "router";
+    private static METHODS_PROPERTY_NAME = "methods";
     private static ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
     private static TO_ROUTER_METHOD_NAME = "toRouter";
     private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
@@ -25,12 +26,31 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     }
 
     public writeToFile(context: ExpressServiceContext): void {
+        const methodsInterface = context.base.sourceFile.addInterface({
+            name: this.getMethodsInterfaceName(),
+            isExported: true,
+        });
+
+        for (const endpoint of this.service.endpoints) {
+            this.addEndpointMethodToInterface({ endpoint, methodsInterface, context });
+        }
+
         const serviceClass = context.base.sourceFile.addClass({
             name: this.serviceClassName,
             isExported: true,
-            isAbstract: true,
         });
         maybeAddDocs(serviceClass, this.service.docs);
+
+        serviceClass.addConstructor({
+            parameters: [
+                {
+                    name: GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME,
+                    isReadonly: true,
+                    scope: Scope.Private,
+                    type: this.getMethodsInterfaceName(),
+                },
+            ],
+        });
 
         serviceClass.addProperty({
             scope: Scope.Private,
@@ -44,10 +64,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 })
             ),
         });
-
-        for (const endpoint of this.service.endpoints) {
-            this.addAbstractEndpointMethod({ endpoint, serviceClass, context });
-        }
 
         this.addAddMiddlewareMethod({ serviceClass, context });
 
@@ -78,21 +94,26 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         );
     }
 
-    private addAbstractEndpointMethod({
+    private addEndpointMethodToInterface({
         endpoint,
-        serviceClass,
+        methodsInterface,
         context,
     }: {
         endpoint: HttpEndpoint;
-        serviceClass: ClassDeclaration;
+        methodsInterface: InterfaceDeclaration;
         context: ExpressServiceContext;
     }) {
         const REQUEST_PARAMETER_NAME = "req";
+        const RESPONSE_PARAMETER_NAME = "res";
 
         const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters];
-        serviceClass.addMethod({
-            isAbstract: true,
-            scope: Scope.Public,
+
+        const returnType =
+            endpoint.response.type != null
+                ? context.type.getReferenceToType(endpoint.response.type).typeNode
+                : ts.factory.createTypeReferenceNode("void");
+
+        methodsInterface.addMethod({
             name: this.getEndpointMethodName(endpoint),
             parameters: [
                 {
@@ -150,12 +171,15 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         })
                     ),
                 },
+                {
+                    name: RESPONSE_PARAMETER_NAME,
+                    type: getTextOfTsNode(context.base.externalDependencies.express.Response._getReferenceToType()),
+                },
             ],
             returnType: getTextOfTsNode(
-                ts.factory.createTypeReferenceNode("Promise", [
-                    endpoint.response.type != null
-                        ? context.type.getReferenceToType(endpoint.response.type).typeNode
-                        : ts.factory.createTypeReferenceNode("void"),
+                ts.factory.createUnionTypeNode([
+                    returnType,
+                    ts.factory.createTypeReferenceNode("Promise", [returnType]),
                 ])
             ),
         });
@@ -272,7 +296,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         const implCall = ts.factory.createAwaitExpression(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createThis(),
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createThis(),
+                        GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME
+                    ),
                     this.getEndpointMethodName(endpoint)
                 ),
                 undefined,
@@ -281,6 +308,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         expressRequest,
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                     ),
+                    expressResponse,
                 ]
             )
         );
@@ -524,5 +552,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);
             },
         });
+    }
+
+    private getMethodsInterfaceName(): string {
+        return `${this.serviceClassName}Methods`;
     }
 }
