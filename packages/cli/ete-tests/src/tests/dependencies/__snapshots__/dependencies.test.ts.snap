@@ -32,8 +32,9 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "fernFilepath": [
-                    {
+                "fernFilepath": {
+                    "packagePath": [],
+                    "file": {
                         "originalName": "y",
                         "camelCase": {
                             "unsafeName": "y",
@@ -52,7 +53,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                             "safeName": "Y"
                         }
                     }
-                ],
+                },
                 "name": {
                     "originalName": "IntegerAlias",
                     "camelCase": {
@@ -92,27 +93,29 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "fernFilepath": [
-                    {
-                        "originalName": "imported",
-                        "camelCase": {
-                            "unsafeName": "imported",
-                            "safeName": "imported"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "imported",
-                            "safeName": "imported"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTED",
-                            "safeName": "IMPORTED"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Imported",
-                            "safeName": "Imported"
+                "fernFilepath": {
+                    "packagePath": [
+                        {
+                            "originalName": "imported",
+                            "camelCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORTED",
+                                "safeName": "IMPORTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imported",
+                                "safeName": "Imported"
+                            }
                         }
-                    },
-                    {
+                    ],
+                    "file": {
                         "originalName": "x",
                         "camelCase": {
                             "unsafeName": "x",
@@ -131,7 +134,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                             "safeName": "X"
                         }
                     }
-                ],
+                },
                 "name": {
                     "originalName": "StringAlias",
                     "camelCase": {
@@ -171,27 +174,29 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "fernFilepath": [
-                    {
-                        "originalName": "imported",
-                        "camelCase": {
-                            "unsafeName": "imported",
-                            "safeName": "imported"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "imported",
-                            "safeName": "imported"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTED",
-                            "safeName": "IMPORTED"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Imported",
-                            "safeName": "Imported"
+                "fernFilepath": {
+                    "packagePath": [
+                        {
+                            "originalName": "imported",
+                            "camelCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORTED",
+                                "safeName": "IMPORTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imported",
+                                "safeName": "Imported"
+                            }
                         }
-                    }
-                ],
+                    ]
+                },
                 "name": {
                     "originalName": "RootString",
                     "camelCase": {
@@ -234,27 +239,29 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "fernFilepath": [
-                    {
-                        "originalName": "imported",
-                        "camelCase": {
-                            "unsafeName": "imported",
-                            "safeName": "imported"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "imported",
-                            "safeName": "imported"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTED",
-                            "safeName": "IMPORTED"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Imported",
-                            "safeName": "Imported"
+                "fernFilepath": {
+                    "packagePath": [
+                        {
+                            "originalName": "imported",
+                            "camelCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORTED",
+                                "safeName": "IMPORTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imported",
+                                "safeName": "Imported"
+                            }
                         }
-                    }
-                ]
+                    ]
+                }
             },
             "basePath": {
                 "head": "/",
