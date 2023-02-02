@@ -9,212 +9,459 @@ describe("migrateFromV8ToV7", () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
         });
-        expect(migrated.types).toMatchInlineSnapshot([
-            {
-                availability: {
-                    message: undefined,
-                    status: "GENERAL_AVAILABILITY",
-                },
-                docs: undefined,
-                examples: [],
-                name: {
-                    fernFilepath: [
-                        {
-                            camelCase: {
-                                safeName: "file",
-                                unsafeName: "file",
-                            },
-                            originalName: "file",
-                            pascalCase: {
-                                safeName: "File",
-                                unsafeName: "File",
-                            },
-                            screamingSnakeCase: {
-                                safeName: "FILE",
-                                unsafeName: "FILE",
-                            },
-                            snakeCase: {
-                                safeName: "file",
-                                unsafeName: "file",
-                            },
-                        },
-                    ],
+        expect(migrated.types).toMatchInlineSnapshot(
+            [
+                {
+                    availability: {
+                        message: undefined,
+                        status: "GENERAL_AVAILABILITY",
+                    },
+
+                    docs: undefined,
+                    examples: [],
                     name: {
-                        camelCase: {
-                            safeName: "fileType",
-                            unsafeName: "fileType",
-                        },
-                        originalName: "FileType",
-                        pascalCase: {
-                            safeName: "FileType",
-                            unsafeName: "FileType",
-                        },
-                        screamingSnakeCase: {
-                            safeName: "FILE_TYPE",
-                            unsafeName: "FILE_TYPE",
-                        },
-                        snakeCase: {
-                            safeName: "file_type",
-                            unsafeName: "file_type",
-                        },
-                    },
-                },
-                referencedTypes: [],
-                shape: {
-                    _type: "alias",
-                    aliasOf: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                    resolvedType: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                },
-            },
-            {
-                availability: {
-                    message: undefined,
-                    status: "GENERAL_AVAILABILITY",
-                },
-                docs: undefined,
-                examples: [],
-                name: {
-                    fernFilepath: [
-                        {
+                        fernFilepath: [
+                            {
+                                camelCase: {
+                                    safeName: "file",
+                                    unsafeName: "file",
+                                },
+
+                                originalName: "file",
+                                pascalCase: {
+                                    safeName: "File",
+                                    unsafeName: "File",
+                                },
+
+                                screamingSnakeCase: {
+                                    safeName: "FILE",
+                                    unsafeName: "FILE",
+                                },
+
+                                snakeCase: {
+                                    safeName: "file",
+                                    unsafeName: "file",
+                                },
+                            },
+                        ],
+
+                        name: {
                             camelCase: {
-                                safeName: "folder",
-                                unsafeName: "folder",
+                                safeName: "fileType",
+                                unsafeName: "fileType",
                             },
-                            originalName: "folder",
+
+                            originalName: "FileType",
                             pascalCase: {
-                                safeName: "Folder",
-                                unsafeName: "Folder",
+                                safeName: "FileType",
+                                unsafeName: "FileType",
                             },
+
                             screamingSnakeCase: {
-                                safeName: "FOLDER",
-                                unsafeName: "FOLDER",
+                                safeName: "FILE_TYPE",
+                                unsafeName: "FILE_TYPE",
                             },
+
                             snakeCase: {
-                                safeName: "folder",
-                                unsafeName: "folder",
+                                safeName: "file_type",
+                                unsafeName: "file_type",
                             },
                         },
-                        {
-                            camelCase: {
-                                safeName: "nestedFile",
-                                unsafeName: "nestedFile",
-                            },
-                            originalName: "nestedFile",
-                            pascalCase: {
-                                safeName: "NestedFile",
-                                unsafeName: "NestedFile",
-                            },
-                            screamingSnakeCase: {
-                                safeName: "NESTED_FILE",
-                                unsafeName: "NESTED_FILE",
-                            },
-                            snakeCase: {
-                                safeName: "nested_file",
-                                unsafeName: "nested_file",
-                            },
+                    },
+
+                    referencedTypes: [],
+                    shape: {
+                        _type: "alias",
+                        aliasOf: {
+                            _type: "primitive",
+                            primitive: "STRING",
                         },
-                    ],
+
+                        resolvedType: {
+                            _type: "primitive",
+                            primitive: "STRING",
+                        },
+                    },
+                },
+
+                {
+                    availability: {
+                        message: undefined,
+                        status: "GENERAL_AVAILABILITY",
+                    },
+
+                    docs: undefined,
+                    examples: [],
                     name: {
-                        camelCase: {
-                            safeName: "nestedFileType",
-                            unsafeName: "nestedFileType",
-                        },
-                        originalName: "NestedFileType",
-                        pascalCase: {
-                            safeName: "NestedFileType",
-                            unsafeName: "NestedFileType",
-                        },
-                        screamingSnakeCase: {
-                            safeName: "NESTED_FILE_TYPE",
-                            unsafeName: "NESTED_FILE_TYPE",
-                        },
-                        snakeCase: {
-                            safeName: "nested_file_type",
-                            unsafeName: "nested_file_type",
-                        },
-                    },
-                },
-                referencedTypes: [],
-                shape: {
-                    _type: "alias",
-                    aliasOf: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                    resolvedType: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                },
-            },
-            {
-                availability: {
-                    message: undefined,
-                    status: "GENERAL_AVAILABILITY",
-                },
-                docs: undefined,
-                examples: [],
-                name: {
-                    fernFilepath: [
-                        {
+                        fernFilepath: [
+                            {
+                                camelCase: {
+                                    safeName: "folder",
+                                    unsafeName: "folder",
+                                },
+
+                                originalName: "folder",
+                                pascalCase: {
+                                    safeName: "Folder",
+                                    unsafeName: "Folder",
+                                },
+
+                                screamingSnakeCase: {
+                                    safeName: "FOLDER",
+                                    unsafeName: "FOLDER",
+                                },
+
+                                snakeCase: {
+                                    safeName: "folder",
+                                    unsafeName: "folder",
+                                },
+                            },
+
+                            {
+                                camelCase: {
+                                    safeName: "nestedFile",
+                                    unsafeName: "nestedFile",
+                                },
+
+                                originalName: "nestedFile",
+                                pascalCase: {
+                                    safeName: "NestedFile",
+                                    unsafeName: "NestedFile",
+                                },
+
+                                screamingSnakeCase: {
+                                    safeName: "NESTED_FILE",
+                                    unsafeName: "NESTED_FILE",
+                                },
+
+                                snakeCase: {
+                                    safeName: "nested_file",
+                                    unsafeName: "nested_file",
+                                },
+                            },
+                        ],
+
+                        name: {
                             camelCase: {
-                                safeName: "folder",
-                                unsafeName: "folder",
+                                safeName: "nestedFileType",
+                                unsafeName: "nestedFileType",
                             },
-                            originalName: "folder",
+
+                            originalName: "NestedFileType",
                             pascalCase: {
-                                safeName: "Folder",
-                                unsafeName: "Folder",
+                                safeName: "NestedFileType",
+                                unsafeName: "NestedFileType",
                             },
+
                             screamingSnakeCase: {
-                                safeName: "FOLDER",
-                                unsafeName: "FOLDER",
+                                safeName: "NESTED_FILE_TYPE",
+                                unsafeName: "NESTED_FILE_TYPE",
                             },
+
                             snakeCase: {
-                                safeName: "folder",
-                                unsafeName: "folder",
+                                safeName: "nested_file_type",
+                                unsafeName: "nested_file_type",
                             },
                         },
-                    ],
+                    },
+
+                    referencedTypes: [],
+                    shape: {
+                        _type: "alias",
+                        aliasOf: {
+                            _type: "primitive",
+                            primitive: "STRING",
+                        },
+
+                        resolvedType: {
+                            _type: "primitive",
+                            primitive: "STRING",
+                        },
+                    },
+                },
+
+                {
+                    availability: {
+                        message: undefined,
+                        status: "GENERAL_AVAILABILITY",
+                    },
+
+                    docs: undefined,
+                    examples: [],
                     name: {
-                        camelCase: {
-                            safeName: "folderType",
-                            unsafeName: "folderType",
+                        fernFilepath: [
+                            {
+                                camelCase: {
+                                    safeName: "folder",
+                                    unsafeName: "folder",
+                                },
+
+                                originalName: "folder",
+                                pascalCase: {
+                                    safeName: "Folder",
+                                    unsafeName: "Folder",
+                                },
+
+                                screamingSnakeCase: {
+                                    safeName: "FOLDER",
+                                    unsafeName: "FOLDER",
+                                },
+
+                                snakeCase: {
+                                    safeName: "folder",
+                                    unsafeName: "folder",
+                                },
+                            },
+                        ],
+
+                        name: {
+                            camelCase: {
+                                safeName: "folderType",
+                                unsafeName: "folderType",
+                            },
+
+                            originalName: "FolderType",
+                            pascalCase: {
+                                safeName: "FolderType",
+                                unsafeName: "FolderType",
+                            },
+
+                            screamingSnakeCase: {
+                                safeName: "FOLDER_TYPE",
+                                unsafeName: "FOLDER_TYPE",
+                            },
+
+                            snakeCase: {
+                                safeName: "folder_type",
+                                unsafeName: "folder_type",
+                            },
                         },
-                        originalName: "FolderType",
-                        pascalCase: {
-                            safeName: "FolderType",
-                            unsafeName: "FolderType",
+                    },
+
+                    referencedTypes: [],
+                    shape: {
+                        _type: "alias",
+                        aliasOf: {
+                            _type: "primitive",
+                            primitive: "STRING",
                         },
-                        screamingSnakeCase: {
-                            safeName: "FOLDER_TYPE",
-                            unsafeName: "FOLDER_TYPE",
-                        },
-                        snakeCase: {
-                            safeName: "folder_type",
-                            unsafeName: "folder_type",
+
+                        resolvedType: {
+                            _type: "primitive",
+                            primitive: "STRING",
                         },
                     },
                 },
-                referencedTypes: [],
-                shape: {
-                    _type: "alias",
-                    aliasOf: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                    resolvedType: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
+            ],
+            `
+            [
+              {
+                "availability": {
+                  "message": undefined,
+                  "status": "GENERAL_AVAILABILITY",
                 },
-            },
-        ]);
+                "docs": undefined,
+                "examples": [],
+                "name": {
+                  "fernFilepath": [
+                    {
+                      "camelCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                      "originalName": "file",
+                      "pascalCase": {
+                        "safeName": "File",
+                        "unsafeName": "File",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FILE",
+                        "unsafeName": "FILE",
+                      },
+                      "snakeCase": {
+                        "safeName": "file",
+                        "unsafeName": "file",
+                      },
+                    },
+                  ],
+                  "name": {
+                    "camelCase": {
+                      "safeName": "fileType",
+                      "unsafeName": "fileType",
+                    },
+                    "originalName": "FileType",
+                    "pascalCase": {
+                      "safeName": "FileType",
+                      "unsafeName": "FileType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FILE_TYPE",
+                      "unsafeName": "FILE_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "file_type",
+                      "unsafeName": "file_type",
+                    },
+                  },
+                },
+                "referencedTypes": [],
+                "shape": {
+                  "_type": "alias",
+                  "aliasOf": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                  "resolvedType": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                },
+              },
+              {
+                "availability": {
+                  "message": undefined,
+                  "status": "GENERAL_AVAILABILITY",
+                },
+                "docs": undefined,
+                "examples": [],
+                "name": {
+                  "fernFilepath": [
+                    {
+                      "camelCase": {
+                        "safeName": "folder",
+                        "unsafeName": "folder",
+                      },
+                      "originalName": "folder",
+                      "pascalCase": {
+                        "safeName": "Folder",
+                        "unsafeName": "Folder",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FOLDER",
+                        "unsafeName": "FOLDER",
+                      },
+                      "snakeCase": {
+                        "safeName": "folder",
+                        "unsafeName": "folder",
+                      },
+                    },
+                    {
+                      "camelCase": {
+                        "safeName": "nestedFile",
+                        "unsafeName": "nestedFile",
+                      },
+                      "originalName": "nestedFile",
+                      "pascalCase": {
+                        "safeName": "NestedFile",
+                        "unsafeName": "NestedFile",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "NESTED_FILE",
+                        "unsafeName": "NESTED_FILE",
+                      },
+                      "snakeCase": {
+                        "safeName": "nested_file",
+                        "unsafeName": "nested_file",
+                      },
+                    },
+                  ],
+                  "name": {
+                    "camelCase": {
+                      "safeName": "nestedFileType",
+                      "unsafeName": "nestedFileType",
+                    },
+                    "originalName": "NestedFileType",
+                    "pascalCase": {
+                      "safeName": "NestedFileType",
+                      "unsafeName": "NestedFileType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NESTED_FILE_TYPE",
+                      "unsafeName": "NESTED_FILE_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "nested_file_type",
+                      "unsafeName": "nested_file_type",
+                    },
+                  },
+                },
+                "referencedTypes": [],
+                "shape": {
+                  "_type": "alias",
+                  "aliasOf": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                  "resolvedType": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                },
+              },
+              {
+                "availability": {
+                  "message": undefined,
+                  "status": "GENERAL_AVAILABILITY",
+                },
+                "docs": undefined,
+                "examples": [],
+                "name": {
+                  "fernFilepath": [
+                    {
+                      "camelCase": {
+                        "safeName": "folder",
+                        "unsafeName": "folder",
+                      },
+                      "originalName": "folder",
+                      "pascalCase": {
+                        "safeName": "Folder",
+                        "unsafeName": "Folder",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FOLDER",
+                        "unsafeName": "FOLDER",
+                      },
+                      "snakeCase": {
+                        "safeName": "folder",
+                        "unsafeName": "folder",
+                      },
+                    },
+                  ],
+                  "name": {
+                    "camelCase": {
+                      "safeName": "folderType",
+                      "unsafeName": "folderType",
+                    },
+                    "originalName": "FolderType",
+                    "pascalCase": {
+                      "safeName": "FolderType",
+                      "unsafeName": "FolderType",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOLDER_TYPE",
+                      "unsafeName": "FOLDER_TYPE",
+                    },
+                    "snakeCase": {
+                      "safeName": "folder_type",
+                      "unsafeName": "folder_type",
+                    },
+                  },
+                },
+                "referencedTypes": [],
+                "shape": {
+                  "_type": "alias",
+                  "aliasOf": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                  "resolvedType": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                },
+              },
+            ]
+        `
+        );
     });
 });
