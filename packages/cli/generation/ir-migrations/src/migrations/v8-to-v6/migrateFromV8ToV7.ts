@@ -39,11 +39,7 @@ export const V8_TO_V7_MIGRATION: IrMigration<
 };
 
 function convertFernFilepath(fernFilepath: IrVersions.V8.commons.FernFilepath): IrVersions.V7.commons.FernFilepath {
-    const parts = [...fernFilepath.packagePath];
-    if (fernFilepath.file != null) {
-        parts.push(fernFilepath.file);
-    }
-    return parts;
+    return fernFilepath.allParts;
 }
 
 function convertAuth(auth: IrVersions.V8.auth.ApiAuth): IrVersions.V7.auth.ApiAuth {

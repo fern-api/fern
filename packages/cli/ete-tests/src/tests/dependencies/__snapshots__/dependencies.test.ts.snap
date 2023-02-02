@@ -33,6 +33,27 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "name": {
                 "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "y",
+                            "camelCase": {
+                                "unsafeName": "y",
+                                "safeName": "y"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "y",
+                                "safeName": "y"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "Y",
+                                "safeName": "Y"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Y",
+                                "safeName": "Y"
+                            }
+                        }
+                    ],
                     "packagePath": [],
                     "file": {
                         "originalName": "y",
@@ -94,6 +115,46 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "name": {
                 "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imported",
+                            "camelCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORTED",
+                                "safeName": "IMPORTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imported",
+                                "safeName": "Imported"
+                            }
+                        },
+                        {
+                            "originalName": "x",
+                            "camelCase": {
+                                "unsafeName": "x",
+                                "safeName": "x"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "x",
+                                "safeName": "x"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "X",
+                                "safeName": "X"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "X",
+                                "safeName": "X"
+                            }
+                        }
+                    ],
                     "packagePath": [
                         {
                             "originalName": "imported",
@@ -175,6 +236,27 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "name": {
                 "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imported",
+                            "camelCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORTED",
+                                "safeName": "IMPORTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imported",
+                                "safeName": "Imported"
+                            }
+                        }
+                    ],
                     "packagePath": [
                         {
                             "originalName": "imported",
@@ -240,6 +322,27 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             },
             "name": {
                 "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imported",
+                            "camelCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imported",
+                                "safeName": "imported"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMPORTED",
+                                "safeName": "IMPORTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imported",
+                                "safeName": "Imported"
+                            }
+                        }
+                    ],
                     "packagePath": [
                         {
                             "originalName": "imported",
