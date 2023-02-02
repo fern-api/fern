@@ -133,7 +133,7 @@ export class SchemaConverter {
                     const schemaName = this.inlinedTypeNamer.getName();
                     const convertedSchema = this.convertSchema(parent, [...breadcrumbs, "allOf", `${index}`]);
                     if (convertedSchema == null) {
-                        this.taskContext.logger.warn(`#${parentBreadcrumbs.join("/")}: Failed to convert schema`);
+                        this.taskContext.logger.warn(`${parentBreadcrumbs.join(" > ")}: Failed to convert schema`);
                     } else {
                         extendedObjects.push(schemaName);
                         additionalTypeDeclarations = {
