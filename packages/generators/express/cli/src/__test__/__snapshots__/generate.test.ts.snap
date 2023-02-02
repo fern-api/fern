@@ -105,8 +105,8 @@ export interface AdminServiceMethods {
 }
 export declare class AdminService {
     private readonly methods;
-    constructor(methods: AdminServiceMethods);
     private router;
+    constructor(methods: AdminServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -152,10 +152,11 @@ const express_1 = __importDefault(require(\\"express\\"));
 const errors = __importStar(require(\\"../../../../errors\\"));
 class AdminService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -1897,8 +1898,8 @@ export interface HomepageServiceMethods {
 }
 export declare class HomepageService {
     private readonly methods;
-    constructor(methods: HomepageServiceMethods);
     private router;
+    constructor(methods: HomepageServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -1944,10 +1945,11 @@ const serializers = __importStar(require(\\"../../../../serialization\\"));
 const errors = __importStar(require(\\"../../../../errors\\"));
 class HomepageService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -2255,8 +2257,8 @@ export interface MigrationServiceMethods {
 }
 export declare class MigrationService {
     private readonly methods;
-    constructor(methods: MigrationServiceMethods);
     private router;
+    constructor(methods: MigrationServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -2302,10 +2304,11 @@ const serializers = __importStar(require(\\"../../../../serialization\\"));
 const errors = __importStar(require(\\"../../../../errors\\"));
 class MigrationService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -2673,8 +2676,8 @@ export interface PlaylistServiceMethods {
 }
 export declare class PlaylistService {
     private readonly methods;
-    constructor(methods: PlaylistServiceMethods);
     private router;
+    constructor(methods: PlaylistServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -2720,10 +2723,11 @@ const serializers = __importStar(require(\\"../../../../serialization\\"));
 const errors = __importStar(require(\\"../../../../errors\\"));
 class PlaylistService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -3334,8 +3338,8 @@ export interface ProblemServiceMethods {
 }
 export declare class ProblemService {
     private readonly methods;
-    constructor(methods: ProblemServiceMethods);
     private router;
+    constructor(methods: ProblemServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -3381,10 +3385,11 @@ const serializers = __importStar(require(\\"../../../../serialization\\"));
 const errors = __importStar(require(\\"../../../../errors\\"));
 class ProblemService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -4174,8 +4179,8 @@ export interface SubmissionServiceMethods {
  */
 export declare class SubmissionService {
     private readonly methods;
-    constructor(methods: SubmissionServiceMethods);
     private router;
+    constructor(methods: SubmissionServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -4224,10 +4229,11 @@ const errors = __importStar(require(\\"../../../../errors\\"));
  */
 class SubmissionService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -8044,8 +8050,8 @@ export interface SyspropServiceMethods {
 }
 export declare class SyspropService {
     private readonly methods;
-    constructor(methods: SyspropServiceMethods);
     private router;
+    constructor(methods: SyspropServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -8091,10 +8097,11 @@ const express_1 = __importDefault(require(\\"express\\"));
 const errors = __importStar(require(\\"../../../../errors\\"));
 class SyspropService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -8298,8 +8305,8 @@ export interface ProblemServiceMethods {
 }
 export declare class ProblemService {
     private readonly methods;
-    constructor(methods: ProblemServiceMethods);
     private router;
+    constructor(methods: ProblemServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -8345,10 +8352,11 @@ const serializers = __importStar(require(\\"../../../../../../serialization\\"))
 const errors = __importStar(require(\\"../../../../../../errors\\"));
 class ProblemService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;
@@ -10069,8 +10077,8 @@ export interface ProblemServiceMethods {
 }
 export declare class ProblemService {
     private readonly methods;
-    constructor(methods: ProblemServiceMethods);
     private router;
+    constructor(methods: ProblemServiceMethods, middleware?: express.RequestHandler[]);
     addMiddleware(handler: express.RequestHandler): this;
     toRouter(): express.Router;
 }
@@ -10116,10 +10124,11 @@ const serializers = __importStar(require(\\"../../../../../../../../serializatio
 const errors = __importStar(require(\\"../../../../../../../../errors\\"));
 class ProblemService {
     methods;
-    constructor(methods) {
+    router;
+    constructor(methods, middleware = []) {
         this.methods = methods;
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
     }
-    router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json());
     addMiddleware(handler) {
         this.router.use(handler);
         return this;

@@ -41,29 +41,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         });
         maybeAddDocs(serviceClass, this.service.docs);
 
-        serviceClass.addConstructor({
-            parameters: [
-                {
-                    name: GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME,
-                    isReadonly: true,
-                    scope: Scope.Private,
-                    type: this.getMethodsInterfaceName(),
-                },
-            ],
-        });
-
         serviceClass.addProperty({
             scope: Scope.Private,
             name: GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME,
-            initializer: getTextOfTsNode(
-                context.base.externalDependencies.express.Router.use({
-                    referenceToRouter: context.base.externalDependencies.express.Router._instantiate({
-                        mergeParams: true,
-                    }),
-                    handlers: [context.base.externalDependencies.express.json()],
-                })
-            ),
         });
+
+        this.addConstructor(serviceClass, context);
 
         this.addAddMiddlewareMethod({ serviceClass, context });
 
@@ -77,6 +60,47 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createThis(),
                         GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME
+                    )
+                ),
+            ].map(getTextOfTsNode),
+        });
+    }
+
+    private addConstructor(serviceClass: ClassDeclaration, context: ExpressServiceContext) {
+        const middlewareParameterName = "middleware";
+        serviceClass.addConstructor({
+            parameters: [
+                {
+                    name: GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME,
+                    isReadonly: true,
+                    scope: Scope.Private,
+                    type: this.getMethodsInterfaceName(),
+                },
+                {
+                    name: middlewareParameterName,
+                    type: getTextOfTsNode(
+                        ts.factory.createArrayTypeNode(context.base.externalDependencies.express.RequestHandler())
+                    ),
+                    initializer: getTextOfTsNode(ts.factory.createArrayLiteralExpression([])),
+                },
+            ],
+            statements: [
+                ts.factory.createExpressionStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                        context.base.externalDependencies.express.Router.use({
+                            referenceToRouter: context.base.externalDependencies.express.Router._instantiate({
+                                mergeParams: true,
+                            }),
+                            handlers: [
+                                context.base.externalDependencies.express.json(),
+                                ts.factory.createSpreadElement(ts.factory.createIdentifier(middlewareParameterName)),
+                            ],
+                        })
                     )
                 ),
             ].map(getTextOfTsNode),
