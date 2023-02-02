@@ -109,7 +109,7 @@ export class OpenAPIConverter {
                 };
                 convertedSchema.imports.forEach((fernImport) => imports.add(fernImport));
             } else {
-                this.taskContext.logger.error(breadcrumbs.join(" > "), " Failed to convert. Skipping.");
+                this.taskContext.logger.warn(breadcrumbs.join(" -> "), " Failed to convert. Skipping.");
             }
         });
 

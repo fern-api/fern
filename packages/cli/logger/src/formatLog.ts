@@ -11,7 +11,7 @@ export declare namespace formatLog {
 export function formatLog({ breadcrumbs = [], title, subtitle }: formatLog.Args): string {
     const lines: string[] = [];
     if (breadcrumbs.length > 0) {
-        lines.push(chalk.blue(breadcrumbs.join(" > ")));
+        lines.push(chalk.blue(breadcrumbs.join(" -> ")));
     }
     lines.push(title);
     if (subtitle != null) {
