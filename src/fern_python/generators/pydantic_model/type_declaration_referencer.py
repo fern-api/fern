@@ -29,7 +29,7 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         return (
             Filepath.DirectoryFilepathPart(
                 module_name="resources",
-                export_strategy=ExportStrategy.EXPORT_ALL,
+                export_strategy=ExportStrategy(export_all=True),
             ),
         ) + super()._get_directories_for_fern_filepath(fern_filepath=fern_filepath)
 

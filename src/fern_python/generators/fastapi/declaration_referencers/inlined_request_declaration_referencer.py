@@ -33,7 +33,7 @@ class InlinedRequestDeclarationReferencer(FastApiDeclarationReferencer[ServiceNa
         return Filepath(
             directories=self._service_declaration_handler._get_directories_for_service(
                 name=name.service_name,
-                service_directory_export_strategy=ExportStrategy.EXPORT_ALL,
+                service_directory_export_strategy=ExportStrategy(export_all=True),
             ),
             file=Filepath.FilepathPart(module_name=name.request.name.snake_case.unsafe_name),
         )

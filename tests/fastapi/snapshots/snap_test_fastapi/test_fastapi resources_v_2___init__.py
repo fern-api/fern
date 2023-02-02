@@ -42,6 +42,7 @@ from .resources import (
     VoidFunctionDefinitionThatTakesActualResult,
     VoidFunctionSignature,
     VoidFunctionSignatureThatTakesActualResult,
+    problem,
     v_3,
 )
 
@@ -87,5 +88,6 @@ __all__ = [
     "VoidFunctionDefinitionThatTakesActualResult",
     "VoidFunctionSignature",
     "VoidFunctionSignatureThatTakesActualResult",
+    "problem",
     "v_3",
 ]

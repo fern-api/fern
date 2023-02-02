@@ -129,6 +129,13 @@ from .resources import (
     WorkspaceSubmissionUpdateInfo,
     WorkspaceSubmitRequest,
     WorkspaceTracedUpdate,
+    admin,
+    commons,
+    lang_server,
+    migration,
+    playlist,
+    problem,
+    submission,
     v_2,
 )
 
@@ -261,5 +268,12 @@ __all__ = [
     "WorkspaceSubmissionUpdateInfo",
     "WorkspaceSubmitRequest",
     "WorkspaceTracedUpdate",
+    "admin",
+    "commons",
+    "lang_server",
+    "migration",
+    "playlist",
+    "problem",
+    "submission",
     "v_2",
 ]

@@ -14,7 +14,7 @@ class ErrorDeclarationReferencer(FastApiDeclarationReferencer[ir_types.DeclaredE
             + (
                 Filepath.DirectoryFilepathPart(
                     module_name="errors",
-                    export_strategy=ExportStrategy.EXPORT_ALL,
+                    export_strategy=ExportStrategy(export_all=True),
                 ),
             ),
             file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),

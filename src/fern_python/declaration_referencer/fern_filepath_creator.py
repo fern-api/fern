@@ -19,11 +19,12 @@ class FernFilepathCreator(ABC):
             download_files=lambda: EMPTY_DIRECTORIES,
             publish=lambda x: (
                 Filepath.DirectoryFilepathPart(
-                    module_name=self._ir.api_name.snake_case.unsafe_name, export_strategy=ExportStrategy.EXPORT_ALL
+                    module_name=self._ir.api_name.snake_case.unsafe_name,
+                    export_strategy=ExportStrategy(export_all=True),
                 ),
                 Filepath.DirectoryFilepathPart(
                     module_name=self._get_generator_name_for_containing_folder(),
-                    export_strategy=ExportStrategy.EXPORT_ALL,
+                    export_strategy=ExportStrategy(export_all=True),
                 ),
             ),
         )

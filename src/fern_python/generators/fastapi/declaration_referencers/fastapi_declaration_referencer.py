@@ -26,7 +26,7 @@ class FastApiDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T])
         return (
             Filepath.DirectoryFilepathPart(
                 module_name="resources",
-                export_strategy=ExportStrategy.EXPORT_ALL,
+                export_strategy=ExportStrategy(export_all=True),
             ),
             Filepath.DirectoryFilepathPart(
                 module_name=fern_filepath_part.snake_case.unsafe_name,

@@ -50,7 +50,7 @@ class FernHTTPException:
 class Exceptions:
     def __init__(self, filepath: Tuple[Filepath.DirectoryFilepathPart, ...]):
         self.filepath = filepath + (
-            Filepath.DirectoryFilepathPart(module_name="exceptions", export_strategy=ExportStrategy.EXPORT_ALL),
+            Filepath.DirectoryFilepathPart(module_name="exceptions", export_strategy=ExportStrategy(export_all=True)),
         )
         self._module_path = tuple(part.module_name for part in self.filepath)
         self.FernHTTPException = FernHTTPException(filepath=self.filepath)
@@ -229,7 +229,7 @@ class CoreUtilities:
 
     def _get_security_filepath(self) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return self.filepath + (
-            Filepath.DirectoryFilepathPart(module_name="security", export_strategy=ExportStrategy.EXPORT_ALL),
+            Filepath.DirectoryFilepathPart(module_name="security", export_strategy=ExportStrategy(export_all=True)),
         )
 
     def _get_security_module_path(self) -> AST.ModulePath:

@@ -134,6 +134,13 @@ from .resources import (
     WorkspaceSubmissionUpdateInfo,
     WorkspaceSubmitRequest,
     WorkspaceTracedUpdate,
+    admin,
+    commons,
+    lang_server,
+    migration,
+    playlist,
+    problem,
+    submission,
     v_2,
 )
 from .security import ApiAuth
@@ -273,5 +280,12 @@ __all__ = [
     "WorkspaceSubmissionUpdateInfo",
     "WorkspaceSubmitRequest",
     "WorkspaceTracedUpdate",
+    "admin",
+    "commons",
+    "lang_server",
+    "migration",
+    "playlist",
+    "problem",
+    "submission",
     "v_2",
 ]

@@ -50,12 +50,12 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         for fern_filepath_part in fern_filepath.package_path:
             parts += self._get_directories_for_fern_filepath_part(
                 fern_filepath_part=fern_filepath_part,
-                export_strategy=ExportStrategy.EXPORT_AS_NAMESPACE,
+                export_strategy=ExportStrategy(export_as_namespace=True),
             )
         if fern_filepath.file is not None:
             parts += self._get_directories_for_fern_filepath_part(
                 fern_filepath_part=fern_filepath.file,
-                export_strategy=ExportStrategy.EXPORT_ALL,
+                export_strategy=ExportStrategy(export_as_namespace=True, export_all=True),
             )
         return parts
 

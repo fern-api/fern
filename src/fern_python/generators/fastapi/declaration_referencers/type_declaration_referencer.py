@@ -14,7 +14,7 @@ class TypeDeclarationReferencer(FastApiDeclarationReferencer[ir_types.DeclaredTy
             + (
                 Filepath.DirectoryFilepathPart(
                     module_name="types",
-                    export_strategy=ExportStrategy.EXPORT_ALL,
+                    export_strategy=ExportStrategy(export_all=True),
                 ),
             ),
             file=Filepath.FilepathPart(module_name=name.name.snake_case.unsafe_name),

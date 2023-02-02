@@ -41,18 +41,24 @@ class ModuleManager:
             exporting_module = module_being_exported_from[:-1]
             module_info = self._module_infos[exporting_module]
             export_strategy = (
-                ExportStrategy.EXPORT_ALL
+                ExportStrategy(export_all=True)
                 if is_exporting_from_file
                 else filepath.directories[len(module_being_exported_from) - 1].export_strategy
             )
 
+            # this shouldn't happen but is necessary to appease mypy
             if export_strategy is None:
-                exports = set()
-            elif export_strategy == ExportStrategy.EXPORT_ALL:
+                break
+
+            new_exports = set()
+            if export_strategy.export_all:
+                new_exports.update(exports)
                 module_info.exports[relative_module_being_exported_from].update(exports)
-            elif export_strategy == ExportStrategy.EXPORT_AS_NAMESPACE:
-                exports = set(relative_module_being_exported_from)
-                module_info.exports[()].update(exports)
+            if export_strategy.export_as_namespace:
+                namespace_export = set(relative_module_being_exported_from)
+                module_info.exports[()].update(namespace_export)
+                new_exports.update(namespace_export)
+            exports = new_exports
 
             module_being_exported_from = exporting_module
             is_exporting_from_file = False
