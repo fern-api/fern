@@ -33,7 +33,12 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
             parameters: [
                 {
                     name: GeneratedExpressRegisterImpl.EXPRESS_APP_PARAMETER_NAME,
-                    type: getTextOfTsNode(context.base.externalDependencies.express.Express()),
+                    type: getTextOfTsNode(
+                        ts.factory.createUnionTypeNode([
+                            context.base.externalDependencies.express.Express(),
+                            context.base.externalDependencies.express.Router._getReferenceToType(),
+                        ])
+                    ),
                 },
                 {
                     name: GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME,
@@ -45,8 +50,13 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 .map((service) => {
                     return ts.factory.createExpressionStatement(
                         context.base.externalDependencies.express.App.use({
-                            referenceToApp: ts.factory.createIdentifier(
-                                GeneratedExpressRegisterImpl.EXPRESS_APP_PARAMETER_NAME
+                            referenceToApp: ts.factory.createParenthesizedExpression(
+                                ts.factory.createAsExpression(
+                                    ts.factory.createIdentifier(
+                                        GeneratedExpressRegisterImpl.EXPRESS_APP_PARAMETER_NAME
+                                    ),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                                )
                             ),
                             path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService

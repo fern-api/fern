@@ -13316,7 +13316,7 @@ import { SubmissionService as AbstractSubmissionService } from \\"./api/resource
 import { SyspropService as AbstractSyspropService } from \\"./api/resources/sysprop/service/SyspropService\\";
 import { ProblemService as v2_AbstractProblemService } from \\"./api/resources/v2/resources/problem/service/ProblemService\\";
 import { ProblemService as v2_v3_AbstractProblemService } from \\"./api/resources/v2/resources/v3/resources/problem/service/ProblemService\\";
-export declare function register(expressApp: express.Express, services: {
+export declare function register(expressApp: express.Express | express.Router, services: {
     admin: AbstractAdminService;
     homepage: AbstractHomepageService;
     migration: AbstractMigrationService;
