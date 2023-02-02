@@ -1,4 +1,5 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { EndpointErrorUnionContextMixin, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
@@ -37,7 +38,10 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
         this.serviceResolver = serviceResolver;
     }
 
-    public getGeneratedEndpointErrorUnion(service: FernFilepath, endpointName: Name): GeneratedEndpointErrorUnion {
+    public getGeneratedEndpointErrorUnion(
+        service: DeclaredServiceName,
+        endpointName: Name
+    ): GeneratedEndpointErrorUnion {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
@@ -52,7 +56,7 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
     }
 
     public getReferenceToEndpointTypeExport(
-        service: FernFilepath,
+        service: DeclaredServiceName,
         endpointName: Name,
         export_: string | string[]
     ): Reference {

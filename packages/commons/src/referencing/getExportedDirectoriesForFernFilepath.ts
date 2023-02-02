@@ -10,35 +10,30 @@ export function getExportedDirectoriesForFernFilepath({
     fernFilepath: FernFilepath;
     subExports?: Record<RelativeFilePath, ExportDeclaration>;
 }): ExportedDirectory[] {
-    return fernFilepath.flatMap((fernFilepathPart, index) => {
-        const directories: ExportedDirectory[] = [
-            {
-                nameOnDisk: "resources",
-                exportDeclaration: { exportAll: true },
-            },
-        ];
-        if (index < fernFilepath.length - 1) {
-            directories.push(createExportForFernFilepathDirectory(fernFilepathPart));
-        } else {
-            directories.push(createExportForFernFilepathFile(fernFilepathPart, subExports));
-        }
-        return directories;
-    });
+    const directories = [
+        ...fernFilepath.packagePath.flatMap((fernFilepathPart) =>
+            getExportedDirectoriesForFernFilepathPart(fernFilepathPart)
+        ),
+    ];
+    if (fernFilepath.file != null) {
+        directories.push(...getExportedDirectoriesForFernFilepathPart(fernFilepath.file, { subExports }));
+    }
+    return directories;
 }
 
-export function createExportForFernFilepathDirectory(fernFilepathPart: Name): ExportedDirectory {
-    return {
-        nameOnDisk: fernFilepathPart.camelCase.unsafeName,
-        exportDeclaration: { namespaceExport: fernFilepathPart.camelCase.safeName },
-    };
-}
-
-export function createExportForFernFilepathFile(
+function getExportedDirectoriesForFernFilepathPart(
     fernFilepathPart: Name,
-    subExports?: Record<string, ExportDeclaration>
-): ExportedDirectory {
-    return {
-        ...createExportForFernFilepathDirectory(fernFilepathPart),
-        subExports,
-    };
+    { subExports }: { subExports?: Record<string, ExportDeclaration> } = {}
+): ExportedDirectory[] {
+    return [
+        {
+            nameOnDisk: "resources",
+            exportDeclaration: { exportAll: true },
+        },
+        {
+            nameOnDisk: fernFilepathPart.camelCase.unsafeName,
+            exportDeclaration: { namespaceExport: fernFilepathPart.camelCase.safeName },
+            subExports,
+        },
+    ];
 }

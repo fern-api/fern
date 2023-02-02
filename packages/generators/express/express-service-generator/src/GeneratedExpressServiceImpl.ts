@@ -310,7 +310,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     ? context.base.externalDependencies.express.Response.json({
                           referenceToExpressResponse: expressResponse,
                           valueToSend: context.expressEndpointTypeSchemas
-                              .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, endpoint.name)
+                              .getGeneratedEndpointTypeSchemas(this.service.name, endpoint.name)
                               .serializeResponse(ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME), context),
                       })
                     : context.base.externalDependencies.express.Response.sendStatus({
@@ -491,7 +491,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () =>
                 context.expressInlinedRequestBody
-                    .getReferenceToInlinedRequestBodyType(this.service.name.fernFilepath, endpoint.name)
+                    .getReferenceToInlinedRequestBodyType(this.service.name, endpoint.name)
                     .getTypeNode(),
             reference: ({ requestBodyType }) => context.type.getReferenceToType(requestBodyType).typeNode,
             _unknown: () => {
@@ -514,11 +514,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return HttpRequestBody._visit(requestBodyType, {
             inlinedRequestBody: () =>
                 context.expressInlinedRequestBodySchema
-                    .getGeneratedInlinedRequestBodySchema(this.service.name.fernFilepath, endpoint.name)
+                    .getGeneratedInlinedRequestBodySchema(this.service.name, endpoint.name)
                     .deserializeRequest(referenceToBody, context),
             reference: () =>
                 context.expressEndpointTypeSchemas
-                    .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, endpoint.name)
+                    .getGeneratedEndpointTypeSchemas(this.service.name, endpoint.name)
                     .deserializeRequest(referenceToBody, context),
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);

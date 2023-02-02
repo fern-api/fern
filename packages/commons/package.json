@@ -29,7 +29,7 @@
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-api/logger": "0.0.248-7-gb4189be0",
     "@fern-api/logging-execa": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-model": "0.0.909",
+    "@fern-fern/ir-model": "0.0.914",
     "esutils": "^2.0.3",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",

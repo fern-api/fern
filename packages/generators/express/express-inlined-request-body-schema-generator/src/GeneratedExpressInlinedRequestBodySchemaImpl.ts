@@ -48,7 +48,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
 
     protected getReferenceToSchema(context: ExpressInlinedRequestBodySchemaContext): Reference {
         return context.expressInlinedRequestBodySchema.getReferenceToInlinedRequestBody(
-            this.service.name.fernFilepath,
+            this.service.name,
             this.endpoint.name
         );
     }
@@ -75,7 +75,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
 
     protected getReferenceToParsedShape(context: ExpressInlinedRequestBodySchemaContext): ts.TypeNode {
         return context.expressInlinedRequestBody
-            .getReferenceToInlinedRequestBodyType(this.service.name.fernFilepath, this.endpoint.name)
+            .getReferenceToInlinedRequestBodyType(this.service.name, this.endpoint.name)
             .getTypeNode();
     }
 
@@ -84,7 +84,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.expressInlinedRequestBody
-                        .getGeneratedInlinedRequestBody(this.service.name.fernFilepath, this.endpoint.name)
+                        .getGeneratedInlinedRequestBody(this.service.name, this.endpoint.name)
                         .getPropertyKey(property),
                     raw: property.name.wireValue,
                 },

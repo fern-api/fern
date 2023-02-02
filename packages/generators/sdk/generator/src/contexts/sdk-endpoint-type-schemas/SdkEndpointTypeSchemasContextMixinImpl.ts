@@ -1,4 +1,5 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContextMixin } from "@fern-typescript/contexts";
 import { ServiceResolver } from "@fern-typescript/resolvers";
@@ -38,7 +39,10 @@ export class SdkEndpointTypeSchemasContextMixinImpl implements SdkEndpointTypeSc
         this.sdkEndpointSchemaDeclarationReferencer = sdkEndpointSchemaDeclarationReferencer;
     }
 
-    public getGeneratedEndpointTypeSchemas(service: FernFilepath, endpointName: Name): GeneratedSdkEndpointTypeSchemas {
+    public getGeneratedEndpointTypeSchemas(
+        service: DeclaredServiceName,
+        endpointName: Name
+    ): GeneratedSdkEndpointTypeSchemas {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
@@ -53,7 +57,7 @@ export class SdkEndpointTypeSchemasContextMixinImpl implements SdkEndpointTypeSc
     }
 
     public getReferenceToEndpointTypeSchemaExport(
-        service: FernFilepath,
+        service: DeclaredServiceName,
         endpointName: Name,
         export_: string | string[]
     ): Reference {

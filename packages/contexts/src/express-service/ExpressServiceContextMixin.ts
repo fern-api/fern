@@ -1,10 +1,10 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { Reference } from "@fern-typescript/commons";
 import { GeneratedExpressService } from "./GeneratedExpressService";
 
 export interface ExpressServiceContextMixin {
-    getGeneratedExpressService: (service: FernFilepath) => GeneratedExpressService;
-    getReferenceToExpressService: (service: FernFilepath, options: { importAlias: string }) => Reference;
+    getGeneratedExpressService: (service: DeclaredServiceName) => GeneratedExpressService;
+    getReferenceToExpressService: (service: DeclaredServiceName, options: { importAlias: string }) => Reference;
 }
 
 export interface WithExpressServiceContextMixin {

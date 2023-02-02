@@ -1,4 +1,5 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { ExpressInlinedRequestBodyContextMixin, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
@@ -38,7 +39,7 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
     }
 
     public getGeneratedInlinedRequestBody(
-        service: FernFilepath,
+        service: DeclaredServiceName,
         endpointName: Name
     ): GeneratedExpressInlinedRequestBody {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
@@ -60,7 +61,7 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
         });
     }
 
-    public getReferenceToInlinedRequestBodyType(service: FernFilepath, endpointName: Name): Reference {
+    public getReferenceToInlinedRequestBodyType(service: DeclaredServiceName, endpointName: Name): Reference {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName

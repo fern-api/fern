@@ -1,13 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ExportedFilePath, Reference } from "@fern-typescript/commons";
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace SdkInlinedRequestBodyDeclarationReferencer {
     export interface Name {
-        service: FernFilepath;
+        service: DeclaredServiceName;
         endpoint: HttpEndpoint;
     }
 }

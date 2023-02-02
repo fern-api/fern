@@ -34,7 +34,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
             discriminant: discriminationStrategy.discriminant,
             getReferenceToSchema: (context) =>
                 context.sdkEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
-                    service.name.fernFilepath,
+                    service.name,
                     endpoint.name,
                     GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME
                 ),
@@ -72,7 +72,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
 
     private getErrorUnion(context: SdkEndpointTypeSchemasContext): GeneratedUnion<EndpointErrorUnionContext> {
         return context.endpointErrorUnion
-            .getGeneratedEndpointErrorUnion(this.service.name.fernFilepath, this.endpoint.name)
+            .getGeneratedEndpointErrorUnion(this.service.name, this.endpoint.name)
             .getErrorUnion();
     }
 }

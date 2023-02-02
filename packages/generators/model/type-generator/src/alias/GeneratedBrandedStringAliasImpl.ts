@@ -80,6 +80,6 @@ export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
     }
 
     private getStringBrand(): string {
-        return [...this.fernFilepath.slice(0, -1).map((part) => part.camelCase.unsafeName), this.typeName].join("_");
+        return [...this.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName), this.typeName].join("_");
     }
 }

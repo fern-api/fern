@@ -167,11 +167,14 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             }
         }
 
+        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
+        const url = this.buildUrl();
+
         const fetcherArgs: Fetcher.Args = {
-            url: context.base.externalDependencies.urlJoin.invoke([
-                this.generatedSdkClientClass.getEnvironment(context),
-                this.buildUrl(),
-            ]),
+            url:
+                url != null
+                    ? context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url])
+                    : referenceToEnvironment,
             method: ts.factory.createStringLiteral(this.endpoint.method),
             headers: this.getHeadersForFetcherArgs(context),
             queryParameters: urlSearchParamsVariable,
@@ -195,9 +198,13 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return statements;
     }
 
-    private buildUrl(): ts.Expression {
+    private buildUrl(): ts.Expression | undefined {
         if (this.service.pathParameters.length === 0 && this.endpoint.pathParameters.length === 0) {
-            return ts.factory.createStringLiteral(urlJoin(this.service.basePath.head, this.endpoint.path.head));
+            const joinedUrl = urlJoin(this.service.basePath.head, this.endpoint.path.head);
+            if (joinedUrl.length === 0) {
+                return undefined;
+            }
+            return ts.factory.createStringLiteral(joinedUrl);
         }
 
         const httpPath = this.getHttpPath();
@@ -277,12 +284,12 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return HttpRequestBody._visit(this.endpoint.requestBody, {
             inlinedRequestBody: () => {
                 return context.sdkInlinedRequestBodySchema
-                    .getGeneratedInlinedRequestBodySchema(this.service.name.fernFilepath, this.endpoint.name)
+                    .getGeneratedInlinedRequestBodySchema(this.service.name, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
             },
             reference: () =>
                 context.sdkEndpointTypeSchemas
-                    .getGeneratedEndpointTypeSchemas(this.service.name.fernFilepath, this.endpoint.name)
+                    .getGeneratedEndpointTypeSchemas(this.service.name, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context),
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody type: " + this.endpoint.requestBody?.type);
@@ -291,10 +298,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     }
 
     protected getGeneratedEndpointTypeSchemas(context: SdkClientClassContext): GeneratedSdkEndpointTypeSchemas {
-        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(
-            this.service.name.fernFilepath,
-            this.endpoint.name
-        );
+        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.service.name, this.endpoint.name);
     }
 
     private getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[] {

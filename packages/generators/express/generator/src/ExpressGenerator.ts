@@ -284,7 +284,7 @@ export class ExpressGenerator {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.expressInlinedRequestBodyDeclarationReferencer.getExportedFilepath({
-                            service: service.name.fernFilepath,
+                            service: service.name,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -304,7 +304,7 @@ export class ExpressGenerator {
                                 serviceResolver: this.serviceResolver,
                             });
                             context.expressInlinedRequestBody
-                                .getGeneratedInlinedRequestBody(service.name.fernFilepath, endpoint.name)
+                                .getGeneratedInlinedRequestBody(service.name, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
@@ -319,7 +319,7 @@ export class ExpressGenerator {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.expressInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
-                            service: service.name.fernFilepath,
+                            service: service.name,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -344,7 +344,7 @@ export class ExpressGenerator {
                                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                             });
                             context.expressInlinedRequestBodySchema
-                                .getGeneratedInlinedRequestBodySchema(service.name.fernFilepath, endpoint.name)
+                                .getGeneratedInlinedRequestBodySchema(service.name, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
@@ -358,7 +358,7 @@ export class ExpressGenerator {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.expressEndpointSchemaDeclarationReferencer.getExportedFilepath({
-                        service: service.name.fernFilepath,
+                        service: service.name,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -379,7 +379,7 @@ export class ExpressGenerator {
                             typeSchemaGenerator: this.typeSchemaGenerator,
                         });
                         endpointTypeSchemasContext.expressEndpointTypeSchemas
-                            .getGeneratedEndpointTypeSchemas(service.name.fernFilepath, endpoint.name)
+                            .getGeneratedEndpointTypeSchemas(service.name, endpoint.name)
                             .writeToFile(endpointTypeSchemasContext);
                     },
                 });
@@ -422,7 +422,7 @@ export class ExpressGenerator {
                         genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
                     });
                     expressServiceContext.expressService
-                        .getGeneratedExpressService(service.name.fernFilepath)
+                        .getGeneratedExpressService(service.name)
                         .writeToFile(expressServiceContext);
                 },
             });

@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContextMixin } from "@fern-typescript/contexts";
 import { ServiceResolver } from "@fern-typescript/resolvers";
@@ -37,14 +37,17 @@ export class SdkClientClassContextMixinImpl implements SdkClientClassContextMixi
         this.serviceResolver = serviceResolver;
     }
 
-    public getGeneratedSdkClientClass(service: FernFilepath): GeneratedSdkClientClass {
+    public getGeneratedSdkClientClass(service: DeclaredServiceName): GeneratedSdkClientClass {
         return this.sdkClientClassGenerator.generateService({
             service: this.serviceResolver.getAugmentedServiceFromName(service),
             serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(service),
         });
     }
 
-    public getReferenceToClientClass(service: FernFilepath, { importAlias }: { importAlias: string }): Reference {
+    public getReferenceToClientClass(
+        service: DeclaredServiceName,
+        { importAlias }: { importAlias: string }
+    ): Reference {
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
             name: service,
             referencedIn: this.sourceFile,

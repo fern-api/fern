@@ -1941,7 +1941,7 @@ class AbstractHomepageService {
         return this;
     }
     toRouter() {
-        this.router.get(\\"/\\", async (req, res, next) => {
+        this.router.get(\\"\\", async (req, res, next) => {
             try {
                 const response = await this.getHomepageProblems(req);
                 res.json(await serializers.homepage.getHomepageProblems.Response.json(response));
@@ -1960,7 +1960,7 @@ class AbstractHomepageService {
             }
             next();
         });
-        this.router.post(\\"/\\", async (req, res, next) => {
+        this.router.post(\\"\\", async (req, res, next) => {
             try {
                 req.body = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
                 await this.setHomepageProblems(req);

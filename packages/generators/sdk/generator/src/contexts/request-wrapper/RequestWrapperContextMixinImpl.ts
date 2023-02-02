@@ -1,4 +1,5 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContextMixin } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
@@ -37,7 +38,7 @@ export class RequestWrapperContextMixinImpl implements RequestWrapperContextMixi
         this.sourceFile = sourceFile;
     }
 
-    public getGeneratedRequestWrapper(service: FernFilepath, endpointName: Name): GeneratedRequestWrapper {
+    public getGeneratedRequestWrapper(service: DeclaredServiceName, endpointName: Name): GeneratedRequestWrapper {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
@@ -55,7 +56,7 @@ export class RequestWrapperContextMixinImpl implements RequestWrapperContextMixi
         });
     }
 
-    public getReferenceToRequestWrapper(service: FernFilepath, endpointName: Name): ts.TypeNode {
+    public getReferenceToRequestWrapper(service: DeclaredServiceName, endpointName: Name): ts.TypeNode {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName

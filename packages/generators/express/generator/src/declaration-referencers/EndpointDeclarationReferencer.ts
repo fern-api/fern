@@ -1,12 +1,11 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ExportedFilePath, Reference } from "@fern-typescript/commons";
 import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace EndpointDeclarationReferencer {
     export interface Name {
-        service: FernFilepath;
+        service: DeclaredServiceName;
         endpoint: HttpEndpoint;
     }
 }

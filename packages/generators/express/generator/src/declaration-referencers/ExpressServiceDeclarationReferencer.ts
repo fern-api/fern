@@ -6,7 +6,7 @@ import { DeclarationReferencer } from "./DeclarationReferencer";
 export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<DeclaredServiceName> {
     public getExportedFilepath(name: DeclaredServiceName): ExportedFilePath {
         return {
-            directories: [...this.getExportedDirectory(name.fernFilepath)],
+            directories: [...this.getExportedDirectory(name)],
             file: {
                 nameOnDisk: this.getFilename(name),
                 exportDeclaration: {
@@ -21,7 +21,7 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
     }
 
     public getExportedName(name: DeclaredServiceName): string {
-        const lastFernFilepathPart = name.fernFilepath[name.fernFilepath.length - 1];
+        const lastFernFilepathPart = name.fernFilepath.allParts[name.fernFilepath.allParts.length - 1];
         return `Abstract${lastFernFilepathPart != null ? lastFernFilepathPart.pascalCase.unsafeName : "Root"}Service`;
     }
 

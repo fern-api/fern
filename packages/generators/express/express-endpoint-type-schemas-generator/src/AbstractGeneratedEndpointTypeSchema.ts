@@ -26,7 +26,7 @@ export abstract class AbstractGeneratedEndpointTypeSchema
 
     protected getReferenceToSchema(context: ExpressEndpointTypeSchemasContext): Reference {
         return context.expressEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
-            this.service.name.fernFilepath,
+            this.service.name,
             this.endpoint.name,
             [this.typeName]
         );

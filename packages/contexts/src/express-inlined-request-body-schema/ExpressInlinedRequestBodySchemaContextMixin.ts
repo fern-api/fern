@@ -1,13 +1,14 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { Reference } from "@fern-typescript/commons";
 import { GeneratedExpressInlinedRequestBodySchema } from "./GeneratedExpressInlinedRequestBodySchema";
 
 export interface ExpressInlinedRequestBodySchemaContextMixin {
     getGeneratedInlinedRequestBodySchema: (
-        service: FernFilepath,
+        service: DeclaredServiceName,
         endpointName: Name
     ) => GeneratedExpressInlinedRequestBodySchema;
-    getReferenceToInlinedRequestBody: (service: FernFilepath, endpointName: Name) => Reference;
+    getReferenceToInlinedRequestBody: (service: DeclaredServiceName, endpointName: Name) => Reference;
 }
 
 export interface WithExpressInlinedRequestBodySchemaContextMixin {

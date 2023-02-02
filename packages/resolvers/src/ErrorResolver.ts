@@ -1,7 +1,8 @@
 import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { stringifyFernFilepath } from "@fern-typescript/commons";
+import { StringifiedFernFilepath } from "@fern-typescript/commons/src/stringifyFernFilepath";
 import path from "path";
-import { StringifiedFernFilepath, stringifyFernFilepath } from "./stringify-fern-filepath";
 
 type SimpleErrorName = string;
 

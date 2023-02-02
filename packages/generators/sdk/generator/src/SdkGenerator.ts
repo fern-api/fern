@@ -390,7 +390,7 @@ export class SdkGenerator {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.endpointErrorUnionDeclarationReferencer.getExportedFilepath({
-                        service: service.name.fernFilepath,
+                        service: service.name,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -412,7 +412,7 @@ export class SdkGenerator {
                             endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                         });
                         endpointErrorUnionContext.endpointErrorUnion
-                            .getGeneratedEndpointErrorUnion(service.name.fernFilepath, endpoint.name)
+                            .getGeneratedEndpointErrorUnion(service.name, endpoint.name)
                             .writeToFile(endpointErrorUnionContext);
                     },
                 });
@@ -425,7 +425,7 @@ export class SdkGenerator {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
-                        service: service.name.fernFilepath,
+                        service: service.name,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -453,7 +453,7 @@ export class SdkGenerator {
                             typeSchemaGenerator: this.typeSchemaGenerator,
                         });
                         endpointTypeSchemasContext.sdkEndpointTypeSchemas
-                            .getGeneratedEndpointTypeSchemas(service.name.fernFilepath, endpoint.name)
+                            .getGeneratedEndpointTypeSchemas(service.name, endpoint.name)
                             .writeToFile(endpointTypeSchemasContext);
                     },
                 });
@@ -467,7 +467,7 @@ export class SdkGenerator {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
                     this.withSourceFile({
                         filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
-                            service: service.name.fernFilepath,
+                            service: service.name,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -491,7 +491,7 @@ export class SdkGenerator {
                                 requestWrapperGenerator: this.requestWrapperGenerator,
                             });
                             context.requestWrapper
-                                .getGeneratedRequestWrapper(service.name.fernFilepath, endpoint.name)
+                                .getGeneratedRequestWrapper(service.name, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
@@ -506,7 +506,7 @@ export class SdkGenerator {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
-                            service: service.name.fernFilepath,
+                            service: service.name,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -530,7 +530,7 @@ export class SdkGenerator {
                                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                             });
                             context.sdkInlinedRequestBodySchema
-                                .getGeneratedInlinedRequestBodySchema(service.name.fernFilepath, endpoint.name)
+                                .getGeneratedInlinedRequestBodySchema(service.name, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
@@ -543,7 +543,7 @@ export class SdkGenerator {
         const services = this.serviceResolver.getAllAugmentedServices();
         for (const service of services) {
             this.withSourceFile({
-                filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(service.fernFilepath),
+                filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(service.name),
                 run: ({ sourceFile, importsManager }) => {
                     const sdkClientClassContext = new SdkClientClassContextImpl({
                         intermediateRepresentation: this.intermediateRepresentation,
@@ -583,7 +583,7 @@ export class SdkGenerator {
                         timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
                     });
                     sdkClientClassContext.sdkClientClass
-                        .getGeneratedSdkClientClass(service.fernFilepath)
+                        .getGeneratedSdkClientClass(service.name)
                         .writeToFile(sdkClientClassContext);
                 },
             });

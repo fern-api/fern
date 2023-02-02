@@ -227,7 +227,7 @@ export class Client {
 
     public async status(): Promise<core.APIResponse<void, Fiddle.health.status.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment, \\"/api/health/\\"),
+            url: urlJoin(this.options.environment, \\"/api/health\\"),
             method: \\"GET\\",
         });
         if (_response.ok) {
@@ -5062,7 +5062,6 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
 
 import * as environments from \\"./environments\\";
 import { FernApi } from \\"@fern/api\\";
-import urlJoin from \\"url-join\\";
 import * as core from \\"./core\\";
 import * as serializers from \\"./serialization\\";
 import * as errors from \\"./errors\\";
@@ -5082,7 +5081,7 @@ export class FernApiClient {
 
     public async getString(): Promise<FernApi.RootString> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/\\"),
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -5153,7 +5152,6 @@ export * from \\"./owner/types\\";
 export * as package_ from \\"./package\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
-export * from \\"./package/types\\";
 export * from \\"./owner/errors\\";
 export * from \\"./token/errors\\";
 export * from \\"./owner/client/requests\\";
@@ -5193,7 +5191,7 @@ export class Client {
      */
     public async create(request: FernApi.CreateOwnerRequest): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/owner/\\"),
+            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/owner\\"),
             method: \\"POST\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -5497,7 +5495,6 @@ export * from \\"./Owner\\";
 
 import * as environments from \\"../../../../environments\\";
 import { FernApi } from \\"@fern/api\\";
-import urlJoin from \\"url-join\\";
 import * as core from \\"../../../../core\\";
 import * as serializers from \\"../../../../serialization\\";
 import * as errors from \\"../../../../errors\\";
@@ -5513,16 +5510,18 @@ export declare namespace Client {
 export class Client {
     constructor(private readonly options: Client.Options) {}
 
-    public async getString(): Promise<FernApi.PackageString> {
+    public async getString(): Promise<FernApi.package_.PackageString> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/\\"),
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
         });
         if (_response.ok) {
-            return await serializers.PackageString.parse(_response.body as serializers.PackageString.Raw);
+            return await serializers.package_.PackageString.parse(
+                _response.body as serializers.package_.PackageString.Raw
+            );
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -5595,7 +5594,6 @@ export * from \\"./nested/types\\";
 
 import * as environments from \\"../../../../../../environments\\";
 import { FernApi } from \\"@fern/api\\";
-import urlJoin from \\"url-join\\";
 import * as core from \\"../../../../../../core\\";
 import * as serializers from \\"../../../../../../serialization\\";
 import * as errors from \\"../../../../../../errors\\";
@@ -5612,7 +5610,7 @@ export class Client {
 
     public async getString(): Promise<FernApi.package_.NestedString> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/\\"),
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -7601,7 +7599,6 @@ export * from \\"./owner/types\\";
 export * as package_ from \\"./package\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
-export * from \\"./package/types\\";
 export * from \\"./owner/client/requests\\";
 export * from \\"./token/client/requests\\";
 ",
@@ -7831,8 +7828,10 @@ import * as serializers from \\"../../..\\";
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../../core\\";
 
-export const PackageString: core.serialization.Schema<serializers.PackageString.Raw, FernApi.PackageString> =
-    core.serialization.string();
+export const PackageString: core.serialization.Schema<
+    serializers.package_.PackageString.Raw,
+    FernApi.package_.PackageString
+> = core.serialization.string();
 
 export declare namespace PackageString {
     type Raw = string;
@@ -8444,7 +8443,6 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
 
 import * as environments from \\"./environments\\";
 import { FernApi } from \\"@fern/api\\";
-import urlJoin from \\"url-join\\";
 import * as core from \\"./core\\";
 import * as serializers from \\"./serialization\\";
 import * as errors from \\"./errors\\";
@@ -8464,7 +8462,7 @@ export class FernApiClient {
 
     public async getString(): Promise<FernApi.RootString> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/\\"),
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -8535,7 +8533,6 @@ export * from \\"./owner/types\\";
 export * as package_ from \\"./package\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
-export * from \\"./package/types\\";
 export * from \\"./owner/errors\\";
 export * from \\"./token/errors\\";
 export * from \\"./owner/client/requests\\";
@@ -8575,7 +8572,7 @@ export class Client {
      */
     public async create(request: FernApi.CreateOwnerRequest): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/owner/\\"),
+            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/owner\\"),
             method: \\"POST\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -8879,7 +8876,6 @@ export * from \\"./Owner\\";
 
 import * as environments from \\"../../../../environments\\";
 import { FernApi } from \\"@fern/api\\";
-import urlJoin from \\"url-join\\";
 import * as core from \\"../../../../core\\";
 import * as serializers from \\"../../../../serialization\\";
 import * as errors from \\"../../../../errors\\";
@@ -8895,16 +8891,18 @@ export declare namespace Client {
 export class Client {
     constructor(private readonly options: Client.Options) {}
 
-    public async getString(): Promise<FernApi.PackageString> {
+    public async getString(): Promise<FernApi.package_.PackageString> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/\\"),
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
             },
         });
         if (_response.ok) {
-            return await serializers.PackageString.parse(_response.body as serializers.PackageString.Raw);
+            return await serializers.package_.PackageString.parse(
+                _response.body as serializers.package_.PackageString.Raw
+            );
         }
 
         if (_response.error.reason === \\"status-code\\") {
@@ -8977,7 +8975,6 @@ export * from \\"./nested/types\\";
 
 import * as environments from \\"../../../../../../environments\\";
 import { FernApi } from \\"@fern/api\\";
-import urlJoin from \\"url-join\\";
 import * as core from \\"../../../../../../core\\";
 import * as serializers from \\"../../../../../../serialization\\";
 import * as errors from \\"../../../../../../errors\\";
@@ -8994,7 +8991,7 @@ export class Client {
 
     public async getString(): Promise<FernApi.package_.NestedString> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/\\"),
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -10983,7 +10980,6 @@ export * from \\"./owner/types\\";
 export * as package_ from \\"./package\\";
 export * as token from \\"./token\\";
 export * from \\"./token/types\\";
-export * from \\"./package/types\\";
 export * from \\"./owner/client/requests\\";
 export * from \\"./token/client/requests\\";
 ",
@@ -11213,8 +11209,10 @@ import * as serializers from \\"../../..\\";
 import { FernApi } from \\"@fern/api\\";
 import * as core from \\"../../../../core\\";
 
-export const PackageString: core.serialization.Schema<serializers.PackageString.Raw, FernApi.PackageString> =
-    core.serialization.string();
+export const PackageString: core.serialization.Schema<
+    serializers.package_.PackageString.Raw,
+    FernApi.package_.PackageString
+> = core.serialization.string();
 
 export declare namespace PackageString {
     type Raw = string;
@@ -15811,7 +15809,7 @@ export class Client {
         core.APIResponse<TraceApi.ProblemId[], TraceApi.homepage.getHomepageProblems.Error>
     > {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.TraceApiEnvironment.Prod, \\"/homepage-problems/\\"),
+            url: urlJoin(this.options.environment ?? environments.TraceApiEnvironment.Prod, \\"/homepage-problems\\"),
             method: \\"GET\\",
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
@@ -15836,7 +15834,7 @@ export class Client {
         request: TraceApi.ProblemId[]
     ): Promise<core.APIResponse<void, TraceApi.homepage.setHomepageProblems.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(this.options.environment ?? environments.TraceApiEnvironment.Prod, \\"/homepage-problems/\\"),
+            url: urlJoin(this.options.environment ?? environments.TraceApiEnvironment.Prod, \\"/homepage-problems\\"),
             method: \\"POST\\",
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),

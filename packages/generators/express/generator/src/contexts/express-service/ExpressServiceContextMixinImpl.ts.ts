@@ -1,4 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { ExpressServiceContextMixin, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
@@ -37,7 +37,7 @@ export class ExpressServiceContextMixinImpl implements ExpressServiceContextMixi
         this.sourceFile = sourceFile;
     }
 
-    public getGeneratedExpressService(service: FernFilepath): GeneratedExpressService {
+    public getGeneratedExpressService(service: DeclaredServiceName): GeneratedExpressService {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         return this.expressServiceGenerator.generateService({
             service: serviceDeclaration,
@@ -45,7 +45,10 @@ export class ExpressServiceContextMixinImpl implements ExpressServiceContextMixi
         });
     }
 
-    public getReferenceToExpressService(service: FernFilepath, { importAlias }: { importAlias: string }): Reference {
+    public getReferenceToExpressService(
+        service: DeclaredServiceName,
+        { importAlias }: { importAlias: string }
+    ): Reference {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
         return this.expressServiceDeclarationReferencer.getReferenceToService({
             name: serviceDeclaration.name,

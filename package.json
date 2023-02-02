@@ -19,7 +19,7 @@
     "lint:monorepo": "mrlint lint",
     "lint:monorepo:fix": "yarn lint:monorepo --fix",
     "organize-imports": "organize-imports-cli",
-    "organize-imports:all": "yarn organize-imports packages/**/tsconfig.json",
+    "organize-imports:fix": "yarn organize-imports packages/**/tsconfig.json",
     "organize-imports:check": "yarn organize-imports:all --list-different",
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
     "format:all": "yarn format \"**\"",

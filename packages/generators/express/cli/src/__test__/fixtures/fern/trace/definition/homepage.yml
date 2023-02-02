@@ -7,12 +7,12 @@ service:
   endpoints:
     getHomepageProblems:
       method: GET
-      path: /
+      path: ""
       response: list<commons.ProblemId>
 
     setHomepageProblems:
       method: POST
-      path: /
+      path: ""
       request:
         body:
           type: list<commons.ProblemId>

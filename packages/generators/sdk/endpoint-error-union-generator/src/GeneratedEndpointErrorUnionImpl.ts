@@ -42,7 +42,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             ),
             getReferenceToUnion: (context) =>
                 context.endpointErrorUnion.getReferenceToEndpointTypeExport(
-                    service.name.fernFilepath,
+                    service.name,
                     this.endpoint.name,
                     GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME
                 ),

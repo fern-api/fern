@@ -1,4 +1,5 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ImportsManager, Reference } from "@fern-typescript/commons";
 import { ExpressEndpointTypeSchemasContextMixin, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
@@ -39,7 +40,7 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
     }
 
     public getGeneratedEndpointTypeSchemas(
-        service: FernFilepath,
+        service: DeclaredServiceName,
         endpointName: Name
     ): GeneratedExpressEndpointTypeSchemas {
         const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
@@ -56,7 +57,7 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
     }
 
     public getReferenceToEndpointTypeSchemaExport(
-        service: FernFilepath,
+        service: DeclaredServiceName,
         endpointName: Name,
         export_: string | string[]
     ): Reference {

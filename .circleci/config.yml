@@ -18,7 +18,7 @@ jobs:
           # comma that prettier adds back. Instead, we write the changes to disk.
           # if the repo is dirty after the prettier step is run, this job will fail
           # on the last step.
-          command: yarn organize-imports:all
+          command: yarn organize-imports:fix
       - run:
           name: Check dependencies
           command: yarn depcheck

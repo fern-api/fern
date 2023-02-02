@@ -26,7 +26,7 @@ export abstract class AbstractGeneratedEndpointTypeSchema
 
     protected getReferenceToSchema(context: SdkEndpointTypeSchemasContext): Reference {
         return context.sdkEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
-            this.service.name.fernFilepath,
+            this.service.name,
             this.endpoint.name,
             [this.typeName]
         );

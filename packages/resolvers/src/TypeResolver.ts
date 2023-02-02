@@ -8,8 +8,7 @@ import {
     TypeDeclaration,
     TypeReference,
 } from "@fern-fern/ir-model/types";
-import path from "path";
-import { stringifyFernFilepath } from "./stringify-fern-filepath";
+import { stringifyFernFilepath } from "@fern-typescript/commons";
 
 type Filepath = string;
 type SimpleTypeName = string;
@@ -83,7 +82,7 @@ export class TypeResolver {
 }
 
 function typeNameToString(typeName: DeclaredTypeName) {
-    return path.join(...typeName.fernFilepath.map((part) => part.originalName), typeName.name.originalName);
+    return stringifyFernFilepath(typeName.fernFilepath) + ":" + typeName.name.originalName;
 }
 
 function getSimpleTypeName(typeName: DeclaredErrorName): SimpleTypeName {

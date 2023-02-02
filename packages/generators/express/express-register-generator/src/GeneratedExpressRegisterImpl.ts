@@ -50,7 +50,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             ),
                             path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService
-                                .getGeneratedExpressService(service.name.fernFilepath)
+                                .getGeneratedExpressService(service.name)
                                 .toRouter(this.getReferenceToServiceArgument(service)),
                         })
                     );
@@ -60,14 +60,14 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     }
 
     private getReferenceToServiceArgument(service: HttpService) {
-        return service.name.fernFilepath.reduce<ts.Expression>(
+        return service.name.fernFilepath.allParts.reduce<ts.Expression>(
             (acc, part) => ts.factory.createPropertyAccessExpression(acc, getKeyForFernFilepathPart(part)),
             ts.factory.createIdentifier(GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME)
         );
     }
 
     private getServiceKey(service: HttpService) {
-        const lastFernFilepathPart = service.name.fernFilepath[service.name.fernFilepath.length - 1];
+        const lastFernFilepathPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
         if (lastFernFilepathPart == null) {
             throw new Error("Cannot generate register() because fern filepath is empty");
         }
@@ -85,7 +85,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     this.getServiceKey(service),
                     undefined,
                     context.expressService
-                        .getReferenceToExpressService(service.name.fernFilepath, {
+                        .getReferenceToExpressService(service.name, {
                             importAlias: this.getImportAliasForService(service),
                         })
                         .getTypeNode()
@@ -103,9 +103,9 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     }
 
     private getImportAliasForService(service: HttpService): string {
-        const lastPart = service.name.fernFilepath[service.name.fernFilepath.length - 1];
+        const lastPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
         return [
-            ...service.name.fernFilepath.slice(0, -1).map((part) => part.camelCase.unsafeName),
+            ...service.name.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
             `Abstract${lastPart != null ? lastPart.pascalCase.unsafeName : "Root"}Service`,
         ].join("_");
     }
@@ -129,8 +129,8 @@ function buildServicesTree(intermediateRepresentation: IntermediateRepresentatio
     for (const service of intermediateRepresentation.services) {
         let treeForService = tree;
 
-        for (let i = 0; i < service.name.fernFilepath.length - 1; i++) {
-            const name = getKeyForFernFilepathPart(service.name.fernFilepath[i]!);
+        for (let i = 0; i < service.name.fernFilepath.allParts.length - 1; i++) {
+            const name = getKeyForFernFilepathPart(service.name.fernFilepath.allParts[i]!);
             let subTree: ServicesTreeFolderNode | undefined = treeForService.folders.find(
                 (other) => other.name === name
             );

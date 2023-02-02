@@ -1,10 +1,10 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ExportedFilePath, Reference } from "@fern-typescript/commons";
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
-export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<FernFilepath> {
-    public getExportedFilepath(service: FernFilepath): ExportedFilePath {
+export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassDeclarationReferencer<DeclaredServiceName> {
+    public getExportedFilepath(service: DeclaredServiceName): ExportedFilePath {
         if (this.isRootClient(service)) {
             return {
                 directories: [],
@@ -29,15 +29,15 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
         return "Client.ts";
     }
 
-    public getExportedName(service: FernFilepath): string {
+    public getExportedName(service: DeclaredServiceName): string {
         return this.isRootClient(service) ? `${this.namespaceExport}Client` : "Client";
     }
 
-    public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<FernFilepath>): Reference {
+    public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<DeclaredServiceName>): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
     }
 
-    private isRootClient(service: FernFilepath): boolean {
-        return service.length === 0;
+    private isRootClient(service: DeclaredServiceName): boolean {
+        return service.fernFilepath.allParts.length === 0;
     }
 }

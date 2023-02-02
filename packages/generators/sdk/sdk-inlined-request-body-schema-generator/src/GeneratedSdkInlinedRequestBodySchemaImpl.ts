@@ -45,7 +45,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
 
     protected getReferenceToSchema(context: SdkInlinedRequestBodySchemaContext): Reference {
         return context.sdkInlinedRequestBodySchema.getReferenceToInlinedRequestBody(
-            this.service.name.fernFilepath,
+            this.service.name,
             this.endpoint.name
         );
     }
@@ -69,11 +69,11 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
 
     protected getReferenceToParsedShape(context: SdkInlinedRequestBodySchemaContext): ts.TypeNode {
         const referenceToRequestWrapper = context.requestWrapper.getReferenceToRequestWrapper(
-            this.service.name.fernFilepath,
+            this.service.name,
             this.endpoint.name
         );
         const generatedRequestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
-            this.service.name.fernFilepath,
+            this.service.name,
             this.endpoint.name
         );
         const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys();
@@ -96,7 +96,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.requestWrapper
-                        .getGeneratedRequestWrapper(this.service.name.fernFilepath, this.endpoint.name)
+                        .getGeneratedRequestWrapper(this.service.name, this.endpoint.name)
                         .getInlinedRequestBodyPropertyKey(property),
                     raw: property.name.wireValue,
                 },

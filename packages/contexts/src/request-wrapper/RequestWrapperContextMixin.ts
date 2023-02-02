@@ -1,10 +1,11 @@
-import { FernFilepath, Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { ts } from "ts-morph";
 import { GeneratedRequestWrapper } from "./GeneratedRequestWrapper";
 
 export interface RequestWrapperContextMixin {
-    getGeneratedRequestWrapper: (service: FernFilepath, endpointName: Name) => GeneratedRequestWrapper;
-    getReferenceToRequestWrapper: (service: FernFilepath, endpointName: Name) => ts.TypeNode;
+    getGeneratedRequestWrapper: (service: DeclaredServiceName, endpointName: Name) => GeneratedRequestWrapper;
+    getReferenceToRequestWrapper: (service: DeclaredServiceName, endpointName: Name) => ts.TypeNode;
 }
 
 export interface WithRequestWrapperContextMixin {

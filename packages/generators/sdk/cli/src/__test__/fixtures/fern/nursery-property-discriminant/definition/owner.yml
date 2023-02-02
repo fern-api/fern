@@ -15,7 +15,7 @@ service:
   endpoints:
     create:
       method: POST
-      path: /
+      path: ""
       request:
         name: CreateOwnerRequest
         body:

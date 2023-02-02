@@ -1,10 +1,10 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { Reference } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "./GeneratedSdkClientClass";
 
 export interface SdkClientClassContextMixin {
-    getGeneratedSdkClientClass: (service: FernFilepath) => GeneratedSdkClientClass;
-    getReferenceToClientClass: (service: FernFilepath, options: { importAlias: string }) => Reference;
+    getGeneratedSdkClientClass: (service: DeclaredServiceName) => GeneratedSdkClientClass;
+    getReferenceToClientClass: (service: DeclaredServiceName, options: { importAlias: string }) => Reference;
 }
 
 export interface WithSdkClientClassContextMixin {

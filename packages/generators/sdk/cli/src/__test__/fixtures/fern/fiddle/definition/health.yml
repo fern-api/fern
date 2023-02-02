@@ -4,4 +4,4 @@ service:
   endpoints:
     status:
       method: GET
-      path: /
+      path: ""
