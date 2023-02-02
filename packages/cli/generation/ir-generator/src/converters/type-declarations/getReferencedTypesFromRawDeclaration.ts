@@ -107,6 +107,10 @@ class SeenTypeNamesImpl implements SeenTypeNames {
     }
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
-        return typeName.fernFilepath.join("/") + ":" + typeName.name.originalName;
+        const fernFilepathParts = [...typeName.fernFilepath.packagePath];
+        if (typeName.fernFilepath.file != null) {
+            fernFilepathParts.push(typeName.fernFilepath.file);
+        }
+        return fernFilepathParts.join("/") + ":" + typeName.name.originalName;
     }
 }

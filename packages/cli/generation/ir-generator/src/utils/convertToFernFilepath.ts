@@ -11,10 +11,16 @@ export function convertToFernFilepath({
     relativeFilepath: RelativeFilePath;
     casingsGenerator: CasingsGenerator;
 }): FernFilepath {
-    const santizedPath =
-        basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME ? dirname(relativeFilepath) : relativeFilepath;
-    if (santizedPath === ".") {
-        return [];
-    }
-    return santizedPath.split(path.sep).map((fileOrDir) => casingsGenerator.generateName(path.parse(fileOrDir).name));
+    const pathToPackage = dirname(relativeFilepath);
+    const filename = basename(relativeFilepath);
+    return {
+        packagePath:
+            pathToPackage === "."
+                ? []
+                : pathToPackage.split(path.sep).map((part) => casingsGenerator.generateName(part)),
+        file:
+            filename !== FERN_PACKAGE_MARKER_FILENAME
+                ? casingsGenerator.generateName(path.parse(filename).name)
+                : undefined,
+    };
 }

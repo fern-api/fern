@@ -1,3 +1,4 @@
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
@@ -25,24 +26,32 @@ export interface EndpointNode {
 }
 
 export function getEndpointId(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): ErrorId {
-    const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
+    const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath);
     const endpointId = httpEndpoint.name.originalName;
     return `endpoint_${joinedFernFilePath}.${endpointId}`;
 }
 
 export function getServiceId(declaredServiceName: DeclaredServiceName): ServiceId {
-    const joinedFernFilePath = declaredServiceName.fernFilepath.map((name) => name.originalName).join("/");
+    const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath);
     return `endpoint_${joinedFernFilePath}`;
 }
 
 export function getErrorId(declaredErrorName: DeclaredErrorName): ErrorId {
-    const joinedFernFilePath = declaredErrorName.fernFilepath.map((name) => name.originalName).join("/");
+    const joinedFernFilePath = stringifyFernFilepath(declaredErrorName.fernFilepath);
     const errorName = declaredErrorName.name.originalName;
     return `error_${joinedFernFilePath}:${errorName}`;
 }
 
 export function getTypeId(declaredTypeName: DeclaredTypeName): TypeId {
-    const joinedFernFilePath = declaredTypeName.fernFilepath.map((name) => name.originalName).join("/");
+    const joinedFernFilePath = stringifyFernFilepath(declaredTypeName.fernFilepath);
     const typeName = declaredTypeName.name.originalName;
     return `type_${joinedFernFilePath}:${typeName}`;
+}
+
+function stringifyFernFilepath(fernFilepath: FernFilepath): string {
+    const parts = [...fernFilepath.packagePath];
+    if (fernFilepath.file != null) {
+        parts.push(fernFilepath.file);
+    }
+    return parts.map((part) => part.originalName).join("/");
 }

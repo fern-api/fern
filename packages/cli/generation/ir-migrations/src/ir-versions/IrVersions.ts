@@ -1,7 +1,8 @@
-export * as V7 from "@fern-fern/ir-model";
+export * as V8 from "@fern-fern/ir-model";
 export * as V1 from "@fern-fern/ir-v1-model";
 export * as V2 from "@fern-fern/ir-v2-model";
 export * as V3 from "@fern-fern/ir-v3-model";
 export * as V4 from "@fern-fern/ir-v4-model";
 export * as V5 from "@fern-fern/ir-v5-model";
 export * as V6 from "@fern-fern/ir-v6-model";
+export * as V7 from "@fern-fern/ir-v7-model";
