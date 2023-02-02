@@ -173,7 +173,7 @@ class EndpointGenerator:
                 writer.write_line(",")
                 writer.write("**")
                 default_tag = ".".join(
-                    [package.snake_case.unsafe_name for package in self._service.name.fern_filepath.get_as_list()]
+                    [package.snake_case.unsafe_name for package in self._service.name.fern_filepath.all_parts]
                 )
                 writer.write_node(
                     self._context.core_utilities.get_route_args(

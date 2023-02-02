@@ -21,4 +21,4 @@ class ServiceInitializer:
         )
 
     def get_parameter_name(self) -> str:
-        return "_".join(part.snake_case.unsafe_name for part in self._service.name.fern_filepath.get_as_list())
+        return "_".join(part.snake_case.unsafe_name for part in self._service.name.fern_filepath.all_parts)

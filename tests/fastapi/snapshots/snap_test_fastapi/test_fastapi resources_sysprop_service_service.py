@@ -15,10 +15,9 @@ from ....core.route_args import get_route_args
 from ...commons.types.language import Language
 
 
-class AbstractSysPropCrudService(AbstractFernService):
+class AbstractSyspropService(AbstractFernService):
     """
-    AbstractSysPropCrudService is an abstract class containing the methods that your
-    SysPropCrudService implementation should implement.
+    AbstractSyspropService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -77,7 +76,7 @@ class AbstractSysPropCrudService(AbstractFernService):
         router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            description=AbstractSysPropCrudService.set_num_warm_instances.__doc__,
+            description=AbstractSyspropService.set_num_warm_instances.__doc__,
             **get_route_args(cls.set_num_warm_instances, default_tag="sysprop"),
         )(wrapper)
 
@@ -111,6 +110,6 @@ class AbstractSysPropCrudService(AbstractFernService):
         router.get(
             path="/sysprop/num-warm-instances",
             response_model=typing.Dict[Language, int],
-            description=AbstractSysPropCrudService.get_num_warm_instances.__doc__,
+            description=AbstractSyspropService.get_num_warm_instances.__doc__,
             **get_route_args(cls.get_num_warm_instances, default_tag="sysprop"),
         )(wrapper)

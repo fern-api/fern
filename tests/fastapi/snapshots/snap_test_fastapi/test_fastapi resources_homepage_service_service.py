@@ -15,10 +15,9 @@ from ....core.route_args import get_route_args
 from ...commons.types.problem_id import ProblemId
 
 
-class AbstractHomepageProblemService(AbstractFernService):
+class AbstractHomepageService(AbstractFernService):
     """
-    AbstractHomepageProblemService is an abstract class containing the methods that your
-    HomepageProblemService implementation should implement.
+    AbstractHomepageService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -73,7 +72,7 @@ class AbstractHomepageProblemService(AbstractFernService):
         router.get(
             path="/homepage-problems",
             response_model=typing.List[ProblemId],
-            description=AbstractHomepageProblemService.get_homepage_problems.__doc__,
+            description=AbstractHomepageService.get_homepage_problems.__doc__,
             **get_route_args(cls.get_homepage_problems, default_tag="homepage"),
         )(wrapper)
 
@@ -109,6 +108,6 @@ class AbstractHomepageProblemService(AbstractFernService):
         router.post(
             path="/homepage-problems",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            description=AbstractHomepageProblemService.set_homepage_problems.__doc__,
+            description=AbstractHomepageService.set_homepage_problems.__doc__,
             **get_route_args(cls.set_homepage_problems, default_tag="homepage"),
         )(wrapper)

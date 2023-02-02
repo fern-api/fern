@@ -47,8 +47,7 @@ class ServiceGenerator:
             docstring=AST.Docstring(
                 "\n".join(
                     [
-                        f"{class_name} is an abstract class containing the methods that your",
-                        f"{service.name.name.pascal_case.unsafe_name} implementation should implement.",
+                        f"{class_name} is an abstract class containing the methods that you should implement.",
                         "",
                         "Each method is associated with an API route, which will be registered",
                         "with FastAPI when you register your implementation using Fern's register()",

@@ -6,7 +6,7 @@ orbs:
 jobs:
   check:
     docker:
-      - image: cimg/python:3.7.13-node
+      - image: cimg/python:3.8.16-node
     steps:
       - checkout
       - python/install-packages:
@@ -20,7 +20,7 @@ jobs:
 
   test:
     docker:
-      - image: cimg/python:3.7.13-node
+      - image: cimg/python:3.8.16-node
     steps:
       - checkout
       - python/install-packages:
@@ -50,7 +50,6 @@ jobs:
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fastapi-server:"$projectVersion" fernapi/fern-fastapi-server:"$projectVersion"
             docker push fernapi/fern-fastapi-server:"$projectVersion"
-
 
 workflows:
   build:

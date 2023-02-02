@@ -11,13 +11,11 @@ types:
       name: string
       status: MigrationStatus
 
-services:
-  http:
-    MigrationInfoService:
-      base-path: /migration-info
-      auth: false
-      endpoints:
-        getAttemptedMigrations:
-          method: GET
-          path: /all
-          response: list<Migration>
+service:
+  base-path: /migration-info
+  auth: false
+  endpoints:
+    getAttemptedMigrations:
+      method: GET
+      path: /all
+      response: list<Migration>

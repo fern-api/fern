@@ -9,7 +9,7 @@ import pydantic
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-from ...v_2.problem.types.test_case_id import TestCaseId
+from ...v_2.resources.problem.types.test_case_id import TestCaseId
 from .test_case_grade import TestCaseGrade
 
 

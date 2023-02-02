@@ -14,10 +14,9 @@ from ....core.route_args import get_route_args
 from ..types.migration import Migration
 
 
-class AbstractMigrationInfoService(AbstractFernService):
+class AbstractMigrationService(AbstractFernService):
     """
-    AbstractMigrationInfoService is an abstract class containing the methods that your
-    MigrationInfoService implementation should implement.
+    AbstractMigrationService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -67,6 +66,6 @@ class AbstractMigrationInfoService(AbstractFernService):
         router.get(
             path="/migration-info/all",
             response_model=typing.List[Migration],
-            description=AbstractMigrationInfoService.get_attempted_migrations.__doc__,
+            description=AbstractMigrationService.get_attempted_migrations.__doc__,
             **get_route_args(cls.get_attempted_migrations, default_tag="migration"),
         )(wrapper)

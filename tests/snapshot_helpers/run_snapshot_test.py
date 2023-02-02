@@ -9,7 +9,7 @@ from generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
 from snapshottest.module import SnapshotTest  # type: ignore
 
-PYTHON_VERSION = "3.7.13"
+PYTHON_VERSION = "3.8.16"
 
 
 def run_snapshot_test(

@@ -24,8 +24,7 @@ from .store_traced_workspace_request import StoreTracedWorkspaceRequest
 
 class AbstractAdminService(AbstractFernService):
     """
-    AbstractAdminService is an abstract class containing the methods that your
-    AdminService implementation should implement.
+    AbstractAdminService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()

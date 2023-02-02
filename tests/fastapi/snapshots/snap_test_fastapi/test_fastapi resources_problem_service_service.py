@@ -19,10 +19,9 @@ from ..types.update_problem_response import UpdateProblemResponse
 from .get_default_starter_files_request import GetDefaultStarterFilesRequest
 
 
-class AbstractProblemCrudService(AbstractFernService):
+class AbstractProblemService(AbstractFernService):
     """
-    AbstractProblemCrudService is an abstract class containing the methods that your
-    ProblemCrudService implementation should implement.
+    AbstractProblemService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -101,7 +100,7 @@ class AbstractProblemCrudService(AbstractFernService):
         router.post(
             path="/problem-crud/create",
             response_model=CreateProblemResponse,
-            description=AbstractProblemCrudService.create_problem.__doc__,
+            description=AbstractProblemService.create_problem.__doc__,
             **get_route_args(cls.create_problem, default_tag="problem"),
         )(wrapper)
 
@@ -139,7 +138,7 @@ class AbstractProblemCrudService(AbstractFernService):
         router.post(
             path="/problem-crud/update/{problem_id}",
             response_model=UpdateProblemResponse,
-            description=AbstractProblemCrudService.update_problem.__doc__,
+            description=AbstractProblemService.update_problem.__doc__,
             **get_route_args(cls.update_problem, default_tag="problem"),
         )(wrapper)
 
@@ -175,7 +174,7 @@ class AbstractProblemCrudService(AbstractFernService):
         router.delete(
             path="/problem-crud/delete/{problem_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            description=AbstractProblemCrudService.delete_problem.__doc__,
+            description=AbstractProblemService.delete_problem.__doc__,
             **get_route_args(cls.delete_problem, default_tag="problem"),
         )(wrapper)
 
@@ -211,6 +210,6 @@ class AbstractProblemCrudService(AbstractFernService):
         router.post(
             path="/problem-crud/default-starter-files",
             response_model=GetDefaultStarterFilesResponse,
-            description=AbstractProblemCrudService.get_default_starter_files.__doc__,
+            description=AbstractProblemService.get_default_starter_files.__doc__,
             **get_route_args(cls.get_default_starter_files, default_tag="problem"),
         )(wrapper)

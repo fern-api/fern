@@ -17,14 +17,19 @@ class FastApiDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T])
     def _get_generator_name_for_containing_folder(self) -> str:
         return "fastapi"
 
-    def _get_directories_for_fern_filepath(
+    def _get_directories_for_fern_filepath_part(
         self,
         *,
-        fern_filepath: ir_types.FernFilepath,
+        fern_filepath_part: ir_types.Name,
+        export_strategy: ExportStrategy,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(
                 module_name="resources",
                 export_strategy=ExportStrategy.EXPORT_ALL,
             ),
-        ) + super()._get_directories_for_fern_filepath(fern_filepath=fern_filepath)
+            Filepath.DirectoryFilepathPart(
+                module_name=fern_filepath_part.snake_case.unsafe_name,
+                export_strategy=export_strategy,
+            ),
+        )

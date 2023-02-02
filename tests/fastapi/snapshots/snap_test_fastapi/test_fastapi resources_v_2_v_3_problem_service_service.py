@@ -15,10 +15,9 @@ from ..types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from ..types.problem_info_v_2 import ProblemInfoV2
 
 
-class AbstractProblemInfoServicV2(AbstractFernService):
+class AbstractProblemService(AbstractFernService):
     """
-    AbstractProblemInfoServicV2 is an abstract class containing the methods that your
-    ProblemInfoServicV2 implementation should implement.
+    AbstractProblemService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -95,7 +94,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
-            description=AbstractProblemInfoServicV2.get_lightweight_problems.__doc__,
+            description=AbstractProblemService.get_lightweight_problems.__doc__,
             **get_route_args(cls.get_lightweight_problems, default_tag="v_2.v_3.problem"),
         )(wrapper)
 
@@ -129,7 +128,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
-            description=AbstractProblemInfoServicV2.get_problems.__doc__,
+            description=AbstractProblemService.get_problems.__doc__,
             **get_route_args(cls.get_problems, default_tag="v_2.v_3.problem"),
         )(wrapper)
 
@@ -165,7 +164,7 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
-            description=AbstractProblemInfoServicV2.get_latest_problem.__doc__,
+            description=AbstractProblemService.get_latest_problem.__doc__,
             **get_route_args(cls.get_latest_problem, default_tag="v_2.v_3.problem"),
         )(wrapper)
 
@@ -203,6 +202,6 @@ class AbstractProblemInfoServicV2(AbstractFernService):
         router.get(
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
-            description=AbstractProblemInfoServicV2.get_problem_version.__doc__,
+            description=AbstractProblemService.get_problem_version.__doc__,
             **get_route_args(cls.get_problem_version, default_tag="v_2.v_3.problem"),
         )(wrapper)

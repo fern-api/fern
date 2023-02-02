@@ -64,54 +64,52 @@ types:
     properties:
       files: map<commons.Language, ProblemFiles>
 
-services:
-  http:
-    ProblemCrudService:
-      base-path: /problem-crud
-      auth: false
-      endpoints:
-        createProblem:
-          docs: Creates a problem
-          method: POST
-          path: /create
-          request: CreateProblemRequest
-          response: CreateProblemResponse
+service:
+  base-path: /problem-crud
+  auth: false
+  endpoints:
+    createProblem:
+      docs: Creates a problem
+      method: POST
+      path: /create
+      request: CreateProblemRequest
+      response: CreateProblemResponse
 
-        updateProblem:
-          docs: Updates a problem
-          method: POST
-          path: /update/{problemId}
-          path-parameters:
-            problemId: commons.ProblemId
-          request:
-            body:
-              type: CreateProblemRequest
-          response: UpdateProblemResponse
+    updateProblem:
+      docs: Updates a problem
+      method: POST
+      path: /update/{problemId}
+      path-parameters:
+        problemId: commons.ProblemId
+      request:
+        body:
+          type: CreateProblemRequest
+      response: UpdateProblemResponse
 
-        deleteProblem:
-          docs: Soft deletes a problem
-          method: DELETE
-          path: /delete/{problemId}
-          path-parameters:
-            problemId: commons.ProblemId
+    deleteProblem:
+      docs: Soft deletes a problem
+      method: DELETE
+      path: /delete/{problemId}
+      path-parameters:
+        problemId: commons.ProblemId
 
-        getDefaultStarterFiles:
-          docs: Returns default starter files for problem
-          method: POST
-          path: /default-starter-files
-          request:
-            name: GetDefaultStarterFilesRequest
-            body:
-              properties:
-                inputParams: list<VariableTypeAndName>
-                outputType: commons.VariableType
-                methodName:
-                  type: string
-                  docs: |
-                    The name of the `method` that the student has to complete.
-                    The method name cannot include the following characters:
-                      - Greater Than `>`
-                      - Less Than `<``
-                      - Equals `=`
-                      - Period `.`
-          response: GetDefaultStarterFilesResponse
+    getDefaultStarterFiles:
+      docs: Returns default starter files for problem
+      method: POST
+      path: /default-starter-files
+      request:
+        name: GetDefaultStarterFilesRequest
+        body:
+          properties:
+            inputParams: list<VariableTypeAndName>
+            outputType: commons.VariableType
+            methodName:
+              type: string
+              docs: |
+                The name of the `method` that the student has to complete.
+                The method name cannot include the following characters:
+                  - Greater Than `>`
+                  - Less Than `<``
+                  - Equals `=`
+                  - Period `.`
+      response: GetDefaultStarterFilesResponse

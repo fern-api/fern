@@ -184,37 +184,35 @@ types:
     properties:
       template: TestCaseTemplate
 
-services:
-  http:
-    ProblemInfoServicV2:
-      base-path: /problems-v2
-      auth: false
-      endpoints:
-        getLightweightProblems:
-          docs: Returns lightweight versions of all problems
-          method: GET
-          path: /lightweight-problem-info
-          response: list<LightweightProblemInfoV2>
+service:
+  base-path: /problems-v2
+  auth: false
+  endpoints:
+    getLightweightProblems:
+      docs: Returns lightweight versions of all problems
+      method: GET
+      path: /lightweight-problem-info
+      response: list<LightweightProblemInfoV2>
 
-        getProblems:
-          docs: Returns latest versions of all problems
-          method: GET
-          path: /problem-info
-          response: list<ProblemInfoV2>
+    getProblems:
+      docs: Returns latest versions of all problems
+      method: GET
+      path: /problem-info
+      response: list<ProblemInfoV2>
 
-        getLatestProblem:
-          docs: Returns latest version of a problem
-          method: GET
-          path: /problem-info/{problemId}
-          path-parameters:
-            problemId: commons.ProblemId
-          response: ProblemInfoV2
+    getLatestProblem:
+      docs: Returns latest version of a problem
+      method: GET
+      path: /problem-info/{problemId}
+      path-parameters:
+        problemId: commons.ProblemId
+      response: ProblemInfoV2
 
-        getProblemVersion:
-          docs: Returns requested version of a problem
-          method: GET
-          path: /problem-info/{problemId}/version/{problemVersion}
-          path-parameters:
-            problemId: commons.ProblemId
-            problemVersion: integer
-          response: ProblemInfoV2
+    getProblemVersion:
+      docs: Returns requested version of a problem
+      method: GET
+      path: /problem-info/{problemId}/version/{problemVersion}
+      path-parameters:
+        problemId: commons.ProblemId
+        problemVersion: integer
+      response: ProblemInfoV2

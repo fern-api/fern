@@ -416,8 +416,7 @@ types:
       sessionId:
         type: string
         docs: >
-          The auto-generated session id.
-          Formatted as a uuid.
+          The auto-generated session id. Formatted as a uuid.
       isWarmInstance: boolean
       awsTaskId: optional<string>
       language: commons.Language
@@ -436,38 +435,36 @@ types:
       language: commons.Language
       submissionTypeState: SubmissionTypeState
 
-services:
-  http:
-    ExecutionSesssionManagementService:
-      docs: Responsible for spinning up and spinning down execution.
-      base-path: /sessions
-      auth: false
-      endpoints:
-        createExecutionSession:
-          docs: Returns sessionId and execution server URL for session. Spins up server.
-          method: POST
-          path: /create-session/{language}
-          path-parameters:
-            language: commons.Language
-          response: ExecutionSessionResponse
+service:
+  docs: Responsible for spinning up and spinning down execution.
+  base-path: /sessions
+  auth: false
+  endpoints:
+    createExecutionSession:
+      docs: Returns sessionId and execution server URL for session. Spins up server.
+      method: POST
+      path: /create-session/{language}
+      path-parameters:
+        language: commons.Language
+      response: ExecutionSessionResponse
 
-        getExecutionSession:
-          docs: Returns execution server URL for session. Returns empty if session isn't
-            registered.
-          method: GET
-          path: /{sessionId}
-          path-parameters:
-            sessionId: string
-          response: optional<ExecutionSessionResponse>
+    getExecutionSession:
+      docs: Returns execution server URL for session. Returns empty if session isn't
+        registered.
+      method: GET
+      path: /{sessionId}
+      path-parameters:
+        sessionId: string
+      response: optional<ExecutionSessionResponse>
 
-        stopExecutionSession:
-          docs: Stops execution session. #TODO: only an admin should be able to trigger this
-          method: DELETE
-          path: /stop/{sessionId}
-          path-parameters:
-            sessionId: string
+    stopExecutionSession:
+      docs: Stops execution session. #TODO: only an admin should be able to trigger this
+      method: DELETE
+      path: /stop/{sessionId}
+      path-parameters:
+        sessionId: string
 
-        getExecutionSessionsState:
-          method: GET
-          path: /execution-sessions-state
-          response: GetExecutionSessionStateResponse
+    getExecutionSessionsState:
+      method: GET
+      path: /execution-sessions-state
+      response: GetExecutionSessionStateResponse

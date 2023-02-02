@@ -20,10 +20,9 @@ from ..types.playlist_create_request import PlaylistCreateRequest
 from ..types.update_playlist_request import UpdatePlaylistRequest
 
 
-class AbstractPlaylistCrudService(AbstractFernService):
+class AbstractPlaylistService(AbstractFernService):
     """
-    AbstractPlaylistCrudService is an abstract class containing the methods that your
-    PlaylistCrudService implementation should implement.
+    AbstractPlaylistService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -126,7 +125,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.post(
             path="/v2/playlist/{service_param}/create",
             response_model=Playlist,
-            description=AbstractPlaylistCrudService.create_playlist.__doc__,
+            description=AbstractPlaylistService.create_playlist.__doc__,
             **get_route_args(cls.create_playlist, default_tag="playlist"),
         )(wrapper)
 
@@ -186,7 +185,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.get(
             path="/v2/playlist/{service_param}/all",
             response_model=typing.List[Playlist],
-            description=AbstractPlaylistCrudService.get_playlists.__doc__,
+            description=AbstractPlaylistService.get_playlists.__doc__,
             **get_route_args(cls.get_playlists, default_tag="playlist"),
         )(wrapper)
 
@@ -226,7 +225,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.get(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=Playlist,
-            description=AbstractPlaylistCrudService.get_playlist.__doc__,
+            description=AbstractPlaylistService.get_playlist.__doc__,
             **get_route_args(cls.get_playlist, default_tag="playlist"),
         )(wrapper)
 
@@ -270,7 +269,7 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.put(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=typing.Optional[Playlist],
-            description=AbstractPlaylistCrudService.update_playlist.__doc__,
+            description=AbstractPlaylistService.update_playlist.__doc__,
             **get_route_args(cls.update_playlist, default_tag="playlist"),
         )(wrapper)
 
@@ -310,6 +309,6 @@ class AbstractPlaylistCrudService(AbstractFernService):
         router.delete(
             path="/v2/playlist/{service_param}/{playlist_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            description=AbstractPlaylistCrudService.delete_playlist.__doc__,
+            description=AbstractPlaylistService.delete_playlist.__doc__,
             **get_route_args(cls.delete_playlist, default_tag="playlist"),
         )(wrapper)

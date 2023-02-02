@@ -209,97 +209,101 @@ snapshots['test_fastapi filepaths'] = [
     'resources/sysprop/service/__init__.py',
     'resources/sysprop/service/service.py',
     'resources/v_2/__init__.py',
-    'resources/v_2/problem/__init__.py',
-    'resources/v_2/problem/service/__init__.py',
-    'resources/v_2/problem/service/service.py',
-    'resources/v_2/problem/types/__init__.py',
-    'resources/v_2/problem/types/assert_correctness_check.py',
-    'resources/v_2/problem/types/basic_custom_files.py',
-    'resources/v_2/problem/types/basic_test_case_template.py',
-    'resources/v_2/problem/types/create_problem_request_v_2.py',
-    'resources/v_2/problem/types/custom_files.py',
-    'resources/v_2/problem/types/deep_equality_correctness_check.py',
-    'resources/v_2/problem/types/default_provided_file.py',
-    'resources/v_2/problem/types/file_info_v_2.py',
-    'resources/v_2/problem/types/files.py',
-    'resources/v_2/problem/types/function_implementation.py',
-    'resources/v_2/problem/types/function_implementation_for_multiple_languages.py',
-    'resources/v_2/problem/types/function_signature.py',
-    'resources/v_2/problem/types/generated_files.py',
-    'resources/v_2/problem/types/get_basic_solution_file_request.py',
-    'resources/v_2/problem/types/get_basic_solution_file_response.py',
-    'resources/v_2/problem/types/get_function_signature_request.py',
-    'resources/v_2/problem/types/get_function_signature_response.py',
-    'resources/v_2/problem/types/get_generated_test_case_file_request.py',
-    'resources/v_2/problem/types/get_generated_test_case_template_file_request.py',
-    'resources/v_2/problem/types/lightweight_problem_info_v_2.py',
-    'resources/v_2/problem/types/non_void_function_definition.py',
-    'resources/v_2/problem/types/non_void_function_signature.py',
-    'resources/v_2/problem/types/parameter.py',
-    'resources/v_2/problem/types/parameter_id.py',
-    'resources/v_2/problem/types/problem_info_v_2.py',
-    'resources/v_2/problem/types/test_case_expects.py',
-    'resources/v_2/problem/types/test_case_function.py',
-    'resources/v_2/problem/types/test_case_id.py',
-    'resources/v_2/problem/types/test_case_implementation.py',
-    'resources/v_2/problem/types/test_case_implementation_description.py',
-    'resources/v_2/problem/types/test_case_implementation_description_board.py',
-    'resources/v_2/problem/types/test_case_implementation_reference.py',
-    'resources/v_2/problem/types/test_case_metadata.py',
-    'resources/v_2/problem/types/test_case_template.py',
-    'resources/v_2/problem/types/test_case_template_id.py',
-    'resources/v_2/problem/types/test_case_v_2.py',
-    'resources/v_2/problem/types/test_case_with_actual_result_implementation.py',
-    'resources/v_2/problem/types/void_function_definition.py',
-    'resources/v_2/problem/types/void_function_definition_that_takes_actual_result.py',
-    'resources/v_2/problem/types/void_function_signature.py',
-    'resources/v_2/problem/types/void_function_signature_that_takes_actual_result.py',
-    'resources/v_2/v_3/__init__.py',
-    'resources/v_2/v_3/problem/__init__.py',
-    'resources/v_2/v_3/problem/service/__init__.py',
-    'resources/v_2/v_3/problem/service/service.py',
-    'resources/v_2/v_3/problem/types/__init__.py',
-    'resources/v_2/v_3/problem/types/assert_correctness_check.py',
-    'resources/v_2/v_3/problem/types/basic_custom_files.py',
-    'resources/v_2/v_3/problem/types/basic_test_case_template.py',
-    'resources/v_2/v_3/problem/types/create_problem_request_v_2.py',
-    'resources/v_2/v_3/problem/types/custom_files.py',
-    'resources/v_2/v_3/problem/types/deep_equality_correctness_check.py',
-    'resources/v_2/v_3/problem/types/default_provided_file.py',
-    'resources/v_2/v_3/problem/types/file_info_v_2.py',
-    'resources/v_2/v_3/problem/types/files.py',
-    'resources/v_2/v_3/problem/types/function_implementation.py',
-    'resources/v_2/v_3/problem/types/function_implementation_for_multiple_languages.py',
-    'resources/v_2/v_3/problem/types/function_signature.py',
-    'resources/v_2/v_3/problem/types/generated_files.py',
-    'resources/v_2/v_3/problem/types/get_basic_solution_file_request.py',
-    'resources/v_2/v_3/problem/types/get_basic_solution_file_response.py',
-    'resources/v_2/v_3/problem/types/get_function_signature_request.py',
-    'resources/v_2/v_3/problem/types/get_function_signature_response.py',
-    'resources/v_2/v_3/problem/types/get_generated_test_case_file_request.py',
-    'resources/v_2/v_3/problem/types/get_generated_test_case_template_file_request.py',
-    'resources/v_2/v_3/problem/types/lightweight_problem_info_v_2.py',
-    'resources/v_2/v_3/problem/types/non_void_function_definition.py',
-    'resources/v_2/v_3/problem/types/non_void_function_signature.py',
-    'resources/v_2/v_3/problem/types/parameter.py',
-    'resources/v_2/v_3/problem/types/parameter_id.py',
-    'resources/v_2/v_3/problem/types/problem_info_v_2.py',
-    'resources/v_2/v_3/problem/types/test_case_expects.py',
-    'resources/v_2/v_3/problem/types/test_case_function.py',
-    'resources/v_2/v_3/problem/types/test_case_id.py',
-    'resources/v_2/v_3/problem/types/test_case_implementation.py',
-    'resources/v_2/v_3/problem/types/test_case_implementation_description.py',
-    'resources/v_2/v_3/problem/types/test_case_implementation_description_board.py',
-    'resources/v_2/v_3/problem/types/test_case_implementation_reference.py',
-    'resources/v_2/v_3/problem/types/test_case_metadata.py',
-    'resources/v_2/v_3/problem/types/test_case_template.py',
-    'resources/v_2/v_3/problem/types/test_case_template_id.py',
-    'resources/v_2/v_3/problem/types/test_case_v_2.py',
-    'resources/v_2/v_3/problem/types/test_case_with_actual_result_implementation.py',
-    'resources/v_2/v_3/problem/types/void_function_definition.py',
-    'resources/v_2/v_3/problem/types/void_function_definition_that_takes_actual_result.py',
-    'resources/v_2/v_3/problem/types/void_function_signature.py',
-    'resources/v_2/v_3/problem/types/void_function_signature_that_takes_actual_result.py',
+    'resources/v_2/resources/__init__.py',
+    'resources/v_2/resources/problem/__init__.py',
+    'resources/v_2/resources/problem/service/__init__.py',
+    'resources/v_2/resources/problem/service/service.py',
+    'resources/v_2/resources/problem/types/__init__.py',
+    'resources/v_2/resources/problem/types/assert_correctness_check.py',
+    'resources/v_2/resources/problem/types/basic_custom_files.py',
+    'resources/v_2/resources/problem/types/basic_test_case_template.py',
+    'resources/v_2/resources/problem/types/create_problem_request_v_2.py',
+    'resources/v_2/resources/problem/types/custom_files.py',
+    'resources/v_2/resources/problem/types/deep_equality_correctness_check.py',
+    'resources/v_2/resources/problem/types/default_provided_file.py',
+    'resources/v_2/resources/problem/types/file_info_v_2.py',
+    'resources/v_2/resources/problem/types/files.py',
+    'resources/v_2/resources/problem/types/function_implementation.py',
+    'resources/v_2/resources/problem/types/function_implementation_for_multiple_languages.py',
+    'resources/v_2/resources/problem/types/function_signature.py',
+    'resources/v_2/resources/problem/types/generated_files.py',
+    'resources/v_2/resources/problem/types/get_basic_solution_file_request.py',
+    'resources/v_2/resources/problem/types/get_basic_solution_file_response.py',
+    'resources/v_2/resources/problem/types/get_function_signature_request.py',
+    'resources/v_2/resources/problem/types/get_function_signature_response.py',
+    'resources/v_2/resources/problem/types/get_generated_test_case_file_request.py',
+    'resources/v_2/resources/problem/types/get_generated_test_case_template_file_request.py',
+    'resources/v_2/resources/problem/types/lightweight_problem_info_v_2.py',
+    'resources/v_2/resources/problem/types/non_void_function_definition.py',
+    'resources/v_2/resources/problem/types/non_void_function_signature.py',
+    'resources/v_2/resources/problem/types/parameter.py',
+    'resources/v_2/resources/problem/types/parameter_id.py',
+    'resources/v_2/resources/problem/types/problem_info_v_2.py',
+    'resources/v_2/resources/problem/types/test_case_expects.py',
+    'resources/v_2/resources/problem/types/test_case_function.py',
+    'resources/v_2/resources/problem/types/test_case_id.py',
+    'resources/v_2/resources/problem/types/test_case_implementation.py',
+    'resources/v_2/resources/problem/types/test_case_implementation_description.py',
+    'resources/v_2/resources/problem/types/test_case_implementation_description_board.py',
+    'resources/v_2/resources/problem/types/test_case_implementation_reference.py',
+    'resources/v_2/resources/problem/types/test_case_metadata.py',
+    'resources/v_2/resources/problem/types/test_case_template.py',
+    'resources/v_2/resources/problem/types/test_case_template_id.py',
+    'resources/v_2/resources/problem/types/test_case_v_2.py',
+    'resources/v_2/resources/problem/types/test_case_with_actual_result_implementation.py',
+    'resources/v_2/resources/problem/types/void_function_definition.py',
+    'resources/v_2/resources/problem/types/void_function_definition_that_takes_actual_result.py',
+    'resources/v_2/resources/problem/types/void_function_signature.py',
+    'resources/v_2/resources/problem/types/void_function_signature_that_takes_actual_result.py',
+    'resources/v_2/resources/v_3/__init__.py',
+    'resources/v_2/resources/v_3/resources/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/service/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/service/service.py',
+    'resources/v_2/resources/v_3/resources/problem/types/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/types/assert_correctness_check.py',
+    'resources/v_2/resources/v_3/resources/problem/types/basic_custom_files.py',
+    'resources/v_2/resources/v_3/resources/problem/types/basic_test_case_template.py',
+    'resources/v_2/resources/v_3/resources/problem/types/create_problem_request_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/types/custom_files.py',
+    'resources/v_2/resources/v_3/resources/problem/types/deep_equality_correctness_check.py',
+    'resources/v_2/resources/v_3/resources/problem/types/default_provided_file.py',
+    'resources/v_2/resources/v_3/resources/problem/types/file_info_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/types/files.py',
+    'resources/v_2/resources/v_3/resources/problem/types/function_implementation.py',
+    'resources/v_2/resources/v_3/resources/problem/types/function_implementation_for_multiple_languages.py',
+    'resources/v_2/resources/v_3/resources/problem/types/function_signature.py',
+    'resources/v_2/resources/v_3/resources/problem/types/generated_files.py',
+    'resources/v_2/resources/v_3/resources/problem/types/get_basic_solution_file_request.py',
+    'resources/v_2/resources/v_3/resources/problem/types/get_basic_solution_file_response.py',
+    'resources/v_2/resources/v_3/resources/problem/types/get_function_signature_request.py',
+    'resources/v_2/resources/v_3/resources/problem/types/get_function_signature_response.py',
+    'resources/v_2/resources/v_3/resources/problem/types/get_generated_test_case_file_request.py',
+    'resources/v_2/resources/v_3/resources/problem/types/get_generated_test_case_template_file_request.py',
+    'resources/v_2/resources/v_3/resources/problem/types/lightweight_problem_info_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/types/non_void_function_definition.py',
+    'resources/v_2/resources/v_3/resources/problem/types/non_void_function_signature.py',
+    'resources/v_2/resources/v_3/resources/problem/types/parameter.py',
+    'resources/v_2/resources/v_3/resources/problem/types/parameter_id.py',
+    'resources/v_2/resources/v_3/resources/problem/types/problem_info_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_expects.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_function.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_id.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_implementation.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_implementation_description.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_implementation_description_board.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_implementation_reference.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_metadata.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_template.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_template_id.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/types/test_case_with_actual_result_implementation.py',
+    'resources/v_2/resources/v_3/resources/problem/types/void_function_definition.py',
+    'resources/v_2/resources/v_3/resources/problem/types/void_function_definition_that_takes_actual_result.py',
+    'resources/v_2/resources/v_3/resources/problem/types/void_function_signature.py',
+    'resources/v_2/resources/v_3/resources/problem/types/void_function_signature_that_takes_actual_result.py',
+    'resources/v_2/service/__init__.py',
+    'resources/v_2/service/service.py',
     'security.py'
 ]
 
@@ -637,186 +641,194 @@ snapshots['test_fastapi resources_sysprop_service_service'] = FileSnapshot('snap
 
 snapshots['test_fastapi resources_v_2___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2___init__.py')
 
-snapshots['test_fastapi resources_v_2_problem___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem___init__.py')
+snapshots['test_fastapi resources_v_2_resources___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources___init__.py')
 
-snapshots['test_fastapi resources_v_2_problem_service___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_service___init__.py')
+snapshots['test_fastapi resources_v_2_resources_problem___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem___init__.py')
 
-snapshots['test_fastapi resources_v_2_problem_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_service_service.py')
+snapshots['test_fastapi resources_v_2_resources_problem_service___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_service___init__.py')
 
-snapshots['test_fastapi resources_v_2_problem_types___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types___init__.py')
+snapshots['test_fastapi resources_v_2_resources_problem_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_service_service.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_assert_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_assert_correctness_check.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types___init__.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_basic_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_basic_custom_files.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_assert_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_assert_correctness_check.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_basic_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_basic_test_case_template.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_basic_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_basic_custom_files.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_create_problem_request_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_create_problem_request_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_basic_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_basic_test_case_template.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_custom_files.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_create_problem_request_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_create_problem_request_v_2.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_deep_equality_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_deep_equality_correctness_check.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_custom_files.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_default_provided_file'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_default_provided_file.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_deep_equality_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_deep_equality_correctness_check.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_file_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_file_info_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_default_provided_file'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_default_provided_file.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_files.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_file_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_file_info_v_2.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_function_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_function_implementation.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_files.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_function_implementation_for_multiple_languages.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_function_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_function_implementation.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_function_signature.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_function_implementation_for_multiple_languages.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_generated_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_generated_files.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_function_signature.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_get_basic_solution_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_get_basic_solution_file_request.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_generated_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_generated_files.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_get_basic_solution_file_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_get_basic_solution_file_response.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_get_basic_solution_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_get_basic_solution_file_request.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_get_function_signature_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_get_function_signature_request.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_get_basic_solution_file_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_get_basic_solution_file_response.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_get_function_signature_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_get_function_signature_response.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_get_function_signature_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_get_function_signature_request.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_get_generated_test_case_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_get_generated_test_case_file_request.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_get_function_signature_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_get_function_signature_response.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_get_generated_test_case_template_file_request.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_get_generated_test_case_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_get_generated_test_case_file_request.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_lightweight_problem_info_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_get_generated_test_case_template_file_request.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_non_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_non_void_function_definition.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_lightweight_problem_info_v_2.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_non_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_non_void_function_signature.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_non_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_non_void_function_definition.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_parameter'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_parameter.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_non_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_non_void_function_signature.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_parameter_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_parameter_id.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_parameter'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_parameter.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_problem_info_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_parameter_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_parameter_id.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_expects'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_expects.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_problem_info_v_2.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_function'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_function.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_expects'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_expects.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_id.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_function'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_function.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_implementation.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_id.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_implementation_description'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_implementation_description.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_implementation.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_implementation_description_board'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_implementation_description_board.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_implementation_description'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_implementation_description.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_implementation_reference'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_implementation_reference.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_implementation_description_board'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_implementation_description_board.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_metadata'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_metadata.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_implementation_reference'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_implementation_reference.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_template.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_metadata'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_metadata.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_template_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_template_id.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_template.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_template_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_template_id.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_test_case_with_actual_result_implementation.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_v_2.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_void_function_definition.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_test_case_with_actual_result_implementation.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_void_function_definition_that_takes_actual_result.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_void_function_definition.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_void_function_signature.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_void_function_definition_that_takes_actual_result.py')
 
-snapshots['test_fastapi resources_v_2_problem_types_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_problem_types_void_function_signature_that_takes_actual_result.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_void_function_signature.py')
 
-snapshots['test_fastapi resources_v_2_v_3___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3___init__.py')
+snapshots['test_fastapi resources_v_2_resources_problem_types_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_problem_types_void_function_signature_that_takes_actual_result.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem___init__.py')
+snapshots['test_fastapi resources_v_2_resources_v_3___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3___init__.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_service___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_service___init__.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources___init__.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_service_service.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem___init__.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types___init__.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_service___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_service___init__.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_assert_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_assert_correctness_check.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_service_service.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_basic_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_basic_custom_files.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types___init__.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_basic_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_basic_test_case_template.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_assert_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_assert_correctness_check.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_create_problem_request_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_create_problem_request_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_basic_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_basic_custom_files.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_custom_files.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_basic_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_basic_test_case_template.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_deep_equality_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_deep_equality_correctness_check.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_create_problem_request_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_create_problem_request_v_2.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_default_provided_file'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_default_provided_file.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_custom_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_custom_files.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_file_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_file_info_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_deep_equality_correctness_check'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_deep_equality_correctness_check.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_files.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_default_provided_file'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_default_provided_file.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_function_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_function_implementation.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_file_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_file_info_v_2.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_function_implementation_for_multiple_languages.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_files.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_function_signature.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_function_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_function_implementation.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_generated_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_generated_files.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_function_implementation_for_multiple_languages.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_get_basic_solution_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_get_basic_solution_file_request.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_function_signature.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_get_basic_solution_file_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_get_basic_solution_file_response.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_generated_files'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_generated_files.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_get_function_signature_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_get_function_signature_request.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_basic_solution_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_basic_solution_file_request.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_get_function_signature_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_get_function_signature_response.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_basic_solution_file_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_basic_solution_file_response.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_get_generated_test_case_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_get_generated_test_case_file_request.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_function_signature_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_function_signature_request.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_get_generated_test_case_template_file_request.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_function_signature_response'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_function_signature_response.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_lightweight_problem_info_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_generated_test_case_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_generated_test_case_file_request.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_non_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_non_void_function_definition.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_get_generated_test_case_template_file_request.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_non_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_non_void_function_signature.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_lightweight_problem_info_v_2.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_parameter'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_parameter.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_non_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_non_void_function_definition.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_parameter_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_parameter_id.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_non_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_non_void_function_signature.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_problem_info_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_parameter'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_parameter.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_expects'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_expects.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_parameter_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_parameter_id.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_function'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_function.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_problem_info_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_problem_info_v_2.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_id.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_expects'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_expects.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_implementation.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_function'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_function.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_implementation_description'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_implementation_description.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_id.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_implementation_description_board'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_implementation_description_board.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_implementation_reference'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_implementation_reference.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation_description'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation_description.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_metadata'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_metadata.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation_description_board'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation_description_board.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_template.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation_reference'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_implementation_reference.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_template_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_template_id.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_metadata'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_metadata.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_v_2.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_template'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_template.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_test_case_with_actual_result_implementation.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_template_id'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_template_id.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_void_function_definition.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_v_2'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_v_2.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_void_function_definition_that_takes_actual_result.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_test_case_with_actual_result_implementation.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_void_function_signature.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_definition'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_definition.py')
 
-snapshots['test_fastapi resources_v_2_v_3_problem_types_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_v_3_problem_types_void_function_signature_that_takes_actual_result.py')
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_definition_that_takes_actual_result.py')
+
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_signature'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_signature.py')
+
+snapshots['test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_resources_v_3_resources_problem_types_void_function_signature_that_takes_actual_result.py')
+
+snapshots['test_fastapi resources_v_2_service___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_service___init__.py')
+
+snapshots['test_fastapi resources_v_2_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_service_service.py')
 
 snapshots['test_fastapi security'] = FileSnapshot('snap_test_fastapi/test_fastapi security.py')

@@ -17,10 +17,9 @@ from ..types.execution_session_response import ExecutionSessionResponse
 from ..types.get_execution_session_state_response import GetExecutionSessionStateResponse
 
 
-class AbstractExecutionSesssionManagementService(AbstractFernService):
+class AbstractSubmissionService(AbstractFernService):
     """
-    AbstractExecutionSesssionManagementService is an abstract class containing the methods that your
-    ExecutionSesssionManagementService implementation should implement.
+    AbstractSubmissionService is an abstract class containing the methods that you should implement.
 
     Each method is associated with an API route, which will be registered
     with FastAPI when you register your implementation using Fern's register()
@@ -96,7 +95,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.post(
             path="/sessions/create-session/{language}",
             response_model=ExecutionSessionResponse,
-            description=AbstractExecutionSesssionManagementService.create_execution_session.__doc__,
+            description=AbstractSubmissionService.create_execution_session.__doc__,
             **get_route_args(cls.create_execution_session, default_tag="submission"),
         )(wrapper)
 
@@ -132,7 +131,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.get(
             path="/sessions/{session_id}",
             response_model=typing.Optional[ExecutionSessionResponse],
-            description=AbstractExecutionSesssionManagementService.get_execution_session.__doc__,
+            description=AbstractSubmissionService.get_execution_session.__doc__,
             **get_route_args(cls.get_execution_session, default_tag="submission"),
         )(wrapper)
 
@@ -168,7 +167,7 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.delete(
             path="/sessions/stop/{session_id}",
             status_code=starlette.status.HTTP_204_NO_CONTENT,
-            description=AbstractExecutionSesssionManagementService.stop_execution_session.__doc__,
+            description=AbstractSubmissionService.stop_execution_session.__doc__,
             **get_route_args(cls.stop_execution_session, default_tag="submission"),
         )(wrapper)
 
@@ -202,6 +201,6 @@ class AbstractExecutionSesssionManagementService(AbstractFernService):
         router.get(
             path="/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
-            description=AbstractExecutionSesssionManagementService.get_execution_sessions_state.__doc__,
+            description=AbstractSubmissionService.get_execution_sessions_state.__doc__,
             **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),
         )(wrapper)

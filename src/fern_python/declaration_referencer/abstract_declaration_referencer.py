@@ -46,13 +46,28 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         *,
         fern_filepath: ir_types.FernFilepath,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
-        fern_filepath_parts = fern_filepath.get_as_list()
-        return self._filepath_creator.generate_filepath_prefix() + tuple(
+        parts = self._filepath_creator.generate_filepath_prefix()
+        for fern_filepath_part in fern_filepath.package_path:
+            parts += self._get_directories_for_fern_filepath_part(
+                fern_filepath_part=fern_filepath_part,
+                export_strategy=ExportStrategy.EXPORT_AS_NAMESPACE,
+            )
+        if fern_filepath.file is not None:
+            parts += self._get_directories_for_fern_filepath_part(
+                fern_filepath_part=fern_filepath.file,
+                export_strategy=ExportStrategy.EXPORT_ALL,
+            )
+        return parts
+
+    def _get_directories_for_fern_filepath_part(
+        self,
+        *,
+        fern_filepath_part: ir_types.Name,
+        export_strategy: ExportStrategy,
+    ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
+        return (
             Filepath.DirectoryFilepathPart(
                 module_name=fern_filepath_part.snake_case.unsafe_name,
-                export_strategy=ExportStrategy.EXPORT_AS_NAMESPACE
-                if i < len(fern_filepath_parts) - 1
-                else ExportStrategy.EXPORT_ALL,
-            )
-            for i, fern_filepath_part in enumerate(fern_filepath_parts)
+                export_strategy=export_strategy,
+            ),
         )
