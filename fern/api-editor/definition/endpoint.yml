@@ -1,7 +1,0 @@
-imports:
-  commons: commons.yml
-types:
-  Endpoint:
-    properties:
-      endpointId: commons.EndpointId
-      endpointName: string
