@@ -1,9 +1,0 @@
-types:
-  ApiId: string
-  EndpointId: string
-  PackageId: string
-  TypeId: string
-  ErrorId: string
-  ObjectExtensionId: string
-  ObjectPropertyId: string
-  UnionMemberId: string

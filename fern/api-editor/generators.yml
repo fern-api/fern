@@ -1,8 +1,0 @@
-default-group: server
-groups:
-  server:
-    generators:
-      - name: fernapi/fern-typescript-sdk
-        version: 0.0.249
-        config:
-          useBrandedStringAliases: true
