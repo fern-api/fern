@@ -1,0 +1,34 @@
+services: {}
+
+types:
+  ApiId: string
+  Api:
+    properties:
+      id: ApiId
+      displayName: string
+      definition: ApiDefinition
+
+  ApiDefinition:
+    properties:
+      services: list<Service>
+
+  Service:
+    properties:
+      endpoints: list<Endpoint>
+
+  Endpoint:
+    properties:
+      path: EndpointPath
+
+  EndpointPath:
+    properties:
+      head: string
+      pathParameters: EndpointPathParameter
+
+  EndpointPathParameter:
+    properties:
+      key: string
+      tail: string
+
+  TypeReference:
+    union:
