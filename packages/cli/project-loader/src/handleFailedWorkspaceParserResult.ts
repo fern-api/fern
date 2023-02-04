@@ -33,7 +33,7 @@ function handleWorkspaceParserFailureForFile({
             if (failure.error instanceof YAMLException) {
                 logger.error(
                     formatLog({
-                        title: `Failed to parse YAML: ${failure.error.reason}`,
+                        title: `Failed to parse ${relativeFilepath}: ${failure.error.reason}`,
                         subtitle: failure.error.mark.snippet,
                     })
                 );
