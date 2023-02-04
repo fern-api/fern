@@ -84,7 +84,8 @@ function convertHttpEndpoint({
     security: OpenAPIV3.SecurityRequirementObject[];
     environments: EnvironmentsConfig | undefined;
 }): ConvertedHttpEndpoint {
-    const fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
+    let fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
+    fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
         convertPathParameter({ pathParameter, examples: httpEndpoint.examples })

@@ -46,7 +46,7 @@ services:
       auth: false
       headers:
         x-service-header: string
-      base-path: /
+      base-path: ""
       endpoints:
         createPost:
           docs: Creates a blog post and returns blog post id.
