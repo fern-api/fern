@@ -30,7 +30,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/login": "workspace:*",
-    "@fern-api/openapi-converter": "workspace:*",
+    "@fern-api/openapi-migrator": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-formatter": "workspace:*",

@@ -19,7 +19,7 @@
     { "path": "../cli/init" },
     { "path": "../cli/logger" },
     { "path": "../cli/login" },
-    { "path": "../cli/openapi-converter" },
+    { "path": "../cli/openapi-migrator" },
     { "path": "../cli/posthog-manager" },
     { "path": "../cli/project-loader" },
     { "path": "../cli/semver-utils" },

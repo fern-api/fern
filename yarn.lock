@@ -3375,7 +3375,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
-    "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/openapi-migrator": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
@@ -3646,7 +3646,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/login": "workspace:*"
-    "@fern-api/openapi-converter": "workspace:*"
+    "@fern-api/openapi-migrator": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
@@ -3877,9 +3877,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/openapi-converter@workspace:*, @fern-api/openapi-converter@workspace:packages/cli/openapi-converter":
+"@fern-api/openapi-migrator@workspace:*, @fern-api/openapi-migrator@workspace:packages/cli/openapi-migrator":
   version: 0.0.0-use.local
-  resolution: "@fern-api/openapi-converter@workspace:packages/cli/openapi-converter"
+  resolution: "@fern-api/openapi-migrator@workspace:packages/cli/openapi-migrator"
   dependencies:
     "@apidevtools/swagger-parser": ^10.1.0
     "@babel/core": ^7.19.1
