@@ -89,8 +89,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/login"\
       },\
       {\
-        "name": "@fern-api/openapi-converter",\
-        "reference": "workspace:packages/cli/openapi-converter"\
+        "name": "@fern-api/openapi-migrator",\
+        "reference": "workspace:packages/cli/openapi-migrator"\
       },\
       {\
         "name": "@fern-api/posthog-manager",\
@@ -247,7 +247,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/logging-execa", ["workspace:packages/commons/logging-execa"]],\
       ["@fern-api/login", ["workspace:packages/cli/login"]],\
       ["@fern-api/manage-generator", ["workspace:packages/cli/config-management/manage-generator"]],\
-      ["@fern-api/openapi-converter", ["workspace:packages/cli/openapi-converter"]],\
+      ["@fern-api/openapi-migrator", ["workspace:packages/cli/openapi-migrator"]],\
       ["@fern-api/posthog-manager", ["workspace:packages/cli/posthog-manager"]],\
       ["@fern-api/project-configuration", ["workspace:packages/cli/config-management/project-configuration"]],\
       ["@fern-api/project-loader", ["workspace:packages/cli/project-loader"]],\
@@ -576,17 +576,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:637b206e676cf5a4479a0274aa926af44aaf28bb3b1c2d39d222f254b78b207ee74e5d7921878cb0af259533be924df9a9bfd0136bfa3298b72443235f19f54c#npm:10.1.0", {\
-          "packageLocation": "./.yarn/__virtual__/@apidevtools-swagger-parser-virtual-1829782613/0/cache/@apidevtools-swagger-parser-npm-10.1.0-97318b3580-c7c923755b.zip/node_modules/@apidevtools/swagger-parser/",\
+        ["virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/@apidevtools-swagger-parser-virtual-fa022df861/0/cache/@apidevtools-swagger-parser-npm-10.1.0-97318b3580-c7c923755b.zip/node_modules/@apidevtools/swagger-parser/",\
           "packageDependencies": [\
-            ["@apidevtools/swagger-parser", "virtual:637b206e676cf5a4479a0274aa926af44aaf28bb3b1c2d39d222f254b78b207ee74e5d7921878cb0af259533be924df9a9bfd0136bfa3298b72443235f19f54c#npm:10.1.0"],\
+            ["@apidevtools/swagger-parser", "virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0"],\
             ["@apidevtools/json-schema-ref-parser", "npm:9.0.6"],\
             ["@apidevtools/openapi-schemas", "npm:2.1.0"],\
             ["@apidevtools/swagger-methods", "npm:3.0.2"],\
             ["@jsdevtools/ono", "npm:7.1.3"],\
             ["@types/openapi-types", null],\
             ["ajv", "npm:8.12.0"],\
-            ["ajv-draft-04", "virtual:18297826138202c999c974ca8b6765a7abdaaed9501ed07d01a203a0affe7efa240e31beffb3c68fbddd612b830e3714b4053a8f1b157bdfafe48b262c7d5465#npm:1.0.0"],\
+            ["ajv-draft-04", "virtual:fa022df8614bec51d8f43e6f3fd5ee80b2a4e83406af69cba4440e0cd1fd84fcca939926fa5082e2fc1b5da20ef835dee46d0bb58e115f0b422aaa5b4e36170d#npm:1.0.0"],\
             ["call-me-maybe", "npm:1.0.2"],\
             ["openapi-types", "npm:12.1.0"]\
           ],\
@@ -8077,7 +8077,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
-            ["@fern-api/openapi-converter", "workspace:packages/cli/openapi-converter"],\
+            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
             ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
@@ -8368,7 +8368,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
-            ["@fern-api/openapi-converter", "workspace:packages/cli/openapi-converter"],\
+            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
@@ -8618,12 +8618,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/openapi-converter", [\
-        ["workspace:packages/cli/openapi-converter", {\
-          "packageLocation": "./packages/cli/openapi-converter/",\
+      ["@fern-api/openapi-migrator", [\
+        ["workspace:packages/cli/openapi-migrator", {\
+          "packageLocation": "./packages/cli/openapi-migrator/",\
           "packageDependencies": [\
-            ["@fern-api/openapi-converter", "workspace:packages/cli/openapi-converter"],\
-            ["@apidevtools/swagger-parser", "virtual:637b206e676cf5a4479a0274aa926af44aaf28bb3b1c2d39d222f254b78b207ee74e5d7921878cb0af259533be924df9a9bfd0136bfa3298b72443235f19f54c#npm:10.1.0"],\
+            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
+            ["@apidevtools/swagger-parser", "virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
@@ -12875,10 +12875,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:18297826138202c999c974ca8b6765a7abdaaed9501ed07d01a203a0affe7efa240e31beffb3c68fbddd612b830e3714b4053a8f1b157bdfafe48b262c7d5465#npm:1.0.0", {\
-          "packageLocation": "./.yarn/__virtual__/ajv-draft-04-virtual-1b60ba8796/0/cache/ajv-draft-04-npm-1.0.0-6fc962dbab-3f11fa0e7f.zip/node_modules/ajv-draft-04/",\
+        ["virtual:fa022df8614bec51d8f43e6f3fd5ee80b2a4e83406af69cba4440e0cd1fd84fcca939926fa5082e2fc1b5da20ef835dee46d0bb58e115f0b422aaa5b4e36170d#npm:1.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/ajv-draft-04-virtual-e52ef9386e/0/cache/ajv-draft-04-npm-1.0.0-6fc962dbab-3f11fa0e7f.zip/node_modules/ajv-draft-04/",\
           "packageDependencies": [\
-            ["ajv-draft-04", "virtual:18297826138202c999c974ca8b6765a7abdaaed9501ed07d01a203a0affe7efa240e31beffb3c68fbddd612b830e3714b4053a8f1b157bdfafe48b262c7d5465#npm:1.0.0"],\
+            ["ajv-draft-04", "virtual:fa022df8614bec51d8f43e6f3fd5ee80b2a4e83406af69cba4440e0cd1fd84fcca939926fa5082e2fc1b5da20ef835dee46d0bb58e115f0b422aaa5b4e36170d#npm:1.0.0"],\
             ["@types/ajv", null],\
             ["ajv", "npm:8.12.0"]\
           ],\
