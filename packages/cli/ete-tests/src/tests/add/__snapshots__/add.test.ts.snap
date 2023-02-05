@@ -26,36 +26,39 @@ types:
     properties:
       id: MovieId
       title: string
-      rating:
+      rating: 
         type: double
         docs: The rating scale is one to five stars
 
-  CreateMovieRequest:
+  CreateMovieRequest: 
     properties:
       title: string
-      rating: double
+      rating: double 
 
-service:
-  auth: false
-  base-path: /movies
-  endpoints:
-    # Here's an HTTP endpoint
+services:
+  http:
+  
+    MoviesService:
+      auth: false
+      base-path: /movies
+      endpoints:
 
-    createMovie:
-      docs: Add a movie to the database
-      method: POST
-      path: /create-movie
-      request: CreateMovieRequest
-      response: MovieId
+        # Here's an HTTP endpoint
+        createMovie:
+          docs: Add a movie to the database
+          method: POST
+          path: /create-movie
+          request: CreateMovieRequest
+          response: MovieId
 
-    getMovie:
-      method: GET
-      path: /{movieId}
-      path-parameters:
-        movieId: MovieId
-      response: Movie
-      errors:
-        - MovieDoesNotExistError
+        getMovie:
+          method: GET
+          path: /{movieId}
+          path-parameters:
+            movieId: MovieId
+          response: Movie
+          errors:
+            - MovieDoesNotExistError
 
 errors:
   MovieDoesNotExistError:
@@ -70,20 +73,7 @@ errors:
             "type": "directory",
           },
           {
-            "contents": "default-group: external
-groups:
-  external:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: 0.0.132
-      - name: fernapi/fern-typescript-sdk
-        version: 0.0.255
-      - name: fernapi/fern-postman
-        version: 0.0.25
-      - name: fernapi/fern-openapi
-        version: 0.0.11
-        config:
-          format: yaml
+            "contents": "groups: {}
 ",
             "name": "generators.yml",
             "type": "file",
