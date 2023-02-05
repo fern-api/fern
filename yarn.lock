@@ -3376,6 +3376,7 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
     "@fern-api/openapi-migrator": "workspace:*"
+    "@fern-api/openapi-transformer": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
@@ -3903,7 +3904,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/openapi-transformer@workspace:packages/cli/openapi-transformer":
+"@fern-api/openapi-transformer@workspace:*, @fern-api/openapi-transformer@workspace:packages/cli/openapi-transformer":
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-transformer@workspace:packages/cli/openapi-transformer"
   dependencies:
