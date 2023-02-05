@@ -1,27 +1,19 @@
-import { TaskContext } from "@fern-api/task-context";
+import { OpenAPIWorkspace } from "@fern-api/workspace-loader";
 import { Document, RuleDefinition, Spectral } from "@stoplight/spectral-core";
 import { Json as JsonParser, Yaml as YamlParser } from "@stoplight/spectral-parsers";
-import { OpenAPIV3 } from "openapi-types";
 import { getAllRules } from "./rules/getAllRules";
 import { RuleViolation, SpectralRule } from "./rules/Rule";
 
-export interface LintArgs {
-    context: TaskContext;
-    document: OpenAPIV3.Document;
-    rawContents: string;
-    format: "yaml" | "json";
-}
-
-export async function lint(args: LintArgs): Promise<RuleViolation[]> {
+export async function validateOpenAPIWorkspace(workspace: OpenAPIWorkspace): Promise<RuleViolation[]> {
     const rules = getAllRules();
-    return await runSpectralRules(rules.spectralRules, args);
+    return await runSpectralRules(rules.spectralRules, workspace);
 }
 
-async function runSpectralRules(spectralRules: SpectralRule[], args: LintArgs): Promise<RuleViolation[]> {
+async function runSpectralRules(spectralRules: SpectralRule[], workspace: OpenAPIWorkspace): Promise<RuleViolation[]> {
     const document =
-        args.format === "json"
-            ? new Document(args.rawContents, JsonParser)
-            : new Document(args.rawContents, YamlParser);
+        workspace.definition.format === "json"
+            ? new Document(workspace.definition.contents, JsonParser)
+            : new Document(workspace.definition.contents, YamlParser);
     const spectral = new Spectral();
     spectral.setRuleset({
         rules: spectralRules.reduce<Record<string, RuleDefinition>>((acc, item) => {

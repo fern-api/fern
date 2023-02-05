@@ -14,7 +14,7 @@ import { getAllEnabledRules } from "./getAllRules";
 import { Rule, RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
-export async function validateWorkspace(workspace: FernWorkspace, logger: Logger): Promise<ValidationViolation[]> {
+export async function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): Promise<ValidationViolation[]> {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });
 }
 

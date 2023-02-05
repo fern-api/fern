@@ -4,7 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import stripAnsi from "strip-ansi";
 import { Rule } from "../Rule";
-import { runRulesOnWorkspace } from "../validateWorkspace";
+import { runRulesOnWorkspace } from "../validateFernWorkspace";
 import { ValidationViolation } from "../ValidationViolation";
 
 export declare namespace getViolationsForRule {
