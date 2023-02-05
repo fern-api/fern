@@ -1,1 +1,1 @@
-export const DEFAULT_GROUP_NAME = "external";
+export const DEFAULT_GROUP_NAME = "local";

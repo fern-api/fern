@@ -16,7 +16,7 @@ describe("addGenerator", () => {
 
         const expectedNewConfiguration: GeneratorsConfigurationSchema = {
             groups: {
-                external: {
+                local: {
                     generators: [
                         {
                             name: GeneratorName.JAVA,
@@ -33,7 +33,7 @@ describe("addGenerator", () => {
     it("fail if present", () => {
         const generatorsConfiguration: GeneratorsConfigurationSchema = {
             groups: {
-                external: {
+                local: {
                     generators: [
                         {
                             name: "fernapi/fern-typescript-sdk",

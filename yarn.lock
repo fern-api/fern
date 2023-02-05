@@ -3468,6 +3468,7 @@ __metadata:
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     esbuild: ^0.15.7
     eslint: ^8.26.0
