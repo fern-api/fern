@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import inquirer from "inquirer";
 import { startCase } from "lodash-es";
 import { setupDemo, SetupDemoArgs } from "./setupDemo";
@@ -45,6 +46,16 @@ export async function getSetupDemoArgs(): Promise<SetupDemoArgs> {
             message: "Github organization name",
             default: (answers: Partial<SetupDemoArgs>) =>
                 answers.orgId != null ? startCase(answers.orgId) : undefined,
+        },
+        {
+            type: "confirm",
+            name: "didCreateOrg",
+            message: (answers) =>
+                `Did you make the ${answers.orgId} repo in Github? ${chalk.dim(
+                    "https://github.com/account/organizations/new?plan=free"
+                )}`,
+            default: true,
+            validate: (answer) => answer === true,
         },
     ]);
 }

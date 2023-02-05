@@ -23,7 +23,6 @@ const TEMPLATE_OPENAPI_GITHUB_REPO = "template-openapi";
 export async function setupDemo(args: SetupDemoArgs): Promise<void> {
     console.log("Setting up demo...");
 
-    console.log(`Received args ${JSON.stringify(args)}`);
     // Step 1: Read Fern user token
     const fernUserToken = await getUserToken();
     if (fernUserToken == null) {
@@ -53,7 +52,7 @@ export async function setupDemo(args: SetupDemoArgs): Promise<void> {
 
     // Step 6: Create NodeJS Repo
     await createFromTemplateRepo(octokit, {
-        description: `Official Node.JS SDK for the ${args.orgDisplayName} API`,
+        description: `Official Node.js SDK for the ${args.orgDisplayName} API`,
         templateRepo: TEMPLATE_NODE_GITHUB_REPO,
         repo: `${args.orgId}-node`,
         owner: args.githubOrgId,
@@ -95,7 +94,7 @@ async function createFernOrg(args: SetupDemoArgs, venus: FernVenusApiClient): Pr
     const createOrgResponse = await venus.organization.create({
         organizationId: FernVenusApi.OrganizationId(args.orgId),
     });
-    if (!createOrgResponse.ok) {
+    if (!createOrgResponse.ok && createOrgResponse.error.error !== "OrganizationAlreadyExistsError") {
         throw new Error(`Failed to create org ${args.orgId}, ${JSON.stringify(createOrgResponse.error)}`);
     }
     console.log(`Successfully created organization ${args.orgId} in fern...`);
