@@ -26,7 +26,7 @@ async function runSpectralRules(spectralRules: SpectralRule[], workspace: OpenAP
         return {
             severity: "error",
             message: val.message,
-            breacrumbs: val.path.map((val) => val.toString()),
+            breadcrumbs: val.path.map((val) => val.toString()),
         };
     });
 }
