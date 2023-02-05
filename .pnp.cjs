@@ -8666,7 +8666,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@stoplight/spectral-core", "npm:1.16.1"],\
             ["@stoplight/spectral-functions", "npm:1.7.2"],\
             ["@stoplight/spectral-parsers", "npm:1.0.2"],\
-            ["@stoplight/types", "npm:13.9.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\

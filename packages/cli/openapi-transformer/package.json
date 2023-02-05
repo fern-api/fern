@@ -31,7 +31,6 @@
     "@stoplight/spectral-core": "^1.16.1",
     "@stoplight/spectral-functions": "^1.7.2",
     "@stoplight/spectral-parsers": "^1.0.2",
-    "@stoplight/types": "^13.9.0",
     "openapi-types": "^12.0.0"
   },
   "devDependencies": {
