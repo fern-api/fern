@@ -1,5 +1,5 @@
 import { ErrorResolver, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
@@ -19,7 +19,7 @@ export function validateResponse({
     exampleResolver: ExampleResolver;
     typeResolver: TypeResolver;
     file: FernFileContext;
-    workspace: Workspace;
+    workspace: FernWorkspace;
     errorResolver: ErrorResolver;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];

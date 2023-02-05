@@ -1,16 +1,16 @@
 import { entries } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { formatServiceFile } from "./formatServiceFile";
 
-export async function formatWorkspace({
+export async function formatFernWorkspace({
     workspace,
     context,
     shouldFix,
 }: {
-    workspace: Workspace;
+    workspace: FernWorkspace;
     context: TaskContext;
     shouldFix: boolean;
 }): Promise<void> {

@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { constructFernFileContext, ResolvedType, TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition } from "@fern-api/yaml-schema";
 import { RuleRunnerArgs } from "./Rule";
 import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
@@ -8,7 +8,7 @@ import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
 export class ComplexTypeDetector {
     private typeResolver: TypeResolver;
 
-    constructor(workspace: Workspace) {
+    constructor(workspace: FernWorkspace) {
         this.typeResolver = new TypeResolverImpl(workspace);
     }
 

@@ -3,11 +3,11 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { ServiceFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
-import { Workspace } from "../types/Workspace";
+import { FernWorkspace } from "../types/Workspace";
 import { getAllServiceFiles } from "./getAllServiceFiles";
 
 export async function visitAllServiceFiles(
-    workspace: Workspace,
+    workspace: FernWorkspace,
     visitor: (
         filepath: RelativeFilePath,
         serviceFile: ServiceFileSchema,

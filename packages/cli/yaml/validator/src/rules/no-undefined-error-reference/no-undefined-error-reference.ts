@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import { mapValues } from "lodash-es";
 import { Rule } from "../../Rule";
@@ -48,7 +48,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
     },
 };
 
-async function getErrorsByFilepath(workspace: Workspace) {
+async function getErrorsByFilepath(workspace: FernWorkspace) {
     const erorrsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
 
     await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {

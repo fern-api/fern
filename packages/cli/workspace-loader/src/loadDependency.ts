@@ -160,13 +160,22 @@ async function validateDependencyAndGetDefinition({
 
     // parse workspace
     context.logger.info("Parsing...");
-    const workspaceOfDependency = await loadWorkspace({
+    const loadDependencyWorkspaceResult = await loadWorkspace({
         absolutePathToWorkspace: pathToDependency,
         context,
         cliVersion: response.body.cliVersion,
     });
-    if (!workspaceOfDependency.didSucceed) {
-        context.failWithoutThrowing("Failed to parse dependency after downloading", workspaceOfDependency.failures);
+    if (!loadDependencyWorkspaceResult.didSucceed) {
+        context.failWithoutThrowing(
+            "Failed to parse dependency after downloading",
+            loadDependencyWorkspaceResult.failures
+        );
+        return undefined;
+    }
+
+    const workspaceOfDependency = loadDependencyWorkspaceResult.workspace;
+    if (workspaceOfDependency.type === "openapi") {
+        context.failWithoutThrowing("Dependency must be a fern workspace.");
         return undefined;
     }
 
@@ -177,15 +186,12 @@ async function validateDependencyAndGetDefinition({
         imports: noop,
         "display-name": noop,
         auth: (auth) => {
-            areRootApiFilesEquivalent &&= isEqual(
-                auth,
-                workspaceOfDependency.workspace.definition.rootApiFile.contents.auth
-            );
+            areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.definition.rootApiFile.contents.auth);
         },
         "auth-schemes": (auth) => {
             areRootApiFilesEquivalent &&= isEqual(
                 auth,
-                workspaceOfDependency.workspace.definition.rootApiFile.contents["auth-schemes"]
+                workspaceOfDependency.definition.rootApiFile.contents["auth-schemes"]
             );
         },
         docs: noop,
@@ -195,7 +201,7 @@ async function validateDependencyAndGetDefinition({
         "error-discrimination": (errorDiscrimination) => {
             areRootApiFilesEquivalent &&= isEqual(
                 errorDiscrimination,
-                workspaceOfDependency.workspace.definition.rootApiFile.contents["error-discrimination"]
+                workspaceOfDependency.definition.rootApiFile.contents["error-discrimination"]
             );
         },
         audiences: noop,
@@ -207,7 +213,7 @@ async function validateDependencyAndGetDefinition({
         return undefined;
     }
 
-    return workspaceOfDependency.workspace.definition;
+    return workspaceOfDependency.definition;
 }
 
 async function downloadDependency({

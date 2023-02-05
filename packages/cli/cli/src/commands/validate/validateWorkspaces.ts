@@ -1,6 +1,6 @@
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { validateWorkspaceAndLogIssues } from "./validateWorkspaceAndLogIssues";
+import { validateFernWorkspaceAndLogIssues } from "./validateFernWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     project,
@@ -12,7 +12,11 @@ export async function validateWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                await validateWorkspaceAndLogIssues(workspace, context);
+                if (workspace.type === "openapi") {
+                    context.failWithoutThrowing("Validating OpenAPI not currently supported.");
+                    return;
+                }
+                await validateFernWorkspaceAndLogIssues(workspace, context);
             });
         })
     );

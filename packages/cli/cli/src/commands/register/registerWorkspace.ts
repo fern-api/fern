@@ -35,6 +35,10 @@ export async function registerApiDefinitions({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                if (workspace.type === "openapi") {
+                    context.failWithoutThrowing("Registering from OpenAPI not currently supported.");
+                    return;
+                }
                 const registerApiResponse = await fiddle.definitionRegistry.registerUsingOrgToken({
                     apiId: FernFiddle.ApiId(workspace.definition.rootApiFile.contents.name),
                     version,

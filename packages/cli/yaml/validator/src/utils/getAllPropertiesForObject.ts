@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, getPropertyName, TypeResolver } from "@fern-api/ir-generator";
-import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { CASINGS_GENERATOR } from "./casingsGenerator";
 
@@ -40,7 +40,7 @@ export function getAllPropertiesForObject({
     objectDeclaration: RawSchemas.ObjectSchema;
     filepathOfDeclaration: RelativeFilePath;
     serviceFile: RawSchemas.ServiceFileSchema;
-    workspace: Workspace;
+    workspace: FernWorkspace;
     typeResolver: TypeResolver;
     // these are for recursive calls only
     path?: ObjectPropertyPath;

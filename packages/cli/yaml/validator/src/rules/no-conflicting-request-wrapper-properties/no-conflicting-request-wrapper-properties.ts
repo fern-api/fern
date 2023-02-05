@@ -6,7 +6,7 @@ import {
     getQueryParameterName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
@@ -100,7 +100,7 @@ function getRequestWrapperPropertiesByName({
     service: RawSchemas.HttpServiceSchema;
     relativeFilepath: RelativeFilePath;
     serviceFile: ServiceFileSchema;
-    workspace: Workspace;
+    workspace: FernWorkspace;
 }): Record<string, RequestWrapperProperty[]> {
     const nameToProperties: Record<string, RequestWrapperProperty[]> = {};
     const addProperty = (name: string, property: RequestWrapperProperty) => {

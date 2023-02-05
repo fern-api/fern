@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -23,7 +23,7 @@ export async function generateIntermediateRepresentation({
     generationLanguage,
     audiences,
 }: {
-    workspace: Workspace;
+    workspace: FernWorkspace;
     generationLanguage: Language | undefined;
     audiences: string[] | undefined;
 }): Promise<IntermediateRepresentation> {

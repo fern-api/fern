@@ -27,6 +27,10 @@ export async function getViolationsForRule({
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
     }
 
+    if (parseResult.workspace.type === "openapi") {
+        throw new Error("Expected fern workspace, but received openapi");
+    }
+
     const violations = await runRulesOnWorkspace({
         workspace: parseResult.workspace,
         logger: CONSOLE_LOGGER,

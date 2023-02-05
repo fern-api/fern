@@ -3,11 +3,11 @@ import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "@fern-api/generators-config
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
-import { validateWorkspaceAndLogIssues } from "../validate/validateWorkspaceAndLogIssues";
+import { validateFernWorkspaceAndLogIssues } from "../validate/validateFernWorkspaceAndLogIssues";
 
-export async function generateWorkspace({
+export async function generateFernWorkspace({
     workspace,
     organization,
     context,
@@ -16,7 +16,7 @@ export async function generateWorkspace({
     shouldLogS3Url,
     token,
 }: {
-    workspace: Workspace;
+    workspace: FernWorkspace;
     organization: string;
     context: TaskContext;
     version: string | undefined;
@@ -43,7 +43,7 @@ export async function generateWorkspace({
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
 
-    await validateWorkspaceAndLogIssues(workspace, context);
+    await validateFernWorkspaceAndLogIssues(workspace, context);
 
     await runRemoteGenerationForWorkspace({
         workspace,

@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
-import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import {
     RootApiFileSchema,
     ServiceFileSchema,
@@ -14,7 +14,7 @@ import { getAllEnabledRules } from "./getAllRules";
 import { Rule, RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
-export async function validateWorkspace(workspace: Workspace, logger: Logger): Promise<ValidationViolation[]> {
+export async function validateWorkspace(workspace: FernWorkspace, logger: Logger): Promise<ValidationViolation[]> {
     return runRulesOnWorkspace({ workspace, rules: getAllEnabledRules(), logger });
 }
 
@@ -24,7 +24,7 @@ export async function runRulesOnWorkspace({
     rules,
     logger,
 }: {
-    workspace: Workspace;
+    workspace: FernWorkspace;
     rules: Rule[];
     logger: Logger;
 }): Promise<ValidationViolation[]> {
