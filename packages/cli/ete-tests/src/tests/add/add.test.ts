@@ -12,9 +12,7 @@ it("fern add", async () => {
     };
 
     await add("fernapi/fern-java-sdk");
-    await add("fern-typescript-sdk");
     await add("fern-postman");
-    await add("fern-openapi");
 
     expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
 }, 60_000);

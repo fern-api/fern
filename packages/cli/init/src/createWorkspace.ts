@@ -47,7 +47,28 @@ export async function createWorkspace({
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     "default-group": DEFAULT_GROUP_NAME,
-    groups: {},
+    groups: {
+        [DEFAULT_GROUP_NAME]: {
+            generators: [
+                {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.273",
+                    output: {
+                        location: "local-file-system",
+                        path: "../../generated/typescript",
+                    },
+                },
+                {
+                    name: "fernapi/fern-openapi",
+                    version: "0.0.19",
+                    output: {
+                        location: "local-file-system",
+                        path: "../../generated/openapi",
+                    },
+                },
+            ],
+        },
+    },
 };
 
 async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFilePath }): Promise<void> {
