@@ -28,16 +28,16 @@ service:
               id: tt0111161
               title: The Shawshank Redemption
               rating: 9.3
-        
+
         # Error response
         - path-parameters:
             id: tt1234
           response:
             error: MovieDoesNotExistError
-            body: tt1234 
+            body: tt1234
 
 types:
-  MovieId: 
+  MovieId:
     type: string
     docs: The unique identifier for a Movie in the database
 
@@ -45,14 +45,14 @@ types:
     properties:
       id: MovieId
       title: string
-      rating: 
+      rating:
         type: double
         docs: The rating scale out of ten stars
 
-  CreateMovieRequest: 
+  CreateMovieRequest:
     properties:
       title: string
-      rating: double 
+      rating: double
 
 errors:
   MovieDoesNotExistError:
