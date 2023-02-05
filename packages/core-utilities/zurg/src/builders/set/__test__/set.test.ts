@@ -1,4 +1,5 @@
 import { itSchema } from "../../../__test__/utils/itSchema";
+import { itValidateJson, itValidateParse } from "../../../__test__/utils/itValidate";
 import { string } from "../../primitives";
 import { set } from "../set";
 
@@ -8,41 +9,41 @@ describe("set", () => {
         parsed: new Set(["A", "B"]),
     });
 
-    describe("compile", () => {
-        describe("parse()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid items as input", () => {
-                const schema = set(string());
+    itValidateParse("not a list", set(string()), 42, [
+        {
+            path: [],
+            message: "Not a list",
+        },
+    ]);
 
-                // @ts-expect-error
-                () => schema.parse([42]);
-            });
+    itValidateJson(
+        "not a Set",
+        set(string()),
+        [],
+        [
+            {
+                path: [],
+                message: "Not a Set",
+            },
+        ]
+    );
 
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-list as input", () => {
-                const schema = set(string());
+    itValidateParse(
+        "invalid item type",
+        set(string()),
+        [42],
+        [
+            {
+                path: ["[0]"],
+                message: "Not a string",
+            },
+        ]
+    );
 
-                // @ts-expect-error
-                () => schema.parse(42);
-            });
-        });
-
-        describe("json()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid items as input", () => {
-                const schema = set(string());
-
-                // @ts-expect-error
-                () => schema.json(new Set([42]));
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-Set as input", () => {
-                const schema = set(string());
-
-                // @ts-expect-error
-                () => schema.json(["hello"]);
-            });
-        });
-    });
+    itValidateJson("invalid item type", set(string()), new Set([42]), [
+        {
+            path: ["[0]"],
+            message: "Not a string",
+        },
+    ]);
 });

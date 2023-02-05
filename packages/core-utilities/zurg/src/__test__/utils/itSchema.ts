@@ -4,9 +4,9 @@ import { Schema, SchemaOptions } from "../../Schema";
 export function itSchemaIdentity<T>(
     schema: Schema<T, T>,
     value: T,
-    { title = "functions as identity" }: { title?: string } = {}
+    { title = "functions as identity", opts }: { title?: string; opts?: SchemaOptions } = {}
 ): void {
-    itSchema(title, schema, { raw: value, parsed: value });
+    itSchema(title, schema, { raw: value, parsed: value, opts });
 }
 
 export function itSchema<Raw, Parsed>(
@@ -46,7 +46,11 @@ export function itParse<Raw, Parsed>(
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, async () => {
-        expect(await schema.parse(raw, opts)).toStrictEqual(parsed);
+        const maybeValid = await schema.parse(raw, opts);
+        if (!maybeValid.ok) {
+            throw new Error("Failed to parse() " + JSON.stringify(maybeValid.errors, undefined, 4));
+        }
+        expect(maybeValid.value).toStrictEqual(parsed);
     });
 }
 
@@ -65,6 +69,10 @@ export function itJson<Raw, Parsed>(
 ): void {
     // eslint-disable-next-line jest/valid-title
     it(title, async () => {
-        expect(await schema.json(parsed, opts)).toStrictEqual(raw);
+        const maybeValid = await schema.json(parsed, opts);
+        if (!maybeValid.ok) {
+            throw new Error("Failed to json() " + JSON.stringify(maybeValid.errors, undefined, 4));
+        }
+        expect(maybeValid.value).toStrictEqual(raw);
     });
 }

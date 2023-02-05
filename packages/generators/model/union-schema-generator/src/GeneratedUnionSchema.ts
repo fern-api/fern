@@ -75,8 +75,8 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
             })
             .transform({
                 newShape: this.getReferenceToParsedShape(context),
-                parse: this.generateAddVisitTransform(context),
-                json: ts.factory.createArrowFunction(
+                transform: this.generateAddVisitTransform(context),
+                untransform: ts.factory.createArrowFunction(
                     undefined,
                     undefined,
                     [

@@ -1,6 +1,5 @@
 export * from "./date";
 export * from "./enum";
-export * from "./identity";
 export * from "./lazy";
 export * from "./list";
 export * from "./literals";

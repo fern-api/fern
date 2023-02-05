@@ -40,7 +40,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         referenceToParsedRequest: ts.Expression,
         context: SdkInlinedRequestBodySchemaContext
     ): ts.Expression {
-        return this.getReferenceToZurgSchema(context).json(referenceToParsedRequest);
+        return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest);
     }
 
     protected getReferenceToSchema(context: SdkInlinedRequestBodySchemaContext): Reference {

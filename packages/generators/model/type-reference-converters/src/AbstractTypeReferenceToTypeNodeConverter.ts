@@ -1,4 +1,4 @@
-import { DeclaredTypeName, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
@@ -83,6 +83,24 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected override list(itemType: TypeReference): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createArrayTypeNode(this.convert(itemType).typeNode)
+        );
+    }
+
+    protected override mapWithEnumKeys(map: MapType): TypeReferenceNode {
+        return this.mapWithOptionalValues(map);
+    }
+
+    protected override mapWithNonEnumKeys(map: MapType): TypeReferenceNode {
+        return this.mapWithOptionalValues(map);
+    }
+
+    protected mapWithOptionalValues(map: MapType): TypeReferenceNode {
+        const valueType = this.convert(map.valueType);
+        return this.generateNonOptionalTypeReferenceNode(
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                this.convert(map.keyType).typeNode,
+                (valueType.isOptional ? valueType : this.optional(map.valueType)).typeNode,
+            ])
         );
     }
 }

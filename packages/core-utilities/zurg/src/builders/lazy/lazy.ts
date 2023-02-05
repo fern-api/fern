@@ -17,6 +17,7 @@ export function constructLazyBaseSchema<Raw, Parsed>(
     return {
         parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
         json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
+        getType: async () => (await getMemoizedSchema(getter)).getType(),
     };
 }
 

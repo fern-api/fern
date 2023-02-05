@@ -162,13 +162,15 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
-                    .json(referenceToParsedRequest);
+                    .jsonOrThrow(referenceToParsedRequest);
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
                     throw new Error("No request schema was generated");
                 }
-                return this.generatedRequestSchema.getReferenceToZurgSchema(context).json(referenceToParsedRequest);
+                return this.generatedRequestSchema
+                    .getReferenceToZurgSchema(context)
+                    .jsonOrThrow(referenceToParsedRequest);
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
         }
@@ -188,13 +190,16 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
-                    .parse(
+                    .parseOrThrow(
                         ts.factory.createAsExpression(
                             referenceToRawResponse,
                             context.typeSchema
                                 .getGeneratedTypeSchema(this.endpoint.response.type)
                                 .getReferenceToRawShape(context)
-                        )
+                        ),
+                        {
+                            allowUnknownKeys: true,
+                        }
                     );
             case "primitive":
             case "container":
@@ -203,8 +208,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
-                    .parse(
-                        ts.factory.createAsExpression(referenceToRawResponse, this.getReferenceToRawResponse(context))
+                    .parseOrThrow(
+                        ts.factory.createAsExpression(referenceToRawResponse, this.getReferenceToRawResponse(context)),
+                        {
+                            allowUnknownKeys: true,
+                        }
                     );
             default:
                 assertNever(this.endpoint.response.type);
@@ -215,6 +223,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.GeneratedSdkErrorSchema == null) {
             throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
-        return this.GeneratedSdkErrorSchema.getReferenceToZurgSchema(context).parse(referenceToRawError);
+        return this.GeneratedSdkErrorSchema.getReferenceToZurgSchema(context).parseOrThrow(referenceToRawError, {
+            allowUnknownKeys: true,
+        });
     }
 }

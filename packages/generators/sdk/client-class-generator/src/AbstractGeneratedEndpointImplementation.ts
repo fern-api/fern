@@ -141,23 +141,36 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                 for (const queryParameter of queryParameters) {
                     statements.push(
                         ...this.requestParameter
-                            .withQueryParameter(queryParameter, context, (referenceToQueryParameter) => [
-                                ts.factory.createExpressionStatement(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createIdentifier(
-                                                AbstractGeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
+                            .withQueryParameter(queryParameter, context, (referenceToQueryParameter) => {
+                                if (queryParameter.valueType._type === "named") {
+                                    referenceToQueryParameter = context.typeSchema
+                                        .getSchemaOfNamedType(queryParameter.valueType, {
+                                            isGeneratingSchema: false,
+                                        })
+                                        .jsonOrThrow(referenceToQueryParameter);
+                                }
+
+                                return [
+                                    ts.factory.createExpressionStatement(
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    AbstractGeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
+                                                ),
+                                                ts.factory.createIdentifier("append")
                                             ),
-                                            ts.factory.createIdentifier("append")
-                                        ),
-                                        undefined,
-                                        [
-                                            ts.factory.createStringLiteral(queryParameter.name.wireValue),
-                                            context.type.stringify(referenceToQueryParameter, queryParameter.valueType),
-                                        ]
-                                    )
-                                ),
-                            ])
+                                            undefined,
+                                            [
+                                                ts.factory.createStringLiteral(queryParameter.name.wireValue),
+                                                context.type.stringify(
+                                                    referenceToQueryParameter,
+                                                    queryParameter.valueType
+                                                ),
+                                            ]
+                                        )
+                                    ),
+                                ];
+                            })
                             .map(getTextOfTsNode)
                     );
                 }
@@ -168,7 +181,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         }
 
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
-        const url = this.buildUrl();
+        const url = this.buildUrl(context);
 
         const fetcherArgs: Fetcher.Args = {
             url:
@@ -198,7 +211,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return statements;
     }
 
-    private buildUrl(): ts.Expression | undefined {
+    private buildUrl(context: SdkClientClassContext): ts.Expression | undefined {
         if (this.service.pathParameters.length === 0 && this.endpoint.pathParameters.length === 0) {
             const joinedUrl = urlJoin(this.service.basePath.head, this.endpoint.path.head);
             if (joinedUrl.length === 0) {
@@ -218,8 +231,20 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                 if (pathParameter == null) {
                     throw new Error("Could not locate path parameter: " + part.pathParameter);
                 }
+
+                let referenceToPathParameterValue: ts.Expression = ts.factory.createIdentifier(
+                    this.getParameterNameForPathParameter(pathParameter)
+                );
+                if (pathParameter.valueType._type === "named") {
+                    referenceToPathParameterValue = context.typeSchema
+                        .getSchemaOfNamedType(pathParameter.valueType, {
+                            isGeneratingSchema: false,
+                        })
+                        .jsonOrThrow(referenceToPathParameterValue);
+                }
+
                 return ts.factory.createTemplateSpan(
-                    ts.factory.createIdentifier(this.getParameterNameForPathParameter(pathParameter)),
+                    referenceToPathParameterValue,
                     index === httpPath.parts.length - 1
                         ? ts.factory.createTemplateTail(part.tail)
                         : ts.factory.createTemplateMiddle(part.tail)

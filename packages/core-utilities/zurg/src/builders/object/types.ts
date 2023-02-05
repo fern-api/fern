@@ -1,13 +1,15 @@
-import { inferParsed, inferRaw, Schema } from "../../Schema";
+import { BaseSchema, inferParsed, inferRaw, Schema } from "../../Schema";
 import { addQuestionMarksToNullableProperties } from "../../utils/addQuestionMarksToNullableProperties";
-import { BaseObjectLikeSchema, ObjectLikeSchema } from "../object-like";
+import { ObjectLikeUtils } from "../object-like";
+import { SchemaUtils } from "../schema-utils";
 import { Property } from "./property";
 
 export type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> &
-    ObjectLikeSchema<Raw, Parsed> &
-    ObjectUtils<Raw, Parsed>;
+    ObjectLikeUtils<Raw, Parsed> &
+    ObjectUtils<Raw, Parsed> &
+    SchemaUtils<Raw, Parsed>;
 
-export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+export interface BaseObjectSchema<Raw, Parsed> extends BaseSchema<Raw, Parsed> {
     _getRawProperties: () => Promise<(keyof Raw)[]>;
     _getParsedProperties: () => Promise<(keyof Parsed)[]>;
 }

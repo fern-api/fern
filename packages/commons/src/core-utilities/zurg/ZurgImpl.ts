@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
 import { Reference } from "../../referencing";
 import { CoreUtility } from "../CoreUtility";
@@ -86,12 +87,12 @@ export class ZurgImpl extends CoreUtility implements Zurg {
 
     private getObjectLikeUtils(objectLike: Zurg.BaseSchema): Zurg.ObjectLikeUtils {
         return {
-            withProperties: (additionalProperties: Zurg.AdditionalProperty[]) =>
-                this.withProperties(objectLike, additionalProperties),
+            withParsedProperties: (additionalProperties: Zurg.AdditionalProperty[]) =>
+                this.withParsedProperties(objectLike, additionalProperties),
         };
     }
 
-    private withProperties(
+    private withParsedProperties(
         objectLike: Zurg.BaseSchema,
         additionalProperties: Zurg.AdditionalProperty[]
     ): Zurg.ObjectLikeSchema {
@@ -101,7 +102,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
                         objectLike.toExpression(),
-                        ts.factory.createIdentifier("withProperties")
+                        ts.factory.createIdentifier("withParsedProperties")
                     ),
                     undefined,
                     [
@@ -367,36 +368,66 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     private getSchemaUtils(baseSchema: Zurg.BaseSchema): Zurg.SchemaUtils {
         return {
             optional: () => this.optional(baseSchema),
-            parse: (raw) =>
+            parse: (raw, opts) =>
                 ts.factory.createAwaitExpression(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
                         undefined,
-                        [raw]
+                        [raw, ...this.constructSchemaOptionsArgs(opts)]
                     )
                 ),
-            json: (parsed) =>
+            json: (parsed, opts) =>
                 ts.factory.createAwaitExpression(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
                         undefined,
-                        [parsed]
+                        [parsed, ...this.constructSchemaOptionsArgs(opts)]
+                    )
+                ),
+            parseOrThrow: (raw, opts) =>
+                ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parseOrThrow"),
+                        undefined,
+                        [raw, ...this.constructSchemaOptionsArgs(opts)]
+                    )
+                ),
+            jsonOrThrow: (parsed, opts) =>
+                ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "jsonOrThrow"),
+                        undefined,
+                        [parsed, ...this.constructSchemaOptionsArgs(opts)]
                     )
                 ),
             transform: ({
                 newShape,
-                parse,
-                json,
+                transform,
+                untransform,
             }: {
                 newShape: ts.TypeNode | undefined;
-                parse: ts.Expression;
-                json: ts.Expression;
+                transform: ts.Expression;
+                untransform: ts.Expression;
             }) =>
                 this.transform(baseSchema, {
                     newShape,
-                    transformer: this.Schema._fromTransformers({ parse, json }),
+                    transformer: this.Schema._fromTransformers({ transform, untransform }),
                 }),
         };
+    }
+
+    private constructSchemaOptionsArgs(schemaOptions: SchemaOptions | undefined): ts.Expression[] {
+        if (schemaOptions?.allowUnknownKeys === true) {
+            return [
+                ts.factory.createObjectLiteralExpression([
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier("allowUnknownKeys"),
+                        ts.factory.createTrue()
+                    ),
+                ]),
+            ];
+        }
+        return [];
     }
 
     private optional(schema: Zurg.BaseSchema): Zurg.Schema {
@@ -512,16 +543,54 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             };
         },
 
-        _fromTransformers: ({ parse, json }: { parse: ts.Expression; json: ts.Expression }): Zurg.Schema => {
+        _fromTransformers: ({
+            transform,
+            untransform,
+        }: {
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }): Zurg.Schema => {
             return this.Schema._fromExpression(
                 ts.factory.createObjectLiteralExpression(
                     [
-                        ts.factory.createPropertyAssignment("parse", parse),
-                        ts.factory.createPropertyAssignment("json", json),
+                        ts.factory.createPropertyAssignment("transform", transform),
+                        ts.factory.createPropertyAssignment("untransform", untransform),
                     ],
                     true
                 )
             );
+        },
+
+        _visitMaybeValid: (
+            referenceToMaybeValid: ts.Expression,
+            visitor: {
+                valid: (referenceToValue: ts.Expression) => ts.Statement[];
+                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+            }
+        ): ts.Statement[] => {
+            return [
+                ts.factory.createIfStatement(
+                    ts.factory.createPropertyAccessExpression(referenceToMaybeValid, this.MaybeValid.ok),
+                    ts.factory.createBlock(
+                        visitor.valid(
+                            ts.factory.createPropertyAccessExpression(
+                                referenceToMaybeValid,
+                                this.MaybeValid.Valid.value
+                            )
+                        ),
+                        true
+                    ),
+                    ts.factory.createBlock(
+                        visitor.invalid(
+                            ts.factory.createPropertyAccessExpression(
+                                referenceToMaybeValid,
+                                this.MaybeValid.Invalid.errors
+                            )
+                        ),
+                        true
+                    )
+                ),
+            ];
         },
     };
 
@@ -532,5 +601,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
                     ts.factory.createTypeReferenceNode(ObjectSchema.getEntityName(), [rawShape, parsedShape])
         ),
+    };
+
+    public MaybeValid = {
+        ok: "ok" as const,
+        Valid: {
+            value: "value" as const,
+        },
+        Invalid: {
+            errors: "errors" as const,
+        },
     };
 }

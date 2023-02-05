@@ -1,7 +1,7 @@
 imports:
   commons: commons.yml
 types:
-  PlaylistId: string
+  PlaylistId: integer
   Playlist:
     extends: playlistCreateRequest
     properties:
@@ -67,6 +67,7 @@ service:
           multipleOptional:
             type: optional<boolean>
             allow-multiple: true
+          aliasQueryParam: PlaylistId
         body: playlistCreateRequest
       response: Playlist
 

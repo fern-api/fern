@@ -1,4 +1,5 @@
 import { itSchema } from "../../../__test__/utils/itSchema";
+import { itValidateJson, itValidateParse } from "../../../__test__/utils/itValidate";
 import { date } from "../date";
 
 describe("date", () => {
@@ -7,25 +8,17 @@ describe("date", () => {
         parsed: new Date("2022-09-29T05:41:21.939Z"),
     });
 
-    describe("compile", () => {
-        describe("parse()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-string as input", () => {
-                const schema = date();
+    itValidateParse("non-string", date(), 42, [
+        {
+            message: "Not an ISO 8601 date string",
+            path: [],
+        },
+    ]);
 
-                // @ts-expect-error
-                () => schema.parse(42);
-            });
-        });
-
-        describe("json()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-Date as input", () => {
-                const schema = date();
-
-                // @ts-expect-error
-                () => schema.json("hello");
-            });
-        });
-    });
+    itValidateJson("non-Date", date(), "hello", [
+        {
+            message: "Not a Date object",
+            path: [],
+        },
+    ]);
 });

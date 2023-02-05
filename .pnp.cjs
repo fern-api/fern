@@ -3281,6 +3281,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/logging-execa", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-fern/ir-model", "npm:0.0.914"],\
+            ["@fern-typescript/zurg", "workspace:packages/core-utilities/zurg"],\
             ["@types/esutils", "npm:2.0.0"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/js-yaml", "npm:4.0.5"],\

@@ -1,3 +1,4 @@
+import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
 
 export interface Zurg {
@@ -20,11 +21,29 @@ export interface Zurg {
     Schema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
         _fromExpression: (expression: ts.Expression) => Zurg.Schema;
-        _fromTransformers: (args: { parse: ts.ArrowFunction; json: ts.ArrowFunction }) => Zurg.Schema;
+        _visitMaybeValid: (
+            referenceToMaybeValid: ts.Expression,
+            visitor: {
+                valid: (referenceToValue: ts.Expression) => ts.Statement[];
+                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+            }
+        ) => ts.Statement[];
     };
 
     ObjectSchema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
+    };
+
+    MaybeValid: {
+        ok: "ok";
+
+        Valid: {
+            value: "value";
+        };
+
+        Invalid: {
+            errors: "errors";
+        };
     };
 }
 
@@ -37,20 +56,22 @@ export declare namespace Zurg {
     }
 
     interface SchemaUtils {
-        parse: (raw: ts.Expression) => ts.Expression;
-        json: (parsed: ts.Expression) => ts.Expression;
+        parse: (raw: ts.Expression, opts?: SchemaOptions) => ts.Expression;
+        json: (parsed: ts.Expression, opts?: SchemaOptions) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts?: SchemaOptions) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts?: SchemaOptions) => ts.Expression;
         optional: () => Zurg.Schema;
         transform: (args: {
             newShape: ts.TypeNode | undefined;
-            parse: ts.Expression;
-            json: ts.Expression;
+            transform: ts.Expression;
+            untransform: ts.Expression;
         }) => Zurg.Schema;
     }
 
     interface ObjectLikeSchema extends Schema, ObjectLikeUtils {}
 
     interface ObjectLikeUtils {
-        withProperties: (properties: Zurg.AdditionalProperty[]) => Zurg.ObjectLikeSchema;
+        withParsedProperties: (properties: Zurg.AdditionalProperty[]) => Zurg.ObjectLikeSchema;
     }
 
     interface AdditionalProperty {

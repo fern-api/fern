@@ -1,73 +1,48 @@
-import { itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itJson, itParse, itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itValidate } from "../../../__test__/utils/itValidate";
+import { enum_ } from "../../enum";
 import { number, string } from "../../primitives";
 import { record } from "../record";
 
 describe("record", () => {
     itSchemaIdentity(record(string(), string()), { hello: "world" });
+    itSchemaIdentity(record(number(), string()), { 42: "world" });
 
-    describe("compile", () => {
-        describe("parse()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid keys", () => {
-                const schema = record(number(), string());
-
-                () =>
-                    schema.parse({
-                        // @ts-expect-error
-                        hello: "world",
-                    });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid values", () => {
-                const schema = record(string(), number());
-
-                () =>
-                    schema.parse({
-                        // @ts-expect-error
-                        hello: "world",
-                    });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-record as input", () => {
-                const schema = record(string(), string());
-
-                // @ts-expect-error
-                () => schema.parse([]);
-            });
+    describe("enum keys", () => {
+        itParse("parse()", record(enum_(["A", "B"]), string()), {
+            raw: { A: "world", B: undefined },
+            parsed: { A: "world" } as Record<"A" | "B", string>,
         });
 
-        describe("json()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid keys", () => {
-                const schema = record(number(), string());
-
-                () =>
-                    schema.json({
-                        // @ts-expect-error
-                        hello: "world",
-                    });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid values", () => {
-                const schema = record(string(), number());
-
-                () =>
-                    schema.json({
-                        // @ts-expect-error
-                        hello: "world",
-                    });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-record as input", () => {
-                const schema = record(string(), string());
-
-                // @ts-expect-error
-                () => schema.json([]);
-            });
+        itJson("json()", record(enum_(["A", "B"]), string()), {
+            raw: { A: "world" } as Record<"A" | "B", string>,
+            parsed: { A: "world", B: undefined },
         });
     });
+
+    itValidate(
+        "non-record",
+        record(number(), string()),
+        [],
+        [
+            {
+                path: [],
+                message: "Not an object",
+            },
+        ]
+    );
+
+    itValidate("invalid key type", record(number(), string()), { hello: "world" }, [
+        {
+            path: ["hello (key)"],
+            message: "Not a number",
+        },
+    ]);
+
+    itValidate("invalid value type", record(string(), number()), { hello: "world" }, [
+        {
+            path: ["hello"],
+            message: "Not a number",
+        },
+    ]);
 });

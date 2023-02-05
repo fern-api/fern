@@ -55,11 +55,14 @@ export class GeneratedSdkErrorSchemaImpl
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
-                    .parse(
+                    .parseOrThrow(
                         ts.factory.createAsExpression(
                             referenceToBody,
                             context.typeSchema.getReferenceToRawNamedType(this.type).getTypeNode()
-                        )
+                        ),
+                        {
+                            allowUnknownKeys: true,
+                        }
                     );
             case "unknown":
                 return referenceToBody;

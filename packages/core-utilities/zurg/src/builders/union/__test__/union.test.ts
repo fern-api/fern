@@ -1,4 +1,5 @@
 import { itSchema, itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itValidate } from "../../../__test__/utils/itValidate";
 import { object } from "../../object";
 import { boolean, number, string } from "../../primitives";
 import { discriminant } from "../discriminant";
@@ -30,90 +31,89 @@ describe("union", () => {
         }
     );
 
-    itSchema(
-        "transforms discriminant & passes through values when discriminant value is unrecognized",
-        union(discriminant("type", "_type"), {
-            lion: object({ meows: boolean() }),
-            giraffe: object({ heightInInches: number() }),
-        }),
-        {
-            // @ts-expect-error
-            raw: { _type: "moose", isAMoose: true },
-            // @ts-expect-error
-            parsed: { type: "moose", isAMoose: true },
-        }
-    );
+    describe("allowUnknownKeys", () => {
+        itSchema(
+            "transforms discriminant & passes through values when discriminant value is unrecognized",
+            union(discriminant("type", "_type"), {
+                lion: object({ meows: boolean() }),
+                giraffe: object({ heightInInches: number() }),
+            }),
+            {
+                // @ts-expect-error
+                raw: { _type: "moose", isAMoose: true },
+                // @ts-expect-error
+                parsed: { type: "moose", isAMoose: true },
+                opts: {
+                    allowUnknownKeys: true,
+                },
+            }
+        );
+    });
 
-    describe("withProperties", () => {
+    describe("withParsedProperties", () => {
         it("Added property is included on parsed object", async () => {
             const schema = union("type", {
                 lion: object({}),
                 tiger: object({ value: string() }),
-            }).withProperties({
+            }).withParsedProperties({
                 printType: (parsed) => () => parsed.type,
             });
 
             const parsed = await schema.parse({ type: "lion" });
-            expect(parsed.printType()).toBe("lion");
+            if (!parsed.ok) {
+                throw new Error("Failed to parse");
+            }
+            expect(parsed.value.printType()).toBe("lion");
         });
     });
 
-    describe("compile", () => {
-        // eslint-disable-next-line jest/expect-expect
-        it("doesn't compile when discriminant is subtype is not an object", () => {
-            () =>
-                union("type", {
-                    // @ts-expect-error
-                    lion: [],
-                });
-        });
+    itValidate(
+        "non-object",
+        union("type", {
+            lion: object({}),
+            tiger: object({ value: string() }),
+        }),
+        [],
+        [
+            {
+                path: [],
+                message: "Not an object",
+            },
+        ]
+    );
 
-        describe("parse()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile when input is missing discriminant", () => {
-                const schema = union("type", {
-                    lion: object({}),
-                    tiger: object({ value: string() }),
-                });
+    itValidate(
+        "missing discriminant",
+        union("type", {
+            lion: object({}),
+            tiger: object({ value: string() }),
+        }),
+        {},
+        [
+            {
+                path: [],
+                message: 'Missing discriminant ("type")',
+            },
+        ]
+    );
 
-                // @ts-expect-error
-                () => schema.parse({});
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-object as input", () => {
-                const schema = union("type", {
-                    lion: object({}),
-                    tiger: object({ value: string() }),
-                });
-
-                // @ts-expect-error
-                () => schema.parse([]);
-            });
-        });
-
-        describe("json()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile when input is missing discriminant", () => {
-                const schema = union("type", {
-                    lion: object({}),
-                    tiger: object({ value: string() }),
-                });
-
-                // @ts-expect-error
-                () => schema.json({});
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-object as input", () => {
-                const schema = union("type", {
-                    lion: object({}),
-                    tiger: object({ value: string() }),
-                });
-
-                // @ts-expect-error
-                () => schema.json([]);
-            });
-        });
-    });
+    itValidate(
+        "unrecognized discriminant value",
+        union("type", {
+            lion: object({}),
+            tiger: object({ value: string() }),
+        }),
+        {
+            type: "bear",
+        },
+        [
+            {
+                path: ["type"],
+                message: "Not one of the allowed values",
+            },
+        ],
+        {
+            allowUnknownKeys: false,
+        }
+    );
 });

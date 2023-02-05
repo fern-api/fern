@@ -1,4 +1,5 @@
 import { itSchema, itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itValidate } from "../../../__test__/utils/itValidate";
 import { object, property } from "../../object";
 import { string } from "../../primitives";
 import { list } from "../list";
@@ -21,41 +22,22 @@ describe("list", () => {
         }
     );
 
-    describe("compile", () => {
-        describe("parse()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid items as input", () => {
-                const schema = list(string());
+    itValidate("not a list", list(string()), 42, [
+        {
+            path: [],
+            message: "Not a list",
+        },
+    ]);
 
-                // @ts-expect-error
-                () => schema.parse([42]);
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-list as input", () => {
-                const schema = list(string());
-
-                // @ts-expect-error
-                () => schema.parse(42);
-            });
-        });
-
-        describe("json()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with invalid items as input", () => {
-                const schema = list(string());
-
-                // @ts-expect-error
-                () => schema.json([42]);
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-list as input", () => {
-                const schema = list(string());
-
-                // @ts-expect-error
-                () => schema.json(42);
-            });
-        });
-    });
+    itValidate(
+        "invalid item type",
+        list(string()),
+        [42],
+        [
+            {
+                path: ["[0]"],
+                message: "Not a string",
+            },
+        ]
+    );
 });

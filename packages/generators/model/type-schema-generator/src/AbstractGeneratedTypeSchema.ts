@@ -19,8 +19,8 @@ export abstract class AbstractGeneratedTypeSchema<
 > extends AbstractGeneratedSchema<Context> {
     protected shape: Shape;
     protected getGeneratedType: () => GeneratedType<Context>;
-    protected getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
     protected getReferenceToSchema: (context: Context) => Reference;
+    private getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
 
     constructor({
         typeName,

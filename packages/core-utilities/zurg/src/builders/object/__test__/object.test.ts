@@ -1,6 +1,7 @@
 import { itJson, itParse, itSchema, itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itValidate } from "../../../__test__/utils/itValidate";
 import { stringLiteral } from "../../literals";
-import { string } from "../../primitives";
+import { number, string } from "../../primitives";
 import { object } from "../object";
 import { property } from "../property";
 
@@ -20,7 +21,7 @@ describe("object", () => {
     );
 
     itSchema(
-        "uses raw value from property()",
+        "uses raw key from property()",
         object({
             foo: property("raw_foo", string()),
             bar: stringLiteral("bar"),
@@ -31,122 +32,7 @@ describe("object", () => {
         }
     );
 
-    describe("skipUnknownKeysOnParse", () => {
-        itParse(
-            "includes unknown keys by default",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-            }
-        );
-
-        itParse(
-            "includes unknown values when skipUnknownKeysOnParse === false",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                opts: {
-                    skipUnknownKeysOnParse: false,
-                },
-            }
-        );
-
-        itParse(
-            "skip unknown values when skipUnknownKeysOnParse === true",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                },
-                opts: {
-                    skipUnknownKeysOnParse: true,
-                },
-            }
-        );
-    });
-
-    describe("includeUnknownKeysOnJson", () => {
-        itJson(
-            "skips unknown keys by default",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-            }
-        );
-
-        itJson(
-            "skips unknown values when includeUnknownKeysOnJson === false",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                opts: {
-                    includeUnknownKeysOnJson: false,
-                },
-            }
-        );
-
+    describe("allowUnknownKeys", () => {
         itJson(
             "includes unknown values when includeUnknownKeysOnJson === true",
             object({
@@ -167,7 +53,7 @@ describe("object", () => {
                     baz: "yoyo",
                 },
                 opts: {
-                    includeUnknownKeysOnJson: true,
+                    allowUnknownKeys: true,
                 },
             }
         );
@@ -218,85 +104,66 @@ describe("object", () => {
             // @ts-expect-error
             object([]);
         });
-
-        describe("parse()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with missing property in input", () => {
-                const schema = object({
-                    foo: string(),
-                    bar: stringLiteral("bar"),
-                });
-
-                // @ts-expect-error
-                () => schema.parse({ foo: "hello" });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with extra property in input", () => {
-                const schema = object({
-                    foo: string(),
-                    bar: stringLiteral("bar"),
-                });
-
-                () =>
-                    schema.parse({
-                        foo: "hello",
-                        bar: "bar",
-                        // @ts-expect-error
-                        baz: 42,
-                    });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-object as input", () => {
-                const schema = object({
-                    foo: string(),
-                    bar: stringLiteral("bar"),
-                });
-
-                // @ts-expect-error
-                () => schema.parse(42);
-            });
-        });
-
-        describe("json()", () => {
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with missing property in input", () => {
-                const schema = object({
-                    foo: string(),
-                    bar: stringLiteral("bar"),
-                });
-
-                // @ts-expect-error
-                () => schema.json({ foo: "hello" });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with extra property in input", () => {
-                const schema = object({
-                    foo: string(),
-                    bar: stringLiteral("bar"),
-                });
-
-                () =>
-                    schema.json({
-                        foo: "hello",
-                        bar: "bar",
-                        // @ts-expect-error
-                        baz: 42,
-                    });
-            });
-
-            // eslint-disable-next-line jest/expect-expect
-            it("doesn't compile with non-object as input in input", () => {
-                const schema = object({
-                    foo: string(),
-                    bar: stringLiteral("bar"),
-                });
-
-                // @ts-expect-error
-                () => schema.json(42);
-            });
-        });
     });
+
+    itValidate(
+        "missing property",
+        object({
+            foo: string(),
+            bar: stringLiteral("bar"),
+        }),
+        { foo: "hello" },
+        [
+            {
+                path: [],
+                message: 'Missing required key "bar"',
+            },
+        ]
+    );
+
+    itValidate(
+        "extra property",
+        object({
+            foo: string(),
+            bar: stringLiteral("bar"),
+        }),
+        { foo: "hello", bar: "bar", baz: 42 },
+        [
+            {
+                path: ["baz"],
+                message: 'Unrecognized key "baz"',
+            },
+        ]
+    );
+
+    itValidate(
+        "not an object",
+        object({
+            foo: string(),
+            bar: stringLiteral("bar"),
+        }),
+        [],
+        [
+            {
+                path: [],
+                message: "Not an object",
+            },
+        ]
+    );
+
+    itValidate(
+        "nested validation error",
+        object({
+            foo: object({
+                bar: number(),
+            }),
+        }),
+        { foo: { bar: "hello" } },
+        [
+            {
+                path: ["foo", "bar"],
+                message: "Not a number",
+            },
+        ]
+    );
 });

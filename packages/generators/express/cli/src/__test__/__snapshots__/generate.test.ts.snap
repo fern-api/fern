@@ -163,162 +163,210 @@ class AdminService {
     }
     toRouter() {
         this.router.post(\\"/store-test-submission-status/:submissionId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.TestSubmissionStatus.parse(req.body);
-                await this.methods.updateTestSubmissionStatus(req, res);
-                res.sendStatus(204);
+            const request = await serializers.TestSubmissionStatus.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateTestSubmissionStatus(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'updateTestSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'updateTestSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-test-submission-status-v2/:submissionId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.TestSubmissionUpdate.parse(req.body);
-                await this.methods.sendTestSubmissionUpdate(req, res);
-                res.sendStatus(204);
+            const request = await serializers.TestSubmissionUpdate.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.sendTestSubmissionUpdate(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'sendTestSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'sendTestSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-workspace-submission-status/:submissionId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.WorkspaceSubmissionStatus.parse(req.body);
-                await this.methods.updateWorkspaceSubmissionStatus(req, res);
-                res.sendStatus(204);
+            const request = await serializers.WorkspaceSubmissionStatus.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.updateWorkspaceSubmissionStatus(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-workspace-submission-status-v2/:submissionId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
-                await this.methods.sendWorkspaceSubmissionUpdate(req, res);
-                res.sendStatus(204);
+            const request = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.sendWorkspaceSubmissionUpdate(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-test-trace/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.StoreTracedTestCaseRequest.parse(req.body);
-                await this.methods.storeTracedTestCase(req, res);
-                res.sendStatus(204);
+            const request = await serializers.StoreTracedTestCaseRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.storeTracedTestCase(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'storeTracedTestCase' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'storeTracedTestCase' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
-                await this.methods.storeTracedTestCaseV2(req, res);
-                res.sendStatus(204);
+            const request = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.storeTracedTestCaseV2(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'storeTracedTestCaseV2' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'storeTracedTestCaseV2' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-workspace-trace/submission/:submissionId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
-                await this.methods.storeTracedWorkspace(req, res);
-                res.sendStatus(204);
+            const request = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.storeTracedWorkspace(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'storeTracedWorkspace' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'storeTracedWorkspace' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/store-workspace-trace-v2/submission/:submissionId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
-                await this.methods.storeTracedWorkspaceV2(req, res);
-                res.sendStatus(204);
+            const request = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.storeTracedWorkspaceV2(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'storeTracedWorkspaceV2' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'storeTracedWorkspaceV2' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
@@ -519,7 +567,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface BinaryTreeValue {
     root?: TraceApi.NodeId;
-    nodes: Record<TraceApi.NodeId, TraceApi.BinaryTreeNodeValue>;
+    nodes: Record<TraceApi.NodeId, TraceApi.BinaryTreeNodeValue | undefined>;
 }
 ",
                     "name": "BinaryTreeValue.d.ts",
@@ -926,7 +974,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface DoublyLinkedListValue {
     head?: TraceApi.NodeId;
-    nodes: Record<TraceApi.NodeId, TraceApi.DoublyLinkedListNodeValue>;
+    nodes: Record<TraceApi.NodeId, TraceApi.DoublyLinkedListNodeValue | undefined>;
 }
 ",
                     "name": "DoublyLinkedListValue.d.ts",
@@ -1232,7 +1280,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface SinglyLinkedListValue {
     head?: TraceApi.NodeId;
-    nodes: Record<TraceApi.NodeId, TraceApi.SinglyLinkedListNodeValue>;
+    nodes: Record<TraceApi.NodeId, TraceApi.SinglyLinkedListNodeValue | undefined>;
 }
 ",
                     "name": "SinglyLinkedListValue.d.ts",
@@ -1975,22 +2023,28 @@ class HomepageService {
             next();
         });
         this.router.post(\\"\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
-                await this.methods.setHomepageProblems(req, res);
-                res.sendStatus(204);
+            const request = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.setHomepageProblems(req, res);
+                    res.sendStatus(204);
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'setHomepageProblems' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'setHomepageProblems' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
@@ -2734,22 +2788,28 @@ class PlaylistService {
     }
     toRouter() {
         this.router.post(\\"/create\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.PlaylistCreateRequest.parse(req.body);
-                const response = await this.methods.createPlaylist(req, res);
-                res.json(await serializers.Playlist.json(response));
+            const request = await serializers.PlaylistCreateRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    const response = await this.methods.createPlaylist(req, res);
+                    res.json(await serializers.Playlist.json(response));
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'createPlaylist' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'createPlaylist' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
@@ -2798,27 +2858,33 @@ class PlaylistService {
             next();
         });
         this.router.put(\\"/:playlistId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.playlist.updatePlaylist.Request.parse(req.body);
-                const response = await this.methods.updatePlaylist(req, res);
-                res.json(await serializers.playlist.updatePlaylist.Response.json(response));
-            }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    switch (error.constructor.name) {
-                        case \\"PlaylistIdNotFoundError\\":
-                            break;
-                        default:
-                            console.warn(\`Endpoint 'updatePlaylist' unexpectedly threw \${error.constructor.name}.\` +
-                                \` If this was intentional, please add \${error.constructor.name} to\` +
-                                \\" the endpoint's errors list in your Fern Definition.\\");
+            const request = await serializers.playlist.updatePlaylist.Request.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    const response = await this.methods.updatePlaylist(req, res);
+                    res.json(await serializers.playlist.updatePlaylist.Response.json(response));
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        switch (error.constructor.name) {
+                            case \\"PlaylistIdNotFoundError\\":
+                                break;
+                            default:
+                                console.warn(\`Endpoint 'updatePlaylist' unexpectedly threw \${error.constructor.name}.\` +
+                                    \` If this was intentional, please add \${error.constructor.name} to\` +
+                                    \\" the endpoint's errors list in your Fern Definition.\\");
+                        }
+                        error.send(res);
                     }
-                    error.send(res);
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
                 }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
@@ -3396,42 +3462,54 @@ class ProblemService {
     }
     toRouter() {
         this.router.post(\\"/create\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.CreateProblemRequest.parse(req.body);
-                const response = await this.methods.createProblem(req, res);
-                res.json(await serializers.CreateProblemResponse.json(response));
+            const request = await serializers.CreateProblemRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    const response = await this.methods.createProblem(req, res);
+                    res.json(await serializers.CreateProblemResponse.json(response));
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'createProblem' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'createProblem' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
         this.router.post(\\"/update/:problemId\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.CreateProblemRequest.parse(req.body);
-                const response = await this.methods.updateProblem(req, res);
-                res.json(await serializers.UpdateProblemResponse.json(response));
+            const request = await serializers.CreateProblemRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    const response = await this.methods.updateProblem(req, res);
+                    res.json(await serializers.UpdateProblemResponse.json(response));
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'updateProblem' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'updateProblem' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
@@ -3455,22 +3533,28 @@ class ProblemService {
             next();
         });
         this.router.post(\\"/default-starter-files\\", async (req, res, next) => {
-            try {
-                req.body = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
-                const response = await this.methods.getDefaultStarterFiles(req, res);
-                res.json(await serializers.GetDefaultStarterFilesResponse.json(response));
+            const request = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    const response = await this.methods.getDefaultStarterFiles(req, res);
+                    res.json(await serializers.GetDefaultStarterFilesResponse.json(response));
+                }
+                catch (error) {
+                    console.error(error);
+                    if (error instanceof errors.TraceApiError) {
+                        console.warn(\`Endpoint 'getDefaultStarterFiles' unexpectedly threw \${error.constructor.name}.\` +
+                            \` If this was intentional, please add \${error.constructor.name} to\` +
+                            \\" the endpoint's errors list in your Fern Definition.\\");
+                        error.send(res);
+                    }
+                    else {
+                        res.status(500).json(\\"Internal Server Error\\");
+                    }
+                }
             }
-            catch (error) {
-                console.error(error);
-                if (error instanceof errors.TraceApiError) {
-                    console.warn(\`Endpoint 'getDefaultStarterFiles' unexpectedly threw \${error.constructor.name}.\` +
-                        \` If this was intentional, please add \${error.constructor.name} to\` +
-                        \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
-                }
-                else {
-                    res.status(500).json(\\"Internal Server Error\\");
-                }
+            else {
+                res.status(422).json({ errors: { request: request.errors } });
             }
             next();
         });
@@ -4003,7 +4087,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import { TraceApi } from \\"../../../..\\";
 export interface ProblemsMap {
-    problemsById: Record<TraceApi.ProblemId, TraceApi.ProblemInfo>;
+    problemsById: Record<TraceApi.ProblemId, TraceApi.ProblemInfo | undefined>;
 }
 ",
                     "name": "ProblemsMap.d.ts",
@@ -5189,7 +5273,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import { TraceApi } from \\"../../../..\\";
 export interface GetExecutionSessionStateResponse {
-    states: Record<string, TraceApi.ExecutionSessionState>;
+    states: Record<string, TraceApi.ExecutionSessionState | undefined>;
     numWarmingInstances?: number;
     warmingSessionIds: string[];
 }
@@ -5260,7 +5344,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface GradedResponse {
     submissionId: TraceApi.SubmissionId;
-    testCases: Record<string, TraceApi.TestCaseResultWithStdout>;
+    testCases: Record<string, TraceApi.TestCaseResultWithStdout | undefined>;
 }
 ",
                     "name": "GradedResponse.d.ts",
@@ -5283,7 +5367,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface GradedResponseV2 {
     submissionId: TraceApi.SubmissionId;
-    testCases: Record<TraceApi.v2.TestCaseId, TraceApi.TestCaseGrade>;
+    testCases: Record<TraceApi.v2.TestCaseId, TraceApi.TestCaseGrade | undefined>;
 }
 ",
                     "name": "GradedResponseV2.d.ts",
@@ -5680,7 +5764,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import { TraceApi } from \\"../../../..\\";
 export interface Scope {
-    variables: Record<string, TraceApi.DebugVariableValue>;
+    variables: Record<string, TraceApi.DebugVariableValue | undefined>;
 }
 ",
                     "name": "Scope.d.ts",
@@ -6792,7 +6876,7 @@ export declare namespace TestSubmissionStatus {
     }
     interface TestCaseIdToState extends _Utils {
         type: \\"testCaseIdToState\\";
-        value: Record<string, TraceApi.SubmissionStatusForTestCase>;
+        value: Record<string, TraceApi.SubmissionStatusForTestCase | undefined>;
     }
     interface _Unknown extends _Utils {
         type: void;
@@ -6804,7 +6888,7 @@ export declare namespace TestSubmissionStatus {
         stopped: () => _Result;
         errored: (value: TraceApi.ErrorInfo) => _Result;
         running: (value: TraceApi.RunningSubmissionState) => _Result;
-        testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase>) => _Result;
+        testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase | undefined>) => _Result;
         _other: (value: {
             type: string;
         }) => _Result;
@@ -6814,7 +6898,7 @@ export declare const TestSubmissionStatus: {
     readonly stopped: () => TraceApi.TestSubmissionStatus.Stopped;
     readonly errored: (value: TraceApi.ErrorInfo) => TraceApi.TestSubmissionStatus.Errored;
     readonly running: (value: TraceApi.RunningSubmissionState) => TraceApi.TestSubmissionStatus.Running;
-    readonly testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase>) => TraceApi.TestSubmissionStatus.TestCaseIdToState;
+    readonly testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase | undefined>) => TraceApi.TestSubmissionStatus.TestCaseIdToState;
     readonly _unknown: (value: {
         type: string;
     }) => TraceApi.TestSubmissionStatus._Unknown;
@@ -9698,7 +9782,7 @@ import { TraceApi } from \\"../../../../../..\\";
 export interface TestCaseV2 {
     metadata: TraceApi.v2.TestCaseMetadata;
     implementation: TraceApi.v2.TestCaseImplementationReference;
-    arguments: Record<TraceApi.v2.ParameterId, TraceApi.VariableValue>;
+    arguments: Record<TraceApi.v2.ParameterId, TraceApi.VariableValue | undefined>;
     expects?: TraceApi.v2.TestCaseExpects;
 }
 ",
@@ -11470,7 +11554,7 @@ import { TraceApi } from \\"../../../../../../../..\\";
 export interface TestCaseV2 {
     metadata: TraceApi.v2.v3.TestCaseMetadata;
     implementation: TraceApi.v2.v3.TestCaseImplementationReference;
-    arguments: Record<TraceApi.v2.v3.ParameterId, TraceApi.VariableValue>;
+    arguments: Record<TraceApi.v2.v3.ParameterId, TraceApi.VariableValue | undefined>;
     expects?: TraceApi.v2.v3.TestCaseExpects;
 }
 ",
@@ -11788,22 +11872,50 @@ exports.serialization = __importStar(require(\\"./schemas\\"));
         "contents": Array [
           Object {
             "contents": "import { SchemaUtils } from \\"./builders\\";
+import { MaybePromise } from \\"./utils/MaybePromise\\";
 export declare type Schema<Raw = unknown, Parsed = unknown> = BaseSchema<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
 export declare type inferRaw<S extends Schema> = S extends Schema<infer Raw, any> ? Raw : never;
 export declare type inferParsed<S extends Schema> = S extends Schema<any, infer Parsed> ? Parsed : never;
 export interface BaseSchema<Raw, Parsed> {
-    parse: (raw: Raw, opts?: SchemaOptions) => Parsed | Promise<Parsed>;
-    json: (parsed: Parsed, opts?: SchemaOptions) => Raw | Promise<Raw>;
+    parse: (raw: unknown, opts?: SchemaOptions) => MaybePromise<MaybeValid<Parsed>>;
+    json: (parsed: unknown, opts?: SchemaOptions) => MaybePromise<MaybeValid<Raw>>;
+    getType: () => SchemaType | Promise<SchemaType>;
+}
+export declare const SchemaType: {
+    readonly DATE: \\"date\\";
+    readonly ENUM: \\"enum\\";
+    readonly LIST: \\"list\\";
+    readonly STRING_LITERAL: \\"stringLiteral\\";
+    readonly OBJECT: \\"object\\";
+    readonly ANY: \\"any\\";
+    readonly BOOLEAN: \\"boolean\\";
+    readonly NUMBER: \\"number\\";
+    readonly STRING: \\"string\\";
+    readonly UNKNOWN: \\"unknown\\";
+    readonly RECORD: \\"record\\";
+    readonly SET: \\"set\\";
+    readonly UNION: \\"union\\";
+    readonly OPTIONAL: \\"optional\\";
+};
+export declare type SchemaType = typeof SchemaType[keyof typeof SchemaType];
+export declare type MaybeValid<T> = Valid<T> | Invalid;
+export interface Valid<T> {
+    ok: true;
+    value: T;
+}
+export interface Invalid {
+    ok: false;
+    errors: ValidationError[];
+}
+export interface ValidationError {
+    path: string[];
+    message: string;
 }
 export interface SchemaOptions {
     /**
      * @default false
      */
-    skipUnknownKeysOnParse?: boolean;
-    /**
-     * @default false
-     */
-    includeUnknownKeysOnJson?: boolean;
+    allowUnknownKeys?: boolean;
 }
 ",
             "name": "Schema.d.ts",
@@ -11812,6 +11924,23 @@ export interface SchemaOptions {
           Object {
             "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.SchemaType = void 0;
+exports.SchemaType = {
+    DATE: \\"date\\",
+    ENUM: \\"enum\\",
+    LIST: \\"list\\",
+    STRING_LITERAL: \\"stringLiteral\\",
+    OBJECT: \\"object\\",
+    ANY: \\"any\\",
+    BOOLEAN: \\"boolean\\",
+    NUMBER: \\"number\\",
+    STRING: \\"string\\",
+    UNKNOWN: \\"unknown\\",
+    RECORD: \\"record\\",
+    SET: \\"set\\",
+    UNION: \\"union\\",
+    OPTIONAL: \\"optional\\",
+};
 ",
             "name": "Schema.js",
             "type": "file",
@@ -11831,11 +11960,51 @@ export declare function date(): Schema<string, Date>;
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.date = void 0;
+const Schema_1 = require(\\"../../Schema\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
+// https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
+const ISO_8601_REGEX = /^([+-]?\\\\d{4}(?!\\\\d{2}\\\\b))((-?)((0[1-9]|1[0-2])(\\\\3([12]\\\\d|0[1-9]|3[01]))?|W([0-4]\\\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\\\d|[12]\\\\d{2}|3([0-5]\\\\d|6[1-6])))([T\\\\s]((([01]\\\\d|2[0-3])((:?)[0-5]\\\\d)?|24:?00)([.,]\\\\d+(?!:))?)?(\\\\17[0-5]\\\\d([.,]\\\\d+)?)?([zZ]|([+-])([01]\\\\d|2[0-3]):?([0-5]\\\\d)?)?)?)?$/;
 function date() {
     const baseSchema = {
-        parse: (raw) => new Date(raw),
-        json: (date) => date.toISOString(),
+        parse: (raw) => {
+            if (typeof raw === \\"string\\" && ISO_8601_REGEX.test(raw)) {
+                return {
+                    ok: true,
+                    value: new Date(raw),
+                };
+            }
+            else {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: [],
+                            message: \\"Not an ISO 8601 date string\\",
+                        },
+                    ],
+                };
+            }
+        },
+        json: (date) => {
+            if (date instanceof Date) {
+                return {
+                    ok: true,
+                    value: date.toISOString(),
+                };
+            }
+            else {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: [],
+                            message: \\"Not a Date object\\",
+                        },
+                    ],
+                };
+            }
+        },
+        getType: () => Schema_1.SchemaType.DATE,
     };
     return {
         ...baseSchema,
@@ -11871,7 +12040,7 @@ Object.defineProperty(exports, \\"date\\", { enumerable: true, get: function () 
                 "contents": Array [
                   Object {
                     "contents": "import { Schema } from \\"../../Schema\\";
-export declare function enum_<U extends string, E extends Readonly<[U, ...U[]]>>(_values: E): Schema<E[number], E[number]>;
+export declare function enum_<U extends string, E extends U[]>(values: E): Schema<E[number], E[number]>;
 ",
                     "name": "enum.d.ts",
                     "type": "file",
@@ -11880,9 +12049,30 @@ export declare function enum_<U extends string, E extends Readonly<[U, ...U[]]>>
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.enum_ = void 0;
-const identity_1 = require(\\"../identity\\");
-function enum_(_values) {
-    return (0, identity_1.createIdentitySchemaCreator)()();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+function enum_(values) {
+    const validValues = new Set(values);
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnknownKeys = false } = {}) => {
+        if (typeof value === \\"string\\" && (validValues.has(value) || allowUnknownKeys)) {
+            return {
+                ok: true,
+                value: value,
+            };
+        }
+        else {
+            return {
+                ok: false,
+                errors: [
+                    {
+                        path: [],
+                        message: \\"Not one of the allowed values\\",
+                    },
+                ],
+            };
+        }
+    });
+    return schemaCreator();
 }
 exports.enum_ = enum_;
 ",
@@ -11910,81 +12100,8 @@ Object.defineProperty(exports, \\"enum_\\", { enumerable: true, get: function ()
                 "type": "directory",
               },
               Object {
-                "contents": Array [
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
-export declare function createIdentitySchemaCreator<T>(): () => Schema<T, T>;
-",
-                    "name": "createIdentitySchemaCreator.d.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.createIdentitySchemaCreator = void 0;
-const identity_1 = require(\\"./identity\\");
-function createIdentitySchemaCreator() {
-    return () => (0, identity_1.identity)();
-}
-exports.createIdentitySchemaCreator = createIdentitySchemaCreator;
-",
-                    "name": "createIdentitySchemaCreator.js",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
-export declare function identity<T>(): Schema<T, T>;
-",
-                    "name": "identity.d.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.identity = void 0;
-const schema_utils_1 = require(\\"../schema-utils\\");
-function identity() {
-    const baseSchema = {
-        parse: (raw) => raw,
-        json: (parsed) => parsed,
-    };
-    return {
-        ...baseSchema,
-        ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
-    };
-}
-exports.identity = identity;
-",
-                    "name": "identity.js",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "export { createIdentitySchemaCreator } from \\"./createIdentitySchemaCreator\\";
-export { identity } from \\"./identity\\";
-",
-                    "name": "index.d.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.identity = exports.createIdentitySchemaCreator = void 0;
-var createIdentitySchemaCreator_1 = require(\\"./createIdentitySchemaCreator\\");
-Object.defineProperty(exports, \\"createIdentitySchemaCreator\\", { enumerable: true, get: function () { return createIdentitySchemaCreator_1.createIdentitySchemaCreator; } });
-var identity_1 = require(\\"./identity\\");
-Object.defineProperty(exports, \\"identity\\", { enumerable: true, get: function () { return identity_1.identity; } });
-",
-                    "name": "index.js",
-                    "type": "file",
-                  },
-                ],
-                "name": "identity",
-                "type": "directory",
-              },
-              Object {
                 "contents": "export * from \\"./date\\";
 export * from \\"./enum\\";
-export * from \\"./identity\\";
 export * from \\"./lazy\\";
 export * from \\"./list\\";
 export * from \\"./literals\\";
@@ -12018,7 +12135,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 __exportStar(require(\\"./date\\"), exports);
 __exportStar(require(\\"./enum\\"), exports);
-__exportStar(require(\\"./identity\\"), exports);
 __exportStar(require(\\"./lazy\\"), exports);
 __exportStar(require(\\"./list\\"), exports);
 __exportStar(require(\\"./literals\\"), exports);
@@ -12081,6 +12197,7 @@ function constructLazyBaseSchema(getter) {
     return {
         parse: async (raw) => (await getMemoizedSchema(getter)).parse(raw),
         json: async (parsed) => (await getMemoizedSchema(getter)).json(parsed),
+        getType: async () => (await getMemoizedSchema(getter)).getType(),
     };
 }
 exports.constructLazyBaseSchema = constructLazyBaseSchema;
@@ -12114,7 +12231,6 @@ const schema_utils_1 = require(\\"../schema-utils\\");
 const lazy_1 = require(\\"./lazy\\");
 function lazyObject(getter) {
     const baseSchema = {
-        ...object_like_1.OBJECT_LIKE_BRAND,
         ...(0, lazy_1.constructLazyBaseSchema)(getter),
         _getRawProperties: async () => (await (0, lazy_1.getMemoizedSchema)(getter))._getRawProperties(),
         _getParsedProperties: async () => (await (0, lazy_1.getMemoizedSchema)(getter))._getParsedProperties(),
@@ -12164,11 +12280,13 @@ export declare function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<R
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.list = void 0;
+const Schema_1 = require(\\"../../Schema\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function list(schema) {
     const baseSchema = {
-        parse: (raw, opts) => Promise.all(raw.map((item) => schema.parse(item, opts))),
-        json: (parsed, opts) => Promise.all(parsed.map((item) => schema.json(item, opts))),
+        parse: async (raw, opts) => validateAndTransformArray(raw, (item) => schema.parse(item, opts)),
+        json: (parsed, opts) => validateAndTransformArray(parsed, (item) => schema.json(item, opts)),
+        getType: () => Schema_1.SchemaType.LIST,
     };
     return {
         ...baseSchema,
@@ -12176,6 +12294,42 @@ function list(schema) {
     };
 }
 exports.list = list;
+async function validateAndTransformArray(value, transformItem) {
+    if (!Array.isArray(value)) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    message: \\"Not a list\\",
+                    path: [],
+                },
+            ],
+        };
+    }
+    const maybeValidItems = await Promise.all(value.map((item) => transformItem(item)));
+    return maybeValidItems.reduce((acc, item, index) => {
+        if (acc.ok && item.ok) {
+            return {
+                ok: true,
+                value: [...acc.value, item.value],
+            };
+        }
+        const errors = [];
+        if (!acc.ok) {
+            errors.push(...acc.errors);
+        }
+        if (!item.ok) {
+            errors.push(...item.errors.map((error) => ({
+                path: [\`[\${index}]\`, ...error.path],
+                message: error.message,
+            })));
+        }
+        return {
+            ok: false,
+            errors,
+        };
+    }, { ok: true, value: [] });
+}
 ",
                     "name": "list.js",
                     "type": "file",
@@ -12204,7 +12358,7 @@ Object.defineProperty(exports, \\"stringLiteral\\", { enumerable: true, get: fun
                   },
                   Object {
                     "contents": "import { Schema } from \\"../../Schema\\";
-export declare function stringLiteral<V extends string>(_value: V): Schema<V, V>;
+export declare function stringLiteral<V extends string>(literal: V): Schema<V, V>;
 ",
                     "name": "stringLiteral.d.ts",
                     "type": "file",
@@ -12213,9 +12367,29 @@ export declare function stringLiteral<V extends string>(_value: V): Schema<V, V>
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.stringLiteral = void 0;
-const identity_1 = require(\\"../identity\\");
-function stringLiteral(_value) {
-    return (0, identity_1.createIdentitySchemaCreator)()();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+function stringLiteral(literal) {
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING_LITERAL, (value) => {
+        if (value === literal) {
+            return {
+                ok: true,
+                value: literal,
+            };
+        }
+        else {
+            return {
+                ok: false,
+                errors: [
+                    {
+                        path: [],
+                        message: \`Not equal to \\"\${literal}\\"\`,
+                    },
+                ],
+            };
+        }
+    });
+    return schemaCreator();
 }
 exports.stringLiteral = stringLiteral;
 ",
@@ -12262,8 +12436,10 @@ export declare function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.getObjectUtils = exports.object = void 0;
+const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
 const filterObject_1 = require(\\"../../utils/filterObject\\");
+const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
 const partition_1 = require(\\"../../utils/partition\\");
 const object_like_1 = require(\\"../object-like\\");
@@ -12271,56 +12447,78 @@ const schema_utils_1 = require(\\"../schema-utils\\");
 const property_1 = require(\\"./property\\");
 function object(schemas) {
     const baseSchema = {
-        ...object_like_1.OBJECT_LIKE_BRAND,
         _getRawProperties: () => Promise.resolve(Object.entries(schemas).map(([parsedKey, propertySchema]) => (0, property_1.isProperty)(propertySchema) ? propertySchema.rawKey : parsedKey)),
         _getParsedProperties: () => Promise.resolve((0, keys_1.keys)(schemas)),
-        parse: async (raw, { skipUnknownKeysOnParse = false } = {}) => {
+        parse: async (raw, opts) => {
             const rawKeyToProperty = {};
+            const requiredKeys = [];
             for (const [parsedKey, schemaOrObjectProperty] of (0, entries_1.entries)(schemas)) {
                 const rawKey = (0, property_1.isProperty)(schemaOrObjectProperty) ? schemaOrObjectProperty.rawKey : parsedKey;
+                const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.valueSchema
+                    : schemaOrObjectProperty;
                 const property = {
                     rawKey,
-                    parsedKey,
-                    valueSchema: (0, property_1.isProperty)(schemaOrObjectProperty)
-                        ? schemaOrObjectProperty.valueSchema
-                        : schemaOrObjectProperty,
+                    parsedKey: parsedKey,
+                    valueSchema,
                 };
                 rawKeyToProperty[rawKey] = property;
-            }
-            const parsed = {};
-            for (const [rawKey, rawPropertyValue] of Object.entries(raw)) {
-                const property = rawKeyToProperty[rawKey];
-                if (property != null) {
-                    const value = await property.valueSchema.parse(rawPropertyValue);
-                    parsed[property.parsedKey] = value;
-                }
-                else if (!skipUnknownKeysOnParse) {
-                    parsed[rawKey] = rawPropertyValue;
+                if ((await valueSchema.getType()) !== \\"optional\\") {
+                    requiredKeys.push(rawKey);
                 }
             }
-            return parsed;
+            return validateAndTransformObject({
+                value: raw,
+                requiredKeys,
+                getProperty: (rawKey) => {
+                    const property = rawKeyToProperty[rawKey];
+                    if (property == null) {
+                        return undefined;
+                    }
+                    return {
+                        transformedKey: property.parsedKey,
+                        transform: (propertyValue) => property.valueSchema.parse(propertyValue, opts),
+                    };
+                },
+                allowUnknownKeys: opts?.allowUnknownKeys ?? false,
+            });
         },
-        json: async (parsed, { includeUnknownKeysOnJson = false } = {}) => {
-            const raw = {};
-            for (const [parsedKey, parsedPropertyValue] of (0, entries_1.entries)(parsed)) {
-                const schemaOrObjectProperty = schemas[parsedKey];
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                if (schemaOrObjectProperty != null) {
-                    if ((0, property_1.isProperty)(schemaOrObjectProperty)) {
-                        const value = await schemaOrObjectProperty.valueSchema.json(parsedPropertyValue);
-                        raw[schemaOrObjectProperty.rawKey] = value;
+        json: async (parsed, opts) => {
+            const requiredKeys = [];
+            for (const [parsedKey, schemaOrObjectProperty] of (0, entries_1.entries)(schemas)) {
+                const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.valueSchema
+                    : schemaOrObjectProperty;
+                if ((await valueSchema.getType()) !== \\"optional\\") {
+                    requiredKeys.push(parsedKey);
+                }
+            }
+            return validateAndTransformObject({
+                value: parsed,
+                requiredKeys,
+                getProperty: (parsedKey) => {
+                    const property = schemas[parsedKey];
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    if (property == null) {
+                        return undefined;
+                    }
+                    if ((0, property_1.isProperty)(property)) {
+                        return {
+                            transformedKey: property.rawKey,
+                            transform: (propertyValue) => property.valueSchema.json(propertyValue, opts),
+                        };
                     }
                     else {
-                        const value = await schemaOrObjectProperty.json(parsedPropertyValue);
-                        raw[parsedKey] = value;
+                        return {
+                            transformedKey: parsedKey,
+                            transform: (propertyValue) => property.json(propertyValue, opts),
+                        };
                     }
-                }
-                else if (includeUnknownKeysOnJson) {
-                    raw[parsedKey] = parsedPropertyValue;
-                }
-            }
-            return raw;
+                },
+                allowUnknownKeys: opts?.allowUnknownKeys ?? false,
+            });
         },
+        getType: () => Schema_1.SchemaType.OBJECT,
     };
     return {
         ...baseSchema,
@@ -12330,11 +12528,69 @@ function object(schemas) {
     };
 }
 exports.object = object;
+async function validateAndTransformObject({ value, requiredKeys, getProperty, allowUnknownKeys, }) {
+    if (!(0, isPlainObject_1.isPlainObject)(value)) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                },
+            ],
+        };
+    }
+    const missingRequiredKeys = new Set(requiredKeys);
+    const errors = [];
+    const transformed = {};
+    for (const [preTransformedKey, preTransformedItemValue] of Object.entries(value)) {
+        const property = getProperty(preTransformedKey);
+        if (property != null) {
+            missingRequiredKeys.delete(preTransformedKey);
+            const value = await property.transform(preTransformedItemValue);
+            if (value.ok) {
+                transformed[property.transformedKey] = value.value;
+            }
+            else {
+                errors.push(...value.errors.map((error) => ({
+                    path: [preTransformedKey, ...error.path],
+                    message: error.message,
+                })));
+            }
+        }
+        else if (allowUnknownKeys) {
+            transformed[preTransformedKey] = preTransformedItemValue;
+        }
+        else {
+            errors.push({
+                path: [preTransformedKey],
+                message: \`Unrecognized key \\"\${preTransformedKey}\\"\`,
+            });
+        }
+    }
+    errors.push(...requiredKeys
+        .filter((key) => missingRequiredKeys.has(key))
+        .map((key) => ({
+        path: [],
+        message: \`Missing required key \\"\${key}\\"\`,
+    })));
+    if (errors.length === 0) {
+        return {
+            ok: true,
+            value: transformed,
+        };
+    }
+    else {
+        return {
+            ok: false,
+            errors,
+        };
+    }
+}
 function getObjectUtils(schema) {
     return {
         extend: (extension) => {
             const baseSchema = {
-                ...object_like_1.OBJECT_LIKE_BRAND,
                 _getParsedProperties: async () => [
                     ...(await schema._getParsedProperties()),
                     ...(await extension._getParsedProperties()),
@@ -12344,21 +12600,22 @@ function getObjectUtils(schema) {
                     ...(await extension._getRawProperties()),
                 ],
                 parse: async (raw, opts) => {
-                    const rawExtensionPropertiesSet = new Set(await extension._getRawProperties());
-                    const [extensionProperties, otherProperties] = (0, partition_1.partition)((0, keys_1.keys)(raw), (key) => rawExtensionPropertiesSet.has(key));
-                    return {
-                        ...(await schema.parse((0, filterObject_1.filterObject)(raw, otherProperties), opts)),
-                        ...(await extension.parse((0, filterObject_1.filterObject)(raw, extensionProperties), opts)),
-                    };
+                    return validateAndTransformExtendedObject({
+                        extensionKeys: await extension._getRawProperties(),
+                        value: raw,
+                        transformBase: (rawBase) => schema.parse(rawBase, opts),
+                        transformExtension: (rawExtension) => extension.parse(rawExtension, opts),
+                    });
                 },
                 json: async (parsed, opts) => {
-                    const parsedExtensionPropertiesSet = new Set(await extension._getParsedProperties());
-                    const [extensionProperties, otherProperties] = (0, partition_1.partition)((0, keys_1.keys)(parsed), (key) => parsedExtensionPropertiesSet.has(key));
-                    return {
-                        ...(await schema.json((0, filterObject_1.filterObject)(parsed, otherProperties), opts)),
-                        ...(await extension.json((0, filterObject_1.filterObject)(parsed, extensionProperties), opts)),
-                    };
+                    return validateAndTransformExtendedObject({
+                        extensionKeys: await extension._getParsedProperties(),
+                        value: parsed,
+                        transformBase: (parsedBase) => schema.json(parsedBase, opts),
+                        transformExtension: (parsedExtension) => extension.json(parsedExtension, opts),
+                    });
                 },
+                getType: () => Schema_1.SchemaType.OBJECT,
             };
             return {
                 ...baseSchema,
@@ -12370,6 +12627,30 @@ function getObjectUtils(schema) {
     };
 }
 exports.getObjectUtils = getObjectUtils;
+async function validateAndTransformExtendedObject({ extensionKeys, value, transformBase, transformExtension, }) {
+    const extensionPropertiesSet = new Set(extensionKeys);
+    const [extensionProperties, baseProperties] = (0, partition_1.partition)((0, keys_1.keys)(value), (key) => extensionPropertiesSet.has(key));
+    const transformedBase = await transformBase((0, filterObject_1.filterObject)(value, baseProperties));
+    const transformedExtension = await transformExtension((0, filterObject_1.filterObject)(value, extensionProperties));
+    if (transformedBase.ok && transformedExtension.ok) {
+        return {
+            ok: true,
+            value: {
+                ...transformedBase.value,
+                ...transformedExtension.value,
+            },
+        };
+    }
+    else {
+        return {
+            ok: false,
+            errors: [
+                ...(transformedBase.ok ? [] : transformedBase.errors),
+                ...(transformedExtension.ok ? [] : transformedExtension.errors),
+            ],
+        };
+    }
+}
 ",
                     "name": "object.js",
                     "type": "file",
@@ -12409,12 +12690,13 @@ exports.isProperty = isProperty;
                     "type": "file",
                   },
                   Object {
-                    "contents": "import { inferParsed, inferRaw, Schema } from \\"../../Schema\\";
+                    "contents": "import { BaseSchema, inferParsed, inferRaw, Schema } from \\"../../Schema\\";
 import { addQuestionMarksToNullableProperties } from \\"../../utils/addQuestionMarksToNullableProperties\\";
-import { BaseObjectLikeSchema, ObjectLikeSchema } from \\"../object-like\\";
+import { ObjectLikeUtils } from \\"../object-like\\";
+import { SchemaUtils } from \\"../schema-utils\\";
 import { Property } from \\"./property\\";
-export declare type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> & ObjectLikeSchema<Raw, Parsed> & ObjectUtils<Raw, Parsed>;
-export interface BaseObjectSchema<Raw, Parsed> extends BaseObjectLikeSchema<Raw, Parsed> {
+export declare type ObjectSchema<Raw, Parsed> = BaseObjectSchema<Raw, Parsed> & ObjectLikeUtils<Raw, Parsed> & ObjectUtils<Raw, Parsed> & SchemaUtils<Raw, Parsed>;
+export interface BaseObjectSchema<Raw, Parsed> extends BaseSchema<Raw, Parsed> {
     _getRawProperties: () => Promise<(keyof Raw)[]>;
     _getParsedProperties: () => Promise<(keyof Parsed)[]>;
 }
@@ -12452,12 +12734,13 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "import { BaseObjectLikeSchema, ObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
-export declare function getObjectLikeUtils<Raw, Parsed>(schema: BaseObjectLikeSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed>;
+                    "contents": "import { BaseSchema } from \\"../../Schema\\";
+import { ObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
+export declare function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed>;
 /**
  * object-like utils are defined in one file to resolve issues with circular imports
  */
-export declare function withProperties<RawObjectShape, ParsedObjectShape, Properties>(objectLike: BaseObjectLikeSchema<RawObjectShape, ParsedObjectShape>, properties: {
+export declare function withParsedProperties<RawObjectShape, ParsedObjectShape, Properties>(objectLike: BaseSchema<RawObjectShape, ParsedObjectShape>, properties: {
     [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]);
 }): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties>;
 ",
@@ -12467,45 +12750,58 @@ export declare function withProperties<RawObjectShape, ParsedObjectShape, Proper
                   Object {
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.withProperties = exports.getObjectLikeUtils = void 0;
+exports.withParsedProperties = exports.getObjectLikeUtils = void 0;
+const filterObject_1 = require(\\"../../utils/filterObject\\");
+const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
-const types_1 = require(\\"./types\\");
 function getObjectLikeUtils(schema) {
     return {
-        withProperties: (properties) => withProperties(schema, properties),
+        withParsedProperties: (properties) => withParsedProperties(schema, properties),
     };
 }
 exports.getObjectLikeUtils = getObjectLikeUtils;
 /**
  * object-like utils are defined in one file to resolve issues with circular imports
  */
-function withProperties(objectLike, properties) {
+function withParsedProperties(objectLike, properties) {
     const objectSchema = {
-        ...types_1.OBJECT_LIKE_BRAND,
         parse: async (raw, opts) => {
             const parsedObject = await objectLike.parse(raw, opts);
+            if (!parsedObject.ok) {
+                return parsedObject;
+            }
             const additionalProperties = Object.entries(properties).reduce((processed, [key, value]) => {
                 return {
                     ...processed,
-                    [key]: typeof value === \\"function\\" ? value(parsedObject) : value,
+                    [key]: typeof value === \\"function\\" ? value(parsedObject.value) : value,
                 };
             }, {});
             return {
-                ...parsedObject,
-                ...additionalProperties,
+                ok: true,
+                value: {
+                    ...parsedObject.value,
+                    ...additionalProperties,
+                },
             };
         },
         json: (parsed, opts) => {
+            if (!(0, isPlainObject_1.isPlainObject)(parsed)) {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: [],
+                            message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                        },
+                    ],
+                };
+            }
             // strip out added properties
             const addedPropertyKeys = new Set(Object.keys(properties));
-            const parsedWithoutAddedProperties = Object.entries(parsed).reduce((filtered, [key, value]) => {
-                if (!addedPropertyKeys.has(key)) {
-                    filtered[key] = value;
-                }
-                return filtered;
-            }, {});
+            const parsedWithoutAddedProperties = (0, filterObject_1.filterObject)(parsed, Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key)));
             return objectLike.json(parsedWithoutAddedProperties, opts);
         },
+        getType: () => objectLike.getType(),
     };
     return {
         ...objectSchema,
@@ -12513,14 +12809,14 @@ function withProperties(objectLike, properties) {
         ...getObjectLikeUtils(objectSchema),
     };
 }
-exports.withProperties = withProperties;
+exports.withParsedProperties = withParsedProperties;
 ",
                     "name": "getObjectLikeUtils.js",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export { getObjectLikeUtils, withProperties } from \\"./getObjectLikeUtils\\";
-export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+                    "contents": "export { getObjectLikeUtils, withParsedProperties } from \\"./getObjectLikeUtils\\";
+export { type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -12528,30 +12824,22 @@ export { OBJECT_LIKE_BRAND, type BaseObjectLikeSchema, type ObjectLikeSchema, ty
                   Object {
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.OBJECT_LIKE_BRAND = exports.withProperties = exports.getObjectLikeUtils = void 0;
+exports.withParsedProperties = exports.getObjectLikeUtils = void 0;
 var getObjectLikeUtils_1 = require(\\"./getObjectLikeUtils\\");
 Object.defineProperty(exports, \\"getObjectLikeUtils\\", { enumerable: true, get: function () { return getObjectLikeUtils_1.getObjectLikeUtils; } });
-Object.defineProperty(exports, \\"withProperties\\", { enumerable: true, get: function () { return getObjectLikeUtils_1.withProperties; } });
-var types_1 = require(\\"./types\\");
-Object.defineProperty(exports, \\"OBJECT_LIKE_BRAND\\", { enumerable: true, get: function () { return types_1.OBJECT_LIKE_BRAND; } });
+Object.defineProperty(exports, \\"withParsedProperties\\", { enumerable: true, get: function () { return getObjectLikeUtils_1.withParsedProperties; } });
 ",
                     "name": "index.js",
                     "type": "file",
                   },
                   Object {
                     "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
-export declare type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> & BaseObjectLikeSchema<Raw, Parsed> & ObjectLikeUtils<Raw, Parsed>;
-export declare type BaseObjectLikeSchema<Raw, Parsed> = BaseSchema<Raw, Parsed> & {
-    _objectLike: void;
-};
+export declare type ObjectLikeSchema<Raw, Parsed> = Schema<Raw, Parsed> & BaseSchema<Raw, Parsed> & ObjectLikeUtils<Raw, Parsed>;
 export interface ObjectLikeUtils<Raw, Parsed> {
-    withProperties: <T extends Record<string, any>>(properties: {
+    withParsedProperties: <T extends Record<string, any>>(properties: {
         [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
     }) => ObjectLikeSchema<Raw, Parsed & T>;
 }
-export declare const OBJECT_LIKE_BRAND: {
-    _objectLike: void;
-};
 ",
                     "name": "types.d.ts",
                     "type": "file",
@@ -12559,8 +12847,6 @@ export declare const OBJECT_LIKE_BRAND: {
                   Object {
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.OBJECT_LIKE_BRAND = void 0;
-exports.OBJECT_LIKE_BRAND = undefined;
 ",
                     "name": "types.js",
                     "type": "file",
@@ -12572,7 +12858,7 @@ exports.OBJECT_LIKE_BRAND = undefined;
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "export declare const any: () => import(\\"../..\\").Schema<any, any>;
+                    "contents": "export declare const any: () => import(\\"../../Schema\\").Schema<any, any>;
 ",
                     "name": "any.d.ts",
                     "type": "file",
@@ -12581,14 +12867,15 @@ exports.OBJECT_LIKE_BRAND = undefined;
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.any = void 0;
-const identity_1 = require(\\"../identity\\");
-exports.any = (0, identity_1.createIdentitySchemaCreator)();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+exports.any = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ANY, (value) => ({ ok: true, value }));
 ",
                     "name": "any.js",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export declare const boolean: () => import(\\"../..\\").Schema<boolean, boolean>;
+                    "contents": "export declare const boolean: () => import(\\"../../Schema\\").Schema<boolean, boolean>;
 ",
                     "name": "boolean.d.ts",
                     "type": "file",
@@ -12597,8 +12884,27 @@ exports.any = (0, identity_1.createIdentitySchemaCreator)();
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.boolean = void 0;
-const identity_1 = require(\\"../identity\\");
-exports.boolean = (0, identity_1.createIdentitySchemaCreator)();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.BOOLEAN, (value) => {
+    if (typeof value === \\"boolean\\") {
+        return {
+            ok: true,
+            value,
+        };
+    }
+    else {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: \\"Not a boolean\\",
+                },
+            ],
+        };
+    }
+});
 ",
                     "name": "boolean.js",
                     "type": "file",
@@ -12632,7 +12938,7 @@ Object.defineProperty(exports, \\"unknown\\", { enumerable: true, get: function 
                     "type": "file",
                   },
                   Object {
-                    "contents": "export declare const number: () => import(\\"../..\\").Schema<number, number>;
+                    "contents": "export declare const number: () => import(\\"../../Schema\\").Schema<number, number>;
 ",
                     "name": "number.d.ts",
                     "type": "file",
@@ -12641,14 +12947,33 @@ Object.defineProperty(exports, \\"unknown\\", { enumerable: true, get: function 
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.number = void 0;
-const identity_1 = require(\\"../identity\\");
-exports.number = (0, identity_1.createIdentitySchemaCreator)();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.NUMBER, (value) => {
+    if (typeof value === \\"number\\") {
+        return {
+            ok: true,
+            value,
+        };
+    }
+    else {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: \\"Not a number\\",
+                },
+            ],
+        };
+    }
+});
 ",
                     "name": "number.js",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export declare const string: () => import(\\"../..\\").Schema<string, string>;
+                    "contents": "export declare const string: () => import(\\"../../Schema\\").Schema<string, string>;
 ",
                     "name": "string.d.ts",
                     "type": "file",
@@ -12657,14 +12982,33 @@ exports.number = (0, identity_1.createIdentitySchemaCreator)();
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.string = void 0;
-const identity_1 = require(\\"../identity\\");
-exports.string = (0, identity_1.createIdentitySchemaCreator)();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING, (value) => {
+    if (typeof value === \\"string\\") {
+        return {
+            ok: true,
+            value,
+        };
+    }
+    else {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: \\"Not a string\\",
+                },
+            ],
+        };
+    }
+});
 ",
                     "name": "string.js",
                     "type": "file",
                   },
                   Object {
-                    "contents": "export declare const unknown: () => import(\\"../..\\").Schema<unknown, unknown>;
+                    "contents": "export declare const unknown: () => import(\\"../../Schema\\").Schema<unknown, unknown>;
 ",
                     "name": "unknown.d.ts",
                     "type": "file",
@@ -12673,8 +13017,9 @@ exports.string = (0, identity_1.createIdentitySchemaCreator)();
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.unknown = void 0;
-const identity_1 = require(\\"../identity\\");
-exports.unknown = (0, identity_1.createIdentitySchemaCreator)();
+const Schema_1 = require(\\"../../Schema\\");
+const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+exports.unknown = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.UNKNOWN, (value) => ({ ok: true, value }));
 ",
                     "name": "unknown.js",
                     "type": "file",
@@ -12687,6 +13032,7 @@ exports.unknown = (0, identity_1.createIdentitySchemaCreator)();
                 "contents": Array [
                   Object {
                     "contents": "export { record } from \\"./record\\";
+export { type BaseRecordSchema, type RecordSchema } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -12703,7 +13049,8 @@ Object.defineProperty(exports, \\"record\\", { enumerable: true, get: function (
                   },
                   Object {
                     "contents": "import { Schema } from \\"../../Schema\\";
-export declare function record<RawKey extends string | number, ParsedKey extends string | number, RawValue, ParsedValue>(keySchema: Schema<RawKey, ParsedKey>, valueSchema: Schema<RawValue, ParsedValue>): Schema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>>;
+import { RecordSchema } from \\"./types\\";
+export declare function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(keySchema: Schema<RawKey, ParsedKey>, valueSchema: Schema<RawValue, ParsedValue>): RecordSchema<RawKey, RawValue, ParsedKey, ParsedValue>;
 ",
                     "name": "record.d.ts",
                     "type": "file",
@@ -12712,26 +13059,29 @@ export declare function record<RawKey extends string | number, ParsedKey extends
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.record = void 0;
+const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
+const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function record(keySchema, valueSchema) {
     const baseSchema = {
-        parse: (raw, opts) => {
-            return (0, entries_1.entries)(raw).reduce(async (parsedPromise, [key, value]) => {
-                const parsed = await parsedPromise;
-                const parsedKey = await keySchema.parse(key, opts);
-                parsed[parsedKey] = await valueSchema.parse(value, opts);
-                return parsedPromise;
-            }, Promise.resolve({}));
+        parse: async (raw, opts) => {
+            return validateAndTransformRecord({
+                value: raw,
+                isKeyNumeric: (await keySchema.getType()) === Schema_1.SchemaType.NUMBER,
+                transformKey: (key) => keySchema.parse(key, opts),
+                transformValue: (value) => valueSchema.parse(value, opts),
+            });
         },
-        json: (parsed, opts) => {
-            return (0, entries_1.entries)(parsed).reduce(async (rawPromise, [key, value]) => {
-                const raw = await rawPromise;
-                const rawKey = await keySchema.json(key, opts);
-                raw[rawKey] = await valueSchema.json(value, opts);
-                return rawPromise;
-            }, Promise.resolve({}));
+        json: async (parsed, opts) => {
+            return validateAndTransformRecord({
+                value: parsed,
+                isKeyNumeric: (await keySchema.getType()) === Schema_1.SchemaType.NUMBER,
+                transformKey: (key) => keySchema.json(key, opts),
+                transformValue: (value) => valueSchema.json(value, opts),
+            });
         },
+        getType: () => Schema_1.SchemaType.RECORD,
     };
     return {
         ...baseSchema,
@@ -12739,8 +13089,83 @@ function record(keySchema, valueSchema) {
     };
 }
 exports.record = record;
+async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, }) {
+    if (!(0, isPlainObject_1.isPlainObject)(value)) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                },
+            ],
+        };
+    }
+    return (0, entries_1.entries)(value).reduce(async (accPromise, [stringKey, value]) => {
+        // skip nullish keys
+        if (value == null) {
+            return accPromise;
+        }
+        const acc = await accPromise;
+        let key = stringKey;
+        if (isKeyNumeric) {
+            const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
+            if (!isNaN(numberKey)) {
+                key = numberKey;
+            }
+        }
+        const transformedKey = await transformKey(key);
+        const transformedValue = await transformValue(value);
+        if (acc.ok && transformedKey.ok && transformedValue.ok) {
+            return {
+                ok: true,
+                value: {
+                    ...acc.value,
+                    [transformedKey.value]: transformedValue.value,
+                },
+            };
+        }
+        const errors = [];
+        if (!acc.ok) {
+            errors.push(...acc.errors);
+        }
+        if (!transformedKey.ok) {
+            errors.push(...transformedKey.errors.map((error) => ({
+                path: [\`\${key} (key)\`, ...error.path],
+                message: error.message,
+            })));
+        }
+        if (!transformedValue.ok) {
+            errors.push(...transformedValue.errors.map((error) => ({
+                path: [stringKey, ...error.path],
+                message: error.message,
+            })));
+        }
+        return {
+            ok: false,
+            errors,
+        };
+    }, Promise.resolve({ ok: true, value: {} }));
+}
 ",
                     "name": "record.js",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import { BaseSchema } from \\"../../Schema\\";
+import { OptionalRecord } from \\"../../utils/OptionalRecord\\";
+import { SchemaUtils } from \\"../schema-utils\\";
+export declare type RecordSchema<RawKey extends string | number, RawValue, ParsedKey extends string | number, ParsedValue> = BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> & SchemaUtils<OptionalRecord<RawKey, RawValue>, OptionalRecord<ParsedKey, ParsedValue>>;
+export declare type BaseRecordSchema<RawKey extends string | number, RawValue, ParsedKey extends string | number, ParsedValue> = BaseSchema<OptionalRecord<RawKey, RawValue>, OptionalRecord<ParsedKey, ParsedValue>>;
+",
+                    "name": "types.d.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+",
+                    "name": "types.js",
                     "type": "file",
                   },
                 ],
@@ -12750,18 +13175,77 @@ exports.record = record;
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "import { BaseSchema, Schema } from \\"../../Schema\\";
-import { OptionalSchema } from \\"./types\\";
+                    "contents": "import { ValidationError } from \\"../../Schema\\";
+export declare class JsonError extends Error {
+    readonly errors: ValidationError[];
+    constructor(errors: ValidationError[]);
+}
+",
+                    "name": "JsonError.d.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.JsonError = void 0;
+class JsonError extends Error {
+    errors;
+    constructor(errors) {
+        super();
+        this.errors = errors;
+        Object.setPrototypeOf(this, JsonError.prototype);
+    }
+}
+exports.JsonError = JsonError;
+",
+                    "name": "JsonError.js",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import { ValidationError } from \\"../../Schema\\";
+export declare class ParseError extends Error {
+    readonly errors: ValidationError[];
+    constructor(errors: ValidationError[]);
+}
+",
+                    "name": "ParseError.d.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.ParseError = void 0;
+class ParseError extends Error {
+    errors;
+    constructor(errors) {
+        super();
+        this.errors = errors;
+        Object.setPrototypeOf(this, ParseError.prototype);
+    }
+}
+exports.ParseError = ParseError;
+",
+                    "name": "ParseError.js",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import { BaseSchema, Schema, SchemaOptions } from \\"../../Schema\\";
 export interface SchemaUtils<Raw, Parsed> {
-    optional: () => OptionalSchema<Raw, Parsed>;
-    transform: <PostTransform>(transformer: BaseSchema<Parsed, PostTransform>) => Schema<Raw, PostTransform>;
+    optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
+    transform: <Transformed>(transformer: SchemaTransformer<Parsed, Transformed>) => Schema<Raw, Transformed>;
+    parseOrThrow: (raw: unknown, opts?: SchemaOptions) => Promise<Parsed>;
+    jsonOrThrow: (raw: unknown, opts?: SchemaOptions) => Promise<Raw>;
+}
+export interface SchemaTransformer<Parsed, Transformed> {
+    transform: (parsed: Parsed) => Transformed;
+    untransform: (transformed: unknown) => Parsed;
 }
 export declare function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed>;
 /**
  * schema utils are defined in one file to resolve issues with circular imports
  */
-export declare function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): OptionalSchema<Raw, Parsed>;
-export declare function transform<PreTransformRaw, PreTransformParsed, PostTransform>(schema: BaseSchema<PreTransformRaw, PreTransformParsed>, transformer: BaseSchema<PreTransformParsed, PostTransform>): Schema<PreTransformRaw, PostTransform>;
+export declare function optional<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): Schema<Raw | null | undefined, Parsed | undefined>;
+export declare function transform<Raw, Parsed, Transformed>(schema: BaseSchema<Raw, Parsed>, transformer: SchemaTransformer<Parsed, Transformed>): Schema<Raw, Transformed>;
 ",
                     "name": "getSchemaUtils.d.ts",
                     "type": "file",
@@ -12770,11 +13254,27 @@ export declare function transform<PreTransformRaw, PreTransformParsed, PostTrans
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.transform = exports.optional = exports.getSchemaUtils = void 0;
-const types_1 = require(\\"./types\\");
+const Schema_1 = require(\\"../../Schema\\");
+const JsonError_1 = require(\\"./JsonError\\");
+const ParseError_1 = require(\\"./ParseError\\");
 function getSchemaUtils(schema) {
     return {
         optional: () => optional(schema),
         transform: (transformer) => transform(schema, transformer),
+        parseOrThrow: async (raw, opts) => {
+            const parsed = await schema.parse(raw, opts);
+            if (parsed.ok) {
+                return parsed.value;
+            }
+            throw new ParseError_1.ParseError(parsed.errors);
+        },
+        jsonOrThrow: async (parsed, opts) => {
+            const raw = await schema.json(parsed, opts);
+            if (raw.ok) {
+                return raw.value;
+            }
+            throw new JsonError_1.JsonError(raw.errors);
+        },
     };
 }
 exports.getSchemaUtils = getSchemaUtils;
@@ -12783,11 +13283,27 @@ exports.getSchemaUtils = getSchemaUtils;
  */
 function optional(schema) {
     const baseSchema = {
-        parse: (raw, opts) => (raw != null ? schema.parse(raw, opts) : undefined),
-        json: (parsed, opts) => (parsed != null ? schema.json(parsed, opts) : null),
+        parse: (raw, opts) => {
+            if (raw == null) {
+                return {
+                    ok: true,
+                    value: undefined,
+                };
+            }
+            return schema.parse(raw, opts);
+        },
+        json: (parsed, opts) => {
+            if (parsed == null) {
+                return {
+                    ok: true,
+                    value: null,
+                };
+            }
+            return schema.json(parsed, opts);
+        },
+        getType: () => Schema_1.SchemaType.OPTIONAL,
     };
     return {
-        ...types_1.OPTIONAL_BRAND,
         ...baseSchema,
         ...getSchemaUtils(baseSchema),
     };
@@ -12796,13 +13312,20 @@ exports.optional = optional;
 function transform(schema, transformer) {
     const baseSchema = {
         parse: async (raw, opts) => {
-            const postTransformParsed = await schema.parse(raw, opts);
-            return transformer.parse(postTransformParsed, opts);
+            const parsed = await schema.parse(raw, opts);
+            if (!parsed.ok) {
+                return parsed;
+            }
+            return {
+                ok: true,
+                value: transformer.transform(parsed.value),
+            };
         },
-        json: async (parsed, opts) => {
-            const preTransformParsed = await transformer.json(parsed, opts);
-            return schema.json(preTransformParsed, opts);
+        json: async (transformed, opts) => {
+            const parsed = await transformer.untransform(transformed);
+            return schema.json(parsed, opts);
         },
+        getType: () => schema.getType(),
     };
     return {
         ...baseSchema,
@@ -12816,7 +13339,8 @@ exports.transform = transform;
                   },
                   Object {
                     "contents": "export { getSchemaUtils, optional, transform, type SchemaUtils } from \\"./getSchemaUtils\\";
-export { OPTIONAL_BRAND, type OptionalSchema } from \\"./types\\";
+export { JsonError } from \\"./JsonError\\";
+export { ParseError } from \\"./ParseError\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -12824,36 +13348,17 @@ export { OPTIONAL_BRAND, type OptionalSchema } from \\"./types\\";
                   Object {
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.OPTIONAL_BRAND = exports.transform = exports.optional = exports.getSchemaUtils = void 0;
+exports.ParseError = exports.JsonError = exports.transform = exports.optional = exports.getSchemaUtils = void 0;
 var getSchemaUtils_1 = require(\\"./getSchemaUtils\\");
 Object.defineProperty(exports, \\"getSchemaUtils\\", { enumerable: true, get: function () { return getSchemaUtils_1.getSchemaUtils; } });
 Object.defineProperty(exports, \\"optional\\", { enumerable: true, get: function () { return getSchemaUtils_1.optional; } });
 Object.defineProperty(exports, \\"transform\\", { enumerable: true, get: function () { return getSchemaUtils_1.transform; } });
-var types_1 = require(\\"./types\\");
-Object.defineProperty(exports, \\"OPTIONAL_BRAND\\", { enumerable: true, get: function () { return types_1.OPTIONAL_BRAND; } });
+var JsonError_1 = require(\\"./JsonError\\");
+Object.defineProperty(exports, \\"JsonError\\", { enumerable: true, get: function () { return JsonError_1.JsonError; } });
+var ParseError_1 = require(\\"./ParseError\\");
+Object.defineProperty(exports, \\"ParseError\\", { enumerable: true, get: function () { return ParseError_1.ParseError; } });
 ",
                     "name": "index.js",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "import { Schema } from \\"../../Schema\\";
-export declare const OPTIONAL_BRAND: {
-    _isOptional: void;
-};
-export declare type OptionalSchema<Raw, Parsed> = Schema<Raw | null | undefined, Parsed | undefined> & {
-    _isOptional: void;
-};
-",
-                    "name": "types.d.ts",
-                    "type": "file",
-                  },
-                  Object {
-                    "contents": "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.OPTIONAL_BRAND = void 0;
-exports.OPTIONAL_BRAND = undefined;
-",
-                    "name": "types.js",
                     "type": "file",
                   },
                 ],
@@ -12889,11 +13394,40 @@ export declare function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Ra
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.set = void 0;
+const Schema_1 = require(\\"../../Schema\\");
+const list_1 = require(\\"../list\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function set(schema) {
+    const listSchema = (0, list_1.list)(schema);
     const baseSchema = {
-        parse: async (raw, opts) => new Set(await Promise.all(raw.map((item) => schema.parse(item, opts)))),
-        json: (parsed, opts) => Promise.all([...parsed].map((item) => schema.json(item, opts))),
+        parse: async (raw, opts) => {
+            const parsedList = await listSchema.parse(raw, opts);
+            if (parsedList.ok) {
+                return {
+                    ok: true,
+                    value: new Set(parsedList.value),
+                };
+            }
+            else {
+                return parsedList;
+            }
+        },
+        json: async (parsed, opts) => {
+            if (!(parsed instanceof Set)) {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: [],
+                            message: \\"Not a Set\\",
+                        },
+                    ],
+                };
+            }
+            const jsonList = await listSchema.json([...parsed], opts);
+            return jsonList;
+        },
+        getType: () => Schema_1.SchemaType.SET,
     };
     return {
         ...baseSchema,
@@ -12994,6 +13528,10 @@ export declare function union<D extends string | Discriminant<any, any>, U exten
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.union = void 0;
+const Schema_1 = require(\\"../../Schema\\");
+const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
+const keys_1 = require(\\"../../utils/keys\\");
+const enum_1 = require(\\"../enum\\");
 const object_like_1 = require(\\"../object-like\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function union(discriminant, union) {
@@ -13001,38 +13539,15 @@ function union(discriminant, union) {
     const parsedDiscriminant = typeof discriminant === \\"string\\"
         ? discriminant
         : discriminant.parsedDiscriminant;
+    const discriminantValueSchema = (0, enum_1.enum_)((0, keys_1.keys)(union));
     const baseSchema = {
-        ...object_like_1.OBJECT_LIKE_BRAND,
         parse: async (raw, opts) => {
-            const { [rawDiscriminant]: discriminantValue, ...additionalProperties } = raw;
-            const additionalPropertySchemas = union[discriminantValue];
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (additionalPropertySchemas == null) {
-                return {
-                    ...additionalProperties,
-                    [parsedDiscriminant]: discriminantValue,
-                };
-            }
-            return {
-                ...(await additionalPropertySchemas.parse(additionalProperties, opts)),
-                [parsedDiscriminant]: discriminantValue,
-            };
+            return transformAndValidateUnion(raw, rawDiscriminant, parsedDiscriminant, (discriminantValue) => discriminantValueSchema.parse(discriminantValue, opts), (discriminantValue) => union[discriminantValue], opts?.allowUnknownKeys ?? false, (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.parse(additionalProperties, opts));
         },
         json: async (parsed, opts) => {
-            const { [parsedDiscriminant]: discriminantValue, ...additionalProperties } = parsed;
-            const additionalPropertySchemas = union[discriminantValue];
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (additionalPropertySchemas == null) {
-                return {
-                    ...additionalProperties,
-                    [rawDiscriminant]: discriminantValue,
-                };
-            }
-            return {
-                ...(await additionalPropertySchemas.json(additionalProperties, opts)),
-                [rawDiscriminant]: discriminantValue,
-            };
+            return transformAndValidateUnion(parsed, parsedDiscriminant, rawDiscriminant, (discriminantValue) => discriminantValueSchema.json(discriminantValue, opts), (discriminantValue) => union[discriminantValue], opts?.allowUnknownKeys ?? false, (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.json(additionalProperties, opts));
         },
+        getType: () => Schema_1.SchemaType.UNION,
     };
     return {
         ...baseSchema,
@@ -13041,6 +13556,75 @@ function union(discriminant, union) {
     };
 }
 exports.union = union;
+async function transformAndValidateUnion(value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnknownKeys, transformAdditionalProperties) {
+    if (!(0, isPlainObject_1.isPlainObject)(value)) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                },
+            ],
+        };
+    }
+    const { [discriminant]: discriminantValue, ...additionalProperties } = value;
+    if (discriminantValue == null) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: [],
+                    message: \`Missing discriminant (\\"\${discriminant}\\")\`,
+                },
+            ],
+        };
+    }
+    const transformedDiscriminantValue = await transformDiscriminantValue(discriminantValue);
+    if (!transformedDiscriminantValue.ok) {
+        return {
+            ok: false,
+            errors: transformedDiscriminantValue.errors.map((error) => ({
+                path: [discriminant, ...error.path],
+                message: error.message,
+            })),
+        };
+    }
+    const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
+    if (additionalPropertiesSchema == null) {
+        if (allowUnknownKeys) {
+            return {
+                ok: true,
+                value: {
+                    [transformedDiscriminant]: transformedDiscriminantValue.value,
+                    ...additionalProperties,
+                },
+            };
+        }
+        else {
+            return {
+                ok: false,
+                errors: [
+                    {
+                        path: [discriminant],
+                        message: \\"Unrecognized discriminant value\\",
+                    },
+                ],
+            };
+        }
+    }
+    const transformedAdditionalProperties = await transformAdditionalProperties(additionalProperties, additionalPropertiesSchema);
+    if (!transformedAdditionalProperties.ok) {
+        return transformedAdditionalProperties;
+    }
+    return {
+        ok: true,
+        value: {
+            [transformedDiscriminant]: discriminantValue,
+            ...transformedAdditionalProperties.value,
+        },
+    };
+}
 ",
                     "name": "union.js",
                     "type": "file",
@@ -13085,6 +13669,32 @@ __exportStar(require(\\"./builders\\"), exports);
           Object {
             "contents": Array [
               Object {
+                "contents": "export declare type MaybePromise<T> = T | Promise<T>;
+",
+                "name": "MaybePromise.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+",
+                "name": "MaybePromise.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "export declare type OptionalRecord<K extends string | number, V> = Record<K, V | undefined>;
+",
+                "name": "OptionalRecord.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+",
+                "name": "OptionalRecord.js",
+                "type": "file",
+              },
+              Object {
                 "contents": "export declare type addQuestionMarksToNullableProperties<T> = {
     [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
@@ -13103,6 +13713,36 @@ export declare type RequiredKeys<T> = {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 ",
                 "name": "addQuestionMarksToNullableProperties.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { MaybeValid, Schema, SchemaOptions, SchemaType } from \\"../Schema\\";
+export declare function createIdentitySchemaCreator<T>(schemaType: SchemaType, validate: (value: unknown, opts?: SchemaOptions) => MaybeValid<T>): () => Schema<T, T>;
+",
+                "name": "createIdentitySchemaCreator.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.createIdentitySchemaCreator = void 0;
+const schema_utils_1 = require(\\"../builders/schema-utils\\");
+function createIdentitySchemaCreator(schemaType, validate) {
+    return () => {
+        const baseSchema = {
+            parse: validate,
+            json: validate,
+            getType: () => schemaType,
+        };
+        return {
+            ...baseSchema,
+            ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
+        };
+    };
+}
+exports.createIdentitySchemaCreator = createIdentitySchemaCreator;
+",
+                "name": "createIdentitySchemaCreator.js",
                 "type": "file",
               },
               Object {
@@ -13146,6 +13786,37 @@ function filterObject(obj, keysToInclude) {
 exports.filterObject = filterObject;
 ",
                 "name": "filterObject.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "export declare const NOT_AN_OBJECT_ERROR_MESSAGE = \\"Not an object\\";
+export declare function isPlainObject(value: unknown): value is Record<string, unknown>;
+",
+                "name": "isPlainObject.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.isPlainObject = exports.NOT_AN_OBJECT_ERROR_MESSAGE = void 0;
+exports.NOT_AN_OBJECT_ERROR_MESSAGE = \\"Not an object\\";
+// borrowed from https://github.com/lodash/lodash/blob/master/isPlainObject.js
+function isPlainObject(value) {
+    if (typeof value !== \\"object\\" || value === null) {
+        return false;
+    }
+    if (Object.getPrototypeOf(value) === null) {
+        return true;
+    }
+    let proto = value;
+    while (Object.getPrototypeOf(proto) !== null) {
+        proto = Object.getPrototypeOf(proto);
+    }
+    return Object.getPrototypeOf(value) === proto;
+}
+exports.isPlainObject = isPlainObject;
+",
+                "name": "isPlainObject.js",
                 "type": "file",
               },
               Object {
@@ -13877,7 +14548,7 @@ export declare const BinaryTreeValue: core.serialization.ObjectSchema<serializer
 export declare namespace BinaryTreeValue {
     interface Raw {
         root?: serializers.NodeId.Raw | null;
-        nodes: Record<serializers.NodeId.Raw, serializers.BinaryTreeNodeValue.Raw>;
+        nodes: Record<serializers.NodeId.Raw, serializers.BinaryTreeNodeValue.Raw | null | undefined>;
     }
 }
 ",
@@ -13917,7 +14588,7 @@ exports.BinaryTreeValue = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.BinaryTreeValue = core.serialization.object({
     root: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId).optional(),
-    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).BinaryTreeNodeValue)),
+    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).BinaryTreeNodeValue).optional()),
 });
 ",
                     "name": "BinaryTreeValue.js",
@@ -14207,7 +14878,7 @@ exports.DebugVariableValue = core.serialization
     genericValue: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).GenericValue),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"integerValue\\":
                 return __1.TraceApi.DebugVariableValue.integerValue(value.value);
@@ -14239,7 +14910,7 @@ exports.DebugVariableValue = core.serialization
                 return __1.TraceApi.DebugVariableValue._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "DebugVariableValue.js",
@@ -14374,7 +15045,7 @@ export declare const DoublyLinkedListValue: core.serialization.ObjectSchema<seri
 export declare namespace DoublyLinkedListValue {
     interface Raw {
         head?: serializers.NodeId.Raw | null;
-        nodes: Record<serializers.NodeId.Raw, serializers.DoublyLinkedListNodeValue.Raw>;
+        nodes: Record<serializers.NodeId.Raw, serializers.DoublyLinkedListNodeValue.Raw | null | undefined>;
     }
 }
 ",
@@ -14414,7 +15085,7 @@ exports.DoublyLinkedListValue = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.DoublyLinkedListValue = core.serialization.object({
     head: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId).optional(),
-    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DoublyLinkedListNodeValue)),
+    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DoublyLinkedListNodeValue).optional()),
 });
 ",
                     "name": "DoublyLinkedListValue.js",
@@ -15091,7 +15762,7 @@ export declare const SinglyLinkedListValue: core.serialization.ObjectSchema<seri
 export declare namespace SinglyLinkedListValue {
     interface Raw {
         head?: serializers.NodeId.Raw | null;
-        nodes: Record<serializers.NodeId.Raw, serializers.SinglyLinkedListNodeValue.Raw>;
+        nodes: Record<serializers.NodeId.Raw, serializers.SinglyLinkedListNodeValue.Raw | null | undefined>;
     }
 }
 ",
@@ -15131,7 +15802,7 @@ exports.SinglyLinkedListValue = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.SinglyLinkedListValue = core.serialization.object({
     head: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId).optional(),
-    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SinglyLinkedListNodeValue)),
+    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SinglyLinkedListNodeValue).optional()),
 });
 ",
                     "name": "SinglyLinkedListValue.js",
@@ -15393,7 +16064,7 @@ exports.VariableType = core.serialization
     doublyLinkedListType: core.serialization.object({}),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"integerType\\":
                 return __1.TraceApi.VariableType.integerType();
@@ -15419,7 +16090,7 @@ exports.VariableType = core.serialization
                 return __1.TraceApi.VariableType._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "VariableType.js",
@@ -15538,7 +16209,7 @@ exports.VariableValue = core.serialization
     nullValue: core.serialization.object({}),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"integerValue\\":
                 return __1.TraceApi.VariableValue.integerValue(value.value);
@@ -15566,7 +16237,7 @@ exports.VariableValue = core.serialization
                 return __1.TraceApi.VariableValue._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "VariableValue.js",
@@ -16680,7 +17351,7 @@ exports.DateUnion = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"date\\":
                 return __1.TraceApi.DateUnion.date(value.value);
@@ -16690,7 +17361,7 @@ exports.DateUnion = core.serialization
                 return __1.TraceApi.DateUnion._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "DateUnion.js",
@@ -17023,7 +17694,7 @@ exports.PlaylistIdNotFoundErrorBody = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"playlistId\\":
                 return __1.TraceApi.PlaylistIdNotFoundErrorBody.playlistId(value.value);
@@ -17031,7 +17702,7 @@ exports.PlaylistIdNotFoundErrorBody = core.serialization
                 return __1.TraceApi.PlaylistIdNotFoundErrorBody._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "PlaylistIdNotFoundErrorBody.js",
@@ -17403,7 +18074,7 @@ exports.CreateProblemError = core.serialization
     generic: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).GenericCreateProblemError),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.errorType) {
             case \\"generic\\":
                 return __1.TraceApi.CreateProblemError.generic(value);
@@ -17411,7 +18082,7 @@ exports.CreateProblemError = core.serialization
                 return __1.TraceApi.CreateProblemError._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "CreateProblemError.js",
@@ -17549,7 +18220,7 @@ exports.CreateProblemResponse = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"success\\":
                 return __1.TraceApi.CreateProblemResponse.success(value.value);
@@ -17559,7 +18230,7 @@ exports.CreateProblemResponse = core.serialization
                 return __1.TraceApi.CreateProblemResponse._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "CreateProblemResponse.js",
@@ -17806,7 +18477,7 @@ exports.ProblemDescriptionBoard = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"html\\":
                 return __1.TraceApi.ProblemDescriptionBoard.html(value.value);
@@ -17818,7 +18489,7 @@ exports.ProblemDescriptionBoard = core.serialization
                 return __1.TraceApi.ProblemDescriptionBoard._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "ProblemDescriptionBoard.js",
@@ -17964,7 +18635,7 @@ import * as core from \\"../../../../core\\";
 export declare const ProblemsMap: core.serialization.ObjectSchema<serializers.ProblemsMap.Raw, TraceApi.ProblemsMap>;
 export declare namespace ProblemsMap {
     interface Raw {
-        problemsById: Record<serializers.ProblemId.Raw, serializers.ProblemInfo.Raw>;
+        problemsById: Record<serializers.ProblemId.Raw, serializers.ProblemInfo.Raw | null | undefined>;
     }
 }
 ",
@@ -18003,7 +18674,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.ProblemsMap = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.ProblemsMap = core.serialization.object({
-    problemsById: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemInfo)),
+    problemsById: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemInfo).optional()),
 });
 ",
                     "name": "ProblemsMap.js",
@@ -18377,7 +19048,7 @@ exports.ActualResult = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"value\\":
                 return __1.TraceApi.ActualResult.value(value.value);
@@ -18389,7 +19060,7 @@ exports.ActualResult = core.serialization
                 return __1.TraceApi.ActualResult._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "ActualResult.js",
@@ -18547,7 +19218,7 @@ exports.CodeExecutionUpdate = core.serialization
     finished: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).FinishedResponse),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"buildingExecutor\\":
                 return __1.TraceApi.CodeExecutionUpdate.buildingExecutor(value);
@@ -18575,7 +19246,7 @@ exports.CodeExecutionUpdate = core.serialization
                 return __1.TraceApi.CodeExecutionUpdate._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "CodeExecutionUpdate.js",
@@ -18756,7 +19427,7 @@ exports.ErrorInfo = core.serialization
     internalError: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).InternalError),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"compileError\\":
                 return __1.TraceApi.ErrorInfo.compileError(value);
@@ -18768,7 +19439,7 @@ exports.ErrorInfo = core.serialization
                 return __1.TraceApi.ErrorInfo._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "ErrorInfo.js",
@@ -18949,7 +19620,7 @@ exports.ExceptionV2 = core.serialization
     timeout: core.serialization.object({}),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"generic\\":
                 return __1.TraceApi.ExceptionV2.generic(value);
@@ -18959,7 +19630,7 @@ exports.ExceptionV2 = core.serialization
                 return __1.TraceApi.ExceptionV2._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "ExceptionV2.js",
@@ -19326,7 +19997,7 @@ import * as core from \\"../../../../core\\";
 export declare const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<serializers.GetExecutionSessionStateResponse.Raw, TraceApi.GetExecutionSessionStateResponse>;
 export declare namespace GetExecutionSessionStateResponse {
     interface Raw {
-        states: Record<string, serializers.ExecutionSessionState.Raw>;
+        states: Record<string, serializers.ExecutionSessionState.Raw | null | undefined>;
         numWarmingInstances?: number | null;
         warmingSessionIds: string[];
     }
@@ -19367,7 +20038,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.GetExecutionSessionStateResponse = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GetExecutionSessionStateResponse = core.serialization.object({
-    states: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ExecutionSessionState)),
+    states: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ExecutionSessionState).optional()),
     numWarmingInstances: core.serialization.number().optional(),
     warmingSessionIds: core.serialization.list(core.serialization.string()),
 });
@@ -19502,7 +20173,7 @@ export declare const GradedResponse: core.serialization.ObjectSchema<serializers
 export declare namespace GradedResponse {
     interface Raw {
         submissionId: serializers.SubmissionId.Raw;
-        testCases: Record<string, serializers.TestCaseResultWithStdout.Raw>;
+        testCases: Record<string, serializers.TestCaseResultWithStdout.Raw | null | undefined>;
     }
 }
 ",
@@ -19542,7 +20213,7 @@ exports.GradedResponse = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GradedResponse = core.serialization.object({
     submissionId: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionId),
-    testCases: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseResultWithStdout)),
+    testCases: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseResultWithStdout).optional()),
 });
 ",
                     "name": "GradedResponse.js",
@@ -19559,7 +20230,7 @@ export declare const GradedResponseV2: core.serialization.ObjectSchema<serialize
 export declare namespace GradedResponseV2 {
     interface Raw {
         submissionId: serializers.SubmissionId.Raw;
-        testCases: Record<serializers.v2.TestCaseId.Raw, serializers.TestCaseGrade.Raw>;
+        testCases: Record<serializers.v2.TestCaseId.Raw, serializers.TestCaseGrade.Raw | null | undefined>;
     }
 }
 ",
@@ -19599,7 +20270,7 @@ exports.GradedResponseV2 = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GradedResponseV2 = core.serialization.object({
     submissionId: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionId),
-    testCases: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).v2.TestCaseId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseGrade)),
+    testCases: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).v2.TestCaseId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseGrade).optional()),
 });
 ",
                     "name": "GradedResponseV2.js",
@@ -19837,7 +20508,7 @@ exports.InvalidRequestCause = core.serialization
     unexpectedLanguage: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).UnexpectedLanguageError),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"submissionIdNotFound\\":
                 return __1.TraceApi.InvalidRequestCause.submissionIdNotFound(value);
@@ -19849,7 +20520,7 @@ exports.InvalidRequestCause = core.serialization
                 return __1.TraceApi.InvalidRequestCause._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "InvalidRequestCause.js",
@@ -20327,7 +20998,7 @@ import * as core from \\"../../../../core\\";
 export declare const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, TraceApi.Scope>;
 export declare namespace Scope {
     interface Raw {
-        variables: Record<string, serializers.DebugVariableValue.Raw>;
+        variables: Record<string, serializers.DebugVariableValue.Raw | null | undefined>;
     }
 }
 ",
@@ -20366,7 +21037,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.Scope = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.Scope = core.serialization.object({
-    variables: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DebugVariableValue)),
+    variables: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DebugVariableValue).optional()),
 });
 ",
                     "name": "Scope.js",
@@ -20999,7 +21670,7 @@ exports.SubmissionRequest = core.serialization
     stop: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).StopRequest),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"initializeProblemRequest\\":
                 return __1.TraceApi.SubmissionRequest.initializeProblemRequest(value);
@@ -21015,7 +21686,7 @@ exports.SubmissionRequest = core.serialization
                 return __1.TraceApi.SubmissionRequest._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "SubmissionRequest.js",
@@ -21102,7 +21773,7 @@ exports.SubmissionResponse = core.serialization
     terminated: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TerminatedResponse),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"serverInitialized\\":
                 return __1.TraceApi.SubmissionResponse.serverInitialized();
@@ -21120,7 +21791,7 @@ exports.SubmissionResponse = core.serialization
                 return __1.TraceApi.SubmissionResponse._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "SubmissionResponse.js",
@@ -21192,7 +21863,7 @@ exports.SubmissionStatusForTestCase = core.serialization
     traced: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TracedTestCase),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"graded\\":
                 return __1.TraceApi.SubmissionStatusForTestCase.graded(value);
@@ -21204,7 +21875,7 @@ exports.SubmissionStatusForTestCase = core.serialization
                 return __1.TraceApi.SubmissionStatusForTestCase._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "SubmissionStatusForTestCase.js",
@@ -21269,7 +21940,7 @@ exports.SubmissionStatusV2 = core.serialization
     workspace: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).WorkspaceSubmissionStatusV2),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"test\\":
                 return __1.TraceApi.SubmissionStatusV2.test(value);
@@ -21279,7 +21950,7 @@ exports.SubmissionStatusV2 = core.serialization
                 return __1.TraceApi.SubmissionStatusV2._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "SubmissionStatusV2.js",
@@ -21395,7 +22066,7 @@ exports.SubmissionTypeState = core.serialization
     workspace: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).WorkspaceSubmissionState),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"test\\":
                 return __1.TraceApi.SubmissionTypeState.test(value);
@@ -21405,7 +22076,7 @@ exports.SubmissionTypeState = core.serialization
                 return __1.TraceApi.SubmissionTypeState._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "SubmissionTypeState.js",
@@ -21587,7 +22258,7 @@ exports.TestCaseGrade = core.serialization
     nonHidden: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseNonHiddenGrade),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"hidden\\":
                 return __1.TraceApi.TestCaseGrade.hidden(value);
@@ -21597,7 +22268,7 @@ exports.TestCaseGrade = core.serialization
                 return __1.TraceApi.TestCaseGrade._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "TestCaseGrade.js",
@@ -21919,7 +22590,7 @@ export declare namespace TestSubmissionStatus {
     }
     interface TestCaseIdToState {
         type: \\"testCaseIdToState\\";
-        value: Record<string, serializers.SubmissionStatusForTestCase.Raw>;
+        value: Record<string, serializers.SubmissionStatusForTestCase.Raw | null | undefined>;
     }
 }
 ",
@@ -21968,11 +22639,11 @@ exports.TestSubmissionStatus = core.serialization
         value: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).RunningSubmissionState),
     }),
     testCaseIdToState: core.serialization.object({
-        value: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionStatusForTestCase)),
+        value: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionStatusForTestCase).optional()),
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"stopped\\":
                 return __1.TraceApi.TestSubmissionStatus.stopped();
@@ -21986,7 +22657,7 @@ exports.TestSubmissionStatus = core.serialization
                 return __1.TraceApi.TestSubmissionStatus._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "TestSubmissionStatus.js",
@@ -22191,7 +22862,7 @@ exports.TestSubmissionUpdateInfo = core.serialization
     finished: core.serialization.object({}),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"running\\":
                 return __1.TraceApi.TestSubmissionUpdateInfo.running(value.value);
@@ -22209,7 +22880,7 @@ exports.TestSubmissionUpdateInfo = core.serialization
                 return __1.TraceApi.TestSubmissionUpdateInfo._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "TestSubmissionUpdateInfo.js",
@@ -23051,7 +23722,7 @@ exports.WorkspaceSubmissionStatus = core.serialization
     traced: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).WorkspaceRunDetails),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"stopped\\":
                 return __1.TraceApi.WorkspaceSubmissionStatus.stopped();
@@ -23067,7 +23738,7 @@ exports.WorkspaceSubmissionStatus = core.serialization
                 return __1.TraceApi.WorkspaceSubmissionStatus._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "WorkspaceSubmissionStatus.js",
@@ -23270,7 +23941,7 @@ exports.WorkspaceSubmissionUpdateInfo = core.serialization
     finished: core.serialization.object({}),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"running\\":
                 return __1.TraceApi.WorkspaceSubmissionUpdateInfo.running(value.value);
@@ -23290,7 +23961,7 @@ exports.WorkspaceSubmissionUpdateInfo = core.serialization
                 return __1.TraceApi.WorkspaceSubmissionUpdateInfo._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                     "name": "WorkspaceSubmissionUpdateInfo.js",
@@ -24053,7 +24724,7 @@ exports.AssertCorrectnessCheck = core.serialization
     custom: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.VoidFunctionDefinitionThatTakesActualResult),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"deepEquality\\":
                 return __1.TraceApi.v2.AssertCorrectnessCheck.deepEquality(value);
@@ -24063,7 +24734,7 @@ exports.AssertCorrectnessCheck = core.serialization
                 return __1.TraceApi.v2.AssertCorrectnessCheck._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                             "name": "AssertCorrectnessCheck.js",
@@ -24320,7 +24991,7 @@ exports.CustomFiles = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"basic\\":
                 return __1.TraceApi.v2.CustomFiles.basic(value);
@@ -24330,7 +25001,7 @@ exports.CustomFiles = core.serialization
                 return __1.TraceApi.v2.CustomFiles._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                             "name": "CustomFiles.js",
@@ -24739,7 +25410,7 @@ exports.FunctionSignature = core.serialization
     voidThatTakesActualResult: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.VoidFunctionSignatureThatTakesActualResult),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"void\\":
                 return __1.TraceApi.v2.FunctionSignature.void(value);
@@ -24751,7 +25422,7 @@ exports.FunctionSignature = core.serialization
                 return __1.TraceApi.v2.FunctionSignature._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                             "name": "FunctionSignature.js",
@@ -25624,7 +26295,7 @@ exports.TestCaseFunction = core.serialization
     custom: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.VoidFunctionDefinition),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"withActualResult\\":
                 return __1.TraceApi.v2.TestCaseFunction.withActualResult(value);
@@ -25634,7 +26305,7 @@ exports.TestCaseFunction = core.serialization
                 return __1.TraceApi.v2.TestCaseFunction._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                             "name": "TestCaseFunction.js",
@@ -25868,7 +26539,7 @@ exports.TestCaseImplementationDescriptionBoard = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"html\\":
                 return __1.TraceApi.v2.TestCaseImplementationDescriptionBoard.html(value.value);
@@ -25878,7 +26549,7 @@ exports.TestCaseImplementationDescriptionBoard = core.serialization
                 return __1.TraceApi.v2.TestCaseImplementationDescriptionBoard._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                             "name": "TestCaseImplementationDescriptionBoard.js",
@@ -25946,7 +26617,7 @@ exports.TestCaseImplementationReference = core.serialization
     implementation: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseImplementation),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"templateId\\":
                 return __1.TraceApi.v2.TestCaseImplementationReference.templateId(value.value);
@@ -25956,7 +26627,7 @@ exports.TestCaseImplementationReference = core.serialization
                 return __1.TraceApi.v2.TestCaseImplementationReference._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                             "name": "TestCaseImplementationReference.js",
@@ -26143,7 +26814,7 @@ export declare namespace TestCaseV2 {
     interface Raw {
         metadata: serializers.v2.TestCaseMetadata.Raw;
         implementation: serializers.v2.TestCaseImplementationReference.Raw;
-        arguments: Record<serializers.v2.ParameterId.Raw, serializers.VariableValue.Raw>;
+        arguments: Record<serializers.v2.ParameterId.Raw, serializers.VariableValue.Raw | null | undefined>;
         expects?: serializers.v2.TestCaseExpects.Raw | null;
     }
 }
@@ -26185,7 +26856,7 @@ const core = __importStar(require(\\"../../../../../../core\\"));
 exports.TestCaseV2 = core.serialization.object({
     metadata: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseMetadata),
     implementation: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseImplementationReference),
-    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).VariableValue)),
+    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).VariableValue).optional()),
     expects: core.serialization
         .lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseExpects)
         .optional(),
@@ -26909,7 +27580,7 @@ exports.AssertCorrectnessCheck = core.serialization
     custom: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.VoidFunctionDefinitionThatTakesActualResult),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"deepEquality\\":
                 return __1.TraceApi.v2.v3.AssertCorrectnessCheck.deepEquality(value);
@@ -26919,7 +27590,7 @@ exports.AssertCorrectnessCheck = core.serialization
                 return __1.TraceApi.v2.v3.AssertCorrectnessCheck._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                                     "name": "AssertCorrectnessCheck.js",
@@ -27178,7 +27849,7 @@ exports.CustomFiles = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"basic\\":
                 return __1.TraceApi.v2.v3.CustomFiles.basic(value);
@@ -27188,7 +27859,7 @@ exports.CustomFiles = core.serialization
                 return __1.TraceApi.v2.v3.CustomFiles._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                                     "name": "CustomFiles.js",
@@ -27599,7 +28270,7 @@ exports.FunctionSignature = core.serialization
     voidThatTakesActualResult: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.VoidFunctionSignatureThatTakesActualResult),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"void\\":
                 return __1.TraceApi.v2.v3.FunctionSignature.void(value);
@@ -27611,7 +28282,7 @@ exports.FunctionSignature = core.serialization
                 return __1.TraceApi.v2.v3.FunctionSignature._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                                     "name": "FunctionSignature.js",
@@ -28484,7 +29155,7 @@ exports.TestCaseFunction = core.serialization
     custom: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.VoidFunctionDefinition),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"withActualResult\\":
                 return __1.TraceApi.v2.v3.TestCaseFunction.withActualResult(value);
@@ -28494,7 +29165,7 @@ exports.TestCaseFunction = core.serialization
                 return __1.TraceApi.v2.v3.TestCaseFunction._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                                     "name": "TestCaseFunction.js",
@@ -28728,7 +29399,7 @@ exports.TestCaseImplementationDescriptionBoard = core.serialization
     }),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"html\\":
                 return __1.TraceApi.v2.v3.TestCaseImplementationDescriptionBoard.html(value.value);
@@ -28738,7 +29409,7 @@ exports.TestCaseImplementationDescriptionBoard = core.serialization
                 return __1.TraceApi.v2.v3.TestCaseImplementationDescriptionBoard._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                                     "name": "TestCaseImplementationDescriptionBoard.js",
@@ -28806,7 +29477,7 @@ exports.TestCaseImplementationReference = core.serialization
     implementation: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseImplementation),
 })
     .transform({
-    parse: (value) => {
+    transform: (value) => {
         switch (value.type) {
             case \\"templateId\\":
                 return __1.TraceApi.v2.v3.TestCaseImplementationReference.templateId(value.value);
@@ -28816,7 +29487,7 @@ exports.TestCaseImplementationReference = core.serialization
                 return __1.TraceApi.v2.v3.TestCaseImplementationReference._unknown(value);
         }
     },
-    json: (value) => value,
+    untransform: (value) => value,
 });
 ",
                                     "name": "TestCaseImplementationReference.js",
@@ -29003,7 +29674,7 @@ export declare namespace TestCaseV2 {
     interface Raw {
         metadata: serializers.v2.v3.TestCaseMetadata.Raw;
         implementation: serializers.v2.v3.TestCaseImplementationReference.Raw;
-        arguments: Record<serializers.v2.v3.ParameterId.Raw, serializers.VariableValue.Raw>;
+        arguments: Record<serializers.v2.v3.ParameterId.Raw, serializers.VariableValue.Raw | null | undefined>;
         expects?: serializers.v2.v3.TestCaseExpects.Raw | null;
     }
 }
@@ -29045,7 +29716,7 @@ const core = __importStar(require(\\"../../../../../../../../core\\"));
 exports.TestCaseV2 = core.serialization.object({
     metadata: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseMetadata),
     implementation: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseImplementationReference),
-    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).VariableValue)),
+    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).VariableValue).optional()),
     expects: core.serialization
         .lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseExpects)
         .optional(),

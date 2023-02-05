@@ -24,8 +24,8 @@ export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
         const VALUE_PARAMETER_NAME = "value";
         return schemaOfAlias.transform({
             newShape: undefined,
-            parse: generatedAliasType.getReferenceToCreator(context),
-            json: ts.factory.createArrowFunction(
+            transform: generatedAliasType.getReferenceToCreator(context),
+            untransform: ts.factory.createArrowFunction(
                 undefined,
                 undefined,
                 [
@@ -40,7 +40,10 @@ export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
                 ],
                 undefined,
                 undefined,
-                ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
+                ts.factory.createAsExpression(
+                    ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
+                    this.getReferenceToParsedShape(context)
+                )
             ),
         });
     }

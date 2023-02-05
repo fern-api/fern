@@ -261,14 +261,22 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             buildHandler: ({ expressRequest, expressResponse, next }) => {
                 return ts.factory.createBlock(
                     [
-                        ts.factory.createTryStatement(
-                            ts.factory.createBlock(
-                                this.getStatementsForTryBlock({ expressRequest, expressResponse, endpoint, context }),
-                                true
-                            ),
-                            this.getCatchClause({ expressResponse, context, endpoint }),
-                            undefined
-                        ),
+                        ...(endpoint.requestBody != null
+                            ? this.getIfElseWithValidation({
+                                  expressRequest,
+                                  expressResponse,
+                                  endpoint,
+                                  context,
+                                  requestBody: endpoint.requestBody,
+                              })
+                            : [
+                                  this.getTryCatch({
+                                      expressRequest,
+                                      expressResponse,
+                                      endpoint,
+                                      context,
+                                  }),
+                              ]),
                         ts.factory.createExpressionStatement(
                             ts.factory.createCallExpression(next, undefined, undefined)
                         ),
@@ -277,6 +285,108 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 );
             },
         });
+    }
+
+    private getIfElseWithValidation({
+        expressRequest,
+        expressResponse,
+        endpoint,
+        requestBody,
+        context,
+    }: {
+        expressRequest: ts.Expression;
+        expressResponse: ts.Expression;
+        endpoint: HttpEndpoint;
+        requestBody: HttpRequestBody;
+        context: ExpressServiceContext;
+    }): ts.Statement[] {
+        const DESERIALIZED_REQUEST_VARIABLE_NAME = "request";
+
+        const referenceToExpressBody = ts.factory.createPropertyAccessExpression(
+            expressRequest,
+            context.base.externalDependencies.express.Request.body
+        );
+
+        return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            DESERIALIZED_REQUEST_VARIABLE_NAME,
+                            undefined,
+                            undefined,
+                            this.deserializeRequest({
+                                endpoint,
+                                requestBodyType: requestBody,
+                                referenceToBody: referenceToExpressBody,
+                                context,
+                            })
+                        ),
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
+                ts.factory.createIdentifier(DESERIALIZED_REQUEST_VARIABLE_NAME),
+                {
+                    valid: (validRequestBody) => [
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                referenceToExpressBody,
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                validRequestBody
+                            )
+                        ),
+                        this.getTryCatch({
+                            expressRequest,
+                            expressResponse,
+                            endpoint,
+                            context,
+                        }),
+                    ],
+                    invalid: (requestErrors) => [
+                        ts.factory.createExpressionStatement(
+                            context.base.externalDependencies.express.Response.json({
+                                referenceToExpressResponse: context.base.externalDependencies.express.Response.status({
+                                    referenceToExpressResponse: expressResponse,
+                                    status: 422,
+                                }),
+                                valueToSend: ts.factory.createObjectLiteralExpression([
+                                    ts.factory.createPropertyAssignment(
+                                        "errors",
+                                        ts.factory.createObjectLiteralExpression([
+                                            ts.factory.createPropertyAssignment("request", requestErrors),
+                                        ])
+                                    ),
+                                ]),
+                            })
+                        ),
+                    ],
+                }
+            ),
+        ];
+    }
+
+    private getTryCatch({
+        expressRequest,
+        expressResponse,
+        endpoint,
+        context,
+    }: {
+        expressRequest: ts.Expression;
+        expressResponse: ts.Expression;
+        endpoint: HttpEndpoint;
+        context: ExpressServiceContext;
+    }): ts.TryStatement {
+        return ts.factory.createTryStatement(
+            ts.factory.createBlock(
+                this.getStatementsForTryBlock({ expressRequest, expressResponse, endpoint, context }),
+                true
+            ),
+            this.getCatchClause({ expressResponse, context, endpoint }),
+            undefined
+        );
     }
 
     private getStatementsForTryBlock({
@@ -293,28 +403,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         const RESPONSE_VARIABLE_NAME = "response";
 
         const statements: ts.Statement[] = [];
-
-        // deserialize request
-        if (endpoint.requestBody != null) {
-            const referenceToExpressBody = ts.factory.createPropertyAccessExpression(
-                expressRequest,
-                context.base.externalDependencies.express.Request.body
-            );
-            statements.push(
-                ts.factory.createExpressionStatement(
-                    ts.factory.createBinaryExpression(
-                        referenceToExpressBody,
-                        ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                        this.deserializeRequest({
-                            endpoint,
-                            requestBodyType: endpoint.requestBody,
-                            referenceToBody: referenceToExpressBody,
-                            context,
-                        })
-                    )
-                )
-            );
-        }
 
         // call impl and maybe store response in RESPONSE_VARIABLE_NAME
         const implCall = ts.factory.createAwaitExpression(

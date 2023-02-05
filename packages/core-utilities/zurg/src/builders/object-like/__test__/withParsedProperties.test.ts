@@ -3,35 +3,47 @@ import { object } from "../../object/object";
 import { property } from "../../object/property";
 import { string } from "../../primitives";
 
-describe("withProperties", () => {
+describe("withParsedProperties", () => {
     it("Added properties included on parsed object", async () => {
         const schema = object({
             foo: property("raw_foo", string()),
             bar: stringLiteral("bar"),
-        }).withProperties({
+        }).withParsedProperties({
             printFoo: (parsed) => () => parsed.foo,
             printHelloWorld: () => () => "Hello world",
             helloWorld: "Hello world",
         });
 
         const parsed = await schema.parse({ raw_foo: "value of foo", bar: "bar" });
-        expect(parsed.printFoo()).toBe("value of foo");
-        expect(parsed.printHelloWorld()).toBe("Hello world");
-        expect(parsed.helloWorld).toBe("Hello world");
+        if (!parsed.ok) {
+            throw new Error("Failed to parse");
+        }
+        expect(parsed.value.printFoo()).toBe("value of foo");
+        expect(parsed.value.printHelloWorld()).toBe("Hello world");
+        expect(parsed.value.helloWorld).toBe("Hello world");
     });
 
     it("Added property is removed on raw object", async () => {
         const schema = object({
             foo: property("raw_foo", string()),
             bar: stringLiteral("bar"),
-        }).withProperties({
+        }).withParsedProperties({
             printFoo: (parsed) => () => parsed.foo,
         });
 
         const original = { raw_foo: "value of foo", bar: "bar" } as const;
         const parsed = await schema.parse(original);
-        const raw = await schema.json(parsed);
-        expect(raw).toEqual(original);
+        if (!parsed.ok) {
+            throw new Error("Failed to parse()");
+        }
+
+        const raw = await schema.json(parsed.value);
+
+        if (!raw.ok) {
+            throw new Error("Failed to json()");
+        }
+
+        expect(raw.value).toEqual(original);
     });
 
     describe("compile", () => {
@@ -42,36 +54,7 @@ describe("withProperties", () => {
                     foo: string(),
                 })
                     // @ts-expect-error
-                    .withProperties(42);
-        });
-
-        // eslint-disable-next-line jest/expect-expect
-        it("doesn't compile with missing property in input", () => {
-            const schema = object({
-                foo: string(),
-            }).withProperties({
-                bar: "yo",
-            });
-
-            // @ts-expect-error
-            () => schema.json({ foo: "hello" });
-        });
-
-        // eslint-disable-next-line jest/expect-expect
-        it("doesn't compile with additional property in input", () => {
-            const schema = object({
-                foo: string(),
-            }).withProperties({
-                bar: "yo",
-            });
-
-            () =>
-                schema.json({
-                    foo: "hello",
-                    bar: "world",
-                    // @ts-expect-error
-                    baz: 42,
-                });
+                    .withParsedProperties(42);
         });
     });
 });
