@@ -1,9 +1,10 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile, mkdir } = require("fs/promises");
+const { chmod, writeFile, mkdir, readFile } = require("fs/promises");
 
 const packageJson = require("./package.json");
+const jsoncParserResolverPlugin = require("./jsoncParserResolverPlugin.cjs");
 
 main();
 
@@ -15,7 +16,7 @@ async function main() {
         outfile: "./dist/dev/bundle.cjs",
         bundle: true,
         external: ["cpu-features"],
-        plugins: [pnpPlugin()],
+        plugins: [jsoncParserResolverPlugin, pnpPlugin()],
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-dev"),
             "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
