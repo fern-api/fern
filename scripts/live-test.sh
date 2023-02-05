@@ -15,7 +15,7 @@ set -x
 node "$cli_path" init --organization fern
 node "$cli_path" add fern-java-sdk
 node "$cli_path" add fern-postman
-node "$cli_path" generate --group external --log-level debug
+node "$cli_path" generate --log-level debug
 set +x
 node "$cli_path" register --log-level debug
 
