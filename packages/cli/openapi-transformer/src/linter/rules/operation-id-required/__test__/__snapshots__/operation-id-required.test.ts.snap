@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`open api converter flagright simple 1`] = `
+exports[`operation-id-required simple simple 1`] = `
 [
   {
     "breacrumbs": [
       "paths",
-      "/transactions",
-      "post",
+      "/example",
+      "get",
     ],
     "message": "operationId is required",
     "severity": "error",
