@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api converter flagright simple 1`] = `
+[
+  {
+    "breacrumbs": [
+      "paths",
+      "/transactions",
+      "post",
+    ],
+    "message": "operationId is required",
+    "severity": "error",
+  },
+]
+`;
