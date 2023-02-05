@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Example API
+  version: 1.0.0
+  description: An example API for demonstrating OpenAPI specifications
+  contact:
+    name: John Doe
+    email: john.doe@example.com
+servers:
+  - url: https://api.example.com/v1
+paths:
+  /example:
+    get:
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello, World!"
+components:
+  schemas:
+    TransactionUpdatable:
+      title: TransactionUpdatable
+      type: object
+      description: Model for transaction additional payload
+      properties:
+        destinationPaymentDetails:
+          oneOf:
+            - string
+            - integer

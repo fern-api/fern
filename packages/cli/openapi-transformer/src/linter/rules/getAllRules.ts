@@ -1,8 +1,9 @@
+import { OneOfRequiresDiscriminant } from "./one-of-requires-discriminant";
 import { OperationIdRequired } from "./operation-id-required";
 import { CustomRule, SpectralRule } from "./Rule";
 
 const ALL_RULES = {
-    spectralRules: [OperationIdRequired],
+    spectralRules: [OperationIdRequired, OneOfRequiresDiscriminant],
     customRules: [],
 };
 

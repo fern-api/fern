@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`operation-id-required simple simple 1`] = `
+[
+  {
+    "breacrumbs": [
+      "components",
+      "schemas",
+      "TransactionUpdatable",
+      "properties",
+      "destinationPaymentDetails",
+      "oneOf",
+    ],
+    "message": "discriminant is required",
+    "severity": "error",
+  },
+]
+`;

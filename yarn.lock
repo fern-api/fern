@@ -3917,6 +3917,7 @@ __metadata:
     "@stoplight/spectral-core": ^1.16.1
     "@stoplight/spectral-functions": ^1.7.2
     "@stoplight/spectral-parsers": ^1.0.2
+    "@stoplight/types": ^13.9.0
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5924,7 +5925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stoplight/types@npm:^12.3.0 || ^13.0.0, @stoplight/types@npm:^13.0.0, @stoplight/types@npm:^13.6.0":
+"@stoplight/types@npm:^12.3.0 || ^13.0.0, @stoplight/types@npm:^13.0.0, @stoplight/types@npm:^13.6.0, @stoplight/types@npm:^13.9.0":
   version: 13.9.0
   resolution: "@stoplight/types@npm:13.9.0"
   dependencies:
