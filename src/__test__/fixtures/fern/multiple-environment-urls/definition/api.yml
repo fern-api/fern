@@ -1,6 +1,6 @@
 name: test-api
 default-environment: prod
-environments: 
+environments:
   prod:
     urls:
       foo: https://foo.buildwithfern.com

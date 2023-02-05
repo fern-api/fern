@@ -1,6 +1,6 @@
 name: test-api
 default-environment: prod
-environments: 
+environments:
   prod: https://buildwithfern.com
   dev: https://dev.buildwithfern.com
 error-discrimination:

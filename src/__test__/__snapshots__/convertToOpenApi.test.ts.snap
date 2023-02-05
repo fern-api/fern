@@ -8,7 +8,7 @@ info:
 paths:
   /create:
     post:
-      operationId: PostsService.createPost
+      operationId: blog_createPost
       tags:
         - Blog
       parameters: []
@@ -32,7 +32,7 @@ paths:
               $ref: '#/components/schemas/BlogPost'
   /{postId}:
     get:
-      operationId: PostsService.getPost
+      operationId: blog_getPost
       tags:
         - Blog
       parameters:
@@ -110,7 +110,7 @@ info:
 paths:
   /:
     post:
-      operationId: PostsService.doThing
+      operationId: blog_doThing
       tags:
         - Blog
       parameters: []
@@ -136,7 +136,7 @@ paths:
   /create:
     post:
       description: Creates a blog post and returns blog post id.
-      operationId: PostsService.createPost
+      operationId: blog_createPost
       tags:
         - Blog
       parameters:
@@ -176,7 +176,7 @@ paths:
   /{postId}:
     get:
       description: Gets a blog post.
-      operationId: PostsService.getPost
+      operationId: blog_getPost
       tags:
         - Blog
       parameters:
@@ -215,7 +215,7 @@ paths:
                     id: post-id-123
     post:
       description: Updates a blog post.
-      operationId: PostsService.updatePost
+      operationId: blog_updatePost
       tags:
         - Blog
       parameters:
@@ -245,6 +245,8 @@ paths:
               $ref: '#/components/schemas/CreatePostRequest'
 components:
   schemas:
+    AliasOfNestedType:
+      $ref: '#/components/schemas/FolderNestedType'
     PostId:
       type: string
     BlogPost:
@@ -324,6 +326,8 @@ components:
         - author
         - content
         - postType
+    FolderNestedType:
+      type: string
   securitySchemes: {}
 servers:
   - url: https://buildwithfern.com

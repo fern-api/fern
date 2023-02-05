@@ -278,12 +278,10 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 }
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
-    const pascalCaseFolders = declaredTypeName.fernFilepath
-        .filter((_part, idx) => {
-            return idx !== declaredTypeName.fernFilepath.length - 1;
-        })
-        .map((part) => part.pascalCase.unsafeName);
-    return [...pascalCaseFolders, declaredTypeName.name.originalName].join("");
+    return [
+        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.pascalCase.unsafeName),
+        declaredTypeName.name.pascalCase.unsafeName,
+    ].join("");
 }
 
 function getExampleFromEndpointRequest(

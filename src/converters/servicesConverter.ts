@@ -107,8 +107,11 @@ function convertHttpEndpoint({
     ];
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
-        operationId: httpService.name.name.originalName + "." + httpEndpoint.name.originalName,
-        tags: [httpService.name.fernFilepath.map((name) => name.pascalCase.unsafeName).join("")],
+        operationId: [
+            ...httpService.name.fernFilepath.allParts.map((name) => name.camelCase.unsafeName),
+            httpEndpoint.name.originalName,
+        ].join("_"),
+        tags: [httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("")],
         parameters,
         responses: {
             ...convertResponse({
@@ -125,9 +128,7 @@ function convertHttpEndpoint({
     if (httpService.baseUrl != null) {
         const baseUrlId = httpService.baseUrl;
         if (environments?.environments.type !== "multipleBaseUrls") {
-            throw new Error(
-                `baseUrl is defined on ${httpService.name.name.originalName} but environments are not multipleBaseUrls`
-            );
+            throw new Error("baseUrl is defined environments are not multipleBaseUrls");
         }
         operationObject.servers = environments.environments.environments.map((environment) => {
             const url = environment.urls[baseUrlId];
@@ -304,7 +305,9 @@ function convertResponse({
             for (const responseError of responseErrors) {
                 const errorDeclaration = errorsByName[getDeclaredTypeNameKey(responseError.error)];
                 if (errorDeclaration == null) {
-                    throw new Error("Encountered undefined error declaration: " + responseError.error.name);
+                    throw new Error(
+                        "Encountered undefined error declaration: " + responseError.error.name.originalName
+                    );
                 }
                 const responseForStatusCode: OpenAPIV3.ResponseObject = {
                     description: responseError.docs ?? "",
@@ -454,7 +457,7 @@ function getErrorInfoByStatusCode({
     for (const responseError of responseErrors) {
         const errorDeclaration = errorsByName[getDeclaredTypeNameKey(responseError.error)];
         if (errorDeclaration == null) {
-            throw new Error("Encountered undefined error declaration: " + responseError.error.name);
+            throw new Error("Encountered undefined error declaration: " + responseError.error.name.originalName);
         }
         const statusCode = errorDeclaration.statusCode;
         const statusCodeErrorInfo = errorInfoByStatusCode[statusCode];
@@ -591,7 +594,7 @@ function isTypeReferenceRequired({
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
         if (typeDeclaration == null) {
-            throw new Error("Encountered non-existent type: " + typeReference.name);
+            throw new Error("Encountered non-existent type: " + typeReference.name.originalName);
         }
         if (typeDeclaration.shape._type === "alias") {
             return isTypeReferenceRequired({ typeReference: typeDeclaration.shape.aliasOf, typesByName });
