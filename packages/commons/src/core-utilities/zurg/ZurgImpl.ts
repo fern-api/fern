@@ -612,4 +612,9 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             errors: "errors" as const,
         },
     };
+
+    public ValidationError = {
+        path: "path" as const,
+        message: "message" as const,
+    };
 }

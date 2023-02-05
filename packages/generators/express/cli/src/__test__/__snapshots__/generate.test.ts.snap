@@ -184,7 +184,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -210,7 +212,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -236,7 +240,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -262,7 +268,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -288,7 +296,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -314,7 +324,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -340,7 +352,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -366,7 +380,9 @@ class AdminService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -2044,7 +2060,9 @@ class HomepageService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -2809,7 +2827,9 @@ class PlaylistService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -2884,7 +2904,9 @@ class PlaylistService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -3483,7 +3505,9 @@ class ProblemService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -3509,7 +3533,9 @@ class ProblemService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });
@@ -3554,7 +3580,9 @@ class ProblemService {
                 }
             }
             else {
-                res.status(422).json({ errors: { request: request.errors } });
+                res.status(422).json({
+                    errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
+                });
             }
             next();
         });

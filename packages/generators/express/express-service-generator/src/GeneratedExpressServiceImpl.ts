@@ -345,24 +345,83 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             context,
                         }),
                     ],
-                    invalid: (requestErrors) => [
-                        ts.factory.createExpressionStatement(
-                            context.base.externalDependencies.express.Response.json({
-                                referenceToExpressResponse: context.base.externalDependencies.express.Response.status({
-                                    referenceToExpressResponse: expressResponse,
-                                    status: 422,
-                                }),
-                                valueToSend: ts.factory.createObjectLiteralExpression([
-                                    ts.factory.createPropertyAssignment(
-                                        "errors",
-                                        ts.factory.createObjectLiteralExpression([
-                                            ts.factory.createPropertyAssignment("request", requestErrors),
-                                        ])
-                                    ),
-                                ]),
-                            })
-                        ),
-                    ],
+                    invalid: (requestErrors) => {
+                        const ERROR_VARIABLE_NAME = "error";
+                        return [
+                            ts.factory.createExpressionStatement(
+                                context.base.externalDependencies.express.Response.json({
+                                    referenceToExpressResponse:
+                                        context.base.externalDependencies.express.Response.status({
+                                            referenceToExpressResponse: expressResponse,
+                                            status: 422,
+                                        }),
+                                    valueToSend: ts.factory.createObjectLiteralExpression([
+                                        ts.factory.createPropertyAssignment(
+                                            "errors",
+                                            ts.factory.createCallExpression(
+                                                ts.factory.createPropertyAccessExpression(
+                                                    requestErrors,
+                                                    ts.factory.createIdentifier("map")
+                                                ),
+                                                undefined,
+                                                [
+                                                    ts.factory.createArrowFunction(
+                                                        undefined,
+                                                        undefined,
+                                                        [
+                                                            ts.factory.createParameterDeclaration(
+                                                                undefined,
+                                                                undefined,
+                                                                undefined,
+                                                                ERROR_VARIABLE_NAME
+                                                            ),
+                                                        ],
+                                                        undefined,
+                                                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                                        ts.factory.createBinaryExpression(
+                                                            ts.factory.createBinaryExpression(
+                                                                ts.factory.createCallExpression(
+                                                                    ts.factory.createPropertyAccessExpression(
+                                                                        ts.factory.createArrayLiteralExpression(
+                                                                            [
+                                                                                ts.factory.createStringLiteral(
+                                                                                    "request"
+                                                                                ),
+                                                                                ts.factory.createSpreadElement(
+                                                                                    ts.factory.createPropertyAccessExpression(
+                                                                                        ts.factory.createIdentifier(
+                                                                                            ERROR_VARIABLE_NAME
+                                                                                        ),
+                                                                                        context.base.coreUtilities.zurg
+                                                                                            .ValidationError.path
+                                                                                    )
+                                                                                ),
+                                                                            ],
+                                                                            false
+                                                                        ),
+                                                                        ts.factory.createIdentifier("join")
+                                                                    ),
+                                                                    undefined,
+                                                                    [ts.factory.createStringLiteral(" -> ")]
+                                                                ),
+                                                                ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                                                                ts.factory.createStringLiteral(": ")
+                                                            ),
+                                                            ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                                                            ts.factory.createPropertyAccessExpression(
+                                                                ts.factory.createIdentifier(ERROR_VARIABLE_NAME),
+                                                                context.base.coreUtilities.zurg.ValidationError.message
+                                                            )
+                                                        )
+                                                    ),
+                                                ]
+                                            )
+                                        ),
+                                    ]),
+                                })
+                            ),
+                        ];
+                    },
                 }
             ),
         ];

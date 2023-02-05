@@ -45,6 +45,11 @@ export interface Zurg {
             errors: "errors";
         };
     };
+
+    ValidationError: {
+        path: "path";
+        message: "message";
+    };
 }
 
 export declare namespace Zurg {
