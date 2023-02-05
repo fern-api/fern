@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`operation-id-required simple simple 1`] = `
+[
+  {
+    "breacrumbs": [
+      "paths",
+      "/example",
+      "get",
+    ],
+    "message": "operationId is required",
+    "severity": "error",
+  },
+]
+`;
