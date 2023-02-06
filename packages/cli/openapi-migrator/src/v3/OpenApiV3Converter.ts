@@ -91,16 +91,22 @@ export class OpenAPIConverter {
         );
         serviceFiles[RelativeFilePath.of(commonsServiceFile.filename)] = commonsServiceFile.serviceFile;
 
+        const rootApiFile: RawSchemas.RootApiFileSchema = {
+            name: "api",
+            "display-name": this.document.info.title,
+            headers: globalHeaders,
+            auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
+            "auth-schemes": maybeAuthScheme,
+        };
+
+        const environments = this.maybeGetEnvironments(this.document);
+        if (environments != null) {
+            rootApiFile.environments = environments;
+            rootApiFile["default-environment"] = null;
+        }
+
         return {
-            rootApiFile: {
-                name: "api",
-                "display-name": this.document.info.title,
-                headers: globalHeaders,
-                auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
-                "auth-schemes": maybeAuthScheme,
-                "default-environment": null,
-                environments: this.maybeGetEnvironments(this.document),
-            },
+            rootApiFile,
             serviceFiles,
         };
     }
