@@ -5,6 +5,7 @@ exports[`open api converter covie simple 1`] = `
   "rootApiFile": {
     "auth": undefined,
     "auth-schemes": undefined,
+    "display-name": "Policy API",
     "headers": {},
     "name": "api",
   },
@@ -2919,6 +2920,7 @@ exports[`open api converter flagright simple 1`] = `
         "name": "apiKey",
       },
     },
+    "display-name": "Flagright API",
     "headers": {},
     "name": "api",
   },
@@ -4915,6 +4917,7 @@ exports[`open api converter partnerstack simple 1`] = `
   "rootApiFile": {
     "auth": undefined,
     "auth-schemes": undefined,
+    "display-name": "PartnerStack API",
     "headers": {},
     "name": "api",
   },
@@ -9127,6 +9130,7 @@ exports[`open api converter suger simple 1`] = `
   "rootApiFile": {
     "auth": undefined,
     "auth-schemes": undefined,
+    "display-name": "Suger API",
     "headers": {},
     "name": "api",
   },
@@ -12556,6 +12560,7 @@ exports[`open api converter telematica simple 1`] = `
         "name": "apiKey",
       },
     },
+    "display-name": "Telematica EV APIs",
     "headers": {},
     "name": "api",
   },

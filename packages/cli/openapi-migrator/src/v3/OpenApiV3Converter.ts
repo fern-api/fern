@@ -94,6 +94,7 @@ export class OpenAPIConverter {
         return {
             rootApiFile: {
                 name: "api",
+                "display-name": this.document.info.title,
                 headers: globalHeaders,
                 auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
                 "auth-schemes": maybeAuthScheme,

@@ -52,6 +52,7 @@ types:
               },
               {
                 "contents": "name: api
+display-name: Policy API
 headers: {}
 ",
                 "name": "api.yml",
@@ -2726,6 +2727,7 @@ exports[`fern init gigs openapi 1`] = `
               },
               {
                 "contents": "name: api
+display-name: Gigs Core API
 headers: {}
 ",
                 "name": "api.yml",
@@ -5402,6 +5404,7 @@ exports[`fern init telematica openapi 1`] = `
               },
               {
                 "contents": "name: api
+display-name: Telematica EV APIs
 headers: {}
 auth: bearerAuth
 auth-schemes:
