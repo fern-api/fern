@@ -63,7 +63,7 @@ function formatLog({ title, location, breadcrumbs = [] }: FormatLogArgs): string
     const lines: string[] = [];
     lines.push(chalk.cyan(location.path) + ":" + chalk.yellow(`${location.line}:${location.column}`));
     if (breadcrumbs.length > 0) {
-        lines.push(chalk.dim(breadcrumbs.join(" -> ")));
+        lines.push(chalk.grey(breadcrumbs.join(" -> ")));
     }
     lines.push(title);
     return lines.join("\n");
