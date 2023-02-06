@@ -1,7 +1,7 @@
 import { falsy } from "@stoplight/spectral-functions";
 import { SpectralRule } from "../Rule";
 
-export const NoInlinedEnums: SpectralRule = {
+export const NoInlineEnums: SpectralRule = {
     name: "no-inlined-enums",
     get: () => {
         return {

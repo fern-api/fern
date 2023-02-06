@@ -3,7 +3,7 @@ import { Document, Spectral } from "@stoplight/spectral-core";
 import { Yaml } from "@stoplight/spectral-parsers";
 import { readFile } from "fs/promises";
 import path from "path";
-import { NoInlinedEnums } from "../no-inline-schemas";
+import { NoInlineEnums } from "../no-inline-enums";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), "fixtures");
 const OPENAPI_JSON_FILENAME = "openapi.yml";
@@ -22,7 +22,7 @@ function testFixture(fixtureName: string) {
             const spectral = new Spectral();
             spectral.setRuleset({
                 rules: {
-                    [NoInlinedEnums.name]: NoInlinedEnums.get(),
+                    [NoInlineEnums.name]: NoInlineEnums.get(),
                 },
             });
             const violations = await spectral.run(document);
