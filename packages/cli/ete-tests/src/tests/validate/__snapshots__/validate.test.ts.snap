@@ -2,10 +2,13 @@
 
 exports[`validate openapi 1`] = `
 "[api]: fern/api/definition/openapi.yml:36:9
+       paths -> /pet -> post
        Endpoint is missing operationId.
 [api]: fern/api/definition/openapi.yml:631:15
+       components -> schemas -> Order -> properties -> status -> ...
        Enum is inlined. Please refactor as a $ref.
 [api]: fern/api/definition/openapi.yml:768:15
+       components -> schemas -> Pet -> properties -> status -> ...
        Enum is inlined. Please refactor as a $ref."
 `;
 

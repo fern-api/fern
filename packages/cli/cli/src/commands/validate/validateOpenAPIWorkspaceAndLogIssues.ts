@@ -25,6 +25,10 @@ export async function validateOpenAPIWorkspaceAndLogIssues(
                     line: violation.line,
                     column: violation.column,
                 },
+                breadcrumbs:
+                    violation.breadcrumbs.length > 5
+                        ? [...violation.breadcrumbs.slice(0, 5), "..."]
+                        : violation.breadcrumbs,
             })
         );
     }
@@ -44,6 +48,7 @@ function getLogLevelForSeverity(severity: "error" | "warning") {
 }
 
 interface FormatLogArgs {
+    breadcrumbs: string[];
     title: string;
     location: Location;
 }
@@ -54,9 +59,12 @@ interface Location {
     column: number;
 }
 
-function formatLog({ title, location }: FormatLogArgs): string {
+function formatLog({ title, location, breadcrumbs = [] }: FormatLogArgs): string {
     const lines: string[] = [];
     lines.push(chalk.cyan(location.path) + ":" + chalk.yellow(`${location.line}:${location.column}`));
+    if (breadcrumbs.length > 0) {
+        lines.push(chalk.dim(breadcrumbs.join(" -> ")));
+    }
     lines.push(title);
     return lines.join("\n");
 }
