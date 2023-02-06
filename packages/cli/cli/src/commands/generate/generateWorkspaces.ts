@@ -1,6 +1,9 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
+import { convertOpenApi } from "@fern-api/openapi-migrator";
 import { Project } from "@fern-api/project-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateFernWorkspace } from "./generateFernWorkspace";
 
@@ -59,12 +62,25 @@ export async function generateWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "openapi") {
-                    context.failWithoutThrowing("Generating from OpenAPI not currently supported.");
-                    return;
-                }
+                const fernWorkspace: FernWorkspace =
+                    workspace.type === "fern"
+                        ? workspace
+                        : {
+                              type: "fern",
+                              name: workspace.name,
+                              generatorsConfiguration: workspace.generatorsConfiguration,
+                              absolutePathToDefinition: workspace.absolutePathToDefinition,
+                              absolutePathToWorkspace: workspace.absolutePathToDefinition,
+                              dependenciesConfiguration: {
+                                  dependencies: {},
+                              },
+                              definition: await convertOpenApi({
+                                  openApiPath: join(workspace.absolutePathToDefinition, workspace.definition.path),
+                                  taskContext: context,
+                              }),
+                          };
                 await generateFernWorkspace({
-                    workspace,
+                    workspace: fernWorkspace,
                     organization: project.config.organization,
                     context,
                     version,

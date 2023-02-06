@@ -11,6 +11,7 @@
     { "path": "../login" },
     { "path": "../openapi-migrator" },
     { "path": "../task-context" },
+    { "path": "../workspace-loader" },
     { "path": "../yaml/formatter" },
     { "path": "../yaml/yaml-schema" }
   ]

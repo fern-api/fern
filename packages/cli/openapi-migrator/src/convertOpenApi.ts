@@ -1,14 +1,9 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { FernDefinition } from "@fern-api/workspace-loader";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { OpenAPIConverter } from "./v3/OpenApiV3Converter";
-
-export interface FernDefinition {
-    rootApiFile: RootApiFileSchema;
-    serviceFiles: Record<RelativeFilePath, ServiceFileSchema>;
-}
 
 export async function convertOpenApi({
     openApiPath,

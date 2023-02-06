@@ -1,7 +1,7 @@
 import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
 import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { convertOpenApi, FernDefinition } from "@fern-api/openapi-migrator";
+import { convertOpenApi } from "@fern-api/openapi-migrator";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
     FERN_DIRECTORY,
@@ -9,6 +9,7 @@ import {
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
+import { FernDefinition } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
