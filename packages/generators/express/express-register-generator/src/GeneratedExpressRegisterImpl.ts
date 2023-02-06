@@ -116,7 +116,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         const lastPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
         return [
             ...service.name.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
-            `Abstract${lastPart != null ? lastPart.pascalCase.unsafeName : "Root"}Service`,
+            `${lastPart != null ? lastPart.pascalCase.unsafeName : "Root"}Service`,
         ].join("_");
     }
 }
