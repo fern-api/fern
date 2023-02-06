@@ -2,7 +2,7 @@ import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { generateWorkspace } from "./generateWorkspace";
+import { generateFernWorkspace } from "./generateFernWorkspace";
 
 export async function generateWorkspaces({
     project,
@@ -57,9 +57,13 @@ export async function generateWorkspaces({
     });
 
     await Promise.all(
-        project.workspaces.map(async (workspace) =>
-            cliContext.runTaskForWorkspace(workspace, async (context) =>
-                generateWorkspace({
+        project.workspaces.map(async (workspace) => {
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                if (workspace.type === "openapi") {
+                    context.failWithoutThrowing("Generating from OpenAPI not currently supported.");
+                    return;
+                }
+                await generateFernWorkspace({
                     workspace,
                     organization: project.config.organization,
                     context,
@@ -67,8 +71,8 @@ export async function generateWorkspaces({
                     groupName,
                     shouldLogS3Url,
                     token,
-                })
-            )
-        )
+                });
+            });
+        })
     );
 }

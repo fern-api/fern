@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { constructFernFileContext, ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { keyBy } from "lodash-es";
 import { RuleViolation } from "../../Rule";
@@ -29,7 +29,7 @@ export function validateObjectExample({
     example: RawSchemas.ExampleTypeValueSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-    workspace: Workspace;
+    workspace: FernWorkspace;
 }): RuleViolation[] {
     if (!isPlainObject(example)) {
         return getRuleViolationsForMisshapenExample(example, "an object");

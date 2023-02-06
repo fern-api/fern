@@ -1,21 +1,21 @@
 import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
 import { TaskContext } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { validateWorkspaceAndLogIssues } from "../validate/validateWorkspaceAndLogIssues";
+import { validateFernWorkspaceAndLogIssues } from "../validate/validateFernWorkspaceAndLogIssues";
 
-export async function generateIrForWorkspace({
+export async function generateIrForFernWorkspace({
     workspace,
     context,
     generationLanguage,
     audiences,
 }: {
-    workspace: Workspace;
+    workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: Language | undefined;
     audiences: string[] | undefined;
 }): Promise<IntermediateRepresentation> {
-    await validateWorkspaceAndLogIssues(workspace, context);
+    await validateFernWorkspaceAndLogIssues(workspace, context);
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,

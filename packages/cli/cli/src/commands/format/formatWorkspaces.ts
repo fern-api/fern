@@ -13,6 +13,9 @@ export async function formatWorkspaces({
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {
+            if (workspace.type === "openapi") {
+                return;
+            }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 await formatWorkspace({
                     workspace,

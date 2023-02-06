@@ -41,8 +41,7 @@ describe("ir", () => {
 });
 
 function itFixture(fixtureName: string, language?: Language, audiences?: string[]) {
-    it(// eslint-disable-next-line jest/valid-title
-    `${JSON.stringify({ fixtureName, language, audiences })}`, async () => {
+    it(`${JSON.stringify({ fixtureName, language, audiences })}`, async () => {
         const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixtureName));
         const irContents = await generateIrAsString({ fixturePath, language, audiences });
         expect(irContents).toMatchSnapshot();

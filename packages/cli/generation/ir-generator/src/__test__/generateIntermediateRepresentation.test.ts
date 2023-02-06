@@ -40,6 +40,10 @@ describe("generateIntermediateRepresentation", () => {
                 throw new Error("Failed to load workspace: " + JSON.stringify(workspace.failures, undefined, 4));
             }
 
+            if (workspace.workspace.type === "openapi") {
+                throw new Error("Convert openapi workspace to fern before generating IR");
+            }
+
             const intermediateRepresentation = await generateIntermediateRepresentation({
                 workspace: workspace.workspace,
                 generationLanguage: fixture.generationLanguage,

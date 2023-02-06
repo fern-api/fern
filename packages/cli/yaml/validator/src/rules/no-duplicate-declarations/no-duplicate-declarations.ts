@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
@@ -68,7 +68,7 @@ export const NoDuplicateDeclarationsRule: Rule = {
     },
 };
 
-async function getDeclarations(workspace: Workspace): Promise<Declarations> {
+async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> {
     const declarations: Declarations = {};
 
     await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {

@@ -1,5 +1,5 @@
 import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
@@ -18,7 +18,7 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
     parameterDisplayName: string;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-    workspace: Workspace;
+    workspace: FernWorkspace;
     file: FernFileContext;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];

@@ -1,26 +1,19 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
+import { OpenAPIWorkspace } from "@fern-api/workspace-loader";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { lint } from "./linter/lint";
+import { validateOpenAPIWorkspace } from "./validator/validateOpenAPIWorkspace";
 
 export async function transform({
-    openApiPath,
+    workspace,
     taskContext,
 }: {
-    openApiPath: AbsoluteFilePath;
+    workspace: OpenAPIWorkspace;
     taskContext: TaskContext;
 }): Promise<void> {
-    const raw = await readFile(openApiPath);
-    const document = await SwaggerParser.parse(openApiPath);
+    const document = await SwaggerParser.parse(workspace.definition.contents);
     if (isOpenApiV3(document)) {
-        await lint({
-            context: taskContext,
-            document,
-            rawContents: raw.toString(),
-            format: openApiPath.endsWith("yaml") ? "yaml" : "json",
-        });
+        await validateOpenAPIWorkspace(workspace);
     } else {
         taskContext.failAndThrow(
             `Only OpenAPI V3 Documents are supported. ${isOpenApiV2(document) ? "Received V2 instead." : ""}`

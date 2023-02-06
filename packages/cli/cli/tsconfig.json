@@ -15,6 +15,7 @@
     { "path": "../init" },
     { "path": "../logger" },
     { "path": "../login" },
+    { "path": "../openapi-transformer" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../semver-utils" },

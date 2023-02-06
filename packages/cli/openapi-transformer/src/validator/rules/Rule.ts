@@ -13,7 +13,7 @@ export interface SpectralRule {
 export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
-    breacrumbs: string[];
+    breadcrumbs: string[];
 }
 
 export type MaybePromise<T> = T | Promise<T>;

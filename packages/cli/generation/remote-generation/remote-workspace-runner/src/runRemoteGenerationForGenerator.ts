@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { GeneratorAudiences, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
@@ -18,7 +18,7 @@ export async function runRemoteGenerationForGenerator({
     token,
 }: {
     organization: string;
-    workspace: Workspace;
+    workspace: FernWorkspace;
     interactiveTaskContext: InteractiveTaskContext;
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;

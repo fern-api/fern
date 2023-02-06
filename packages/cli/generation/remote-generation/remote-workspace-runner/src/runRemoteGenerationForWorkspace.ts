@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export async function runRemoteGenerationForWorkspace({
@@ -14,7 +14,7 @@ export async function runRemoteGenerationForWorkspace({
     token,
 }: {
     organization: string;
-    workspace: Workspace;
+    workspace: FernWorkspace;
     context: TaskContext;
     generatorGroup: GeneratorGroup;
     version: string | undefined;
