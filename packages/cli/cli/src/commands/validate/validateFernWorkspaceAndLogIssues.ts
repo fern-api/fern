@@ -1,15 +1,15 @@
 import { formatLog, LogLevel } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { validateWorkspace } from "@fern-api/validator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { validateFernWorkspace } from "@fern-api/validator";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import validatePackageName from "validate-npm-package-name";
 
-export async function validateWorkspaceAndLogIssues(workspace: Workspace, context: TaskContext): Promise<void> {
+export async function validateFernWorkspaceAndLogIssues(workspace: FernWorkspace, context: TaskContext): Promise<void> {
     if (!validatePackageName(workspace.name).validForNewPackages) {
         context.failAndThrow("Workspace name is not valid.");
     }
 
-    const violations = await validateWorkspace(workspace, context.logger);
+    const violations = await validateFernWorkspace(workspace, context.logger);
     let violationsContainError = false;
     for (const violation of violations) {
         if (!violationsContainError && violation.severity === "error") {

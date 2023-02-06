@@ -1,6 +1,7 @@
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { validateWorkspaceAndLogIssues } from "./validateWorkspaceAndLogIssues";
+import { validateFernWorkspaceAndLogIssues } from "./validateFernWorkspaceAndLogIssues";
+import { validateOpenAPIWorkspaceAndLogIssues } from "./validateOpenAPIWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     project,
@@ -12,7 +13,11 @@ export async function validateWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                await validateWorkspaceAndLogIssues(workspace, context);
+                if (workspace.type === "openapi") {
+                    await validateOpenAPIWorkspaceAndLogIssues(workspace, context);
+                } else {
+                    await validateFernWorkspaceAndLogIssues(workspace, context);
+                }
             });
         })
     );

@@ -1,2 +1,2 @@
-export { validateWorkspace } from "./validateWorkspace";
+export { validateFernWorkspace } from "./validateFernWorkspace";
 export { type ValidationViolation } from "./ValidationViolation";

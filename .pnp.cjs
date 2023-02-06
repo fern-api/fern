@@ -313,9 +313,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["jsonc-parser", "npm:2.2.1"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.108"],\
+            ["mrlint", "npm:0.0.109"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -8001,6 +8002,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
+            ["@fern-api/openapi-transformer", "workspace:packages/cli/openapi-transformer"],\
             ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
@@ -8663,6 +8665,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@stoplight/spectral-core", "npm:1.16.1"],\
             ["@stoplight/spectral-functions", "npm:1.7.2"],\
             ["@stoplight/spectral-parsers", "npm:1.0.2"],\
@@ -10603,7 +10606,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/request-error", "npm:3.0.3"],\
             ["@octokit/types", "npm:9.0.0"],\
             ["is-plain-object", "npm:5.0.0"],\
-            ["node-fetch", "virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8"],\
+            ["node-fetch", "virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8"],\
             ["universal-user-agent", "npm:6.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -10997,7 +11000,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@stoplight/types", "npm:12.5.0"],\
             ["abort-controller", "npm:3.0.0"],\
             ["lodash", "npm:4.17.21"],\
-            ["node-fetch", "virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8"],\
+            ["node-fetch", "virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8"],\
             ["tslib", "npm:2.4.0"]\
           ],\
           "linkType": "HARD"\
@@ -18658,9 +18661,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["immer", "npm:9.0.15"],\
             ["is-ci", "npm:3.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["jsonc-parser", "npm:2.2.1"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.108"],\
+            ["mrlint", "npm:0.0.109"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -21822,7 +21826,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],\
       ["jsonc-parser", [\
         ["npm:2.2.1", {\
-          "packageLocation": "./.yarn/cache/jsonc-parser-npm-2.2.1-31c56e9df8-c113878b5e.zip/node_modules/jsonc-parser/",\
+          "packageLocation": "./.yarn/unplugged/jsonc-parser-npm-2.2.1-31c56e9df8/node_modules/jsonc-parser/",\
           "packageDependencies": [\
             ["jsonc-parser", "npm:2.2.1"]\
           ],\
@@ -23076,10 +23080,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.108", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.108-d27fef4755-e719681acb.zip/node_modules/mrlint/",\
+        ["npm:0.0.109", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.109-1a6642f9ea-43d0ac8133.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.108"]\
+            ["mrlint", "npm:0.0.109"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -23287,10 +23291,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8", {\
-          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-dc5609492f/0/cache/node-fetch-npm-2.6.8-ddb8bfc274-91f57be68e.zip/node_modules/node-fetch/",\
+        ["virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-b983be5a3c/0/cache/node-fetch-npm-2.6.8-ddb8bfc274-91f57be68e.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
-            ["node-fetch", "virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8"],\
+            ["node-fetch", "virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8"],\
             ["@types/encoding", null],\
             ["encoding", null],\
             ["whatwg-url", "npm:5.0.0"]\

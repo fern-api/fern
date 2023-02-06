@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRootApiFileAstNodeTypes, FernServiceFileAstNodeTypes, ServiceFileSchema } from "@fern-api/yaml-schema";
 
 export interface Rule {
@@ -10,7 +10,7 @@ export interface Rule {
 }
 
 export interface RuleContext {
-    workspace: Workspace;
+    workspace: FernWorkspace;
     logger: Logger;
 }
 
