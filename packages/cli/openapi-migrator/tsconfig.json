@@ -7,7 +7,6 @@
     { "path": "../../commons/fs-utils" },
     { "path": "../logger" },
     { "path": "../task-context" },
-    { "path": "../workspace-loader" },
     { "path": "../yaml/yaml-schema" }
   ]
 }

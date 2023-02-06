@@ -1,9 +1,14 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDefinition } from "@fern-api/workspace-loader";
+import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { OpenAPIConverter } from "./v3/OpenApiV3Converter";
+
+export interface OpenApiConvertedFernDefinition {
+    rootApiFile: RootApiFileSchema;
+    serviceFiles: Record<RelativeFilePath, ServiceFileSchema>;
+}
 
 export async function convertOpenApi({
     openApiPath,
@@ -11,7 +16,7 @@ export async function convertOpenApi({
 }: {
     openApiPath: AbsoluteFilePath;
     taskContext: TaskContext;
-}): Promise<FernDefinition | undefined> {
+}): Promise<OpenApiConvertedFernDefinition | undefined> {
     taskContext.logger.debug(`Reading ${openApiPath}`);
     const openApiDocument = await SwaggerParser.parse(openApiPath);
     if (isOpenApiV3(openApiDocument)) {

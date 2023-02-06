@@ -1,10 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDefinition } from "@fern-api/workspace-loader";
 import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
-import yaml from "js-yaml";
-import { camelCase, mapValues as mapValuesLodash, size, upperFirst } from "lodash-es";
+import { camelCase, size, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
+import { OpenApiConvertedFernDefinition } from "../convertOpenApi";
 import { EndpointConverter } from "./EndpointConverter";
 import { EndpointNamer } from "./EndpointNamer";
 import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
@@ -57,7 +56,7 @@ export class OpenAPIConverter {
      *        - If an endpoint does not have an operation id, we will default to the http method as
      *          the name.
      */
-    public async convert(): Promise<FernDefinition> {
+    public async convert(): Promise<OpenApiConvertedFernDefinition> {
         const maybeAuthScheme = this.maybeGetAuthScheme(this.document);
         const hasAuth = maybeAuthScheme != null;
         const globalHeaderScanner = new GlobalHeaderScanner(this.context, this.taskContext);
@@ -92,25 +91,14 @@ export class OpenAPIConverter {
         );
         serviceFiles[RelativeFilePath.of(commonsServiceFile.filename)] = commonsServiceFile.serviceFile;
 
-        const rootApiFile = {
-            name: "api",
-            headers: globalHeaders,
-            auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
-            "auth-schemes": maybeAuthScheme,
-        };
-
         return {
             rootApiFile: {
-                rawContents: yaml.dump(rootApiFile),
-                contents: rootApiFile,
+                name: "api",
+                headers: globalHeaders,
+                auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
+                "auth-schemes": maybeAuthScheme,
             },
-            serviceFiles: mapValues(serviceFiles, (serviceFile) => ({
-                absoluteFilepath: "/TODO",
-                rawContents: yaml.dump(serviceFile),
-                contents: serviceFile,
-            })),
-            packageMarkers: {},
-            importedDefinitions: {},
+            serviceFiles,
         };
     }
 
@@ -320,8 +308,4 @@ function calculateBasePath(endpoints: OpenAPIV3Endpoint[]): ServiceBasePath {
 export interface ServiceBasePath {
     parts: string[];
     pathParameters: string[];
-}
-
-function mapValues<T extends object, U>(items: T, mapper: (item: T[keyof T]) => U): Record<keyof T, U> {
-    return mapValuesLodash(items, mapper) as Record<keyof T, U>;
 }
