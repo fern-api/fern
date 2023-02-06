@@ -12,7 +12,7 @@ exports[`fern init covie openapi 1`] = `
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: true
+  auth: false
   base-path: /accounts/{account_id}/mfa_requirements
   path-parameters:
     account_id:
@@ -56,7 +56,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /applications/{application_id}
   path-parameters:
     application_id:
@@ -1396,7 +1396,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: true
+  auth: false
   base-path: /events/{event_id}/broadcasts
   path-parameters:
     event_id: string
@@ -1457,7 +1457,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /integrations
   endpoints:
     listIntegrations:
@@ -1894,7 +1894,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     getLink:
@@ -2252,7 +2252,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /policies/{policy_id}
   path-parameters:
     policy_id:
@@ -2477,7 +2477,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /webhooks
   endpoints:
     listWebhooks:
@@ -3577,7 +3577,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     deviceModelsRetrieve:
@@ -3881,7 +3881,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/plans
   path-parameters:
     project:
@@ -4065,7 +4065,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     portingCancel:
@@ -4361,7 +4361,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects
   endpoints:
     projectsRetrieve:
@@ -4467,7 +4467,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/sims
   path-parameters:
     project:
@@ -4631,7 +4631,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/subscriptions
   path-parameters:
     project:
@@ -4811,7 +4811,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/subscriptions/{id}/usage
   path-parameters:
     project:
@@ -4919,7 +4919,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/users/{user}/addresses
   path-parameters:
     project:
@@ -5032,7 +5032,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/users
   path-parameters:
     project:
@@ -5379,6 +5379,11 @@ exports[`fern init telematica openapi 1`] = `
               {
                 "contents": "name: api
 headers: {}
+auth: bearerAuth
+auth-schemes:
+  bearerAuth:
+    header: Authorization
+    name: apiKey
 ",
                 "name": "api.yml",
                 "type": "file",

@@ -20,9 +20,11 @@ export class OpenAPIConverter {
     private taskContext: TaskContext;
     private inlinedTypeNamer: InlinedTypeNamer;
     private endpointNamer: EndpointNamer;
+    private document: OpenAPIV3.Document;
 
     constructor(document: OpenAPIV3.Document, taskContext: TaskContext) {
         this.taskContext = taskContext;
+        this.document = document;
         this.context = new OpenApiV3Context(document);
         this.inlinedTypeNamer = new InlinedTypeNamer();
         this.endpointNamer = new EndpointNamer();
@@ -49,6 +51,8 @@ export class OpenAPIConverter {
      *          the name.
      */
     public async convert(): Promise<FernDefinition> {
+        const maybeAuthScheme = this.maybeGetAuthScheme(this.document);
+        const hasAuth = maybeAuthScheme != null;
         const globalHeaderScanner = new GlobalHeaderScanner(this.context, this.taskContext);
         const globalHeaders = globalHeaderScanner.getGlobalHeaders();
         const serviceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
@@ -57,23 +61,27 @@ export class OpenAPIConverter {
         for (const tag of tags) {
             const endpoints = this.context.getEndpointsForTag(tag);
             const schemas = this.context.getSchemasForTag(tag);
-            const convertedServiceFile = this.convertToServiceFile(tag, endpoints, schemas);
+            const convertedServiceFile = this.convertToServiceFile(tag, endpoints, schemas, hasAuth);
             serviceFiles[RelativeFilePath.of(convertedServiceFile.filename)] = convertedServiceFile.serviceFile;
         }
 
         const untaggedEndpoints = this.context.getUntaggedEndpoints();
         const untaggedSchemas = this.context.getUntaggedSchemas();
         const multiTaggedSchemas = this.context.getMultitaggedSchemas();
-        const commonsServiceFile = this.convertToServiceFile(COMMONS_SERVICE_FILE_NAME, untaggedEndpoints, [
-            ...multiTaggedSchemas,
-            ...untaggedSchemas,
-        ]);
+        const commonsServiceFile = this.convertToServiceFile(
+            COMMONS_SERVICE_FILE_NAME,
+            untaggedEndpoints,
+            [...multiTaggedSchemas, ...untaggedSchemas],
+            hasAuth
+        );
         serviceFiles[RelativeFilePath.of(commonsServiceFile.filename)] = commonsServiceFile.serviceFile;
 
         return {
             rootApiFile: {
                 name: "api",
                 headers: globalHeaders,
+                auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
+                "auth-schemes": maybeAuthScheme,
             },
             serviceFiles,
         };
@@ -82,7 +90,8 @@ export class OpenAPIConverter {
     private convertToServiceFile(
         tag: string,
         endpoints: OpenAPIV3Endpoint[],
-        schemas: OpenAPIV3Schema[]
+        schemas: OpenAPIV3Schema[],
+        hasAuth: boolean
     ): { serviceFile: ServiceFileSchema; filename: string } {
         const camelCasedTag = camelCase(tag);
         const pascalCasedTag = upperFirst(camelCasedTag);
@@ -153,7 +162,7 @@ export class OpenAPIConverter {
         const serviceName = `${pascalCasedTag}Service`;
         if (size(convertedEndpoints) > 0) {
             const partialService: Omit<RawSchemas.HttpServiceSchema, "endpoints"> = {
-                auth: true,
+                auth: hasAuth,
                 "base-path": serviceBasePath.parts.join("/"),
             };
 
@@ -227,6 +236,27 @@ export class OpenAPIConverter {
             pathParameters[pathParameter] = "string";
         });
         return pathParameters;
+    }
+
+    private maybeGetAuthScheme(
+        document: OpenAPIV3.Document
+    ): Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined {
+        if (document.components?.securitySchemes != null) {
+            for (const [name, securityScheme] of Object.entries(document.components.securitySchemes)) {
+                if (isReferenceObject(securityScheme)) {
+                    continue;
+                }
+                if (securityScheme.type === "apiKey") {
+                    return {
+                        [name]: {
+                            header: securityScheme.name,
+                            name: "apiKey",
+                        },
+                    };
+                }
+            }
+        }
+        return undefined;
     }
 }
 
