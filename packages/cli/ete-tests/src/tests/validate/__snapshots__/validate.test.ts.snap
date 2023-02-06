@@ -3,7 +3,7 @@
 exports[`validate openapi 1`] = `
 "[api]: fern/api/definition/openapi.yml:2:4
        servers -> 0
-       
+       Please specify a name for the server on /v3. Use the property x-server-name.
 [api]: fern/api/definition/openapi.yml:36:9
        paths -> /pet -> post
        Endpoint is missing operationId.

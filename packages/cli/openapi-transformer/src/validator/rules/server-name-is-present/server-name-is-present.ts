@@ -6,7 +6,6 @@ export const ServerNameIsPresent: SpectralRule = {
     get: () => {
         return {
             given: ["$.servers[*]"],
-            message: "",
             resolved: false,
             then: [
                 {
@@ -20,7 +19,7 @@ export const ServerNameIsPresent: SpectralRule = {
                         if (schema["x-server-name"] == null) {
                             results.push({
                                 message: `Please specify a name for the server on ${schema.url}. Use the property x-server-name.`,
-                                path: [...path],
+                                path,
                             });
                         }
 
