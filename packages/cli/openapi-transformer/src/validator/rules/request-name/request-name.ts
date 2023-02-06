@@ -1,6 +1,6 @@
 import { SpectralRule } from "../Rule";
 
-const X_REQUEST_NAME_FIELD = "X-request-name";
+const X_REQUEST_NAME_FIELD = "x-request-name";
 
 export const RequestName: SpectralRule = {
     name: "request-name",

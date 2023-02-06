@@ -4,8 +4,11 @@ components:
     CurrencyCode:
       type: string
       title: CurrencyCode
+      x-enum-names:
+        2INCH: TWO_INCH
       enum:
         - 1INCH
+        - 2INCH
         - AAVE
         - ADA
         - AED
