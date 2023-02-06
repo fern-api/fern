@@ -53,9 +53,30 @@ export class SchemaConverter {
         const extendedObjects: string[] = [];
 
         if (schema.enum != null) {
-            typeDeclaration = {
-                enum: schema.enum,
-            };
+            if (!isListOfStrings(schema.enum)) {
+                return undefined;
+            }
+            const enumNames = (schema as any)["X-enum-names"] as Record<string, string> | undefined;
+            if (enumNames == null) {
+                typeDeclaration = {
+                    enum: schema.enum,
+                };
+            } else {
+                const enumDeclaration = [];
+                for (const enumValue of schema.enum) {
+                    if (enumValue in enumNames) {
+                        enumDeclaration.push({
+                            name: enumNames[enumValue],
+                            value: enumValue,
+                        });
+                    } else {
+                        enumDeclaration.push(enumValue);
+                    }
+                }
+                typeDeclaration = {
+                    enum: enumDeclaration,
+                };
+            }
         } else if (schema === "boolean" || schema.type === "boolean") {
             typeDeclaration = "boolean";
         } else if (schema === "number" || schema.type === "number") {
