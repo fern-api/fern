@@ -1,3 +1,4 @@
+import { IFunctionResult } from "@stoplight/spectral-core";
 import { SpectralRule } from "../Rule";
 
 export const ServerNameIsPresent: SpectralRule = {
