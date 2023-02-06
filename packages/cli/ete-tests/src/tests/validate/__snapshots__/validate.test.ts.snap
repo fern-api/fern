@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`validate openapi 1`] = `
-"[api]: fern/api/definition/openapi.yml:36:9
+"[api]: fern/api/definition/openapi.yml:2:4
+       servers -> 0
+       
+[api]: fern/api/definition/openapi.yml:36:9
        paths -> /pet -> post
        Endpoint is missing operationId.
 [api]: fern/api/definition/openapi.yml:110:8
