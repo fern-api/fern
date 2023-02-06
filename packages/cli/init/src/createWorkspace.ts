@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { FernDefinition } from "@fern-api/openapi-migrator";
+import { OpenApiConvertedFernDefinition } from "@fern-api/openapi-migrator";
 import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -18,7 +18,7 @@ export async function createWorkspace({
     fernDefinition,
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
-    fernDefinition: FernDefinition | undefined;
+    fernDefinition: OpenApiConvertedFernDefinition | undefined;
 }): Promise<void> {
     await mkdir(directoryOfWorkspace);
     await writeGeneratorsConfiguration({

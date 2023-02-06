@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { camelCase, size, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-import { FernDefinition } from "../convertOpenApi";
+import { OpenApiConvertedFernDefinition } from "../convertOpenApi";
 import { EndpointConverter } from "./EndpointConverter";
 import { EndpointNamer } from "./EndpointNamer";
 import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
@@ -56,7 +56,7 @@ export class OpenAPIConverter {
      *        - If an endpoint does not have an operation id, we will default to the http method as
      *          the name.
      */
-    public async convert(): Promise<FernDefinition> {
+    public async convert(): Promise<OpenApiConvertedFernDefinition> {
         const maybeAuthScheme = this.maybeGetAuthScheme(this.document);
         const hasAuth = maybeAuthScheme != null;
         const globalHeaderScanner = new GlobalHeaderScanner(this.context, this.taskContext);

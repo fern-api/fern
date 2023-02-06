@@ -1,6 +1,12 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
+import { convertOpenApi } from "@fern-api/openapi-migrator";
 import { Project } from "@fern-api/project-loader";
+import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace, OpenAPIWorkspace } from "@fern-api/workspace-loader";
+import yaml from "js-yaml";
+import { mapValues as mapValuesLodash } from "lodash-es";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateFernWorkspace } from "./generateFernWorkspace";
 
@@ -59,12 +65,13 @@ export async function generateWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "openapi") {
-                    context.failWithoutThrowing("Generating from OpenAPI not currently supported.");
-                    return;
-                }
+                const fernWorkspace: FernWorkspace =
+                    workspace.type === "fern"
+                        ? workspace
+                        : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+
                 await generateFernWorkspace({
-                    workspace,
+                    workspace: fernWorkspace,
                     organization: project.config.organization,
                     context,
                     version,
@@ -75,4 +82,47 @@ export async function generateWorkspaces({
             });
         })
     );
+}
+
+async function convertOpenApiWorkspaceToFernWorkspace(
+    openapiWorkspace: OpenAPIWorkspace,
+    context: TaskContext
+): Promise<FernWorkspace> {
+    const definition = await convertOpenApi({
+        openApiPath: join(openapiWorkspace.absolutePathToDefinition, openapiWorkspace.definition.path),
+        taskContext: context,
+    });
+
+    if (definition == null) {
+        return context.failAndThrow("Failed to convert OpenAPI");
+    }
+
+    return {
+        type: "fern",
+        name: openapiWorkspace.name,
+        generatorsConfiguration: openapiWorkspace.generatorsConfiguration,
+        absolutePathToDefinition: openapiWorkspace.absolutePathToDefinition,
+        absolutePathToWorkspace: openapiWorkspace.absolutePathToDefinition,
+        dependenciesConfiguration: {
+            dependencies: {},
+        },
+        definition: {
+            rootApiFile: {
+                contents: definition.rootApiFile,
+                rawContents: yaml.dump(definition.rootApiFile),
+            },
+            serviceFiles: mapValues(definition.serviceFiles, (serviceFile) => ({
+                // these files doesn't live on disk, so there's no absolute filepath
+                absoluteFilepath: "/DUMMY_PATH",
+                rawContents: yaml.dump(serviceFile),
+                contents: serviceFile,
+            })),
+            packageMarkers: {},
+            importedDefinitions: {},
+        },
+    };
+}
+
+function mapValues<T extends object, U>(items: T, mapper: (item: T[keyof T]) => U): Record<keyof T, U> {
+    return mapValuesLodash(items, mapper) as Record<keyof T, U>;
 }

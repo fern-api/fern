@@ -1,1 +1,1 @@
-export { convertOpenApi, type FernDefinition } from "./convertOpenApi";
+export { convertOpenApi, type OpenApiConvertedFernDefinition } from "./convertOpenApi";

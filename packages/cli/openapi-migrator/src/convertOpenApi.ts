@@ -5,7 +5,7 @@ import { RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { OpenAPIConverter } from "./v3/OpenApiV3Converter";
 
-export interface FernDefinition {
+export interface OpenApiConvertedFernDefinition {
     rootApiFile: RootApiFileSchema;
     serviceFiles: Record<RelativeFilePath, ServiceFileSchema>;
 }
@@ -16,7 +16,7 @@ export async function convertOpenApi({
 }: {
     openApiPath: AbsoluteFilePath;
     taskContext: TaskContext;
-}): Promise<FernDefinition | undefined> {
+}): Promise<OpenApiConvertedFernDefinition | undefined> {
     taskContext.logger.debug(`Reading ${openApiPath}`);
     const openApiDocument = await SwaggerParser.parse(openApiPath);
     if (isOpenApiV3(openApiDocument)) {
