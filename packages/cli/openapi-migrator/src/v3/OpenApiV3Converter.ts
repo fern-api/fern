@@ -285,6 +285,7 @@ export class OpenAPIConverter {
         const result: Record<string, RawSchemas.EnvironmentSchema> = {};
         if (document.servers != null) {
             for (const serverObject of document.servers) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const serverName = (serverObject as any)["x-server-name"] as string | undefined;
                 if (serverName == null) {
                     continue;
