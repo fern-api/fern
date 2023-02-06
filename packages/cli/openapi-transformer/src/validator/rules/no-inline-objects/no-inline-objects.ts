@@ -1,20 +1,21 @@
 import { falsy } from "@stoplight/spectral-functions";
 import { SpectralRule } from "../Rule";
 
-export const NoInlineEnums: SpectralRule = {
-    name: "no-inlined-enums",
+export const NoInlineObjects: SpectralRule = {
+    name: "no-inlined-objects",
     get: () => {
         return {
             given: [
                 "$.components.schemas.*.properties[*]",
+                "$.components.schemas.*.allOf[*]",
                 "$.paths.*.*.requestBody.content.*.schema.properties[*]",
                 "$.paths.*.*.responses.*.content.*.schema.properties[*]",
             ],
-            message: "Enum is inlined. Please refactor as a $ref.",
+            message: "Object is inlined. Please refactor as a $ref.",
             resolved: false,
             then: [
                 {
-                    field: "enum",
+                    field: "properties",
                     function: falsy,
                 },
             ],

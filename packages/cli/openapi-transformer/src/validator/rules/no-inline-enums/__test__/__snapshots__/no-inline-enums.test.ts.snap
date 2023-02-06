@@ -3,7 +3,7 @@
 exports[`operation-id-required simple simple 1`] = `
 [
   {
-    "breacrumbs": [
+    "breadcrumbs": [
       "paths",
       "/example",
       "get",
@@ -20,7 +20,7 @@ exports[`operation-id-required simple simple 1`] = `
     "severity": "error",
   },
   {
-    "breacrumbs": [
+    "breadcrumbs": [
       "components",
       "schemas",
       "Example",
