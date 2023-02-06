@@ -2,7 +2,11 @@
 
 exports[`validate openapi 1`] = `
 "[api]: openapi.yml -> paths -> /pet -> post
-       operationId is required"
+       operationId is required
+[api]: openapi.yml -> components -> schemas -> Order -> properties -> status -> enum
+       Enum is inlined. Please refactor as a $ref.
+[api]: openapi.yml -> components -> schemas -> Pet -> properties -> status -> enum
+       Enum is inlined. Please refactor as a $ref."
 `;
 
 exports[`validate simple 1`] = `
