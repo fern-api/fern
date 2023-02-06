@@ -114,7 +114,7 @@ describe("migrateIntermediateRepresentation", () => {
                 },
             },
         });
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 
@@ -129,7 +129,7 @@ describe("migrateIntermediateRepresentation", () => {
                 },
             },
         });
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
         expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 });

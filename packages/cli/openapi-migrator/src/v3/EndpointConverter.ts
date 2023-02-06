@@ -409,7 +409,6 @@ interface ConvertedResponse {
 }
 
 export function isObjectSchema(parameter: RawSchemas.TypeDeclarationSchema): parameter is RawSchemas.ObjectSchema {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (parameter as RawSchemas.ObjectSchema).properties != null;
 }
 
