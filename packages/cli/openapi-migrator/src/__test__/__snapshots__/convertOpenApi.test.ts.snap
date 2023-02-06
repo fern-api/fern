@@ -6975,7 +6975,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 ],
               },
             },
-            "response": "_InlinedType175",
+            "response": "_InlinedType174",
           },
           "_unnamedOperation17": {
             "display-name": "Retrieve the form templates for a lead",
@@ -6988,7 +6988,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "mold_key": "optional<string>",
               },
             },
-            "response": "_InlinedType183",
+            "response": "_InlinedType182",
           },
           "_unnamedOperation18": {
             "display-name": "Retrieve a lead",
@@ -7003,7 +7003,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "type": "string",
               },
             },
-            "response": "_InlinedType189",
+            "response": "_InlinedType188",
           },
           "_unnamedOperation19": {
             "display-name": "Archive a lead",
@@ -7016,7 +7016,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "type": "string",
               },
             },
-            "response": "_InlinedType190",
+            "response": "_InlinedType189",
           },
           "_unnamedOperation20": {
             "display-name": "Update a lead",
@@ -7053,7 +7053,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                     "type": "optional<string>",
                   },
                   "field_data": "optional<map<string, unknown>>",
-                  "fields": "optional<list<_InlinedType191>>",
+                  "fields": "optional<list<_InlinedType190>>",
                   "group_key": "optional<string>",
                   "meta": {
                     "docs": "Key value pairs that store additional information about this lead. First and last name required. Other eligible keys are based on Lead forms created. Use the /leads/form-template to view field names",
@@ -7066,12 +7066,12 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                   },
                   "status": {
                     "docs": "Current status of this lead. Must be one of either 'open', 'closed', 'dead', 'closed won', or 'closed lost'",
-                    "type": "optional<_InlinedType192>",
+                    "type": "optional<_InlinedType191>",
                   },
                 },
               },
             },
-            "response": "_InlinedType198",
+            "response": "_InlinedType197",
           },
           "_unnamedOperation21": {
             "display-name": "Convert a lead",
@@ -7099,7 +7099,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
               },
             },
-            "response": "_InlinedType205",
+            "response": "_InlinedType204",
           },
         },
         "path-parameters": undefined,
@@ -7190,16 +7190,12 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "Lead amount in **cents**",
               "type": "optional<integer>",
             },
-            "approved": {
-              "docs": "Used to indicate whether this lead has been approved to move past the closed stage",
-              "type": "optional<_InlinedType167>",
-            },
             "external_key": {
               "docs": "A unique key that identifies this lead in an external system. This key must be unique across all leads in your account. This key is used to identify leads when they are updated or deleted. Often provided as an email, but can be any unique string.",
               "type": "string",
             },
             "field_data": "optional<map<string, unknown>>",
-            "fields": "optional<list<_InlinedType168>>",
+            "fields": "optional<list<_InlinedType167>>",
             "group_key": "optional<string>",
             "meta": {
               "docs": "Key value pairs that store additional information about this lead. First and last name required. Other eligible keys are based on Lead forms created. Use the /leads/form-template to view field names",
@@ -7212,11 +7208,11 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "status": {
               "docs": "Current status of this lead. Must be one of either 'open', 'closed', 'dead', 'closed won', or 'closed lost'",
-              "type": "_InlinedType169",
+              "type": "_InlinedType168",
             },
           },
         },
-        "_InlinedType170": {
+        "_InlinedType169": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -7234,7 +7230,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType171": {
+        "_InlinedType170": {
           "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
           "extends": undefined,
           "properties": {
@@ -7255,7 +7251,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "type": "optional<string>",
             },
             "field_data": "optional<map<string, unknown>>",
-            "fields": "optional<list<_InlinedType172>>",
+            "fields": "optional<list<_InlinedType171>>",
             "group_key": "optional<string>",
             "meta": {
               "docs": "Key value pairs that store additional information about this lead. First and last name required. Other eligible keys are based on Lead forms created. Use the /leads/form-template to view field names",
@@ -7268,25 +7264,25 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "status": {
               "docs": "Current status of this lead. Must be one of either 'open', 'closed', 'dead', 'closed won', or 'closed lost'",
-              "type": "optional<_InlinedType173>",
+              "type": "optional<_InlinedType172>",
             },
           },
         },
-        "_InlinedType174": {
+        "_InlinedType173": {
           "extends": [
+            "_InlinedType169",
             "_InlinedType170",
-            "_InlinedType171",
           ],
         },
-        "_InlinedType175": {
+        "_InlinedType174": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType174",
+            "data": "_InlinedType173",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType176": {
+        "_InlinedType175": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -7304,7 +7300,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType177": {
+        "_InlinedType176": {
           "docs": "**FormTemplates** are configurable on many of our supported objects. These forms act as a way to collect additional information on object create",
           "extends": undefined,
           "properties": {
@@ -7312,8 +7308,8 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "A description for users to better understand the form",
               "type": "optional<string>",
             },
-            "fields": "optional<list<_InlinedType178>>",
-            "groups": "optional<list<_InlinedType181>>",
+            "fields": "optional<list<_InlinedType177>>",
+            "groups": "optional<list<_InlinedType180>>",
             "name": {
               "docs": "The presented name of this form",
               "type": "optional<string>",
@@ -7328,21 +7324,21 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType182": {
+        "_InlinedType181": {
           "extends": [
+            "_InlinedType175",
             "_InlinedType176",
-            "_InlinedType177",
           ],
         },
-        "_InlinedType183": {
+        "_InlinedType182": {
           "extends": undefined,
           "properties": {
-            "data": "list<_InlinedType182>",
+            "data": "list<_InlinedType181>",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType184": {
+        "_InlinedType183": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -7360,7 +7356,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType185": {
+        "_InlinedType184": {
           "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
           "extends": undefined,
           "properties": {
@@ -7381,7 +7377,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "type": "optional<string>",
             },
             "field_data": "optional<map<string, unknown>>",
-            "fields": "optional<list<_InlinedType186>>",
+            "fields": "optional<list<_InlinedType185>>",
             "group_key": "optional<string>",
             "meta": {
               "docs": "Key value pairs that store additional information about this lead. First and last name required. Other eligible keys are based on Lead forms created. Use the /leads/form-template to view field names",
@@ -7394,32 +7390,32 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "status": {
               "docs": "Current status of this lead. Must be one of either 'open', 'closed', 'dead', 'closed won', or 'closed lost'",
-              "type": "optional<_InlinedType187>",
+              "type": "optional<_InlinedType186>",
             },
           },
         },
-        "_InlinedType188": {
+        "_InlinedType187": {
           "extends": [
+            "_InlinedType183",
             "_InlinedType184",
-            "_InlinedType185",
           ],
+        },
+        "_InlinedType188": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType187",
+            "message": "string",
+            "status": "integer",
+          },
         },
         "_InlinedType189": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType188",
             "message": "string",
             "status": "integer",
           },
         },
         "_InlinedType190": {
-          "extends": undefined,
-          "properties": {
-            "message": "string",
-            "status": "integer",
-          },
-        },
-        "_InlinedType191": {
           "docs": "**FieldData** combines attributes about a field with its submitted value on target object",
           "extends": undefined,
           "properties": {
@@ -7473,7 +7469,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType192": {
+        "_InlinedType191": {
           "docs": "Current status of this lead. Must be one of either 'open', 'closed', 'dead', 'closed won', or 'closed lost'",
           "enum": [
             "open",
@@ -7483,7 +7479,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "closed lost",
           ],
         },
-        "_InlinedType193": {
+        "_InlinedType192": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -7501,7 +7497,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType194": {
+        "_InlinedType193": {
           "docs": "**Leads** are submitted by your partners to let your sales team know of potential accounts that they may wish to work. Partners may earn comission for qualified leads, or leads that eventually become closed accounts.",
           "extends": undefined,
           "properties": {
@@ -7522,7 +7518,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "type": "optional<string>",
             },
             "field_data": "optional<map<string, unknown>>",
-            "fields": "optional<list<_InlinedType195>>",
+            "fields": "optional<list<_InlinedType194>>",
             "group_key": "optional<string>",
             "meta": {
               "docs": "Key value pairs that store additional information about this lead. First and last name required. Other eligible keys are based on Lead forms created. Use the /leads/form-template to view field names",
@@ -7535,25 +7531,25 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "status": {
               "docs": "Current status of this lead. Must be one of either 'open', 'closed', 'dead', 'closed won', or 'closed lost'",
-              "type": "optional<_InlinedType196>",
+              "type": "optional<_InlinedType195>",
             },
           },
         },
-        "_InlinedType197": {
+        "_InlinedType196": {
           "extends": [
+            "_InlinedType192",
             "_InlinedType193",
-            "_InlinedType194",
           ],
         },
-        "_InlinedType198": {
+        "_InlinedType197": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType197",
+            "data": "_InlinedType196",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType199": {
+        "_InlinedType198": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -7571,27 +7567,27 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType200": {
+        "_InlinedType199": {
           "docs": "**Customers** represent the users who have been referred by a **Partner**.
 
 **Customers** are linked to the **Partner** that referred them through a **partner_key** which must be provided on the Create Customer endpoint.
 
 The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is created by the \`PartnerStackJS\` snippet.",
           "extends": [
+            "_InlinedType200",
             "_InlinedType201",
-            "_InlinedType202",
+          ],
+        },
+        "_InlinedType203": {
+          "extends": [
+            "_InlinedType198",
+            "_InlinedType199",
           ],
         },
         "_InlinedType204": {
-          "extends": [
-            "_InlinedType199",
-            "_InlinedType200",
-          ],
-        },
-        "_InlinedType205": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType204",
+            "data": "_InlinedType203",
             "message": "string",
             "status": "integer",
           },
@@ -7636,7 +7632,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
               },
             },
-            "response": "_InlinedType210",
+            "response": "_InlinedType209",
           },
           "_unnamedOperation22": {
             "display-name": "Retrieve a marketplace program",
@@ -7649,13 +7645,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "type": "string",
               },
             },
-            "response": "_InlinedType214",
+            "response": "_InlinedType213",
           },
         },
         "path-parameters": undefined,
       },
       "types": {
-        "_InlinedType206": {
+        "_InlinedType205": {
           "docs": "Returns a list of all marketplace-listed programs and their details",
           "extends": undefined,
           "properties": {
@@ -7689,7 +7685,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "offers": {
               "docs": "Available offers for the program",
-              "type": "optional<list<_InlinedType207>>",
+              "type": "optional<list<_InlinedType206>>",
             },
             "website": {
               "docs": "The website of this marketplace listing",
@@ -7697,28 +7693,28 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType208": {
+        "_InlinedType207": {
           "extends": [
-            "_InlinedType206",
+            "_InlinedType205",
           ],
+        },
+        "_InlinedType208": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType207>>",
+            "total": "optional<integer>",
+          },
         },
         "_InlinedType209": {
           "extends": undefined,
           "properties": {
-            "has_more": "optional<boolean>",
-            "items": "optional<list<_InlinedType208>>",
-            "total": "optional<integer>",
-          },
-        },
-        "_InlinedType210": {
-          "extends": undefined,
-          "properties": {
-            "data": "_InlinedType209",
+            "data": "_InlinedType208",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType211": {
+        "_InlinedType210": {
           "docs": "Returns a list of all marketplace-listed programs and their details",
           "extends": undefined,
           "properties": {
@@ -7752,7 +7748,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "offers": {
               "docs": "Available offers for the program",
-              "type": "optional<list<_InlinedType212>>",
+              "type": "optional<list<_InlinedType211>>",
             },
             "website": {
               "docs": "The website of this marketplace listing",
@@ -7760,15 +7756,15 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType213": {
+        "_InlinedType212": {
           "extends": [
-            "_InlinedType211",
+            "_InlinedType210",
           ],
         },
-        "_InlinedType214": {
+        "_InlinedType213": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType213",
+            "data": "_InlinedType212",
             "message": "string",
             "status": "integer",
           },
@@ -7821,7 +7817,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "order_by": {
                   "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
-                  "type": "optional<_InlinedType215>",
+                  "type": "optional<_InlinedType214>",
                 },
                 "starting_after": {
                   "docs": "A cursor for use in pagination, \`starting_after\` takes in an item key and the subsequent call will return the following items in the list. This is mutually exclusive with \`ending_before\`.",
@@ -7829,7 +7825,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
               },
             },
-            "response": "_InlinedType226",
+            "response": "_InlinedType225",
           },
           "_unnamedOperation23": {
             "display-name": "Create a partnership",
@@ -7839,12 +7835,12 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "request": {
               "body": {
                 "extends": [
-                  "_InlinedType227",
-                  "_InlinedType229",
+                  "_InlinedType226",
+                  "_InlinedType228",
                 ],
               },
             },
-            "response": "_InlinedType240",
+            "response": "_InlinedType239",
           },
           "_unnamedOperation24": {
             "display-name": "Retrieve a partnership",
@@ -7857,7 +7853,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "type": "string",
               },
             },
-            "response": "_InlinedType254",
+            "response": "_InlinedType253",
           },
           "_unnamedOperation25": {
             "display-name": "Archive a partnership",
@@ -7870,7 +7866,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "type": "string",
               },
             },
-            "response": "_InlinedType255",
+            "response": "_InlinedType254",
           },
           "_unnamedOperation26": {
             "display-name": "Update a partnership",
@@ -7888,7 +7884,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 "docs": "UpdateTarget",
                 "extends": undefined,
                 "properties": {
-                  "fields": "optional<list<_InlinedType256>>",
+                  "fields": "optional<list<_InlinedType255>>",
                   "group_key": {
                     "docs": "The key of the group within PartnerStack that you want this partner to be placed into.",
                     "type": "optional<string>",
@@ -7904,7 +7900,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
               },
             },
-            "response": "_InlinedType265",
+            "response": "_InlinedType264",
           },
           "_unnamedOperation27": {
             "display-name": "Updates a partnership's tags",
@@ -7933,13 +7929,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
               },
             },
-            "response": "_InlinedType277",
+            "response": "_InlinedType276",
           },
         },
         "path-parameters": undefined,
       },
       "types": {
-        "_InlinedType216": {
+        "_InlinedType215": {
           "enum": [
             "-created_at",
             "created_at",
@@ -7947,7 +7943,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "updated_at",
           ],
         },
-        "_InlinedType217": {
+        "_InlinedType216": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -7965,13 +7961,13 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType218": {
+        "_InlinedType217": {
           "docs": "Partnerships represent companies that you are partnered with and promoting on PartnerStack",
           "extends": undefined,
           "properties": {
             "address": {
               "docs": "Partnership's address information.",
-              "type": "optional<_InlinedType219>",
+              "type": "optional<_InlinedType218>",
             },
             "email": {
               "docs": "email address for the partner",
@@ -7983,7 +7979,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "group": {
               "docs": "partnership's group information",
-              "type": "optional<_InlinedType220>",
+              "type": "optional<_InlinedType219>",
             },
             "joined_at": {
               "docs": "timestamp for when the partner joined partnerstack",
@@ -7995,7 +7991,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "manager": {
               "docs": "partnership's manager information if applicable",
-              "type": "optional<_InlinedType221>",
+              "type": "optional<_InlinedType220>",
             },
             "mdata": {
               "docs": "partnership metadata",
@@ -8015,36 +8011,36 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType222": {
+        "_InlinedType221": {
           "extends": undefined,
           "properties": {
-            "team": "optional<_InlinedType223>",
+            "team": "optional<_InlinedType222>",
           },
         },
-        "_InlinedType224": {
+        "_InlinedType223": {
           "extends": [
+            "_InlinedType216",
             "_InlinedType217",
-            "_InlinedType218",
-            "_InlinedType222",
+            "_InlinedType221",
           ],
+        },
+        "_InlinedType224": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType223>>",
+            "total": "optional<integer>",
+          },
         },
         "_InlinedType225": {
           "extends": undefined,
           "properties": {
-            "has_more": "optional<boolean>",
-            "items": "optional<list<_InlinedType224>>",
-            "total": "optional<integer>",
-          },
-        },
-        "_InlinedType226": {
-          "extends": undefined,
-          "properties": {
-            "data": "_InlinedType225",
+            "data": "_InlinedType224",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType227": {
+        "_InlinedType226": {
           "docs": "**Partners** represent users on PartnerStack that will be promoting your company.",
           "extends": undefined,
           "properties": {
@@ -8056,7 +8052,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "DEPRECATED 'fields' should be the source of truth",
               "type": "optional<map<string, unknown>>",
             },
-            "fields": "optional<list<_InlinedType228>>",
+            "fields": "optional<list<_InlinedType227>>",
             "first_name": {
               "docs": "The first name of the partner.",
               "type": "optional<string>",
@@ -8084,7 +8080,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "tags": "optional<list<string>>",
           },
         },
-        "_InlinedType229": {
+        "_InlinedType228": {
           "extends": undefined,
           "properties": {
             "group_key": {
@@ -8093,7 +8089,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType230": {
+        "_InlinedType229": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8111,27 +8107,27 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType231": {
+        "_InlinedType230": {
           "extends": [
-            "_InlinedType232",
-            "_InlinedType234",
+            "_InlinedType231",
+            "_InlinedType233",
+          ],
+        },
+        "_InlinedType238": {
+          "extends": [
+            "_InlinedType229",
+            "_InlinedType230",
           ],
         },
         "_InlinedType239": {
-          "extends": [
-            "_InlinedType230",
-            "_InlinedType231",
-          ],
-        },
-        "_InlinedType240": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType239",
+            "data": "_InlinedType238",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType241": {
+        "_InlinedType240": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8149,45 +8145,45 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType242": {
+        "_InlinedType241": {
           "extends": [
-            "_InlinedType243",
-            "_InlinedType245",
+            "_InlinedType242",
+            "_InlinedType244",
           ],
         },
-        "_InlinedType250": {
+        "_InlinedType249": {
           "extends": undefined,
           "properties": {
             "address": {
               "docs": "Partnership's address information.",
-              "type": "optional<_InlinedType251>",
+              "type": "optional<_InlinedType250>",
             },
-            "team": "optional<_InlinedType252>",
+            "team": "optional<_InlinedType251>",
           },
         },
-        "_InlinedType253": {
+        "_InlinedType252": {
           "extends": [
+            "_InlinedType240",
             "_InlinedType241",
-            "_InlinedType242",
-            "_InlinedType250",
+            "_InlinedType249",
           ],
+        },
+        "_InlinedType253": {
+          "extends": undefined,
+          "properties": {
+            "data": "_InlinedType252",
+            "message": "string",
+            "status": "integer",
+          },
         },
         "_InlinedType254": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType253",
             "message": "string",
             "status": "integer",
           },
         },
         "_InlinedType255": {
-          "extends": undefined,
-          "properties": {
-            "message": "string",
-            "status": "integer",
-          },
-        },
-        "_InlinedType256": {
           "extends": undefined,
           "properties": {
             "api_name": {
@@ -8196,7 +8192,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType257": {
+        "_InlinedType256": {
           "docs": "**Partners** represent users on PartnerStack that will be promoting your company.",
           "extends": undefined,
           "properties": {
@@ -8208,7 +8204,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "DEPRECATED 'fields' should be the source of truth",
               "type": "optional<map<string, unknown>>",
             },
-            "fields": "optional<list<_InlinedType258>>",
+            "fields": "optional<list<_InlinedType257>>",
             "first_name": {
               "docs": "The first name of the partner.",
               "type": "optional<string>",
@@ -8236,31 +8232,31 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "tags": "optional<list<string>>",
           },
         },
-        "_InlinedType259": {
+        "_InlinedType258": {
           "extends": undefined,
           "properties": {
-            "group": "optional<_InlinedType262>",
+            "group": "optional<_InlinedType261>",
             "tier": {
               "docs": "**Tiers** enable vendors to provide reward and feature levels.",
-              "type": "optional<_InlinedType263>",
+              "type": "optional<_InlinedType262>",
             },
           },
         },
-        "_InlinedType264": {
+        "_InlinedType263": {
           "extends": [
-            "_InlinedType257",
-            "_InlinedType259",
+            "_InlinedType256",
+            "_InlinedType258",
           ],
         },
-        "_InlinedType265": {
+        "_InlinedType264": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType264",
+            "data": "_InlinedType263",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType266": {
+        "_InlinedType265": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8278,34 +8274,34 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType267": {
+        "_InlinedType266": {
           "extends": [
-            "_InlinedType268",
-            "_InlinedType270",
+            "_InlinedType267",
+            "_InlinedType269",
+          ],
+        },
+        "_InlinedType274": {
+          "extends": [
+            "_InlinedType265",
+            "_InlinedType266",
           ],
         },
         "_InlinedType275": {
-          "extends": [
-            "_InlinedType266",
-            "_InlinedType267",
-          ],
-        },
-        "_InlinedType276": {
           "docs": "Response schema for the PatchUpdateTagsForPartnership endpoint",
           "extends": undefined,
           "properties": {
-            "partnership": "optional<_InlinedType275>",
+            "partnership": "optional<_InlinedType274>",
             "tags_added": "optional<list<string>>",
             "tags_not_found": "optional<list<string>>",
             "tags_removed": "optional<list<string>>",
           },
         },
-        "_InlinedType277": {
+        "_InlinedType276": {
           "extends": undefined,
           "properties": {
             "data": {
               "docs": "Response schema for the PatchUpdateTagsForPartnership endpoint",
-              "type": "_InlinedType276",
+              "type": "_InlinedType275",
             },
             "message": "string",
             "status": "integer",
@@ -8391,7 +8387,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "order_by": {
                   "docs": "The field in which the results are ordered by. A \`-\` prefix denotes that the results are in descending order.",
-                  "type": "optional<_InlinedType278>",
+                  "type": "optional<_InlinedType277>",
                 },
                 "partnership_key": {
                   "docs": "Partnership key in which the results are filtered by.",
@@ -8403,11 +8399,11 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
                 "status": {
                   "docs": "The status of the rewards",
-                  "type": "optional<_InlinedType280>",
+                  "type": "optional<_InlinedType279>",
                 },
               },
             },
-            "response": "_InlinedType298",
+            "response": "_InlinedType297",
           },
           "_unnamedOperation28": {
             "display-name": "Create a reward",
@@ -8427,17 +8423,17 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                     "docs": "The description of what this reward is for",
                     "type": "string",
                   },
-                  "target": "_InlinedType300",
+                  "target": "_InlinedType299",
                 },
               },
             },
-            "response": "_InlinedType306",
+            "response": "_InlinedType305",
           },
         },
         "path-parameters": undefined,
       },
       "types": {
-        "_InlinedType279": {
+        "_InlinedType278": {
           "enum": [
             "-created_at",
             "created_at",
@@ -8447,7 +8443,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "ready_at",
           ],
         },
-        "_InlinedType281": {
+        "_InlinedType280": {
           "enum": [
             "pending",
             "declined",
@@ -8457,7 +8453,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "scheduled",
           ],
         },
-        "_InlinedType282": {
+        "_InlinedType281": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8475,35 +8471,35 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType283": {
+        "_InlinedType282": {
           "extends": [
+            "_InlinedType283",
             "_InlinedType284",
-            "_InlinedType285",
+          ],
+        },
+        "_InlinedType295": {
+          "extends": [
+            "_InlinedType281",
+            "_InlinedType282",
           ],
         },
         "_InlinedType296": {
-          "extends": [
-            "_InlinedType282",
-            "_InlinedType283",
-          ],
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType295>>",
+            "total": "optional<integer>",
+          },
         },
         "_InlinedType297": {
           "extends": undefined,
           "properties": {
-            "has_more": "optional<boolean>",
-            "items": "optional<list<_InlinedType296>>",
-            "total": "optional<integer>",
-          },
-        },
-        "_InlinedType298": {
-          "extends": undefined,
-          "properties": {
-            "data": "_InlinedType297",
+            "data": "_InlinedType296",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType299": {
+        "_InlinedType298": {
           "docs": "The type of the target for the reward",
           "enum": [
             "customer",
@@ -8511,7 +8507,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             "manual",
           ],
         },
-        "_InlinedType300": {
+        "_InlinedType299": {
           "extends": undefined,
           "properties": {
             "key": {
@@ -8520,11 +8516,11 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
             "type": {
               "docs": "The type of the target for the reward",
-              "type": "_InlinedType299",
+              "type": "_InlinedType298",
             },
           },
         },
-        "_InlinedType301": {
+        "_InlinedType300": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8542,7 +8538,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
-        "_InlinedType302": {
+        "_InlinedType301": {
           "docs": "Reward is what the Partner earns.",
           "extends": undefined,
           "properties": {
@@ -8554,19 +8550,19 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "The description of what this reward is for",
               "type": "string",
             },
-            "target": "_InlinedType304",
+            "target": "_InlinedType303",
           },
         },
-        "_InlinedType305": {
+        "_InlinedType304": {
           "extends": [
+            "_InlinedType300",
             "_InlinedType301",
-            "_InlinedType302",
           ],
         },
-        "_InlinedType306": {
+        "_InlinedType305": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType305",
+            "data": "_InlinedType304",
             "message": "string",
             "status": "integer",
           },
@@ -8611,7 +8607,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
                 },
               },
             },
-            "response": "_InlinedType315",
+            "response": "_InlinedType314",
           },
           "_unnamedOperation29": {
             "display-name": "Create a transaction",
@@ -8627,25 +8623,25 @@ These customer reference fields are required, but mutually exclusive
             "request": {
               "body": {
                 "extends": [
-                  "_InlinedType316",
+                  "_InlinedType315",
                 ],
               },
             },
-            "response": "_InlinedType327",
+            "response": "_InlinedType326",
           },
         },
         "path-parameters": undefined,
       },
       "types": {
-        "_InlinedType307": {
+        "_InlinedType306": {
           "docs": "Transaction",
           "extends": [
+            "_InlinedType307",
             "_InlinedType308",
             "_InlinedType309",
-            "_InlinedType310",
           ],
         },
-        "_InlinedType311": {
+        "_InlinedType310": {
           "extends": undefined,
           "properties": {
             "approved": {
@@ -8654,35 +8650,35 @@ These customer reference fields are required, but mutually exclusive
             },
             "customer": {
               "docs": "Customer info.",
-              "type": "optional<_InlinedType312>",
+              "type": "optional<_InlinedType311>",
             },
             "extension": "optional<map<string, unknown>>",
           },
         },
-        "_InlinedType313": {
+        "_InlinedType312": {
           "docs": "Transaction",
           "extends": [
-            "_InlinedType307",
-            "_InlinedType311",
+            "_InlinedType306",
+            "_InlinedType310",
           ],
+        },
+        "_InlinedType313": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "optional<boolean>",
+            "items": "optional<list<_InlinedType312>>",
+            "total": "optional<integer>",
+          },
         },
         "_InlinedType314": {
           "extends": undefined,
           "properties": {
-            "has_more": "optional<boolean>",
-            "items": "optional<list<_InlinedType313>>",
-            "total": "optional<integer>",
-          },
-        },
-        "_InlinedType315": {
-          "extends": undefined,
-          "properties": {
-            "data": "_InlinedType314",
+            "data": "_InlinedType313",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType316": {
+        "_InlinedType315": {
           "docs": "Transaction Base",
           "extends": undefined,
           "properties": {
@@ -8716,22 +8712,22 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
-        "_InlinedType319": {
+        "_InlinedType318": {
           "docs": "Transaction",
           "extends": [
-            "_InlinedType320",
-            "_InlinedType324",
+            "_InlinedType319",
+            "_InlinedType323",
+          ],
+        },
+        "_InlinedType325": {
+          "extends": [
+            "_InlinedType318",
           ],
         },
         "_InlinedType326": {
-          "extends": [
-            "_InlinedType319",
-          ],
-        },
-        "_InlinedType327": {
           "extends": undefined,
           "properties": {
-            "data": "_InlinedType326",
+            "data": "_InlinedType325",
             "message": "string",
             "status": "integer",
           },
@@ -8766,7 +8762,7 @@ These customer reference fields are required, but mutually exclusive
                 },
               },
             },
-            "response": "_InlinedType333",
+            "response": "_InlinedType332",
           },
           "_unnamedOperation30": {
             "display-name": "Create a webhook",
@@ -8776,11 +8772,11 @@ These customer reference fields are required, but mutually exclusive
             "request": {
               "body": {
                 "extends": [
-                  "_InlinedType334",
+                  "_InlinedType333",
                 ],
               },
             },
-            "response": "_InlinedType341",
+            "response": "_InlinedType340",
           },
           "_unnamedOperation31": {
             "display-name": "Retrieve a webhook",
@@ -8795,7 +8791,7 @@ These customer reference fields are required, but mutually exclusive
                 "type": "string",
               },
             },
-            "response": "_InlinedType346",
+            "response": "_InlinedType345",
           },
           "_unnamedOperation32": {
             "display-name": "Archive a webhook",
@@ -8808,7 +8804,7 @@ These customer reference fields are required, but mutually exclusive
                 "type": "string",
               },
             },
-            "response": "_InlinedType351",
+            "response": "_InlinedType350",
           },
           "_unnamedOperation33": {
             "display-name": "Update a webhook",
@@ -8824,17 +8820,17 @@ These customer reference fields are required, but mutually exclusive
             "request": {
               "body": {
                 "extends": [
-                  "_InlinedType352",
+                  "_InlinedType351",
                 ],
               },
             },
-            "response": "_InlinedType359",
+            "response": "_InlinedType358",
           },
         },
         "path-parameters": undefined,
       },
       "types": {
-        "_InlinedType328": {
+        "_InlinedType327": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8852,13 +8848,13 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
-        "_InlinedType329": {
+        "_InlinedType328": {
           "docs": "Webhook Base",
           "extends": undefined,
           "properties": {
             "events": {
               "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType330>>",
+              "type": "optional<list<_InlinedType329>>",
             },
             "target_url": {
               "docs": "URL endpoint Webhook data will be sent to.",
@@ -8866,43 +8862,93 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
-        "_InlinedType331": {
+        "_InlinedType330": {
           "docs": "Webhook",
           "extends": [
+            "_InlinedType327",
             "_InlinedType328",
-            "_InlinedType329",
           ],
+        },
+        "_InlinedType331": {
+          "extends": undefined,
+          "properties": {
+            "has_more": "boolean",
+            "items": "list<_InlinedType330>",
+          },
         },
         "_InlinedType332": {
           "extends": undefined,
           "properties": {
-            "has_more": "boolean",
-            "items": "list<_InlinedType331>",
-          },
-        },
-        "_InlinedType333": {
-          "extends": undefined,
-          "properties": {
-            "data": "_InlinedType332",
+            "data": "_InlinedType331",
             "message": "string",
             "status": "integer",
           },
         },
-        "_InlinedType334": {
+        "_InlinedType333": {
           "docs": "Webhook Base",
           "extends": undefined,
           "properties": {
             "events": {
               "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType335>>",
+              "type": "optional<list<_InlinedType334>>",
             },
             "target_url": {
               "docs": "URL endpoint Webhook data will be sent to.",
               "type": "optional<string>",
+            },
+          },
+        },
+        "_InlinedType336": {
+          "docs": "Standard fields that are present on all database objects.",
+          "extends": undefined,
+          "properties": {
+            "created_at": {
+              "docs": "Immutable Unix timestamp in milliseconds taken at time of creation",
+              "type": "optional<integer>",
+            },
+            "key": {
+              "docs": "A unique identifier used to reference the object",
+              "type": "optional<string>",
+            },
+            "updated_at": {
+              "docs": "Unix timestamp in milliseconds taken at time of last update",
+              "type": "optional<integer>",
             },
           },
         },
         "_InlinedType337": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": {
+              "docs": "A list of events to send to the registered Webhook.",
+              "type": "optional<list<_InlinedType338>>",
+            },
+            "target_url": {
+              "docs": "URL endpoint Webhook data will be sent to.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "_InlinedType339": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType336",
+            "_InlinedType337",
+          ],
+        },
+        "_InlinedType340": {
+          "extends": undefined,
+          "properties": {
+            "data": {
+              "docs": "Webhook",
+              "type": "_InlinedType339",
+            },
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType341": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8918,41 +8964,41 @@ These customer reference fields are required, but mutually exclusive
               "docs": "Unix timestamp in milliseconds taken at time of last update",
               "type": "optional<integer>",
             },
-          },
-        },
-        "_InlinedType338": {
-          "docs": "Webhook Base",
-          "extends": undefined,
-          "properties": {
-            "events": {
-              "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType339>>",
-            },
-            "target_url": {
-              "docs": "URL endpoint Webhook data will be sent to.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "_InlinedType340": {
-          "docs": "Webhook",
-          "extends": [
-            "_InlinedType337",
-            "_InlinedType338",
-          ],
-        },
-        "_InlinedType341": {
-          "extends": undefined,
-          "properties": {
-            "data": {
-              "docs": "Webhook",
-              "type": "_InlinedType340",
-            },
-            "message": "string",
-            "status": "integer",
           },
         },
         "_InlinedType342": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": {
+              "docs": "A list of events to send to the registered Webhook.",
+              "type": "optional<list<_InlinedType343>>",
+            },
+            "target_url": {
+              "docs": "URL endpoint Webhook data will be sent to.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "_InlinedType344": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType341",
+            "_InlinedType342",
+          ],
+        },
+        "_InlinedType345": {
+          "extends": undefined,
+          "properties": {
+            "data": {
+              "docs": "Webhook",
+              "type": "_InlinedType344",
+            },
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType346": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -8968,41 +9014,55 @@ These customer reference fields are required, but mutually exclusive
               "docs": "Unix timestamp in milliseconds taken at time of last update",
               "type": "optional<integer>",
             },
-          },
-        },
-        "_InlinedType343": {
-          "docs": "Webhook Base",
-          "extends": undefined,
-          "properties": {
-            "events": {
-              "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType344>>",
-            },
-            "target_url": {
-              "docs": "URL endpoint Webhook data will be sent to.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "_InlinedType345": {
-          "docs": "Webhook",
-          "extends": [
-            "_InlinedType342",
-            "_InlinedType343",
-          ],
-        },
-        "_InlinedType346": {
-          "extends": undefined,
-          "properties": {
-            "data": {
-              "docs": "Webhook",
-              "type": "_InlinedType345",
-            },
-            "message": "string",
-            "status": "integer",
           },
         },
         "_InlinedType347": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": {
+              "docs": "A list of events to send to the registered Webhook.",
+              "type": "optional<list<_InlinedType348>>",
+            },
+            "target_url": {
+              "docs": "URL endpoint Webhook data will be sent to.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "_InlinedType349": {
+          "docs": "Webhook",
+          "extends": [
+            "_InlinedType346",
+            "_InlinedType347",
+          ],
+        },
+        "_InlinedType350": {
+          "extends": undefined,
+          "properties": {
+            "data": {
+              "docs": "Webhook",
+              "type": "_InlinedType349",
+            },
+            "message": "string",
+            "status": "integer",
+          },
+        },
+        "_InlinedType351": {
+          "docs": "Webhook Base",
+          "extends": undefined,
+          "properties": {
+            "events": {
+              "docs": "A list of events to send to the registered Webhook.",
+              "type": "optional<list<_InlinedType352>>",
+            },
+            "target_url": {
+              "docs": "URL endpoint Webhook data will be sent to.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "_InlinedType354": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
           "properties": {
@@ -9017,80 +9077,16 @@ These customer reference fields are required, but mutually exclusive
             "updated_at": {
               "docs": "Unix timestamp in milliseconds taken at time of last update",
               "type": "optional<integer>",
-            },
-          },
-        },
-        "_InlinedType348": {
-          "docs": "Webhook Base",
-          "extends": undefined,
-          "properties": {
-            "events": {
-              "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType349>>",
-            },
-            "target_url": {
-              "docs": "URL endpoint Webhook data will be sent to.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "_InlinedType350": {
-          "docs": "Webhook",
-          "extends": [
-            "_InlinedType347",
-            "_InlinedType348",
-          ],
-        },
-        "_InlinedType351": {
-          "extends": undefined,
-          "properties": {
-            "data": {
-              "docs": "Webhook",
-              "type": "_InlinedType350",
-            },
-            "message": "string",
-            "status": "integer",
-          },
-        },
-        "_InlinedType352": {
-          "docs": "Webhook Base",
-          "extends": undefined,
-          "properties": {
-            "events": {
-              "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType353>>",
-            },
-            "target_url": {
-              "docs": "URL endpoint Webhook data will be sent to.",
-              "type": "optional<string>",
             },
           },
         },
         "_InlinedType355": {
-          "docs": "Standard fields that are present on all database objects.",
-          "extends": undefined,
-          "properties": {
-            "created_at": {
-              "docs": "Immutable Unix timestamp in milliseconds taken at time of creation",
-              "type": "optional<integer>",
-            },
-            "key": {
-              "docs": "A unique identifier used to reference the object",
-              "type": "optional<string>",
-            },
-            "updated_at": {
-              "docs": "Unix timestamp in milliseconds taken at time of last update",
-              "type": "optional<integer>",
-            },
-          },
-        },
-        "_InlinedType356": {
           "docs": "Webhook Base",
           "extends": undefined,
           "properties": {
             "events": {
               "docs": "A list of events to send to the registered Webhook.",
-              "type": "optional<list<_InlinedType357>>",
+              "type": "optional<list<_InlinedType356>>",
             },
             "target_url": {
               "docs": "URL endpoint Webhook data will be sent to.",
@@ -9098,19 +9094,19 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
-        "_InlinedType358": {
+        "_InlinedType357": {
           "docs": "Webhook",
           "extends": [
+            "_InlinedType354",
             "_InlinedType355",
-            "_InlinedType356",
           ],
         },
-        "_InlinedType359": {
+        "_InlinedType358": {
           "extends": undefined,
           "properties": {
             "data": {
               "docs": "Webhook",
-              "type": "_InlinedType358",
+              "type": "_InlinedType357",
             },
             "message": "string",
             "status": "integer",
