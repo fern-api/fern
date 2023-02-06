@@ -6,22 +6,30 @@ export declare namespace ExpressRegisterGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         registerFunctionName: string;
+        areImplementationsOptional: boolean;
     }
 }
 
 export class ExpressRegisterGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private registerFunctionName: string;
+    private areImplementationsOptional: boolean;
 
-    constructor({ intermediateRepresentation, registerFunctionName }: ExpressRegisterGenerator.Init) {
+    constructor({
+        intermediateRepresentation,
+        registerFunctionName,
+        areImplementationsOptional,
+    }: ExpressRegisterGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.registerFunctionName = registerFunctionName;
+        this.areImplementationsOptional = areImplementationsOptional;
     }
 
     public generateRegisterFunction(): GeneratedExpressRegister {
         return new GeneratedExpressRegisterImpl({
             intermediateRepresentation: this.intermediateRepresentation,
             registerFunctionName: this.registerFunctionName,
+            areImplementationsOptional: this.areImplementationsOptional,
         });
     }
 }

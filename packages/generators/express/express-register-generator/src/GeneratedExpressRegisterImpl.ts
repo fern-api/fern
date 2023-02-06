@@ -9,6 +9,7 @@ export declare namespace GeneratedExpressRegisterImpl {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         registerFunctionName: string;
+        areImplementationsOptional: boolean;
     }
 }
 
@@ -18,11 +19,17 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
 
     private intermediateRepresentation: IntermediateRepresentation;
     private registerFunctionName: string;
+    private areImplementationsOptional: boolean;
     private servicesTree: ServicesTree;
 
-    constructor({ intermediateRepresentation, registerFunctionName }: GeneratedExpressRegisterImpl.Init) {
+    constructor({
+        intermediateRepresentation,
+        registerFunctionName,
+        areImplementationsOptional,
+    }: GeneratedExpressRegisterImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.registerFunctionName = registerFunctionName;
+        this.areImplementationsOptional = areImplementationsOptional;
         this.servicesTree = buildServicesTree(intermediateRepresentation);
     }
 
@@ -48,7 +55,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
             returnType: "void",
             statements: this.intermediateRepresentation.services
                 .map((service) => {
-                    return ts.factory.createExpressionStatement(
+                    let statement: ts.Statement = ts.factory.createExpressionStatement(
                         context.base.externalDependencies.express.App.use({
                             referenceToApp: ts.factory.createParenthesizedExpression(
                                 ts.factory.createAsExpression(
@@ -64,14 +71,33 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                                 .toRouter(this.getReferenceToServiceArgument(service)),
                         })
                     );
+                    if (this.areImplementationsOptional) {
+                        statement = ts.factory.createIfStatement(
+                            ts.factory.createBinaryExpression(
+                                this.getReferenceToServiceArgument(service, { includeQuestionMarks: true }),
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createBlock([statement], true)
+                        );
+                    }
+                    return statement;
                 })
                 .map(getTextOfTsNode),
         });
     }
 
-    private getReferenceToServiceArgument(service: HttpService) {
+    private getReferenceToServiceArgument(
+        service: HttpService,
+        { includeQuestionMarks = false }: { includeQuestionMarks?: boolean } = {}
+    ) {
         return service.name.fernFilepath.allParts.reduce<ts.Expression>(
-            (acc, part) => ts.factory.createPropertyAccessExpression(acc, getKeyForFernFilepathPart(part)),
+            (acc, part) =>
+                ts.factory.createPropertyAccessChain(
+                    acc,
+                    includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
+                    getKeyForFernFilepathPart(part)
+                ),
             ts.factory.createIdentifier(GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME)
         );
     }
@@ -93,7 +119,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 ts.factory.createPropertySignature(
                     undefined,
                     this.getServiceKey(service),
-                    undefined,
+                    this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     context.expressService
                         .getReferenceToExpressService(service.name, {
                             importAlias: this.getImportAliasForService(service),
@@ -105,7 +131,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 ts.factory.createPropertySignature(
                     undefined,
                     folder.name,
-                    undefined,
+                    this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     this.constructLiteralTypeNodeForServicesTree(folder, context)
                 )
             ),

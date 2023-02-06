@@ -13,6 +13,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
+            areImplementationsOptional: parsed?.optionalImplementations ?? false,
         };
     }
 
@@ -38,6 +39,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             npmPackage,
             config: {
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
+                areImplementationsOptional: customConfig.areImplementationsOptional,
             },
         });
 
