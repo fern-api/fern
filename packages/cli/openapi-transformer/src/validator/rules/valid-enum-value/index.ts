@@ -1,1 +1,1 @@
-export { NoInlineUnions } from "./valid-enum-value";
+export { ValidEnumValue } from "./valid-enum-value";
