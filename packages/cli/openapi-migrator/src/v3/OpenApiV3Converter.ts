@@ -98,6 +98,8 @@ export class OpenAPIConverter {
                 headers: globalHeaders,
                 auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
                 "auth-schemes": maybeAuthScheme,
+                "default-environment": null,
+                environments: this.maybeGetEnvironments(this.document),
             },
             serviceFiles,
         };
@@ -269,6 +271,28 @@ export class OpenAPIConverter {
             }
         }
         return undefined;
+    }
+
+    private maybeGetEnvironments(
+        document: OpenAPIV3.Document
+    ): Record<string, RawSchemas.EnvironmentSchema> | undefined {
+        const result: Record<string, RawSchemas.EnvironmentSchema> = {};
+        if (document.servers != null) {
+            for (const serverObject of document.servers) {
+                const serverName = (serverObject as any)["x-server-name"] as string | undefined;
+                if (serverName == null) {
+                    continue;
+                }
+                result[serverName] =
+                    serverObject.description == null
+                        ? serverObject.url
+                        : {
+                              url: serverObject.url,
+                              docs: serverObject.description,
+                          };
+            }
+        }
+        return Object.entries(result).length === 0 ? undefined : result;
     }
 }
 
