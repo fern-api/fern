@@ -56,6 +56,7 @@ export class SchemaConverter {
             if (!isListOfStrings(schema.enum)) {
                 return undefined;
             }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const enumNames = (schema as any)["X-enum-names"] as Record<string, string> | undefined;
             if (enumNames == null) {
                 typeDeclaration = {
