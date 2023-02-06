@@ -67,6 +67,7 @@
     "immer": "^9.0.15",
     "is-ci": "^3.0.1",
     "jest": "^29.0.3",
+    "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
     "mrlint": "^0.0.109",
@@ -81,6 +82,9 @@
   },
   "packageManager": "yarn@3.2.2",
   "dependenciesMeta": {
+    "jsonc-parser@2.2.1": {
+      "unplugged": true
+    },
     "vite": {
       "unplugged": true
     }

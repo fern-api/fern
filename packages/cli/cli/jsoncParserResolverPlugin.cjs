@@ -11,8 +11,6 @@ module.exports = {
             };
         });
 
-        // Load paths tagged with the "env-ns" namespace and behave as if
-        // they point to a JSON file containing the environment variables.
         build.onLoad({ filter: /.*/, namespace: "jsonc-parser-resolver" }, async () => {
             const filepath = path.join(
                 __dirname,
