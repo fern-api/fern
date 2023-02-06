@@ -47,6 +47,7 @@ export function isPrimitive(typeReference: RawSchemas.TypeReferenceSchema): bool
     });
 }
 
+export const UNTAGGED_FILE_NAME = "__package__";
 export const COMMONS_SERVICE_FILE_NAME = "commons";
 
 // adds imports to import array
@@ -54,17 +55,26 @@ export function getFernReferenceForSchema(
     schemaReference: OpenAPIV3.ReferenceObject,
     context: OpenApiV3Context,
     tag: string,
-    imports: Set<string>
+    imports: Record<string, string>,
+    referencePrefix = SCHEMA_REFERENCE_PREFIX
 ): string {
     const tags = context.getTagForReference(schemaReference);
-    let serviceFileName = COMMONS_SERVICE_FILE_NAME;
-    if (tags.length === 1 && tags[0] != null) {
-        serviceFileName = tags[0];
+
+    let serviceFileName = UNTAGGED_FILE_NAME;
+    const [firstTag, ...remainingTags] = tags;
+    if (firstTag != null) {
+        if (remainingTags.length === 0) {
+            serviceFileName = firstTag;
+        } else {
+            serviceFileName = COMMONS_SERVICE_FILE_NAME;
+        }
     }
-    const typeName = schemaReference.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
+
+    const typeName = schemaReference.$ref.replace(referencePrefix, "");
     if (tag !== serviceFileName) {
-        imports.add(serviceFileName);
+        imports[serviceFileName === UNTAGGED_FILE_NAME ? "root" : serviceFileName] = `${serviceFileName}.yml`;
     }
+
     return tag === serviceFileName ? typeName : `${serviceFileName}.${typeName}`;
 }
 

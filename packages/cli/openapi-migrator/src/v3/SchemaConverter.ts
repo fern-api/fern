@@ -8,7 +8,7 @@ import { getFernReferenceForSchema, isReferenceObject, maybeGetAliasReference } 
 export interface ConvertedSchema {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>;
-    imports: Set<string>;
+    imports: Record<string, string>;
 }
 
 export class SchemaConverter {
@@ -18,7 +18,7 @@ export class SchemaConverter {
     private context: OpenApiV3Context;
     private rootBreadcrumbs: string[];
     private tag: string;
-    private imports = new Set<string>();
+    private imports: Record<string, string> = {};
 
     constructor({
         schema,

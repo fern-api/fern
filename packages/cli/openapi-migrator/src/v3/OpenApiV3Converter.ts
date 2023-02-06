@@ -10,7 +10,13 @@ import { GlobalHeaderScanner } from "./GlobalHeaderScanner";
 import { InlinedTypeNamer } from "./InlinedTypeNamer";
 import { OpenApiV3Context, OpenAPIV3Endpoint, OpenAPIV3Schema } from "./OpenApiV3Context";
 import { SchemaConverter } from "./SchemaConverter";
-import { COMMONS_SERVICE_FILE_NAME, convertParameterSchema, diff, isReferenceObject } from "./utils";
+import {
+    COMMONS_SERVICE_FILE_NAME,
+    convertParameterSchema,
+    diff,
+    isReferenceObject,
+    UNTAGGED_FILE_NAME,
+} from "./utils";
 
 const SCHEMAS_BREADCRUMBS = ["components", "schemas"];
 const ENDPOINT_BREADCRUMBS = ["paths"];
@@ -67,11 +73,20 @@ export class OpenAPIConverter {
 
         const untaggedEndpoints = this.context.getUntaggedEndpoints();
         const untaggedSchemas = this.context.getUntaggedSchemas();
+
+        const untaggedServiceFile = this.convertToServiceFile(
+            UNTAGGED_FILE_NAME,
+            untaggedEndpoints,
+            untaggedSchemas,
+            hasAuth
+        );
+        serviceFiles[RelativeFilePath.of(untaggedServiceFile.filename)] = untaggedServiceFile.serviceFile;
+
         const multiTaggedSchemas = this.context.getMultitaggedSchemas();
         const commonsServiceFile = this.convertToServiceFile(
             COMMONS_SERVICE_FILE_NAME,
-            untaggedEndpoints,
-            [...multiTaggedSchemas, ...untaggedSchemas],
+            [],
+            multiTaggedSchemas,
             hasAuth
         );
         serviceFiles[RelativeFilePath.of(commonsServiceFile.filename)] = commonsServiceFile.serviceFile;
@@ -93,11 +108,11 @@ export class OpenAPIConverter {
         schemas: OpenAPIV3Schema[],
         hasAuth: boolean
     ): { serviceFile: ServiceFileSchema; filename: string } {
-        const camelCasedTag = camelCase(tag);
+        const camelCasedTag = tag === UNTAGGED_FILE_NAME ? tag : camelCase(tag);
         const pascalCasedTag = upperFirst(camelCasedTag);
         let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
         const convertedEndpoints: Record<string, RawSchemas.HttpEndpointSchema> = {};
-        const imports = new Set<string>();
+        const imports: Record<string, string> = {};
         const filename = `${camelCasedTag}.yml`;
         schemas.forEach((schema) => {
             const breadcrumbs = [...SCHEMAS_BREADCRUMBS, schema.name];
@@ -116,7 +131,7 @@ export class OpenAPIConverter {
                     [schema.name]: convertedSchema.typeDeclaration,
                     ...convertedSchema.additionalTypeDeclarations,
                 };
-                convertedSchema.imports.forEach((fernImport) => imports.add(fernImport));
+                Object.assign(imports, convertedSchema.imports);
             } else {
                 this.taskContext.logger.warn(breadcrumbs.join(" -> "), " Failed to convert. Skipping.");
             }
@@ -145,18 +160,14 @@ export class OpenAPIConverter {
                     ...types,
                     ...convertedEndpoint.additionalTypeDeclarations,
                 };
-                convertedEndpoint.imports.forEach((fernImport) => imports.add(fernImport));
+                Object.assign(imports, convertedEndpoint.imports);
             }
         });
 
         const serviceFile: ServiceFileSchema = {};
 
         if (size(imports) > 0) {
-            const serviceFileImports: Record<string, string> = {};
-            imports.forEach((fernImport) => {
-                serviceFileImports[fernImport] = `${fernImport}.yml`;
-            });
-            serviceFile.imports = serviceFileImports;
+            serviceFile.imports = imports;
         }
 
         const serviceName = `${pascalCasedTag}Service`;
