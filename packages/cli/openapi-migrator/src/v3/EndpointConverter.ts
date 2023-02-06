@@ -108,6 +108,15 @@ export class EndpointConverter {
 
         let request: RawSchemas.HttpRequestSchema | undefined;
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const requestName = (this.endpoint.definition as any)["x-request-name"] as string | undefined;
+        if (requestName != null) {
+            if (request == null) {
+                request = {};
+            }
+            request.name = requestName;
+        }
+
         if (size(queryParameters) > 0) {
             if (request == null) {
                 request = {};

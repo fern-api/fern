@@ -8,7 +8,7 @@ exports[`valid-enum-value simple simple 1`] = `
       "/example",
       "get",
     ],
-    "message": "X-request-name is required because this request has query parameters",
+    "message": "x-request-name is required because this request has query parameters",
     "severity": "error",
   },
 ]

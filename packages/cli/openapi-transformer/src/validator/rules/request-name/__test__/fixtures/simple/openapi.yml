@@ -17,7 +17,7 @@ paths:
           in: query
           name: paramName
     post:
-      X-request-name: MyRequest
+      x-request-name: MyRequest
       parameters:
         - schema:
             type: string

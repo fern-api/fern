@@ -1,7 +1,7 @@
 import { IFunctionResult } from "@stoplight/spectral-core";
 import { SpectralRule } from "../Rule";
 
-const X_ENUM_NAMES_FIELD = "X-enum-names";
+const X_ENUM_NAMES_FIELD = "x-enum-names";
 
 export const ValidEnumValue: SpectralRule = {
     name: "valid-enum-value",

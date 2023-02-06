@@ -6,19 +6,19 @@ exports[`validate openapi 1`] = `
        Endpoint is missing operationId.
 [api]: fern/api/definition/openapi.yml:110:8
        paths -> /pet/findByStatus -> get
-       X-request-name is required because this request has query parameters
+       x-request-name is required because this request has query parameters
 [api]: fern/api/definition/openapi.yml:150:8
        paths -> /pet/findByTags -> get
-       X-request-name is required because this request has query parameters
+       x-request-name is required because this request has query parameters
 [api]: fern/api/definition/openapi.yml:222:9
        paths -> /pet/{petId} -> post
-       X-request-name is required because this request has query parameters
+       x-request-name is required because this request has query parameters
 [api]: fern/api/definition/openapi.yml:281:9
        paths -> /pet/{petId}/uploadImage -> post
-       X-request-name is required because this request has query parameters
+       x-request-name is required because this request has query parameters
 [api]: fern/api/definition/openapi.yml:477:8
        paths -> /user/login -> get
-       X-request-name is required because this request has query parameters
+       x-request-name is required because this request has query parameters
 [api]: fern/api/definition/openapi.yml:631:15
        components -> schemas -> Order -> properties -> status -> ...
        Enum is inlined. Please refactor as a $ref.
