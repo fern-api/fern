@@ -3,13 +3,15 @@
 exports[`open api converter covie simple 1`] = `
 {
   "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
     "headers": {},
     "name": "api",
   },
   "serviceFiles": {
     "account.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/accounts/{account_id}/mfa_requirements",
         "endpoints": {
           "disableAccountMfaRequired": {
@@ -47,7 +49,7 @@ exports[`open api converter covie simple 1`] = `
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/applications/{application_id}",
         "endpoints": {
           "getApplicationLinks": {
@@ -1483,7 +1485,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
     },
     "event.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/events/{event_id}/broadcasts",
         "endpoints": {
           "postEventsEventIdBroadcasts": {
@@ -1559,7 +1561,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/integrations",
         "endpoints": {
           "createIntegration": {
@@ -2039,7 +2041,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "attachLinkDocument": {
@@ -2444,7 +2446,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/policies/{policy_id}",
         "endpoints": {
           "getPoliciesPolicyId": {
@@ -2672,7 +2674,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/webhooks",
         "endpoints": {
           "createWebhook": {
@@ -2909,6 +2911,13 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
 exports[`open api converter flagright simple 1`] = `
 {
   "rootApiFile": {
+    "auth": "x-api-key",
+    "auth-schemes": {
+      "x-api-key": {
+        "header": "x-api-key",
+        "name": "apiKey",
+      },
+    },
     "headers": {},
     "name": "api",
   },
@@ -4901,13 +4910,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
 exports[`open api converter partnerstack simple 1`] = `
 {
   "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
     "headers": {},
     "name": "api",
   },
   "serviceFiles": {
     "actions.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/actions",
         "endpoints": {
           "": {
@@ -5162,7 +5173,7 @@ exports[`open api converter partnerstack simple 1`] = `
     },
     "applications.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/applications",
         "endpoints": {
           "": {
@@ -5318,7 +5329,7 @@ exports[`open api converter partnerstack simple 1`] = `
     "commons.yml": {},
     "customers.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/customers",
         "endpoints": {
           "": {
@@ -5700,7 +5711,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "deals.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "": {
@@ -6660,7 +6671,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "formTemplates.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/form-templates",
         "endpoints": {
           "getFormTemplates": {
@@ -6797,7 +6808,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "groups.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/groups",
         "endpoints": {
           "": {
@@ -6912,7 +6923,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "leads.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/leads",
         "endpoints": {
           "": {
@@ -7589,7 +7600,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "marketplace.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/marketplace/programs",
         "endpoints": {
           "": {
@@ -7766,7 +7777,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "partnerships.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/partnerships",
         "endpoints": {
           "": {
@@ -8304,7 +8315,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "rewards.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/rewards",
         "endpoints": {
           "": {
@@ -8564,7 +8575,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
     },
     "transactions.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/transactions",
         "endpoints": {
           "": {
@@ -8729,7 +8740,7 @@ These customer reference fields are required, but mutually exclusive
     },
     "webhooks.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/v2/webhooks",
         "endpoints": {
           "": {
@@ -9114,13 +9125,15 @@ These customer reference fields are required, but mutually exclusive
 exports[`open api converter suger simple 1`] = `
 {
   "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
     "headers": {},
     "name": "api",
   },
   "serviceFiles": {
     "apiAuth.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/public/apiClient/accessToken",
         "endpoints": {
           "": {
@@ -9160,7 +9173,7 @@ exports[`open api converter suger simple 1`] = `
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}/buyer",
         "endpoints": {
           "": {
@@ -11479,7 +11492,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}",
         "endpoints": {
           "": {
@@ -11638,7 +11651,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
         "endpoints": {
           "": {
@@ -11679,7 +11692,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}/integration",
         "endpoints": {
           "": {
@@ -11880,7 +11893,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}",
         "endpoints": {
           "": {
@@ -12037,7 +12050,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}",
         "endpoints": {
           "": {
@@ -12195,7 +12208,7 @@ the same customer, dimension, and time, but a different quantity.",
     },
     "operation.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}/operation",
         "endpoints": {
           "": {
@@ -12248,7 +12261,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}",
         "endpoints": {
           "": {
@@ -12397,7 +12410,7 @@ the same customer, dimension, and time, but a different quantity.",
         "commons": "commons.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "/org/{orgId}",
         "endpoints": {
           "": {
@@ -12535,6 +12548,13 @@ the same customer, dimension, and time, but a different quantity.",
 exports[`open api converter telematica simple 1`] = `
 {
   "rootApiFile": {
+    "auth": "bearerAuth",
+    "auth-schemes": {
+      "bearerAuth": {
+        "header": "Authorization",
+        "name": "apiKey",
+      },
+    },
     "headers": {},
     "name": "api",
   },
