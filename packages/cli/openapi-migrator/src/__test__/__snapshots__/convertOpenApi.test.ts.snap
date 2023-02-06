@@ -9,6 +9,7 @@ exports[`open api converter covie simple 1`] = `
     "name": "api",
   },
   "serviceFiles": {
+    "__package__.yml": {},
     "account.yml": {
       "service": {
         "auth": false,
@@ -2922,7 +2923,7 @@ exports[`open api converter flagright simple 1`] = `
     "name": "api",
   },
   "serviceFiles": {
-    "commons.yml": {
+    "__package__.yml": {
       "service": {
         "auth": true,
         "base-path": "",
@@ -4904,6 +4905,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
     },
+    "commons.yml": {},
   },
 }
 `;
@@ -4917,6 +4919,7 @@ exports[`open api converter partnerstack simple 1`] = `
     "name": "api",
   },
   "serviceFiles": {
+    "__package__.yml": {},
     "actions.yml": {
       "service": {
         "auth": false,
@@ -9128,6 +9131,7 @@ exports[`open api converter suger simple 1`] = `
     "name": "api",
   },
   "serviceFiles": {
+    "__package__.yml": {},
     "apiAuth.yml": {
       "service": {
         "auth": false,
@@ -12556,6 +12560,7 @@ exports[`open api converter telematica simple 1`] = `
     "name": "api",
   },
   "serviceFiles": {
+    "__package__.yml": {},
     "commons.yml": {
       "types": {
         "ChargingStatus_ResponseDTO": {

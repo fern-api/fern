@@ -8,7 +8,6 @@ import { ServiceBasePath } from "./OpenApiV3Converter";
 import { SchemaConverter } from "./SchemaConverter";
 import {
     APPLICATION_JSON_CONTENT,
-    COMMONS_SERVICE_FILE_NAME,
     diff,
     getFernReferenceForSchema,
     isPrimitive,
@@ -21,7 +20,7 @@ import {
 export interface ConvertedEndpoint {
     endpoint: RawSchemas.HttpEndpointSchema;
     additionalTypeDeclarations?: Record<string, RawSchemas.TypeDeclarationSchema>;
-    imports: Set<string>;
+    imports: Record<string, string>;
 }
 
 const TWO_HUNDRED_STATUS_CODE = 200;
@@ -35,7 +34,7 @@ export class EndpointConverter {
     private inlinedTypeNamer: InlinedTypeNamer;
     private breadcrumbs: string[];
     private tag: string;
-    private imports = new Set<string>();
+    private imports: Record<string, string> = {};
     private serviceBasePath: ServiceBasePath;
     private additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
 
@@ -425,36 +424,18 @@ function getFernReferenceForRequest(
     requestReference: OpenAPIV3.ReferenceObject,
     context: OpenApiV3Context,
     tag: string,
-    imports: Set<string>
+    imports: Record<string, string>
 ): string {
-    const tags = context.getTagForReference(requestReference);
-    let serviceFileName = COMMONS_SERVICE_FILE_NAME;
-    if (tags.length === 1 && tags[0] != null) {
-        serviceFileName = tags[0];
-    }
-    const responseName = requestReference.$ref.replace(REQUEST_REFERENCE_PREFIX, "");
-    if (tag !== serviceFileName) {
-        imports.add(serviceFileName);
-    }
-    return tag === serviceFileName ? responseName : `${serviceFileName}.${responseName}`;
+    return getFernReferenceForSchema(requestReference, context, tag, imports, REQUEST_REFERENCE_PREFIX);
 }
 
 function getFernReferenceForResponse(
     responseReference: OpenAPIV3.ReferenceObject,
     context: OpenApiV3Context,
     tag: string,
-    imports: Set<string>
+    imports: Record<string, string>
 ): string {
-    const tags = context.getTagForReference(responseReference);
-    let serviceFileName = COMMONS_SERVICE_FILE_NAME;
-    if (tags.length === 1 && tags[0] != null) {
-        serviceFileName = tags[0];
-    }
-    const requestName = responseReference.$ref.replace(RESPONSE_REFERENCE_PREFIX, "");
-    if (tag !== serviceFileName) {
-        imports.add(serviceFileName);
-    }
-    return tag === serviceFileName ? requestName : `${serviceFileName}.${requestName}`;
+    return getFernReferenceForSchema(responseReference, context, tag, imports, RESPONSE_REFERENCE_PREFIX);
 }
 
 function convertHttpMethod(httpMethod: OpenAPIV3.HttpMethods): RawSchemas.HttpMethodSchema | undefined {

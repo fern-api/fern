@@ -11,6 +11,14 @@ exports[`fern init covie openapi 1`] = `
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+{}
+",
+                "name": "__package__.yml",
+                "type": "file",
+              },
+              {
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 service:
   auth: false
   base-path: /accounts/{account_id}/mfa_requirements
@@ -2709,6 +2717,14 @@ exports[`fern init gigs openapi 1`] = `
           {
             "contents": [
               {
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+{}
+",
+                "name": "__package__.yml",
+                "type": "file",
+              },
+              {
                 "contents": "name: api
 headers: {}
 ",
@@ -5376,6 +5392,14 @@ exports[`fern init telematica openapi 1`] = `
         "contents": [
           {
             "contents": [
+              {
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+{}
+",
+                "name": "__package__.yml",
+                "type": "file",
+              },
               {
                 "contents": "name: api
 headers: {}
