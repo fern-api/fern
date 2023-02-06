@@ -1,5 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`validate openapi 1`] = `
+"[api]: openapi.yml -> paths -> /pet -> post
+       operationId is required"
+`;
+
 exports[`validate simple 1`] = `
 "[simple-api]: api.yml -> error-discrimination
               error-discrimination is required because this API has declared errors.
