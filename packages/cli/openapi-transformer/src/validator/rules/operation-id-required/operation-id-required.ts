@@ -6,7 +6,7 @@ export const OperationIdRequired: SpectralRule = {
     get: () => {
         return {
             given: "$.paths.*.*",
-            message: "operationId is required",
+            message: "Endpoint is missing operationId.",
             then: {
                 field: "operationId",
                 function: truthy,

@@ -1,7 +1,9 @@
-import { formatLog, LogLevel } from "@fern-api/logger";
+import { LogLevel } from "@fern-api/logger";
 import { validateOpenAPIWorkspace } from "@fern-api/openapi-transformer";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIWorkspace } from "@fern-api/workspace-loader";
+import chalk from "chalk";
+import path from "path";
 
 export async function validateOpenAPIWorkspaceAndLogIssues(
     workspace: OpenAPIWorkspace,
@@ -13,11 +15,16 @@ export async function validateOpenAPIWorkspaceAndLogIssues(
         if (!violationsContainError && violation.severity === "error") {
             violationsContainError = true;
         }
+        const pathToOpenApi = path.join(workspace.absolutePathToDefinition, workspace.definition.path);
         context.logger.log(
             getLogLevelForSeverity(violation.severity),
             formatLog({
-                breadcrumbs: [workspace.definition.path, ...violation.breadcrumbs],
                 title: violation.message,
+                location: {
+                    path: path.relative(process.cwd(), pathToOpenApi),
+                    line: violation.line,
+                    column: violation.column,
+                },
             })
         );
     }
@@ -34,4 +41,22 @@ function getLogLevelForSeverity(severity: "error" | "warning") {
         case "warning":
             return LogLevel.Warn;
     }
+}
+
+interface FormatLogArgs {
+    title: string;
+    location: Location;
+}
+
+interface Location {
+    path: string;
+    line: number;
+    column: number;
+}
+
+function formatLog({ title, location }: FormatLogArgs): string {
+    const lines: string[] = [];
+    lines.push(chalk.cyan(location.path) + ":" + chalk.yellow(`${location.line}:${location.column}`));
+    lines.push(title);
+    return lines.join("\n");
 }
