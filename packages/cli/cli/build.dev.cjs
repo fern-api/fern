@@ -1,7 +1,7 @@
 const { pnpPlugin } = require("@yarnpkg/esbuild-plugin-pnp");
 const { build } = require("esbuild");
 const path = require("path");
-const { chmod, writeFile, mkdir, readFile } = require("fs/promises");
+const { chmod, writeFile, mkdir } = require("fs/promises");
 
 const packageJson = require("./package.json");
 const jsoncParserResolverPlugin = require("./jsoncParserResolverPlugin.cjs");
