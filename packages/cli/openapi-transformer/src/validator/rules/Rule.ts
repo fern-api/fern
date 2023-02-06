@@ -14,6 +14,8 @@ export interface RuleViolation {
     severity: "warning" | "error";
     message: string;
     breadcrumbs: string[];
+    line: number;
+    column: number;
 }
 
 export type MaybePromise<T> = T | Promise<T>;

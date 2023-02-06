@@ -27,6 +27,8 @@ async function runSpectralRules(spectralRules: SpectralRule[], workspace: OpenAP
             severity: "error",
             message: val.message,
             breadcrumbs: val.path.map((val) => val.toString()),
+            line: val.range.start.line,
+            column: val.range.start.character,
         };
     });
 }

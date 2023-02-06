@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`validate openapi 1`] = `
-"[api]: openapi.yml -> paths -> /pet -> post
-       operationId is required
-[api]: openapi.yml -> components -> schemas -> Order -> properties -> status -> enum
+"[api]: fern/api/definition/openapi.yml:36:9
+       Endpoint is missing operationId.
+[api]: fern/api/definition/openapi.yml:631:15
        Enum is inlined. Please refactor as a $ref.
-[api]: openapi.yml -> components -> schemas -> Pet -> properties -> status -> enum
+[api]: fern/api/definition/openapi.yml:768:15
        Enum is inlined. Please refactor as a $ref."
 `;
 

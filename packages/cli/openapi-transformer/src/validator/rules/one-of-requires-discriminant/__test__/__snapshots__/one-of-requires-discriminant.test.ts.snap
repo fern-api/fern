@@ -11,7 +11,7 @@ exports[`operation-id-required simple simple 1`] = `
       "destinationPaymentDetails",
       "oneOf",
     ],
-    "message": "discriminant is required",
+    "message": "OneOf is missing discriminant and mapping. See https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism.",
     "severity": "error",
   },
 ]

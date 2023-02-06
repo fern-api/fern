@@ -6,7 +6,8 @@ export const OneOfRequiresDiscriminant: SpectralRule = {
     get: () => {
         return {
             given: ["$..oneOf"],
-            message: "discriminant is required",
+            message:
+                "OneOf is missing discriminant and mapping. See https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism.",
             then: {
                 field: "discriminant",
                 function: truthy,

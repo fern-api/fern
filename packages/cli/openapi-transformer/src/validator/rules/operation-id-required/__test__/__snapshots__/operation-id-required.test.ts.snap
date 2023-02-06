@@ -8,7 +8,7 @@ exports[`operation-id-required simple simple 1`] = `
       "/example",
       "get",
     ],
-    "message": "operationId is required",
+    "message": "Endpoint is missing operationId.",
     "severity": "error",
   },
 ]
