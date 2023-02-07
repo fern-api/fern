@@ -1,3 +1,4 @@
+import { stringifyLargeObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Language } from "@fern-api/ir-generator";
 import { Project } from "@fern-api/project-loader";
@@ -33,7 +34,10 @@ export async function generateIrForWorkspaces({
                     audiences,
                 });
                 const irOutputFilePath = path.resolve(irFilepath);
-                await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));
+                await writeFile(
+                    irOutputFilePath,
+                    await stringifyLargeObject(intermediateRepresentation, { pretty: true })
+                );
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })

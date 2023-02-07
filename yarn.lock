@@ -3448,9 +3448,11 @@ __metadata:
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.0.3
+    json-stream-stringify: ^3.0.1
     lodash-es: ^4.17.21
     prettier: ^2.7.1
     strip-ansi: ^7.0.1
+    tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -14745,6 +14747,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.0.1
   resolution: "json-stable-stringify-without-jsonify@npm:1.0.1"
   checksum: cff44156ddce9c67c44386ad5cddf91925fe06b1d217f2da9c4910d01f358c6e3989c4d5a02683c7a5667f9727ff05831f7aa8ae66c8ff691c556f0884d49215
+  languageName: node
+  linkType: hard
+
+"json-stream-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "json-stream-stringify@npm:3.0.1"
+  checksum: bc6a00e67a33cad54bbaecabfd051c7d837d5bb9ce58bfd047b258919d5ed8831ff699a6d0aa4bd1aa94db9cb502a6ab94eedfa47193e418d3bcacdae07675e2
   languageName: node
   linkType: hard
 
