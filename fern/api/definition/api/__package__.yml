@@ -19,6 +19,8 @@ types:
   Endpoint:
     properties:
       path: EndpointPath
+      request: optional<TypeReference>
+      response: optional<TypeReference>
 
   EndpointPath:
     properties:
