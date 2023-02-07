@@ -2022,7 +2022,7 @@ class HomepageService {
         this.router.get(\\"\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getHomepageProblems(req, res);
-                res.json(await serializers.homepage.getHomepageProblems.Response.json(response));
+                res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -2389,7 +2389,7 @@ class MigrationService {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getAttemptedMigrations(req, res);
-                res.json(await serializers.migration.getAttemptedMigrations.Response.json(response));
+                res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -2811,7 +2811,7 @@ class PlaylistService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.createPlaylist(req, res);
-                    res.json(await serializers.Playlist.json(response));
+                    res.json(await serializers.Playlist.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -2836,7 +2836,7 @@ class PlaylistService {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getPlaylists(req, res);
-                res.json(await serializers.playlist.getPlaylists.Response.json(response));
+                res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -2855,7 +2855,7 @@ class PlaylistService {
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getPlaylist(req, res);
-                res.json(await serializers.Playlist.json(response));
+                res.json(await serializers.Playlist.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -2883,7 +2883,7 @@ class PlaylistService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.updatePlaylist(req, res);
-                    res.json(await serializers.playlist.updatePlaylist.Response.json(response));
+                    res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -3489,7 +3489,7 @@ class ProblemService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.createProblem(req, res);
-                    res.json(await serializers.CreateProblemResponse.json(response));
+                    res.json(await serializers.CreateProblemResponse.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -3517,7 +3517,7 @@ class ProblemService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.updateProblem(req, res);
-                    res.json(await serializers.UpdateProblemResponse.json(response));
+                    res.json(await serializers.UpdateProblemResponse.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -3564,7 +3564,7 @@ class ProblemService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.getDefaultStarterFiles(req, res);
-                    res.json(await serializers.GetDefaultStarterFilesResponse.json(response));
+                    res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -4354,7 +4354,7 @@ class SubmissionService {
         this.router.post(\\"/create-session/:language\\", async (req, res, next) => {
             try {
                 const response = await this.methods.createExecutionSession(req, res);
-                res.json(await serializers.ExecutionSessionResponse.json(response));
+                res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -4373,7 +4373,7 @@ class SubmissionService {
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getExecutionSession(req, res);
-                res.json(await serializers.submission.getExecutionSession.Response.json(response));
+                res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -4411,7 +4411,7 @@ class SubmissionService {
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getExecutionSessionsState(req, res);
-                res.json(await serializers.GetExecutionSessionStateResponse.json(response));
+                res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -8241,7 +8241,7 @@ class SyspropService {
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getNumWarmInstances(req, res);
-                res.json(await serializers.sysprop.getNumWarmInstances.Response.json(response));
+                res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -8477,7 +8477,7 @@ class ProblemService {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLightweightProblems(req, res);
-                res.json(await serializers.v2.problem.getLightweightProblems.Response.json(response));
+                res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -8496,7 +8496,7 @@ class ProblemService {
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblems(req, res);
-                res.json(await serializers.v2.problem.getProblems.Response.json(response));
+                res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -8515,7 +8515,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLatestProblem(req, res);
-                res.json(await serializers.v2.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -8534,7 +8534,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblemVersion(req, res);
-                res.json(await serializers.v2.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -10249,7 +10249,7 @@ class ProblemService {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLightweightProblems(req, res);
-                res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
+                res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -10268,7 +10268,7 @@ class ProblemService {
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblems(req, res);
-                res.json(await serializers.v2.v3.problem.getProblems.Response.json(response));
+                res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -10287,7 +10287,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLatestProblem(req, res);
-                res.json(await serializers.v2.v3.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -10306,7 +10306,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblemVersion(req, res);
-                res.json(await serializers.v2.v3.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -32237,7 +32237,7 @@ class HomepageService {
         this.router.get(\\"\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getHomepageProblems(req, res);
-                res.json(await serializers.homepage.getHomepageProblems.Response.json(response));
+                res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -32604,7 +32604,7 @@ class MigrationService {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getAttemptedMigrations(req, res);
-                res.json(await serializers.migration.getAttemptedMigrations.Response.json(response));
+                res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -33026,7 +33026,7 @@ class PlaylistService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.createPlaylist(req, res);
-                    res.json(await serializers.Playlist.json(response));
+                    res.json(await serializers.Playlist.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -33051,7 +33051,7 @@ class PlaylistService {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getPlaylists(req, res);
-                res.json(await serializers.playlist.getPlaylists.Response.json(response));
+                res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -33070,7 +33070,7 @@ class PlaylistService {
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getPlaylist(req, res);
-                res.json(await serializers.Playlist.json(response));
+                res.json(await serializers.Playlist.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -33098,7 +33098,7 @@ class PlaylistService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.updatePlaylist(req, res);
-                    res.json(await serializers.playlist.updatePlaylist.Response.json(response));
+                    res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -33713,7 +33713,7 @@ class ProblemService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.createProblem(req, res);
-                    res.json(await serializers.CreateProblemResponse.json(response));
+                    res.json(await serializers.CreateProblemResponse.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -33741,7 +33741,7 @@ class ProblemService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.updateProblem(req, res);
-                    res.json(await serializers.UpdateProblemResponse.json(response));
+                    res.json(await serializers.UpdateProblemResponse.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -33788,7 +33788,7 @@ class ProblemService {
                 req.body = request.value;
                 try {
                     const response = await this.methods.getDefaultStarterFiles(req, res);
-                    res.json(await serializers.GetDefaultStarterFilesResponse.json(response));
+                    res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(response));
                 }
                 catch (error) {
                     console.error(error);
@@ -34578,7 +34578,7 @@ class SubmissionService {
         this.router.post(\\"/create-session/:language\\", async (req, res, next) => {
             try {
                 const response = await this.methods.createExecutionSession(req, res);
-                res.json(await serializers.ExecutionSessionResponse.json(response));
+                res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -34597,7 +34597,7 @@ class SubmissionService {
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getExecutionSession(req, res);
-                res.json(await serializers.submission.getExecutionSession.Response.json(response));
+                res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -34635,7 +34635,7 @@ class SubmissionService {
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getExecutionSessionsState(req, res);
-                res.json(await serializers.GetExecutionSessionStateResponse.json(response));
+                res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -38483,7 +38483,7 @@ class SyspropService {
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getNumWarmInstances(req, res);
-                res.json(await serializers.sysprop.getNumWarmInstances.Response.json(response));
+                res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -38719,7 +38719,7 @@ class ProblemService {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLightweightProblems(req, res);
-                res.json(await serializers.v2.problem.getLightweightProblems.Response.json(response));
+                res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -38738,7 +38738,7 @@ class ProblemService {
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblems(req, res);
-                res.json(await serializers.v2.problem.getProblems.Response.json(response));
+                res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -38757,7 +38757,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLatestProblem(req, res);
-                res.json(await serializers.v2.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -38776,7 +38776,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblemVersion(req, res);
-                res.json(await serializers.v2.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -40518,7 +40518,7 @@ class ProblemService {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLightweightProblems(req, res);
-                res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.json(response));
+                res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -40537,7 +40537,7 @@ class ProblemService {
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblems(req, res);
-                res.json(await serializers.v2.v3.problem.getProblems.Response.json(response));
+                res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -40556,7 +40556,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLatestProblem(req, res);
-                res.json(await serializers.v2.v3.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);
@@ -40575,7 +40575,7 @@ class ProblemService {
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblemVersion(req, res);
-                res.json(await serializers.v2.v3.ProblemInfoV2.json(response));
+                res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
             }
             catch (error) {
                 console.error(error);

@@ -128,13 +128,15 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
-                    .json(referenceToParsedResponse);
+                    .jsonOrThrow(referenceToParsedResponse);
             case "primitive":
             case "container":
                 if (this.generatedResponseSchema == null) {
                     throw new Error("No response schema was generated");
                 }
-                return this.generatedResponseSchema.getReferenceToZurgSchema(context).json(referenceToParsedResponse);
+                return this.generatedResponseSchema
+                    .getReferenceToZurgSchema(context)
+                    .jsonOrThrow(referenceToParsedResponse);
             default:
                 assertNever(this.endpoint.response.type);
         }
