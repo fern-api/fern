@@ -2,6 +2,7 @@ services: {}
 
 types:
   ApiId: string
+
   Api:
     properties:
       id: ApiId
@@ -22,13 +23,60 @@ types:
 
   EndpointPath:
     properties:
-      head: string
-      pathParameters: EndpointPathParameter
+      parts: list<EndpointPathPart>
+
+  EndpointPathPart:
+    union:
+      literal: string
+      pathParameter: EndpointPathParameter
 
   EndpointPathParameter:
     properties:
-      key: string
-      tail: string
+      name: string
+      type:
 
-  TypeReference:
+  Type:
     union:
+      named:
+      inline:
+
+  NamedType:
+    union:
+
+  InlinedType:
+    union:
+
+  ObjectType:
+    properties:
+
+  ObjectPropertes:
+    properties:
+      key: string
+      value: Type
+
+  PrimitiveType:
+    union:
+      integer: {}
+      double: {}
+      long: {}
+      string: {}
+      boolean: {}
+
+  ContainerType:
+    union:
+      optional: OptionalType
+      list: ListType
+      map: MapType
+
+  OptionalType:
+    properties:
+      value: Type
+
+  ListType:
+    properties:
+      value: Type
+
+  MapType:
+    properties:
+      key: Type
+      value: Type
