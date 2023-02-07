@@ -169,6 +169,7 @@ class AdminService {
                 try {
                     await this.methods.updateTestSubmissionStatus(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -181,14 +182,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-test-submission-status-v2/:submissionId\\", async (req, res, next) => {
             const request = await serializers.TestSubmissionUpdate.parse(req.body);
@@ -197,6 +199,7 @@ class AdminService {
                 try {
                     await this.methods.sendTestSubmissionUpdate(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -209,14 +212,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-workspace-submission-status/:submissionId\\", async (req, res, next) => {
             const request = await serializers.WorkspaceSubmissionStatus.parse(req.body);
@@ -225,6 +229,7 @@ class AdminService {
                 try {
                     await this.methods.updateWorkspaceSubmissionStatus(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -237,14 +242,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-workspace-submission-status-v2/:submissionId\\", async (req, res, next) => {
             const request = await serializers.WorkspaceSubmissionUpdate.parse(req.body);
@@ -253,6 +259,7 @@ class AdminService {
                 try {
                     await this.methods.sendWorkspaceSubmissionUpdate(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -265,14 +272,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-test-trace/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
             const request = await serializers.StoreTracedTestCaseRequest.parse(req.body);
@@ -281,6 +289,7 @@ class AdminService {
                 try {
                     await this.methods.storeTracedTestCase(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -293,14 +302,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-test-trace-v2/submission/:submissionId/testCase/:testCaseId\\", async (req, res, next) => {
             const request = await serializers.admin.storeTracedTestCaseV2.Request.parse(req.body);
@@ -309,6 +319,7 @@ class AdminService {
                 try {
                     await this.methods.storeTracedTestCaseV2(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -321,14 +332,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-workspace-trace/submission/:submissionId\\", async (req, res, next) => {
             const request = await serializers.StoreTracedWorkspaceRequest.parse(req.body);
@@ -337,6 +349,7 @@ class AdminService {
                 try {
                     await this.methods.storeTracedWorkspace(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -349,14 +362,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/store-workspace-trace-v2/submission/:submissionId\\", async (req, res, next) => {
             const request = await serializers.admin.storeTracedWorkspaceV2.Request.parse(req.body);
@@ -365,6 +379,7 @@ class AdminService {
                 try {
                     await this.methods.storeTracedWorkspaceV2(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -377,14 +392,15 @@ class AdminService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         return this.router;
     }
@@ -2023,6 +2039,7 @@ class HomepageService {
             try {
                 const response = await this.methods.getHomepageProblems(req, res);
                 res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -2035,8 +2052,8 @@ class HomepageService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.post(\\"\\", async (req, res, next) => {
             const request = await serializers.homepage.setHomepageProblems.Request.parse(req.body);
@@ -2045,6 +2062,7 @@ class HomepageService {
                 try {
                     await this.methods.setHomepageProblems(req, res);
                     res.sendStatus(204);
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -2057,14 +2075,15 @@ class HomepageService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         return this.router;
     }
@@ -2390,6 +2409,7 @@ class MigrationService {
             try {
                 const response = await this.methods.getAttemptedMigrations(req, res);
                 res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -2402,8 +2422,8 @@ class MigrationService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         return this.router;
     }
@@ -2812,6 +2832,7 @@ class PlaylistService {
                 try {
                     const response = await this.methods.createPlaylist(req, res);
                     res.json(await serializers.Playlist.jsonOrThrow(response));
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -2824,19 +2845,21 @@ class PlaylistService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getPlaylists(req, res);
                 res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -2849,13 +2872,14 @@ class PlaylistService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getPlaylist(req, res);
                 res.json(await serializers.Playlist.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -2874,8 +2898,8 @@ class PlaylistService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.put(\\"/:playlistId\\", async (req, res, next) => {
             const request = await serializers.playlist.updatePlaylist.Request.parse(req.body);
@@ -2884,6 +2908,7 @@ class PlaylistService {
                 try {
                     const response = await this.methods.updatePlaylist(req, res);
                     res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(response));
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -2901,19 +2926,21 @@ class PlaylistService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.delete(\\"/:playlist_id\\", async (req, res, next) => {
             try {
                 await this.methods.deletePlaylist(req, res);
                 res.sendStatus(204);
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -2926,8 +2953,8 @@ class PlaylistService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         return this.router;
     }
@@ -3490,6 +3517,7 @@ class ProblemService {
                 try {
                     const response = await this.methods.createProblem(req, res);
                     res.json(await serializers.CreateProblemResponse.jsonOrThrow(response));
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -3502,14 +3530,15 @@ class ProblemService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.post(\\"/update/:problemId\\", async (req, res, next) => {
             const request = await serializers.CreateProblemRequest.parse(req.body);
@@ -3518,6 +3547,7 @@ class ProblemService {
                 try {
                     const response = await this.methods.updateProblem(req, res);
                     res.json(await serializers.UpdateProblemResponse.jsonOrThrow(response));
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -3530,19 +3560,21 @@ class ProblemService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         this.router.delete(\\"/delete/:problemId\\", async (req, res, next) => {
             try {
                 await this.methods.deleteProblem(req, res);
                 res.sendStatus(204);
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -3555,8 +3587,8 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.post(\\"/default-starter-files\\", async (req, res, next) => {
             const request = await serializers.GetDefaultStarterFilesRequest.parse(req.body);
@@ -3565,6 +3597,7 @@ class ProblemService {
                 try {
                     const response = await this.methods.getDefaultStarterFiles(req, res);
                     res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(response));
+                    next();
                 }
                 catch (error) {
                     console.error(error);
@@ -3577,14 +3610,15 @@ class ProblemService {
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
                     }
+                    next(error);
                 }
             }
             else {
                 res.status(422).json({
                     errors: request.errors.map((error) => [\\"request\\", ...error.path].join(\\" -> \\") + \\": \\" + error.message),
                 });
+                next(request.errors);
             }
-            next();
         });
         return this.router;
     }
@@ -4355,6 +4389,7 @@ class SubmissionService {
             try {
                 const response = await this.methods.createExecutionSession(req, res);
                 res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -4367,13 +4402,14 @@ class SubmissionService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getExecutionSession(req, res);
                 res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -4386,13 +4422,14 @@ class SubmissionService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.delete(\\"/stop/:sessionId\\", async (req, res, next) => {
             try {
                 await this.methods.stopExecutionSession(req, res);
                 res.sendStatus(204);
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -4405,13 +4442,14 @@ class SubmissionService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getExecutionSessionsState(req, res);
                 res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -4424,8 +4462,8 @@ class SubmissionService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         return this.router;
     }
@@ -8223,6 +8261,7 @@ class SyspropService {
             try {
                 await this.methods.setNumWarmInstances(req, res);
                 res.sendStatus(204);
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -8235,13 +8274,14 @@ class SyspropService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getNumWarmInstances(req, res);
                 res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -8254,8 +8294,8 @@ class SyspropService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         return this.router;
     }
@@ -8478,6 +8518,7 @@ class ProblemService {
             try {
                 const response = await this.methods.getLightweightProblems(req, res);
                 res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -8490,13 +8531,14 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblems(req, res);
                 res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -8509,13 +8551,14 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLatestProblem(req, res);
                 res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -8528,13 +8571,14 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblemVersion(req, res);
                 res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -8547,8 +8591,8 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         return this.router;
     }
@@ -10250,6 +10294,7 @@ class ProblemService {
             try {
                 const response = await this.methods.getLightweightProblems(req, res);
                 res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -10262,13 +10307,14 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblems(req, res);
                 res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -10281,13 +10327,14 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getLatestProblem(req, res);
                 res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -10300,13 +10347,14 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
                 const response = await this.methods.getProblemVersion(req, res);
                 res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
+                next();
             }
             catch (error) {
                 console.error(error);
@@ -10319,8 +10367,8 @@ class ProblemService {
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
                 }
+                next(error);
             }
-            next();
         });
         return this.router;
     }

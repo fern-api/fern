@@ -265,6 +265,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             ? this.getIfElseWithValidation({
                                   expressRequest,
                                   expressResponse,
+                                  next,
                                   endpoint,
                                   context,
                                   requestBody: endpoint.requestBody,
@@ -273,13 +274,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                   this.getTryCatch({
                                       expressRequest,
                                       expressResponse,
+                                      next,
                                       endpoint,
                                       context,
                                   }),
                               ]),
-                        ts.factory.createExpressionStatement(
-                            ts.factory.createCallExpression(next, undefined, undefined)
-                        ),
                     ],
                     true
                 );
@@ -290,12 +289,14 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private getIfElseWithValidation({
         expressRequest,
         expressResponse,
+        next,
         endpoint,
         requestBody,
         context,
     }: {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
+        next: ts.Expression;
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody;
         context: ExpressServiceContext;
@@ -341,6 +342,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         this.getTryCatch({
                             expressRequest,
                             expressResponse,
+                            next,
                             endpoint,
                             context,
                         }),
@@ -420,6 +422,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                     ]),
                                 })
                             ),
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createCallExpression(next, undefined, [requestErrors])
+                            ),
                         ];
                     },
                 }
@@ -430,20 +435,22 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private getTryCatch({
         expressRequest,
         expressResponse,
+        next,
         endpoint,
         context,
     }: {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
+        next: ts.Expression;
         endpoint: HttpEndpoint;
         context: ExpressServiceContext;
     }): ts.TryStatement {
         return ts.factory.createTryStatement(
             ts.factory.createBlock(
-                this.getStatementsForTryBlock({ expressRequest, expressResponse, endpoint, context }),
+                this.getStatementsForTryBlock({ expressRequest, expressResponse, next, endpoint, context }),
                 true
             ),
-            this.getCatchClause({ expressResponse, context, endpoint }),
+            this.getCatchClause({ expressResponse, next, context, endpoint }),
             undefined
         );
     }
@@ -451,11 +458,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private getStatementsForTryBlock({
         expressRequest,
         expressResponse,
+        next,
         endpoint,
         context,
     }: {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
+        next: ts.Expression;
         endpoint: HttpEndpoint;
         context: ExpressServiceContext;
     }): ts.Statement[] {
@@ -519,15 +528,22 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             )
         );
 
+        // call next()
+        statements.push(
+            ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))
+        );
+
         return statements;
     }
 
     private getCatchClause({
         expressResponse,
+        next,
         context,
         endpoint,
     }: {
         expressResponse: ts.Expression;
+        next: ts.Expression;
         context: ExpressServiceContext;
         endpoint: HttpEndpoint;
     }): ts.CatchClause {
@@ -580,6 +596,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             ],
                             true
                         )
+                    ),
+                    ts.factory.createExpressionStatement(
+                        ts.factory.createCallExpression(next, undefined, [ts.factory.createIdentifier(ERROR_NAME)])
                     ),
                 ],
                 true
