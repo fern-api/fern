@@ -13216,10 +13216,11 @@ export declare class JsonError extends Error {
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.JsonError = void 0;
+const stringifyValidationErrors_1 = require(\\"./stringifyValidationErrors\\");
 class JsonError extends Error {
     errors;
     constructor(errors) {
-        super();
+        super(errors.map(stringifyValidationErrors_1.stringifyValidationError).join(\\"; \\"));
         this.errors = errors;
         Object.setPrototypeOf(this, JsonError.prototype);
     }
@@ -13243,10 +13244,11 @@ export declare class ParseError extends Error {
                     "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.ParseError = void 0;
+const stringifyValidationErrors_1 = require(\\"./stringifyValidationErrors\\");
 class ParseError extends Error {
     errors;
     constructor(errors) {
-        super();
+        super(errors.map(stringifyValidationErrors_1.stringifyValidationError).join(\\"; \\"));
         this.errors = errors;
         Object.setPrototypeOf(this, ParseError.prototype);
     }
@@ -13387,6 +13389,28 @@ var ParseError_1 = require(\\"./ParseError\\");
 Object.defineProperty(exports, \\"ParseError\\", { enumerable: true, get: function () { return ParseError_1.ParseError; } });
 ",
                     "name": "index.js",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import { ValidationError } from \\"../../Schema\\";
+export declare function stringifyValidationError(error: ValidationError): string;
+",
+                    "name": "stringifyValidationErrors.d.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.stringifyValidationError = void 0;
+function stringifyValidationError(error) {
+    if (error.path.length === 0) {
+        return error.message;
+    }
+    return \`\${error.path.join(\\" -> \\")}: \${error.message}\`;
+}
+exports.stringifyValidationError = stringifyValidationError;
+",
+                    "name": "stringifyValidationErrors.js",
                     "type": "file",
                   },
                 ],
