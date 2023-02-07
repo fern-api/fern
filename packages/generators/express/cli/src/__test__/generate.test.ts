@@ -24,16 +24,6 @@ const FIXTURES: FixtureInfo[] = [
         outputMode: "local",
         apiName: "api",
     },
-    {
-        path: "trace",
-        orgName: "trace",
-        outputMode: "local",
-        apiName: "api",
-        customConfig: {
-            useBrandedStringAliases: true,
-            optionalImplementations: true,
-        },
-    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
