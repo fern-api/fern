@@ -25,7 +25,10 @@ export class ExpressRegisterGenerator {
         this.areImplementationsOptional = areImplementationsOptional;
     }
 
-    public generateRegisterFunction(): GeneratedExpressRegister {
+    public generateRegisterFunction(): GeneratedExpressRegister | undefined {
+        if (this.intermediateRepresentation.services.length === 0) {
+            return undefined;
+        }
         return new GeneratedExpressRegisterImpl({
             intermediateRepresentation: this.intermediateRepresentation,
             registerFunctionName: this.registerFunctionName,

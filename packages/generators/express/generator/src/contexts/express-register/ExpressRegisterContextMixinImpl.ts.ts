@@ -14,7 +14,7 @@ export class ExpressRegisterContextMixinImpl implements ExpressRegisterContextMi
         this.expressRegisterGenerator = expressRegisterGenerator;
     }
 
-    public getGeneratedExpressRegister(): GeneratedExpressRegister {
+    public getGeneratedExpressRegister(): GeneratedExpressRegister | undefined {
         return this.expressRegisterGenerator.generateRegisterFunction();
     }
 }

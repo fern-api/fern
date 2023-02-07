@@ -461,7 +461,7 @@ export class ExpressGenerator {
                 });
                 expressRegisterContext.expressRegister
                     .getGeneratedExpressRegister()
-                    .writeToFile(expressRegisterContext);
+                    ?.writeToFile(expressRegisterContext);
             },
         });
     }
