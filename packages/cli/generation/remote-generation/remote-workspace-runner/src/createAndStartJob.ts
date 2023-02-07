@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { stringifyLargeObject } from "@fern-api/core-utils";
+import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
@@ -12,10 +12,6 @@ import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
 import { substituteEnvVariables } from "./substituteEnvVariables";
-
-declare namespace JSONStream {
-    export function stringifyObject(): NodeJS.ReadWriteStream;
-}
 
 export async function createAndStartJob({
     workspace,

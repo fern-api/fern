@@ -25,10 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "json-stream-stringify": "^3.0.1",
     "lodash-es": "^4.17.21",
-    "strip-ansi": "^7.0.1",
-    "tmp-promise": "^3.0.3"
+    "strip-ansi": "^7.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

@@ -1,5 +1,4 @@
-import { stringifyLargeObject } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { Language } from "@fern-api/ir-generator";
 import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
