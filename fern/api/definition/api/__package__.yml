@@ -62,12 +62,12 @@ types:
       value: TypeReference
 
   PrimitiveType:
-    enum:
-      - integer
-      - double
-      - long
-      - string
-      - boolean
+    union:
+      integer: {}
+      double: {}
+      long: {}
+      string: {}
+      boolean: {}
 
   ContainerType:
     union:
