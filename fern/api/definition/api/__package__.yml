@@ -1,5 +1,3 @@
-services: {}
-
 types:
   ApiId: string
 
@@ -34,15 +32,15 @@ types:
   EndpointPathParameter:
     properties:
       name: string
-      type: TypeReference
+      parameterType: TypeReference
 
   TypeId: string
 
   TypeDefinition:
     union:
       alias: TypeReference
-      enum: ...
-      union: ...
+      enum: EnumType
+      union: UnionType
       object: ObjectType
 
   TypeReference:
@@ -55,8 +53,9 @@ types:
 
   ObjectType:
     properties:
+      properties: list<ObjectProperty>
 
-  ObjectPropertes:
+  ObjectProperty:
     properties:
       key: string
       value: TypeReference
@@ -77,13 +76,21 @@ types:
 
   OptionalType:
     properties:
-      itemType: Type
+      itemType: TypeReference
 
   ListType:
     properties:
-      itemType: Type
+      itemType: TypeReference
 
   MapType:
     properties:
-      keyType: Type
-      valueType: Type
+      keyType: TypeReference
+      valueType: TypeReference
+
+  EnumType:
+    properties:
+      values: list<string>
+
+  UnionType:
+    properties:
+      members: list<TypeReference>
