@@ -9763,7 +9763,8 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                     "pathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -10380,7 +10381,8 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                     "pathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -10997,7 +10999,8 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                     "pathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -11614,7 +11617,8 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                     "pathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -21080,7 +21084,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                     ],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -30532,7 +30537,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                     ],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -39984,7 +39990,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                     ],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -47751,7 +47758,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                     ],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
@@ -55518,7 +55526,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                     ],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {},
+                    "response": {
+                    },
                     "errors": [],
                     "examples": []
                 }
