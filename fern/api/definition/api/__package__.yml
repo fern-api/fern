@@ -12,6 +12,7 @@ types:
   ApiDefinition:
     properties:
       services: list<Service>
+      types: map<TypeId, TypeDefinition>
 
   Service:
     properties:
@@ -33,18 +34,24 @@ types:
   EndpointPathParameter:
     properties:
       name: string
-      type:
+      type: TypeReference
 
-  Type:
-    union:
-      named:
-      inline:
+  TypeId: string
 
-  NamedType:
+  TypeDefinition:
     union:
+      alias: TypeReference
+      enum: ...
+      union: ...
+      object: ObjectType
 
-  InlinedType:
+  TypeReference:
     union:
+      primitive: PrimitiveType
+      container: ContainerType
+      unknown: {}
+      reference: TypeId
+      definition: TypeDefinition
 
   ObjectType:
     properties:
@@ -52,15 +59,15 @@ types:
   ObjectPropertes:
     properties:
       key: string
-      value: Type
+      value: TypeReference
 
   PrimitiveType:
-    union:
-      integer: {}
-      double: {}
-      long: {}
-      string: {}
-      boolean: {}
+    enum:
+      - integer
+      - double
+      - long
+      - string
+      - boolean
 
   ContainerType:
     union:
@@ -70,13 +77,13 @@ types:
 
   OptionalType:
     properties:
-      value: Type
+      itemType: Type
 
   ListType:
     properties:
-      value: Type
+      itemType: Type
 
   MapType:
     properties:
-      key: Type
-      value: Type
+      keyType: Type
+      valueType: Type
