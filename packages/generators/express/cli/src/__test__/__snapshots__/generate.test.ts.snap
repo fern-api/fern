@@ -13316,7 +13316,7 @@ export interface SchemaUtils<Raw, Parsed> {
 }
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 export declare function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed>;
 /**
@@ -15010,7 +15010,7 @@ exports.DebugVariableValue = core.serialization
                 return __1.TraceApi.DebugVariableValue._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "DebugVariableValue.js",
@@ -16190,7 +16190,7 @@ exports.VariableType = core.serialization
                 return __1.TraceApi.VariableType._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "VariableType.js",
@@ -16337,7 +16337,7 @@ exports.VariableValue = core.serialization
                 return __1.TraceApi.VariableValue._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "VariableValue.js",
@@ -17461,7 +17461,7 @@ exports.DateUnion = core.serialization
                 return __1.TraceApi.DateUnion._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "DateUnion.js",
@@ -17802,7 +17802,7 @@ exports.PlaylistIdNotFoundErrorBody = core.serialization
                 return __1.TraceApi.PlaylistIdNotFoundErrorBody._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "PlaylistIdNotFoundErrorBody.js",
@@ -18182,7 +18182,7 @@ exports.CreateProblemError = core.serialization
                 return __1.TraceApi.CreateProblemError._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "CreateProblemError.js",
@@ -18330,7 +18330,7 @@ exports.CreateProblemResponse = core.serialization
                 return __1.TraceApi.CreateProblemResponse._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "CreateProblemResponse.js",
@@ -18589,7 +18589,7 @@ exports.ProblemDescriptionBoard = core.serialization
                 return __1.TraceApi.ProblemDescriptionBoard._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "ProblemDescriptionBoard.js",
@@ -19160,7 +19160,7 @@ exports.ActualResult = core.serialization
                 return __1.TraceApi.ActualResult._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "ActualResult.js",
@@ -19346,7 +19346,7 @@ exports.CodeExecutionUpdate = core.serialization
                 return __1.TraceApi.CodeExecutionUpdate._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "CodeExecutionUpdate.js",
@@ -19539,7 +19539,7 @@ exports.ErrorInfo = core.serialization
                 return __1.TraceApi.ErrorInfo._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "ErrorInfo.js",
@@ -19730,7 +19730,7 @@ exports.ExceptionV2 = core.serialization
                 return __1.TraceApi.ExceptionV2._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "ExceptionV2.js",
@@ -20620,7 +20620,7 @@ exports.InvalidRequestCause = core.serialization
                 return __1.TraceApi.InvalidRequestCause._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "InvalidRequestCause.js",
@@ -21786,7 +21786,7 @@ exports.SubmissionRequest = core.serialization
                 return __1.TraceApi.SubmissionRequest._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "SubmissionRequest.js",
@@ -21891,7 +21891,7 @@ exports.SubmissionResponse = core.serialization
                 return __1.TraceApi.SubmissionResponse._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "SubmissionResponse.js",
@@ -21975,7 +21975,7 @@ exports.SubmissionStatusForTestCase = core.serialization
                 return __1.TraceApi.SubmissionStatusForTestCase._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "SubmissionStatusForTestCase.js",
@@ -22050,7 +22050,7 @@ exports.SubmissionStatusV2 = core.serialization
                 return __1.TraceApi.SubmissionStatusV2._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "SubmissionStatusV2.js",
@@ -22176,7 +22176,7 @@ exports.SubmissionTypeState = core.serialization
                 return __1.TraceApi.SubmissionTypeState._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "SubmissionTypeState.js",
@@ -22368,7 +22368,7 @@ exports.TestCaseGrade = core.serialization
                 return __1.TraceApi.TestCaseGrade._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "TestCaseGrade.js",
@@ -22757,7 +22757,7 @@ exports.TestSubmissionStatus = core.serialization
                 return __1.TraceApi.TestSubmissionStatus._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "TestSubmissionStatus.js",
@@ -22980,7 +22980,7 @@ exports.TestSubmissionUpdateInfo = core.serialization
                 return __1.TraceApi.TestSubmissionUpdateInfo._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "TestSubmissionUpdateInfo.js",
@@ -23838,7 +23838,7 @@ exports.WorkspaceSubmissionStatus = core.serialization
                 return __1.TraceApi.WorkspaceSubmissionStatus._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "WorkspaceSubmissionStatus.js",
@@ -24061,7 +24061,7 @@ exports.WorkspaceSubmissionUpdateInfo = core.serialization
                 return __1.TraceApi.WorkspaceSubmissionUpdateInfo._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                     "name": "WorkspaceSubmissionUpdateInfo.js",
@@ -24834,7 +24834,7 @@ exports.AssertCorrectnessCheck = core.serialization
                 return __1.TraceApi.v2.AssertCorrectnessCheck._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                             "name": "AssertCorrectnessCheck.js",
@@ -25101,7 +25101,7 @@ exports.CustomFiles = core.serialization
                 return __1.TraceApi.v2.CustomFiles._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                             "name": "CustomFiles.js",
@@ -25522,7 +25522,7 @@ exports.FunctionSignature = core.serialization
                 return __1.TraceApi.v2.FunctionSignature._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                             "name": "FunctionSignature.js",
@@ -26405,7 +26405,7 @@ exports.TestCaseFunction = core.serialization
                 return __1.TraceApi.v2.TestCaseFunction._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                             "name": "TestCaseFunction.js",
@@ -26649,7 +26649,7 @@ exports.TestCaseImplementationDescriptionBoard = core.serialization
                 return __1.TraceApi.v2.TestCaseImplementationDescriptionBoard._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                             "name": "TestCaseImplementationDescriptionBoard.js",
@@ -26727,7 +26727,7 @@ exports.TestCaseImplementationReference = core.serialization
                 return __1.TraceApi.v2.TestCaseImplementationReference._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                             "name": "TestCaseImplementationReference.js",
@@ -27690,7 +27690,7 @@ exports.AssertCorrectnessCheck = core.serialization
                 return __1.TraceApi.v2.v3.AssertCorrectnessCheck._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                                     "name": "AssertCorrectnessCheck.js",
@@ -27959,7 +27959,7 @@ exports.CustomFiles = core.serialization
                 return __1.TraceApi.v2.v3.CustomFiles._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                                     "name": "CustomFiles.js",
@@ -28382,7 +28382,7 @@ exports.FunctionSignature = core.serialization
                 return __1.TraceApi.v2.v3.FunctionSignature._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                                     "name": "FunctionSignature.js",
@@ -29265,7 +29265,7 @@ exports.TestCaseFunction = core.serialization
                 return __1.TraceApi.v2.v3.TestCaseFunction._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                                     "name": "TestCaseFunction.js",
@@ -29509,7 +29509,7 @@ exports.TestCaseImplementationDescriptionBoard = core.serialization
                 return __1.TraceApi.v2.v3.TestCaseImplementationDescriptionBoard._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                                     "name": "TestCaseImplementationDescriptionBoard.js",
@@ -29587,7 +29587,7 @@ exports.TestCaseImplementationReference = core.serialization
                 return __1.TraceApi.v2.v3.TestCaseImplementationReference._unknown(value);
         }
     },
-    untransform: (value) => value,
+    untransform: ({ _visit, ...value }) => value,
 });
 ",
                                     "name": "TestCaseImplementationReference.js",

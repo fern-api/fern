@@ -11,7 +11,7 @@ export interface SchemaUtils<Raw, Parsed> {
 
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {

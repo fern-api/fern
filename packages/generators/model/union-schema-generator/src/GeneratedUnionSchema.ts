@@ -84,7 +84,20 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
                             undefined,
                             undefined,
                             undefined,
-                            ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
+                            ts.factory.createObjectBindingPattern([
+                                ts.factory.createBindingElement(
+                                    undefined,
+                                    undefined,
+                                    ts.factory.createIdentifier(this.getGeneratedUnion(context).visitPropertyName),
+                                    undefined
+                                ),
+                                ts.factory.createBindingElement(
+                                    ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
+                                    undefined,
+                                    ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
+                                    undefined
+                                ),
+                            ]),
                             undefined,
                             undefined
                         ),

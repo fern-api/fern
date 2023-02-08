@@ -3,6 +3,7 @@ import { GeneratedFile } from "./GeneratedFile";
 
 export interface GeneratedUnion<Context> extends GeneratedFile<Context> {
     discriminant: string;
+    visitPropertyName: string;
     getReferenceTo: (context: Context) => ts.TypeNode;
     build: (args: {
         discriminantValueToBuild: string | number;

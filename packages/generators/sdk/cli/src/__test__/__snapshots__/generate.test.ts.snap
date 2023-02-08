@@ -3463,7 +3463,7 @@ export interface SchemaUtils<Raw, Parsed> {
 
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
@@ -4095,7 +4095,7 @@ export const Error: core.serialization.Schema<
                     return Fiddle.remoteGen.createJob.Error.insufficientPermissions(value.content);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Error {
@@ -4185,7 +4185,7 @@ export const Error: core.serialization.Schema<
                     return Fiddle.remoteGen.createJobV2.Error.insufficientPermissions(value.content);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Error {
@@ -4691,7 +4691,7 @@ export const GithubPublishInfo: core.serialization.Schema<serializers.GithubPubl
                         return Fiddle.GithubPublishInfo._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace GithubPublishInfo {
@@ -4960,7 +4960,7 @@ export const OutputMode: core.serialization.Schema<serializers.OutputMode.Raw, F
                     return Fiddle.OutputMode._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace OutputMode {
@@ -5041,7 +5041,7 @@ export const PackageCoordinate: core.serialization.Schema<serializers.PackageCoo
                         return Fiddle.PackageCoordinate._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace PackageCoordinate {
@@ -5169,7 +5169,7 @@ export const PublishOutputModeV2: core.serialization.Schema<
                     return Fiddle.PublishOutputModeV2._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace PublishOutputModeV2 {
@@ -5257,7 +5257,7 @@ import * as core from \\"../../../../core\\";
 export const RemoteGenJobId: core.serialization.Schema<serializers.RemoteGenJobId.Raw, Fiddle.RemoteGenJobId> =
     core.serialization.string().transform({
         transform: Fiddle.RemoteGenJobId,
-        untransform: (value) => value as Fiddle.RemoteGenJobId,
+        untransform: (value) => value,
     });
 
 export declare namespace RemoteGenJobId {
@@ -5279,7 +5279,7 @@ import * as core from \\"../../../../core\\";
 export const RemoteGenTaskId: core.serialization.Schema<serializers.RemoteGenTaskId.Raw, Fiddle.RemoteGenTaskId> =
     core.serialization.string().transform({
         transform: Fiddle.RemoteGenTaskId,
-        untransform: (value) => value as Fiddle.RemoteGenTaskId,
+        untransform: (value) => value,
     });
 
 export declare namespace RemoteGenTaskId {
@@ -5371,7 +5371,7 @@ export const TaskStatus: core.serialization.Schema<serializers.TaskStatus.Raw, F
                     return Fiddle.TaskStatus._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TaskStatus {
@@ -8372,7 +8372,7 @@ export interface SchemaUtils<Raw, Parsed> {
 
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
@@ -9499,7 +9499,7 @@ export const TokenStatus: core.serialization.Schema<serializers.TokenStatus.Raw,
                         return FernApi.TokenStatus._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace TokenStatus {
@@ -12469,7 +12469,7 @@ export interface SchemaUtils<Raw, Parsed> {
 
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
@@ -13596,7 +13596,7 @@ export const TokenStatus: core.serialization.Schema<serializers.TokenStatus.Raw,
                         return FernApi.TokenStatus._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace TokenStatus {
@@ -15298,7 +15298,7 @@ export interface SchemaUtils<Raw, Parsed> {
 }
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 export declare function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed>;
 /**
@@ -29526,7 +29526,7 @@ export interface SchemaUtils<Raw, Parsed> {
 
 export interface SchemaTransformer<Parsed, Transformed> {
     transform: (parsed: Parsed) => Transformed;
-    untransform: (transformed: unknown) => Parsed;
+    untransform: (transformed: any) => Parsed;
 }
 
 export function getSchemaUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): SchemaUtils<Raw, Parsed> {
@@ -30364,7 +30364,7 @@ export const Date: core.serialization.Schema<serializers.Date.Raw, TraceApi.Date
     .string()
     .transform({
         transform: TraceApi.Date,
-        untransform: (value) => value as TraceApi.Date,
+        untransform: (value) => value,
     });
 
 export declare namespace Date {
@@ -30507,7 +30507,7 @@ export const DebugVariableValue: core.serialization.Schema<
                     return TraceApi.DebugVariableValue._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace DebugVariableValue {
@@ -30858,7 +30858,7 @@ export const NodeId: core.serialization.Schema<serializers.NodeId.Raw, TraceApi.
     .string()
     .transform({
         transform: TraceApi.NodeId,
-        untransform: (value) => value as TraceApi.NodeId,
+        untransform: (value) => value,
     });
 
 export declare namespace NodeId {
@@ -30881,7 +30881,7 @@ export const ProblemId: core.serialization.Schema<serializers.ProblemId.Raw, Tra
     .string()
     .transform({
         transform: TraceApi.ProblemId,
-        untransform: (value) => value as TraceApi.ProblemId,
+        untransform: (value) => value,
     });
 
 export declare namespace ProblemId {
@@ -31063,7 +31063,7 @@ export const UserId: core.serialization.Schema<serializers.UserId.Raw, TraceApi.
     .string()
     .transform({
         transform: TraceApi.UserId,
-        untransform: (value) => value as TraceApi.UserId,
+        untransform: (value) => value,
     });
 
 export declare namespace UserId {
@@ -31123,7 +31123,7 @@ export const VariableType: core.serialization.Schema<serializers.VariableType.Ra
                         return TraceApi.VariableType._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace VariableType {
@@ -31254,7 +31254,7 @@ export const VariableValue: core.serialization.Schema<serializers.VariableValue.
                         return TraceApi.VariableValue._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace VariableValue {
@@ -31666,7 +31666,7 @@ export const Error: core.serialization.Schema<
                     return TraceApi.playlist.getPlaylist.Error.unauthorizedError();
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Error {
@@ -31755,7 +31755,7 @@ export const Error: core.serialization.Schema<
                     return TraceApi.playlist.updatePlaylist.Error.playlistIdNotFoundError(value.content);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace Error {
@@ -31833,7 +31833,7 @@ export const DateUnion: core.serialization.Schema<serializers.DateUnion.Raw, Tra
                     return TraceApi.DateUnion._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace DateUnion {
@@ -32004,7 +32004,7 @@ export const PlaylistIdNotFoundErrorBody: core.serialization.Schema<
                     return TraceApi.PlaylistIdNotFoundErrorBody._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace PlaylistIdNotFoundErrorBody {
@@ -32181,7 +32181,7 @@ export const CreateProblemError: core.serialization.Schema<
                     return TraceApi.CreateProblemError._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace CreateProblemError {
@@ -32271,7 +32271,7 @@ export const CreateProblemResponse: core.serialization.Schema<
                     return TraceApi.CreateProblemResponse._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace CreateProblemResponse {
@@ -32412,7 +32412,7 @@ export const ProblemDescriptionBoard: core.serialization.Schema<
                     return TraceApi.ProblemDescriptionBoard._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace ProblemDescriptionBoard {
@@ -32692,7 +32692,7 @@ export const ActualResult: core.serialization.Schema<serializers.ActualResult.Ra
                         return TraceApi.ActualResult._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace ActualResult {
@@ -32800,7 +32800,7 @@ export const CodeExecutionUpdate: core.serialization.Schema<
                     return TraceApi.CodeExecutionUpdate._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace CodeExecutionUpdate {
@@ -32943,7 +32943,7 @@ export const ErrorInfo: core.serialization.Schema<serializers.ErrorInfo.Raw, Tra
                     return TraceApi.ErrorInfo._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace ErrorInfo {
@@ -33045,7 +33045,7 @@ export const ExceptionV2: core.serialization.Schema<serializers.ExceptionV2.Raw,
                         return TraceApi.ExceptionV2._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace ExceptionV2 {
@@ -33500,7 +33500,7 @@ export const InvalidRequestCause: core.serialization.Schema<
                     return TraceApi.InvalidRequestCause._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace InvalidRequestCause {
@@ -33790,7 +33790,7 @@ export const ShareId: core.serialization.Schema<serializers.ShareId.Raw, TraceAp
     .string()
     .transform({
         transform: TraceApi.ShareId,
-        untransform: (value) => value as TraceApi.ShareId,
+        untransform: (value) => value,
     });
 
 export declare namespace ShareId {
@@ -33993,7 +33993,7 @@ import * as core from \\"../../../../core\\";
 export const SubmissionId: core.serialization.Schema<serializers.SubmissionId.Raw, TraceApi.SubmissionId> =
     core.serialization.string().transform({
         transform: TraceApi.SubmissionId,
-        untransform: (value) => value as TraceApi.SubmissionId,
+        untransform: (value) => value,
     });
 
 export declare namespace SubmissionId {
@@ -34067,7 +34067,7 @@ export const SubmissionRequest: core.serialization.Schema<
                     return TraceApi.SubmissionRequest._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace SubmissionRequest {
@@ -34146,7 +34146,7 @@ export const SubmissionResponse: core.serialization.Schema<
                     return TraceApi.SubmissionResponse._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace SubmissionResponse {
@@ -34221,7 +34221,7 @@ export const SubmissionStatusForTestCase: core.serialization.Schema<
                     return TraceApi.SubmissionStatusForTestCase._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace SubmissionStatusForTestCase {
@@ -34275,7 +34275,7 @@ export const SubmissionStatusV2: core.serialization.Schema<
                     return TraceApi.SubmissionStatusV2._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace SubmissionStatusV2 {
@@ -34342,7 +34342,7 @@ export const SubmissionTypeState: core.serialization.Schema<
                     return TraceApi.SubmissionTypeState._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace SubmissionTypeState {
@@ -34444,7 +34444,7 @@ export const TestCaseGrade: core.serialization.Schema<serializers.TestCaseGrade.
                         return TraceApi.TestCaseGrade._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace TestCaseGrade {
@@ -34650,7 +34650,7 @@ export const TestSubmissionStatus: core.serialization.Schema<
                     return TraceApi.TestSubmissionStatus._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestSubmissionStatus {
@@ -34787,7 +34787,7 @@ export const TestSubmissionUpdateInfo: core.serialization.Schema<
                     return TraceApi.TestSubmissionUpdateInfo._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestSubmissionUpdateInfo {
@@ -35243,7 +35243,7 @@ export const WorkspaceSubmissionStatus: core.serialization.Schema<
                     return TraceApi.WorkspaceSubmissionStatus._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace WorkspaceSubmissionStatus {
@@ -35381,7 +35381,7 @@ export const WorkspaceSubmissionUpdateInfo: core.serialization.Schema<
                     return TraceApi.WorkspaceSubmissionUpdateInfo._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace WorkspaceSubmissionUpdateInfo {
@@ -35747,7 +35747,7 @@ export const AssertCorrectnessCheck: core.serialization.Schema<
                     return TraceApi.v2.AssertCorrectnessCheck._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace AssertCorrectnessCheck {
@@ -35908,7 +35908,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.CustomFiles.R
                         return TraceApi.v2.CustomFiles._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace CustomFiles {
@@ -36125,7 +36125,7 @@ export const FunctionSignature: core.serialization.Schema<
                     return TraceApi.v2.FunctionSignature._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace FunctionSignature {
@@ -36477,7 +36477,7 @@ import * as core from \\"../../../../../../core\\";
 export const ParameterId: core.serialization.Schema<serializers.v2.ParameterId.Raw, TraceApi.v2.ParameterId> =
     core.serialization.string().transform({
         transform: TraceApi.v2.ParameterId,
-        untransform: (value) => value as TraceApi.v2.ParameterId,
+        untransform: (value) => value,
     });
 
 export declare namespace ParameterId {
@@ -36591,7 +36591,7 @@ export const TestCaseFunction: core.serialization.Schema<
                     return TraceApi.v2.TestCaseFunction._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestCaseFunction {
@@ -36621,7 +36621,7 @@ import * as core from \\"../../../../../../core\\";
 export const TestCaseId: core.serialization.Schema<serializers.v2.TestCaseId.Raw, TraceApi.v2.TestCaseId> =
     core.serialization.string().transform({
         transform: TraceApi.v2.TestCaseId,
-        untransform: (value) => value as TraceApi.v2.TestCaseId,
+        untransform: (value) => value,
     });
 
 export declare namespace TestCaseId {
@@ -36719,7 +36719,7 @@ export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
                     return TraceApi.v2.TestCaseImplementationDescriptionBoard._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestCaseImplementationDescriptionBoard {
@@ -36771,7 +36771,7 @@ export const TestCaseImplementationReference: core.serialization.Schema<
                     return TraceApi.v2.TestCaseImplementationReference._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestCaseImplementationReference {
@@ -36864,7 +36864,7 @@ export const TestCaseTemplateId: core.serialization.Schema<
     TraceApi.v2.TestCaseTemplateId
 > = core.serialization.string().transform({
     transform: TraceApi.v2.TestCaseTemplateId,
-    untransform: (value) => value as TraceApi.v2.TestCaseTemplateId,
+    untransform: (value) => value,
 });
 
 export declare namespace TestCaseTemplateId {
@@ -37232,7 +37232,7 @@ export const AssertCorrectnessCheck: core.serialization.Schema<
                     return TraceApi.v2.v3.AssertCorrectnessCheck._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace AssertCorrectnessCheck {
@@ -37403,7 +37403,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFile
                         return TraceApi.v2.v3.CustomFiles._unknown(value);
                 }
             },
-            untransform: (value) => value as any,
+            untransform: ({ _visit, ...value }) => value as any,
         });
 
 export declare namespace CustomFiles {
@@ -37629,7 +37629,7 @@ export const FunctionSignature: core.serialization.Schema<
                     return TraceApi.v2.v3.FunctionSignature._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace FunctionSignature {
@@ -37987,7 +37987,7 @@ import * as core from \\"../../../../../../../../core\\";
 export const ParameterId: core.serialization.Schema<serializers.v2.v3.ParameterId.Raw, TraceApi.v2.v3.ParameterId> =
     core.serialization.string().transform({
         transform: TraceApi.v2.v3.ParameterId,
-        untransform: (value) => value as TraceApi.v2.v3.ParameterId,
+        untransform: (value) => value,
     });
 
 export declare namespace ParameterId {
@@ -38107,7 +38107,7 @@ export const TestCaseFunction: core.serialization.Schema<
                     return TraceApi.v2.v3.TestCaseFunction._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestCaseFunction {
@@ -38137,7 +38137,7 @@ import * as core from \\"../../../../../../../../core\\";
 export const TestCaseId: core.serialization.Schema<serializers.v2.v3.TestCaseId.Raw, TraceApi.v2.v3.TestCaseId> =
     core.serialization.string().transform({
         transform: TraceApi.v2.v3.TestCaseId,
-        untransform: (value) => value as TraceApi.v2.v3.TestCaseId,
+        untransform: (value) => value,
     });
 
 export declare namespace TestCaseId {
@@ -38237,7 +38237,7 @@ export const TestCaseImplementationDescriptionBoard: core.serialization.Schema<
                     return TraceApi.v2.v3.TestCaseImplementationDescriptionBoard._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestCaseImplementationDescriptionBoard {
@@ -38289,7 +38289,7 @@ export const TestCaseImplementationReference: core.serialization.Schema<
                     return TraceApi.v2.v3.TestCaseImplementationReference._unknown(value);
             }
         },
-        untransform: (value) => value as any,
+        untransform: ({ _visit, ...value }) => value as any,
     });
 
 export declare namespace TestCaseImplementationReference {
@@ -38382,7 +38382,7 @@ export const TestCaseTemplateId: core.serialization.Schema<
     TraceApi.v2.v3.TestCaseTemplateId
 > = core.serialization.string().transform({
     transform: TraceApi.v2.v3.TestCaseTemplateId,
-    untransform: (value) => value as TraceApi.v2.v3.TestCaseTemplateId,
+    untransform: (value) => value,
 });
 
 export declare namespace TestCaseTemplateId {

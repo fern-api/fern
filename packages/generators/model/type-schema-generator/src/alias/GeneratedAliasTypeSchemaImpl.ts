@@ -40,10 +40,7 @@ export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
                 ],
                 undefined,
                 undefined,
-                ts.factory.createAsExpression(
-                    ts.factory.createIdentifier(VALUE_PARAMETER_NAME),
-                    this.getReferenceToParsedShape(context)
-                )
+                ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
             ),
         });
     }

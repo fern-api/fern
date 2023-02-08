@@ -39,6 +39,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
 
     public readonly getReferenceToUnion: (context: Context) => Reference;
     public readonly discriminant: string;
+    public readonly visitPropertyName = GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME;
 
     private getDocs: ((context: Context) => string | null | undefined) | undefined;
     private typeName: string;
