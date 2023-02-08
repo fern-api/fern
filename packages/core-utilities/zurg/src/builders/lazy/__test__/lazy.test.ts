@@ -27,6 +27,15 @@ describe("lazy", () => {
     });
 
     itSchemaIdentity(
+        lazy(() => object({})),
+        { foo: "hello" },
+        {
+            title: "passes opts through",
+            opts: { allowUnknownKeys: true },
+        }
+    );
+
+    itSchemaIdentity(
         lazy(() => object({ foo: string() })),
         { foo: "hello" }
     );
