@@ -1,0 +1,12 @@
+{
+  "type": "cli",
+  "cliName": "server",
+  "private": true,
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "start": "yarn dist:cli && node dist/bundle.cjs"
+      }
+    }
+  }
+}

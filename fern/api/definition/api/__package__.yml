@@ -1,3 +1,14 @@
+service:
+  base-path: /apis
+  auth: false
+  endpoints:
+    get:
+      method: GET
+      path: /{apiId}
+      path-parameters:
+        apiId: ApiId
+      response: Api
+
 types:
   ApiId: string
 
@@ -55,6 +66,7 @@ types:
 
   ObjectType:
     properties:
+      extends: list<TypeId>
       properties: list<ObjectProperty>
 
   ObjectProperty:
@@ -69,11 +81,14 @@ types:
       long: {}
       string: {}
       boolean: {}
+      datetime: {}
+      uuid: {}
 
   ContainerType:
     union:
       optional: OptionalType
       list: ListType
+      set: SetType
       map: MapType
 
   OptionalType:
@@ -81,6 +96,10 @@ types:
       itemType: TypeReference
 
   ListType:
+    properties:
+      itemType: TypeReference
+
+  SetType:
     properties:
       itemType: TypeReference
 
@@ -95,4 +114,10 @@ types:
 
   UnionType:
     properties:
-      members: list<TypeReference>
+      discriminant: string
+      members: list<UnionMember>
+
+  UnionMember:
+    properties:
+      discriminantValue: string
+      additionalProperties: ObjectType
