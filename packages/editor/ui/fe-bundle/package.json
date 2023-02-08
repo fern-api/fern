@@ -1,5 +1,5 @@
 {
-  "name": "@fern-ui/fe-bundle",
+  "name": "@fern-ui/editor-fe-bundle",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
     "preview": "yarn compile && vite preview"
   },
   "dependencies": {
-    "@fern-ui/app": "workspace:*",
+    "@fern-ui/editor-app": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

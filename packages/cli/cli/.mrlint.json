@@ -22,5 +22,5 @@
       "POSTHOG_API_KEY"
     ]
   },
-  "private": false
+  "private": true
 }

@@ -1,3 +1,4 @@
 name: api
 error-discrimination:
-  strategy: status-code
+  strategy: property
+  property-name: error

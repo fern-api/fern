@@ -1,4 +1,4 @@
-import { App } from "@fern-ui/app";
+import { App } from "@fern-ui/editor-app";
 import ReactDOM from "react-dom/client";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

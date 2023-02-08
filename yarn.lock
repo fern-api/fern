@@ -3391,10 +3391,10 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-ui/app": "workspace:*"
     "@fern-ui/common-components": "workspace:*"
     "@fern-ui/contexted-dialog": "workspace:*"
-    "@fern-ui/fe-bundle": "workspace:*"
+    "@fern-ui/editor-app": "workspace:*"
+    "@fern-ui/editor-fe-bundle": "workspace:*"
     "@fern-ui/fonts": "workspace:*"
     "@fern-ui/react-commons": "workspace:*"
     "@fern-ui/react-query-utils": "workspace:*"
@@ -3588,6 +3588,28 @@ __metadata:
     strip-ansi: ^7.0.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/fe-bundle@workspace:packages/ui/fe-bundle":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fe-bundle@workspace:packages/ui/fe-bundle"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@vitejs/plugin-react": ^2.0.0
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    sass: ^1.54.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+    vite-plugin-checker: ^0.4.9
   languageName: unknown
   linkType: soft
 
@@ -4064,6 +4086,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/server@workspace:packages/ui/server":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/server@workspace:packages/ui/server"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/services@workspace:*, @fern-api/services@workspace:packages/cli/services":
   version: 0.0.0-use.local
   resolution: "@fern-api/services@workspace:packages/cli/services"
@@ -4419,9 +4458,63 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-ui/app@workspace:*, @fern-ui/app@workspace:packages/editor/ui/app":
+"@fern-ui/common-components@workspace:*, @fern-ui/common-components@workspace:packages/commons/react/common-components":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/app@workspace:packages/editor/ui/app"
+  resolution: "@fern-ui/common-components@workspace:packages/commons/react/common-components"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@blueprintjs/icons": ^4.4.0
+    "@fern-api/loadable": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-ui/react-commons": "workspace:*"
+    "@fern-ui/theme": "workspace:*"
+    "@fern-ui/toaster": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-ui/editor-app@workspace:*, @fern-ui/editor-app@workspace:packages/editor/ui/app":
+  version: 0.0.0-use.local
+  resolution: "@fern-ui/editor-app@workspace:packages/editor/ui/app"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4469,68 +4562,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/common-components@workspace:*, @fern-ui/common-components@workspace:packages/editor/ui/common-components":
+"@fern-ui/editor-fe-bundle@workspace:*, @fern-ui/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/common-components@workspace:packages/editor/ui/common-components"
+  resolution: "@fern-ui/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@blueprintjs/icons": ^4.4.0
-    "@fern-api/loadable": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/editor/ui/contexted-dialog":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/contexted-dialog@workspace:packages/editor/ui/contexted-dialog"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fern-ui/toaster": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/fe-bundle@workspace:*, @fern-ui/fe-bundle@workspace:packages/editor/ui/fe-bundle":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/fe-bundle@workspace:packages/editor/ui/fe-bundle"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-ui/app": "workspace:*"
+    "@fern-ui/editor-app": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -4550,9 +4589,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/fonts@workspace:*, @fern-ui/fonts@workspace:packages/editor/ui/fonts":
+"@fern-ui/fonts@workspace:*, @fern-ui/fonts@workspace:packages/commons/react/fonts":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/fonts@workspace:packages/editor/ui/fonts"
+  resolution: "@fern-ui/fonts@workspace:packages/commons/react/fonts"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4571,9 +4610,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/react-commons@workspace:*, @fern-ui/react-commons@workspace:packages/editor/ui/react-commons":
+"@fern-ui/react-commons@workspace:*, @fern-ui/react-commons@workspace:packages/commons/react/react-commons":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/react-commons@workspace:packages/editor/ui/react-commons"
+  resolution: "@fern-ui/react-commons@workspace:packages/commons/react/react-commons"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4595,9 +4634,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/react-query-utils@workspace:*, @fern-ui/react-query-utils@workspace:packages/editor/ui/react-query-utils":
+"@fern-ui/react-query-utils@workspace:*, @fern-ui/react-query-utils@workspace:packages/commons/react/react-query-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/react-query-utils@workspace:packages/editor/ui/react-query-utils"
+  resolution: "@fern-ui/react-query-utils@workspace:packages/commons/react/react-query-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4618,9 +4657,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/routing-utils@workspace:*, @fern-ui/routing-utils@workspace:packages/editor/ui/routing-utils":
+"@fern-ui/routing-utils@workspace:*, @fern-ui/routing-utils@workspace:packages/commons/react/routing-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/routing-utils@workspace:packages/editor/ui/routing-utils"
+  resolution: "@fern-ui/routing-utils@workspace:packages/commons/react/routing-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4643,9 +4682,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/split-view@workspace:*, @fern-ui/split-view@workspace:packages/editor/ui/split-view":
+"@fern-ui/split-view@workspace:*, @fern-ui/split-view@workspace:packages/commons/react/split-view":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/split-view@workspace:packages/editor/ui/split-view"
+  resolution: "@fern-ui/split-view@workspace:packages/commons/react/split-view"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4672,9 +4711,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/theme@workspace:*, @fern-ui/theme@workspace:packages/editor/ui/theme":
+"@fern-ui/theme@workspace:*, @fern-ui/theme@workspace:packages/commons/react/theme":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/theme@workspace:packages/editor/ui/theme"
+  resolution: "@fern-ui/theme@workspace:packages/commons/react/theme"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
@@ -4696,9 +4735,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-ui/toaster@workspace:*, @fern-ui/toaster@workspace:packages/editor/ui/toaster":
+"@fern-ui/toaster@workspace:*, @fern-ui/toaster@workspace:packages/commons/react/toaster":
   version: 0.0.0-use.local
-  resolution: "@fern-ui/toaster@workspace:packages/editor/ui/toaster"
+  resolution: "@fern-ui/toaster@workspace:packages/commons/react/toaster"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
