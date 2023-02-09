@@ -8522,7 +8522,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/generator-exec-client", "npm:0.0.5"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.101"],\
             ["@fern-fern/ir-model", "npm:0.0.914"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9143,13 +9143,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@fern-fern/generator-exec-client", [\
-        ["npm:0.0.5", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-client-npm-0.0.5-91f0112e85-51bad9f8ed.zip/node_modules/@fern-fern/generator-exec-client/",\
+      ["@fern-fern/generator-exec-sdk", [\
+        ["npm:0.0.101", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.101-1d836823b7-aa892abc02.zip/node_modules/@fern-fern/generator-exec-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-exec-client", "npm:0.0.5"],\
-            ["@fern-typescript/service-utils", "npm:0.0.184"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.101"],\
             ["@types/url-join", "npm:4.0.1"],\
+            ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -9235,18 +9235,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-typescript/service-utils", [\
-        ["npm:0.0.184", {\
-          "packageLocation": "./.yarn/cache/@fern-typescript-service-utils-npm-0.0.184-ed1d3cdf6e-173877b5eb.zip/node_modules/@fern-typescript/service-utils/",\
-          "packageDependencies": [\
-            ["@fern-typescript/service-utils", "npm:0.0.184"],\
-            ["axios", "npm:0.27.2"],\
-            ["basic-auth", "npm:2.0.1"],\
-            ["js-base64", "npm:3.7.2"]\
           ],\
           "linkType": "HARD"\
         }]\

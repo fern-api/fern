@@ -29,7 +29,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/generator-exec-client": "0.0.5",
+    "@fern-fern/generator-exec-sdk": "0.0.101",
     "@fern-fern/ir-model": "0.0.914",
     "tmp-promise": "^3.0.3"
   },
