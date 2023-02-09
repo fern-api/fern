@@ -39,23 +39,19 @@ export async function runLocalGenerationForWorkspace({
                         "Cannot generate becuase output location is not local-file-system"
                     );
                 } else {
-                    try {
-                        await writeFilesToDiskAndRunGenerator({
-                            organization,
-                            workspace,
-                            generatorInvocation,
-                            absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
-                            audiences: generatorGroup.audiences,
-                            workspaceTempDir,
-                            keepDocker,
-                            context: interactiveTaskContext,
-                        });
-                        interactiveTaskContext.logger.info(
-                            chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
-                        );
-                    } catch (e) {
-                        interactiveTaskContext.failWithoutThrowing("Failed to generate", e);
-                    }
+                    await writeFilesToDiskAndRunGenerator({
+                        organization,
+                        workspace,
+                        generatorInvocation,
+                        absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+                        audiences: generatorGroup.audiences,
+                        workspaceTempDir,
+                        keepDocker,
+                        context: interactiveTaskContext,
+                    });
+                    interactiveTaskContext.logger.info(
+                        chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
+                    );
                 }
             });
         })

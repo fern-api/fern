@@ -7,7 +7,6 @@
     { "path": "../../commons/fs-utils" },
     { "path": "../../commons/logging-execa" },
     { "path": "../config-management/generators-configuration" },
-    { "path": "../config-management/project-configuration" },
-    { "path": "../generation/ir-generator" }
+    { "path": "../config-management/project-configuration" }
   ]
 }

@@ -29,20 +29,16 @@ export async function runRemoteGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                try {
-                    await runRemoteGenerationForGenerator({
-                        organization,
-                        workspace,
-                        interactiveTaskContext,
-                        generatorInvocation,
-                        version,
-                        audiences: generatorGroup.audiences,
-                        shouldLogS3Url,
-                        token,
-                    });
-                } catch (e) {
-                    interactiveTaskContext.failWithoutThrowing(undefined, e);
-                }
+                await runRemoteGenerationForGenerator({
+                    organization,
+                    workspace,
+                    interactiveTaskContext,
+                    generatorInvocation,
+                    version,
+                    audiences: generatorGroup.audiences,
+                    shouldLogS3Url,
+                    token,
+                });
             })
         )
     );

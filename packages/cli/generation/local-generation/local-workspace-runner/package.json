@@ -33,7 +33,6 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/generator-exec-sdk": "0.0.101",
-    "@fern-fern/ir-model": "0.0.914",
     "chalk": "^5.0.1",
     "tmp-promise": "^3.0.3"
   },
