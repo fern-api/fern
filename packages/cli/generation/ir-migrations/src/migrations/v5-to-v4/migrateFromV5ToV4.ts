@@ -28,6 +28,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.33-9-gf683b5e",
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
         const typeReferenceResolver = new TypeReferenceResolverImpl(v5);

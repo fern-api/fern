@@ -20,6 +20,7 @@ export const V3_TO_V2_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },
     migrateBackwards: (v3): IrVersions.V2.ir.IntermediateRepresentation => {
         const newTypes = [...v3.types];
