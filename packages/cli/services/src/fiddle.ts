@@ -10,9 +10,8 @@ export function getFiddleOrigin(): string {
 }
 
 export function createFiddleService({ token }: { token?: string } = {}): FernFiddleClient {
-    const client = new FernFiddleClient({
+    return new FernFiddleClient({
         environment: FIDDLE_ORIGIN,
         token,
     });
-    const healthResponse = client.definitionRegistry.get();
 }

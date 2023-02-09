@@ -1,9 +1,0 @@
-default-group: external
-groups:
-  external:
-    generators:
-      - name: fernapi/fern-typescript-express
-        version: 0.0.276
-        output:
-          location: local-file-system
-          path: ../../packages/cli/server/src/generated

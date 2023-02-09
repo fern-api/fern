@@ -1,19 +1,20 @@
 import * as ir from "@fern-fern/ir-model";
-import { FernApi } from "../generated";
+import { FernRegistry } from "@fern-fern/registry";
 import { convertTypeReference } from "./convertType";
 import { convertTypeNameToId } from "./convertTypeNameToId";
 
-export function convertService(irService: ir.http.HttpService): FernApi.api.Service {
+export function convertService(irService: ir.http.HttpService): FernRegistry.ServiceDefinition {
     return {
+        name: irService.displayName ?? "My Service",
         endpoints: irService.endpoints.map((endpoint) => convertEndpoint(endpoint)),
     };
 }
 
-function convertEndpoint(irEndpoint: ir.http.HttpEndpoint): FernApi.api.Endpoint {
+function convertEndpoint(irEndpoint: ir.http.HttpEndpoint): FernRegistry.Endpoint {
     return {
         path: {
             parts: [
-                FernApi.api.EndpointPathPart.literal(irEndpoint.path.head),
+                FernRegistry.EndpointPathPart.literal(irEndpoint.path.head),
                 ...irEndpoint.path.parts.flatMap((part) => {
                     const pathParameterDefinition = irEndpoint.pathParameters.find(
                         (pathParameter) => part.pathParameter === pathParameter.name.originalName
@@ -22,11 +23,11 @@ function convertEndpoint(irEndpoint: ir.http.HttpEndpoint): FernApi.api.Endpoint
                         throw new Error("Path parameter does not exist: " + part.pathParameter);
                     }
                     return [
-                        FernApi.api.EndpointPathPart.pathParameter({
+                        FernRegistry.EndpointPathPart.pathParameter({
                             name: part.pathParameter,
                             parameterType: convertTypeReference(pathParameterDefinition.valueType),
                         }),
-                        FernApi.api.EndpointPathPart.literal(part.tail),
+                        FernRegistry.EndpointPathPart.literal(part.tail),
                     ];
                 }),
             ],
@@ -36,15 +37,15 @@ function convertEndpoint(irEndpoint: ir.http.HttpEndpoint): FernApi.api.Endpoint
     };
 }
 
-function convertRequest(irRequestBody: ir.http.HttpRequestBody): FernApi.api.TypeReference {
+function convertRequest(irRequestBody: ir.http.HttpRequestBody): FernRegistry.TypeReference {
     return ir.http.HttpRequestBody._visit(irRequestBody, {
         inlinedRequestBody: (inlinedRequestBody) =>
-            FernApi.api.TypeReference.definition(
-                FernApi.api.TypeDefinition.object({
+            FernRegistry.TypeReference.definition(
+                FernRegistry.TypeDefinition.object({
                     extends: inlinedRequestBody.extends.map((extension) => convertTypeNameToId(extension)),
                     properties: inlinedRequestBody.properties.map((property) => ({
                         key: property.name.wireValue,
-                        value: convertTypeReference(property.valueType),
+                        valueType: convertTypeReference(property.valueType),
                     })),
                 })
             ),

@@ -22,6 +22,7 @@
     { "path": "../cli/openapi-converter" },
     { "path": "../cli/posthog-manager" },
     { "path": "../cli/project-loader" },
+    { "path": "../cli/register" },
     { "path": "../cli/semver-utils" },
     { "path": "../cli/services" },
     { "path": "../cli/task-context" },
@@ -51,6 +52,7 @@
     { "path": "../editor/transaction-resolver" },
     { "path": "../editor/ui/app" },
     { "path": "../editor/ui/fe-bundle" },
-    { "path": "../scripts" }
+    { "path": "../scripts" },
+    { "path": "../ui/fe-bundle" }
   ]
 }
