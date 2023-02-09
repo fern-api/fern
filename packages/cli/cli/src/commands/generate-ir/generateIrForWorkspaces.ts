@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { Language } from "@fern-api/ir-generator";
+import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -16,8 +16,8 @@ export async function generateIrForWorkspaces({
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    generationLanguage: Language | undefined;
-    audiences: string[] | undefined;
+    generationLanguage: GenerationLanguage | undefined;
+    audiences: GeneratorAudiences;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {

@@ -1,7 +1,7 @@
-import { Language } from "../language";
+import { GenerationLanguage } from "@fern-api/generators-configuration";
 
-export const RESERVED_KEYWORDS: Record<Language, Set<string>> = {
-    [Language.TYPESCRIPT]: new Set([
+export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
+    [GenerationLanguage.TYPESCRIPT]: new Set([
         "any",
         "as",
         "boolean",
@@ -65,7 +65,7 @@ export const RESERVED_KEYWORDS: Record<Language, Set<string>> = {
         "Date",
         "Error",
     ]),
-    [Language.JAVA]: new Set([
+    [GenerationLanguage.JAVA]: new Set([
         "abstract",
         "assert",
         "boolean",
@@ -118,7 +118,7 @@ export const RESERVED_KEYWORDS: Record<Language, Set<string>> = {
         "volatile",
         "while",
     ]),
-    [Language.PYTHON]: new Set([
+    [GenerationLanguage.PYTHON]: new Set([
         "False",
         "None",
         "True",

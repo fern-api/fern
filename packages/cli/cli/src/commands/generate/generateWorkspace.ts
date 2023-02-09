@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY } from "@fern-api/generators-configuration";
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { runRemoteGenerationForWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
@@ -7,7 +8,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateFernWorkspaceAndLogIssues } from "../validate/validateFernWorkspaceAndLogIssues";
 
-export async function generateFernWorkspace({
+export async function generateWorkspace({
     workspace,
     organization,
     context,
@@ -15,6 +16,8 @@ export async function generateFernWorkspace({
     version,
     shouldLogS3Url,
     token,
+    useLocalDocker,
+    keepDocker,
 }: {
     workspace: FernWorkspace;
     organization: string;
@@ -23,6 +26,8 @@ export async function generateFernWorkspace({
     groupName: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken;
+    useLocalDocker: boolean;
+    keepDocker: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration.groups.length === 0) {
         context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
@@ -45,13 +50,23 @@ export async function generateFernWorkspace({
 
     await validateFernWorkspaceAndLogIssues(workspace, context);
 
-    await runRemoteGenerationForWorkspace({
-        workspace,
-        organization,
-        context,
-        generatorGroup: group,
-        version,
-        shouldLogS3Url,
-        token,
-    });
+    if (useLocalDocker) {
+        await runLocalGenerationForWorkspace({
+            organization,
+            workspace,
+            generatorGroup: group,
+            keepDocker,
+            context,
+        });
+    } else {
+        await runRemoteGenerationForWorkspace({
+            workspace,
+            organization,
+            context,
+            generatorGroup: group,
+            version,
+            shouldLogS3Url,
+            token,
+        });
+    }
 }

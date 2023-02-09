@@ -5,7 +5,10 @@
   "references": [
     { "path": "../../../../commons/fs-utils" },
     { "path": "../../../config-management/generators-configuration" },
+    { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },
+    { "path": "../../ir-generator" },
+    { "path": "../../ir-migrations" },
     { "path": "../docker-utils" }
   ]
 }

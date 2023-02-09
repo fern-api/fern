@@ -8,7 +8,7 @@ import { FernWorkspace, OpenAPIWorkspace } from "@fern-api/workspace-loader";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { CliContext } from "../../cli-context/CliContext";
-import { generateFernWorkspace } from "./generateFernWorkspace";
+import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({
     project,
@@ -16,12 +16,16 @@ export async function generateWorkspaces({
     version,
     groupName,
     shouldLogS3Url,
+    keepDocker,
+    useLocalDocker,
 }: {
     project: Project;
     cliContext: CliContext;
     version: string | undefined;
     groupName: string | undefined;
     shouldLogS3Url: boolean;
+    useLocalDocker: boolean;
+    keepDocker: boolean;
 }): Promise<void> {
     const token = await cliContext.runTask(async (context) => {
         return askToLogin(context);
@@ -70,7 +74,7 @@ export async function generateWorkspaces({
                         ? workspace
                         : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
 
-                await generateFernWorkspace({
+                await generateWorkspace({
                     workspace: fernWorkspace,
                     organization: project.config.organization,
                     context,
@@ -78,6 +82,8 @@ export async function generateWorkspaces({
                     groupName,
                     shouldLogS3Url,
                     token,
+                    useLocalDocker,
+                    keepDocker,
                 });
             });
         })

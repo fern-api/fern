@@ -1,8 +1,11 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { GeneratorInvocation } from "@fern-api/generators-configuration";
-import { Workspace } from "@fern-api/workspace-loader";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { mkdir, rm, writeFile } from "fs/promises";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
+import { GeneratorAudiences, GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
+import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import chalk from "chalk";
+import { mkdir, rm } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -11,13 +14,15 @@ import { runGenerator } from "./run-generator/runGenerator";
 export async function runLocalGenerationForWorkspace({
     organization,
     workspace,
-    intermediateRepresentation,
+    generatorGroup,
     keepDocker,
+    context,
 }: {
     organization: string;
-    workspace: Workspace;
-    intermediateRepresentation: IntermediateRepresentation;
+    workspace: FernWorkspace;
+    generatorGroup: GeneratorGroup;
     keepDocker: boolean;
+    context: TaskContext;
 }): Promise<void> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -26,53 +31,81 @@ export async function runLocalGenerationForWorkspace({
         prefix: "fern",
     });
 
-    const absolutePathToIr = join(AbsoluteFilePath.of(workspaceTempDir.path), "ir.json");
-    await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation));
-
-    await Promise.all(
-        workspace.generatorsConfiguration.groups.flatMap(async (group) =>
-            group.generators.map((generatorInvocation) =>
-                loadHelpersAndRunGenerator({
-                    organization,
-                    workspace,
-                    generatorInvocation,
-                    workspaceTempDir,
-                    absolutePathToIr,
-                    keepDocker,
-                })
-            )
-        )
+    const results = await Promise.all(
+        generatorGroup.generators.map(async (generatorInvocation) => {
+            return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                if (generatorInvocation.absolutePathToLocalOutput == null) {
+                    interactiveTaskContext.failWithoutThrowing(
+                        "Cannot generate becuase output location is not local-file-system"
+                    );
+                } else {
+                    try {
+                        await writeFilesToDiskAndRunGenerator({
+                            organization,
+                            workspace,
+                            generatorInvocation,
+                            absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+                            audiences: generatorGroup.audiences,
+                            workspaceTempDir,
+                            keepDocker,
+                            context: interactiveTaskContext,
+                        });
+                        interactiveTaskContext.logger.info(
+                            chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
+                        );
+                    } catch (e) {
+                        interactiveTaskContext.failWithoutThrowing("Failed to generate", e);
+                    }
+                }
+            });
+        })
     );
+
+    if (results.some((didSucceed) => !didSucceed)) {
+        context.failAndThrow();
+    }
 }
 
-async function loadHelpersAndRunGenerator({
+async function writeFilesToDiskAndRunGenerator({
     organization,
     workspace,
     generatorInvocation,
+    absolutePathToLocalOutput,
+    audiences,
     workspaceTempDir,
-    absolutePathToIr,
     keepDocker,
+    context,
 }: {
     organization: string;
-    workspace: Workspace;
+    workspace: FernWorkspace;
+    audiences: GeneratorAudiences;
     generatorInvocation: GeneratorInvocation;
+    absolutePathToLocalOutput: AbsoluteFilePath;
     workspaceTempDir: DirectoryResult;
-    absolutePathToIr: AbsoluteFilePath;
     keepDocker: boolean;
+    context: TaskContext;
 }): Promise<void> {
-    const configJson = await tmp.file({
+    const absolutePathToIr = await writeIrToFile({
+        workspace,
+        audiences,
+        generatorInvocation,
+        workspaceTempDir,
+        context,
+    });
+    context.logger.debug("Wrote IR to: " + absolutePathToIr);
+
+    const configJsonFile = await tmp.file({
         tmpdir: workspaceTempDir.path,
     });
-    const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJson.path);
+    const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJsonFile.path);
+    context.logger.debug("Will write config.json to: " + absolutePathToWriteConfigJson);
 
-    if (generatorInvocation.absolutePathToLocalOutput != null) {
-        await rm(generatorInvocation.absolutePathToLocalOutput, { force: true, recursive: true });
-        await mkdir(generatorInvocation.absolutePathToLocalOutput, { recursive: true });
-    }
+    await rm(absolutePathToLocalOutput, { force: true, recursive: true });
+    await mkdir(absolutePathToLocalOutput, { recursive: true });
 
     await runGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
-        absolutePathToOutput: generatorInvocation.absolutePathToLocalOutput,
+        absolutePathToOutput: absolutePathToLocalOutput,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         customConfig: generatorInvocation.config,
@@ -80,4 +113,41 @@ async function loadHelpersAndRunGenerator({
         organization,
         keepDocker,
     });
+}
+
+async function writeIrToFile({
+    workspace,
+    audiences,
+    generatorInvocation,
+    workspaceTempDir,
+    context,
+}: {
+    workspace: FernWorkspace;
+    audiences: GeneratorAudiences;
+    generatorInvocation: GeneratorInvocation;
+    workspaceTempDir: DirectoryResult;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath> {
+    const intermediateRepresentation = await generateIntermediateRepresentation({
+        workspace,
+        audiences,
+        generationLanguage: generatorInvocation.language,
+    });
+    const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
+        intermediateRepresentation,
+        context: {
+            taskContext: context,
+            targetGenerator: {
+                name: generatorInvocation.name,
+                version: generatorInvocation.version,
+            },
+        },
+    });
+
+    const irFile = await tmp.file({
+        tmpdir: workspaceTempDir.path,
+    });
+    const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
+    await streamObjectToFile(absolutePathToIr, migratedIntermediateRepresentation, { pretty: true });
+    return absolutePathToIr;
 }

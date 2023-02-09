@@ -1,26 +1,26 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
-import { Language } from "../language";
 
 const FIXTURES: Fixture[] = [
     {
         name: "audiences",
         generationLanguage: undefined,
-        audiences: ["public"],
+        audiences: { type: "select", audiences: ["public"] },
     },
     {
         name: "packages",
         generationLanguage: undefined,
-        audiences: undefined,
+        audiences: { type: "all" },
     },
 ];
 
 interface Fixture {
     name: string;
-    generationLanguage: Language | undefined;
-    audiences: string[] | undefined;
+    generationLanguage: GenerationLanguage | undefined;
+    audiences: GeneratorAudiences;
 }
 
 describe("generateIntermediateRepresentation", () => {

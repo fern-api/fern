@@ -12,7 +12,7 @@ export declare namespace runGenerator {
         organization: string;
 
         absolutePathToIr: AbsoluteFilePath;
-        absolutePathToOutput: AbsoluteFilePath | undefined;
+        absolutePathToOutput: AbsoluteFilePath;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
@@ -32,11 +32,8 @@ export async function runGenerator({
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
+        `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`,
     ];
-
-    if (absolutePathToOutput != null) {
-        binds.push(`${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`);
-    }
 
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         customConfig,

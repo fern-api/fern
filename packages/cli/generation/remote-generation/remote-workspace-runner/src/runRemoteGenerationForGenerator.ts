@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { GeneratorAudiences, GeneratorInvocation } from "@fern-api/generators-configuration";
-import { generateIntermediateRepresentation, Language } from "@fern-api/ir-generator";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { createAndStartJob } from "./createAndStartJob";
@@ -28,8 +28,8 @@ export async function runRemoteGenerationForGenerator({
 }): Promise<void> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
-        generationLanguage: getLanguageFromGeneratorName(generatorInvocation.name),
-        audiences: audiences.type === "all" ? undefined : audiences.audiences,
+        generationLanguage: generatorInvocation.language,
+        audiences,
     });
 
     const job = await createAndStartJob({
@@ -64,17 +64,4 @@ export async function runRemoteGenerationForGenerator({
         taskId,
         context: interactiveTaskContext,
     });
-}
-
-function getLanguageFromGeneratorName(generatorName: string) {
-    if (generatorName.includes("typescript")) {
-        return Language.TYPESCRIPT;
-    }
-    if (generatorName.includes("java") || generatorName.includes("spring")) {
-        return Language.JAVA;
-    }
-    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
-        return Language.PYTHON;
-    }
-    return undefined;
 }
