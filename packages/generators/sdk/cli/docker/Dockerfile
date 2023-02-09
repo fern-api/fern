@@ -1,5 +1,7 @@
 FROM node:18.1.0-alpine
 
+ENV YARN_ENABLE_GLOBAL_CACHE=true
+
 COPY packages/generators/sdk/cli/docker/cache_heavy_dependencies.sh /
 RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
 

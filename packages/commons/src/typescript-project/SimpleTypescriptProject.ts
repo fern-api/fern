@@ -77,6 +77,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private async generateTsConfig(): Promise<void> {
         const compilerOptions: CompilerOptions = {
+            extendedDiagnostics: true,
             strict: true,
             target: "esnext" as unknown as ScriptTarget,
             module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
