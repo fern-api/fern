@@ -274,20 +274,23 @@ export class OpenApiV3Context {
                 }
             }
 
-            const successResponse =
-                endpoint.definition.responses[TWO_HUNDRED_RESPONSE] ??
-                endpoint.definition.responses[TWO_HUNDRED_AND_ONE_RESPONSE];
-            if (successResponse != null) {
-                if (isReferenceObject(successResponse)) {
-                    this.referenceObjectToTags.add(successResponse, tag);
-                    this.addAllReferencedSchemas(successResponse, referencedSchemas);
-                } else if (successResponse.content != null) {
-                    const schema = successResponse.content[APPLICATION_JSON_CONTENT]?.schema;
-                    if (schema != null) {
-                        if (isReferenceObject(schema)) {
-                            this.referenceObjectToTags.add(schema, tag);
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (endpoint.definition.responses != null) {
+                const successResponse =
+                    endpoint.definition.responses[TWO_HUNDRED_RESPONSE] ??
+                    endpoint.definition.responses[TWO_HUNDRED_AND_ONE_RESPONSE];
+                if (successResponse != null) {
+                    if (isReferenceObject(successResponse)) {
+                        this.referenceObjectToTags.add(successResponse, tag);
+                        this.addAllReferencedSchemas(successResponse, referencedSchemas);
+                    } else if (successResponse.content != null) {
+                        const schema = successResponse.content[APPLICATION_JSON_CONTENT]?.schema;
+                        if (schema != null) {
+                            if (isReferenceObject(schema)) {
+                                this.referenceObjectToTags.add(schema, tag);
+                            }
+                            this.addAllReferencedSchemas(schema, referencedSchemas);
                         }
-                        this.addAllReferencedSchemas(schema, referencedSchemas);
                     }
                 }
             }
