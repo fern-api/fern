@@ -4,4 +4,5 @@ export interface SdkCustomConfig {
     neverThrowErrors: boolean;
     namespaceExport: string | undefined;
     outputEsm: boolean;
+    includeCredentialsOnCrossOriginRequests: boolean;
 }

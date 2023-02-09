@@ -62,5 +62,6 @@ export declare namespace Fetcher {
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
         timeoutMs: ts.Expression | undefined;
+        withCredentials: boolean;
     }
 }

@@ -25,6 +25,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             queryParameters: "queryParameters",
             body: "body",
             timeoutMs: "timeoutMs",
+            withCredentials: "withCredentials",
         },
         Error: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Error"),
@@ -74,6 +75,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             }
             if (args.timeoutMs != null) {
                 properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.timeoutMs, args.timeoutMs));
+            }
+            if (args.withCredentials) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.withCredentials, ts.factory.createTrue())
+                );
             }
 
             return ts.factory.createAwaitExpression(

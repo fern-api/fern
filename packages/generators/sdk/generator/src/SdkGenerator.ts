@@ -69,6 +69,7 @@ export declare namespace SdkGenerator {
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
         neverThrowErrors: boolean;
+        includeCredentialsOnCrossOriginRequests: boolean;
         aliasOfRoot: string | undefined;
         outputEsm: boolean;
     }
@@ -232,6 +233,7 @@ export class SdkGenerator {
             intermediateRepresentation: this.intermediateRepresentation,
             errorResolver: this.errorResolver,
             neverThrowErrors: config.neverThrowErrors,
+            includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

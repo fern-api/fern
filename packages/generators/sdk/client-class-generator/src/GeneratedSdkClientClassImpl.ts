@@ -20,6 +20,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         neverThrowErrors: boolean;
+        includeCredentialsOnCrossOriginRequests: boolean;
     }
 }
 
@@ -47,6 +48,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         errorResolver,
         errorDiscriminationStrategy,
         neverThrowErrors,
+        includeCredentialsOnCrossOriginRequests,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -64,6 +66,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           generatedSdkClientClass: this,
                           errorResolver,
                           errorDiscriminationStrategy,
+                          includeCredentialsOnCrossOriginRequests,
                       })
                     : new GeneratedThrowingEndpointImplementation({
                           endpoint,
@@ -71,6 +74,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                           generatedSdkClientClass: this,
                           errorResolver,
                           errorDiscriminationStrategy,
+                          includeCredentialsOnCrossOriginRequests,
                       })
             );
         }

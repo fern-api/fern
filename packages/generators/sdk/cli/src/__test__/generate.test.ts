@@ -26,6 +26,7 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             useBrandedStringAliases: true,
             neverThrowErrors: true,
+            includeCredentialsOnCrossOriginRequests: true,
         },
     },
     {

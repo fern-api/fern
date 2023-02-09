@@ -9,6 +9,7 @@ export declare namespace SdkClientClassGenerator {
         intermediateRepresentation: IntermediateRepresentation;
         errorResolver: ErrorResolver;
         neverThrowErrors: boolean;
+        includeCredentialsOnCrossOriginRequests: boolean;
     }
 
     export namespace generateService {
@@ -23,11 +24,18 @@ export class SdkClientClassGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private errorResolver: ErrorResolver;
     private neverThrowErrors: boolean;
+    private includeCredentialsOnCrossOriginRequests: boolean;
 
-    constructor({ intermediateRepresentation, errorResolver, neverThrowErrors }: SdkClientClassGenerator.Init) {
+    constructor({
+        intermediateRepresentation,
+        errorResolver,
+        neverThrowErrors,
+        includeCredentialsOnCrossOriginRequests,
+    }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
         this.neverThrowErrors = neverThrowErrors;
+        this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
     }
 
     public generateService({
@@ -42,6 +50,7 @@ export class SdkClientClassGenerator {
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             errorResolver: this.errorResolver,
             neverThrowErrors: this.neverThrowErrors,
+            includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
         });
     }
 }

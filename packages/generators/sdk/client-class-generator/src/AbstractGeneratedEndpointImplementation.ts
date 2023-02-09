@@ -32,6 +32,7 @@ export declare namespace AbstractGeneratedEndpointImplementation {
         service: HttpService;
         endpoint: HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
+        includeCredentialsOnCrossOriginRequests: boolean;
     }
 }
 
@@ -44,11 +45,18 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     protected endpoint: HttpEndpoint;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private requestParameter: RequestParameter | undefined;
+    private includeCredentialsOnCrossOriginRequests: boolean;
 
-    constructor({ service, endpoint, generatedSdkClientClass }: AbstractGeneratedEndpointImplementation.Init) {
+    constructor({
+        service,
+        endpoint,
+        generatedSdkClientClass,
+        includeCredentialsOnCrossOriginRequests,
+    }: AbstractGeneratedEndpointImplementation.Init) {
         this.service = service;
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
+        this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
 
         const sdkRequest = this.endpoint.sdkRequest;
         this.requestParameter =
@@ -185,6 +193,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             queryParameters: urlSearchParamsVariable,
             body: this.getSerializedRequestBody(context),
             timeoutMs: undefined,
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
         };
 
         statements.push({

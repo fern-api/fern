@@ -2064,6 +2064,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        withCredentials?: boolean;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -2116,7 +2117,7 @@ export const fetcher: FetchFunction = async (args) => {
             transitional: {
                 clarifyTimeoutError: true,
             },
-            withCredentials: true,
+            withCredentials: args.withCredentials,
         });
 
         let body: unknown;
@@ -6973,6 +6974,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        withCredentials?: boolean;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -7025,7 +7027,7 @@ export const fetcher: FetchFunction = async (args) => {
             transitional: {
                 clarifyTimeoutError: true,
             },
-            withCredentials: true,
+            withCredentials: args.withCredentials,
         });
 
         let body: unknown;
@@ -11070,6 +11072,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        withCredentials?: boolean;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -11122,7 +11125,7 @@ export const fetcher: FetchFunction = async (args) => {
             transitional: {
                 clarifyTimeoutError: true,
             },
-            withCredentials: true,
+            withCredentials: args.withCredentials,
         });
 
         let body: unknown;
@@ -16496,6 +16499,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.TestSubmissionStatus.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16524,6 +16528,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.TestSubmissionUpdate.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16552,6 +16557,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.WorkspaceSubmissionStatus.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16582,6 +16588,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16624,6 +16631,7 @@ export class Client {
             },
             queryParameters: _queryParams,
             body: await serializers.StoreTracedTestCaseRequest.jsonOrThrow(_body),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16655,6 +16663,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16683,6 +16692,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -16711,6 +16721,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -18605,6 +18616,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -18632,6 +18644,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -18885,6 +18898,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -19088,6 +19102,7 @@ export class Client {
             },
             queryParameters: _queryParams,
             body: await serializers.PlaylistCreateRequest.jsonOrThrow(_body),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -19128,6 +19143,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             queryParameters: _queryParams,
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -19169,6 +19185,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             queryParameters: _queryParams,
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -19217,6 +19234,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.playlist.updatePlaylist.Request.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -19263,6 +19281,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20038,6 +20057,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.CreateProblemRequest.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20072,6 +20092,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.CreateProblemRequest.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20104,6 +20125,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20136,6 +20158,7 @@ export class Client {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
             body: await serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request),
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20928,6 +20951,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20959,6 +20983,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -20991,6 +21016,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -21017,6 +21043,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -24547,6 +24574,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -24573,6 +24601,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -24828,6 +24857,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -24860,6 +24890,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -24892,6 +24923,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -24927,6 +24959,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -26475,6 +26508,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -26507,6 +26541,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -26539,6 +26574,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -26574,6 +26610,7 @@ export class Client {
             headers: {
                 Authorization: core.BearerToken.toAuthorizationHeader(await core.Supplier.get(this.options.token)),
             },
+            withCredentials: true,
         });
         if (_response.ok) {
             return {
@@ -28155,6 +28192,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        withCredentials?: boolean;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -28207,7 +28245,7 @@ export const fetcher: FetchFunction = async (args) => {
             transitional: {
                 clarifyTimeoutError: true,
             },
-            withCredentials: true,
+            withCredentials: args.withCredentials,
         });
 
         let body: unknown;
