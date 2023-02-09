@@ -1,7 +1,7 @@
 import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { initialize } from "@fern-api/init";
-import { Language } from "@fern-api/ir-generator";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import {
@@ -241,6 +241,16 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     hidden: true,
                     default: false,
+                })
+                .option("local", {
+                    boolean: true,
+                    hidden: true,
+                    default: false,
+                })
+                .option("keepDocker", {
+                    boolean: true,
+                    hidden: true,
+                    default: false,
                 }),
         async (argv) => {
             await generateWorkspaces({
@@ -252,6 +262,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 version: argv.version,
                 groupName: argv.group,
                 shouldLogS3Url: argv.printZipUrl,
+                keepDocker: argv.keepDocker,
+                useLocalDocker: argv.local,
             });
         }
     );
@@ -273,12 +285,13 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Only run the command on the provided API",
                 })
                 .option("language", {
-                    choices: Object.values(Language),
+                    choices: Object.values(GenerationLanguage),
                     description: "Generate ir for a particular language",
                 })
                 .option("audience", {
                     type: "array",
                     string: true,
+                    default: new Array<string>(),
                     description: "Filter the ir for certain audiences",
                 }),
         async (argv) => {
@@ -290,7 +303,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
                 generationLanguage: argv.language,
-                audiences: argv.audience,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
             });
         }
     );

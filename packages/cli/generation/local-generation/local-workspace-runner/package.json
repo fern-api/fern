@@ -28,9 +28,12 @@
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/ir-migrations": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/generator-exec-client": "0.0.5",
-    "@fern-fern/ir-model": "0.0.914",
+    "@fern-fern/generator-exec-sdk": "0.0.101",
+    "chalk": "^5.0.1",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {

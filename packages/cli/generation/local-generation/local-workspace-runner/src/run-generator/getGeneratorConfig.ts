@@ -1,4 +1,4 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
 
 export declare namespace getGeneratorConfig {
@@ -9,7 +9,7 @@ export declare namespace getGeneratorConfig {
     }
 
     export interface Return {
-        config: GeneratorConfig;
+        config: FernGeneratorExec.GeneratorConfig;
         binds: string[];
     }
 }
@@ -25,12 +25,16 @@ export function getGeneratorConfig({
         binds,
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
-            output: { path: DOCKER_CODEGEN_OUTPUT_DIRECTORY },
-            publish: null,
+            output: {
+                mode: FernGeneratorExec.OutputMode.downloadFiles(),
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+            },
+            publish: undefined,
             customConfig,
             workspaceName,
             organization,
-            environment: { _type: "local" },
+            environment: FernGeneratorExec.GeneratorEnvironment.local(),
+            dryRun: false,
         },
     };
 }

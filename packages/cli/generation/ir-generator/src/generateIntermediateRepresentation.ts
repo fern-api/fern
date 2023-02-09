@@ -1,4 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -13,7 +14,6 @@ import { convertHttpHeader, convertHttpService } from "./converters/services/con
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
-import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -24,12 +24,12 @@ export async function generateIntermediateRepresentation({
     audiences,
 }: {
     workspace: FernWorkspace;
-    generationLanguage: Language | undefined;
-    audiences: string[] | undefined;
+    generationLanguage: GenerationLanguage | undefined;
+    audiences: GeneratorAudiences;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
 
-    const audienceIrGraph = audiences != null ? new AudienceIrGraph(audiences) : undefined;
+    const audienceIrGraph = audiences.type !== "all" ? new AudienceIrGraph(audiences.audiences) : undefined;
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",

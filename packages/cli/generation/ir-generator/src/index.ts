@@ -14,7 +14,6 @@ export {
 } from "./converters/type-declarations/convertUnionTypeDeclaration";
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
-export { Language } from "./language";
 export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";

@@ -1,3 +1,4 @@
+import { Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
@@ -32,4 +33,13 @@ export interface GeneratorInvocation {
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    language: GenerationLanguage | undefined;
 }
+
+export const GenerationLanguage = {
+    TYPESCRIPT: "typescript",
+    JAVA: "java",
+    PYTHON: "python",
+} as const;
+
+export type GenerationLanguage = Values<typeof GenerationLanguage>;
