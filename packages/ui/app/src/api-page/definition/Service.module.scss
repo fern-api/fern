@@ -1,0 +1,25 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.endpointContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.endpoint {
+    display: flex;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+.divider {
+    height: 1px;
+    background-color: orange;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}

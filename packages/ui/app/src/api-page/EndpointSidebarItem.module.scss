@@ -1,0 +1,9 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+
+    &.isFocused {
+        color: red;
+    }
+}

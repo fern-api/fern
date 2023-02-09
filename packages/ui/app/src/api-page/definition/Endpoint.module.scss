@@ -1,0 +1,32 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    flex: 1;
+    display: flex;
+}
+
+.definition {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.property {
+    margin: 20px;
+}
+
+.examples {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    padding-top: 30px;
+}
+
+.example {
+    background-color: blue;
+    border-radius: 6px;
+}

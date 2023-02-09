@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@fern-fern/ir-model": "0.0.914",
-    "@fern-fern/registry": "0.0.4"
+    "@fern-fern/registry": "0.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
