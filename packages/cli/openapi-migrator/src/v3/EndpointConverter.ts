@@ -86,7 +86,12 @@ export class EndpointConverter {
             this.endpoint.definition.requestBody != null
                 ? this.convertRequestBody(this.endpoint.definition.requestBody)
                 : undefined;
-        const successResponse = this.endpoint.definition.responses[TWO_HUNDRED_STATUS_CODE];
+
+        const successResponse =
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            this.endpoint.definition.responses != null
+                ? this.endpoint.definition.responses[TWO_HUNDRED_STATUS_CODE]
+                : undefined;
         const responseBody = successResponse != null ? this.convertResponseBody(successResponse) : undefined;
         this.additionalTypeDeclarations = {
             ...this.additionalTypeDeclarations,
