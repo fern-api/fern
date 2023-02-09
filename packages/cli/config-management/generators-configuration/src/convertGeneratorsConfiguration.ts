@@ -107,6 +107,15 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
                     workspaceId: generator.output["workspace-id"],
                 })
             );
+        case "pypi":
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
+                    registryUrl: generator.output.url ?? "",
+                    username: generator.output.username ?? "",
+                    password: generator.output.password ?? "",
+                    coordinate: generator.output["package-name"],
+                })
+            );
         default:
             assertNever(generator.output);
     }
@@ -138,6 +147,15 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             return FernFiddle.GithubPublishInfo.postman({
                 apiKey: output["api-key"],
                 workspaceId: output["workspace-id"],
+            });
+        case "pypi":
+            return FernFiddle.GithubPublishInfo.pypi({
+                registryUrl: output.url ?? "",
+                packageName: output["package-name"],
+                credentials: {
+                    username: output.username ?? "",
+                    password: output.password ?? "",
+                },
             });
         default:
             assertNever(output);
