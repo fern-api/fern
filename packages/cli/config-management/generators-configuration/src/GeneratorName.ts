@@ -9,6 +9,7 @@ export const GeneratorName = {
     PYTHON_PYDANTIC: "fernapi/fern-pydantic-model",
     OPENAPI: "fernapi/fern-openapi",
     POSTMAN: "fernapi/fern-postman",
+    OPENAPI_PYTHON_CLIENT: "fernapi/openapi-python-client",
 } as const;
 
 export type GeneratorName = typeof GeneratorName[keyof typeof GeneratorName];

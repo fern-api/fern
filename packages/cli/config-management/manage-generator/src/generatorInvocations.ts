@@ -38,4 +38,14 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.POSTMAN]: {
         version: "0.0.25",
     },
+    [GeneratorName.OPENAPI_PYTHON_CLIENT]: {
+        version: "0.0.11",
+        output: {
+            location: "local-file-system",
+            path: "../../generated/python",
+        },
+        config: {
+            format: "yaml",
+        },
+    },
 };
