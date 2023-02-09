@@ -26,8 +26,9 @@ class ModuleManager:
 
     _module_infos: DefaultDict[AST.ModulePath, ModuleInfo]
 
-    def __init__(self) -> None:
+    def __init__(self, *, should_format: bool) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
+        self._should_format = should_format
 
     def register_exports(self, filepath: Filepath, exports: Set[str]) -> None:
         module_being_exported_from: AST.ModulePath = tuple(
@@ -65,7 +66,9 @@ class ModuleManager:
 
     def write_modules(self, filepath: str) -> None:
         for module, module_info in self._module_infos.items():
-            with WriterImpl(filepath=os.path.join(filepath, *module, "__init__.py")) as writer:
+            with WriterImpl(
+                filepath=os.path.join(filepath, *module, "__init__.py"), should_format=self._should_format
+            ) as writer:
                 all_exports: Set[str] = set()
                 for exported_from, exports in module_info.exports.items():
                     if len(exports) > 0:

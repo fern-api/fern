@@ -51,11 +51,13 @@ class SourceFile(ClassParent):
 class SourceFileImpl(SourceFile):
     def __init__(
         self,
+        *,
         filepath: str,
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
         dependency_manager: DependencyManager,
         completion_listener: Callable[[SourceFileImpl], None] = None,
+        should_format: bool,
     ):
         self._filepath = filepath
         self._module_path = module_path
@@ -66,6 +68,7 @@ class SourceFileImpl(SourceFile):
         self._exports: Set[str] = set()
         self._footer_statements: List[TopLevelStatement] = []
         self._dependency_manager = dependency_manager
+        self._should_format = should_format
 
     def add_declaration(
         self,
@@ -120,7 +123,11 @@ class SourceFileImpl(SourceFile):
 
     def finish(self) -> None:
         self._prepare_for_writing()
-        with NodeWriterImpl(filepath=self._filepath, reference_resolver=self._reference_resolver) as writer:
+        with NodeWriterImpl(
+            filepath=self._filepath,
+            reference_resolver=self._reference_resolver,
+            should_format=self._should_format,
+        ) as writer:
             self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
             for statement in self._statements:
                 self._imports_manager.write_top_imports_for_statement(

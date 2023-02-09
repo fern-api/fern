@@ -30,6 +30,7 @@ class AbstractGenerator(ABC):
             filepath=generator_config.output.path,
             project_name=generator_config.organization,
             publish_config=project_publish_config,
+            should_format_files=self.should_format_files(generator_config=generator_config),
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=generator_config, project=project
@@ -65,4 +66,12 @@ class AbstractGenerator(ABC):
         generator_config: GeneratorConfig,
         project: Project,
     ) -> None:
+        ...
+
+    @abstractmethod
+    def should_format_files(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
         ...

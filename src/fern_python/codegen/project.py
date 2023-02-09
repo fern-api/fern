@@ -29,20 +29,23 @@ class Project:
 
     def __init__(
         self,
+        *,
         filepath: str,
         project_name: str,
         python_version: str = "3.7",
         publish_config: PublishConfig = None,
         generate_py_typed: bool = False,
+        should_format_files: bool,
     ) -> None:
         self._project_filepath = filepath if publish_config is None else os.path.join(filepath, "src", project_name)
         self._root_filepath = filepath
         self._project_name = project_name
         self._publish_config = publish_config
-        self._module_manager = ModuleManager()
+        self._module_manager = ModuleManager(should_format=should_format_files)
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._generate_py_typed = generate_py_typed
+        self._should_format_files = should_format_files
 
     def source_file(self, filepath: Filepath) -> SourceFile:
         """
@@ -65,6 +68,7 @@ class Project:
                 module_path_of_source_file=module.path,
             ),
             dependency_manager=self._dependency_manager,
+            should_format=self._should_format_files,
         )
         return source_file
 
@@ -73,7 +77,10 @@ class Project:
 
     def add_source_file_from_disk(self, *, path_on_disk: str, filepath_in_project: Filepath, exports: Set[str]) -> None:
         with open(path_on_disk, "r") as existing_file:
-            with WriterImpl(self._get_source_file_filepath(filepath_in_project)) as writer:
+            with WriterImpl(
+                filepath=self._get_source_file_filepath(filepath_in_project),
+                should_format=self._should_format_files,
+            ) as writer:
                 writer.write(existing_file.read())
         self._module_manager.register_exports(
             filepath=filepath_in_project,

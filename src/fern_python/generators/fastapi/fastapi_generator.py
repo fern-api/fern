@@ -21,6 +21,14 @@ from .service_generator import ServiceGenerator
 
 
 class FastApiGenerator(AbstractGenerator):
+    def should_format_files(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
+        return custom_config.skip_formatting is None or not custom_config.skip_formatting
+
     def run(
         self,
         *,
@@ -34,6 +42,7 @@ class FastApiGenerator(AbstractGenerator):
             forbid_extra_fields=True,
             wrapped_aliases=True,
             include_validators=custom_config.include_validators,
+            skip_formatting=custom_config.skip_formatting,
         )
 
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)
