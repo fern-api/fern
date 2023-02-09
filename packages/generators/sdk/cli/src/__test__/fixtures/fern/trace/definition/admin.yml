@@ -2,7 +2,8 @@ imports:
   submission: submission.yml
   problemV2: v2/problem.yml
 
-types: {}
+types:
+  OptionalString: optional<string>
 
 service:
   auth: false
@@ -53,6 +54,7 @@ service:
         name: StoreTracedTestCaseRequest
         query-parameters:
           some-query-param: optional<string>
+          reference-to-optional-string: OptionalString
         body:
           properties:
             result: submission.TestCaseResultWithStdout

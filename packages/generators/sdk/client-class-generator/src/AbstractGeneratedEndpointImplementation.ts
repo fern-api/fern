@@ -142,14 +142,6 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                     statements.push(
                         ...this.requestParameter
                             .withQueryParameter(queryParameter, context, (referenceToQueryParameter) => {
-                                if (queryParameter.valueType._type === "named") {
-                                    referenceToQueryParameter = context.typeSchema
-                                        .getSchemaOfNamedType(queryParameter.valueType, {
-                                            isGeneratingSchema: false,
-                                        })
-                                        .jsonOrThrow(referenceToQueryParameter);
-                                }
-
                                 return [
                                     ts.factory.createExpressionStatement(
                                         ts.factory.createCallExpression(
