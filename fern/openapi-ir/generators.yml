@@ -1,0 +1,6 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.279

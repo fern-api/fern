@@ -3923,6 +3923,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
+    "@fern-fern/openapi-ir-sdk": ^0.0.4
     "@stoplight/spectral-core": ^1.16.1
     "@stoplight/spectral-functions": ^1.7.2
     "@stoplight/spectral-parsers": ^1.0.2
@@ -4429,6 +4430,13 @@ __metadata:
   version: 0.0.2
   resolution: "@fern-fern/ir-v7-model@npm:0.0.2"
   checksum: c9ed010788fdd9cbaf5ba0017ec480bfa8bf6a9896194ff70b2ca92082ea5201d177119b7a9839210c166cfa7ff9cb782985a03cac5d56a55b8e3bc158d32685
+  languageName: node
+  linkType: hard
+
+"@fern-fern/openapi-ir-sdk@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@fern-fern/openapi-ir-sdk@npm:0.0.4"
+  checksum: 5d7ff3652baa778007c51ea6153e083a45692bec4627caa164c4197166300870fe3964dcac2e4068556d7b619f71d5014cab7a7c96c51ba554517a98e2fd0ec9
   languageName: node
   linkType: hard
 

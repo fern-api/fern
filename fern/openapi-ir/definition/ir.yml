@@ -1,0 +1,128 @@
+types: 
+  IntermediateRepresentation: 
+    properties: 
+      displayName: optional<string>
+      environments: list<Environment>
+      endpoints: list<Endpoint>
+      schemas: map<SchemaId, Schema>
+      schemasToTags:
+        type: map<SchemaId, list<TagId>>
+        docs: Which schemas are referenced by which tags
+
+  WithDescription: 
+    properties: 
+      description: optional<string>
+
+  Environment: 
+    extends: WithDescription
+    properties: 
+      name: optional<string>
+      url: string
+
+  TagId: 
+    type: string
+    docs: The name of the tag.
+  
+  TagInfo: 
+    properties: 
+      description: string
+      displayName: optional<string>
+
+  SchemaId: 
+    type: string
+    docs: The name of the schema.
+
+  Endpoint: 
+    properties: 
+      operationId: optional<string>
+      tags: list<TagId>
+      summary: optional<string>
+      method: HttpMethod
+      path: string
+      requestName: optional<string>
+      request: optional<Request>
+      response: optional<Schema>
+
+  Request: 
+    properties:   
+      pathParameters: list<PathParameter>
+      queryParameters: list<QueryParameter>
+      headers: list<Header>
+      requestBody: optional<Schema>
+
+  PathParameter: 
+    extends: WithDescription
+    properties: 
+      name: string
+
+  QueryParameter:   
+    extends: WithDescription
+    properties: 
+      name: string
+
+  Header: 
+    extends: WithDescription
+    properties: 
+      name: string
+
+  HttpMethod: 
+    enum: 
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+
+  Schema:
+    union: 
+      primitive: PrimitiveSchema
+      object: ObjectSchema
+      container: ContainerSchema
+      reference: SchemaId
+
+  EnumSchema: 
+    extends: WithDescription
+    properties: 
+      values: list<EnumValue>
+
+  EnumValue: 
+    properties: 
+      name: 
+        type: optional<string>
+        docs: Name suitable for code generation.
+      value: 
+        type: string
+        docs: Value of the enum
+      
+  ObjectSchema: 
+    extends: WithDescription
+    properties: 
+      allOfReferences: list<SchemaId>
+      allOfInlined: list<ObjectSchema>
+      properties: list<ObjectProperty>
+
+  ObjectProperty: 
+    extends: WithDescription
+    properties: 
+      key: string
+      schema: Schema
+
+  PrimitiveSchema: 
+    union: 
+      int32: {}
+      int64: {}
+      float: {}
+      string: {}
+
+  ContainerSchema: 
+    union: 
+      array: ArraySchema
+      optional: OptionalSchema
+
+  ArraySchema: 
+    properties: 
+      value: Schema
+
+  OptionalSchema: 
+    properties: 
+      value: Schema

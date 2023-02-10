@@ -29,6 +29,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/openapi-ir-sdk": "^0.0.4",
     "@stoplight/spectral-core": "^1.16.1",
     "@stoplight/spectral-functions": "^1.7.2",
     "@stoplight/spectral-parsers": "^1.0.2",
