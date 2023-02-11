@@ -1,5 +1,7 @@
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { resolveParameterReference } from "./resolvers";
+import { isReferenceObject } from "./utils";
 
 export interface ConvertedEndpoint {
     endpoint: FernOpenapiIr.Endpoint,
@@ -33,11 +35,30 @@ export function convertEndpoint({
 }
 
 interface ConvertedParameters {
-    queryParameters: FernOpenapiIr.QueryParameter,
-    pathParameters: FernOpenapiIr.PathParameter,
-
+    queryParameters: FernOpenapiIr.QueryParameter[],
+    pathParameters: FernOpenapiIr.PathParameter[],
 }
 
-function convertParameters(operationObject: OpenAPIV3.OperationObject) {
+function convertParameters({ document, operationObject}: { document: OpenAPIV3.Document, operationObject: OpenAPIV3.OperationObject}) {
+    const convertedParameters = {
+        queryParameters: [],
+        pathParameters: [],
+    }
+    for (const parameterObject of operationObject.parameters ?? []) {
+        const resolvedParameterObject = isReferenceObject(parameterObject)
+            ? resolveParameterReference({ parameter: parameterObject, document })
+            : parameterObject;
+        if (resolvedParameterObject == null) {
+            continue;
+        }
+        let parameterSchema = resolvedParameterObject.schema != null 
+            ? FernOpenapiIr.Schema.primitive(FernOpenapiIr.PrimitiveSchema.string())
+            ? convertParameterSchema()
 
+        if (resolvedParameterObject.in === "query") {
+            
+        } else if (resolvedParameterObject.in === "path") {
+
+        }
+    }
 }

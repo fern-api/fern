@@ -8673,7 +8673,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/openapi-ir-sdk", "npm:0.0.4"],\
+            ["@fern-fern/openapi-ir-sdk", "npm:0.0.8"],\
             ["@stoplight/spectral-core", "npm:1.16.1"],\
             ["@stoplight/spectral-functions", "npm:1.7.2"],\
             ["@stoplight/spectral-parsers", "npm:1.0.2"],\
@@ -9233,10 +9233,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/openapi-ir-sdk", [\
-        ["npm:0.0.4", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-sdk-npm-0.0.4-573d28c065-5d7ff3652b.zip/node_modules/@fern-fern/openapi-ir-sdk/",\
+        ["npm:0.0.8", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-sdk-npm-0.0.8-89d6648c06-4f1055c0a0.zip/node_modules/@fern-fern/openapi-ir-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/openapi-ir-sdk", "npm:0.0.4"]\
+            ["@fern-fern/openapi-ir-sdk", "npm:0.0.8"]\
           ],\
           "linkType": "HARD"\
         }]\

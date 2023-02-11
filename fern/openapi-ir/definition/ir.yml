@@ -54,11 +54,13 @@ types:
     extends: WithDescription
     properties: 
       name: string
+      schema: Schema
 
   QueryParameter:   
     extends: WithDescription
     properties: 
       name: string
+      schema: Schema
 
   Header: 
     extends: WithDescription
@@ -78,6 +80,7 @@ types:
       primitive: PrimitiveSchema
       object: ObjectSchema
       container: ContainerSchema
+      enum: EnumSchema
       reference: SchemaId
 
   EnumSchema: 
@@ -107,12 +110,17 @@ types:
       key: string
       schema: Schema
 
-  PrimitiveSchema: 
+  PrimitiveSchema:
+    extends: WithDescription
+    properties: 
+      schema: PrimitiveSchemaValue
+
+  PrimitiveSchemaValue:
     union: 
-      int32: {}
-      int64: {}
-      float: {}
+      integer: {}
+      number: {}
       string: {}
+      boolean: {}
 
   ContainerSchema: 
     union: 
