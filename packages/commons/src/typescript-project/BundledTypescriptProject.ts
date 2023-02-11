@@ -243,7 +243,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
-                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write ${BundledTypescriptProject.SRC_DIRECTORY}/**/*.ts`,
+                [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${BundledTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
                 [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc && tsc-alias",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [

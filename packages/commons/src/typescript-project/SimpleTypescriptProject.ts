@@ -119,7 +119,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             files: [SimpleTypescriptProject.DIST_DIRECTORY],
             types: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.d.ts`,
             scripts: {
-                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write ${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts`,
+                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
             },
         };

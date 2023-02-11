@@ -54,8 +54,6 @@ export class PersistedTypescriptProject {
             logger,
         });
 
-        await yarn(["set", "version", "3.2.4"]);
-        await yarn(["config", "set", "nodeLinker", "pnp"]);
         await yarn(["install"], {
             env: {
                 // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI

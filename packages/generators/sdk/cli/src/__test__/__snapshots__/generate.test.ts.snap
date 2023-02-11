@@ -27,14 +27,6 @@ printWidth: 120
     "type": "file",
   },
   Object {
-    "contents": "nodeLinker: pnp
-
-yarnPath: .yarn/releases/yarn-3.2.4.cjs
-",
-    "name": ".yarnrc.yml",
-    "type": "file",
-  },
-  Object {
     "contents": "const { build } = require(\\"esbuild\\");
 
 void main();
@@ -135,7 +127,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     },
     \\"types\\": \\"./types/index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write src/**/*.ts\\",
+        \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"compile\\": \\"tsc && tsc-alias\\",
         \\"bundle\\": \\"node build.js\\",
         \\"build\\": \\"yarn compile && yarn bundle\\"
@@ -151,8 +143,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
-    },
-    \\"packageManager\\": \\"yarn@3.2.4\\"
+    }
 }
 ",
     "name": "package.json",
@@ -5635,14 +5626,6 @@ printWidth: 120
     "type": "directory",
   },
   Object {
-    "contents": "nodeLinker: pnp
-
-yarnPath: .yarn/releases/yarn-3.2.4.cjs
-",
-    "name": ".yarnrc.yml",
-    "type": "file",
-  },
-  Object {
     "contents": "const { build } = require(\\"esbuild\\");
 
 void main();
@@ -5745,7 +5728,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     },
     \\"types\\": \\"./types/index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write src/**/*.ts\\",
+        \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"compile\\": \\"tsc && tsc-alias\\",
         \\"bundle\\": \\"node build.js\\",
         \\"build\\": \\"yarn compile && yarn bundle\\"
@@ -5761,8 +5744,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
-    },
-    \\"packageManager\\": \\"yarn@3.2.4\\"
+    }
 }
 ",
     "name": "package.json",
@@ -9733,14 +9715,6 @@ printWidth: 120
     "type": "directory",
   },
   Object {
-    "contents": "nodeLinker: pnp
-
-yarnPath: .yarn/releases/yarn-3.2.4.cjs
-",
-    "name": ".yarnrc.yml",
-    "type": "file",
-  },
-  Object {
     "contents": "const { build } = require(\\"esbuild\\");
 
 void main();
@@ -9843,7 +9817,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     },
     \\"types\\": \\"./types/index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write src/**/*.ts\\",
+        \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"compile\\": \\"tsc && tsc-alias\\",
         \\"bundle\\": \\"node build.js\\",
         \\"build\\": \\"yarn compile && yarn bundle\\"
@@ -9859,8 +9833,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
-    },
-    \\"packageManager\\": \\"yarn@3.2.4\\"
+    }
 }
 ",
     "name": "package.json",
@@ -16235,14 +16208,6 @@ printWidth: 120
     "type": "file",
   },
   Object {
-    "contents": "nodeLinker: pnp
-
-yarnPath: .yarn/releases/yarn-3.2.4.cjs
-",
-    "name": ".yarnrc.yml",
-    "type": "file",
-  },
-  Object {
     "contents": "const { build } = require(\\"esbuild\\");
 
 void main();
@@ -16343,7 +16308,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
     },
     \\"types\\": \\"./types/index.d.ts\\",
     \\"scripts\\": {
-        \\"format\\": \\"prettier --write src/**/*.ts\\",
+        \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"compile\\": \\"tsc && tsc-alias\\",
         \\"bundle\\": \\"node build.js\\",
         \\"build\\": \\"yarn compile && yarn bundle\\"
@@ -16363,8 +16328,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         \\"prettier\\": \\"2.7.1\\",
         \\"tsc-alias\\": \\"1.7.1\\",
         \\"typescript\\": \\"4.6.4\\"
-    },
-    \\"packageManager\\": \\"yarn@3.2.4\\"
+    }
 }
 ",
     "name": "package.json",
