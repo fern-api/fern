@@ -74,5 +74,8 @@ export function convertToOpenApi({
 }
 
 export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
-    return `${declaredTypeName.fernFilepath}-${declaredTypeName.name}`;
+    return [
+        ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
+        declaredTypeName.name.originalName,
+    ].join("-");
 }

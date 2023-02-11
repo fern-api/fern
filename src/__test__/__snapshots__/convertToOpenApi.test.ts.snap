@@ -140,6 +140,11 @@ paths:
       tags:
         - Blog
       parameters:
+        - name: optionalQueryParam
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/OptionalString'
         - name: x-endpoint-header
           in: header
           description: I'm a header!
@@ -245,6 +250,8 @@ paths:
               $ref: '#/components/schemas/CreatePostRequest'
 components:
   schemas:
+    OptionalString:
+      type: string
     AliasOfNestedType:
       $ref: '#/components/schemas/FolderNestedType'
     PostId:
