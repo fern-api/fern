@@ -86,6 +86,254 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "errors": [],
           "examples": [],
           "headers": [],
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getDirectThread",
+              "unsafeName": "getDirectThread",
+            },
+            "originalName": "getDirectThread",
+            "pascalCase": {
+              "safeName": "GetDirectThread",
+              "unsafeName": "GetDirectThread",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_DIRECT_THREAD",
+              "unsafeName": "GET_DIRECT_THREAD",
+            },
+            "snakeCase": {
+              "safeName": "get_direct_thread",
+              "unsafeName": "get_direct_thread",
+            },
+          },
+          "path": {
+            "head": "",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "docs": undefined,
+            "type": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "folderA",
+                      "unsafeName": "folderA",
+                    },
+                    "originalName": "folder-a",
+                    "pascalCase": {
+                      "safeName": "FolderA",
+                      "unsafeName": "FolderA",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOLDER_A",
+                      "unsafeName": "FOLDER_A",
+                    },
+                    "snakeCase": {
+                      "safeName": "folder_a",
+                      "unsafeName": "folder_a",
+                    },
+                  },
+                  {
+                    "camelCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                    "originalName": "service",
+                    "pascalCase": {
+                      "safeName": "Service",
+                      "unsafeName": "Service",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SERVICE",
+                      "unsafeName": "SERVICE",
+                    },
+                    "snakeCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
+                "packagePath": [
+                  {
+                    "camelCase": {
+                      "safeName": "folderA",
+                      "unsafeName": "folderA",
+                    },
+                    "originalName": "folder-a",
+                    "pascalCase": {
+                      "safeName": "FolderA",
+                      "unsafeName": "FolderA",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOLDER_A",
+                      "unsafeName": "FOLDER_A",
+                    },
+                    "snakeCase": {
+                      "safeName": "folder_a",
+                      "unsafeName": "folder_a",
+                    },
+                  },
+                ],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "response",
+                  "unsafeName": "response",
+                },
+                "originalName": "Response",
+                "pascalCase": {
+                  "safeName": "Response",
+                  "unsafeName": "Response",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESPONSE",
+                  "unsafeName": "RESPONSE",
+                },
+                "snakeCase": {
+                  "safeName": "response",
+                  "unsafeName": "response",
+                },
+              },
+            },
+          },
+          "sdkRequest": undefined,
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "folderA",
+                "unsafeName": "folderA",
+              },
+              "originalName": "folder-a",
+              "pascalCase": {
+                "safeName": "FolderA",
+                "unsafeName": "FolderA",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_A",
+                "unsafeName": "FOLDER_A",
+              },
+              "snakeCase": {
+                "safeName": "folder_a",
+                "unsafeName": "folder_a",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "folderA",
+                "unsafeName": "folderA",
+              },
+              "originalName": "folder-a",
+              "pascalCase": {
+                "safeName": "FolderA",
+                "unsafeName": "FolderA",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_A",
+                "unsafeName": "FOLDER_A",
+              },
+              "snakeCase": {
+                "safeName": "folder_a",
+                "unsafeName": "folder_a",
+              },
+            },
+          ],
+        },
+      },
+      "pathParameters": [],
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "basePath": {
+        "head": "/",
+        "parts": [],
+      },
+      "baseUrl": undefined,
+      "displayName": undefined,
+      "docs": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": {
+            "message": undefined,
+            "status": "GENERAL_AVAILABILITY",
+          },
+          "displayName": undefined,
+          "docs": undefined,
+          "errors": [],
+          "examples": [],
+          "headers": [],
           "method": "POST",
           "name": {
             "camelCase": {
@@ -316,6 +564,879 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "_type": "primitive",
           "primitive": "STRING",
         },
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "folderA",
+                "unsafeName": "folderA",
+              },
+              "originalName": "folder-a",
+              "pascalCase": {
+                "safeName": "FolderA",
+                "unsafeName": "FolderA",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_A",
+                "unsafeName": "FOLDER_A",
+              },
+              "snakeCase": {
+                "safeName": "folder_a",
+                "unsafeName": "folder_a",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "folderA",
+                "unsafeName": "folderA",
+              },
+              "originalName": "folder-a",
+              "pascalCase": {
+                "safeName": "FolderA",
+                "unsafeName": "FolderA",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_A",
+                "unsafeName": "FOLDER_A",
+              },
+              "snakeCase": {
+                "safeName": "folder_a",
+                "unsafeName": "folder_a",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "response",
+            "unsafeName": "response",
+          },
+          "originalName": "Response",
+          "pascalCase": {
+            "safeName": "Response",
+            "unsafeName": "Response",
+          },
+          "screamingSnakeCase": {
+            "safeName": "RESPONSE",
+            "unsafeName": "RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "response",
+            "unsafeName": "response",
+          },
+        },
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "folderB",
+                  "unsafeName": "folderB",
+                },
+                "originalName": "folder-b",
+                "pascalCase": {
+                  "safeName": "FolderB",
+                  "unsafeName": "FolderB",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOLDER_B",
+                  "unsafeName": "FOLDER_B",
+                },
+                "snakeCase": {
+                  "safeName": "folder_b",
+                  "unsafeName": "folder_b",
+                },
+              },
+              {
+                "camelCase": {
+                  "safeName": "common",
+                  "unsafeName": "common",
+                },
+                "originalName": "common",
+                "pascalCase": {
+                  "safeName": "Common",
+                  "unsafeName": "Common",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMON",
+                  "unsafeName": "COMMON",
+                },
+                "snakeCase": {
+                  "safeName": "common",
+                  "unsafeName": "common",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+              "originalName": "common",
+              "pascalCase": {
+                "safeName": "Common",
+                "unsafeName": "Common",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMON",
+                "unsafeName": "COMMON",
+              },
+              "snakeCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+            },
+            "packagePath": [
+              {
+                "camelCase": {
+                  "safeName": "folderB",
+                  "unsafeName": "folderB",
+                },
+                "originalName": "folder-b",
+                "pascalCase": {
+                  "safeName": "FolderB",
+                  "unsafeName": "FolderB",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOLDER_B",
+                  "unsafeName": "FOLDER_B",
+                },
+                "snakeCase": {
+                  "safeName": "folder_b",
+                  "unsafeName": "folder_b",
+                },
+              },
+            ],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "Foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+        },
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": {
+              "message": undefined,
+              "status": "GENERAL_AVAILABILITY",
+            },
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+                "originalName": "foo",
+                "pascalCase": {
+                  "safeName": "Foo",
+                  "unsafeName": "Foo",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOO",
+                  "unsafeName": "FOO",
+                },
+                "snakeCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+              },
+              "wireValue": "foo",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "folderB",
+                          "unsafeName": "folderB",
+                        },
+                        "originalName": "folder-b",
+                        "pascalCase": {
+                          "safeName": "FolderB",
+                          "unsafeName": "FolderB",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "FOLDER_B",
+                          "unsafeName": "FOLDER_B",
+                        },
+                        "snakeCase": {
+                          "safeName": "folder_b",
+                          "unsafeName": "folder_b",
+                        },
+                      },
+                      {
+                        "camelCase": {
+                          "safeName": "common",
+                          "unsafeName": "common",
+                        },
+                        "originalName": "common",
+                        "pascalCase": {
+                          "safeName": "Common",
+                          "unsafeName": "Common",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMON",
+                          "unsafeName": "COMMON",
+                        },
+                        "snakeCase": {
+                          "safeName": "common",
+                          "unsafeName": "common",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "common",
+                        "unsafeName": "common",
+                      },
+                      "originalName": "common",
+                      "pascalCase": {
+                        "safeName": "Common",
+                        "unsafeName": "Common",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "COMMON",
+                        "unsafeName": "COMMON",
+                      },
+                      "snakeCase": {
+                        "safeName": "common",
+                        "unsafeName": "common",
+                      },
+                    },
+                    "packagePath": [
+                      {
+                        "camelCase": {
+                          "safeName": "folderB",
+                          "unsafeName": "folderB",
+                        },
+                        "originalName": "folder-b",
+                        "pascalCase": {
+                          "safeName": "FolderB",
+                          "unsafeName": "FolderB",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "FOLDER_B",
+                          "unsafeName": "FOLDER_B",
+                        },
+                        "snakeCase": {
+                          "safeName": "folder_b",
+                          "unsafeName": "folder_b",
+                        },
+                      },
+                    ],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                    "originalName": "Foo",
+                    "pascalCase": {
+                      "safeName": "Foo",
+                      "unsafeName": "Foo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOO",
+                      "unsafeName": "FOO",
+                    },
+                    "snakeCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "folderB",
+                "unsafeName": "folderB",
+              },
+              "originalName": "folder-b",
+              "pascalCase": {
+                "safeName": "FolderB",
+                "unsafeName": "FolderB",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_B",
+                "unsafeName": "FOLDER_B",
+              },
+              "snakeCase": {
+                "safeName": "folder_b",
+                "unsafeName": "folder_b",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+              "originalName": "common",
+              "pascalCase": {
+                "safeName": "Common",
+                "unsafeName": "Common",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMON",
+                "unsafeName": "COMMON",
+              },
+              "snakeCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+            "originalName": "common",
+            "pascalCase": {
+              "safeName": "Common",
+              "unsafeName": "Common",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON",
+              "unsafeName": "COMMON",
+            },
+            "snakeCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "folderB",
+                "unsafeName": "folderB",
+              },
+              "originalName": "folder-b",
+              "pascalCase": {
+                "safeName": "FolderB",
+                "unsafeName": "FolderB",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_B",
+                "unsafeName": "FOLDER_B",
+              },
+              "snakeCase": {
+                "safeName": "folder_b",
+                "unsafeName": "folder_b",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+          "originalName": "Foo",
+          "pascalCase": {
+            "safeName": "Foo",
+            "unsafeName": "Foo",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FOO",
+            "unsafeName": "FOO",
+          },
+          "snakeCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+        },
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "folderC",
+                  "unsafeName": "folderC",
+                },
+                "originalName": "folder-c",
+                "pascalCase": {
+                  "safeName": "FolderC",
+                  "unsafeName": "FolderC",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOLDER_C",
+                  "unsafeName": "FOLDER_C",
+                },
+                "snakeCase": {
+                  "safeName": "folder_c",
+                  "unsafeName": "folder_c",
+                },
+              },
+              {
+                "camelCase": {
+                  "safeName": "common",
+                  "unsafeName": "common",
+                },
+                "originalName": "common",
+                "pascalCase": {
+                  "safeName": "Common",
+                  "unsafeName": "Common",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMON",
+                  "unsafeName": "COMMON",
+                },
+                "snakeCase": {
+                  "safeName": "common",
+                  "unsafeName": "common",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+              "originalName": "common",
+              "pascalCase": {
+                "safeName": "Common",
+                "unsafeName": "Common",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMON",
+                "unsafeName": "COMMON",
+              },
+              "snakeCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+            },
+            "packagePath": [
+              {
+                "camelCase": {
+                  "safeName": "folderC",
+                  "unsafeName": "folderC",
+                },
+                "originalName": "folder-c",
+                "pascalCase": {
+                  "safeName": "FolderC",
+                  "unsafeName": "FolderC",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOLDER_C",
+                  "unsafeName": "FOLDER_C",
+                },
+                "snakeCase": {
+                  "safeName": "folder_c",
+                  "unsafeName": "folder_c",
+                },
+              },
+            ],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "Foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+        },
+      ],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": {
+              "message": undefined,
+              "status": "GENERAL_AVAILABILITY",
+            },
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+                "originalName": "foo",
+                "pascalCase": {
+                  "safeName": "Foo",
+                  "unsafeName": "Foo",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOO",
+                  "unsafeName": "FOO",
+                },
+                "snakeCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+              },
+              "wireValue": "foo",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "folderC",
+                          "unsafeName": "folderC",
+                        },
+                        "originalName": "folder-c",
+                        "pascalCase": {
+                          "safeName": "FolderC",
+                          "unsafeName": "FolderC",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "FOLDER_C",
+                          "unsafeName": "FOLDER_C",
+                        },
+                        "snakeCase": {
+                          "safeName": "folder_c",
+                          "unsafeName": "folder_c",
+                        },
+                      },
+                      {
+                        "camelCase": {
+                          "safeName": "common",
+                          "unsafeName": "common",
+                        },
+                        "originalName": "common",
+                        "pascalCase": {
+                          "safeName": "Common",
+                          "unsafeName": "Common",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "COMMON",
+                          "unsafeName": "COMMON",
+                        },
+                        "snakeCase": {
+                          "safeName": "common",
+                          "unsafeName": "common",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "common",
+                        "unsafeName": "common",
+                      },
+                      "originalName": "common",
+                      "pascalCase": {
+                        "safeName": "Common",
+                        "unsafeName": "Common",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "COMMON",
+                        "unsafeName": "COMMON",
+                      },
+                      "snakeCase": {
+                        "safeName": "common",
+                        "unsafeName": "common",
+                      },
+                    },
+                    "packagePath": [
+                      {
+                        "camelCase": {
+                          "safeName": "folderC",
+                          "unsafeName": "folderC",
+                        },
+                        "originalName": "folder-c",
+                        "pascalCase": {
+                          "safeName": "FolderC",
+                          "unsafeName": "FolderC",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "FOLDER_C",
+                          "unsafeName": "FOLDER_C",
+                        },
+                        "snakeCase": {
+                          "safeName": "folder_c",
+                          "unsafeName": "folder_c",
+                        },
+                      },
+                    ],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                    "originalName": "Foo",
+                    "pascalCase": {
+                      "safeName": "Foo",
+                      "unsafeName": "Foo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOO",
+                      "unsafeName": "FOO",
+                    },
+                    "snakeCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "folderC",
+                "unsafeName": "folderC",
+              },
+              "originalName": "folder-c",
+              "pascalCase": {
+                "safeName": "FolderC",
+                "unsafeName": "FolderC",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_C",
+                "unsafeName": "FOLDER_C",
+              },
+              "snakeCase": {
+                "safeName": "folder_c",
+                "unsafeName": "folder_c",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+              "originalName": "common",
+              "pascalCase": {
+                "safeName": "Common",
+                "unsafeName": "Common",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMON",
+                "unsafeName": "COMMON",
+              },
+              "snakeCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+            "originalName": "common",
+            "pascalCase": {
+              "safeName": "Common",
+              "unsafeName": "Common",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON",
+              "unsafeName": "COMMON",
+            },
+            "snakeCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "folderC",
+                "unsafeName": "folderC",
+              },
+              "originalName": "folder-c",
+              "pascalCase": {
+                "safeName": "FolderC",
+                "unsafeName": "FolderC",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_C",
+                "unsafeName": "FOLDER_C",
+              },
+              "snakeCase": {
+                "safeName": "folder_c",
+                "unsafeName": "folder_c",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+          "originalName": "Foo",
+          "pascalCase": {
+            "safeName": "Foo",
+            "unsafeName": "Foo",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FOO",
+            "unsafeName": "FOO",
+          },
+          "snakeCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+        },
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": {
+              "message": undefined,
+              "status": "GENERAL_AVAILABILITY",
+            },
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "barProperty",
+                  "unsafeName": "barProperty",
+                },
+                "originalName": "bar_property",
+                "pascalCase": {
+                  "safeName": "BarProperty",
+                  "unsafeName": "BarProperty",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BAR_PROPERTY",
+                  "unsafeName": "BAR_PROPERTY",
+                },
+                "snakeCase": {
+                  "safeName": "bar_property",
+                  "unsafeName": "bar_property",
+                },
+              },
+              "wireValue": "bar_property",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "UUID",
+            },
+          },
+        ],
       },
     },
     {
