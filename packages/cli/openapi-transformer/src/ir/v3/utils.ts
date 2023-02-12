@@ -1,3 +1,4 @@
+import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
@@ -15,4 +16,11 @@ export function isReferenceObject(
 ): parameter is OpenAPIV3.ReferenceObject {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (parameter as OpenAPIV3.ReferenceObject).$ref != null;
+}
+
+export function getSchemaIdFromReference(reference: OpenAPIV3.ReferenceObject): FernOpenapiIr.SchemaId | undefined {
+    if (reference.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
+        return reference.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
+    }
+    return undefined;
 }

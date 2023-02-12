@@ -1,6 +1,6 @@
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "./utils";
+import { getSchemaIdFromReference, isReferenceObject } from "./utils";
 
 export function convertSchema({ schema }: { schema: OpenAPIV3.SchemaObject }): FernOpenapiIr.Schema | undefined {
     if (schema.enum != null) {
@@ -36,11 +36,8 @@ export function convertSchema({ schema }: { schema: OpenAPIV3.SchemaObject }): F
         });
     } else if (schema.type === "object") {
         for (const [propertyName, propertyDefinition] of Object.entries(schema.properties ?? {})) {
-            
             if (isReferenceObject(propertyDefinition)) {
-
-            } else {
-
+                const schemaId = getSchemaIdFromReference(propertyDefinition);
             }
         }
     }
