@@ -6,14 +6,9 @@ import { generateIntermediateRepresentation } from "../generateIntermediateRepre
 
 const FIXTURES: Fixture[] = [
     {
-        name: "audiences",
+        name: "api",
         generationLanguage: undefined,
         audiences: { type: "select", audiences: ["public"] },
-    },
-    {
-        name: "packages",
-        generationLanguage: undefined,
-        audiences: { type: "all" },
     },
 ];
 
