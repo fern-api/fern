@@ -19,28 +19,10 @@ error-discrimination:
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-types:
-  MovieId: string
-
-  Movie:
-    properties:
-      id: MovieId
-      title: string
-      rating:
-        type: double
-        docs: The rating scale is one to five stars
-
-  CreateMovieRequest:
-    properties:
-      title: string
-      rating: double
-
 service:
   auth: false
   base-path: /movies
   endpoints:
-    # Here's an HTTP endpoint
-
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -49,13 +31,47 @@ service:
       response: MovieId
 
     getMovie:
+      docs: Retrieve a movie from the database based on the ID
       method: GET
-      path: /{movieId}
+      path: /{id}
       path-parameters:
-        movieId: MovieId
+        id: MovieId
       response: Movie
       errors:
         - MovieDoesNotExistError
+      examples:
+        # Success response
+        - path-parameters:
+            id: tt0111161
+          response:
+            body:
+              id: tt0111161
+              title: The Shawshank Redemption
+              rating: 9.3
+        # Error response
+        - path-parameters:
+            id: tt1234
+          response:
+            error: MovieDoesNotExistError
+            body: tt1234
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
 
 errors:
   MovieDoesNotExistError:
@@ -70,20 +86,24 @@ errors:
             "type": "directory",
           },
           {
-            "contents": "default-group: external
+            "contents": "default-group: local
 groups:
-  external:
+  local:
     generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.273
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+      - name: fernapi/fern-openapi
+        version: 0.0.19
+        output:
+          location: local-file-system
+          path: ../../generated/openapi
       - name: fernapi/fern-java-sdk
         version: 0.0.132
-      - name: fernapi/fern-typescript-sdk
-        version: 0.0.255
       - name: fernapi/fern-postman
         version: 0.0.25
-      - name: fernapi/fern-openapi
-        version: 0.0.11
-        config:
-          format: yaml
 ",
             "name": "generators.yml",
             "type": "file",

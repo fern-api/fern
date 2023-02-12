@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { FernDefinition } from "@fern-api/openapi-converter";
+import { OpenApiConvertedFernDefinition } from "@fern-api/openapi-migrator";
 import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
@@ -18,7 +18,7 @@ export async function createWorkspace({
     fernDefinition,
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
-    fernDefinition: FernDefinition | undefined;
+    fernDefinition: OpenApiConvertedFernDefinition | undefined;
 }): Promise<void> {
     await mkdir(directoryOfWorkspace);
     await writeGeneratorsConfiguration({
@@ -47,7 +47,28 @@ export async function createWorkspace({
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     "default-group": DEFAULT_GROUP_NAME,
-    groups: {},
+    groups: {
+        [DEFAULT_GROUP_NAME]: {
+            generators: [
+                {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "0.0.273",
+                    output: {
+                        location: "local-file-system",
+                        path: "../../generated/typescript",
+                    },
+                },
+                {
+                    name: "fernapi/fern-openapi",
+                    version: "0.0.19",
+                    output: {
+                        location: "local-file-system",
+                        path: "../../generated/openapi",
+                    },
+                },
+            ],
+        },
+    },
 };
 
 async function writeGeneratorsConfiguration({ filepath }: { filepath: AbsoluteFilePath }): Promise<void> {

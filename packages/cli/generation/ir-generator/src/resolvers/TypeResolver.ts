@@ -1,4 +1,4 @@
-import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
@@ -23,7 +23,7 @@ export interface TypeResolver {
 }
 
 export class TypeResolverImpl implements TypeResolver {
-    constructor(private readonly workspace: Workspace) {}
+    constructor(private readonly workspace: FernWorkspace) {}
 
     public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
         const resolvedType = this.resolveType({ type, file });

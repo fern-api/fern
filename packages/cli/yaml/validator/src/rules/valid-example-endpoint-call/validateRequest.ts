@@ -1,5 +1,5 @@
 import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { validateObjectExample } from "../valid-example-type/validateObjectExample";
@@ -18,7 +18,7 @@ export function validateRequest({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
-    workspace: Workspace;
+    workspace: FernWorkspace;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 

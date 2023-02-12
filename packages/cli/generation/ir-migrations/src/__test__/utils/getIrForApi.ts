@@ -13,10 +13,12 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
     });
     if (!workspace.didSucceed) {
         return context.failAndThrow("Failed to load workspace", workspace.failures);
+    } else if (workspace.workspace.type === "openapi") {
+        return context.failAndThrow("Expected fern workspace but received openapi.");
     }
     return generateIntermediateRepresentation({
         workspace: workspace.workspace,
         generationLanguage: undefined,
-        audiences: undefined,
+        audiences: { type: "all" },
     });
 }

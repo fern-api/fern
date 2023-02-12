@@ -1,6 +1,6 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { ExampleResolver, FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { PrimitiveType } from "@fern-fern/ir-model/types";
 import { RuleViolation } from "../../Rule";
@@ -28,7 +28,7 @@ export function validateTypeReferenceExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
-    workspace: Workspace;
+    workspace: FernWorkspace;
 }): RuleViolation[] {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the

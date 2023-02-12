@@ -1,6 +1,6 @@
 import { noop } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName, HttpEndpoint, HttpRequestBody } from "@fern-fern/ir-model/http";
+import { DeclaredServiceName, HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
@@ -60,10 +60,19 @@ export class AudienceIrGraph {
         this.errors[errorId] = errorNode;
     }
 
-    public addEndpoint(declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): void {
-        const endpointId = getEndpointId(declaredServiceName, httpEndpoint);
+    public addEndpoint(service: HttpService, httpEndpoint: HttpEndpoint): void {
+        const endpointId = getEndpointId(service.name, httpEndpoint);
         const referencedTypes = new Set<TypeId>();
         const referencedErrors = new Set<ErrorId>();
+        for (const header of [...service.headers, ...httpEndpoint.headers]) {
+            populateReferencesFromTypeReference(header.valueType, referencedTypes);
+        }
+        for (const pathParameter of [...service.pathParameters, ...httpEndpoint.pathParameters]) {
+            populateReferencesFromTypeReference(pathParameter.valueType, referencedTypes);
+        }
+        for (const queryParameter of httpEndpoint.queryParameters) {
+            populateReferencesFromTypeReference(queryParameter.valueType, referencedTypes);
+        }
         if (httpEndpoint.requestBody != null) {
             HttpRequestBody._visit(httpEndpoint.requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
@@ -136,7 +145,7 @@ export class AudienceIrGraph {
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
-        for (const typeId of typesToAdd.keys()) {
+        for (const typeId of typesToAdd) {
             if (types.has(typeId)) {
                 continue;
             }

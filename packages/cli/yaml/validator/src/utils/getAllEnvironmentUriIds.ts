@@ -1,7 +1,7 @@
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawMultipleBaseUrlsEnvironment } from "@fern-api/yaml-schema";
 
-export function getAllEnvironmentUrlIds(workspace: Workspace): string[] {
+export function getAllEnvironmentUrlIds(workspace: FernWorkspace): string[] {
     if (workspace.definition.rootApiFile.contents.environments == null) {
         return [];
     }

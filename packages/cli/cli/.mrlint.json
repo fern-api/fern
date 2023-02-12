@@ -22,5 +22,8 @@
       "POSTHOG_API_KEY"
     ]
   },
+  "plugins": {
+    "jsoncParserResolverPlugin": "./jsoncParserResolverPlugin.cjs"
+  },
   "private": true
 }

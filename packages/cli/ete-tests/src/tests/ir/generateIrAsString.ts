@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
-import { Language } from "@fern-api/ir-generator";
+import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { readFile, rm } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";
 
@@ -10,7 +10,7 @@ export async function generateIrAsString({
     apiName,
 }: {
     fixturePath: AbsoluteFilePath;
-    language?: Language;
+    language?: GenerationLanguage;
     audiences?: string[];
     apiName?: string;
 }): Promise<string> {

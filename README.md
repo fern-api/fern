@@ -214,3 +214,7 @@ You can view our documentation [here](https://docs.buildwithfern.com).
 # Community
 
 [Join our Discord!](https://discord.com/invite/JkkXumPzcG)
+
+# Attribution
+
+Thanks to the folks at [Twemoji](https://twemoji.twitter.com), an open source project, who created the graphic that we use as our logo.

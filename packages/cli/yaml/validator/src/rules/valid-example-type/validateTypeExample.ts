@@ -1,5 +1,5 @@
 import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { validateAliasExample } from "./validateAliasExample";
@@ -22,7 +22,7 @@ export function validateTypeExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
-    workspace: Workspace;
+    workspace: FernWorkspace;
 }): RuleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {

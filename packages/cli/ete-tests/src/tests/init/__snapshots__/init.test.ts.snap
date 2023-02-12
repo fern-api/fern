@@ -11,8 +11,16 @@ exports[`fern init covie openapi 1`] = `
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+{}
+",
+                "name": "__package__.yml",
+                "type": "file",
+              },
+              {
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 service:
-  auth: true
+  auth: false
   base-path: /accounts/{account_id}/mfa_requirements
   path-parameters:
     account_id:
@@ -44,6 +52,7 @@ types:
               },
               {
                 "contents": "name: api
+display-name: Policy API
 headers: {}
 ",
                 "name": "api.yml",
@@ -56,7 +65,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /applications/{application_id}
   path-parameters:
     application_id:
@@ -1396,7 +1405,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: true
+  auth: false
   base-path: /events/{event_id}/broadcasts
   path-parameters:
     event_id: string
@@ -1457,7 +1466,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /integrations
   endpoints:
     listIntegrations:
@@ -1894,7 +1903,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     getLink:
@@ -2252,7 +2261,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /policies/{policy_id}
   path-parameters:
     policy_id:
@@ -2477,7 +2486,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /webhooks
   endpoints:
     listWebhooks:
@@ -2663,8 +2672,20 @@ types:
             "type": "directory",
           },
           {
-            "contents": "default-group: external
-groups: {}
+            "contents": "default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.273
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+      - name: fernapi/fern-openapi
+        version: 0.0.19
+        output:
+          location: local-file-system
+          path: ../../generated/openapi
 ",
             "name": "generators.yml",
             "type": "file",
@@ -2697,7 +2718,16 @@ exports[`fern init gigs openapi 1`] = `
           {
             "contents": [
               {
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+{}
+",
+                "name": "__package__.yml",
+                "type": "file",
+              },
+              {
                 "contents": "name: api
+display-name: Gigs Core API
 headers: {}
 ",
                 "name": "api.yml",
@@ -3565,7 +3595,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     deviceModelsRetrieve:
@@ -3869,7 +3899,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/plans
   path-parameters:
     project:
@@ -4053,7 +4083,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     portingCancel:
@@ -4349,7 +4379,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects
   endpoints:
     projectsRetrieve:
@@ -4455,7 +4485,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/sims
   path-parameters:
     project:
@@ -4619,7 +4649,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/subscriptions
   path-parameters:
     project:
@@ -4799,7 +4829,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/subscriptions/{id}/usage
   path-parameters:
     project:
@@ -4907,7 +4937,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/users/{user}/addresses
   path-parameters:
     project:
@@ -5020,7 +5050,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: true
+  auth: false
   base-path: /projects/{project}/users
   path-parameters:
     project:
@@ -5202,8 +5232,20 @@ types:
             "type": "directory",
           },
           {
-            "contents": "default-group: external
-groups: {}
+            "contents": "default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.273
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+      - name: fernapi/fern-openapi
+        version: 0.0.19
+        output:
+          location: local-file-system
+          path: ../../generated/openapi
 ",
             "name": "generators.yml",
             "type": "file",
@@ -5244,28 +5286,10 @@ error-discrimination:
           {
             "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-types:
-  MovieId: string
-
-  Movie:
-    properties:
-      id: MovieId
-      title: string
-      rating:
-        type: double
-        docs: The rating scale is one to five stars
-
-  CreateMovieRequest:
-    properties:
-      title: string
-      rating: double
-
 service:
   auth: false
   base-path: /movies
   endpoints:
-    # Here's an HTTP endpoint
-
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -5274,13 +5298,47 @@ service:
       response: MovieId
 
     getMovie:
+      docs: Retrieve a movie from the database based on the ID
       method: GET
-      path: /{movieId}
+      path: /{id}
       path-parameters:
-        movieId: MovieId
+        id: MovieId
       response: Movie
       errors:
         - MovieDoesNotExistError
+      examples:
+        # Success response
+        - path-parameters:
+            id: tt0111161
+          response:
+            body:
+              id: tt0111161
+              title: The Shawshank Redemption
+              rating: 9.3
+        # Error response
+        - path-parameters:
+            id: tt1234
+          response:
+            error: MovieDoesNotExistError
+            body: tt1234
+
+types:
+  MovieId:
+    type: string
+    docs: The unique identifier for a Movie in the database
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale out of ten stars
+
+  CreateMovieRequest:
+    properties:
+      title: string
+      rating: double
 
 errors:
   MovieDoesNotExistError:
@@ -5295,8 +5353,20 @@ errors:
         "type": "directory",
       },
       {
-        "contents": "default-group: external
-groups: {}
+        "contents": "default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.273
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+      - name: fernapi/fern-openapi
+        version: 0.0.19
+        output:
+          location: local-file-system
+          path: ../../generated/openapi
 ",
         "name": "generators.yml",
         "type": "file",
@@ -5325,8 +5395,22 @@ exports[`fern init telematica openapi 1`] = `
           {
             "contents": [
               {
+                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+{}
+",
+                "name": "__package__.yml",
+                "type": "file",
+              },
+              {
                 "contents": "name: api
+display-name: Telematica EV APIs
 headers: {}
+auth: bearerAuth
+auth-schemes:
+  bearerAuth:
+    header: Authorization
+    name: apiKey
 ",
                 "name": "api.yml",
                 "type": "file",
@@ -5627,8 +5711,20 @@ service:
             "type": "directory",
           },
           {
-            "contents": "default-group: external
-groups: {}
+            "contents": "default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 0.0.273
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+      - name: fernapi/fern-openapi
+        version: 0.0.19
+        output:
+          location: local-file-system
+          path: ../../generated/openapi
 ",
             "name": "generators.yml",
             "type": "file",

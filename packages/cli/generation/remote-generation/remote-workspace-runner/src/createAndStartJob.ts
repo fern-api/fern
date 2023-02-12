@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
@@ -137,7 +138,8 @@ async function startJob({
     });
 
     const formData = new FormData();
-    formData.append("file", JSON.stringify(migratedIntermediateRepresentation));
+
+    formData.append("file", await stringifyLargeObject(migratedIntermediateRepresentation));
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {

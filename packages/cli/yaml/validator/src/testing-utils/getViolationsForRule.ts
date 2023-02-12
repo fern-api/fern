@@ -4,7 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import stripAnsi from "strip-ansi";
 import { Rule } from "../Rule";
-import { runRulesOnWorkspace } from "../validateWorkspace";
+import { runRulesOnWorkspace } from "../validateFernWorkspace";
 import { ValidationViolation } from "../ValidationViolation";
 
 export declare namespace getViolationsForRule {
@@ -25,6 +25,10 @@ export async function getViolationsForRule({
     });
     if (!parseResult.didSucceed) {
         throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));
+    }
+
+    if (parseResult.workspace.type === "openapi") {
+        throw new Error("Expected fern workspace, but received openapi");
     }
 
     const violations = await runRulesOnWorkspace({

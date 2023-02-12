@@ -45,7 +45,7 @@ async function tryRunDocker({
     binds?: string[];
     removeAfterCompletion: boolean;
 }): Promise<void> {
-    const runResponse = await docker.run(
+    const [status, container] = await docker.run(
         imageName,
         args != null ? args : [],
         new Writable({
@@ -60,8 +60,14 @@ async function tryRunDocker({
     );
 
     if (removeAfterCompletion) {
-        const container = runResponse[1];
         await container.remove();
+    }
+
+    if (status.Error != null) {
+        throw status.Error;
+    }
+    if (status.StatusCode !== 0) {
+        throw new Error("Docker exited with a non-zero exit code.");
     }
 }
 

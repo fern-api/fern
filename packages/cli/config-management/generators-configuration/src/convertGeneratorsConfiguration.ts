@@ -1,7 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GeneratorGroup, GeneratorInvocation, GeneratorsConfiguration } from "./GeneratorsConfiguration";
+import {
+    GenerationLanguage,
+    GeneratorGroup,
+    GeneratorInvocation,
+    GeneratorsConfiguration,
+} from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
@@ -65,6 +70,7 @@ function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
+        language: getLanguageFromGeneratorName(generator.name),
     };
 }
 
@@ -107,6 +113,15 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
                     workspaceId: generator.output["workspace-id"],
                 })
             );
+        case "pypi":
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
+                    registryUrl: generator.output.url ?? "",
+                    username: generator.output.username ?? "",
+                    password: generator.output.password ?? "",
+                    coordinate: generator.output["package-name"],
+                })
+            );
         default:
             assertNever(generator.output);
     }
@@ -139,7 +154,29 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                 apiKey: output["api-key"],
                 workspaceId: output["workspace-id"],
             });
+        case "pypi":
+            return FernFiddle.GithubPublishInfo.pypi({
+                registryUrl: output.url ?? "",
+                packageName: output["package-name"],
+                credentials: {
+                    username: output.username ?? "",
+                    password: output.password ?? "",
+                },
+            });
         default:
             assertNever(output);
     }
+}
+
+function getLanguageFromGeneratorName(generatorName: string) {
+    if (generatorName.includes("typescript")) {
+        return GenerationLanguage.TYPESCRIPT;
+    }
+    if (generatorName.includes("java") || generatorName.includes("spring")) {
+        return GenerationLanguage.JAVA;
+    }
+    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
+        return GenerationLanguage.PYTHON;
+    }
+    return undefined;
 }

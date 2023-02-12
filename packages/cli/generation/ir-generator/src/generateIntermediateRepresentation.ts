@@ -1,5 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { visitAllServiceFiles, Workspace } from "@fern-api/workspace-loader";
+import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
+import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -13,7 +14,6 @@ import { convertHttpHeader, convertHttpService } from "./converters/services/con
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
-import { Language } from "./language";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -23,13 +23,13 @@ export async function generateIntermediateRepresentation({
     generationLanguage,
     audiences,
 }: {
-    workspace: Workspace;
-    generationLanguage: Language | undefined;
-    audiences: string[] | undefined;
+    workspace: FernWorkspace;
+    generationLanguage: GenerationLanguage | undefined;
+    audiences: GeneratorAudiences;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
 
-    const audienceIrGraph = audiences != null ? new AudienceIrGraph(audiences) : undefined;
+    const audienceIrGraph = audiences.type !== "all" ? new AudienceIrGraph(audiences.audiences) : undefined;
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",
@@ -128,7 +128,7 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
+                    audienceIrGraph?.addEndpoint(convertedHttpService, httpEndpoint);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });
                 if (service.audiences != null) {

@@ -1,2 +1,2 @@
 export { formatServiceFile } from "./formatServiceFile";
-export { formatWorkspace } from "./formatWorkspace";
+export { formatFernWorkspace as formatWorkspace } from "./formatWorkspace";

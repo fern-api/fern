@@ -1,4 +1,4 @@
-import { getServiceFile, Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -15,7 +15,7 @@ export interface ErrorResolver {
 }
 
 export class ErrorResolverImpl implements ErrorResolver {
-    constructor(private readonly workspace: Workspace) {}
+    constructor(private readonly workspace: FernWorkspace) {}
 
     public getDeclarationOrThrow(
         referenceToError: string,

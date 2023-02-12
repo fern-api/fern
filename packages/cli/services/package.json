@@ -19,15 +19,15 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "yarn compile && jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
-    "lint:eslint:fix": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --fix",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore --report-unused-disable-directives",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck"
   },
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.0.14",
-    "@fern-fern/fiddle-sdk": "^0.0.190"
+    "@fern-fern/fiddle-sdk": "^0.0.193"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

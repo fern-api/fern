@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { ExampleResolver, FernFileContext, getUnionDiscriminant, TypeResolver } from "@fern-api/ir-generator";
-import { Workspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
@@ -22,7 +22,7 @@ export function validateUnionExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
-    workspace: Workspace;
+    workspace: FernWorkspace;
 }): RuleViolation[] {
     if (!isPlainObject(example)) {
         return getRuleViolationsForMisshapenExample(example, "an object");

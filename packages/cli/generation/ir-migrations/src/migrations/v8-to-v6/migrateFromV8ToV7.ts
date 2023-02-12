@@ -17,7 +17,8 @@ export const V8_TO_V7_MIGRATION: IrMigration<
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
         [GeneratorName.PYTHON_FASTAPI]: "0.0.45-1-g8bb600f",
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.45-1-g8bb600f",
-        [GeneratorName.OPENAPI]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: "0.0.0",
+        [GeneratorName.OPENAPI]: "0.0.20-1-gbbeb9bd",
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v8): IrVersions.V7.ir.IntermediateRepresentation => {

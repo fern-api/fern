@@ -36,12 +36,9 @@ map<string, string>
 In OpenAPI:
 
 ```json OpenAPI example
-{
-  "type": "object",
-  "additionalProperties": {
-    "type": "string"
-  }
-}
+type: object
+additionalProperties:
+  type: string
 ```
 
 ### Example: Discriminated union
@@ -74,67 +71,42 @@ Cat:
 In OpenAPI:
 
 ```json OpenAPI example
-{
-  "Animal": {
-    "oneOf": [
-      {
-        "$ref": "#/components/schemas/Cat"
-      },
-      {
-        "$ref": "#/components/schemas/Dog"
-      }
-    ],
-    "discriminator": {
-      "propertyName": "pet_type"
-    }
-  },
-  "BaseAnimal": {
-    "type": "object",
-    "required": ["pet_type"],
-    "properties": {
-      "pet_type": {
-        "type": "string"
-      }
-    },
-    "discriminator": {
-      "propertyName": "pet_type"
-    }
-  },
-  "Dog": {
-    "allOf": [
-      {
-        "$ref": "#/components/schemas/BaseAnimal"
-      },
-      {
-        "type": "object",
-        "properties": {
-          "bark": {
-            "type": "boolean"
-          },
-          "breed": {
-            "type": "string",
-            "enum": ["Dingo", "Husky", "Retriever", "Shepherd"]
-          }
-        }
-      }
-    ]
-  },
-  "Cat": {
-    "allOf": [
-      {
-        "$ref": "#/components/schemas/BaseAnimal"
-      },
-      {
-        "type": "object",
-        "properties": {
-          "hunts": {
-            "type": "boolean"
-          }
-        }
-      }
-    ]
-  }
-}
+Animal:
+  oneOf:
+  - "$ref": "#/components/schemas/Cat"
+  - "$ref": "#/components/schemas/Dog"
+  discriminator:
+    propertyName: pet_type
+BaseAnimal:
+  type: object
+  required:
+  - pet_type
+  properties:
+    pet_type:
+      type: string
+  discriminator:
+    propertyName: pet_type
+Dog:
+  allOf:
+  - "$ref": "#/components/schemas/BaseAnimal"
+  - type: object
+    properties:
+      bark:
+        type: boolean
+      breed:
+        type: string
+        enum:
+        - Dingo
+        - Husky
+        - Retriever
+        - Shepherd
+Cat:
+  allOf:
+  - "$ref": "#/components/schemas/BaseAnimal"
+  - type: object
+    properties:
+      hunts:
+        type: boolean
 ```
 
 ## New features in specification

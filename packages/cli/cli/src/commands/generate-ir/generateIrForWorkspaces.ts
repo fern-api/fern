@@ -1,10 +1,10 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { Language } from "@fern-api/ir-generator";
+import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
+import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-import { generateIrForWorkspace } from "./generateIrForWorkspace";
+import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";
 
 export async function generateIrForWorkspaces({
     project,
@@ -16,20 +16,27 @@ export async function generateIrForWorkspaces({
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    generationLanguage: Language | undefined;
-    audiences: string[] | undefined;
+    generationLanguage: GenerationLanguage | undefined;
+    audiences: GeneratorAudiences;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const intermediateRepresentation = await generateIrForWorkspace({
+                if (workspace.type === "openapi") {
+                    context.failWithoutThrowing("Generating from OpenAPI not currently supported.");
+                    return;
+                }
+                const intermediateRepresentation = await generateIrForFernWorkspace({
                     workspace,
                     context,
                     generationLanguage,
                     audiences,
                 });
                 const irOutputFilePath = path.resolve(irFilepath);
-                await writeFile(irOutputFilePath, JSON.stringify(intermediateRepresentation, undefined, 4));
+                await writeFile(
+                    irOutputFilePath,
+                    await stringifyLargeObject(intermediateRepresentation, { pretty: true })
+                );
                 context.logger.info(`Wrote IR to ${irOutputFilePath}`);
             });
         })
