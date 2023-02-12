@@ -8,13 +8,18 @@ service:
   base-path: /
   endpoints:
     find:
-      path: ""
-      method: POST
       audiences:
         - public
+      path: ""
+      method: POST
+      request:
+        name: FindRequest
+        query-parameters:
+          optionalString: OptionalString
       response: ImportingType
 
 types:
   ImportingType:
     properties:
       imported: commons.Imported
+  OptionalString: optional<string>
