@@ -107,6 +107,8 @@ class SeenTypeNamesImpl implements SeenTypeNames {
     }
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
-        return typeName.fernFilepath.allParts.join("/") + ":" + typeName.name.originalName;
+        return (
+            typeName.fernFilepath.allParts.map((part) => part.originalName).join("/") + ":" + typeName.name.originalName
+        );
     }
 }
