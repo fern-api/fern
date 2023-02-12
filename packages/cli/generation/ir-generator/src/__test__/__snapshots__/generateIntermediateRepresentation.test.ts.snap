@@ -1937,6 +1937,102 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+              "originalName": "foo",
+              "pascalCase": {
+                "safeName": "Foo",
+                "unsafeName": "Foo",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOO",
+                "unsafeName": "FOO",
+              },
+              "snakeCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "optionalString",
+            "unsafeName": "optionalString",
+          },
+          "originalName": "OptionalString",
+          "pascalCase": {
+            "safeName": "OptionalString",
+            "unsafeName": "OptionalString",
+          },
+          "screamingSnakeCase": {
+            "safeName": "OPTIONAL_STRING",
+            "unsafeName": "OPTIONAL_STRING",
+          },
+          "snakeCase": {
+            "safeName": "optional_string",
+            "unsafeName": "optional_string",
+          },
+        },
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "container",
+          "container": {
+            "_type": "optional",
+            "optional": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        },
+        "resolvedType": {
+          "_type": "container",
+          "container": {
+            "_type": "optional",
+            "optional": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        },
+      },
+    },
   ],
 }
 `;
