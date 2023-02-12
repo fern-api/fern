@@ -1300,6 +1300,157 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "allParts": [
             {
               "camelCase": {
+                "safeName": "folderC",
+                "unsafeName": "folderC",
+              },
+              "originalName": "folder-c",
+              "pascalCase": {
+                "safeName": "FolderC",
+                "unsafeName": "FolderC",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_C",
+                "unsafeName": "FOLDER_C",
+              },
+              "snakeCase": {
+                "safeName": "folder_c",
+                "unsafeName": "folder_c",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+              "originalName": "common",
+              "pascalCase": {
+                "safeName": "Common",
+                "unsafeName": "Common",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMON",
+                "unsafeName": "COMMON",
+              },
+              "snakeCase": {
+                "safeName": "common",
+                "unsafeName": "common",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+            "originalName": "common",
+            "pascalCase": {
+              "safeName": "Common",
+              "unsafeName": "Common",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON",
+              "unsafeName": "COMMON",
+            },
+            "snakeCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "folderC",
+                "unsafeName": "folderC",
+              },
+              "originalName": "folder-c",
+              "pascalCase": {
+                "safeName": "FolderC",
+                "unsafeName": "FolderC",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOLDER_C",
+                "unsafeName": "FOLDER_C",
+              },
+              "snakeCase": {
+                "safeName": "folder_c",
+                "unsafeName": "folder_c",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+          "originalName": "Foo",
+          "pascalCase": {
+            "safeName": "Foo",
+            "unsafeName": "Foo",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FOO",
+            "unsafeName": "FOO",
+          },
+          "snakeCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+        },
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": {
+              "message": undefined,
+              "status": "GENERAL_AVAILABILITY",
+            },
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "barProperty",
+                  "unsafeName": "barProperty",
+                },
+                "originalName": "bar_property",
+                "pascalCase": {
+                  "safeName": "BarProperty",
+                  "unsafeName": "BarProperty",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BAR_PROPERTY",
+                  "unsafeName": "BAR_PROPERTY",
+                },
+                "snakeCase": {
+                  "safeName": "bar_property",
+                  "unsafeName": "bar_property",
+                },
+              },
+              "wireValue": "bar_property",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "UUID",
+            },
+          },
+        ],
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
                 "safeName": "foo",
                 "unsafeName": "foo",
               },
