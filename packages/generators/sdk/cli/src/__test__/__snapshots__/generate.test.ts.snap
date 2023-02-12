@@ -5778,7 +5778,7 @@ export class FernApiClient {
 
     public async getString(): Promise<FernApi.RootString> {
         const _response = await core.fetcher({
-            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -5890,7 +5890,7 @@ export class Client {
      */
     public async create(request: FernApi.CreateOwnerRequest): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/owner\\"),
+            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).serverA, \\"/owner\\"),
             method: \\"POST\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -5938,7 +5938,7 @@ export class Client {
     public async get(ownerId: FernApi.OwnerId): Promise<FernApi.Owner> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
                 \`/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
             ),
             method: \\"GET\\",
@@ -5985,7 +5985,7 @@ export class Client {
     public async update(ownerId: FernApi.OwnerId, request: FernApi.UpdateOwnerRequest): Promise<FernApi.Owner> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
                 \`/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
             ),
             method: \\"PUT\\",
@@ -6217,7 +6217,7 @@ export class Client {
 
     public async getString(): Promise<FernApi.package_.PackageString> {
         const _response = await core.fetcher({
-            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -6316,7 +6316,7 @@ export class Client {
 
     public async getString(): Promise<FernApi.package_.NestedString> {
         const _response = await core.fetcher({
-            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -6460,7 +6460,7 @@ export class Client {
     public async create(request: FernApi.CreateTokenRequest): Promise<FernApi.CreateTokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerB,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \\"/tokens/create\\"
             ),
             method: \\"POST\\",
@@ -6509,7 +6509,7 @@ export class Client {
     public async getTokenMetadata(request: FernApi.GetTokenMetadataRequest): Promise<FernApi.TokenMetadata> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerB,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \\"/tokens/metadata\\"
             ),
             method: \\"POST\\",
@@ -6558,7 +6558,7 @@ export class Client {
     public async getTokensForOwner(ownerId: FernApi.OwnerId): Promise<FernApi.TokenMetadata[]> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerB,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \`/tokens/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
             ),
             method: \\"GET\\",
@@ -8914,18 +8914,18 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
  */
 
 export interface FernApiEnvironmentUrls {
-    ServerA: string;
-    ServerB: string;
+    serverA: string;
+    serverB: string;
 }
 
 export const FernApiEnvironment = {
     Production: {
-        ServerA: \\"a.prod.com\\",
-        ServerB: \\"b.prod.com\\",
+        serverA: \\"a.prod.com\\",
+        serverB: \\"b.prod.com\\",
     },
     Staging: {
-        ServerA: \\"a.staging.com\\",
-        ServerB: \\"b.staging.com\\",
+        serverA: \\"a.staging.com\\",
+        serverB: \\"b.staging.com\\",
     },
 } as const;
 
@@ -9867,7 +9867,7 @@ export class FernApiClient {
 
     public async getString(): Promise<FernApi.RootString> {
         const _response = await core.fetcher({
-            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -9979,7 +9979,7 @@ export class Client {
      */
     public async create(request: FernApi.CreateOwnerRequest): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).ServerA, \\"/owner\\"),
+            url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).serverA, \\"/owner\\"),
             method: \\"POST\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -10027,7 +10027,7 @@ export class Client {
     public async get(ownerId: FernApi.OwnerId): Promise<FernApi.Owner> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
                 \`/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
             ),
             method: \\"GET\\",
@@ -10074,7 +10074,7 @@ export class Client {
     public async update(ownerId: FernApi.OwnerId, request: FernApi.UpdateOwnerRequest): Promise<FernApi.Owner> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
                 \`/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
             ),
             method: \\"PUT\\",
@@ -10306,7 +10306,7 @@ export class Client {
 
     public async getString(): Promise<FernApi.package_.PackageString> {
         const _response = await core.fetcher({
-            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -10405,7 +10405,7 @@ export class Client {
 
     public async getString(): Promise<FernApi.package_.NestedString> {
         const _response = await core.fetcher({
-            url: (this.options.environment ?? environments.FernApiEnvironment.Production).ServerA,
+            url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
                 \\"X-API-Version\\": this.options.apiVersion,
@@ -10549,7 +10549,7 @@ export class Client {
     public async create(request: FernApi.CreateTokenRequest): Promise<FernApi.CreateTokenResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerB,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \\"/tokens/create\\"
             ),
             method: \\"POST\\",
@@ -10598,7 +10598,7 @@ export class Client {
     public async getTokenMetadata(request: FernApi.GetTokenMetadataRequest): Promise<FernApi.TokenMetadata> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerB,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \\"/tokens/metadata\\"
             ),
             method: \\"POST\\",
@@ -10647,7 +10647,7 @@ export class Client {
     public async getTokensForOwner(ownerId: FernApi.OwnerId): Promise<FernApi.TokenMetadata[]> {
         const _response = await core.fetcher({
             url: urlJoin(
-                (this.options.environment ?? environments.FernApiEnvironment.Production).ServerB,
+                (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \`/tokens/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
             ),
             method: \\"GET\\",
@@ -13003,18 +13003,18 @@ export function isPlainObject(value: unknown): value is Record<string, unknown> 
  */
 
 export interface FernApiEnvironmentUrls {
-    ServerA: string;
-    ServerB: string;
+    serverA: string;
+    serverB: string;
 }
 
 export const FernApiEnvironment = {
     Production: {
-        ServerA: \\"a.prod.com\\",
-        ServerB: \\"b.prod.com\\",
+        serverA: \\"a.prod.com\\",
+        serverB: \\"b.prod.com\\",
     },
     Staging: {
-        ServerA: \\"a.staging.com\\",
-        ServerB: \\"b.staging.com\\",
+        serverA: \\"a.staging.com\\",
+        serverB: \\"b.staging.com\\",
     },
 } as const;
 

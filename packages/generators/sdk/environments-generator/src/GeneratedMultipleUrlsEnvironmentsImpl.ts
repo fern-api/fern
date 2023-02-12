@@ -150,6 +150,6 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
     }
 
     private getNameOfBaseUrl(baseUrl: EnvironmentBaseUrlWithId): string {
-        return baseUrl.name.pascalCase.unsafeName;
+        return baseUrl.name.camelCase.unsafeName;
     }
 }
