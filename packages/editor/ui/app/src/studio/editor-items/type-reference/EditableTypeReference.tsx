@@ -1,7 +1,7 @@
 import { Button } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { useBooleanState } from "@fern-api/react-commons";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useBooleanState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
 import { TypeReferenceEditor } from "./draft-type-reference/TypeReferenceEditor";
 import styles from "./EditableTypeReference.module.scss";

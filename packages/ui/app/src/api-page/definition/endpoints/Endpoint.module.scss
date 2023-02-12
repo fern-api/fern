@@ -3,6 +3,8 @@
 .container {
     flex: 1;
     display: flex;
+    min-width: 0;
+    gap: 50px;
 }
 
 .definition {
@@ -11,8 +13,14 @@
     flex-direction: column;
 }
 
-.property {
-    margin: 20px;
+.title {
+    margin-bottom: 30px;
+    padding-top: 40px;
+}
+
+.description {
+    color: $pt-text-color-muted;
+    margin-bottom: 30px;
 }
 
 .examples {
@@ -24,9 +32,5 @@
     top: 0;
     align-self: flex-start;
     padding-top: 30px;
-}
-
-.example {
-    background-color: blue;
-    border-radius: 6px;
+    min-width: 0;
 }

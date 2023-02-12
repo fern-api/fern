@@ -1,7 +1,7 @@
 import { Button, Divider, Intent } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React, { useCallback } from "react";
 import { TypeIcon } from "../../../types/type/TypeIcon";
 import { TypeNameSuggest } from "../../named-type/TypeNameSuggest";

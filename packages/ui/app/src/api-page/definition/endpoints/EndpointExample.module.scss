@@ -1,0 +1,17 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.example {
+    display: flex;
+    flex-direction: column;
+
+    // TODO substract example padding and header height
+    max-height: calc(100vh - 200px);
+}
+
+.divider {
+    width: 2px;
+    height: 15px;
+    background-color: $black;
+    margin-left: 10px;
+    flex-shrink: 0;
+}

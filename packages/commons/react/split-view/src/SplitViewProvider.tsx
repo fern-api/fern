@@ -1,4 +1,4 @@
-import { useBooleanState } from "@fern-ui/react-commons";
+import { useBooleanState } from "@fern-api/react-commons";
 import React, { useMemo } from "react";
 
 export const SplitViewContext = React.createContext<SplitViewContextValue | undefined>(undefined);

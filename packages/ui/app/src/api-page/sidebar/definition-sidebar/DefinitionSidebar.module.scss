@@ -1,9 +1,9 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 .container {
+    flex: 1;
     display: flex;
-
-    &.isFocused {
-        color: red;
-    }
+    flex-direction: column;
+    overflow: auto;
+    padding: 10px;
 }

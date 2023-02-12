@@ -1,5 +1,5 @@
 {
-  "name": "@fern-ui/contexted-dialog",
+  "name": "@fern-api/contexted-dialog",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -31,9 +31,9 @@
   "dependencies": {
     "@blueprintjs/core": "^4.11.5",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-ui/react-commons": "workspace:*",
-    "@fern-ui/theme": "workspace:*",
-    "@fern-ui/toaster": "workspace:*",
+    "@fern-api/react-commons": "workspace:*",
+    "@fern-api/theme": "workspace:*",
+    "@fern-api/toaster": "workspace:*",
     "classnames": "^2.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

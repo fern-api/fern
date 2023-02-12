@@ -3,15 +3,17 @@ import { FernRegistry } from "@fern-fern/registry";
 import { convertTypeReference } from "./convertType";
 import { convertTypeNameToId } from "./convertTypeNameToId";
 
-export function convertService(irService: ir.http.HttpService): FernRegistry.ServiceDefinition {
+export function convertPackage(irService: ir.http.HttpService): FernRegistry.ApiDefinitionSubpackage {
     return {
-        name: irService.displayName ?? "My Service",
+        displayName: irService.displayName ?? undefined,
         endpoints: irService.endpoints.map((endpoint) => convertEndpoint(endpoint)),
+        packages: [],
     };
 }
 
-function convertEndpoint(irEndpoint: ir.http.HttpEndpoint): FernRegistry.Endpoint {
+function convertEndpoint(irEndpoint: ir.http.HttpEndpoint): FernRegistry.EndpointDefinition {
     return {
+        displayName: irEndpoint.displayName ?? irEndpoint.name.originalName,
         path: {
             parts: [
                 FernRegistry.EndpointPathPart.literal(irEndpoint.path.head),

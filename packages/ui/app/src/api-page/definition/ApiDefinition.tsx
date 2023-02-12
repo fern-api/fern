@@ -1,19 +1,22 @@
-import { useApiContext } from "../context/useApiContext";
+import { EMPTY_ARRAY } from "@fern-api/core-utils";
+import { useCurrentApiDefinition } from "../queries/useCurrentApiDefinition";
 import styles from "./ApiDefinition.module.scss";
-import { Service } from "./Service";
+import { PackageDefinitionContents } from "./PackageDefinitionContents";
 
 export const ApiDefinition: React.FC = () => {
-    const { api } = useApiContext();
+    const api = useCurrentApiDefinition();
 
-    if (api.type !== "loaded") {
+    if (api.type !== "loaded" || !api.value.ok) {
         return null;
     }
 
     return (
         <div className={styles.container}>
-            {api.value.services.map((service, serviceIndex) => (
-                <Service key={serviceIndex} service={service} serviceIndex={serviceIndex} />
-            ))}
+            <PackageDefinitionContents
+                packagePathIncludingSelf={EMPTY_ARRAY}
+                subPackages={api.value.body.packages}
+                endpoints={api.value.body.endpoints}
+            />
         </div>
     );
 };

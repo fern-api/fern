@@ -1,0 +1,30 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-top: 1px solid $light-gray1;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+
+.titleRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    font-weight: 600;
+
+    .key {
+        font-size: 13px;
+    }
+
+    .typePreview {
+        color: $gray3;
+        font-size: 12px;
+    }
+}
+
+.decription {
+    color: $pt-text-color-muted;
+}

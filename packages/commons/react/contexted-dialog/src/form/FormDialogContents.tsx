@@ -1,6 +1,6 @@
 import { Button, Classes, Intent } from "@blueprintjs/core";
 import { assertNever, withMinimumTime } from "@fern-api/core-utils";
-import { errorToast, Toast } from "@fern-ui/toaster";
+import { errorToast, Toast } from "@fern-api/toaster";
 import { useCallback, useReducer, useRef } from "react";
 import { RenderFormDialogArgs } from "./types";
 

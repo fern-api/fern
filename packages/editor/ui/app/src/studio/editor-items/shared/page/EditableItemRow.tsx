@@ -1,6 +1,6 @@
 import { Button, Intent } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { useBooleanState } from "@fern-ui/react-commons";
+import { useBooleanState } from "@fern-api/react-commons";
 import styles from "./EditableItemRow.module.scss";
 
 export declare namespace EditableItemRow {

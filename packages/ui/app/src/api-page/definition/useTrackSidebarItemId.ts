@@ -3,16 +3,19 @@ import { useInView } from "react-intersection-observer";
 import { SidebarItemId } from "../context/ApiContext";
 import { useApiContext } from "../context/useApiContext";
 
-export function useTrackSidebarItemId({
-    serviceIndex,
-    endpointIndex,
-}: SidebarItemId): (node?: Element | null | undefined) => void {
-    const [ref, inView] = useInView();
+export function useTrackSidebarItemId(sidebarItemId: SidebarItemId): (node?: Element | null | undefined) => void {
+    const [ref, inView] = useInView({
+        // detect what is intersecting the middle of the screen
+        // https://stackoverflow.com/a/69020644/4238485
+        rootMargin: "-50% 0% -50% 0%",
+        // this must be 0 for the above rootMargin to work
+        threshold: 0,
+    });
 
-    const { setIsSidebarItemVisible } = useApiContext();
+    const { setIsSidebarItemFocused } = useApiContext();
     useEffect(() => {
-        setIsSidebarItemVisible({ serviceIndex, endpointIndex }, inView);
-    }, [endpointIndex, inView, serviceIndex, setIsSidebarItemVisible]);
+        setIsSidebarItemFocused(sidebarItemId, inView);
+    }, [inView, setIsSidebarItemFocused, sidebarItemId]);
 
     return ref;
 }

@@ -1,9 +1,9 @@
 import { Button, EditableText } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
+import { useLocalTextState } from "@fern-api/react-commons";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
-import { useLocalTextState } from "@fern-ui/react-commons";
 import { useCallback } from "react";
 import { useApiEditorContext } from "../../../../../../api-editor-context/ApiEditorContext";
 import { EditableItemRow } from "../../../../shared/page/EditableItemRow";

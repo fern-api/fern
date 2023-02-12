@@ -2195,6 +2195,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.3.1":
+  version: 7.20.13
+  resolution: "@babel/runtime@npm:7.20.13"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 09b7a97a05c80540db6c9e4ddf8c5d2ebb06cae5caf3a87e33c33f27f8c4d49d9c67a2d72f1570e796045288fad569f98a26ceba0c4f5fad2af84b6ad855c4fb
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.12.7, @babel/template@npm:^7.18.10":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
@@ -3346,6 +3355,32 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/common-components@workspace:*, @fern-api/common-components@workspace:packages/commons/react/common-components":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/common-components@workspace:packages/commons/react/common-components"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@blueprintjs/icons": ^4.4.0
+    "@fern-api/loadable": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/compile-root@workspace:packages/_root":
   version: 0.0.0-use.local
   resolution: "@fern-api/compile-root@workspace:packages/_root"
@@ -3355,15 +3390,20 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/cli": "workspace:*"
+    "@fern-api/common-components": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/contexted-dialog": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/demo-setup": "workspace:*"
     "@fern-api/dependencies-configuration": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/docs": "workspace:*"
+    "@fern-api/editor-app": "workspace:*"
+    "@fern-api/editor-fe-bundle": "workspace:*"
     "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/ete-tests": "workspace:*"
     "@fern-api/fe-bundle": "workspace:*"
+    "@fern-api/fonts": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/init": "workspace:*"
@@ -3380,30 +3420,26 @@ __metadata:
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
+    "@fern-api/react-commons": "workspace:*"
+    "@fern-api/react-query-utils": "workspace:*"
     "@fern-api/register": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
+    "@fern-api/routing-utils": "workspace:*"
     "@fern-api/scripts": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
+    "@fern-api/split-view": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/theme": "workspace:*"
+    "@fern-api/toaster": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
+    "@fern-api/ui": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-ui/common-components": "workspace:*"
-    "@fern-ui/contexted-dialog": "workspace:*"
-    "@fern-ui/editor-app": "workspace:*"
-    "@fern-ui/editor-fe-bundle": "workspace:*"
-    "@fern-ui/fonts": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/react-query-utils": "workspace:*"
-    "@fern-ui/routing-utils": "workspace:*"
-    "@fern-ui/split-view": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fern-ui/toaster": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3431,6 +3467,34 @@ __metadata:
     prettier: ^2.7.1
     typescript: 4.6.4
     zod: ^3.14.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/contexted-dialog@workspace:*, @fern-api/contexted-dialog@workspace:packages/commons/react/contexted-dialog":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/react-commons": "workspace:*"
+    "@fern-api/theme": "workspace:*"
+    "@fern-api/toaster": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
@@ -3546,6 +3610,83 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/editor-app@workspace:*, @fern-api/editor-app@workspace:packages/editor/ui/app":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/editor-app@workspace:packages/editor/ui/app"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@blueprintjs/icons": ^4.4.0
+    "@blueprintjs/popover2": ^1.8.0
+    "@blueprintjs/select": ^4.4.2
+    "@emotion/react": ^11.9.3
+    "@emotion/styled": ^11.9.3
+    "@fern-api/common-components": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/editor-item-id-generator": "workspace:*"
+    "@fern-api/fonts": "workspace:*"
+    "@fern-api/loadable": "workspace:*"
+    "@fern-api/react-commons": "workspace:*"
+    "@fern-api/routing-utils": "workspace:*"
+    "@fern-api/split-view": "workspace:*"
+    "@fern-api/theme": "workspace:*"
+    "@fern-api/transaction-generator": "workspace:*"
+    "@fern-api/transaction-resolver": "workspace:*"
+    "@fern-fern/api-editor-sdk": 0.0.38
+    "@fontsource/actor": ^4.5.9
+    "@fontsource/roboto-mono": ^4.5.8
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    "@types/uuid": ^9.0.0
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    lodash-es: ^4.17.21
+    normalize.css: ^8.0.1
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-query: ^3.34.12
+    react-router-dom: ^6.4.3
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    uuid: ^9.0.0
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/editor-fe-bundle@workspace:*, @fern-api/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/editor-app": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    "@types/react-dom": ^18.0.6
+    "@vitejs/plugin-react": ^2.0.0
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    sass: ^1.54.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+    vite-plugin-checker: ^0.4.9
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/editor-item-id-generator@workspace:*, @fern-api/editor-item-id-generator@workspace:packages/editor/id-generator":
   version: 0.0.0-use.local
   resolution: "@fern-api/editor-item-id-generator@workspace:packages/editor/id-generator"
@@ -3617,6 +3758,27 @@ __metadata:
     typescript: 4.6.4
     vite: 3.0.3
     vite-plugin-checker: ^0.4.9
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/fonts@workspace:*, @fern-api/fonts@workspace:packages/commons/react/fonts":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fonts@workspace:packages/commons/react/fonts"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
@@ -4003,6 +4165,53 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/react-commons@workspace:*, @fern-api/react-commons@workspace:packages/commons/react/react-commons":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/react-commons@workspace:packages/commons/react/react-commons"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@fern-api/core-utils": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    immer: ^9.0.15
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/react-query-utils@workspace:*, @fern-api/react-query-utils@workspace:packages/commons/react/react-query-utils":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/react-query-utils@workspace:packages/commons/react/react-query-utils"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/loadable": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-query: ^3.34.12
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/register@workspace:*, @fern-api/register@workspace:packages/cli/register":
   version: 0.0.0-use.local
   resolution: "@fern-api/register@workspace:packages/cli/register"
@@ -4011,7 +4220,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-model": 0.0.914
-    "@fern-fern/registry": 0.0.5
+    "@fern-fern/registry": 0.0.21
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4059,6 +4268,31 @@ __metadata:
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     url-join: ^5.0.0
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/routing-utils@workspace:*, @fern-api/routing-utils@workspace:packages/commons/react/routing-utils":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/routing-utils@workspace:packages/commons/react/routing-utils"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    react-router-dom: ^6.4.3
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
@@ -4131,6 +4365,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/split-view@workspace:*, @fern-api/split-view@workspace:packages/commons/react/split-view":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/split-view@workspace:packages/commons/react/split-view"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/react-commons": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.6
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    lodash-es: ^4.17.21
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-draggable: ^4.4.5
+    sass: ^1.54.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/task-context@workspace:*, @fern-api/task-context@workspace:packages/cli/task-context":
   version: 0.0.0-use.local
   resolution: "@fern-api/task-context@workspace:packages/cli/task-context"
@@ -4146,6 +4409,53 @@ __metadata:
     jest: ^29.0.3
     prettier: ^2.7.1
     typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/theme@workspace:*, @fern-api/theme@workspace:packages/commons/react/theme":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/theme@workspace:packages/commons/react/theme"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@types/react": ^18.0.20
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/toaster@workspace:*, @fern-api/toaster@workspace:packages/commons/react/toaster":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/toaster@workspace:packages/commons/react/toaster"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@blueprintjs/core": ^4.11.5
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    classnames: ^2.3.1
+    depcheck: ^1.4.3
+    eslint: ^8.26.0
+    jest: ^29.0.3
+    prettier: ^2.7.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    stylelint: ^14.14.0
+    typescript: 4.6.4
+    vite: 3.0.3
   languageName: unknown
   linkType: soft
 
@@ -4205,25 +4515,27 @@ __metadata:
     "@blueprintjs/select": ^4.4.2
     "@emotion/react": ^11.9.3
     "@emotion/styled": ^11.9.3
+    "@fern-api/common-components": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/editor-item-id-generator": "workspace:*"
+    "@fern-api/fonts": "workspace:*"
     "@fern-api/loadable": "workspace:*"
+    "@fern-api/react-commons": "workspace:*"
+    "@fern-api/react-query-utils": "workspace:*"
+    "@fern-api/routing-utils": "workspace:*"
+    "@fern-api/split-view": "workspace:*"
+    "@fern-api/theme": "workspace:*"
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
     "@fern-fern/api-editor-sdk": 0.0.38
-    "@fern-fern/registry": 0.0.5
-    "@fern-ui/common-components": "workspace:*"
-    "@fern-ui/fonts": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/routing-utils": "workspace:*"
-    "@fern-ui/split-view": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
+    "@fern-fern/registry": 0.0.21
     "@fontsource/actor": ^4.5.9
     "@fontsource/roboto-mono": ^4.5.8
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
+    "@types/react-syntax-highlighter": ^15.5.6
     "@types/uuid": ^9.0.0
     classnames: ^2.3.1
     depcheck: ^1.4.3
@@ -4237,6 +4549,7 @@ __metadata:
     react-intersection-observer: ^9.4.2
     react-query: ^3.34.12
     react-router-dom: ^6.4.3
+    react-syntax-highlighter: ^15.5.0
     stylelint: ^14.14.0
     typescript: 4.6.4
     uuid: ^9.0.0
@@ -4508,14 +4821,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry@npm:0.0.5":
-  version: 0.0.5
-  resolution: "@fern-fern/registry@npm:0.0.5"
+"@fern-fern/registry@npm:0.0.21":
+  version: 0.0.21
+  resolution: "@fern-fern/registry@npm:0.0.21"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: bde3b4184d1ce157f399d33903214914847a6c72262c0b621e03d20d60d411d40e10376523f844e284b38a17a76113821226ad3123a99164a09e5f20ebac01ca
+  checksum: 08127a4ccacb97f66abac3e56dea883ee33935dd74a16325b3fe64f7a3715e20df162e4409807ed553232c9768916a57c84093ea943cac3c175ff92ef1c5e6d6
   languageName: node
   linkType: hard
 
@@ -4529,306 +4842,6 @@ __metadata:
   checksum: 173877b5eb6412e65f577cf7f2ce90317e81e5348bbba0cb6c1b272d10b44c0ad74f1bafb16428f88b42a1af51343f45b82d2664728d5d7f1cf00e987bd3f6be
   languageName: node
   linkType: hard
-
-"@fern-ui/common-components@workspace:*, @fern-ui/common-components@workspace:packages/commons/react/common-components":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/common-components@workspace:packages/commons/react/common-components"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@blueprintjs/icons": ^4.4.0
-    "@fern-api/loadable": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/contexted-dialog@workspace:*, @fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fern-ui/toaster": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/editor-app@workspace:*, @fern-ui/editor-app@workspace:packages/editor/ui/app":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/editor-app@workspace:packages/editor/ui/app"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@blueprintjs/icons": ^4.4.0
-    "@blueprintjs/popover2": ^1.8.0
-    "@blueprintjs/select": ^4.4.2
-    "@emotion/react": ^11.9.3
-    "@emotion/styled": ^11.9.3
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-api/editor-item-id-generator": "workspace:*"
-    "@fern-api/loadable": "workspace:*"
-    "@fern-api/transaction-generator": "workspace:*"
-    "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.38
-    "@fern-ui/common-components": "workspace:*"
-    "@fern-ui/fonts": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@fern-ui/routing-utils": "workspace:*"
-    "@fern-ui/split-view": "workspace:*"
-    "@fern-ui/theme": "workspace:*"
-    "@fontsource/actor": ^4.5.9
-    "@fontsource/roboto-mono": ^4.5.8
-    "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    "@types/uuid": ^9.0.0
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    lodash-es: ^4.17.21
-    normalize.css: ^8.0.1
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-query: ^3.34.12
-    react-router-dom: ^6.4.3
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    uuid: ^9.0.0
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/editor-fe-bundle@workspace:*, @fern-ui/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-ui/editor-app": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    "@types/react-dom": ^18.0.6
-    "@vitejs/plugin-react": ^2.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    sass: ^1.54.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-    vite-plugin-checker: ^0.4.9
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/fonts@workspace:*, @fern-ui/fonts@workspace:packages/commons/react/fonts":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/fonts@workspace:packages/commons/react/fonts"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/react-commons@workspace:*, @fern-ui/react-commons@workspace:packages/commons/react/react-commons":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/react-commons@workspace:packages/commons/react/react-commons"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@fern-api/core-utils": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    immer: ^9.0.15
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/react-query-utils@workspace:*, @fern-ui/react-query-utils@workspace:packages/commons/react/react-query-utils":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/react-query-utils@workspace:packages/commons/react/react-query-utils"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-api/loadable": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-query: ^3.34.12
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/routing-utils@workspace:*, @fern-ui/routing-utils@workspace:packages/commons/react/routing-utils":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/routing-utils@workspace:packages/commons/react/routing-utils"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-router-dom: ^6.4.3
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/split-view@workspace:*, @fern-ui/split-view@workspace:packages/commons/react/split-view":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/split-view@workspace:packages/commons/react/split-view"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-ui/react-commons": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    lodash-es: ^4.17.21
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-draggable: ^4.4.5
-    sass: ^1.54.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/theme@workspace:*, @fern-ui/theme@workspace:packages/commons/react/theme":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/theme@workspace:packages/commons/react/theme"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
-
-"@fern-ui/toaster@workspace:*, @fern-ui/toaster@workspace:packages/commons/react/toaster":
-  version: 0.0.0-use.local
-  resolution: "@fern-ui/toaster@workspace:packages/commons/react/toaster"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.0.3
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: 3.0.3
-  languageName: unknown
-  linkType: soft
 
 "@fontsource/actor@npm:^4.5.9":
   version: 4.5.9
@@ -6638,6 +6651,15 @@ __metadata:
     "@types/history": ^4.7.11
     "@types/react": "*"
   checksum: f08b37ee822f9f9ff904ffd0778fe2bb7c717ed3ee311610382ee024d02a35169bd3301ecde863cac21aae8fdee919501e8ea22bad0260c02c10cfbdba5c71be
+  languageName: node
+  linkType: hard
+
+"@types/react-syntax-highlighter@npm:^15.5.6":
+  version: 15.5.6
+  resolution: "@types/react-syntax-highlighter@npm:15.5.6"
+  dependencies:
+    "@types/react": "*"
+  checksum: 81a9f26da41606ff595d42a064ec4097cd17c4ef242558aa5b3b76a1063729b2ae73f063350069a4692218cf6843d7ea59d3eaeac4df2a4894d969d911fb80b2
   languageName: node
   linkType: hard
 
@@ -11643,6 +11665,15 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"fault@npm:^1.0.0":
+  version: 1.0.4
+  resolution: "fault@npm:1.0.4"
+  dependencies:
+    format: ^0.2.0
+  checksum: 5ac610d8b09424e0f2fa8cf913064372f2ee7140a203a79957f73ed557c0e79b1a3d096064d7f40bde8132a69204c1fe25ec23634c05c6da2da2039cff26c4e7
+  languageName: node
+  linkType: hard
+
 "faye-websocket@npm:^0.11.3":
   version: 0.11.4
   resolution: "faye-websocket@npm:0.11.4"
@@ -12013,6 +12044,13 @@ env-cmd@toddbluhm/env-cmd:
     combined-stream: "npm:^1.0.8"
     mime-types: "npm:^2.1.12"
   checksum: 01135bf8675f9d5c61ff18e2e2932f719ca4de964e3be90ef4c36aacfc7b9cb2fceb5eca0b7e0190e3383fe51c5b37f4cb80b62ca06a99aaabfcfd6ac7c9328c
+  languageName: node
+  linkType: hard
+
+"format@npm:^0.2.0":
+  version: 0.2.2
+  resolution: "format@npm:0.2.2"
+  checksum: 646a60e1336250d802509cf24fb801e43bd4a70a07510c816fa133aa42cdbc9c21e66e9cc0801bb183c5b031c9d68be62e7fbb6877756e52357850f92aa28799
   languageName: node
   linkType: hard
 
@@ -12695,6 +12733,13 @@ env-cmd@toddbluhm/env-cmd:
     capital-case: "npm:^1.0.4"
     tslib: "npm:^2.0.3"
   checksum: 571c83eeb25e8130d172218712f807c0b96d62b020981400bccc1503a7cf14b09b8b10498a962d2739eccf231d950e3848ba7d420b58a6acd2f9283439546cd9
+  languageName: node
+  linkType: hard
+
+"highlight.js@npm:^10.4.1, highlight.js@npm:~10.7.0":
+  version: 10.7.3
+  resolution: "highlight.js@npm:10.7.3"
+  checksum: defeafcd546b535d710d8efb8e650af9e3b369ef53e28c3dc7893eacfe263200bba4c5fcf43524ae66d5c0c296b1af0870523ceae3e3104d24b7abf6374a4fea
   languageName: node
   linkType: hard
 
@@ -14845,6 +14890,16 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.0.0
   resolution: "lowercase-keys@npm:3.0.0"
   checksum: 67a3f81409af969bc0c4ca0e76cd7d16adb1e25aa1c197229587eaf8671275c8c067cd421795dbca4c81be0098e4c426a086a05e30de8a9c587b7a13c0c7ccc5
+  languageName: node
+  linkType: hard
+
+"lowlight@npm:^1.17.0":
+  version: 1.20.0
+  resolution: "lowlight@npm:1.20.0"
+  dependencies:
+    fault: ^1.0.0
+    highlight.js: ~10.7.0
+  checksum: 14a1815d6bae202ddee313fc60f06d46e5235c02fa483a77950b401d85b4c1e12290145ccd17a716b07f9328bd5864aa2d402b6a819ff3be7c833d9748ff8ba7
   languageName: node
   linkType: hard
 
@@ -17088,6 +17143,20 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"prismjs@npm:^1.27.0":
+  version: 1.29.0
+  resolution: "prismjs@npm:1.29.0"
+  checksum: 007a8869d4456ff8049dc59404e32d5666a07d99c3b0e30a18bd3b7676dfa07d1daae9d0f407f20983865fd8da56de91d09cb08e6aa61f5bc420a27c0beeaf93
+  languageName: node
+  linkType: hard
+
+"prismjs@npm:~1.27.0":
+  version: 1.27.0
+  resolution: "prismjs@npm:1.27.0"
+  checksum: 85c7f4a3e999073502cc9e1882af01e3709706369ec254b60bff1149eda701f40d02512acab956012dc7e61cfd61743a3a34c1bd0737e8dbacd79141e5698bbc
+  languageName: node
+  linkType: hard
+
 "process-nextick-args@npm:~2.0.0":
   version: 2.0.1
   resolution: "process-nextick-args@npm:2.0.1"
@@ -17604,6 +17673,21 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"react-syntax-highlighter@npm:^15.5.0":
+  version: 15.5.0
+  resolution: "react-syntax-highlighter@npm:15.5.0"
+  dependencies:
+    "@babel/runtime": ^7.3.1
+    highlight.js: ^10.4.1
+    lowlight: ^1.17.0
+    prismjs: ^1.27.0
+    refractor: ^3.6.0
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: c082b48f30f8ba8d0c55ed1d761910630860077c7ff5793c4c912adcb5760df06436ed0ad62be0de28113aac9ad2af55eccd995f8eee98df53382e4ced2072fb
+  languageName: node
+  linkType: hard
+
 "react-textarea-autosize@npm:^8.3.2":
   version: 8.3.4
   resolution: "react-textarea-autosize@npm:8.3.4"
@@ -17749,6 +17833,17 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"refractor@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "refractor@npm:3.6.0"
+  dependencies:
+    hastscript: ^6.0.0
+    parse-entities: ^2.0.0
+    prismjs: ~1.27.0
+  checksum: 39b01c4168c77c5c8486f9bf8907bbb05f257f15026057ba5728535815a2d90eed620468a4bfbb2b8ceefbb3ce3931a1be8b17152dbdbc8b0eef92450ff750a2
+  languageName: node
+  linkType: hard
+
 "regenerate-unicode-properties@npm:^10.0.1":
   version: 10.0.1
   resolution: "regenerate-unicode-properties@npm:10.0.1"
@@ -17762,6 +17857,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.4.2
   resolution: "regenerate@npm:1.4.2"
   checksum: 3317a09b2f802da8db09aa276e469b57a6c0dd818347e05b8862959c6193408242f150db5de83c12c3fa99091ad95fb42a6db2c3329bfaa12a0ea4cbbeb30cb0
+  languageName: node
+  linkType: hard
+
+"regenerator-runtime@npm:^0.13.11":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
   languageName: node
   linkType: hard
 

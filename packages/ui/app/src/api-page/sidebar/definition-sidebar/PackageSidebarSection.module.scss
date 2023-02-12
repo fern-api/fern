@@ -1,0 +1,27 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+}
+
+.iconWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.leftLineWrapper {
+    display: flex;
+
+    // flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.leftLine {
+    width: 1px;
+    background-color: gray;
+}

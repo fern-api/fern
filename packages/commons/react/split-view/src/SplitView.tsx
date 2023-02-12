@@ -1,5 +1,5 @@
 import { ResizeSensor } from "@blueprintjs/core";
-import { useDimensions } from "@fern-ui/react-commons";
+import { useDimensions } from "@fern-api/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
 import { getRelevationDimensionForOrientation } from "./getRelevationDimensionForOrientation";

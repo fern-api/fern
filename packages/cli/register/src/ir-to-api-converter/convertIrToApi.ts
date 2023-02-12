@@ -1,19 +1,19 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { FernRegistry } from "@fern-fern/registry";
-import { convertService } from "./convertService";
+import { convertPackage } from "./convertPackage";
 import { convertType } from "./convertType";
 import { convertTypeNameToId } from "./convertTypeNameToId";
 
-export function convertIrToApi(ir: IntermediateRepresentation): FernRegistry.ApiDefinition {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function convertIrToApi(ir: IntermediateRepresentation): any {
     return {
-        id: FernRegistry.ApiId("some-id"),
-        version: FernRegistry.ApiVersion("0.0.0"),
         types: ir.types.reduce<Record<FernRegistry.TypeId, FernRegistry.TypeDefinition>>((acc, type) => {
             return {
                 ...acc,
                 [convertTypeNameToId(type.name)]: convertType(type),
             };
         }, {}),
-        services: ir.services.map((service) => convertService(service)),
+        packages: ir.services.map((service) => convertPackage(service)),
+        endpoints: [],
     };
 }

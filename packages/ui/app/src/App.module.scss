@@ -2,6 +2,7 @@
 
 body {
     overscroll-behavior-y: none;
+    font-family: Actor;
 
     h1,
     h2,
@@ -19,5 +20,4 @@ body {
     flex: 1;
     display: flex;
     height: 100vh;
-    font-family: Actor;
 }

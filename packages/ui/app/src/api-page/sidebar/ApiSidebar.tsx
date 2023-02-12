@@ -4,7 +4,7 @@ import { assertNever, Values } from "@fern-api/core-utils";
 import classNames from "classnames";
 import { useCallback, useState } from "react";
 import styles from "./ApiSidebar.module.scss";
-import { DefinitionSidebar } from "./DefinitionSidebar";
+import { DefinitionSidebar } from "./definition-sidebar/DefinitionSidebar";
 
 const SidebarTab = {
     DEFINITION: "definition",

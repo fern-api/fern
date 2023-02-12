@@ -1,5 +1,5 @@
 import { assertNever, Values } from "@fern-api/core-utils";
-import { useIsHovering } from "@fern-ui/react-commons";
+import { useIsHovering } from "@fern-api/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useContext, useRef, useState } from "react";
 import { DraggableCore, DraggableEvent, DraggableEventHandler } from "react-draggable";

@@ -1,5 +1,3 @@
-import { Loadable } from "@fern-api/loadable";
-import { FernRegistry } from "@fern-fern/registry";
 import React from "react";
 
 export const ApiContext = React.createContext<() => ApiContextValue>(() => {
@@ -7,13 +5,25 @@ export const ApiContext = React.createContext<() => ApiContextValue>(() => {
 });
 
 export interface ApiContextValue {
-    api: Loadable<FernRegistry.ApiDefinition>;
     focusedSidebarItem: SidebarItemId | undefined;
-    setIsSidebarItemVisible: (sidebarItemId: SidebarItemId, isVisible: boolean) => void;
+    setIsSidebarItemFocused: (sidebarItemId: SidebarItemId, isVisible: boolean) => void;
 }
 
-export interface SidebarItemId {
-    serviceIndex: number;
-    // optional for services
-    endpointIndex: number | undefined;
+export type SidebarItemId = PackageId | EndpointId;
+
+export interface PackageId {
+    type: "package";
+    packagePathIncludingSelf: PackagePath;
+}
+
+export interface EndpointId {
+    type: "endpoint";
+    packagePath: PackagePath;
+    indexInParent: number;
+}
+
+export type PackagePath = readonly PackagePathItem[];
+
+export interface PackagePathItem {
+    indexInParent: number;
 }

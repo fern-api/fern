@@ -1,8 +1,8 @@
 import { NonIdealState, Spinner } from "@blueprintjs/core";
 import { delay } from "@fern-api/core-utils";
 import { isLoaded, Loadable, loaded, loading, notStartedLoading } from "@fern-api/loadable";
+import { Pane, ResizeHandlePosition, SplitView } from "@fern-api/split-view";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { Pane, ResizeHandlePosition, SplitView } from "@fern-ui/split-view";
 import React, { useEffect, useState } from "react";
 import { ApiEditorContextProvider } from "../api-editor-context/ApiEditorContextProvider";
 import { MaybeSelectedEditorItemPage } from "./MaybeSelectedEditorItemPage";

@@ -1,4 +1,4 @@
-import { useIsDirectlyHovering } from "@fern-ui/react-commons";
+import { useIsDirectlyHovering } from "@fern-api/react-commons";
 import classNames from "classnames";
 import React, { useCallback } from "react";
 import { useDraftTypeReferenceContext } from "./context/DraftTypeReferenceContext";

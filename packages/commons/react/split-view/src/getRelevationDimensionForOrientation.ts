@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Dimensions } from "@fern-ui/react-commons";
+import { Dimensions } from "@fern-api/react-commons";
 import { Orientation } from "./types";
 
 export function getRelevationDimensionForOrientation(dimensions: Dimensions, orientation: Orientation): number {

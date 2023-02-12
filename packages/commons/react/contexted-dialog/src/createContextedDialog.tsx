@@ -1,4 +1,4 @@
-import { ThemedDialog } from "@fern-ui/theme";
+import { ThemedDialog } from "@fern-api/theme";
 import classNames from "classnames";
 import { createContext, useCallback, useContext } from "react";
 import styles from "./createContextedDialog.module.scss";
