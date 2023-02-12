@@ -11,7 +11,7 @@ export type EndpointId = string;
 
 export interface TypeNode {
     typeId: TypeId;
-    descendents: Set<TypeId>;
+    descendants: Set<TypeId>;
 }
 
 export interface ErrorNode {

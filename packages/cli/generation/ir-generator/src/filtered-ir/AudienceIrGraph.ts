@@ -31,11 +31,11 @@ export class AudienceIrGraph {
         this.audiences = new Set(audiences);
     }
 
-    public addType(declaredTypeName: DeclaredTypeName, descendents: DeclaredTypeName[]): void {
+    public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
         const typeId = getTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
-            descendents: new Set(descendents.map((declaredTypeName) => getTypeId(declaredTypeName))),
+            descendants: new Set(descendants.map((declaredTypeName) => getTypeId(declaredTypeName))),
         };
         this.types[typeId] = typeNode;
     }
@@ -136,13 +136,15 @@ export class AudienceIrGraph {
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
-        for (const typeId of typesToAdd.keys()) {
+        for (const typeId of typesToAdd) {
             if (types.has(typeId)) {
                 continue;
             }
             types.add(typeId);
             const typeNode = this.getTypeNode(typeId);
-            this.addReferencedTypes(types, typeNode.descendents);
+            typeNode.descendants.forEach((descendantTypeId) => {
+                types.add(descendantTypeId);
+            });
         }
     }
 
