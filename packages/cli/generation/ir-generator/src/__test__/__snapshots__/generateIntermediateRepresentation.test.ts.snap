@@ -359,7 +359,103 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "parts": [],
           },
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": {
+                "message": undefined,
+                "status": "GENERAL_AVAILABILITY",
+              },
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "optionalString",
+                    "unsafeName": "optionalString",
+                  },
+                  "originalName": "optionalString",
+                  "pascalCase": {
+                    "safeName": "OptionalString",
+                    "unsafeName": "OptionalString",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "OPTIONAL_STRING",
+                    "unsafeName": "OPTIONAL_STRING",
+                  },
+                  "snakeCase": {
+                    "safeName": "optional_string",
+                    "unsafeName": "optional_string",
+                  },
+                },
+                "wireValue": "optionalString",
+              },
+              "valueType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "foo",
+                        "unsafeName": "foo",
+                      },
+                      "originalName": "foo",
+                      "pascalCase": {
+                        "safeName": "Foo",
+                        "unsafeName": "Foo",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FOO",
+                        "unsafeName": "FOO",
+                      },
+                      "snakeCase": {
+                        "safeName": "foo",
+                        "unsafeName": "foo",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                    "originalName": "foo",
+                    "pascalCase": {
+                      "safeName": "Foo",
+                      "unsafeName": "Foo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOO",
+                      "unsafeName": "FOO",
+                    },
+                    "snakeCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "optionalString",
+                    "unsafeName": "optionalString",
+                  },
+                  "originalName": "OptionalString",
+                  "pascalCase": {
+                    "safeName": "OptionalString",
+                    "unsafeName": "OptionalString",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "OPTIONAL_STRING",
+                    "unsafeName": "OPTIONAL_STRING",
+                  },
+                  "snakeCase": {
+                    "safeName": "optional_string",
+                    "unsafeName": "optional_string",
+                  },
+                },
+              },
+            },
+          ],
           "requestBody": undefined,
           "response": {
             "docs": undefined,
@@ -429,7 +525,68 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               },
             },
           },
-          "sdkRequest": undefined,
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "findRequest",
+                  "unsafeName": "findRequest",
+                },
+                "originalName": "FindRequest",
+                "pascalCase": {
+                  "safeName": "FindRequest",
+                  "unsafeName": "FindRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FIND_REQUEST",
+                  "unsafeName": "FIND_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "find_request",
+                  "unsafeName": "find_request",
+                },
+              },
+            },
+          },
         },
       ],
       "headers": [],
@@ -1778,6 +1935,102 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             },
           },
         ],
+      },
+    },
+    {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+              "originalName": "foo",
+              "pascalCase": {
+                "safeName": "Foo",
+                "unsafeName": "Foo",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FOO",
+                "unsafeName": "FOO",
+              },
+              "snakeCase": {
+                "safeName": "foo",
+                "unsafeName": "foo",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "optionalString",
+            "unsafeName": "optionalString",
+          },
+          "originalName": "OptionalString",
+          "pascalCase": {
+            "safeName": "OptionalString",
+            "unsafeName": "OptionalString",
+          },
+          "screamingSnakeCase": {
+            "safeName": "OPTIONAL_STRING",
+            "unsafeName": "OPTIONAL_STRING",
+          },
+          "snakeCase": {
+            "safeName": "optional_string",
+            "unsafeName": "optional_string",
+          },
+        },
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "container",
+          "container": {
+            "_type": "optional",
+            "optional": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        },
+        "resolvedType": {
+          "_type": "container",
+          "container": {
+            "_type": "optional",
+            "optional": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        },
       },
     },
   ],

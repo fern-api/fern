@@ -128,7 +128,7 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
+                    audienceIrGraph?.addEndpoint(convertedHttpService, httpEndpoint);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });
                 if (service.audiences != null) {
