@@ -79,6 +79,7 @@ class WriterImpl(AST.Writer):
             import isort
 
             try:
+                print("Formatting: " + self._filepath)
                 self._content = isort.code(self._content, quiet=True)
                 self._content = black.format_file_contents(
                     self._content,
@@ -86,7 +87,8 @@ class WriterImpl(AST.Writer):
                     # todo read their config?
                     mode=black.FileMode(magic_trailing_comma=False, line_length=120),
                 )
-            except:  # noqa: E722
+            except Exception as e:
+                print("Failed to format " + self._filepath, e)
                 # write to disk even if the the formatting failed
                 pass
 

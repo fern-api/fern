@@ -27,7 +27,7 @@ class FastApiGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
     ) -> bool:
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
-        return custom_config.skip_formatting is None or not custom_config.skip_formatting
+        return not custom_config.skip_formatting
 
     def run(
         self,
