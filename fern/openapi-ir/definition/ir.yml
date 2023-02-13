@@ -1,39 +1,39 @@
-types: 
-  IntermediateRepresentation: 
-    properties: 
+types:
+  IntermediateRepresentation:
+    properties:
       displayName: optional<string>
-      environments: list<Environment>
+      servers: list<Server>
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
       schemasToTags:
         type: map<SchemaId, list<TagId>>
         docs: Which schemas are referenced by which tags
 
-  WithDescription: 
-    properties: 
+  WithDescription:
+    properties:
       description: optional<string>
 
-  Environment: 
+  Server:
     extends: WithDescription
-    properties: 
+    properties:
       name: optional<string>
       url: string
 
-  TagId: 
+  TagId:
     type: string
     docs: The name of the tag.
-  
-  TagInfo: 
-    properties: 
+
+  TagInfo:
+    properties:
       description: string
       displayName: optional<string>
 
-  SchemaId: 
+  SchemaId:
     type: string
     docs: The name of the schema.
 
-  Endpoint: 
-    properties: 
+  Endpoint:
+    properties:
       operationId: optional<string>
       tags: list<TagId>
       summary: optional<string>
@@ -43,32 +43,33 @@ types:
       request: optional<Request>
       response: optional<Schema>
 
-  Request: 
-    properties:   
+  Request:
+    properties:
       pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       headers: list<Header>
       requestBody: optional<Schema>
 
-  PathParameter: 
+  PathParameter:
     extends: WithDescription
-    properties: 
+    properties:
       name: string
       schema: Schema
 
-  QueryParameter:   
+  QueryParameter:
     extends: WithDescription
-    properties: 
+    properties:
       name: string
       schema: Schema
 
-  Header: 
+  Header:
     extends: WithDescription
-    properties: 
+    properties:
       name: string
+      schema: Schema
 
-  HttpMethod: 
-    enum: 
+  HttpMethod:
+    enum:
       - GET
       - POST
       - PUT
@@ -76,61 +77,68 @@ types:
       - PATCH
 
   Schema:
-    union: 
+    union:
       primitive: PrimitiveSchema
       object: ObjectSchema
-      container: ContainerSchema
+      array: ArraySchema
+      optional: OptionalSchema
       enum: EnumSchema
+      reference: ReferencedSchema
+      unknown: UnknownSchema
+
+  UnknownSchema:
+    extends:
+      - WithDescription
+    properties: {}
+
+  ReferencedSchema:
+    extends:
+      - WithDescription
+    properties:
       reference: SchemaId
 
-  EnumSchema: 
+  EnumSchema:
     extends: WithDescription
-    properties: 
+    properties:
       values: list<EnumValue>
 
-  EnumValue: 
-    properties: 
-      name: 
+  EnumValue:
+    properties:
+      name:
         type: optional<string>
         docs: Name suitable for code generation.
-      value: 
+      value:
         type: string
         docs: Value of the enum
-      
-  ObjectSchema: 
+
+  ObjectSchema:
     extends: WithDescription
-    properties: 
-      allOfReferences: list<SchemaId>
-      allOfInlined: list<ObjectSchema>
+    properties:
+      allOf: list<Schema>
       properties: list<ObjectProperty>
 
-  ObjectProperty: 
+  ObjectProperty:
     extends: WithDescription
-    properties: 
+    properties:
       key: string
       schema: Schema
 
   PrimitiveSchema:
     extends: WithDescription
-    properties: 
+    properties:
       schema: PrimitiveSchemaValue
 
   PrimitiveSchemaValue:
-    union: 
+    union:
       integer: {}
       number: {}
       string: {}
       boolean: {}
 
-  ContainerSchema: 
-    union: 
-      array: ArraySchema
-      optional: OptionalSchema
-
-  ArraySchema: 
-    properties: 
+  ArraySchema:
+    properties:
       value: Schema
 
-  OptionalSchema: 
-    properties: 
+  OptionalSchema:
+    properties:
       value: Schema

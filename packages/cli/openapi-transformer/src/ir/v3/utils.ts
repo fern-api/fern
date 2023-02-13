@@ -4,7 +4,6 @@ import { OpenAPIV3 } from "openapi-types";
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
-export const REQUEST_REFERENCE_PREFIX = "#/components/requests/";
 
 export function isReferenceObject(
     parameter:
