@@ -1,5 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { ObjectDefinition } from "./object/ObjectDefinition";
+import { TypeDefinitionDetailsWithTitle } from "./TypeDefinitionDetailsWithTitle";
+import { TypePreview } from "./TypePreview";
 
 export declare namespace TypeDefinition {
     export interface Props {
@@ -8,8 +9,11 @@ export declare namespace TypeDefinition {
 }
 
 export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeDefinition }) => {
-    if (typeDefinition.type !== "object") {
-        return <div>not an object</div>;
-    }
-    return <ObjectDefinition object={typeDefinition} />;
+    return (
+        <TypeDefinitionDetailsWithTitle
+            title={<TypePreview type={typeDefinition} />}
+            typeDefinition={typeDefinition}
+            defaultIsCollapsed={false}
+        />
+    );
 };

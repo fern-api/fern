@@ -13,29 +13,20 @@
     flex-direction: column;
 }
 
-.title {
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     padding-top: 40px;
+}
+
+.title {
     margin-bottom: 0;
 }
 
 .description {
     margin-top: 30px;
     color: $pt-text-color-muted;
-}
-
-.request {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-}
-
-.requestType {
-    margin-left: 15px;
-}
-
-.requestDescription {
-    color: $pt-text-color-muted;
-    margin-bottom: 20px;
 }
 
 .examples {

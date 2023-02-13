@@ -1,13 +1,43 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
+$line-color: $light-gray3;
+
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 20px;
+    position: relative;
+    display: grid;
+    grid-template-areas:
+        "left-line top-row top-row top-row"
+        "left-line dash    caret   title"
+        "left-line ....... ....... docs"
+        "left-line ....... ....... children";
 }
 
-.titleRow {
+.topRow {
+    grid-area: top-row;
+    height: 15px;
+}
+
+.leftLine {
+    grid-area: left-line;
+    width: 1px;
+    background-color: $line-color;
+}
+
+.dash {
+    grid-area: dash;
+    display: flex;
+    align-items: center;
+}
+
+.dashInner {
+    height: 1px;
+    width: 10px;
+    background-color: $line-color;
+    margin-right: 5px;
+}
+
+.title {
+    grid-area: title;
     display: flex;
     align-items: flex-end;
     gap: 5px;
@@ -16,13 +46,15 @@
     .key {
         font-size: 13px;
     }
-
-    .typePreview {
-        color: $gray3;
-        font-size: 12px;
-    }
 }
 
-.decription {
+.docs {
+    grid-area: docs;
     color: $pt-text-color-muted;
+    margin-top: 5px;
+}
+
+.children {
+    grid-area: children;
+    margin-top: 10px;
 }

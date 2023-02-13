@@ -1,0 +1,24 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.collapseIcon {
+    margin-right: 3px;
+}
+
+.details {
+    display: flex;
+}
+
+.clickable {
+    cursor: pointer;
+}
