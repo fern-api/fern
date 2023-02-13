@@ -52,7 +52,7 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
             generators: [
                 {
                     name: "fernapi/fern-typescript-sdk",
-                    version: "0.0.273",
+                    version: "0.0.282",
                     output: {
                         location: "local-file-system",
                         path: "../../generated/typescript",
@@ -60,7 +60,7 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                 },
                 {
                     name: "fernapi/fern-openapi",
-                    version: "0.0.19",
+                    version: "0.0.22",
                     output: {
                         location: "local-file-system",
                         path: "../../generated/openapi",
