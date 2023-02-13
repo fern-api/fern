@@ -1,3 +1,6 @@
+import { Loadable } from "@fern-api/loadable";
+import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryCore from "@fern-fern/registry/core";
 import React from "react";
 
 export const ApiContext = React.createContext<() => ApiContextValue>(() => {
@@ -5,6 +8,10 @@ export const ApiContext = React.createContext<() => ApiContextValue>(() => {
 });
 
 export interface ApiContextValue {
+    api: Loadable<
+        FernRegistryCore.APIResponse<FernRegistry.ApiDefinition, FernRegistry.registry.getApiForEnvironment.Error>
+    >;
+    resolveType: (typeId: FernRegistry.TypeId) => FernRegistry.Type;
     focusedSidebarItem: SidebarItemId | undefined;
     setIsSidebarItemFocused: (sidebarItemId: SidebarItemId, isVisible: boolean) => void;
 }

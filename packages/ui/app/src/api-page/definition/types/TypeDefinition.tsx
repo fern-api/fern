@@ -3,7 +3,7 @@ import { ObjectDefinition } from "./object/ObjectDefinition";
 
 export declare namespace TypeDefinition {
     export interface Props {
-        typeDefinition: FernRegistry.TypeDefinition;
+        typeDefinition: FernRegistry.Type;
     }
 }
 

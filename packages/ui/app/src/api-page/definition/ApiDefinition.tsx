@@ -1,10 +1,10 @@
 import { EMPTY_ARRAY } from "@fern-api/core-utils";
-import { useCurrentApiDefinition } from "../queries/useCurrentApiDefinition";
+import { useApiContext } from "../context/useApiContext";
 import styles from "./ApiDefinition.module.scss";
 import { PackageDefinitionContents } from "./PackageDefinitionContents";
 
 export const ApiDefinition: React.FC = () => {
-    const api = useCurrentApiDefinition();
+    const { api } = useApiContext();
 
     if (api.type !== "loaded" || !api.value.ok) {
         return null;

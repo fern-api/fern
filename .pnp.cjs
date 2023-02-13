@@ -9373,7 +9373,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/transaction-generator", "workspace:packages/editor/transaction-generator"],\
             ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
             ["@fern-fern/api-editor-sdk", "npm:0.0.38"],\
-            ["@fern-fern/registry", "npm:0.0.21"],\
+            ["@fern-fern/registry", "npm:0.0.23"],\
             ["@fontsource/actor", "npm:4.5.9"],\
             ["@fontsource/roboto-mono", "npm:4.5.8"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9703,6 +9703,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.21-e6f2fb813a-08127a4cca.zip/node_modules/@fern-fern/registry/",\
           "packageDependencies": [\
             ["@fern-fern/registry", "npm:0.0.21"],\
+            ["@types/url-join", "npm:4.0.1"],\
+            ["axios", "npm:0.27.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:0.0.23", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.23-88b87e02bb-7b00b85690.zip/node_modules/@fern-fern/registry/",\
+          "packageDependencies": [\
+            ["@fern-fern/registry", "npm:0.0.23"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\

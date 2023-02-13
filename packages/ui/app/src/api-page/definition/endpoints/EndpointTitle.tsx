@@ -5,16 +5,17 @@ import styles from "./EndpointTitle.module.scss";
 export declare namespace EndpointTitle {
     export interface Props {
         endpoint: FernRegistry.EndpointDefinition;
+        className?: string;
     }
 }
 
-export const EndpointTitle: React.FC<EndpointTitle.Props> = ({ endpoint }) => {
+export const EndpointTitle: React.FC<EndpointTitle.Props> = ({ endpoint, className }) => {
     if (endpoint.displayName != null) {
         return <span>{endpoint.displayName}</span>;
     }
 
     return (
-        <MonospaceText>
+        <MonospaceText className={className}>
             {endpoint.path.parts.map((part, index) => (
                 <span key={index}>
                     {part._visit<JSX.Element | string>({

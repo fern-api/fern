@@ -3,7 +3,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
 import { getAnchorForSidebarItem } from "../../anchor-links/getAnchorForSidebarItem";
 import { EndpointId, PackagePath } from "../../context/ApiContext";
-import { TypeReference } from "../types/TypeReference";
+import { TypeDefinition } from "../types/TypeDefinition";
 import { useTrackSidebarItemId } from "../useTrackSidebarItemId";
 import styles from "./Endpoint.module.scss";
 import { EndpointExample } from "./EndpointExample";
@@ -36,11 +36,14 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, packagePath, inde
                     <EndpointTitle endpoint={endpoint} />
                 </H2>
                 {endpoint.docs != null && <div className={styles.description}>{endpoint.docs}</div>}
-                <H4>Request</H4>
-                {endpoint.request != null ? (
-                    <TypeReference typeReference={endpoint.request} />
-                ) : (
-                    <div>This endpoint has no request</div>
+                {endpoint.request != null && (
+                    <div className={styles.request}>
+                        <H4>Request body</H4>
+                        <div className={styles.requestDescription}>Here is some text about the request.</div>
+                        <div className={styles.requestType}>
+                            <TypeDefinition typeDefinition={endpoint.request} />
+                        </div>
+                    </div>
                 )}
             </div>
             <div className={styles.examples}>

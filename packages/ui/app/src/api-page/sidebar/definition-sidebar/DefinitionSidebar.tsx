@@ -1,12 +1,12 @@
 import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { FernRegistry } from "@fern-fern/registry";
-import { useCurrentApiDefinition } from "../../queries/useCurrentApiDefinition";
+import { useApiContext } from "../../context/useApiContext";
 import styles from "./DefinitionSidebar.module.scss";
 import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
 import { ApiVersionSelect } from "./version-chooser/ApiVersionSelect";
 
 export const DefinitionSidebar: React.FC = () => {
-    const api = useCurrentApiDefinition();
+    const { api } = useApiContext();
 
     if (api.type !== "loaded" || !api.value.ok) {
         return null;
