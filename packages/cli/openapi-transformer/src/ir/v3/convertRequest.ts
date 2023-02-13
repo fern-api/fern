@@ -4,7 +4,7 @@ import { convertSchema } from "./convertSchema";
 import { getSchemaIdFromReference, isReferenceObject } from "./utils";
 
 const REQUEST_REFERENCE_PREFIX = "#/components/requests/";
-export const APPLICATION_JSON_CONTENT = "application/json";
+const APPLICATION_JSON_CONTENT = "application/json";
 
 export function convertRequest({
     document,

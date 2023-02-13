@@ -1,6 +1,7 @@
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertRequest } from "./convertRequest";
+import { convertResponse } from "./convertResponse";
 import { convertSchema } from "./convertSchema";
 import { resolveParameterReference } from "./resolvers";
 import { getSchemaIdFromReference, isReferenceObject } from "./utils";
@@ -37,7 +38,10 @@ export function convertEndpoint({
                 ...convertedParameters,
                 requestBody: convertRequest({ document, requestBody: operationObject.requestBody }),
             },
-            response: undefined,
+            response: convertResponse({
+                document,
+                responseBody: operationObject.responses["200"] ?? operationObject.responses["201"],
+            }),
         },
         referencedSchemas: [],
     };
