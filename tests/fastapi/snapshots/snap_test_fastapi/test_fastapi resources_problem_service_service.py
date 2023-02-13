@@ -29,28 +29,34 @@ class AbstractProblemService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def create_problem(self, *, body: CreateProblemRequest) -> CreateProblemResponse:
+    def create_problem(
+        self, *, body: CreateProblemRequest, x_random_header: typing.Optional[str]
+    ) -> CreateProblemResponse:
         """
         Creates a problem
         """
         ...
 
     @abc.abstractmethod
-    def update_problem(self, *, body: CreateProblemRequest, problem_id: str) -> UpdateProblemResponse:
+    def update_problem(
+        self, *, body: CreateProblemRequest, problem_id: str, x_random_header: typing.Optional[str]
+    ) -> UpdateProblemResponse:
         """
         Updates a problem
         """
         ...
 
     @abc.abstractmethod
-    def delete_problem(self, *, problem_id: str) -> None:
+    def delete_problem(self, *, problem_id: str, x_random_header: typing.Optional[str]) -> None:
         """
         Soft deletes a problem
         """
         ...
 
     @abc.abstractmethod
-    def get_default_starter_files(self, *, body: GetDefaultStarterFilesRequest) -> GetDefaultStarterFilesResponse:
+    def get_default_starter_files(
+        self, *, body: GetDefaultStarterFilesRequest, x_random_header: typing.Optional[str]
+    ) -> GetDefaultStarterFilesResponse:
         """
         Returns default starter files for problem
         """
@@ -77,6 +83,8 @@ class AbstractProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -115,6 +123,8 @@ class AbstractProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "problem_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -151,6 +161,8 @@ class AbstractProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.delete_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -187,6 +199,8 @@ class AbstractProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_default_starter_files, "__signature__", endpoint_function.replace(parameters=new_parameters))

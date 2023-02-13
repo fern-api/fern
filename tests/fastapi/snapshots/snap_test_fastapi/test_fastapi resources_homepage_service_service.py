@@ -25,11 +25,11 @@ class AbstractHomepageService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_homepage_problems(self) -> typing.List[ProblemId]:
+    def get_homepage_problems(self, *, x_random_header: typing.Optional[str]) -> typing.List[ProblemId]:
         ...
 
     @abc.abstractmethod
-    def set_homepage_problems(self, *, body: typing.List[ProblemId]) -> None:
+    def set_homepage_problems(self, *, body: typing.List[ProblemId], x_random_header: typing.Optional[str]) -> None:
         ...
 
     """
@@ -49,6 +49,8 @@ class AbstractHomepageService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -85,6 +87,8 @@ class AbstractHomepageService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.set_homepage_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))

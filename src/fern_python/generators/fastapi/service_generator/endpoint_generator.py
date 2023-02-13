@@ -10,6 +10,7 @@ from ..context import FastApiGeneratorContext
 from .endpoint_parameters import (
     AuthEndpointParameter,
     EndpointParameter,
+    HeaderEndpointParameter,
     InlinedRequestEndpointParameter,
     PathEndpointParameter,
     QueryEndpointParameter,
@@ -51,6 +52,10 @@ class EndpointGenerator:
             self._parameters.append(PathEndpointParameter(context=context, path_parameter=path_parameter))
         for query_parameter in endpoint.query_parameters:
             self._parameters.append(QueryEndpointParameter(context=context, query_parameter=query_parameter))
+        for header_parameter in endpoint.headers:
+            self._parameters.append(HeaderEndpointParameter(context=context, header=header_parameter))
+        for global_header in context.ir.headers:
+            self._parameters.append(HeaderEndpointParameter(context=context, header=global_header))
         if endpoint.auth:
             self._parameters.append(AuthEndpointParameter(context=context))
 

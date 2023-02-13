@@ -24,7 +24,9 @@ class AbstractMigrationService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_attempted_migrations(self) -> typing.List[Migration]:
+    def get_attempted_migrations(
+        self, *, admin_key_header: str, x_random_header: typing.Optional[str]
+    ) -> typing.List[Migration]:
         ...
 
     """
@@ -43,6 +45,10 @@ class AbstractMigrationService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "admin_key_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(alias="admin-key-header")))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_attempted_migrations, "__signature__", endpoint_function.replace(parameters=new_parameters))

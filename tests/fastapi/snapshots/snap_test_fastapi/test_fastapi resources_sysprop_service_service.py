@@ -25,11 +25,13 @@ class AbstractSyspropService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def set_num_warm_instances(self, *, language: Language, num_warm_instances: int) -> None:
+    def set_num_warm_instances(
+        self, *, language: Language, num_warm_instances: int, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     @abc.abstractmethod
-    def get_num_warm_instances(self) -> typing.Dict[Language, int]:
+    def get_num_warm_instances(self, *, x_random_header: typing.Optional[str]) -> typing.Dict[Language, int]:
         ...
 
     """
@@ -53,6 +55,8 @@ class AbstractSyspropService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "num_warm_instances":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.set_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -87,6 +91,8 @@ class AbstractSyspropService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))

@@ -27,28 +27,34 @@ class AbstractSubmissionService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def create_execution_session(self, *, language: Language) -> ExecutionSessionResponse:
+    def create_execution_session(
+        self, *, language: Language, x_random_header: typing.Optional[str]
+    ) -> ExecutionSessionResponse:
         """
         Returns sessionId and execution server URL for session. Spins up server.
         """
         ...
 
     @abc.abstractmethod
-    def get_execution_session(self, *, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
+    def get_execution_session(
+        self, *, session_id: str, x_random_header: typing.Optional[str]
+    ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
         """
         ...
 
     @abc.abstractmethod
-    def stop_execution_session(self, *, session_id: str) -> None:
+    def stop_execution_session(self, *, session_id: str, x_random_header: typing.Optional[str]) -> None:
         """
         Stops execution session.
         """
         ...
 
     @abc.abstractmethod
-    def get_execution_sessions_state(self) -> GetExecutionSessionStateResponse:
+    def get_execution_sessions_state(
+        self, *, x_random_header: typing.Optional[str]
+    ) -> GetExecutionSessionStateResponse:
         ...
 
     """
@@ -72,6 +78,8 @@ class AbstractSubmissionService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -108,6 +116,8 @@ class AbstractSubmissionService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -144,6 +154,8 @@ class AbstractSubmissionService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.stop_execution_session, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -178,6 +190,8 @@ class AbstractSubmissionService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_execution_sessions_state, "__signature__", endpoint_function.replace(parameters=new_parameters))

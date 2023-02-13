@@ -18,4 +18,8 @@ service:
     getAttemptedMigrations:
       method: GET
       path: /all
+      request:
+        name: GetAttemptedMigrationsRequest
+        headers:
+          admin-key-header: string
       response: list<Migration>

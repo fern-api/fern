@@ -24,7 +24,7 @@ class AbstractV2Service(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def test(self) -> None:
+    def test(self, *, x_random_header: typing.Optional[str]) -> None:
         ...
 
     """
@@ -43,6 +43,8 @@ class AbstractV2Service(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.test, "__signature__", endpoint_function.replace(parameters=new_parameters))

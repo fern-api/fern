@@ -25,28 +25,32 @@ class AbstractV2ProblemService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
+    def get_lightweight_problems(
+        self, *, x_random_header: typing.Optional[str]
+    ) -> typing.List[LightweightProblemInfoV2]:
         """
         Returns lightweight versions of all problems
         """
         ...
 
     @abc.abstractmethod
-    def get_problems(self) -> typing.List[ProblemInfoV2]:
+    def get_problems(self, *, x_random_header: typing.Optional[str]) -> typing.List[ProblemInfoV2]:
         """
         Returns latest versions of all problems
         """
         ...
 
     @abc.abstractmethod
-    def get_latest_problem(self, *, problem_id: str) -> ProblemInfoV2:
+    def get_latest_problem(self, *, problem_id: str, x_random_header: typing.Optional[str]) -> ProblemInfoV2:
         """
         Returns latest version of a problem
         """
         ...
 
     @abc.abstractmethod
-    def get_problem_version(self, *, problem_id: str, problem_version: int) -> ProblemInfoV2:
+    def get_problem_version(
+        self, *, problem_id: str, problem_version: int, x_random_header: typing.Optional[str]
+    ) -> ProblemInfoV2:
         """
         Returns requested version of a problem
         """
@@ -71,6 +75,8 @@ class AbstractV2ProblemService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_lightweight_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -105,6 +111,8 @@ class AbstractV2ProblemService(AbstractFernService):
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_problems, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -141,6 +149,8 @@ class AbstractV2ProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_latest_problem, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -179,6 +189,8 @@ class AbstractV2ProblemService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "problem_version":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_problem_version, "__signature__", endpoint_function.replace(parameters=new_parameters))

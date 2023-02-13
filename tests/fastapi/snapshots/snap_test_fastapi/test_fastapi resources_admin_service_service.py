@@ -32,39 +32,61 @@ class AbstractAdminService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def update_test_submission_status(self, *, body: TestSubmissionStatus, submission_id: uuid.UUID) -> None:
+    def update_test_submission_status(
+        self, *, body: TestSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     @abc.abstractmethod
-    def send_test_submission_update(self, *, body: TestSubmissionUpdate, submission_id: uuid.UUID) -> None:
+    def send_test_submission_update(
+        self, *, body: TestSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     @abc.abstractmethod
-    def update_workspace_submission_status(self, *, body: WorkspaceSubmissionStatus, submission_id: uuid.UUID) -> None:
+    def update_workspace_submission_status(
+        self, *, body: WorkspaceSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     @abc.abstractmethod
-    def send_workspace_submission_update(self, *, body: WorkspaceSubmissionUpdate, submission_id: uuid.UUID) -> None:
+    def send_workspace_submission_update(
+        self, *, body: WorkspaceSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_test_case(
-        self, *, body: StoreTracedTestCaseRequest, submission_id: uuid.UUID, test_case_id: str
+        self,
+        *,
+        body: StoreTracedTestCaseRequest,
+        submission_id: uuid.UUID,
+        test_case_id: str,
+        x_random_header: typing.Optional[str],
     ) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_test_case_v_2(
-        self, *, body: typing.List[TraceResponseV2], submission_id: uuid.UUID, test_case_id: str
+        self,
+        *,
+        body: typing.List[TraceResponseV2],
+        submission_id: uuid.UUID,
+        test_case_id: str,
+        x_random_header: typing.Optional[str],
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def store_traced_workspace(self, *, body: StoreTracedWorkspaceRequest, submission_id: uuid.UUID) -> None:
+    def store_traced_workspace(
+        self, *, body: StoreTracedWorkspaceRequest, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     @abc.abstractmethod
-    def store_traced_workspace_v_2(self, *, body: typing.List[TraceResponseV2], submission_id: uuid.UUID) -> None:
+    def store_traced_workspace_v_2(
+        self, *, body: typing.List[TraceResponseV2], submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+    ) -> None:
         ...
 
     """
@@ -94,6 +116,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -134,6 +158,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.send_test_submission_update, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -172,6 +198,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -214,6 +242,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -256,6 +286,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "test_case_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_test_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -296,6 +328,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "test_case_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_test_case_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -334,6 +368,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_workspace, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -372,6 +408,8 @@ class AbstractAdminService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "submission_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.store_traced_workspace_v_2, "__signature__", endpoint_function.replace(parameters=new_parameters))

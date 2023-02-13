@@ -30,7 +30,9 @@ class AbstractPlaylistService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def create_playlist(self, *, body: PlaylistCreateRequest, service_param: int, auth: ApiAuth) -> Playlist:
+    def create_playlist(
+        self, *, body: PlaylistCreateRequest, service_param: int, x_random_header: typing.Optional[str], auth: ApiAuth
+    ) -> Playlist:
         """
         Create a new playlist
         """
@@ -46,6 +48,7 @@ class AbstractPlaylistService(AbstractFernService):
         multi_line_docs: str,
         optional_multiple_field: typing.Optional[typing.List[str]],
         multiple_field: typing.List[str],
+        x_random_header: typing.Optional[str],
         auth: ApiAuth,
     ) -> typing.List[Playlist]:
         """
@@ -54,7 +57,7 @@ class AbstractPlaylistService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_playlist(self, *, service_param: int, playlist_id: str) -> Playlist:
+    def get_playlist(self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str]) -> Playlist:
         """
         Returns a playlist
         """
@@ -62,7 +65,13 @@ class AbstractPlaylistService(AbstractFernService):
 
     @abc.abstractmethod
     def update_playlist(
-        self, *, body: typing.Optional[UpdatePlaylistRequest], service_param: int, playlist_id: str, auth: ApiAuth
+        self,
+        *,
+        body: typing.Optional[UpdatePlaylistRequest],
+        service_param: int,
+        playlist_id: str,
+        x_random_header: typing.Optional[str],
+        auth: ApiAuth,
     ) -> typing.Optional[Playlist]:
         """
         Updates a playlist
@@ -70,7 +79,9 @@ class AbstractPlaylistService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def delete_playlist(self, *, service_param: int, playlist_id: str, auth: ApiAuth) -> None:
+    def delete_playlist(
+        self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str], auth: ApiAuth
+    ) -> None:
         """
         Deletes a playlist
         """
@@ -100,6 +111,8 @@ class AbstractPlaylistService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Body(...)))
             elif parameter_name == "service_param":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
@@ -160,6 +173,8 @@ class AbstractPlaylistService(AbstractFernService):
                 )
             elif parameter_name == "multiple_field":
                 new_parameters.append(parameter.replace(default=fastapi.Query(default=[], alias="multipleField")))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
@@ -200,6 +215,8 @@ class AbstractPlaylistService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "playlist_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_playlist, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -242,6 +259,8 @@ class AbstractPlaylistService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "playlist_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
@@ -284,6 +303,8 @@ class AbstractPlaylistService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "playlist_id":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "x_random_header":
+                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
             elif parameter_name == "auth":
                 new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
             else:
