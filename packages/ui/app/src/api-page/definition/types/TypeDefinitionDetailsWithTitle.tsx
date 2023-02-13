@@ -4,6 +4,7 @@ import { useBooleanState } from "@fern-api/react-commons";
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { useApiContext } from "../../context/useApiContext";
+import { DiscriminatedUnionDefinition } from "./discriminated-union/DiscriminatedUnionDefinition";
 import { ObjectDefinition } from "./object/ObjectDefinition";
 import { SmallMutedText } from "./SmallMutedText";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
@@ -34,7 +35,7 @@ export const TypeDefinitionDetailsWithTitle: React.FC<TypeDefinitionDetailsWithT
         map: () => <span>map</span>,
         optional: () => <span>optional</span>,
         unknown: () => null,
-        discriminatedUnion: () => <span>union</span>,
+        discriminatedUnion: (union) => <DiscriminatedUnionDefinition union={union} />,
         _other: () => null,
     });
 
@@ -44,14 +45,14 @@ export const TypeDefinitionDetailsWithTitle: React.FC<TypeDefinitionDetailsWithT
 
     return (
         <div className={styles.container}>
-            <div
-                className={classNames(styles.titleSection, {
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    [styles.clickable!]: onClickTitle != null,
-                })}
-                onClick={onClickTitle}
-            >
-                {isCollapsible && (
+            {isCollapsible && (
+                <div
+                    className={classNames(styles.caret, {
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        [styles.clickable!]: onClickTitle != null,
+                    })}
+                    onClick={onClickTitle}
+                >
                     <SmallMutedText>
                         <Icon
                             className={styles.collapseIcon}
@@ -59,13 +60,25 @@ export const TypeDefinitionDetailsWithTitle: React.FC<TypeDefinitionDetailsWithT
                             size={12}
                         />
                     </SmallMutedText>
-                )}
+                </div>
+            )}
+            <div
+                className={classNames(styles.title, {
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    [styles.clickable!]: onClickTitle != null,
+                })}
+                onClick={onClickTitle}
+            >
                 <SmallMutedText>{title}</SmallMutedText>
             </div>
+
             {details != null && !isCollapsed && (
-                <div className={styles.details}>
-                    <TypeDefinitionDetails typeDefinition={typeDefinition} />
-                </div>
+                <>
+                    <div className={styles.leftLine}>
+                        <div className={styles.leftLineInner}></div>
+                    </div>
+                    <div className={styles.details}>{details}</div>
+                </>
             )}
         </div>
     );

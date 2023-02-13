@@ -1,5 +1,4 @@
-import { Button, H2, Intent } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
+import { H2 } from "@blueprintjs/core";
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
 import { getAnchorForSidebarItem } from "../../anchor-links/getAnchorForSidebarItem";
@@ -33,27 +32,28 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, packagePath, inde
 
     return (
         <div ref={ref} className={styles.container}>
-            <div className={styles.definition}>
-                <div className={styles.titleSection}>
-                    <H2 id={getAnchorForSidebarItem(endpointId)} className={styles.title}>
-                        <EndpointTitle endpoint={endpoint} />
-                    </H2>
-                    <Button minimal intent={Intent.SUCCESS} icon={IconNames.PLUS} text="New request" />
-                </div>
-                {endpoint.docs != null && <div className={styles.description}>{endpoint.docs}</div>}
-                {endpoint.request != null && (
-                    <EndpointSection title="Request" description="Here is some text about the request body.">
-                        <TypeDefinition typeDefinition={endpoint.request} />
-                    </EndpointSection>
-                )}
-                {endpoint.response != null && (
-                    <EndpointSection title="Response" description="Here is some text about the success response.">
-                        <TypeDefinition typeDefinition={endpoint.response} />
-                    </EndpointSection>
-                )}
+            <div className={styles.titleSection}>
+                <H2 id={getAnchorForSidebarItem(endpointId)} className={styles.title}>
+                    <EndpointTitle endpoint={endpoint} />
+                </H2>
             </div>
-            <div className={styles.examples}>
-                <EndpointExample request="" response="" />
+            <div className={styles.body}>
+                <div className={styles.definition}>
+                    {endpoint.docs != null && <div className={styles.description}>{endpoint.docs}</div>}
+                    {endpoint.request != null && (
+                        <EndpointSection title="Request" description="Here is some text about the request body.">
+                            <TypeDefinition typeDefinition={endpoint.request} />
+                        </EndpointSection>
+                    )}
+                    {endpoint.response != null && (
+                        <EndpointSection title="Response" description="Here is some text about the success response.">
+                            <TypeDefinition typeDefinition={endpoint.response} />
+                        </EndpointSection>
+                    )}
+                </div>
+                <div className={styles.examples}>
+                    <EndpointExample request="" response="" />
+                </div>
             </div>
         </div>
     );

@@ -1,22 +1,51 @@
 @import "~@blueprintjs/core/lib/scss/variables";
+@import "../variables";
 
 .container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+        "caret title"
+        "left-line details";
 }
 
-.titleSection {
+.title {
+    grid-area: title;
     display: flex;
     align-items: center;
     user-select: none;
 }
 
-.collapseIcon {
-    margin-right: 3px;
+.caret {
+    grid-area: caret;
+}
+
+.caret,
+.leftLine {
+    padding-right: 5px;
+}
+
+.caret,
+.title {
+    padding-bottom: 5px;
+}
+
+.leftLine {
+    grid-area: left-line;
+    display: flex;
+    justify-content: center;
+}
+
+.leftLineInner {
+    width: 1px;
+    background-color: $type-definition-tree-color;
 }
 
 .details {
+    grid-area: details;
     display: flex;
+    margin-top: 15px;
+    margin-left: 5px;
 }
 
 .clickable {
