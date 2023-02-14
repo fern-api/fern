@@ -197,7 +197,6 @@ export class ExpressGenerator {
             npmPackage: this.npmPackage,
             dependencies: this.dependencyManager.getDependencies(),
             tsMorphProject: this.project,
-            outputEsm: false,
         });
     }
 

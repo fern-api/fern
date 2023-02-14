@@ -10,7 +10,6 @@ export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage;
         dependencies: PackageDependencies;
-        outputEsm: boolean;
     }
 }
 
@@ -20,13 +19,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private npmPackage: NpmPackage;
     private dependencies: PackageDependencies;
-    private outputEsm: boolean;
 
-    constructor({ npmPackage, dependencies, outputEsm, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
-        this.outputEsm = outputEsm;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -80,7 +77,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             extendedDiagnostics: true,
             strict: true,
             target: "esnext" as unknown as ScriptTarget,
-            module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
+            module: "CommonJS" as unknown as ModuleKind,
             moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,
             skipLibCheck: true,
@@ -90,6 +87,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: SimpleTypescriptProject.SRC_DIRECTORY,
             baseUrl: SimpleTypescriptProject.SRC_DIRECTORY,
+            paths: {
+                [this.npmPackage.packageName]: ["."],
+            },
         };
 
         await this.writeFileToVolume(
@@ -120,7 +120,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             types: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.d.ts`,
             scripts: {
                 [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
-                [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
+                [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc && tsc-alias",
             },
         };
 
@@ -145,6 +145,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             "@types/node": "17.0.33",
             prettier: "2.7.1",
             typescript: "4.6.4",
+            "tsc-alias": "1.7.1",
         };
     }
 }

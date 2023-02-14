@@ -65,6 +65,7 @@ const FIXTURES: FixtureInfo[] = [
             useBrandedStringAliases: true,
             neverThrowErrors: true,
             namespaceExport: "Fiddle",
+            bundle: true,
         },
     },
 ];

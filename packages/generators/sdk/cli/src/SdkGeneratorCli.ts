@@ -16,7 +16,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             isPackagePrivate: parsed?.private ?? false,
             neverThrowErrors: parsed?.neverThrowErrors ?? false,
             namespaceExport: parsed?.namespaceExport,
-            outputEsm: parsed?.outputEsm ?? false,
+            shouldBundle: parsed?.bundle ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
         };
     }
@@ -47,9 +47,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
                 neverThrowErrors: customConfig.neverThrowErrors,
-                shouldBundle: config.output.mode.type !== "downloadFiles",
+                shouldBundle: customConfig.shouldBundle,
                 aliasOfRoot: config.output.mode.type !== "downloadFiles" ? npmPackage.packageName : undefined,
-                outputEsm: customConfig.outputEsm,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
             },
         });
