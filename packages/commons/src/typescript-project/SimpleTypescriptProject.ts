@@ -119,7 +119,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             ...packageJson,
             private: this.npmPackage.private,
             repository: this.npmPackage.repoUrl,
-            files: this.getDistFiles().map((filepath) => `./${filepath}`),
+            files: this.getDistFiles(),
             main: "./index.js",
             types: "./index.d.ts",
             scripts: {
