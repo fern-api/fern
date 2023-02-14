@@ -111,18 +111,6 @@ export class PersistedTypescriptProject {
         await cp(join(this.directory, this.distDirectory), target, { recursive: true });
     }
 
-    public async installVscodeSdks(logger: Logger): Promise<void> {
-        if (!this.hasInstalled) {
-            await this.installDependencies(logger);
-        }
-
-        const yarn = createLoggingExecutable("yarn", {
-            cwd: this.directory,
-            logger,
-        });
-        await yarn(["dlx", "@yarnpkg/sdks", "vscode"]);
-    }
-
     public async publish({
         logger,
         publishInfo,

@@ -88,7 +88,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
                 },
                 github: async (githubOutputMode) => {
-                    await typescriptProject.installVscodeSdks(logger);
                     await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
                     await writeGitHubWorkflows({
                         config,
