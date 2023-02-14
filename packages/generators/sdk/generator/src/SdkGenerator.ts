@@ -71,6 +71,7 @@ export declare namespace SdkGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         aliasOfRoot: string | undefined;
+        outputEsm: boolean;
     }
 }
 
@@ -270,6 +271,7 @@ export class SdkGenerator {
                   npmPackage: this.npmPackage,
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
+                  outputEsm: this.config.outputEsm,
               });
     }
 

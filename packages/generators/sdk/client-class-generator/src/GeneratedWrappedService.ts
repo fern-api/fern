@@ -26,6 +26,7 @@ export class GeneratedWrappedService {
 
         class_.addProperty({
             name: this.getCachedMemberName(),
+            scope: Scope.Private,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
                     referenceToWrapped.getTypeNode(),
@@ -61,7 +62,7 @@ export class GeneratedWrappedService {
     }
 
     private getCachedMemberName(): string {
-        return `#${this.getGetterName()}`;
+        return `_${this.getGetterName()}`;
     }
 
     private getGetterName(): string {

@@ -18,7 +18,7 @@ export abstract class TypescriptProject {
     protected static DIST_DIRECTORY = "dist" as const;
 
     protected volume = new Volume();
-    private tsMorphProject: Project;
+    protected tsMorphProject: Project;
 
     constructor({ tsMorphProject }: TypescriptProject.Init) {
         this.tsMorphProject = tsMorphProject;

@@ -10,6 +10,7 @@ export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage;
         dependencies: PackageDependencies;
+        outputEsm: boolean;
     }
 }
 
@@ -19,11 +20,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private npmPackage: NpmPackage;
     private dependencies: PackageDependencies;
+    private outputEsm: boolean;
 
-    constructor({ npmPackage, dependencies, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, outputEsm, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
+        this.outputEsm = outputEsm;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -47,8 +50,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
             [
                 "node_modules",
                 ".DS_Store",
-                "*.d.ts",
-                "dist/",
+                SimpleTypescriptProject.DIST_DIRECTORY,
+                ...this.getDistFiles(),
                 "",
                 "# yarn berry",
                 ".pnp.*",
@@ -77,7 +80,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             extendedDiagnostics: true,
             strict: true,
             target: "esnext" as unknown as ScriptTarget,
-            module: "CommonJS" as unknown as ModuleKind,
+            module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
             moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,
             skipLibCheck: true,
@@ -116,12 +119,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
             ...packageJson,
             private: this.npmPackage.private,
             repository: this.npmPackage.repoUrl,
-            files: [SimpleTypescriptProject.DIST_DIRECTORY],
-            main: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.js`,
-            types: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.d.ts`,
+            files: this.getDistFiles().map((filepath) => `./${filepath}`),
+            main: "./index.js",
+            types: "./index.d.ts",
             scripts: {
                 [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc && tsc-alias",
+                prepack: `cp -r ${SimpleTypescriptProject.DIST_DIRECTORY}/* .`,
             },
         };
 
@@ -145,8 +149,23 @@ export class SimpleTypescriptProject extends TypescriptProject {
         return {
             "@types/node": "17.0.33",
             prettier: "2.7.1",
-            typescript: "4.6.4",
             "tsc-alias": "1.7.1",
+            typescript: "4.6.4",
         };
+    }
+
+    private getDistFiles(): string[] {
+        const rootDirectory = this.tsMorphProject.getDirectory(".");
+        if (rootDirectory == null) {
+            throw new Error("Root ts-morph directory does not exist");
+        }
+
+        return [
+            ...rootDirectory.getSourceFiles().flatMap((file) => {
+                const baseName = file.getBaseNameWithoutExtension();
+                return [`${baseName}.d.ts`, `${baseName}.js`];
+            }),
+            ...rootDirectory.getDirectories().map((directory) => directory.getBaseName()),
+        ];
     }
 }

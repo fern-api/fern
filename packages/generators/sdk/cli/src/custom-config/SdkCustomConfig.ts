@@ -3,6 +3,7 @@ export interface SdkCustomConfig {
     isPackagePrivate: boolean;
     neverThrowErrors: boolean;
     namespaceExport: string | undefined;
-    shouldBundle: boolean;
+    outputEsm: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;
+    shouldBundle: boolean;
 }
