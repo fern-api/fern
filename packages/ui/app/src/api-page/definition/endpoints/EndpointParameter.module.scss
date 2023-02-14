@@ -1,8 +1,11 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-.parameters {
+.container {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    margin-top: 15px;
+    gap: 5px;
+}
+
+.docs {
+    color: $pt-text-color-muted;
 }

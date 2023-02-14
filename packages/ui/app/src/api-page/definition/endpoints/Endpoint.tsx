@@ -6,8 +6,10 @@ import { EndpointId, PackagePath } from "../../context/ApiContext";
 import { useTrackSidebarItemId } from "../useTrackSidebarItemId";
 import styles from "./Endpoint.module.scss";
 import { EndpointExample } from "./EndpointExample";
+import { EndpointPath } from "./EndpointPath";
 import { EndpointTitle } from "./EndpointTitle";
 import { EndpointTypeSection } from "./EndpointTypeSection";
+import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace Endpoint {
@@ -36,10 +38,14 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, packagePath, inde
                 <H2 id={getAnchorForSidebarItem(endpointId)} className={styles.title}>
                     <EndpointTitle endpoint={endpoint} />
                 </H2>
+                {endpoint.displayName != null && <EndpointPath className={styles.endpointPath} endpoint={endpoint} />}
             </div>
             <div className={styles.body}>
                 <div className={styles.definition}>
                     {endpoint.docs != null && <div className={styles.docs}>{endpoint.docs}</div>}
+                    {endpoint.path.pathParameters.length > 0 && (
+                        <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                    )}
                     {endpoint.queryParameters.length > 0 && (
                         <QueryParametersSection queryParameters={endpoint.queryParameters} />
                     )}

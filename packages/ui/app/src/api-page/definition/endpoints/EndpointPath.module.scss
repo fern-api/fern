@@ -1,0 +1,10 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    display: flex;
+}
+
+.httpMethod {
+    margin-right: 5px;
+    text-transform: uppercase;
+}

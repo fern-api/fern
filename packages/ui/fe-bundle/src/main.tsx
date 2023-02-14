@@ -1,6 +1,5 @@
 import { App } from "@fern-api/ui";
 import ReactDOM from "react-dom/client";
-import "./index.module.css";
 
 const root = document.getElementById("root");
 if (root == null) {

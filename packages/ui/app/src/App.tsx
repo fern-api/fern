@@ -5,6 +5,7 @@ import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { Redirect, RoutesWith404 } from "@fern-api/routing-utils";
 import { SplitViewProvider } from "@fern-api/split-view";
+import "normalize.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ApiPage } from "./api-page/ApiPage";

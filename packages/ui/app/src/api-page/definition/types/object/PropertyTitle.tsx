@@ -16,7 +16,7 @@ export const PropertyTitle: React.FC<PropertyTitle.Props> = ({ name, type }) => 
             <div className={styles.name}>
                 <MonospaceText>{name}</MonospaceText>
             </div>
-            <TypePreview type={type} includeContainerItems />
+            <TypePreview className={styles.typePreview} type={type} includeContainerItems />
         </div>
     );
 };
