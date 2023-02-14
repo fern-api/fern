@@ -5634,6 +5634,7 @@ printWidth: 120
     \\"files\\": [
         \\"dist\\"
     ],
+    \\"main\\": \\"./dist/index.js\\",
     \\"types\\": \\"./dist/index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
@@ -9627,6 +9628,7 @@ printWidth: 120
     \\"files\\": [
         \\"dist\\"
     ],
+    \\"main\\": \\"./dist/index.js\\",
     \\"types\\": \\"./dist/index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
@@ -16022,6 +16024,7 @@ printWidth: 120
     \\"files\\": [
         \\"dist\\"
     ],
+    \\"main\\": \\"./dist/index.js\\",
     \\"types\\": \\"./dist/index.d.ts\\",
     \\"scripts\\": {
         \\"format\\": \\"prettier --write 'src/**/*.ts'\\",

@@ -117,6 +117,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             private: this.npmPackage.private,
             repository: this.npmPackage.repoUrl,
             files: [SimpleTypescriptProject.DIST_DIRECTORY],
+            main: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.js`,
             types: `./${SimpleTypescriptProject.DIST_DIRECTORY}/index.d.ts`,
             scripts: {
                 [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
