@@ -3,4 +3,4 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 0.0.279
+        version: 0.1.0

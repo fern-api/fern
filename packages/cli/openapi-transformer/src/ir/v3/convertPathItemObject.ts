@@ -1,3 +1,4 @@
+import { TaskContext } from "@fern-api/task-context";
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertEndpoint } from "./convertEndpoint";
@@ -8,11 +9,13 @@ export function convertPathItemObject({
     document,
     pathItemObject,
     irBuilder,
+    taskContext,
 }: {
     path: string;
     document: OpenAPIV3.Document;
     pathItemObject: OpenAPIV3.PathItemObject;
     irBuilder: IrBuilder;
+    taskContext: TaskContext;
 }): void {
     if (pathItemObject.get != null) {
         const convertedEndpoint = convertEndpoint({
@@ -20,6 +23,7 @@ export function convertPathItemObject({
             document,
             httpMethod: FernOpenapiIr.HttpMethod.Get,
             operationObject: pathItemObject.get,
+            taskContext,
         });
         irBuilder.addEndpoint(convertedEndpoint.endpoint);
     }
@@ -29,6 +33,7 @@ export function convertPathItemObject({
             document,
             httpMethod: FernOpenapiIr.HttpMethod.Post,
             operationObject: pathItemObject.post,
+            taskContext,
         });
         irBuilder.addEndpoint(convertedEndpoint.endpoint);
     }
@@ -38,6 +43,7 @@ export function convertPathItemObject({
             document,
             httpMethod: FernOpenapiIr.HttpMethod.Put,
             operationObject: pathItemObject.put,
+            taskContext,
         });
         irBuilder.addEndpoint(convertedEndpoint.endpoint);
     }
@@ -47,6 +53,7 @@ export function convertPathItemObject({
             document,
             httpMethod: FernOpenapiIr.HttpMethod.Patch,
             operationObject: pathItemObject.patch,
+            taskContext,
         });
         irBuilder.addEndpoint(convertedEndpoint.endpoint);
     }
@@ -56,6 +63,7 @@ export function convertPathItemObject({
             document,
             httpMethod: FernOpenapiIr.HttpMethod.Delete,
             operationObject: pathItemObject.delete,
+            taskContext,
         });
         irBuilder.addEndpoint(convertedEndpoint.endpoint);
     }

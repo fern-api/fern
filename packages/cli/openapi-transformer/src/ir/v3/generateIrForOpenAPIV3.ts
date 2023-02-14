@@ -1,3 +1,4 @@
+import { TaskContext } from "@fern-api/task-context";
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertPathItemObject } from "./convertPathItemObject";
@@ -6,7 +7,13 @@ import { convertServers } from "./convertServers";
 import { IrBuilder } from "./IrBuilder";
 import { getSchemaIdFromReference, isReferenceObject } from "./utils";
 
-export function generateIrForOpenAPI(document: OpenAPIV3.Document): FernOpenapiIr.IntermediateRepresentation {
+export function generateIrForOpenAPIV3({
+    document,
+    taskContext,
+}: {
+    document: OpenAPIV3.Document;
+    taskContext: TaskContext;
+}): FernOpenapiIr.IntermediateRepresentation {
     const irBuilder = new IrBuilder();
 
     Object.entries(document.paths).forEach(([path, pathItemObject]) => {
@@ -18,11 +25,12 @@ export function generateIrForOpenAPI(document: OpenAPIV3.Document): FernOpenapiI
             document,
             pathItemObject,
             irBuilder,
+            taskContext,
         });
     });
 
     Object.entries(document.components?.schemas ?? {}).forEach(([schemaName, schemaDefinition]) => {
-        convertSchemaDefinition({ schemaDefinition, schemaName, irBuilder });
+        convertSchemaDefinition({ schemaDefinition, schemaName, irBuilder, taskContext });
     });
 
     convertServers(document.servers ?? []).forEach((server) => {
@@ -36,15 +44,17 @@ function convertSchemaDefinition({
     schemaName,
     schemaDefinition,
     irBuilder,
+    taskContext,
 }: {
     schemaName: string;
     schemaDefinition: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
     irBuilder: IrBuilder;
+    taskContext: TaskContext;
 }): void {
     if (isReferenceObject(schemaDefinition)) {
         const schemaId = getSchemaIdFromReference(schemaDefinition);
         if (schemaId == null) {
-            // TODO(dsinghvi): add log about not being able to parse referenced schema
+            taskContext.logger.warn(`Failed to convert ${schemaName} with ref ${schemaDefinition.$ref}`);
             return;
         }
         const referencedSchema = FernOpenapiIr.Schema.reference({
@@ -52,9 +62,9 @@ function convertSchemaDefinition({
         });
         irBuilder.addSchema(schemaName, referencedSchema);
     } else {
-        const convertedSchema = convertSchema({ schema: schemaDefinition });
+        const convertedSchema = convertSchema({ schema: schemaDefinition, taskContext });
         if (convertedSchema == null) {
-            // TODO(dsinghvi): add log about not being able to convert schema
+            taskContext.logger.warn(`Failed to convert ${schemaName} ${JSON.stringify(convertedSchema)}`);
             return;
         }
         irBuilder.addSchema(schemaName, convertedSchema);

@@ -5,9 +5,6 @@ types:
       servers: list<Server>
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
-      schemasToTags:
-        type: map<SchemaId, list<TagId>>
-        docs: Which schemas are referenced by which tags
 
   WithDescription:
     properties:
@@ -85,6 +82,21 @@ types:
       enum: EnumSchema
       reference: ReferencedSchema
       unknown: UnknownSchema
+      oneOf: OneOfSchema
+
+  OneOfSchema:
+    union:
+      discriminated: DiscriminatedOneOfSchema
+      undisciminated: NonDiscriminatedOneOfSchema
+
+  DiscriminatedOneOfSchema:
+    properties:
+      discriminant: string
+      schemas: map<string, Schema>
+
+  NonDiscriminatedOneOfSchema:
+    properties:
+      schemas: list<Schema>
 
   UnknownSchema:
     extends:
@@ -136,9 +148,11 @@ types:
       boolean: {}
 
   ArraySchema:
+    extends: WithDescription
     properties:
       value: Schema
 
   OptionalSchema:
+    extends: WithDescription
     properties:
       value: Schema

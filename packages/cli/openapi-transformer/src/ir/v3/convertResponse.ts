@@ -1,3 +1,4 @@
+import { TaskContext } from "@fern-api/task-context";
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchema";
@@ -9,9 +10,11 @@ const APPLICATION_JSON_CONTENT = "application/json";
 export function convertResponse({
     document,
     responseBody,
+    taskContext,
 }: {
     document: OpenAPIV3.Document;
     responseBody: OpenAPIV3.ResponseObject | OpenAPIV3.ReferenceObject | undefined;
+    taskContext: TaskContext;
 }): undefined | FernOpenapiIr.Schema {
     if (responseBody == null) {
         return undefined;
@@ -22,7 +25,7 @@ export function convertResponse({
             return undefined;
         }
         const resolvedResponseBody = document.components.responses[responseKey];
-        return convertResponse({ document, responseBody: resolvedResponseBody });
+        return convertResponse({ document, responseBody: resolvedResponseBody, taskContext });
     } else if (responseBody.content != null) {
         const responseBodySchema = responseBody.content[APPLICATION_JSON_CONTENT]?.schema;
         if (responseBodySchema == null) {
@@ -35,12 +38,11 @@ export function convertResponse({
                     reference: schemaId,
                 });
             } else {
-                // TODO(dsinghvi): log about not parsing schema id from reference
+                taskContext.logger.warn(`Failed to convert response ${responseBodySchema.$ref}`);
                 return undefined;
             }
         }
-        return convertSchema({ schema: responseBodySchema });
+        return convertSchema({ schema: responseBodySchema, taskContext });
     }
-    // TODO(dsinghvi): log about not parsing schema id from reference
     return undefined;
 }

@@ -1,0 +1,7270 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api ir generator flagright simple 1`] = `
+{
+  "displayName": null,
+  "endpoints": [
+    {
+      "method": "POST",
+      "operationId": "post-consumer-transaction",
+      "path": "/transactions",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [
+          {
+            "name": "validateOriginUserId",
+            "schema": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "name": "validateDestinationUserId",
+            "schema": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "requestBody": {
+          "reference": "Transaction",
+          "type": "reference",
+        },
+      },
+      "requestName": "VerifyTransactionRequest",
+      "response": {
+        "allOf": [
+          {
+            "reference": "TransactionMonitoringResult",
+            "type": "reference",
+          },
+          {
+            "allOf": [],
+            "properties": [
+              {
+                "description": null,
+                "key": "message",
+                "schema": {
+                  "type": "optional",
+                  "value": {
+                    "description": null,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        ],
+        "properties": [],
+        "type": "object",
+      },
+      "summary": "Verify a Transaction",
+      "tags": [],
+    },
+    {
+      "method": "GET",
+      "operationId": "get-consumer-transaction",
+      "path": "/transactions/{transactionId}",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [
+          {
+            "name": "transactionId",
+            "schema": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "requestBody": null,
+      },
+      "requestName": null,
+      "response": {
+        "reference": "TransactionWithRulesResult",
+        "type": "reference",
+      },
+      "summary": "Retrieve a Transaction",
+      "tags": [],
+    },
+    {
+      "method": "POST",
+      "operationId": "post-transaction-event",
+      "path": "/events/transaction",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [],
+        "requestBody": {
+          "reference": "TransactionEvent",
+          "type": "reference",
+        },
+      },
+      "requestName": null,
+      "response": {
+        "reference": "TransactionEventMonitoringResult",
+        "type": "reference",
+      },
+      "summary": "Create a Transaction Event",
+      "tags": [],
+    },
+    {
+      "method": "POST",
+      "operationId": "post-consumer-user",
+      "path": "/consumer/users",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [],
+        "requestBody": {
+          "reference": "User",
+          "type": "reference",
+        },
+      },
+      "requestName": null,
+      "response": {
+        "allOf": [
+          {
+            "reference": "ConsumerUsersResponse",
+            "type": "reference",
+          },
+          {
+            "allOf": [],
+            "properties": [
+              {
+                "description": null,
+                "key": "message",
+                "schema": {
+                  "type": "optional",
+                  "value": {
+                    "description": null,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        ],
+        "properties": [],
+        "type": "object",
+      },
+      "summary": "Create a Consumer User",
+      "tags": [],
+    },
+    {
+      "method": "GET",
+      "operationId": "get-consumer-user",
+      "path": "/consumer/users/{userId}",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [
+          {
+            "name": "userId",
+            "schema": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "requestBody": null,
+      },
+      "requestName": null,
+      "response": {
+        "reference": "User",
+        "type": "reference",
+      },
+      "summary": "Retrieve a Consumer User",
+      "tags": [],
+    },
+    {
+      "method": "POST",
+      "operationId": "post-business-user",
+      "path": "/business/users",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [],
+        "requestBody": {
+          "reference": "Business",
+          "type": "reference",
+        },
+      },
+      "requestName": null,
+      "response": {
+        "allOf": [
+          {
+            "reference": "BusinessUsersResponse",
+            "type": "reference",
+          },
+          {
+            "allOf": [],
+            "properties": [
+              {
+                "description": null,
+                "key": "message",
+                "schema": {
+                  "type": "optional",
+                  "value": {
+                    "description": null,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        ],
+        "properties": [],
+        "type": "object",
+      },
+      "summary": "Create a Business User",
+      "tags": [],
+    },
+    {
+      "method": "GET",
+      "operationId": "get-business-user-userId",
+      "path": "/business/users/{userId}",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [
+          {
+            "name": "userId",
+            "schema": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "requestBody": null,
+      },
+      "requestName": null,
+      "response": {
+        "reference": "Business",
+        "type": "reference",
+      },
+      "summary": "Retrieve a Business User",
+      "tags": [],
+    },
+    {
+      "method": "POST",
+      "operationId": "post-user-event",
+      "path": "/events/consumer/user",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [],
+        "requestBody": {
+          "reference": "ConsumerUserEvent",
+          "type": "reference",
+        },
+      },
+      "requestName": null,
+      "response": {
+        "reference": "Business",
+        "type": "reference",
+      },
+      "summary": "Create a Consumer User Event",
+      "tags": [],
+    },
+    {
+      "method": "POST",
+      "operationId": "post-business-user-event",
+      "path": "/events/business/user",
+      "request": {
+        "headers": [],
+        "pathParameters": [],
+        "queryParameters": [],
+        "requestBody": {
+          "reference": "BusinessUserEvent",
+          "type": "reference",
+        },
+      },
+      "requestName": null,
+      "response": {
+        "reference": "Business",
+        "type": "reference",
+      },
+      "summary": "Create a Business User Event",
+      "tags": [],
+    },
+  ],
+  "schemas": {
+    "ACHDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "ACHPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Routing number of the bank",
+          "key": "routingNumber",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Routing number of the bank",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Bank account number of the individual",
+          "key": "accountNumber",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Bank account number of the individual",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the bank",
+          "key": "bankName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the bank",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the account holder",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the account holder",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "bankAddress",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Address",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Beneficiary name of the account",
+          "key": "beneficiaryName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Beneficiary name of the account",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ACHPaymentMethod": {
+      "description": "Classify the method of payment as "ACH" for ACHDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "ACH",
+        },
+      ],
+    },
+    "Address": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Address lines of the user's residence address",
+          "key": "addressLines",
+          "schema": {
+            "description": "Address lines of the user's residence address",
+            "type": "array",
+            "value": {
+              "type": "unknown",
+            },
+          },
+        },
+        {
+          "description": "Post code of the user's residence address",
+          "key": "postcode",
+          "schema": {
+            "description": "Post code of the user's residence address",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "City of the user's residence address",
+          "key": "city",
+          "schema": {
+            "description": "City of the user's residence address",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "State of the user's residence address",
+          "key": "state",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "State of the user's residence address",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "User's country of residence",
+          "key": "country",
+          "schema": {
+            "description": "User's country of residence",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "Amount": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Numerical value of the transaction",
+          "key": "amountValue",
+          "schema": {
+            "description": "Numerical value of the transaction",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "amountCurrency",
+          "schema": {
+            "reference": "CurrencyCode",
+            "type": "reference",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "Business": {
+      "allOf": [
+        {
+          "reference": "BusinessBase",
+          "type": "reference",
+        },
+        {
+          "reference": "BusinessOptional",
+          "type": "reference",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "BusinessBase": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique user ID for the user",
+          "key": "userId",
+          "schema": {
+            "description": "Unique user ID for the user",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "legalEntity",
+          "schema": {
+            "reference": "LegalEntity",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Timestamp when the user was created",
+          "key": "createdTimestamp",
+          "schema": {
+            "description": "Timestamp when the user was created",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "riskLevel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RiskLevel",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "BusinessOptional": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "userStateDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "UserStateDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "kycStatusDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "KYCStatusDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
+          "key": "shareHolders",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Person",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "description": "Director(s) of the company. Must be at least one",
+          "key": "directors",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Director(s) of the company. Must be at least one",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Person",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "key": "transactionLimits",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionLimits",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "riskLevel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RiskLevel",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "allowedPaymentMethods",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "PaymentMethods",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "key": "mccDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "MCCDetails",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "BusinessUserEvent": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Timestamp of the event",
+          "key": "timestamp",
+          "schema": {
+            "description": "Timestamp of the event",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Transaction ID the event pertains to",
+          "key": "userId",
+          "schema": {
+            "description": "Transaction ID the event pertains to",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Unique event ID",
+          "key": "eventId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Unique event ID",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Reason for the event or a state change",
+          "key": "reason",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Reason for the event or a state change",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Event description",
+          "key": "eventDescription",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Event description",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "updatedBusinessUserAttributes",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "BusinessOptional",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "BusinessUsersResponse": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "user ID the risk score pertains to",
+          "key": "userId",
+          "schema": {
+            "description": "user ID the risk score pertains to",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "userRiskScoreDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RiskScoringResult",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CardDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "CardPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
+          "key": "cardFingerprint",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "cardIssuedCountry",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CountryCode",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Reference for the transaction",
+          "key": "transactionReferenceField",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Reference for the transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Whether 3ds was successfully enforced for the transaction",
+          "key": "3dsDone",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Whether 3ds was successfully enforced for the transaction",
+              "schema": {
+                "type": "boolean",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "nameOnCard",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ConsumerName",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "cardExpiry",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CardExpiry",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Last 4 digits of Card",
+          "key": "cardLast4Digits",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Last 4 digits of Card",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Brand of Card",
+          "key": "cardBrand",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Brand of Card",
+              "type": "enum",
+              "values": [
+                {
+                  "name": null,
+                  "value": "VISA",
+                },
+                {
+                  "name": null,
+                  "value": "MASTERCARD",
+                },
+                {
+                  "name": null,
+                  "value": "AMERICAN_EXPRESS",
+                },
+                {
+                  "name": null,
+                  "value": "DISCOVER",
+                },
+                {
+                  "name": null,
+                  "value": "UNIONPAY",
+                },
+                {
+                  "name": null,
+                  "value": "RUPAY",
+                },
+                {
+                  "name": null,
+                  "value": "JCB",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "description": "Funding of Card",
+          "key": "cardFunding",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Funding of Card",
+              "type": "enum",
+              "values": [
+                {
+                  "name": null,
+                  "value": "CREDIT",
+                },
+                {
+                  "name": null,
+                  "value": "DEBIT",
+                },
+                {
+                  "name": null,
+                  "value": "PREPAID",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "description": "Authentication of Card",
+          "key": "cardAuthenticated",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Authentication of Card",
+              "schema": {
+                "type": "boolean",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "paymentChannel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "cardType",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "enum",
+              "values": [
+                {
+                  "name": null,
+                  "value": "VIRTUAL",
+                },
+                {
+                  "name": null,
+                  "value": "PHYSICAL",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "key": "merchantDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CardMerchantDetails",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CardExpiry": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "month",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "year",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CardMerchantDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "category",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "MCC",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "city",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "country",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "state",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "postCode",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CardPaymentMethod": {
+      "description": "Classify the method of payment as "Card" for CardDetails
+",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "CARD",
+        },
+      ],
+    },
+    "CaseCreationType": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "TRANSACTION",
+        },
+        {
+          "name": null,
+          "value": "USER",
+        },
+      ],
+    },
+    "CaseManagementEvent": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Status of a case. E.g. Open, Closed etc.",
+          "key": "caseStatus",
+          "schema": {
+            "description": "Status of a case. E.g. Open, Closed etc.",
+            "type": "enum",
+            "values": [
+              {
+                "name": null,
+                "value": "CLOSED",
+              },
+              {
+                "name": null,
+                "value": "HIT",
+              },
+            ],
+          },
+        },
+        {
+          "description": "Timestamp of the event",
+          "key": "timestamp",
+          "schema": {
+            "description": "Timestamp of the event",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
+          "key": "caseStatusReason",
+          "schema": {
+            "description": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
+            "type": "enum",
+            "values": [
+              {
+                "name": null,
+                "value": "FALSE_POSITIVE",
+              },
+              {
+                "name": null,
+                "value": "INVESTIGATION_COMPLETED",
+              },
+              {
+                "name": null,
+                "value": "DOCUMENTS_COLLECTED",
+              },
+              {
+                "name": null,
+                "value": "OTHER",
+              },
+            ],
+          },
+        },
+        {
+          "description": "Transaction ID the case pertains to",
+          "key": "transactionId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Transaction ID the case pertains to",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "User ID the case pertains to",
+          "key": "userId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "User ID the case pertains to",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Event ID the case pertains to",
+          "key": "eventId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Event ID the case pertains to",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Case status reason description",
+          "key": "caseStatusReasonDescription",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Case status reason description",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CheckDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "CheckPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": null,
+          "key": "checkNumber",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "checkIdentifier",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "deliveryStatus",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "enum",
+              "values": [
+                {
+                  "name": null,
+                  "value": "COMPLETED",
+                },
+                {
+                  "name": null,
+                  "value": "PENDING",
+                },
+                {
+                  "name": null,
+                  "value": "SETTLED",
+                },
+                {
+                  "name": null,
+                  "value": "CANCELED",
+                },
+                {
+                  "name": null,
+                  "value": "REFUND",
+                },
+                {
+                  "name": null,
+                  "value": "DECLINED",
+                },
+              ],
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "etaTimestamp",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "shippingAddress",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Address",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CheckPaymentMethod": {
+      "description": "Classify the method of payment as "CHECK" for CheckDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "CHECK",
+        },
+      ],
+    },
+    "CompanyFinancialDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "expectedTransactionAmountPerMonth",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "expectedTurnoverPerMonth",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CompanyGeneralDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Legal name of the company",
+          "key": "legalName",
+          "schema": {
+            "description": "Legal name of the company",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "The industry the business operates in for a business customer",
+          "key": "businessIndustry",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The industry the business operates in for a business customer",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "The key products and services provided by the company",
+          "key": "mainProductsServicesSold",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The key products and services provided by the company",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CompanyRegistrationDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Commercial registry registration number for the company in its registration country",
+          "key": "registrationIdentifier",
+          "schema": {
+            "description": "Commercial registry registration number for the company in its registration country",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "registrationCountry",
+          "schema": {
+            "reference": "CountryCode",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Tax ID number of the registered entity",
+          "key": "taxIdentifier",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Tax ID number of the registered entity",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Type of legal entity. Ex: Limited Liability",
+          "key": "legalEntityType",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Type of legal entity. Ex: Limited Liability",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "dateOfRegistration",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ConsumerName": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "First name of the user",
+          "key": "firstName",
+          "schema": {
+            "description": "First name of the user",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Middle name of the user",
+          "key": "middleName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Middle name of the user",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Last name of the user",
+          "key": "lastName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Last name of the user",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ConsumerUserEvent": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Timestamp of the event",
+          "key": "timestamp",
+          "schema": {
+            "description": "Timestamp of the event",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Transaction ID the event pertains to",
+          "key": "userId",
+          "schema": {
+            "description": "Transaction ID the event pertains to",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Unique event ID",
+          "key": "eventId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Unique event ID",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Reason for the event or a state change",
+          "key": "reason",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Reason for the event or a state change",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Event description",
+          "key": "eventDescription",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Event description",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "updatedConsumerUserAttributes",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "UserOptional",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ConsumerUsersResponse": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "user ID the risk score pertains to",
+          "key": "userId",
+          "schema": {
+            "description": "user ID the risk score pertains to",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "userRiskScoreDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RiskScoringResult",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ContactDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Email addresses of the contacts for a given business customer",
+          "key": "emailIds",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Email addresses of the contacts for a given business customer",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "Phone numbers to contact a given business customer",
+          "key": "contactNumbers",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Phone numbers to contact a given business customer",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "Fax numbers to contact a business customer",
+          "key": "faxNumbers",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Fax numbers to contact a business customer",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "Website of the company",
+          "key": "websites",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Website of the company",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "Address(es) of the company",
+          "key": "addresses",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Address(es) of the company",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Address",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "CountryCode": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "AF",
+        },
+        {
+          "name": null,
+          "value": "AL",
+        },
+        {
+          "name": null,
+          "value": "DZ",
+        },
+        {
+          "name": null,
+          "value": "AS",
+        },
+        {
+          "name": null,
+          "value": "AD",
+        },
+        {
+          "name": null,
+          "value": "AO",
+        },
+        {
+          "name": null,
+          "value": "AI",
+        },
+        {
+          "name": null,
+          "value": "AQ",
+        },
+        {
+          "name": null,
+          "value": "AG",
+        },
+        {
+          "name": null,
+          "value": "AR",
+        },
+        {
+          "name": null,
+          "value": "AM",
+        },
+        {
+          "name": null,
+          "value": "AW",
+        },
+        {
+          "name": null,
+          "value": "AU",
+        },
+        {
+          "name": null,
+          "value": "AT",
+        },
+        {
+          "name": null,
+          "value": "AZ",
+        },
+        {
+          "name": null,
+          "value": "BS",
+        },
+        {
+          "name": null,
+          "value": "BH",
+        },
+        {
+          "name": null,
+          "value": "BD",
+        },
+        {
+          "name": null,
+          "value": "BB",
+        },
+        {
+          "name": null,
+          "value": "BY",
+        },
+        {
+          "name": null,
+          "value": "BE",
+        },
+        {
+          "name": null,
+          "value": "BZ",
+        },
+        {
+          "name": null,
+          "value": "BJ",
+        },
+        {
+          "name": null,
+          "value": "BM",
+        },
+        {
+          "name": null,
+          "value": "BT",
+        },
+        {
+          "name": null,
+          "value": "BO",
+        },
+        {
+          "name": null,
+          "value": "BQ",
+        },
+        {
+          "name": null,
+          "value": "BA",
+        },
+        {
+          "name": null,
+          "value": "BW",
+        },
+        {
+          "name": null,
+          "value": "BV",
+        },
+        {
+          "name": null,
+          "value": "BR",
+        },
+        {
+          "name": null,
+          "value": "IO",
+        },
+        {
+          "name": null,
+          "value": "BN",
+        },
+        {
+          "name": null,
+          "value": "BG",
+        },
+        {
+          "name": null,
+          "value": "BF",
+        },
+        {
+          "name": null,
+          "value": "BI",
+        },
+        {
+          "name": null,
+          "value": "CV",
+        },
+        {
+          "name": null,
+          "value": "KH",
+        },
+        {
+          "name": null,
+          "value": "CM",
+        },
+        {
+          "name": null,
+          "value": "CA",
+        },
+        {
+          "name": null,
+          "value": "KY",
+        },
+        {
+          "name": null,
+          "value": "CF",
+        },
+        {
+          "name": null,
+          "value": "TD",
+        },
+        {
+          "name": null,
+          "value": "CL",
+        },
+        {
+          "name": null,
+          "value": "CN",
+        },
+        {
+          "name": null,
+          "value": "CX",
+        },
+        {
+          "name": null,
+          "value": "CC",
+        },
+        {
+          "name": null,
+          "value": "CO",
+        },
+        {
+          "name": null,
+          "value": "KM",
+        },
+        {
+          "name": null,
+          "value": "CD",
+        },
+        {
+          "name": null,
+          "value": "CG",
+        },
+        {
+          "name": null,
+          "value": "CK",
+        },
+        {
+          "name": null,
+          "value": "CR",
+        },
+        {
+          "name": null,
+          "value": "HR",
+        },
+        {
+          "name": null,
+          "value": "CU",
+        },
+        {
+          "name": null,
+          "value": "CW",
+        },
+        {
+          "name": null,
+          "value": "CY",
+        },
+        {
+          "name": null,
+          "value": "CZ",
+        },
+        {
+          "name": null,
+          "value": "CI",
+        },
+        {
+          "name": null,
+          "value": "DK",
+        },
+        {
+          "name": null,
+          "value": "DJ",
+        },
+        {
+          "name": null,
+          "value": "DM",
+        },
+        {
+          "name": null,
+          "value": "DO",
+        },
+        {
+          "name": null,
+          "value": "EC",
+        },
+        {
+          "name": null,
+          "value": "EG",
+        },
+        {
+          "name": null,
+          "value": "SV",
+        },
+        {
+          "name": null,
+          "value": "GQ",
+        },
+        {
+          "name": null,
+          "value": "ER",
+        },
+        {
+          "name": null,
+          "value": "EE",
+        },
+        {
+          "name": null,
+          "value": "SZ",
+        },
+        {
+          "name": null,
+          "value": "ET",
+        },
+        {
+          "name": null,
+          "value": "FK",
+        },
+        {
+          "name": null,
+          "value": "FO",
+        },
+        {
+          "name": null,
+          "value": "FJ",
+        },
+        {
+          "name": null,
+          "value": "FI",
+        },
+        {
+          "name": null,
+          "value": "FR",
+        },
+        {
+          "name": null,
+          "value": "GF",
+        },
+        {
+          "name": null,
+          "value": "PF",
+        },
+        {
+          "name": null,
+          "value": "TF",
+        },
+        {
+          "name": null,
+          "value": "GA",
+        },
+        {
+          "name": null,
+          "value": "GM",
+        },
+        {
+          "name": null,
+          "value": "GE",
+        },
+        {
+          "name": null,
+          "value": "DE",
+        },
+        {
+          "name": null,
+          "value": "GH",
+        },
+        {
+          "name": null,
+          "value": "GI",
+        },
+        {
+          "name": null,
+          "value": "GR",
+        },
+        {
+          "name": null,
+          "value": "GL",
+        },
+        {
+          "name": null,
+          "value": "GD",
+        },
+        {
+          "name": null,
+          "value": "GP",
+        },
+        {
+          "name": null,
+          "value": "GU",
+        },
+        {
+          "name": null,
+          "value": "GT",
+        },
+        {
+          "name": null,
+          "value": "GG",
+        },
+        {
+          "name": null,
+          "value": "GN",
+        },
+        {
+          "name": null,
+          "value": "GW",
+        },
+        {
+          "name": null,
+          "value": "GY",
+        },
+        {
+          "name": null,
+          "value": "HT",
+        },
+        {
+          "name": null,
+          "value": "HM",
+        },
+        {
+          "name": null,
+          "value": "VA",
+        },
+        {
+          "name": null,
+          "value": "HN",
+        },
+        {
+          "name": null,
+          "value": "HK",
+        },
+        {
+          "name": null,
+          "value": "HU",
+        },
+        {
+          "name": null,
+          "value": "IS",
+        },
+        {
+          "name": null,
+          "value": "IN",
+        },
+        {
+          "name": null,
+          "value": "ID",
+        },
+        {
+          "name": null,
+          "value": "IR",
+        },
+        {
+          "name": null,
+          "value": "IQ",
+        },
+        {
+          "name": null,
+          "value": "IE",
+        },
+        {
+          "name": null,
+          "value": "IM",
+        },
+        {
+          "name": null,
+          "value": "IL",
+        },
+        {
+          "name": null,
+          "value": "IT",
+        },
+        {
+          "name": null,
+          "value": "JM",
+        },
+        {
+          "name": null,
+          "value": "JP",
+        },
+        {
+          "name": null,
+          "value": "JE",
+        },
+        {
+          "name": null,
+          "value": "JO",
+        },
+        {
+          "name": null,
+          "value": "KZ",
+        },
+        {
+          "name": null,
+          "value": "KE",
+        },
+        {
+          "name": null,
+          "value": "KI",
+        },
+        {
+          "name": null,
+          "value": "KP",
+        },
+        {
+          "name": null,
+          "value": "KR",
+        },
+        {
+          "name": null,
+          "value": "KW",
+        },
+        {
+          "name": null,
+          "value": "KG",
+        },
+        {
+          "name": null,
+          "value": "LA",
+        },
+        {
+          "name": null,
+          "value": "LV",
+        },
+        {
+          "name": null,
+          "value": "LB",
+        },
+        {
+          "name": null,
+          "value": "LS",
+        },
+        {
+          "name": null,
+          "value": "LR",
+        },
+        {
+          "name": null,
+          "value": "LY",
+        },
+        {
+          "name": null,
+          "value": "LI",
+        },
+        {
+          "name": null,
+          "value": "LT",
+        },
+        {
+          "name": null,
+          "value": "LU",
+        },
+        {
+          "name": null,
+          "value": "MO",
+        },
+        {
+          "name": null,
+          "value": "MG",
+        },
+        {
+          "name": null,
+          "value": "MW",
+        },
+        {
+          "name": null,
+          "value": "MY",
+        },
+        {
+          "name": null,
+          "value": "MV",
+        },
+        {
+          "name": null,
+          "value": "ML",
+        },
+        {
+          "name": null,
+          "value": "MT",
+        },
+        {
+          "name": null,
+          "value": "MH",
+        },
+        {
+          "name": null,
+          "value": "MQ",
+        },
+        {
+          "name": null,
+          "value": "MR",
+        },
+        {
+          "name": null,
+          "value": "MU",
+        },
+        {
+          "name": null,
+          "value": "YT",
+        },
+        {
+          "name": null,
+          "value": "MX",
+        },
+        {
+          "name": null,
+          "value": "FM",
+        },
+        {
+          "name": null,
+          "value": "MD",
+        },
+        {
+          "name": null,
+          "value": "MC",
+        },
+        {
+          "name": null,
+          "value": "MN",
+        },
+        {
+          "name": null,
+          "value": "ME",
+        },
+        {
+          "name": null,
+          "value": "MS",
+        },
+        {
+          "name": null,
+          "value": "MA",
+        },
+        {
+          "name": null,
+          "value": "MZ",
+        },
+        {
+          "name": null,
+          "value": "MM",
+        },
+        {
+          "name": null,
+          "value": "NA",
+        },
+        {
+          "name": null,
+          "value": "NR",
+        },
+        {
+          "name": null,
+          "value": "NP",
+        },
+        {
+          "name": null,
+          "value": "NL",
+        },
+        {
+          "name": null,
+          "value": "NC",
+        },
+        {
+          "name": null,
+          "value": "NZ",
+        },
+        {
+          "name": null,
+          "value": "NI",
+        },
+        {
+          "name": null,
+          "value": "NE",
+        },
+        {
+          "name": null,
+          "value": "NG",
+        },
+        {
+          "name": null,
+          "value": "NU",
+        },
+        {
+          "name": null,
+          "value": "NF",
+        },
+        {
+          "name": null,
+          "value": "MK",
+        },
+        {
+          "name": null,
+          "value": "MP",
+        },
+        {
+          "name": null,
+          "value": "NO",
+        },
+        {
+          "name": null,
+          "value": "OM",
+        },
+        {
+          "name": null,
+          "value": "PK",
+        },
+        {
+          "name": null,
+          "value": "PW",
+        },
+        {
+          "name": null,
+          "value": "PS",
+        },
+        {
+          "name": null,
+          "value": "PA",
+        },
+        {
+          "name": null,
+          "value": "PG",
+        },
+        {
+          "name": null,
+          "value": "PY",
+        },
+        {
+          "name": null,
+          "value": "PE",
+        },
+        {
+          "name": null,
+          "value": "PH",
+        },
+        {
+          "name": null,
+          "value": "PN",
+        },
+        {
+          "name": null,
+          "value": "PL",
+        },
+        {
+          "name": null,
+          "value": "PT",
+        },
+        {
+          "name": null,
+          "value": "PR",
+        },
+        {
+          "name": null,
+          "value": "QA",
+        },
+        {
+          "name": null,
+          "value": "RO",
+        },
+        {
+          "name": null,
+          "value": "RU",
+        },
+        {
+          "name": null,
+          "value": "RW",
+        },
+        {
+          "name": null,
+          "value": "RE",
+        },
+        {
+          "name": null,
+          "value": "BL",
+        },
+        {
+          "name": null,
+          "value": "SH",
+        },
+        {
+          "name": null,
+          "value": "KN",
+        },
+        {
+          "name": null,
+          "value": "LC",
+        },
+        {
+          "name": null,
+          "value": "MF",
+        },
+        {
+          "name": null,
+          "value": "PM",
+        },
+        {
+          "name": null,
+          "value": "VC",
+        },
+        {
+          "name": null,
+          "value": "WS",
+        },
+        {
+          "name": null,
+          "value": "SM",
+        },
+        {
+          "name": null,
+          "value": "ST",
+        },
+        {
+          "name": null,
+          "value": "SA",
+        },
+        {
+          "name": null,
+          "value": "SN",
+        },
+        {
+          "name": null,
+          "value": "RS",
+        },
+        {
+          "name": null,
+          "value": "SC",
+        },
+        {
+          "name": null,
+          "value": "SL",
+        },
+        {
+          "name": null,
+          "value": "SG",
+        },
+        {
+          "name": null,
+          "value": "SX",
+        },
+        {
+          "name": null,
+          "value": "SK",
+        },
+        {
+          "name": null,
+          "value": "SI",
+        },
+        {
+          "name": null,
+          "value": "SB",
+        },
+        {
+          "name": null,
+          "value": "SO",
+        },
+        {
+          "name": null,
+          "value": "ZA",
+        },
+        {
+          "name": null,
+          "value": "GS",
+        },
+        {
+          "name": null,
+          "value": "SS",
+        },
+        {
+          "name": null,
+          "value": "ES",
+        },
+        {
+          "name": null,
+          "value": "LK",
+        },
+        {
+          "name": null,
+          "value": "SD",
+        },
+        {
+          "name": null,
+          "value": "SR",
+        },
+        {
+          "name": null,
+          "value": "SJ",
+        },
+        {
+          "name": null,
+          "value": "SE",
+        },
+        {
+          "name": null,
+          "value": "CH",
+        },
+        {
+          "name": null,
+          "value": "SY",
+        },
+        {
+          "name": null,
+          "value": "TW",
+        },
+        {
+          "name": null,
+          "value": "TJ",
+        },
+        {
+          "name": null,
+          "value": "TZ",
+        },
+        {
+          "name": null,
+          "value": "TH",
+        },
+        {
+          "name": null,
+          "value": "TL",
+        },
+        {
+          "name": null,
+          "value": "TG",
+        },
+        {
+          "name": null,
+          "value": "TK",
+        },
+        {
+          "name": null,
+          "value": "TO",
+        },
+        {
+          "name": null,
+          "value": "TT",
+        },
+        {
+          "name": null,
+          "value": "TN",
+        },
+        {
+          "name": null,
+          "value": "TM",
+        },
+        {
+          "name": null,
+          "value": "TC",
+        },
+        {
+          "name": null,
+          "value": "TV",
+        },
+        {
+          "name": null,
+          "value": "TR",
+        },
+        {
+          "name": null,
+          "value": "UG",
+        },
+        {
+          "name": null,
+          "value": "UA",
+        },
+        {
+          "name": null,
+          "value": "AE",
+        },
+        {
+          "name": null,
+          "value": "GB",
+        },
+        {
+          "name": null,
+          "value": "UM",
+        },
+        {
+          "name": null,
+          "value": "US",
+        },
+        {
+          "name": null,
+          "value": "UY",
+        },
+        {
+          "name": null,
+          "value": "UZ",
+        },
+        {
+          "name": null,
+          "value": "VU",
+        },
+        {
+          "name": null,
+          "value": "VE",
+        },
+        {
+          "name": null,
+          "value": "VN",
+        },
+        {
+          "name": null,
+          "value": "VG",
+        },
+        {
+          "name": null,
+          "value": "VI",
+        },
+        {
+          "name": null,
+          "value": "WF",
+        },
+        {
+          "name": null,
+          "value": "EH",
+        },
+        {
+          "name": null,
+          "value": "YE",
+        },
+        {
+          "name": null,
+          "value": "ZM",
+        },
+        {
+          "name": null,
+          "value": "ZW",
+        },
+        {
+          "name": null,
+          "value": "AX",
+        },
+        {
+          "name": null,
+          "value": "N/A",
+        },
+      ],
+    },
+    "CurrencyCode": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "1INCH",
+        },
+        {
+          "name": null,
+          "value": "AAVE",
+        },
+        {
+          "name": null,
+          "value": "ADA",
+        },
+        {
+          "name": null,
+          "value": "AED",
+        },
+        {
+          "name": null,
+          "value": "AFN",
+        },
+        {
+          "name": null,
+          "value": "ALGO",
+        },
+        {
+          "name": null,
+          "value": "ALL",
+        },
+        {
+          "name": null,
+          "value": "AMD",
+        },
+        {
+          "name": null,
+          "value": "AMP",
+        },
+        {
+          "name": null,
+          "value": "ANG",
+        },
+        {
+          "name": null,
+          "value": "AOA",
+        },
+        {
+          "name": null,
+          "value": "AR",
+        },
+        {
+          "name": null,
+          "value": "ARS",
+        },
+        {
+          "name": null,
+          "value": "ATOM",
+        },
+        {
+          "name": null,
+          "value": "AUD",
+        },
+        {
+          "name": null,
+          "value": "AVAX",
+        },
+        {
+          "name": null,
+          "value": "AWG",
+        },
+        {
+          "name": null,
+          "value": "AXS",
+        },
+        {
+          "name": null,
+          "value": "AZN",
+        },
+        {
+          "name": null,
+          "value": "BAM",
+        },
+        {
+          "name": null,
+          "value": "BAT",
+        },
+        {
+          "name": null,
+          "value": "BBD",
+        },
+        {
+          "name": null,
+          "value": "BCH",
+        },
+        {
+          "name": null,
+          "value": "BDT",
+        },
+        {
+          "name": null,
+          "value": "BGN",
+        },
+        {
+          "name": null,
+          "value": "BHD",
+        },
+        {
+          "name": null,
+          "value": "BIF",
+        },
+        {
+          "name": null,
+          "value": "BMD",
+        },
+        {
+          "name": null,
+          "value": "BNB",
+        },
+        {
+          "name": null,
+          "value": "BND",
+        },
+        {
+          "name": null,
+          "value": "BOB",
+        },
+        {
+          "name": null,
+          "value": "BRL",
+        },
+        {
+          "name": null,
+          "value": "BSD",
+        },
+        {
+          "name": null,
+          "value": "BSV",
+        },
+        {
+          "name": null,
+          "value": "BTC",
+        },
+        {
+          "name": null,
+          "value": "BTCB",
+        },
+        {
+          "name": null,
+          "value": "BTG",
+        },
+        {
+          "name": null,
+          "value": "BTN",
+        },
+        {
+          "name": null,
+          "value": "BUSD",
+        },
+        {
+          "name": null,
+          "value": "BWP",
+        },
+        {
+          "name": null,
+          "value": "BYN",
+        },
+        {
+          "name": null,
+          "value": "BYR",
+        },
+        {
+          "name": null,
+          "value": "BZD",
+        },
+        {
+          "name": null,
+          "value": "CAD",
+        },
+        {
+          "name": null,
+          "value": "CAKE",
+        },
+        {
+          "name": null,
+          "value": "CDF",
+        },
+        {
+          "name": null,
+          "value": "CELO",
+        },
+        {
+          "name": null,
+          "value": "CHF",
+        },
+        {
+          "name": null,
+          "value": "CHZ",
+        },
+        {
+          "name": null,
+          "value": "CLF",
+        },
+        {
+          "name": null,
+          "value": "CLP",
+        },
+        {
+          "name": null,
+          "value": "CNY",
+        },
+        {
+          "name": null,
+          "value": "COMP",
+        },
+        {
+          "name": null,
+          "value": "COP",
+        },
+        {
+          "name": null,
+          "value": "CRC",
+        },
+        {
+          "name": null,
+          "value": "CRO",
+        },
+        {
+          "name": null,
+          "value": "CRV",
+        },
+        {
+          "name": null,
+          "value": "CUC",
+        },
+        {
+          "name": null,
+          "value": "CUP",
+        },
+        {
+          "name": null,
+          "value": "CVE",
+        },
+        {
+          "name": null,
+          "value": "CVX",
+        },
+        {
+          "name": null,
+          "value": "CZK",
+        },
+        {
+          "name": null,
+          "value": "DAI",
+        },
+        {
+          "name": null,
+          "value": "DASH",
+        },
+        {
+          "name": null,
+          "value": "DCR",
+        },
+        {
+          "name": null,
+          "value": "DFI",
+        },
+        {
+          "name": null,
+          "value": "DJF",
+        },
+        {
+          "name": null,
+          "value": "DKK",
+        },
+        {
+          "name": null,
+          "value": "DOGE",
+        },
+        {
+          "name": null,
+          "value": "DOP",
+        },
+        {
+          "name": null,
+          "value": "DOT",
+        },
+        {
+          "name": null,
+          "value": "DZD",
+        },
+        {
+          "name": null,
+          "value": "EGLD",
+        },
+        {
+          "name": null,
+          "value": "EGP",
+        },
+        {
+          "name": null,
+          "value": "ENJ",
+        },
+        {
+          "name": null,
+          "value": "EOS",
+        },
+        {
+          "name": null,
+          "value": "ERN",
+        },
+        {
+          "name": null,
+          "value": "ETB",
+        },
+        {
+          "name": null,
+          "value": "ETC",
+        },
+        {
+          "name": null,
+          "value": "ETH",
+        },
+        {
+          "name": null,
+          "value": "EUR",
+        },
+        {
+          "name": null,
+          "value": "FEI",
+        },
+        {
+          "name": null,
+          "value": "FIL",
+        },
+        {
+          "name": null,
+          "value": "FJD",
+        },
+        {
+          "name": null,
+          "value": "FKP",
+        },
+        {
+          "name": null,
+          "value": "FLOW",
+        },
+        {
+          "name": null,
+          "value": "FRAX",
+        },
+        {
+          "name": null,
+          "value": "FTM",
+        },
+        {
+          "name": null,
+          "value": "FTT",
+        },
+        {
+          "name": null,
+          "value": "GALA",
+        },
+        {
+          "name": null,
+          "value": "GBP",
+        },
+        {
+          "name": null,
+          "value": "GEL",
+        },
+        {
+          "name": null,
+          "value": "GGP",
+        },
+        {
+          "name": null,
+          "value": "GHS",
+        },
+        {
+          "name": null,
+          "value": "GIP",
+        },
+        {
+          "name": null,
+          "value": "GMD",
+        },
+        {
+          "name": null,
+          "value": "GNF",
+        },
+        {
+          "name": null,
+          "value": "GNO",
+        },
+        {
+          "name": null,
+          "value": "GRT",
+        },
+        {
+          "name": null,
+          "value": "GT",
+        },
+        {
+          "name": null,
+          "value": "GTQ",
+        },
+        {
+          "name": null,
+          "value": "GYD",
+        },
+        {
+          "name": null,
+          "value": "HBAR",
+        },
+        {
+          "name": null,
+          "value": "HKD",
+        },
+        {
+          "name": null,
+          "value": "HNL",
+        },
+        {
+          "name": null,
+          "value": "HNT",
+        },
+        {
+          "name": null,
+          "value": "HOT",
+        },
+        {
+          "name": null,
+          "value": "HRK",
+        },
+        {
+          "name": null,
+          "value": "HT",
+        },
+        {
+          "name": null,
+          "value": "HTG",
+        },
+        {
+          "name": null,
+          "value": "HUF",
+        },
+        {
+          "name": null,
+          "value": "ICP",
+        },
+        {
+          "name": null,
+          "value": "IDR",
+        },
+        {
+          "name": null,
+          "value": "ILS",
+        },
+        {
+          "name": null,
+          "value": "IMP",
+        },
+        {
+          "name": null,
+          "value": "INJ",
+        },
+        {
+          "name": null,
+          "value": "INR",
+        },
+        {
+          "name": null,
+          "value": "IQD",
+        },
+        {
+          "name": null,
+          "value": "IRR",
+        },
+        {
+          "name": null,
+          "value": "ISK",
+        },
+        {
+          "name": null,
+          "value": "JEP",
+        },
+        {
+          "name": null,
+          "value": "JMD",
+        },
+        {
+          "name": null,
+          "value": "JOD",
+        },
+        {
+          "name": null,
+          "value": "JPY",
+        },
+        {
+          "name": null,
+          "value": "KAVA",
+        },
+        {
+          "name": null,
+          "value": "KCS",
+        },
+        {
+          "name": null,
+          "value": "KDA",
+        },
+        {
+          "name": null,
+          "value": "KES",
+        },
+        {
+          "name": null,
+          "value": "KGS",
+        },
+        {
+          "name": null,
+          "value": "KHR",
+        },
+        {
+          "name": null,
+          "value": "KLAY",
+        },
+        {
+          "name": null,
+          "value": "KMF",
+        },
+        {
+          "name": null,
+          "value": "KNC",
+        },
+        {
+          "name": null,
+          "value": "KPW",
+        },
+        {
+          "name": null,
+          "value": "KRW",
+        },
+        {
+          "name": null,
+          "value": "KSM",
+        },
+        {
+          "name": null,
+          "value": "KWD",
+        },
+        {
+          "name": null,
+          "value": "KYD",
+        },
+        {
+          "name": null,
+          "value": "KZT",
+        },
+        {
+          "name": null,
+          "value": "LAK",
+        },
+        {
+          "name": null,
+          "value": "LBP",
+        },
+        {
+          "name": null,
+          "value": "LEO",
+        },
+        {
+          "name": null,
+          "value": "LINK",
+        },
+        {
+          "name": null,
+          "value": "LKR",
+        },
+        {
+          "name": null,
+          "value": "LRC",
+        },
+        {
+          "name": null,
+          "value": "LRD",
+        },
+        {
+          "name": null,
+          "value": "LSL",
+        },
+        {
+          "name": null,
+          "value": "LTC",
+        },
+        {
+          "name": null,
+          "value": "LTL",
+        },
+        {
+          "name": null,
+          "value": "LUNA",
+        },
+        {
+          "name": null,
+          "value": "LVL",
+        },
+        {
+          "name": null,
+          "value": "LYD",
+        },
+        {
+          "name": null,
+          "value": "MAD",
+        },
+        {
+          "name": null,
+          "value": "MANA",
+        },
+        {
+          "name": null,
+          "value": "MATIC",
+        },
+        {
+          "name": null,
+          "value": "MDL",
+        },
+        {
+          "name": null,
+          "value": "MGA",
+        },
+        {
+          "name": null,
+          "value": "MINA",
+        },
+        {
+          "name": null,
+          "value": "MIOTA",
+        },
+        {
+          "name": null,
+          "value": "MKD",
+        },
+        {
+          "name": null,
+          "value": "MKR",
+        },
+        {
+          "name": null,
+          "value": "MMK",
+        },
+        {
+          "name": null,
+          "value": "MNT",
+        },
+        {
+          "name": null,
+          "value": "MOP",
+        },
+        {
+          "name": null,
+          "value": "MRO",
+        },
+        {
+          "name": null,
+          "value": "MUR",
+        },
+        {
+          "name": null,
+          "value": "MVR",
+        },
+        {
+          "name": null,
+          "value": "MWK",
+        },
+        {
+          "name": null,
+          "value": "MXN",
+        },
+        {
+          "name": null,
+          "value": "MYR",
+        },
+        {
+          "name": null,
+          "value": "MZN",
+        },
+        {
+          "name": null,
+          "value": "NAD",
+        },
+        {
+          "name": null,
+          "value": "NEAR",
+        },
+        {
+          "name": null,
+          "value": "NEO",
+        },
+        {
+          "name": null,
+          "value": "NEXO",
+        },
+        {
+          "name": null,
+          "value": "NGN",
+        },
+        {
+          "name": null,
+          "value": "NIO",
+        },
+        {
+          "name": null,
+          "value": "NOK",
+        },
+        {
+          "name": null,
+          "value": "NPR",
+        },
+        {
+          "name": null,
+          "value": "NZD",
+        },
+        {
+          "name": null,
+          "value": "OKB",
+        },
+        {
+          "name": null,
+          "value": "OMR",
+        },
+        {
+          "name": null,
+          "value": "ONE",
+        },
+        {
+          "name": null,
+          "value": "PAB",
+        },
+        {
+          "name": null,
+          "value": "PAXG",
+        },
+        {
+          "name": null,
+          "value": "PEN",
+        },
+        {
+          "name": null,
+          "value": "PGK",
+        },
+        {
+          "name": null,
+          "value": "PHP",
+        },
+        {
+          "name": null,
+          "value": "PKR",
+        },
+        {
+          "name": null,
+          "value": "PLN",
+        },
+        {
+          "name": null,
+          "value": "PYG",
+        },
+        {
+          "name": null,
+          "value": "QAR",
+        },
+        {
+          "name": null,
+          "value": "QNT",
+        },
+        {
+          "name": null,
+          "value": "QTUM",
+        },
+        {
+          "name": null,
+          "value": "RON",
+        },
+        {
+          "name": null,
+          "value": "RSD",
+        },
+        {
+          "name": null,
+          "value": "RUB",
+        },
+        {
+          "name": null,
+          "value": "RUNE",
+        },
+        {
+          "name": null,
+          "value": "RWF",
+        },
+        {
+          "name": null,
+          "value": "SAND",
+        },
+        {
+          "name": null,
+          "value": "SAR",
+        },
+        {
+          "name": null,
+          "value": "SBD",
+        },
+        {
+          "name": null,
+          "value": "SCR",
+        },
+        {
+          "name": null,
+          "value": "SDG",
+        },
+        {
+          "name": null,
+          "value": "SEK",
+        },
+        {
+          "name": null,
+          "value": "SGD",
+        },
+        {
+          "name": null,
+          "value": "SHIB",
+        },
+        {
+          "name": null,
+          "value": "SHP",
+        },
+        {
+          "name": null,
+          "value": "SLE",
+        },
+        {
+          "name": null,
+          "value": "SLL",
+        },
+        {
+          "name": null,
+          "value": "SOL",
+        },
+        {
+          "name": null,
+          "value": "SOS",
+        },
+        {
+          "name": null,
+          "value": "SRD",
+        },
+        {
+          "name": null,
+          "value": "STD",
+        },
+        {
+          "name": null,
+          "value": "STX",
+        },
+        {
+          "name": null,
+          "value": "SVC",
+        },
+        {
+          "name": null,
+          "value": "SYP",
+        },
+        {
+          "name": null,
+          "value": "SZL",
+        },
+        {
+          "name": null,
+          "value": "THB",
+        },
+        {
+          "name": null,
+          "value": "THETA",
+        },
+        {
+          "name": null,
+          "value": "TJS",
+        },
+        {
+          "name": null,
+          "value": "TMT",
+        },
+        {
+          "name": null,
+          "value": "TND",
+        },
+        {
+          "name": null,
+          "value": "TOP",
+        },
+        {
+          "name": null,
+          "value": "TRX",
+        },
+        {
+          "name": null,
+          "value": "TRY",
+        },
+        {
+          "name": null,
+          "value": "TTD",
+        },
+        {
+          "name": null,
+          "value": "TTT",
+        },
+        {
+          "name": null,
+          "value": "TUSD",
+        },
+        {
+          "name": null,
+          "value": "TWD",
+        },
+        {
+          "name": null,
+          "value": "TZS",
+        },
+        {
+          "name": null,
+          "value": "UAH",
+        },
+        {
+          "name": null,
+          "value": "UGX",
+        },
+        {
+          "name": null,
+          "value": "UNI",
+        },
+        {
+          "name": null,
+          "value": "USD",
+        },
+        {
+          "name": null,
+          "value": "USDC",
+        },
+        {
+          "name": null,
+          "value": "USDP",
+        },
+        {
+          "name": null,
+          "value": "USDT",
+        },
+        {
+          "name": null,
+          "value": "UYU",
+        },
+        {
+          "name": null,
+          "value": "UZS",
+        },
+        {
+          "name": null,
+          "value": "VEF",
+        },
+        {
+          "name": null,
+          "value": "VET",
+        },
+        {
+          "name": null,
+          "value": "VND",
+        },
+        {
+          "name": null,
+          "value": "VUV",
+        },
+        {
+          "name": null,
+          "value": "WAVES",
+        },
+        {
+          "name": null,
+          "value": "WBTC",
+        },
+        {
+          "name": null,
+          "value": "WEMIX",
+        },
+        {
+          "name": null,
+          "value": "WST",
+        },
+        {
+          "name": null,
+          "value": "XAF",
+        },
+        {
+          "name": null,
+          "value": "XAG",
+        },
+        {
+          "name": null,
+          "value": "XAU",
+        },
+        {
+          "name": null,
+          "value": "XCD",
+        },
+        {
+          "name": null,
+          "value": "XCH",
+        },
+        {
+          "name": null,
+          "value": "XDC",
+        },
+        {
+          "name": null,
+          "value": "XDR",
+        },
+        {
+          "name": null,
+          "value": "XEC",
+        },
+        {
+          "name": null,
+          "value": "XEM",
+        },
+        {
+          "name": null,
+          "value": "XLM",
+        },
+        {
+          "name": null,
+          "value": "XMR",
+        },
+        {
+          "name": null,
+          "value": "XOF",
+        },
+        {
+          "name": null,
+          "value": "XPF",
+        },
+        {
+          "name": null,
+          "value": "XRP",
+        },
+        {
+          "name": null,
+          "value": "XTZ",
+        },
+        {
+          "name": null,
+          "value": "YER",
+        },
+        {
+          "name": null,
+          "value": "ZAR",
+        },
+        {
+          "name": null,
+          "value": "ZEC",
+        },
+        {
+          "name": null,
+          "value": "ZIL",
+        },
+        {
+          "name": null,
+          "value": "ZMK",
+        },
+        {
+          "name": null,
+          "value": "ZMW",
+        },
+        {
+          "name": null,
+          "value": "ZWL",
+        },
+      ],
+    },
+    "Date": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Day of date",
+          "key": "day",
+          "schema": {
+            "description": "Day of date",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Month of date",
+          "key": "month",
+          "schema": {
+            "description": "Month of date",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Year of date",
+          "key": "year",
+          "schema": {
+            "description": "Year of date",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "DeviceData": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Battery level of the device used for a transaction or event at a given timestamp",
+          "key": "batteryLevel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Battery level of the device used for a transaction or event at a given timestamp",
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Device latitude at a give timestamp for an event or transaction",
+          "key": "deviceLatitude",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Device latitude at a give timestamp for an event or transaction",
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Device longitude at a give timestamp for an event or transaction",
+          "key": "deviceLongitude",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Device longitude at a give timestamp for an event or transaction",
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "IP address of the device at a given timestamp for an event or transaction",
+          "key": "ipAddress",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "IP address of the device at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Device identifier number",
+          "key": "deviceIdentifier",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Device identifier number",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Whether VPN was used at a given timestamp for an event or transaction",
+          "key": "vpnUsed",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Whether VPN was used at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "boolean",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Operating system of the device at a given timestamp for an event or transaction",
+          "key": "operatingSystem",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Operating system of the device at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "The maker of the device at a given timestamp for an event or transaction",
+          "key": "deviceMaker",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The maker of the device at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "The model of the device at a given timestamp for an event or transaction",
+          "key": "deviceModel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The model of the device at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "The year the device was manufactured at a given timestamp for an event or transaction",
+          "key": "deviceYear",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The year the device was manufactured at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
+          "key": "appVersion",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ExecutedRulesResult": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique rule identifier",
+          "key": "ruleId",
+          "schema": {
+            "description": "Unique rule identifier",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": null,
+          "key": "ruleInstanceId",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Name of the rule",
+          "key": "ruleName",
+          "schema": {
+            "description": "Name of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Description of the rule",
+          "key": "ruleDescription",
+          "schema": {
+            "description": "Description of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "ruleAction",
+          "schema": {
+            "reference": "RuleAction",
+            "type": "reference",
+          },
+        },
+        {
+          "description": null,
+          "key": "ruleHit",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "ruleHitMeta",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RuleHitMeta",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "FailedRulesResult": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique rule identifier",
+          "key": "ruleId",
+          "schema": {
+            "description": "Unique rule identifier",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Name of the rule",
+          "key": "ruleName",
+          "schema": {
+            "description": "Name of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Description of the rule",
+          "key": "ruleDescription",
+          "schema": {
+            "description": "Description of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "failureException",
+          "schema": {
+            "reference": "RuleFailureException",
+            "type": "reference",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "FalsePositiveDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "isFalsePositive",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": null,
+          "key": "confidenceScore",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GeneralBankAccountPaymentMethod": {
+      "description": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "GENERIC_BANK_ACCOUNT",
+        },
+      ],
+    },
+    "GenericBankAccountDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "GeneralBankAccountPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Bank account number",
+          "key": "accountNumber",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Bank account number",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Bank account type. E.g. Checking, Savings etc.",
+          "key": "accountType",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Bank account type. E.g. Checking, Savings etc.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the bank",
+          "key": "bankName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the bank",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
+          "key": "bankCode",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the account holder",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the account holder",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "bankAddress",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Address",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Special instructions to be specified if any",
+          "key": "specialInstructions",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Special instructions to be specified if any",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "paymentChannel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "HitRulesDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique rule identifier",
+          "key": "ruleId",
+          "schema": {
+            "description": "Unique rule identifier",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": null,
+          "key": "ruleInstanceId",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Name of the rule",
+          "key": "ruleName",
+          "schema": {
+            "description": "Name of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Description of the rule",
+          "key": "ruleDescription",
+          "schema": {
+            "description": "Description of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "ruleAction",
+          "schema": {
+            "reference": "RuleAction",
+            "type": "reference",
+          },
+        },
+        {
+          "key": "ruleHitMeta",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RuleHitMeta",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "IBANDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "IBANPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
+          "key": "BIC",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the bank",
+          "key": "bankName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the bank",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "bankAddress",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Address",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Account number of the user. Can be account number, IBAN number etc.",
+          "key": "IBAN",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Account number of the user. Can be account number, IBAN number etc.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the bank account holder",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the bank account holder",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Tag",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
+          "key": "bankBranchCode",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "paymentChannel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "IBANPaymentMethod": {
+      "description": "Classify the method of payment as "IBAN" for IBANDetails
+",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "IBAN",
+        },
+      ],
+    },
+    "KYCStatus": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "SUCCESSFUL",
+        },
+        {
+          "name": null,
+          "value": "FAILED",
+        },
+        {
+          "name": null,
+          "value": "NOT_STARTED",
+        },
+        {
+          "name": null,
+          "value": "IN_PROGRESS",
+        },
+        {
+          "name": null,
+          "value": "MANUAL_REVIEW",
+        },
+      ],
+    },
+    "KYCStatusDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "reason",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "status",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "KYCStatus",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "LegalDocument": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "User's identity document type such as passport, national ID etc.",
+          "key": "documentType",
+          "schema": {
+            "description": "User's identity document type such as passport, national ID etc.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "User's unique identity document number such as passport number",
+          "key": "documentNumber",
+          "schema": {
+            "description": "User's unique identity document number such as passport number",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
+          "key": "documentIssuedDate",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
+          "key": "documentExpirationDate",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "documentIssuedCountry",
+          "schema": {
+            "reference": "CountryCode",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "key": "nameOnDocument",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ConsumerName",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "LegalEntity": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "companyGeneralDetails",
+          "schema": {
+            "reference": "CompanyGeneralDetails",
+            "type": "reference",
+          },
+        },
+        {
+          "key": "companyFinancialDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CompanyFinancialDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "companyRegistrationDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CompanyRegistrationDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Reason for opening the account at financial institution",
+          "key": "reasonForAccountOpening",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Reason for opening the account at financial institution",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "key": "contactDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ContactDetails",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ListData": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "metadata",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ListMetadata",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "List items",
+          "key": "items",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "List items",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "ListItem",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ListExisted": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "listId",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "header",
+          "schema": {
+            "reference": "ListHeader",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "List items",
+          "key": "items",
+          "schema": {
+            "description": "List items",
+            "type": "array",
+            "value": {
+              "type": "array",
+              "value": {
+                "reference": "ListItem",
+                "type": "reference",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ListHeader": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "listId",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "listType",
+          "schema": {
+            "reference": "ListType",
+            "type": "reference",
+          },
+        },
+        {
+          "key": "subtype",
+          "schema": {
+            "reference": "ListSubtype",
+            "type": "reference",
+          },
+        },
+        {
+          "key": "metadata",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ListMetadata",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "createdTimestamp",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": null,
+          "key": "size",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ListItem": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "key",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "metadata",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ListKeyMetadata",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ListKeyMetadata": {
+      "allOf": [],
+      "properties": [],
+      "type": "object",
+    },
+    "ListMetadata": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "List name",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "List name",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "List description",
+          "key": "description",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "List description",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "status",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "boolean",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ListSubtype": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "USER_ID",
+        },
+        {
+          "name": null,
+          "value": "CARD_FINGERPRINT_NUMBER",
+        },
+        {
+          "name": null,
+          "value": "IBAN_NUMBER",
+        },
+        {
+          "name": null,
+          "value": "BANK_ACCOUNT_NUMBER",
+        },
+        {
+          "name": null,
+          "value": "ACH_ACCOUNT_NUMBER",
+        },
+        {
+          "name": null,
+          "value": "SWIFT_ACCOUNT_NUMBER",
+        },
+        {
+          "name": null,
+          "value": "BIC",
+        },
+        {
+          "name": null,
+          "value": "BANK_SWIFT_CODE",
+        },
+        {
+          "name": null,
+          "value": "UPI_IDENTIFYING_NUMBER",
+        },
+        {
+          "name": null,
+          "value": "IP_ADDRESS",
+        },
+      ],
+    },
+    "ListType": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "WHITELIST",
+        },
+        {
+          "name": null,
+          "value": "BLACKLIST",
+        },
+      ],
+    },
+    "MCCDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Merchant code",
+          "key": "code",
+          "schema": {
+            "description": "Merchant code",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Merchant Description",
+          "key": "description",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Merchant Description",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "MpesaDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "MpesaPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Business code",
+          "key": "businessShortCode",
+          "schema": {
+            "description": "Business code",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Type of transaction",
+          "key": "transactionType",
+          "schema": {
+            "description": "Type of transaction",
+            "type": "enum",
+            "values": [
+              {
+                "name": null,
+                "value": "CustomerPayBillOnline",
+              },
+              {
+                "name": null,
+                "value": "CustomerBuyGoodsOnline",
+              },
+              {
+                "name": null,
+                "value": "SalaryPayment",
+              },
+              {
+                "name": null,
+                "value": "BusinessPayment",
+              },
+              {
+                "name": null,
+                "value": "PromotionPayment",
+              },
+            ],
+          },
+        },
+        {
+          "description": "Contact Number of the account holder",
+          "key": "phoneNumber",
+          "schema": {
+            "description": "Contact Number of the account holder",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "MpesaPaymentMethod": {
+      "description": "Classify the method of payment as "Mpesa" for MpesaDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "MPESA",
+        },
+      ],
+    },
+    "PEPStatus": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "SUCCESSFUL",
+        },
+        {
+          "name": null,
+          "value": "FAILED",
+        },
+        {
+          "name": null,
+          "value": "NOT_STARTED",
+        },
+        {
+          "name": null,
+          "value": "IN_PROGRESS",
+        },
+        {
+          "name": null,
+          "value": "MANUAL_REVIEW",
+        },
+      ],
+    },
+    "PaymentMethods": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "ACH",
+        },
+        {
+          "name": null,
+          "value": "CARD",
+        },
+        {
+          "name": null,
+          "value": "IBAN",
+        },
+        {
+          "name": null,
+          "value": "UPI",
+        },
+        {
+          "name": null,
+          "value": "GENERIC_BANK_ACCOUNT",
+        },
+        {
+          "name": null,
+          "value": "MPESA",
+        },
+        {
+          "name": null,
+          "value": "SWIFT",
+        },
+        {
+          "name": null,
+          "value": "WALLET",
+        },
+        {
+          "name": null,
+          "value": "CHECK",
+        },
+      ],
+    },
+    "Person": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "generalDetails",
+          "schema": {
+            "reference": "UserDetails",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "User's legal identity documents - See Document Model for details",
+          "key": "legalDocuments",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "User's legal identity documents - See Document Model for details",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "LegalDocument",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "key": "contactDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ContactDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "pepStatus",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "PEPStatus",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RiskLevel": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "VERY_HIGH",
+        },
+        {
+          "name": null,
+          "value": "HIGH",
+        },
+        {
+          "name": null,
+          "value": "MEDIUM",
+        },
+        {
+          "name": null,
+          "value": "LOW",
+        },
+        {
+          "name": null,
+          "value": "VERY_LOW",
+        },
+      ],
+    },
+    "RiskScoringResult": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Quantified KYC risk score",
+          "key": "kycRiskScore",
+          "schema": {
+            "description": "Quantified KYC risk score",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Quantified action risk score",
+          "key": "actionRiskScore",
+          "schema": {
+            "description": "Quantified action risk score",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Quantified dynamic risk score",
+          "key": "dynamicRiskScore",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Quantified dynamic risk score",
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RuleAction": {
+      "description": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "ALLOW",
+        },
+        {
+          "name": null,
+          "value": "FLAG",
+        },
+        {
+          "name": null,
+          "value": "BLOCK",
+        },
+        {
+          "name": null,
+          "value": "SUSPEND",
+        },
+      ],
+    },
+    "RuleFailureException": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique rule identifier",
+          "key": "exceptionName",
+          "schema": {
+            "description": "Unique rule identifier",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Name of the rule",
+          "key": "exceptionDescription",
+          "schema": {
+            "description": "Name of the rule",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RuleHitDirection": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "ORIGIN",
+        },
+        {
+          "name": null,
+          "value": "DESTINATION",
+        },
+      ],
+    },
+    "RuleHitMeta": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "hitDirections",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "RuleHitDirection",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "key": "caseCreationType",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CaseCreationType",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "falsePositiveDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "FalsePositiveDetails",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "RulesResults": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique transaction identifier",
+          "key": "executedRules",
+          "schema": {
+            "description": "Unique transaction identifier",
+            "type": "array",
+            "value": {
+              "type": "array",
+              "value": {
+                "reference": "ExecutedRulesResult",
+                "type": "reference",
+              },
+            },
+          },
+        },
+        {
+          "description": "Unique transaction identifier",
+          "key": "hitRules",
+          "schema": {
+            "description": "Unique transaction identifier",
+            "type": "array",
+            "value": {
+              "type": "array",
+              "value": {
+                "reference": "HitRulesDetails",
+                "type": "reference",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SWIFTDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "SWIFTPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "SWIFT code of the financial institution",
+          "key": "swiftCode",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "SWIFT code of the financial institution",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Account number",
+          "key": "accountNumber",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Account number",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Account type. E.g. Checking, Savings etc.",
+          "key": "accountType",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Account type. E.g. Checking, Savings etc.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the bank",
+          "key": "bankName",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the bank",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the account holder",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the account holder",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "bankAddress",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Address",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Special instructions if any",
+          "key": "specialInstructions",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Special instructions if any",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SWIFTPaymentMethod": {
+      "description": "Classify the method of payment as "SWIFT" for SWIFTDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "SWIFT",
+        },
+      ],
+    },
+    "Tag": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Key value when you are creating a custom variable",
+          "key": "key",
+          "schema": {
+            "description": "Key value when you are creating a custom variable",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Value for a given key when you are creating a custom variable",
+          "key": "value",
+          "schema": {
+            "description": "Value for a given key when you are creating a custom variable",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "Transaction": {
+      "allOf": [
+        {
+          "reference": "TransactionBase",
+          "type": "reference",
+        },
+        {
+          "reference": "TransactionUpdatable",
+          "type": "reference",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "TransactionAmountDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Amount of the transaction",
+          "key": "transactionAmount",
+          "schema": {
+            "description": "Amount of the transaction",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "transactionCurrency",
+          "schema": {
+            "reference": "CurrencyCode",
+            "type": "reference",
+          },
+        },
+        {
+          "key": "country",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CountryCode",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionAmountLimit": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "day",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "week",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "month",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "year",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionBase": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "type",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionType",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Unique transaction identifier",
+          "key": "transactionId",
+          "schema": {
+            "description": "Unique transaction identifier",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Timestamp of when transaction took place",
+          "key": "timestamp",
+          "schema": {
+            "description": "Timestamp of when transaction took place",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "UserId for where the transaction originates from",
+          "key": "originUserId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "UserId for where the transaction originates from",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
+          "key": "destinationUserId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionCountLimit": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "day",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "week",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "month",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "year",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "number",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionEvent": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "transactionState",
+          "schema": {
+            "reference": "TransactionState",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Timestamp of the event",
+          "key": "timestamp",
+          "schema": {
+            "description": "Timestamp of the event",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Transaction ID the event pertains to",
+          "key": "transactionId",
+          "schema": {
+            "description": "Transaction ID the event pertains to",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Unique event ID",
+          "key": "eventId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Unique event ID",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Reason for the event or a state change",
+          "key": "reason",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Reason for the event or a state change",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Event description",
+          "key": "eventDescription",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Event description",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "updatedTransactionAttributes",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionUpdatable",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "metaData",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "DeviceData",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionEventMonitoringResult": {
+      "allOf": [
+        {
+          "allOf": [],
+          "properties": [
+            {
+              "description": null,
+              "key": "eventId",
+              "schema": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "transaction",
+              "schema": {
+                "reference": "Transaction",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        {
+          "reference": "RulesResults",
+          "type": "reference",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "TransactionLimit": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "transactionCountLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionCountLimit",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "transactionAmountLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionAmountLimit",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "averageTransactionAmountLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionAmountLimit",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionLimits": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "maximumDailyTransactionLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "maximumWeeklyTransactionLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "maximumMonthlyTransactionLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "maximumQuarterlyTransactionLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "maximumTransactionLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "maximumYearlyTransactionLimit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Amount",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "paymentMethodLimits",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "allOf": [],
+              "properties": [
+                {
+                  "key": "ACH",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "CARD",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "IBAN",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "UPI",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "GENERIC_BANK_ACCOUNT",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "MPESA",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "SWIFT",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "WALLET",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+                {
+                  "key": "CHECK",
+                  "schema": {
+                    "type": "optional",
+                    "value": {
+                      "reference": "TransactionLimit",
+                      "type": "reference",
+                    },
+                  },
+                },
+              ],
+              "type": "object",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionMonitoringResult": {
+      "allOf": [
+        {
+          "allOf": [],
+          "properties": [
+            {
+              "description": "Transaction ID that the results pertain to",
+              "key": "transactionId",
+              "schema": {
+                "description": "Transaction ID that the results pertain to",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        {
+          "reference": "RulesResults",
+          "type": "reference",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "TransactionState": {
+      "description": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "CREATED",
+        },
+        {
+          "name": null,
+          "value": "PROCESSING",
+        },
+        {
+          "name": null,
+          "value": "SENT",
+        },
+        {
+          "name": null,
+          "value": "EXPIRED",
+        },
+        {
+          "name": null,
+          "value": "DECLINED",
+        },
+        {
+          "name": null,
+          "value": "SUSPENDED",
+        },
+        {
+          "name": null,
+          "value": "REFUNDED",
+        },
+        {
+          "name": null,
+          "value": "SUCCESSFUL",
+        },
+      ],
+    },
+    "TransactionType": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "DEPOSIT",
+        },
+        {
+          "name": null,
+          "value": "TRANSFER",
+        },
+        {
+          "name": null,
+          "value": "EXTERNAL_PAYMENT",
+        },
+        {
+          "name": null,
+          "value": "WITHDRAWAL",
+        },
+        {
+          "name": null,
+          "value": "REFUND",
+        },
+      ],
+    },
+    "TransactionUpdatable": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "transactionState",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionState",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "originAmountDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionAmountDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "destinationAmountDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionAmountDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+          "key": "originPaymentDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "type": "oneOf",
+              "value": {
+                "schemas": [
+                  {
+                    "reference": "CardDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "GenericBankAccountDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "IBANDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "ACHDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "SWIFTDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "MpesaDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "UPIDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "WalletDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "CheckDetails",
+                    "type": "reference",
+                  },
+                ],
+                "type": "undisciminated",
+              },
+            },
+          },
+        },
+        {
+          "description": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+          "key": "destinationPaymentDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "type": "oneOf",
+              "value": {
+                "schemas": [
+                  {
+                    "reference": "CardDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "GenericBankAccountDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "IBANDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "ACHDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "UPIDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "WalletDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "SWIFTDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "MpesaDetails",
+                    "type": "reference",
+                  },
+                  {
+                    "reference": "CheckDetails",
+                    "type": "reference",
+                  },
+                ],
+                "type": "undisciminated",
+              },
+            },
+          },
+        },
+        {
+          "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
+          "key": "relatedTransactionIds",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
+          "key": "productType",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Whether a promotion code was used or not the transaction",
+          "key": "promotionCodeUsed",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Whether a promotion code was used or not the transaction",
+              "schema": {
+                "type": "boolean",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
+          "key": "reference",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "deviceData",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "DeviceData",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "TransactionWithRulesResult": {
+      "allOf": [
+        {
+          "reference": "Transaction",
+          "type": "reference",
+        },
+        {
+          "allOf": [],
+          "properties": [
+            {
+              "description": null,
+              "key": "executedRules",
+              "schema": {
+                "description": null,
+                "type": "array",
+                "value": {
+                  "type": "array",
+                  "value": {
+                    "reference": "ExecutedRulesResult",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "description": null,
+              "key": "hitRules",
+              "schema": {
+                "description": null,
+                "type": "array",
+                "value": {
+                  "type": "array",
+                  "value": {
+                    "reference": "HitRulesDetails",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "UPIDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "UPIPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "UPI Id number",
+          "key": "upiID",
+          "schema": {
+            "description": "UPI Id number",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Bank provider name",
+          "key": "bankProvider",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Bank provider name",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Interface provider name",
+          "key": "interfaceProvider",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Interface provider name",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the account holder",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the account holder",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UPIPaymentMethod": {
+      "description": "Classify the method of payment as "UPI" for UPIDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "UPI",
+        },
+      ],
+    },
+    "User": {
+      "allOf": [
+        {
+          "reference": "UserBase",
+          "type": "reference",
+        },
+        {
+          "reference": "UserOptional",
+          "type": "reference",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "UserBase": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": "Unique user ID",
+          "key": "userId",
+          "schema": {
+            "description": "Unique user ID",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "userDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "UserDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Timestamp when userId is created",
+          "key": "createdTimestamp",
+          "schema": {
+            "description": "Timestamp when userId is created",
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UserDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "name",
+          "schema": {
+            "reference": "ConsumerName",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Date of birth of the user (YYYY-MM-DD)",
+          "key": "dateOfBirth",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Date of birth of the user (YYYY-MM-DD)",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "countryOfResidence",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CountryCode",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "countryOfNationality",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "CountryCode",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UserMonitoringResult": {
+      "allOf": [
+        {
+          "allOf": [],
+          "properties": [
+            {
+              "description": "User ID that the results pertain to",
+              "key": "userId",
+              "schema": {
+                "description": "User ID that the results pertain to",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        {
+          "reference": "RulesResults",
+          "type": "reference",
+        },
+      ],
+      "properties": [],
+      "type": "object",
+    },
+    "UserOptional": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "userStateDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "UserStateDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "kycStatusDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "KYCStatusDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "User's legal identity documents - See Document Model for details",
+          "key": "legalDocuments",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "User's legal identity documents - See Document Model for details",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "LegalDocument",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "key": "contactDetails",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ContactDetails",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "transactionLimits",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "TransactionLimits",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "key": "riskLevel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "RiskLevel",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "reasonForAccountOpening",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "array",
+              "value": {
+                "description": null,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "pepStatus",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "PEPStatus",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+        {
+          "description": "Additional information that can be added via tags",
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Additional information that can be added via tags",
+              "type": "array",
+              "value": {
+                "type": "array",
+                "value": {
+                  "reference": "Tag",
+                  "type": "reference",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UserState": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "UNACCEPTABLE",
+        },
+        {
+          "name": null,
+          "value": "UNDECIDED",
+        },
+        {
+          "name": null,
+          "value": "TERMINATED",
+        },
+        {
+          "name": null,
+          "value": "ACTIVE",
+        },
+        {
+          "name": null,
+          "value": "INACTIVE",
+        },
+        {
+          "name": null,
+          "value": "DORMANT",
+        },
+        {
+          "name": null,
+          "value": "CREATED",
+        },
+        {
+          "name": null,
+          "value": "DELETED",
+        },
+        {
+          "name": null,
+          "value": "SUSPENDED",
+        },
+        {
+          "name": null,
+          "value": "BLOCKED",
+        },
+      ],
+    },
+    "UserStateDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "userId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "reason",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": null,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "state",
+          "schema": {
+            "reference": "UserState",
+            "type": "reference",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "WalletDetails": {
+      "allOf": [],
+      "properties": [
+        {
+          "key": "method",
+          "schema": {
+            "reference": "WalletPaymentMethod",
+            "type": "reference",
+          },
+        },
+        {
+          "description": "Wallet type if there are various types of wallets belonging to the same user. E.g. Checking, savings, vault, different currency wallets etc.",
+          "key": "walletType",
+          "schema": {
+            "description": "Wallet type if there are various types of wallets belonging to the same user. E.g. Checking, savings, vault, different currency wallets etc.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": "Unique ID of the wallet",
+          "key": "walletId",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Unique ID of the wallet",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Payment Channel used through wallet",
+          "key": "paymentChannel",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Payment Channel used through wallet",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": "Name of the account holder for a specific wallet",
+          "key": "name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Name of the account holder for a specific wallet",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "key": "tags",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "Tag",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": "Phone number associated with the wallet, if any",
+          "key": "walletPhoneNumber",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Phone number associated with the wallet, if any",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "WalletPaymentMethod": {
+      "description": "Classify the method of payment as "Wallet" for WalletDetails",
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "WALLET",
+        },
+      ],
+    },
+    "WebhookEvent": {
+      "allOf": [],
+      "properties": [
+        {
+          "description": null,
+          "key": "id",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "key": "type",
+          "schema": {
+            "reference": "WebhookEventType",
+            "type": "reference",
+          },
+        },
+        {
+          "description": null,
+          "key": "data",
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "schemas": [
+                {
+                  "reference": "UserStateDetails",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        {
+          "description": null,
+          "key": "createdTimestamp",
+          "schema": {
+            "description": null,
+            "schema": {
+              "type": "number",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "WebhookEventType": {
+      "description": null,
+      "type": "enum",
+      "values": [
+        {
+          "name": null,
+          "value": "USER_STATE_UPDATED",
+        },
+      ],
+    },
+  },
+  "servers": [
+    {
+      "description": null,
+      "name": null,
+      "url": "https://sandbox.api.flagright.com",
+    },
+  ],
+}
+`;

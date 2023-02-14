@@ -8671,9 +8671,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/openapi-ir-sdk", "npm:0.0.16"],\
+            ["@fern-fern/openapi-ir-sdk", "npm:0.0.20"],\
             ["@stoplight/spectral-core", "npm:1.16.1"],\
             ["@stoplight/spectral-functions", "npm:1.7.2"],\
             ["@stoplight/spectral-parsers", "npm:1.0.2"],\
@@ -9233,10 +9234,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/openapi-ir-sdk", [\
-        ["npm:0.0.16", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-sdk-npm-0.0.16-4cd6b0bee4-bc00b788c6.zip/node_modules/@fern-fern/openapi-ir-sdk/",\
+        ["npm:0.0.20", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-sdk-npm-0.0.20-e64ffda307-ceaf2c5799.zip/node_modules/@fern-fern/openapi-ir-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/openapi-ir-sdk", "npm:0.0.16"]\
+            ["@fern-fern/openapi-ir-sdk", "npm:0.0.20"]\
           ],\
           "linkType": "HARD"\
         }]\

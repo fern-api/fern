@@ -1,3 +1,4 @@
+import { TaskContext } from "@fern-api/task-context";
 import { FernOpenapiIr } from "@fern-fern/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertRequest } from "./convertRequest";
@@ -16,15 +17,17 @@ export function convertEndpoint({
     httpMethod,
     operationObject,
     document,
+    taskContext,
 }: {
     path: string;
     httpMethod: FernOpenapiIr.HttpMethod;
     operationObject: OpenAPIV3.OperationObject;
     document: OpenAPIV3.Document;
+    taskContext: TaskContext;
 }): ConvertedEndpoint {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const requestName = (operationObject as any)["x-request-name"] as string | undefined;
-    const convertedParameters = convertParameters({ document, operationObject });
+    const convertedParameters = convertParameters({ document, operationObject, taskContext });
 
     return {
         endpoint: {
@@ -36,11 +39,12 @@ export function convertEndpoint({
             tags: operationObject.tags ?? [],
             request: {
                 ...convertedParameters,
-                requestBody: convertRequest({ document, requestBody: operationObject.requestBody }),
+                requestBody: convertRequest({ document, requestBody: operationObject.requestBody, taskContext }),
             },
             response: convertResponse({
                 document,
                 responseBody: operationObject.responses["200"] ?? operationObject.responses["201"],
+                taskContext,
             }),
         },
         referencedSchemas: [],
@@ -56,9 +60,11 @@ interface ConvertedParameters {
 function convertParameters({
     document,
     operationObject,
+    taskContext,
 }: {
     document: OpenAPIV3.Document;
     operationObject: OpenAPIV3.OperationObject;
+    taskContext: TaskContext;
 }): ConvertedParameters {
     const convertedParameters: ConvertedParameters = {
         queryParameters: [],
@@ -83,14 +89,14 @@ function convertParameters({
                     reference: schemaId,
                 });
             } else {
-                //TODO(dsinghvi): log that we failed to read parameterSchema
+                taskContext.logger.warn(`Failed to read parameter schema ${schema.$ref}`);
             }
         } else {
-            const convertedSchema = convertSchema({ schema });
+            const convertedSchema = convertSchema({ schema, taskContext });
             if (convertedSchema != null) {
                 parameterSchema = convertedSchema;
             } else {
-                //TODO(dsinghvi): log that we skipped a property
+                taskContext.logger.warn(`Failed to read parameter schema ${JSON.stringify(schema)}`);
             }
         }
 
