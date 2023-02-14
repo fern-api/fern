@@ -24,7 +24,7 @@ from .resources.v_2.service.service import AbstractV2Service
 
 
 def register(
-    app: fastapi.FastAPI,
+    _app: fastapi.FastAPI,
     *,
     admin: AbstractAdminService,
     homepage: AbstractHomepageService,
@@ -37,20 +37,20 @@ def register(
     v_2_v_3_problem: AbstractV2V3ProblemService,
     v_2: AbstractV2Service
 ) -> None:
-    app.include_router(__register_service(admin))
-    app.include_router(__register_service(homepage))
-    app.include_router(__register_service(migration))
-    app.include_router(__register_service(playlist))
-    app.include_router(__register_service(problem))
-    app.include_router(__register_service(submission))
-    app.include_router(__register_service(sysprop))
-    app.include_router(__register_service(v_2_problem))
-    app.include_router(__register_service(v_2_v_3_problem))
-    app.include_router(__register_service(v_2))
+    _app.include_router(__register_service(admin))
+    _app.include_router(__register_service(homepage))
+    _app.include_router(__register_service(migration))
+    _app.include_router(__register_service(playlist))
+    _app.include_router(__register_service(problem))
+    _app.include_router(__register_service(submission))
+    _app.include_router(__register_service(sysprop))
+    _app.include_router(__register_service(v_2_problem))
+    _app.include_router(__register_service(v_2_v_3_problem))
+    _app.include_router(__register_service(v_2))
 
-    app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
-    app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
-    app.add_exception_handler(Exception, default_exception_handler)
+    _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
+    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
+    _app.add_exception_handler(Exception, default_exception_handler)
 
 
 def __register_service(service: AbstractFernService) -> fastapi.APIRouter:

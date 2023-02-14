@@ -13,7 +13,7 @@ class RegisterFileGenerator:
     _MODULE_NAME = "register"
     _REGISTER_FUNCTION_NAME = "register"
     _REGISTER_SERVICE_FUNCTION_NAME = "__register_service"
-    _APP_PARAMETER_NAME = "app"
+    _APP_PARAMETER_NAME = "_app"
     _SERVICE_PARAMETER_NAME = "service"
 
     def __init__(self, context: FastApiGeneratorContext):
