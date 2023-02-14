@@ -1,5 +1,5 @@
 @import "~@blueprintjs/core/lib/scss/variables";
-@import "../variables";
+@import "../../variables";
 
 .container {
     display: grid;
@@ -18,6 +18,12 @@
 
 .caret {
     grid-area: caret;
+    display: flex;
+    align-items: center;
+
+    .collapseIcon {
+        color: $gray3;
+    }
 }
 
 .caret,
@@ -44,7 +50,6 @@
 .details {
     grid-area: details;
     display: flex;
-    margin-top: 15px;
     margin-left: 5px;
 }
 

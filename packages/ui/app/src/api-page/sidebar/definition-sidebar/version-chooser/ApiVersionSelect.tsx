@@ -51,7 +51,7 @@ export const ApiVersionSelect: React.FC<ApiVersionSelect.Props> = () => {
             activeItem={currentEnvironment}
             filterable={false}
             itemRenderer={renderFilm}
-            noResults={<MenuItem disabled={true} text="No results." roleStructure="listoption" />}
+            noResults={<MenuItem disabled text="No results." roleStructure="listoption" />}
             onItemSelect={onItemSelect}
             popoverProps={POPOVER_PROPS}
         >

@@ -4,18 +4,12 @@
 .container {
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
 }
 
-.title {
+.titleRow {
     position: relative;
     display: flex;
-    align-items: flex-end;
-    gap: 5px;
-    font-weight: 600;
-
-    .key {
-        font-size: 13px;
-    }
 }
 
 .dash {
@@ -28,13 +22,11 @@
     background-color: $type-definition-tree-color;
 }
 
-.docs {
-    grid-area: docs;
+.body {
     color: $pt-text-color-muted;
     margin-top: 5px;
 }
 
 .children {
-    grid-area: children;
-    margin-top: 10px;
+    display: flex;
 }

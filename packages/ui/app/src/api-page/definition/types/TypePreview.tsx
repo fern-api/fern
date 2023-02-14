@@ -1,24 +1,35 @@
 import { FernRegistry } from "@fern-fern/registry";
+import classNames from "classnames";
 import { useMemo } from "react";
 import { useApiContext } from "../../context/useApiContext";
+import styles from "./TypePreview.module.scss";
 
 export declare namespace TypePreview {
     export interface Props {
         type: FernRegistry.Type;
+        includeContainerItems?: boolean;
         className?: string;
     }
 }
 
-export const TypePreview: React.FC<TypePreview.Props> = ({ type, className }) => {
+export const TypePreview: React.FC<TypePreview.Props> = ({ type, includeContainerItems = false, className }) => {
     const { resolveType } = useApiContext();
-    const previewString = useMemo(() => getTypePreviewString(type, resolveType), [type, resolveType]);
-    return <span className={className}>{previewString}</span>;
+    const previewString = useMemo(
+        () => getTypePreviewString({ type, includeContainerItems, resolveType }),
+        [type, includeContainerItems, resolveType]
+    );
+    return <span className={classNames(className, styles.container)}>{previewString}</span>;
 };
 
-function getTypePreviewString(
-    type: FernRegistry.Type,
-    resolveType: (typeId: FernRegistry.TypeId) => FernRegistry.Type
-): string {
+function getTypePreviewString({
+    type,
+    includeContainerItems,
+    resolveType,
+}: {
+    type: FernRegistry.Type;
+    includeContainerItems: boolean;
+    resolveType: (typeId: FernRegistry.TypeId) => FernRegistry.Type;
+}): string {
     return type._visit({
         primitive: (primitive) =>
             primitive._visit({
@@ -31,19 +42,31 @@ function getTypePreviewString(
                 uuid: () => "uuid",
                 _other: () => "unknown",
             }),
-        list: ({ itemType }) => "list<" + getTypePreviewString(itemType, resolveType) + ">",
-        reference: (typeId) => getTypePreviewString(resolveType(typeId), resolveType),
+        list: ({ itemType }) =>
+            includeContainerItems
+                ? "list<" + getTypePreviewString({ type: itemType, includeContainerItems, resolveType }) + ">"
+                : "list",
+        reference: (typeId) => getTypePreviewString({ type: resolveType(typeId), includeContainerItems, resolveType }),
         enum: () => "enum",
+        union: () => "union",
         discriminatedUnion: () => "union",
         object: () => "object",
-        optional: () => "optional " + getTypePreviewString(type, resolveType),
-        set: ({ itemType }) => "set<" + getTypePreviewString(itemType, resolveType) + ">",
+        optional: ({ itemType }) =>
+            includeContainerItems
+                ? "optional " + getTypePreviewString({ type: itemType, includeContainerItems, resolveType })
+                : "optional",
+        set: ({ itemType }) =>
+            includeContainerItems
+                ? "set<" + getTypePreviewString({ type: itemType, includeContainerItems, resolveType }) + ">"
+                : "set",
         map: ({ keyType, valueType }) =>
-            "map<" +
-            getTypePreviewString(keyType, resolveType) +
-            ", " +
-            getTypePreviewString(valueType, resolveType) +
-            ">",
+            includeContainerItems
+                ? "map<" +
+                  getTypePreviewString({ type: keyType, includeContainerItems, resolveType }) +
+                  ", " +
+                  getTypePreviewString({ type: valueType, includeContainerItems, resolveType }) +
+                  ">"
+                : "map",
         unknown: () => "unknown",
         _other: () => "unknown",
     });

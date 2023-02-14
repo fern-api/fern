@@ -20,8 +20,8 @@ export const EndpointTitle: React.FC<EndpointTitle.Props> = ({ endpoint, classNa
                 <span key={index}>
                     {part._visit<JSX.Element | string>({
                         literal: (literal) => literal,
-                        pathParameter: (pathParameter) => (
-                            <span className={styles.pathParameter}>{`{${pathParameter.name}}`}</span>
+                        pathParameter: (pathParameterKey) => (
+                            <span className={styles.pathParameter}>{`{${pathParameterKey}}`}</span>
                         ),
                         _other: () => "",
                     })}
