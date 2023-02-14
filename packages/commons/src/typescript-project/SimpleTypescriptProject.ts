@@ -125,7 +125,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             scripts: {
                 [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc && tsc-alias",
-                prepack: `cp -r ${SimpleTypescriptProject.DIST_DIRECTORY}/* .`,
+                prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
             },
         };
 

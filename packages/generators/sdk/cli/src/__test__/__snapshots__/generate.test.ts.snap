@@ -5626,7 +5626,7 @@ printWidth: 120
     \\"scripts\\": {
         \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"build\\": \\"tsc && tsc-alias\\",
-        \\"prepack\\": \\"cp -r dist/* .\\"
+        \\"prepack\\": \\"cp -rv dist/. .\\"
     },
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
@@ -5916,7 +5916,7 @@ printWidth: 120
     \\"scripts\\": {
         \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"build\\": \\"tsc && tsc-alias\\",
-        \\"prepack\\": \\"cp -r dist/* .\\"
+        \\"prepack\\": \\"cp -rv dist/. .\\"
     },
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
@@ -8637,7 +8637,7 @@ printWidth: 120
     \\"scripts\\": {
         \\"format\\": \\"prettier --write 'src/**/*.ts'\\",
         \\"build\\": \\"tsc && tsc-alias\\",
-        \\"prepack\\": \\"cp -r dist/* .\\"
+        \\"prepack\\": \\"cp -rv dist/. .\\"
     },
     \\"dependencies\\": {
         \\"@types/basic-auth\\": \\"^1.1.3\\",
