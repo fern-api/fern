@@ -50,8 +50,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
             [
                 "node_modules",
                 ".DS_Store",
-                SimpleTypescriptProject.DIST_DIRECTORY,
-                ...this.getDistFiles(),
+                `/${SimpleTypescriptProject.DIST_DIRECTORY}`,
+                ...this.getDistFiles().map((distFile) => `/${distFile}`),
                 "",
                 "# yarn berry",
                 ".pnp.*",
