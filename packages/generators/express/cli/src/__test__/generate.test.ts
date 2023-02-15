@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, getDirectoryContents, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import decompress from "decompress";
@@ -165,6 +165,8 @@ async function doesPathExist(filepath: string): Promise<boolean> {
 
 async function getDirectoryForSnapshot(outputPath: AbsoluteFilePath): Promise<AbsoluteFilePath> {
     const unzippedPackage = (await tmp.dir()).path;
-    await decompress(path.join(outputPath, "output.zip"), unzippedPackage);
-    return join(AbsoluteFilePath.of(unzippedPackage), "output");
+    await decompress(path.join(outputPath, "output.zip"), unzippedPackage, {
+        strip: 1,
+    });
+    return AbsoluteFilePath.of(unzippedPackage);
 }

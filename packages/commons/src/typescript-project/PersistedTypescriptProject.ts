@@ -141,10 +141,12 @@ export class PersistedTypescriptProject {
         }
         const pathToPack = join(directoryContainingPack, RelativeFilePath.of(packName));
         const directoryOfDecompressedPack = AbsoluteFilePath.of((await tmp.dir()).path);
-        await decompress(pathToPack, directoryOfDecompressedPack);
+        await decompress(pathToPack, directoryOfDecompressedPack, {
+            strip: 1,
+        });
 
         // zip decompressed pack into destination
-        await this.zipDirectory(join(directoryOfDecompressedPack, "package"), { logger, destinationZip });
+        await this.zipDirectory(directoryOfDecompressedPack, { logger, destinationZip });
     }
 
     public async copyDistAsZipTo({
