@@ -7,7 +7,7 @@ import styles from "./PackageDefinitionContents.module.scss";
 export declare namespace PackageDefinitionContents {
     export interface Props {
         packagePathIncludingSelf: PackagePath;
-        subPackages: FernRegistry.ApiDefinitionSubpackage[];
+        subPackages: FernRegistry.ApiDefinitionPackage[];
         endpoints: FernRegistry.EndpointDefinition[];
     }
 }
@@ -35,7 +35,7 @@ export const PackageDefinitionContents: React.FC<PackageDefinitionContents.Props
                 <PackageDefinition
                     key={subPackageIndex}
                     package={subPackage}
-                    packagePathExcludingSelf={packagePathIncludingSelf}
+                    packagePathExcludingSelf={[]}
                     indexInParent={subPackageIndex}
                 />
             ))}

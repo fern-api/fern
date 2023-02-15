@@ -34,7 +34,7 @@ export const App: React.FC = () => {
                                     path={Routes.API.absolutePath}
                                     element={<Redirect to="/api1/definition/production" />}
                                 />
-                                <Route path={Routes.API_DEFINITION.absolutePath} element={<ApiPage />} />
+                                <Route path="/:API_ID/definition/:ENVIRONMENT/*" element={<ApiPage />} />
                             </RoutesWith404>
                         </SplitViewProvider>
                     </HotkeysProvider>

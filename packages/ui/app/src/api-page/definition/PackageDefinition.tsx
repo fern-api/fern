@@ -7,7 +7,7 @@ import { PackageLabel } from "./PackageLabel";
 
 export declare namespace PackageDefinition {
     export interface Props {
-        package: FernRegistry.ApiDefinitionSubpackage;
+        package: FernRegistry.ApiDefinitionPackage;
         packagePathExcludingSelf: PackagePath;
         indexInParent: number;
     }
@@ -36,7 +36,7 @@ export const PackageDefinition: React.FC<PackageDefinition.Props> = ({
             <PackageLabel package={package_} packageId={packageId} />
             <PackageDefinitionContents
                 packagePathIncludingSelf={packagePathIncludingSelf}
-                subPackages={package_.packages}
+                subPackages={[]}
                 endpoints={package_.endpoints}
             />
         </div>

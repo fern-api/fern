@@ -8,7 +8,7 @@ export declare namespace PackageSidebarSectionContents {
     export interface Props {
         packagePathIncludingSelf: PackagePath;
         endpoints: FernRegistry.EndpointDefinition[];
-        subPackages: FernRegistry.ApiDefinitionSubpackage[];
+        subPackages: FernRegistry.ApiDefinitionPackage[];
     }
 }
 

@@ -11,7 +11,7 @@ import { SidebarItem } from "./SidebarItem";
 export declare namespace PackageSidebarSection {
     export interface Props {
         packagePathExcludingSelf: PackagePath;
-        package: FernRegistry.ApiDefinitionSubpackage;
+        package: FernRegistry.ApiDefinitionPackage;
         indexInParent: number;
     }
 }
@@ -41,7 +41,7 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({
             <div className={styles.iconWrapper} onClick={toggleIsCollapsed}>
                 <Icon icon={isCollapsed ? IconNames.CARET_RIGHT : IconNames.CARET_DOWN} />
             </div>
-            <SidebarItem label={package_.displayName ?? "<Package>"} sidebarItemId={packageId} />
+            <SidebarItem label={"<Package>"} sidebarItemId={packageId} />
             <div className={styles.leftLineWrapper}>
                 <div className={styles.leftLine} />
             </div>
@@ -49,7 +49,7 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({
                 <PackageSidebarSectionContents
                     packagePathIncludingSelf={packagePathIncludingSelf}
                     endpoints={package_.endpoints}
-                    subPackages={package_.packages}
+                    subPackages={[]}
                 />
             )}
         </div>

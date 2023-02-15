@@ -22,11 +22,7 @@ export const DefinitionSidebar: React.FC = () => {
                     },
                 ]}
             />
-            <PackageSidebarSectionContents
-                packagePathIncludingSelf={EMPTY_ARRAY}
-                endpoints={api.value.body.endpoints}
-                subPackages={api.value.body.packages}
-            />
+            <PackageSidebarSectionContents packagePathIncludingSelf={EMPTY_ARRAY} endpoints={[]} subPackages={[]} />
         </div>
     );
 };

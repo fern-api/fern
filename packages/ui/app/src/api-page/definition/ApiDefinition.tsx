@@ -1,7 +1,5 @@
-import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { useApiContext } from "../context/useApiContext";
-import styles from "./ApiDefinition.module.scss";
-import { PackageDefinitionContents } from "./PackageDefinitionContents";
+import { PackagePage } from "./PackagePage";
 
 export const ApiDefinition: React.FC = () => {
     const { api } = useApiContext();
@@ -10,13 +8,5 @@ export const ApiDefinition: React.FC = () => {
         return null;
     }
 
-    return (
-        <div className={styles.container}>
-            <PackageDefinitionContents
-                packagePathIncludingSelf={EMPTY_ARRAY}
-                subPackages={api.value.body.packages}
-                endpoints={api.value.body.endpoints}
-            />
-        </div>
-    );
+    return <PackagePage api={api.value.body} parent={api.value.body.rootPackage} />;
 };

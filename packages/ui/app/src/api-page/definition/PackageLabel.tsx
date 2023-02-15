@@ -6,17 +6,17 @@ import { useTrackSidebarItemId } from "./useTrackSidebarItemId";
 
 export declare namespace PackageLabel {
     export interface Props {
-        package: FernRegistry.ApiDefinitionSubpackage;
+        package: FernRegistry.ApiDefinitionPackage;
         packageId: PackageId;
     }
 }
 
-export const PackageLabel: React.FC<PackageLabel.Props> = ({ package: package_, packageId }) => {
+export const PackageLabel: React.FC<PackageLabel.Props> = ({ packageId }) => {
     const ref = useTrackSidebarItemId(packageId);
 
     return (
         <H1 elementRef={ref} id={getAnchorForSidebarItem(packageId)}>
-            {package_.displayName ?? "<Package>"}
+            Package
         </H1>
     );
 };

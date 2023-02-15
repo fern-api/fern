@@ -46,7 +46,7 @@
     "@fern-api/transaction-generator": "workspace:*",
     "@fern-api/transaction-resolver": "workspace:*",
     "@fern-fern/api-editor-sdk": "0.0.38",
-    "@fern-fern/registry": "0.0.27",
+    "@fern-fern/registry": "0.0.29",
     "@fontsource/actor": "^4.5.9",
     "@fontsource/roboto-mono": "^4.5.8",
     "classnames": "^2.3.1",
