@@ -11,7 +11,7 @@ export async function publishPackage({
     dryRun,
     typescriptProject,
 }: {
-    generatorNotificationService: GeneratorNotificationService;
+    generatorNotificationService: GeneratorNotificationService | undefined;
     logger: Logger;
     npmPackage: NpmPackage;
     dryRun: boolean;
@@ -26,7 +26,7 @@ export async function publishPackage({
         version: npmPackage.version,
     });
 
-    await generatorNotificationService.sendUpdateAndSwallowError(
+    await generatorNotificationService?.sendUpdateAndSwallowError(
         FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate)
     );
 
@@ -36,7 +36,7 @@ export async function publishPackage({
         publishInfo: npmPackage.publishInfo,
     });
 
-    await generatorNotificationService.sendUpdateAndSwallowError(
+    await generatorNotificationService?.sendUpdateAndSwallowError(
         FernGeneratorExec.GeneratorUpdate.published(packageCoordinate)
     );
 }

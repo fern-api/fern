@@ -1,5 +1,5 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
@@ -7,14 +7,12 @@ import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { readFile } from "fs/promises";
 import { constructNpmPackage } from "./constructNpmPackage";
-import {
-    GeneratorNotificationService,
-    GeneratorNotificationServiceImpl,
-    NOOP_GENERATOR_NOTIFICATION_SERVICE,
-} from "./GeneratorNotificationService";
+import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+
+const OUTPUT_ZIP_FILENAME = "output.zip";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
@@ -41,22 +39,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // properties to be present
             customConfig: rawConfig.customConfig ?? {},
         });
-        const generatorNotificationService = config.environment._visit<GeneratorNotificationService>({
-            remote: (environment) => new GeneratorNotificationServiceImpl(environment),
-            local: () => NOOP_GENERATOR_NOTIFICATION_SERVICE,
-            _other: () => {
-                throw new Error("Unknown environment: " + config.environment.type);
-            },
-        });
+        const generatorNotificationService =
+            config.environment.type === "remote" ? new GeneratorNotificationServiceImpl(config.environment) : undefined;
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
 
             const logger = createLogger((level, ...message) => {
-                // eslint-disable-next-line no-console
-                console.log(...message);
+                CONSOLE_LOGGER.log(level, ...message);
+
                 // kick off log, but don't wait for it
-                void generatorNotificationService.sendUpdateAndSwallowError(
+                void generatorNotificationService?.sendUpdateAndSwallowError(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level],
@@ -69,7 +62,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 isPackagePrivate: this.isPackagePrivate(customConfig),
             });
 
-            await generatorNotificationService.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
                         npmPackage.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
@@ -88,6 +81,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
+            const destinationZip = join(AbsoluteFilePath.of(config.output.path), OUTPUT_ZIP_FILENAME);
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -97,34 +91,46 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         generatorNotificationService,
                         typescriptProject,
                     });
-                    await typescriptProject.npmPack({
+                    await typescriptProject.npmPackAsZipTo({
                         logger,
-                        location: AbsoluteFilePath.of(config.output.path),
+                        destinationZip,
                     });
                 },
                 github: async (githubOutputMode) => {
                     await typescriptProject.format(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
-                    await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
-                    await writeGitHubWorkflows({
-                        config,
-                        githubOutputMode,
-                        isPackagePrivate: npmPackage.private,
+                    await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
+                        await writeGitHubWorkflows({
+                            githubOutputMode,
+                            isPackagePrivate: npmPackage.private,
+                            pathToProject,
+                        });
+                    });
+                    await typescriptProject.copyProjectAsZipTo({
+                        logger,
+                        destinationZip,
                     });
                 },
                 downloadFiles: async () => {
-                    await typescriptProject.copyDistTo(AbsoluteFilePath.of(config.output.path), { logger });
+                    await typescriptProject.copyDistAsZipTo({
+                        destinationZip,
+                        logger,
+                    });
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
                 },
             });
 
-            await generatorNotificationService.sendUpdateOrThrow(
-                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful())
+            await generatorNotificationService?.sendUpdateOrThrow(
+                FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
+                    FernGeneratorExec.ExitStatusUpdate.successful({
+                        zipFilename: destinationZip,
+                    })
+                )
             );
         } catch (e) {
-            await generatorNotificationService.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error",
