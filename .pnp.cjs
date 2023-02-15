@@ -3137,10 +3137,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/generator-exec-sdk", [\
-        ["npm:0.0.46", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.46-2743b547ee-36c86fcd82.zip/node_modules/@fern-fern/generator-exec-sdk/",\
+        ["npm:0.0.106", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.106-c334ff2d7c-5afcbeffff.zip/node_modules/@fern-fern/generator-exec-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.46"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.106"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
@@ -3189,7 +3189,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
             ["@fern-api/logger", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.46"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.106"],\
             ["@fern-fern/ir-model", "npm:0.0.914"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
@@ -3497,7 +3497,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.46"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.106"],\
             ["@fern-fern/ir-model", "npm:0.0.914"],\
             ["@fern-typescript/abstract-generator-cli", "workspace:packages/abstract-generator-cli"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\
@@ -3859,7 +3859,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/fs-utils", "npm:0.0.248-7-gb4189be0"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.46"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.106"],\
             ["@fern-fern/ir-model", "npm:0.0.914"],\
             ["@fern-typescript/abstract-generator-cli", "workspace:packages/abstract-generator-cli"],\
             ["@fern-typescript/commons", "workspace:packages/commons"],\

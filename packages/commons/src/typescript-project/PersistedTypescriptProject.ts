@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { rename, rm } from "fs/promises";
+import { cp, rm } from "fs/promises";
 import urlJoin from "url-join";
 import { PublishInfo } from "../NpmPackage";
 
@@ -100,15 +100,15 @@ export class PersistedTypescriptProject {
         this.hasBuilt = true;
     }
 
-    public async moveProjectTo(target: AbsoluteFilePath): Promise<void> {
-        await rename(this.directory, target);
+    public async copyProjectTo(target: AbsoluteFilePath): Promise<void> {
+        await cp(this.directory, target, { recursive: true });
     }
 
-    public async moveDistTo(target: AbsoluteFilePath, { logger }: { logger: Logger }): Promise<void> {
+    public async copyDistTo(target: AbsoluteFilePath, { logger }: { logger: Logger }): Promise<void> {
         if (!this.hasBuilt) {
             await this.build(logger);
         }
-        await rename(join(this.directory, this.distDirectory), target);
+        await cp(join(this.directory, this.distDirectory), target, { recursive: true });
     }
 
     public async publish({

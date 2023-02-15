@@ -1,4 +1,4 @@
-import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/resources";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
@@ -24,7 +24,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         generatorContext,
         intermediateRepresentation,
     }: {
-        config: GeneratorConfig;
+        config: FernGeneratorExec.GeneratorConfig;
         customConfig: ExpressCustomConfig;
         npmPackage: NpmPackage;
         generatorContext: GeneratorContext;

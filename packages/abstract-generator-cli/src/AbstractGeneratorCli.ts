@@ -7,7 +7,11 @@ import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { readFile } from "fs/promises";
 import { constructNpmPackage } from "./constructNpmPackage";
-import { GeneratorNotificationService } from "./GeneratorNotificationService";
+import {
+    GeneratorNotificationService,
+    GeneratorNotificationServiceImpl,
+    NOOP_GENERATOR_NOTIFICATION_SERVICE,
+} from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -31,8 +35,19 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     public async run(pathToConfig: string): Promise<void> {
         const configStr = await readFile(pathToConfig);
         const rawConfig = JSON.parse(configStr.toString());
-        const config = GeneratorExecParsing.GeneratorConfig.parse(rawConfig);
-        const generatorNotificationService = new GeneratorNotificationService(config);
+        const config = await GeneratorExecParsing.GeneratorConfig.parseOrThrow({
+            ...rawConfig,
+            // in this version of the fiddle client, it requires unknown
+            // properties to be present
+            customConfig: rawConfig.customConfig ?? {},
+        });
+        const generatorNotificationService = config.environment._visit<GeneratorNotificationService>({
+            remote: (environment) => new GeneratorNotificationServiceImpl(environment),
+            local: () => NOOP_GENERATOR_NOTIFICATION_SERVICE,
+            _other: () => {
+                throw new Error("Unknown environment: " + config.environment.type);
+            },
+        });
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
@@ -41,7 +56,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 // eslint-disable-next-line no-console
                 console.log(...message);
                 // kick off log, but don't wait for it
-                void generatorNotificationService.sendUpdate(
+                void generatorNotificationService.sendUpdateAndSwallowError(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level],
@@ -54,7 +69,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 isPackagePrivate: this.isPackagePrivate(customConfig),
             });
 
-            await generatorNotificationService.sendUpdate(
+            await generatorNotificationService.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
                         npmPackage.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
@@ -90,7 +105,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 github: async (githubOutputMode) => {
                     await typescriptProject.format(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
-                    await typescriptProject.moveProjectTo(AbsoluteFilePath.of(config.output.path));
+                    await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
                     await writeGitHubWorkflows({
                         config,
                         githubOutputMode,
@@ -98,18 +113,18 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 downloadFiles: async () => {
-                    await typescriptProject.moveDistTo(AbsoluteFilePath.of(config.output.path), { logger });
+                    await typescriptProject.copyDistTo(AbsoluteFilePath.of(config.output.path), { logger });
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
                 },
             });
 
-            await generatorNotificationService.sendUpdate(
+            await generatorNotificationService.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful())
             );
         } catch (e) {
-            await generatorNotificationService.sendUpdate(
+            await generatorNotificationService.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error",

@@ -1,24 +1,36 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
 
-export class GeneratorNotificationService {
-    // implementation defined in constructor
-    public sendUpdate: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
+export interface GeneratorNotificationService {
+    sendUpdateOrThrow: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
+    sendUpdateAndSwallowError: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
+}
 
-    constructor(generatorConfig: FernGeneratorExec.GeneratorConfig) {
-        if (generatorConfig.environment.type === "remote") {
-            const generatorExecClient = new FernGeneratorExecClient({
-                environment: generatorConfig.environment.coordinatorUrlV2,
-            });
-            const taskId = generatorConfig.environment.id;
-            this.sendUpdate = async (update) => {
-                await generatorExecClient.logging.sendUpdate({
-                    taskId,
-                    _body: [update],
-                });
-            };
-        } else {
-            // no-op
-            this.sendUpdate = () => Promise.resolve();
+export class GeneratorNotificationServiceImpl implements GeneratorNotificationService {
+    private client: FernGeneratorExecClient;
+    private taskId: FernGeneratorExec.TaskId;
+
+    constructor(environment: FernGeneratorExec.RemoteGeneratorEnvironment) {
+        this.client = new FernGeneratorExecClient({
+            environment: environment.coordinatorUrlV2,
+        });
+        this.taskId = environment.id;
+    }
+
+    public async sendUpdateAndSwallowError(update: FernGeneratorExec.GeneratorUpdate): Promise<void> {
+        try {
+            await this.sendUpdateOrThrow(update);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.warn("Encountered error when sending update", e);
         }
     }
+
+    public sendUpdateOrThrow(update: FernGeneratorExec.GeneratorUpdate): Promise<void> {
+        return this.client.logging.sendUpdate(this.taskId, [update]);
+    }
 }
+
+export const NOOP_GENERATOR_NOTIFICATION_SERVICE: GeneratorNotificationService = {
+    sendUpdateOrThrow: (): Promise<void> => Promise.resolve(),
+    sendUpdateAndSwallowError: (): Promise<void> => Promise.resolve(),
+};

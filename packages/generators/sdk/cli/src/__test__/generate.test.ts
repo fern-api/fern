@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import decompress from "decompress";
 import execa from "execa";
 import { lstat, readdir, rm, symlink, writeFile } from "fs/promises";
@@ -109,7 +110,10 @@ describe("runGenerator", () => {
                     organization: fixture.orgName,
                     environment: FernGeneratorExec.GeneratorEnvironment.local(),
                 };
-                await writeFile(configJsonPath, JSON.stringify(config, undefined, 4));
+                await writeFile(
+                    configJsonPath,
+                    JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.jsonOrThrow(config), undefined, 4)
+                );
 
                 await execa("fern", ["ir", irPath, "--api", fixture.path, "--language", "typescript"], {
                     cwd: FIXTURES_PATH,
@@ -155,7 +159,7 @@ function generateOutputMode(
                 repoUrl: `https://github.com/${org}/${apiName}}`,
                 publishInfo: FernGeneratorExec.GithubPublishInfo.npm({
                     registryUrl: "https://npmjs.org/",
-                    tokenEnvironmentVariable: "NPM_TOKEN",
+                    tokenEnvironmentVariable: FernGeneratorExec.EnvironmentVariable("NPM_TOKEN"),
                     packageName: `@${org}/${apiName}`,
                 }),
             });

@@ -1598,14 +1598,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:^0.0.46":
-  version: 0.0.46
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.46"
+"@fern-fern/generator-exec-sdk@npm:^0.0.106":
+  version: 0.0.106
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.106"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: 36c86fcd82b1e18c385926611e4b8300d1f619bffd7f5384c8679195d8b5e9f8854beb75753b237899c374afc871f937f7afc823f106b7e7509b4bf03dbb73c9
+  checksum: 5afcbeffff3e4fd56e6ef51d20c19cf6a2ab3632dd7087635969c5eb6511f2af726856ad29c64ec4e3e9cbf545d768255f25ed0f264781eb56c20f8e72dafbe5
   languageName: node
   linkType: hard
 
@@ -1645,7 +1645,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
     "@fern-api/logger": 0.0.248-7-gb4189be0
-    "@fern-fern/generator-exec-sdk": ^0.0.46
+    "@fern-fern/generator-exec-sdk": ^0.0.106
     "@fern-fern/ir-model": 0.0.914
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -1894,7 +1894,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-fern/generator-exec-sdk": ^0.0.46
+    "@fern-fern/generator-exec-sdk": ^0.0.106
     "@fern-fern/ir-model": 0.0.914
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -2226,7 +2226,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": 0.0.248-7-gb4189be0
-    "@fern-fern/generator-exec-sdk": ^0.0.46
+    "@fern-fern/generator-exec-sdk": ^0.0.106
     "@fern-fern/ir-model": 0.0.914
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
