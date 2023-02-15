@@ -58,7 +58,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 
                 rawKeyToProperty[rawKey] = property;
 
-                if ((await valueSchema.getType()) !== "optional") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -88,7 +88,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
 
-                if ((await valueSchema.getType()) !== "optional") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey as string);
                 }
             }
@@ -289,5 +289,20 @@ async function validateAndTransformExtendedObject<PreTransformedExtension, Trans
                 ...(transformedExtension.ok ? [] : transformedExtension.errors),
             ],
         };
+    }
+}
+
+async function isSchemaRequired(schema: Schema<any, any>): Promise<boolean> {
+    return !(await isSchemaOptional(schema));
+}
+
+async function isSchemaOptional(schema: Schema<any, any>): Promise<boolean> {
+    switch (await schema.getType()) {
+        case SchemaType.ANY:
+        case SchemaType.UNKNOWN:
+        case SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
     }
 }

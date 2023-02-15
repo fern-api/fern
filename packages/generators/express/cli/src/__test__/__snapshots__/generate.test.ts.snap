@@ -12539,7 +12539,7 @@ function object(schemas) {
                     valueSchema,
                 };
                 rawKeyToProperty[rawKey] = property;
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -12565,7 +12565,7 @@ function object(schemas) {
                 const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey);
                 }
             }
@@ -12725,6 +12725,19 @@ async function validateAndTransformExtendedObject({ extensionKeys, value, transf
                 ...(transformedExtension.ok ? [] : transformedExtension.errors),
             ],
         };
+    }
+}
+async function isSchemaRequired(schema) {
+    return !(await isSchemaOptional(schema));
+}
+async function isSchemaOptional(schema) {
+    switch (await schema.getType()) {
+        case Schema_1.SchemaType.ANY:
+        case Schema_1.SchemaType.UNKNOWN:
+        case Schema_1.SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
     }
 }
 ",
@@ -13799,11 +13812,9 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
     [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 export declare type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+    [K in keyof T]-?: undefined extends T[K] ? K : null extends T[K] ? K : 1 extends (any extends T[K] ? 0 : 1) ? never : K;
 }[keyof T];
-export declare type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
-}[keyof T];
+export declare type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 ",
                 "name": "addQuestionMarksToNullableProperties.d.ts",
                 "type": "file",

@@ -1,7 +1,7 @@
 import { itJson, itParse, itSchema, itSchemaIdentity } from "../../../__test__/utils/itSchema";
 import { itValidate } from "../../../__test__/utils/itValidate";
 import { stringLiteral } from "../../literals";
-import { number, string } from "../../primitives";
+import { any, number, string, unknown } from "../../primitives";
 import { object } from "../object";
 import { property } from "../property";
 
@@ -29,6 +29,28 @@ describe("object", () => {
         {
             raw: { raw_foo: "foo", bar: "bar" },
             parsed: { foo: "foo", bar: "bar" },
+        }
+    );
+
+    itSchema(
+        "keys with unknown type can be omitted",
+        object({
+            foo: unknown(),
+        }),
+        {
+            raw: {},
+            parsed: {},
+        }
+    );
+
+    itSchema(
+        "keys with any type can be omitted",
+        object({
+            foo: any(),
+        }),
+        {
+            raw: {},
+            parsed: {},
         }
     );
 

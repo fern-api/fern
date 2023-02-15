@@ -1947,7 +1947,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -1971,7 +1971,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -2137,6 +2137,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 
@@ -4079,7 +4092,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -4103,7 +4116,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -4269,6 +4282,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 var init_object = __esm({
@@ -9098,7 +9124,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -9122,7 +9148,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -9288,6 +9314,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 var init_object = __esm({
@@ -14388,7 +14427,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -14412,7 +14451,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -14578,6 +14617,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 
@@ -16523,7 +16575,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -16547,7 +16599,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -16713,6 +16765,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 var init_object = __esm({
@@ -21538,7 +21603,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -21562,7 +21627,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -21728,6 +21793,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 var init_object = __esm({
@@ -37106,7 +37184,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -37130,7 +37208,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -37296,6 +37374,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 
@@ -39262,7 +39353,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -39286,7 +39377,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -39452,6 +39543,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 var init_object = __esm({
@@ -54530,7 +54634,7 @@ function object(schemas) {
           valueSchema
         };
         rawKeyToProperty[rawKey] = property2;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(rawKey);
         }
       }
@@ -54554,7 +54658,7 @@ function object(schemas) {
       const requiredKeys = [];
       for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const valueSchema = isProperty(schemaOrObjectProperty) ? schemaOrObjectProperty.valueSchema : schemaOrObjectProperty;
-        if (await valueSchema.getType() !== \\"optional\\") {
+        if (await isSchemaRequired(valueSchema)) {
           requiredKeys.push(parsedKey);
         }
       }
@@ -54720,6 +54824,19 @@ async function validateAndTransformExtendedObject({
         ...transformedExtension.ok ? [] : transformedExtension.errors
       ]
     };
+  }
+}
+async function isSchemaRequired(schema) {
+  return !await isSchemaOptional(schema);
+}
+async function isSchemaOptional(schema) {
+  switch (await schema.getType()) {
+    case SchemaType.ANY:
+    case SchemaType.UNKNOWN:
+    case SchemaType.OPTIONAL:
+      return true;
+    default:
+      return false;
   }
 }
 var init_object = __esm({
@@ -69901,11 +70018,9 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
     [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 export declare type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+    [K in keyof T]-?: undefined extends T[K] ? K : null extends T[K] ? K : 1 extends (any extends T[K] ? 0 : 1) ? never : K;
 }[keyof T];
-export declare type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
-}[keyof T];
+export declare type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 ",
                         "name": "addQuestionMarksToNullableProperties.d.ts",
                         "type": "file",
@@ -72850,7 +72965,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 
                 rawKeyToProperty[rawKey] = property;
 
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -72880,7 +72995,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
 
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey as string);
                 }
             }
@@ -73081,6 +73196,21 @@ async function validateAndTransformExtendedObject<PreTransformedExtension, Trans
                 ...(transformedExtension.ok ? [] : transformedExtension.errors),
             ],
         };
+    }
+}
+
+async function isSchemaRequired(schema: Schema<any, any>): Promise<boolean> {
+    return !(await isSchemaOptional(schema));
+}
+
+async function isSchemaOptional(schema: Schema<any, any>): Promise<boolean> {
+    switch (await schema.getType()) {
+        case SchemaType.ANY:
+        case SchemaType.UNKNOWN:
+        case SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
     }
 }
 ",
@@ -74058,12 +74188,16 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+    [K in keyof T]-?: undefined extends T[K]
+        ? K
+        : null extends T[K]
+        ? K
+        : 1 extends (any extends T[K] ? 0 : 1)
+        ? never
+        : K;
 }[keyof T];
 
-export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
-}[keyof T];
+export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 ",
                     "name": "addQuestionMarksToNullableProperties.ts",
                     "type": "file",
@@ -78191,7 +78325,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 
                 rawKeyToProperty[rawKey] = property;
 
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -78221,7 +78355,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
 
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey as string);
                 }
             }
@@ -78422,6 +78556,21 @@ async function validateAndTransformExtendedObject<PreTransformedExtension, Trans
                 ...(transformedExtension.ok ? [] : transformedExtension.errors),
             ],
         };
+    }
+}
+
+async function isSchemaRequired(schema: Schema<any, any>): Promise<boolean> {
+    return !(await isSchemaOptional(schema));
+}
+
+async function isSchemaOptional(schema: Schema<any, any>): Promise<boolean> {
+    switch (await schema.getType()) {
+        case SchemaType.ANY:
+        case SchemaType.UNKNOWN:
+        case SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
     }
 }
 ",
@@ -79399,12 +79548,16 @@ export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from
 } & Pick<T, RequiredKeys<T>>;
 
 export type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+    [K in keyof T]-?: undefined extends T[K]
+        ? K
+        : null extends T[K]
+        ? K
+        : 1 extends (any extends T[K] ? 0 : 1)
+        ? never
+        : K;
 }[keyof T];
 
-export type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
-}[keyof T];
+export type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 ",
                     "name": "addQuestionMarksToNullableProperties.ts",
                     "type": "file",
@@ -82376,7 +82529,7 @@ function object(schemas) {
                     valueSchema,
                 };
                 rawKeyToProperty[rawKey] = property;
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -82402,7 +82555,7 @@ function object(schemas) {
                 const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey);
                 }
             }
@@ -82562,6 +82715,19 @@ async function validateAndTransformExtendedObject({ extensionKeys, value, transf
                 ...(transformedExtension.ok ? [] : transformedExtension.errors),
             ],
         };
+    }
+}
+async function isSchemaRequired(schema) {
+    return !(await isSchemaOptional(schema));
+}
+async function isSchemaOptional(schema) {
+    switch (await schema.getType()) {
+        case Schema_1.SchemaType.ANY:
+        case Schema_1.SchemaType.UNKNOWN:
+        case Schema_1.SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
     }
 }
 ",
@@ -83636,11 +83802,9 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
     [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 export declare type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+    [K in keyof T]-?: undefined extends T[K] ? K : null extends T[K] ? K : 1 extends (any extends T[K] ? 0 : 1) ? never : K;
 }[keyof T];
-export declare type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
-}[keyof T];
+export declare type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 ",
                 "name": "addQuestionMarksToNullableProperties.d.ts",
                 "type": "file",
@@ -99402,7 +99566,7 @@ function object(schemas) {
                     valueSchema,
                 };
                 rawKeyToProperty[rawKey] = property;
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(rawKey);
                 }
             }
@@ -99428,7 +99592,7 @@ function object(schemas) {
                 const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
-                if ((await valueSchema.getType()) !== \\"optional\\") {
+                if (await isSchemaRequired(valueSchema)) {
                     requiredKeys.push(parsedKey);
                 }
             }
@@ -99588,6 +99752,19 @@ async function validateAndTransformExtendedObject({ extensionKeys, value, transf
                 ...(transformedExtension.ok ? [] : transformedExtension.errors),
             ],
         };
+    }
+}
+async function isSchemaRequired(schema) {
+    return !(await isSchemaOptional(schema));
+}
+async function isSchemaOptional(schema) {
+    switch (await schema.getType()) {
+        case Schema_1.SchemaType.ANY:
+        case Schema_1.SchemaType.UNKNOWN:
+        case Schema_1.SchemaType.OPTIONAL:
+            return true;
+        default:
+            return false;
     }
 }
 ",
@@ -100662,11 +100839,9 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
     [K in OptionalKeys<T>]?: T[K];
 } & Pick<T, RequiredKeys<T>>;
 export declare type OptionalKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? K : null extends T[K] ? K : never;
+    [K in keyof T]-?: undefined extends T[K] ? K : null extends T[K] ? K : 1 extends (any extends T[K] ? 0 : 1) ? never : K;
 }[keyof T];
-export declare type RequiredKeys<T> = {
-    [K in keyof T]: undefined extends T[K] ? never : null extends T[K] ? never : K;
-}[keyof T];
+export declare type RequiredKeys<T> = Exclude<keyof T, OptionalKeys<T>>;
 ",
                     "name": "addQuestionMarksToNullableProperties.d.ts",
                     "type": "file",
