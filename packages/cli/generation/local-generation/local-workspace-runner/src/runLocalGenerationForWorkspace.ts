@@ -5,9 +5,10 @@ import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import { mkdir, rm } from "fs/promises";
+import decompress from "decompress";
+import { cp, readdir, rm } from "fs/promises";
 import os from "os";
-import path from "path";
+import path, { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
 import { runGenerator } from "./run-generator/runGenerator";
 
@@ -96,12 +97,15 @@ async function writeFilesToDiskAndRunGenerator({
     const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJsonFile.path);
     context.logger.debug("Will write config.json to: " + absolutePathToWriteConfigJson);
 
-    await rm(absolutePathToLocalOutput, { force: true, recursive: true });
-    await mkdir(absolutePathToLocalOutput, { recursive: true });
+    const tmpOutputDirectory = await tmp.dir({
+        tmpdir: workspaceTempDir.path,
+    });
+    const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
+    context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
     await runGenerator({
         imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
-        absolutePathToOutput: absolutePathToLocalOutput,
+        absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         customConfig: generatorInvocation.config,
@@ -109,6 +113,20 @@ async function writeFilesToDiskAndRunGenerator({
         organization,
         keepDocker,
     });
+
+    const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(absolutePathToTmpOutputDirectory);
+    if (firstLocalOutputItem == null) {
+        return;
+    }
+    await rm(absolutePathToLocalOutput, { force: true, recursive: true });
+
+    if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
+        await decompress(join(absolutePathToTmpOutputDirectory, firstLocalOutputItem), absolutePathToLocalOutput, {
+            strip: 1,
+        });
+    } else {
+        await cp(absolutePathToTmpOutputDirectory, absolutePathToLocalOutput, { recursive: true });
+    }
 }
 
 async function writeIrToFile({

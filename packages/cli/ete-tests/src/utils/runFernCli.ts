@@ -8,6 +8,7 @@ export async function runFernCli(args: string[], options?: Options): Promise<Exe
         env: {
             ...options?.env,
             FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV,
+            FERN_NO_VERSION_REDIRECTION: "true",
         },
         doNotPipeOutput: options?.reject === false,
     });
