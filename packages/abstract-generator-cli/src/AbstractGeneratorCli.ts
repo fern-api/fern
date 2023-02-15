@@ -90,7 +90,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 github: async (githubOutputMode) => {
                     await typescriptProject.format(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
-                    await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
+                    await typescriptProject.moveProjectTo(AbsoluteFilePath.of(config.output.path));
                     await writeGitHubWorkflows({
                         config,
                         githubOutputMode,
@@ -98,7 +98,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 downloadFiles: async () => {
-                    await typescriptProject.copyDistTo(AbsoluteFilePath.of(config.output.path), { logger });
+                    await typescriptProject.moveDistTo(AbsoluteFilePath.of(config.output.path), { logger });
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
