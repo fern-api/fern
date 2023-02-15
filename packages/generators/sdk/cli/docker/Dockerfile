@@ -1,5 +1,7 @@
 FROM node:18.1.0-alpine
 
+RUN apk --no-cache add git
+
 ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY packages/generators/sdk/cli/docker/cache_heavy_dependencies.sh /
