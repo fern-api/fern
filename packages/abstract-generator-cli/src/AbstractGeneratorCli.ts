@@ -73,9 +73,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
-            // make sure code compiles
-            await typescriptProject.build(logger);
-
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -85,9 +82,14 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         generatorNotificationService,
                         typescriptProject,
                     });
-                    await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
+                    await typescriptProject.npmPack({
+                        logger,
+                        location: AbsoluteFilePath.of(config.output.path),
+                    });
                 },
                 github: async (githubOutputMode) => {
+                    await typescriptProject.format(logger);
+                    await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.copyProjectTo(AbsoluteFilePath.of(config.output.path));
                     await writeGitHubWorkflows({
                         config,

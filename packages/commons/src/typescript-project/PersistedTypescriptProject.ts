@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { cp } from "fs/promises";
+import { cp, rm } from "fs/promises";
 import urlJoin from "url-join";
 import { PublishInfo } from "../NpmPackage";
 
@@ -146,5 +146,31 @@ export class PersistedTypescriptProject {
             publishCommand.push("--dry-run");
         }
         await npm(publishCommand);
+    }
+
+    public async npmPack({ logger, location }: { logger: Logger; location: AbsoluteFilePath }): Promise<void> {
+        if (!this.hasBuilt) {
+            await this.build(logger);
+        }
+
+        const npm = createLoggingExecutable("npm", {
+            cwd: this.directory,
+            logger,
+        });
+
+        await npm(["pack", "--pack-destination", location]);
+    }
+
+    public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {
+        const git = createLoggingExecutable("git", {
+            cwd: this.directory,
+            logger,
+        });
+        await git(["init"]);
+        await git(["add", "."]);
+        await git(["commit", "-m", '"Initial commit"']);
+        await git(["clean", "-fdx"]);
+
+        await rm(join(this.directory, ".git"), { recursive: true });
     }
 }

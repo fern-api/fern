@@ -178,6 +178,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private async generateTsConfig(): Promise<void> {
         const compilerOptions: CompilerOptions = {
+            extendedDiagnostics: true,
             strict: true,
             target: "esnext" as unknown as ScriptTarget,
             module: "esnext" as unknown as ModuleKind,
