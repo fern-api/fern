@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import decompress from "decompress";
-import { cp, readdir, rename, rm } from "fs/promises";
+import { cp, readdir, rm } from "fs/promises";
 import { basename } from "path";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
@@ -179,7 +179,7 @@ export class PersistedTypescriptProject {
 
         const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), "output.zip");
         await zip(["-r", tmpZipLocation, basename(copiedSource)]);
-        await rename(tmpZipLocation, destinationZip);
+        await cp(tmpZipLocation, destinationZip);
     }
 
     public async publish({
