@@ -30,7 +30,12 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
     }
 
     public getExportedName(service: DeclaredServiceName): string {
-        return this.isRootClient(service) ? `${this.namespaceExport}Client` : "Client";
+        const lastFernFilepathPart = service.fernFilepath.allParts[service.fernFilepath.allParts.length - 1];
+        if (lastFernFilepathPart == null) {
+            return `${this.namespaceExport}Client`;
+        } else {
+            return lastFernFilepathPart.pascalCase.unsafeName;
+        }
     }
 
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<DeclaredServiceName>): Reference {

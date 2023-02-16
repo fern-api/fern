@@ -46,7 +46,7 @@ export class SdkClientClassContextMixinImpl implements SdkClientClassContextMixi
 
     public getReferenceToClientClass(
         service: DeclaredServiceName,
-        { importAlias }: { importAlias: string }
+        { importAlias }: { importAlias?: string } = {}
     ): Reference {
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
             name: service,

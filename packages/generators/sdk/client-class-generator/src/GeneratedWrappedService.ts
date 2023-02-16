@@ -74,18 +74,7 @@ export class GeneratedWrappedService {
         return lastFernFilepathPart.camelCase.unsafeName;
     }
 
-    private getImportAlias(): string {
-        const lastFernFilepathPart =
-            this.wrappedService.fernFilepath.allParts[this.wrappedService.fernFilepath.allParts.length - 1];
-        if (lastFernFilepathPart == null) {
-            throw new Error("Cannot generate wrapped service because FernFilepath is empty");
-        }
-        return `${lastFernFilepathPart.pascalCase.unsafeName}Client`;
-    }
-
     private getReferenceToWrappedService(context: SdkClientClassContext): Reference {
-        return context.sdkClientClass.getReferenceToClientClass(this.wrappedService, {
-            importAlias: this.getImportAlias(),
-        });
+        return context.sdkClientClass.getReferenceToClientClass(this.wrappedService);
     }
 }
