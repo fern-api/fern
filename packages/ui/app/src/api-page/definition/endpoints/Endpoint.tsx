@@ -1,9 +1,6 @@
 import { H2 } from "@blueprintjs/core";
 import { FernRegistry } from "@fern-fern/registry";
-import { useMemo } from "react";
-import { getAnchorForSidebarItem } from "../../anchor-links/getAnchorForSidebarItem";
-import { EndpointId, PackagePath } from "../../context/ApiContext";
-import { useTrackSidebarItemId } from "../useTrackSidebarItemId";
+import { useParams } from "react-router-dom";
 import styles from "./Endpoint.module.scss";
 import { EndpointExample } from "./EndpointExample";
 import { EndpointPath } from "./EndpointPath";
@@ -14,28 +11,25 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace Endpoint {
     export interface Props {
-        endpoint: FernRegistry.EndpointDefinition;
-        packagePath: PackagePath;
-        indexInParent: number;
+        package: FernRegistry.ApiDefinitionPackage;
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, packagePath, indexInParent }) => {
-    const endpointId = useMemo(
-        (): EndpointId => ({
-            type: "endpoint",
-            packagePath,
-            indexInParent,
-        }),
-        [indexInParent, packagePath]
-    );
+export const Endpoint: React.FC<Endpoint.Props> = ({ package: package_ }) => {
+    const { endpointId } = useParams();
+    if (endpointId == null) {
+        return null;
+    }
 
-    const ref = useTrackSidebarItemId(endpointId);
+    const endpoint = package_.endpoints.find((endpoint) => endpoint.id === endpointId);
+    if (endpoint == null) {
+        return null;
+    }
 
     return (
-        <div ref={ref} className={styles.container}>
+        <div className={styles.container}>
             <div className={styles.titleSection}>
-                <H2 id={getAnchorForSidebarItem(endpointId)} className={styles.title}>
+                <H2 className={styles.title}>
                     <EndpointTitle endpoint={endpoint} />
                 </H2>
                 {endpoint.displayName != null && <EndpointPath className={styles.endpointPath} endpoint={endpoint} />}

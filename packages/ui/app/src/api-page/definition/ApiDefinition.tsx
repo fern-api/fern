@@ -1,12 +1,11 @@
 import { useApiContext } from "../context/useApiContext";
-import { PackagePage } from "./PackagePage";
+import { PackageRoutes } from "./PackageRoutes";
 
 export const ApiDefinition: React.FC = () => {
     const { api } = useApiContext();
-
-    if (api.type !== "loaded" || !api.value.ok) {
+    if (api.type !== "loaded") {
         return null;
     }
 
-    return <PackagePage api={api.value.body} parent={api.value.body.rootPackage} />;
+    return <PackageRoutes api={api.value} parent={api.value.rootPackage} />;
 };

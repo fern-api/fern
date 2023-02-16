@@ -9,17 +9,11 @@ import { useCurrentEnvironment } from "../../../../routes/useCurrentEnvironment"
 import { useAllEnvironments } from "../../../queries/useAllEnvironments";
 import { ApiVersionSelectButton } from "./ApiVersionSelectButton";
 
-export declare namespace ApiVersionSelect {
-    export interface Props {
-        environments: FernRegistry.Environment[];
-    }
-}
-
 const POPOVER_PROPS: SelectPopoverProps["popoverProps"] = {
     matchTargetWidth: true,
 };
 
-export const ApiVersionSelect: React.FC<ApiVersionSelect.Props> = () => {
+export const ApiVersionSelect: React.FC = () => {
     const currentApiId = useCurrentApiId();
     const currentEnvironment = useCurrentEnvironment();
     const environments = useAllEnvironments();

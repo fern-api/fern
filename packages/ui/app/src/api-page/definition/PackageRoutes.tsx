@@ -1,19 +1,18 @@
 import { RoutesWith404 } from "@fern-api/routing-utils";
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { Route, useMatch, useParams } from "react-router-dom";
+import { Route, useParams } from "react-router-dom";
+import { Endpoint } from "./endpoints/Endpoint";
 
-export declare namespace PackagePage {
+export declare namespace PackageRoutes {
     export interface Props {
         api: FernRegistry.ApiDefinition;
         parent: FernRegistry.ApiDefinitionPackage;
     }
 }
 
-export const PackagePage: React.FC<PackagePage.Props> = ({ api, parent }) => {
+export const PackageRoutes: React.FC<PackageRoutes.Props> = ({ api, parent }) => {
     const params = useParams();
-    console.log("match", useMatch("/:apiId/definition/:environment/*"));
-    console.log("rendering", params);
 
     const package_ = useMemo(() => {
         if (params.subpackage != null) {
@@ -28,9 +27,9 @@ export const PackagePage: React.FC<PackagePage.Props> = ({ api, parent }) => {
 
     return (
         <RoutesWith404>
-            <Route path="/endpoints/:endpointId" element={<div>endpoint</div>} />
+            <Route path="/endpoints/:endpointId" element={<Endpoint package={package_} />} />
             <Route path="/types/:typeId" element={<div>type</div>} />
-            <Route path="/:subpackage/*" element={<PackagePage api={api} parent={package_} />} />
+            <Route path="/:subpackage/*" element={<PackageRoutes api={api} parent={package_} />} />
         </RoutesWith404>
     );
 };

@@ -12,7 +12,7 @@ export function useTypedQuery<
     queryKey: TQueryKey,
     queryFn: QueryFunction<TQueryFnData, TQueryKey>,
     options?: Omit<UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>, "queryKey" | "queryFn">
-): Loadable<TQueryFnData> {
+): Loadable<TQueryFnData, TError> {
     const result = useQuery(queryKey, queryFn, options);
     return useMemo(() => convertUseQueryResultToLoadable(result), [result]);
 }

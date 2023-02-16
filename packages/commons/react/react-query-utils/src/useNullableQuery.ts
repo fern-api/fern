@@ -12,7 +12,7 @@ export function useNullableQuery<
     queryKey: TQueryKey | undefined,
     queryFn: QueryFunction<TQueryFnData, TQueryKey>,
     options?: Omit<UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>, "queryKey" | "queryFn">
-): Loadable<TQueryFnData> {
+): Loadable<TQueryFnData, TError> {
     const { enabled: isEnabledProp = true, refetchInterval, onSettled, onSuccess, isDataEqual, select } = options ?? {};
 
     const result = useTypedQuery<TQueryFnData | NullableQueryResult, TError>(

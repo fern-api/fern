@@ -5,6 +5,9 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    overflow: auto;
+    padding-left: 10vw;
+    padding-right: 10vw;
 }
 
 .body {

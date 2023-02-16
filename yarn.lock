@@ -4705,7 +4705,7 @@ __metadata:
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
     "@fern-fern/api-editor-sdk": 0.0.38
-    "@fern-fern/registry": 0.0.29
+    "@fern-fern/registry": 0.0.31
     "@fontsource/actor": ^4.5.9
     "@fontsource/roboto-mono": ^4.5.8
     "@types/jest": ^29.0.3
@@ -5009,14 +5009,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry@npm:0.0.29":
-  version: 0.0.29
-  resolution: "@fern-fern/registry@npm:0.0.29"
+"@fern-fern/registry@npm:0.0.31":
+  version: 0.0.31
+  resolution: "@fern-fern/registry@npm:0.0.31"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: 0f11d0001a2298db22f16bbcf552c8cc6ed26c3a0733dee7c907fe447055fc588a7713c217fb7923a35c9cc3a9f7da78bfa100609c20fc5c72ba0e6bc947de66
+  checksum: 3bceee139d0dd5b74164a4a116481f298c3a5ac0a519c2dc493111764e3a64122c81ea9be23ca2790f7b8037407e2502a5cd34bf7894b77c924cb3d6ccc0467e
   languageName: node
   linkType: hard
 
