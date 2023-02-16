@@ -3509,17 +3509,67 @@ var init_remoteGen = __esm({
   }
 });
 
-// src/api/resources/health/client/status.ts
-var status_exports = {};
-__export(status_exports, {
+// src/api/resources/fiddle/client/test.ts
+var test_exports = {};
+__export(test_exports, {
   Error: () => Error5
 });
 var Error5;
+var init_test = __esm({
+  \\"src/api/resources/fiddle/client/test.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    Error5 = {
+      _unknown: (fetcherError) => {
+        return {
+          error: void 0,
+          content: fetcherError,
+          _visit: function(visitor) {
+            return api_exports.fiddle.test.Error._visit(this, visitor);
+          }
+        };
+      },
+      _visit: (value, visitor) => {
+        switch (value.error) {
+          default:
+            return visitor._other(value);
+        }
+      }
+    };
+  }
+});
+
+// src/api/resources/fiddle/client/index.ts
+var init_client2 = __esm({
+  \\"src/api/resources/fiddle/client/index.ts\\"() {
+    \\"use strict\\";
+    init_test();
+  }
+});
+
+// src/api/resources/fiddle/index.ts
+var fiddle_exports = {};
+__export(fiddle_exports, {
+  test: () => test_exports
+});
+var init_fiddle = __esm({
+  \\"src/api/resources/fiddle/index.ts\\"() {
+    \\"use strict\\";
+    init_client2();
+  }
+});
+
+// src/api/resources/health/client/status.ts
+var status_exports = {};
+__export(status_exports, {
+  Error: () => Error6
+});
+var Error6;
 var init_status = __esm({
   \\"src/api/resources/health/client/status.ts\\"() {
     \\"use strict\\";
     init_src();
-    Error5 = {
+    Error6 = {
       _unknown: (fetcherError) => {
         return {
           error: void 0,
@@ -3540,7 +3590,7 @@ var init_status = __esm({
 });
 
 // src/api/resources/health/client/index.ts
-var init_client2 = __esm({
+var init_client3 = __esm({
   \\"src/api/resources/health/client/index.ts\\"() {
     \\"use strict\\";
     init_status();
@@ -3555,7 +3605,7 @@ __export(health_exports, {
 var init_health = __esm({
   \\"src/api/resources/health/index.ts\\"() {
     \\"use strict\\";
-    init_client2();
+    init_client3();
   }
 });
 
@@ -3565,6 +3615,7 @@ var init_resources = __esm({
     \\"use strict\\";
     init_remoteGen();
     init_types();
+    init_fiddle();
     init_health();
     init_requests();
   }
@@ -3582,6 +3633,7 @@ __export(api_exports, {
   RemoteGenJobId: () => RemoteGenJobId,
   RemoteGenTaskId: () => RemoteGenTaskId,
   TaskStatus: () => TaskStatus,
+  fiddle: () => fiddle_exports,
   health: () => health_exports,
   remoteGen: () => remoteGen_exports
 });
@@ -6541,6 +6593,37 @@ var init_core = __esm({
   }
 });
 
+// src/api/resources/fiddle/client/Client.ts
+var FiddleService;
+var init_Client = __esm({
+  \\"src/api/resources/fiddle/client/Client.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    init_core();
+    FiddleService = class {
+      constructor(options) {
+        this.options = options;
+      }
+      async test() {
+        const _response = await fetcher({
+          url: this.options.environment,
+          method: \\"GET\\"
+        });
+        if (_response.ok) {
+          return {
+            ok: true,
+            body: void 0
+          };
+        }
+        return {
+          ok: false,
+          error: api_exports.fiddle.test.Error._unknown(_response.error)
+        };
+      }
+    };
+  }
+});
+
 // .yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js
 var require_url_join = __commonJS({
   \\".yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js\\"(exports, module2) {
@@ -6608,7 +6691,7 @@ var require_url_join = __commonJS({
 
 // src/api/resources/health/client/Client.ts
 var import_url_join, Health;
-var init_Client = __esm({
+var init_Client2 = __esm({
   \\"src/api/resources/health/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -7246,15 +7329,15 @@ var init_types2 = __esm({
 // src/serialization/resources/remoteGen/client/createJob.ts
 var createJob_exports2 = {};
 __export(createJob_exports2, {
-  Error: () => Error6
+  Error: () => Error7
 });
-var Error6;
+var Error7;
 var init_createJob2 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJob.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error6 = schemas_exports.union(\\"error\\", {
+    Error7 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -7299,15 +7382,15 @@ var init_createJob2 = __esm({
 // src/serialization/resources/remoteGen/client/createJobV2.ts
 var createJobV2_exports2 = {};
 __export(createJobV2_exports2, {
-  Error: () => Error7
+  Error: () => Error8
 });
-var Error7;
+var Error8;
 var init_createJobV22 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJobV2.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error7 = schemas_exports.union(\\"error\\", {
+    Error8 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -7411,7 +7494,7 @@ var init_requests2 = __esm({
 });
 
 // src/serialization/resources/remoteGen/client/index.ts
-var init_client3 = __esm({
+var init_client4 = __esm({
   \\"src/serialization/resources/remoteGen/client/index.ts\\"() {
     \\"use strict\\";
     init_createJob2();
@@ -7469,7 +7552,7 @@ var init_remoteGen2 = __esm({
   \\"src/serialization/resources/remoteGen/index.ts\\"() {
     \\"use strict\\";
     init_types2();
-    init_client3();
+    init_client4();
   }
 });
 
@@ -7534,7 +7617,7 @@ var init_serialization = __esm({
 
 // src/api/resources/remoteGen/client/Client.ts
 var import_url_join2, RemoteGen;
-var init_Client2 = __esm({
+var init_Client3 = __esm({
   \\"src/api/resources/remoteGen/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -7645,14 +7728,19 @@ var init_Client2 = __esm({
 
 // src/Client.ts
 var FiddleClient;
-var init_Client3 = __esm({
+var init_Client4 = __esm({
   \\"src/Client.ts\\"() {
     \\"use strict\\";
     init_Client();
     init_Client2();
+    init_Client3();
     FiddleClient = class {
       constructor(options) {
         this.options = options;
+      }
+      _fiddle;
+      get fiddle() {
+        return this._fiddle ??= new FiddleService(this.options);
       }
       _health;
       get health() {
@@ -7676,7 +7764,7 @@ module.exports = __toCommonJS(src_exports);
 var init_src = __esm({
   \\"src/index.ts\\"() {
     init_api();
-    init_Client3();
+    init_Client4();
   }
 });
 init_src();
@@ -8541,17 +8629,67 @@ var init_remoteGen = __esm({
   }
 });
 
-// src/api/resources/health/client/status.ts
-var status_exports = {};
-__export(status_exports, {
+// src/api/resources/fiddle/client/test.ts
+var test_exports = {};
+__export(test_exports, {
   Error: () => Error5
 });
 var Error5;
+var init_test = __esm({
+  \\"src/api/resources/fiddle/client/test.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    Error5 = {
+      _unknown: (fetcherError) => {
+        return {
+          error: void 0,
+          content: fetcherError,
+          _visit: function(visitor) {
+            return api_exports.fiddle.test.Error._visit(this, visitor);
+          }
+        };
+      },
+      _visit: (value, visitor) => {
+        switch (value.error) {
+          default:
+            return visitor._other(value);
+        }
+      }
+    };
+  }
+});
+
+// src/api/resources/fiddle/client/index.ts
+var init_client2 = __esm({
+  \\"src/api/resources/fiddle/client/index.ts\\"() {
+    \\"use strict\\";
+    init_test();
+  }
+});
+
+// src/api/resources/fiddle/index.ts
+var fiddle_exports = {};
+__export(fiddle_exports, {
+  test: () => test_exports
+});
+var init_fiddle = __esm({
+  \\"src/api/resources/fiddle/index.ts\\"() {
+    \\"use strict\\";
+    init_client2();
+  }
+});
+
+// src/api/resources/health/client/status.ts
+var status_exports = {};
+__export(status_exports, {
+  Error: () => Error6
+});
+var Error6;
 var init_status = __esm({
   \\"src/api/resources/health/client/status.ts\\"() {
     \\"use strict\\";
     init_src();
-    Error5 = {
+    Error6 = {
       _unknown: (fetcherError) => {
         return {
           error: void 0,
@@ -8572,7 +8710,7 @@ var init_status = __esm({
 });
 
 // src/api/resources/health/client/index.ts
-var init_client2 = __esm({
+var init_client3 = __esm({
   \\"src/api/resources/health/client/index.ts\\"() {
     \\"use strict\\";
     init_status();
@@ -8587,7 +8725,7 @@ __export(health_exports, {
 var init_health = __esm({
   \\"src/api/resources/health/index.ts\\"() {
     \\"use strict\\";
-    init_client2();
+    init_client3();
   }
 });
 
@@ -8597,6 +8735,7 @@ var init_resources = __esm({
     \\"use strict\\";
     init_remoteGen();
     init_types();
+    init_fiddle();
     init_health();
     init_requests();
   }
@@ -8614,6 +8753,7 @@ __export(api_exports, {
   RemoteGenJobId: () => RemoteGenJobId,
   RemoteGenTaskId: () => RemoteGenTaskId,
   TaskStatus: () => TaskStatus,
+  fiddle: () => fiddle_exports,
   health: () => health_exports,
   remoteGen: () => remoteGen_exports
 });
@@ -11499,6 +11639,15 @@ var init_core = __esm({
   }
 });
 
+// src/api/resources/fiddle/client/Client.ts
+var init_Client = __esm({
+  \\"src/api/resources/fiddle/client/Client.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    init_core();
+  }
+});
+
 // .yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js
 var require_url_join = __commonJS({
   \\".yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js\\"(exports, module2) {
@@ -11566,7 +11715,7 @@ var require_url_join = __commonJS({
 
 // src/api/resources/health/client/Client.ts
 var import_url_join;
-var init_Client = __esm({
+var init_Client2 = __esm({
   \\"src/api/resources/health/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -11577,7 +11726,7 @@ var init_Client = __esm({
 
 // src/api/resources/remoteGen/client/Client.ts
 var import_url_join2;
-var init_Client2 = __esm({
+var init_Client3 = __esm({
   \\"src/api/resources/remoteGen/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -11588,11 +11737,12 @@ var init_Client2 = __esm({
 });
 
 // src/Client.ts
-var init_Client3 = __esm({
+var init_Client4 = __esm({
   \\"src/Client.ts\\"() {
     \\"use strict\\";
     init_Client();
     init_Client2();
+    init_Client3();
   }
 });
 
@@ -11601,7 +11751,7 @@ var init_src = __esm({
   \\"src/index.ts\\"() {
     \\"use strict\\";
     init_api();
-    init_Client3();
+    init_Client4();
   }
 });
 
@@ -12213,15 +12363,15 @@ var init_types2 = __esm({
 // src/serialization/resources/remoteGen/client/createJob.ts
 var createJob_exports2 = {};
 __export(createJob_exports2, {
-  Error: () => Error6
+  Error: () => Error7
 });
-var Error6;
+var Error7;
 var init_createJob2 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJob.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error6 = schemas_exports.union(\\"error\\", {
+    Error7 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -12266,15 +12416,15 @@ var init_createJob2 = __esm({
 // src/serialization/resources/remoteGen/client/createJobV2.ts
 var createJobV2_exports2 = {};
 __export(createJobV2_exports2, {
-  Error: () => Error7
+  Error: () => Error8
 });
-var Error7;
+var Error8;
 var init_createJobV22 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJobV2.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error7 = schemas_exports.union(\\"error\\", {
+    Error8 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -12378,7 +12528,7 @@ var init_requests2 = __esm({
 });
 
 // src/serialization/resources/remoteGen/client/index.ts
-var init_client3 = __esm({
+var init_client4 = __esm({
   \\"src/serialization/resources/remoteGen/client/index.ts\\"() {
     \\"use strict\\";
     init_createJob2();
@@ -12436,7 +12586,7 @@ var init_remoteGen2 = __esm({
   \\"src/serialization/resources/remoteGen/index.ts\\"() {
     \\"use strict\\";
     init_types2();
-    init_client3();
+    init_client4();
   }
 });
 
@@ -15992,17 +16142,67 @@ var init_remoteGen = __esm({
   }
 });
 
-// src/api/resources/health/client/status.ts
-var status_exports = {};
-__export(status_exports, {
+// src/api/resources/fiddle/client/test.ts
+var test_exports = {};
+__export(test_exports, {
   Error: () => Error5
 });
 var Error5;
+var init_test = __esm({
+  \\"src/api/resources/fiddle/client/test.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    Error5 = {
+      _unknown: (fetcherError) => {
+        return {
+          error: void 0,
+          content: fetcherError,
+          _visit: function(visitor) {
+            return api_exports.fiddle.test.Error._visit(this, visitor);
+          }
+        };
+      },
+      _visit: (value, visitor) => {
+        switch (value.error) {
+          default:
+            return visitor._other(value);
+        }
+      }
+    };
+  }
+});
+
+// src/api/resources/fiddle/client/index.ts
+var init_client2 = __esm({
+  \\"src/api/resources/fiddle/client/index.ts\\"() {
+    \\"use strict\\";
+    init_test();
+  }
+});
+
+// src/api/resources/fiddle/index.ts
+var fiddle_exports = {};
+__export(fiddle_exports, {
+  test: () => test_exports
+});
+var init_fiddle = __esm({
+  \\"src/api/resources/fiddle/index.ts\\"() {
+    \\"use strict\\";
+    init_client2();
+  }
+});
+
+// src/api/resources/health/client/status.ts
+var status_exports = {};
+__export(status_exports, {
+  Error: () => Error6
+});
+var Error6;
 var init_status = __esm({
   \\"src/api/resources/health/client/status.ts\\"() {
     \\"use strict\\";
     init_src();
-    Error5 = {
+    Error6 = {
       _unknown: (fetcherError) => {
         return {
           error: void 0,
@@ -16023,7 +16223,7 @@ var init_status = __esm({
 });
 
 // src/api/resources/health/client/index.ts
-var init_client2 = __esm({
+var init_client3 = __esm({
   \\"src/api/resources/health/client/index.ts\\"() {
     \\"use strict\\";
     init_status();
@@ -16038,7 +16238,7 @@ __export(health_exports, {
 var init_health = __esm({
   \\"src/api/resources/health/index.ts\\"() {
     \\"use strict\\";
-    init_client2();
+    init_client3();
   }
 });
 
@@ -16048,6 +16248,7 @@ var init_resources = __esm({
     \\"use strict\\";
     init_remoteGen();
     init_types();
+    init_fiddle();
     init_health();
     init_requests();
   }
@@ -16065,6 +16266,7 @@ __export(api_exports, {
   RemoteGenJobId: () => RemoteGenJobId,
   RemoteGenTaskId: () => RemoteGenTaskId,
   TaskStatus: () => TaskStatus,
+  fiddle: () => fiddle_exports,
   health: () => health_exports,
   remoteGen: () => remoteGen_exports
 });
@@ -19024,6 +19226,37 @@ var init_core = __esm({
   }
 });
 
+// src/api/resources/fiddle/client/Client.ts
+var FiddleService;
+var init_Client = __esm({
+  \\"src/api/resources/fiddle/client/Client.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    init_core();
+    FiddleService = class {
+      constructor(options) {
+        this.options = options;
+      }
+      async test() {
+        const _response = await fetcher({
+          url: this.options.environment,
+          method: \\"GET\\"
+        });
+        if (_response.ok) {
+          return {
+            ok: true,
+            body: void 0
+          };
+        }
+        return {
+          ok: false,
+          error: api_exports.fiddle.test.Error._unknown(_response.error)
+        };
+      }
+    };
+  }
+});
+
 // .yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js
 var require_url_join = __commonJS({
   \\".yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js\\"(exports, module) {
@@ -19091,7 +19324,7 @@ var require_url_join = __commonJS({
 
 // src/api/resources/health/client/Client.ts
 var import_url_join, Health;
-var init_Client = __esm({
+var init_Client2 = __esm({
   \\"src/api/resources/health/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -19729,15 +19962,15 @@ var init_types2 = __esm({
 // src/serialization/resources/remoteGen/client/createJob.ts
 var createJob_exports2 = {};
 __export(createJob_exports2, {
-  Error: () => Error6
+  Error: () => Error7
 });
-var Error6;
+var Error7;
 var init_createJob2 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJob.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error6 = schemas_exports.union(\\"error\\", {
+    Error7 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -19782,15 +20015,15 @@ var init_createJob2 = __esm({
 // src/serialization/resources/remoteGen/client/createJobV2.ts
 var createJobV2_exports2 = {};
 __export(createJobV2_exports2, {
-  Error: () => Error7
+  Error: () => Error8
 });
-var Error7;
+var Error8;
 var init_createJobV22 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJobV2.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error7 = schemas_exports.union(\\"error\\", {
+    Error8 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -19894,7 +20127,7 @@ var init_requests2 = __esm({
 });
 
 // src/serialization/resources/remoteGen/client/index.ts
-var init_client3 = __esm({
+var init_client4 = __esm({
   \\"src/serialization/resources/remoteGen/client/index.ts\\"() {
     \\"use strict\\";
     init_createJob2();
@@ -19952,7 +20185,7 @@ var init_remoteGen2 = __esm({
   \\"src/serialization/resources/remoteGen/index.ts\\"() {
     \\"use strict\\";
     init_types2();
-    init_client3();
+    init_client4();
   }
 });
 
@@ -20017,7 +20250,7 @@ var init_serialization = __esm({
 
 // src/api/resources/remoteGen/client/Client.ts
 var import_url_join2, RemoteGen;
-var init_Client2 = __esm({
+var init_Client3 = __esm({
   \\"src/api/resources/remoteGen/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -20128,14 +20361,19 @@ var init_Client2 = __esm({
 
 // src/Client.ts
 var FiddleClient;
-var init_Client3 = __esm({
+var init_Client4 = __esm({
   \\"src/Client.ts\\"() {
     \\"use strict\\";
     init_Client();
     init_Client2();
+    init_Client3();
     FiddleClient = class {
       constructor(options) {
         this.options = options;
+      }
+      _fiddle;
+      get fiddle() {
+        return this._fiddle ??= new FiddleService(this.options);
       }
       _health;
       get health() {
@@ -20153,7 +20391,7 @@ var init_Client3 = __esm({
 var init_src = __esm({
   \\"src/index.ts\\"() {
     init_api();
-    init_Client3();
+    init_Client4();
   }
 });
 init_src();
@@ -21020,17 +21258,67 @@ var init_remoteGen = __esm({
   }
 });
 
-// src/api/resources/health/client/status.ts
-var status_exports = {};
-__export(status_exports, {
+// src/api/resources/fiddle/client/test.ts
+var test_exports = {};
+__export(test_exports, {
   Error: () => Error5
 });
 var Error5;
+var init_test = __esm({
+  \\"src/api/resources/fiddle/client/test.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    Error5 = {
+      _unknown: (fetcherError) => {
+        return {
+          error: void 0,
+          content: fetcherError,
+          _visit: function(visitor) {
+            return api_exports.fiddle.test.Error._visit(this, visitor);
+          }
+        };
+      },
+      _visit: (value, visitor) => {
+        switch (value.error) {
+          default:
+            return visitor._other(value);
+        }
+      }
+    };
+  }
+});
+
+// src/api/resources/fiddle/client/index.ts
+var init_client2 = __esm({
+  \\"src/api/resources/fiddle/client/index.ts\\"() {
+    \\"use strict\\";
+    init_test();
+  }
+});
+
+// src/api/resources/fiddle/index.ts
+var fiddle_exports = {};
+__export(fiddle_exports, {
+  test: () => test_exports
+});
+var init_fiddle = __esm({
+  \\"src/api/resources/fiddle/index.ts\\"() {
+    \\"use strict\\";
+    init_client2();
+  }
+});
+
+// src/api/resources/health/client/status.ts
+var status_exports = {};
+__export(status_exports, {
+  Error: () => Error6
+});
+var Error6;
 var init_status = __esm({
   \\"src/api/resources/health/client/status.ts\\"() {
     \\"use strict\\";
     init_src();
-    Error5 = {
+    Error6 = {
       _unknown: (fetcherError) => {
         return {
           error: void 0,
@@ -21051,7 +21339,7 @@ var init_status = __esm({
 });
 
 // src/api/resources/health/client/index.ts
-var init_client2 = __esm({
+var init_client3 = __esm({
   \\"src/api/resources/health/client/index.ts\\"() {
     \\"use strict\\";
     init_status();
@@ -21066,7 +21354,7 @@ __export(health_exports, {
 var init_health = __esm({
   \\"src/api/resources/health/index.ts\\"() {
     \\"use strict\\";
-    init_client2();
+    init_client3();
   }
 });
 
@@ -21076,6 +21364,7 @@ var init_resources = __esm({
     \\"use strict\\";
     init_remoteGen();
     init_types();
+    init_fiddle();
     init_health();
     init_requests();
   }
@@ -21093,6 +21382,7 @@ __export(api_exports, {
   RemoteGenJobId: () => RemoteGenJobId,
   RemoteGenTaskId: () => RemoteGenTaskId,
   TaskStatus: () => TaskStatus,
+  fiddle: () => fiddle_exports,
   health: () => health_exports,
   remoteGen: () => remoteGen_exports
 });
@@ -23978,6 +24268,15 @@ var init_core = __esm({
   }
 });
 
+// src/api/resources/fiddle/client/Client.ts
+var init_Client = __esm({
+  \\"src/api/resources/fiddle/client/Client.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    init_core();
+  }
+});
+
 // .yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js
 var require_url_join = __commonJS({
   \\".yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js\\"(exports, module) {
@@ -24045,7 +24344,7 @@ var require_url_join = __commonJS({
 
 // src/api/resources/health/client/Client.ts
 var import_url_join;
-var init_Client = __esm({
+var init_Client2 = __esm({
   \\"src/api/resources/health/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -24056,7 +24355,7 @@ var init_Client = __esm({
 
 // src/api/resources/remoteGen/client/Client.ts
 var import_url_join2;
-var init_Client2 = __esm({
+var init_Client3 = __esm({
   \\"src/api/resources/remoteGen/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -24067,11 +24366,12 @@ var init_Client2 = __esm({
 });
 
 // src/Client.ts
-var init_Client3 = __esm({
+var init_Client4 = __esm({
   \\"src/Client.ts\\"() {
     \\"use strict\\";
     init_Client();
     init_Client2();
+    init_Client3();
   }
 });
 
@@ -24080,7 +24380,7 @@ var init_src = __esm({
   \\"src/index.ts\\"() {
     \\"use strict\\";
     init_api();
-    init_Client3();
+    init_Client4();
   }
 });
 
@@ -24692,15 +24992,15 @@ var init_types2 = __esm({
 // src/serialization/resources/remoteGen/client/createJob.ts
 var createJob_exports2 = {};
 __export(createJob_exports2, {
-  Error: () => Error6
+  Error: () => Error7
 });
-var Error6;
+var Error7;
 var init_createJob2 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJob.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error6 = schemas_exports.union(\\"error\\", {
+    Error7 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -24745,15 +25045,15 @@ var init_createJob2 = __esm({
 // src/serialization/resources/remoteGen/client/createJobV2.ts
 var createJobV2_exports2 = {};
 __export(createJobV2_exports2, {
-  Error: () => Error7
+  Error: () => Error8
 });
-var Error7;
+var Error8;
 var init_createJobV22 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJobV2.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error7 = schemas_exports.union(\\"error\\", {
+    Error8 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -24857,7 +25157,7 @@ var init_requests2 = __esm({
 });
 
 // src/serialization/resources/remoteGen/client/index.ts
-var init_client3 = __esm({
+var init_client4 = __esm({
   \\"src/serialization/resources/remoteGen/client/index.ts\\"() {
     \\"use strict\\";
     init_createJob2();
@@ -24915,7 +25215,7 @@ var init_remoteGen2 = __esm({
   \\"src/serialization/resources/remoteGen/index.ts\\"() {
     \\"use strict\\";
     init_types2();
-    init_client3();
+    init_client4();
   }
 });
 
@@ -38770,17 +39070,67 @@ var init_remoteGen = __esm({
   }
 });
 
-// src/api/resources/health/client/status.ts
-var status_exports = {};
-__export(status_exports, {
+// src/api/resources/fiddle/client/test.ts
+var test_exports = {};
+__export(test_exports, {
   Error: () => Error5
 });
 var Error5;
+var init_test = __esm({
+  \\"src/api/resources/fiddle/client/test.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    Error5 = {
+      _unknown: (fetcherError) => {
+        return {
+          error: void 0,
+          content: fetcherError,
+          _visit: function(visitor) {
+            return api_exports.fiddle.test.Error._visit(this, visitor);
+          }
+        };
+      },
+      _visit: (value, visitor) => {
+        switch (value.error) {
+          default:
+            return visitor._other(value);
+        }
+      }
+    };
+  }
+});
+
+// src/api/resources/fiddle/client/index.ts
+var init_client2 = __esm({
+  \\"src/api/resources/fiddle/client/index.ts\\"() {
+    \\"use strict\\";
+    init_test();
+  }
+});
+
+// src/api/resources/fiddle/index.ts
+var fiddle_exports = {};
+__export(fiddle_exports, {
+  test: () => test_exports
+});
+var init_fiddle = __esm({
+  \\"src/api/resources/fiddle/index.ts\\"() {
+    \\"use strict\\";
+    init_client2();
+  }
+});
+
+// src/api/resources/health/client/status.ts
+var status_exports = {};
+__export(status_exports, {
+  Error: () => Error6
+});
+var Error6;
 var init_status = __esm({
   \\"src/api/resources/health/client/status.ts\\"() {
     \\"use strict\\";
     init_src();
-    Error5 = {
+    Error6 = {
       _unknown: (fetcherError) => {
         return {
           error: void 0,
@@ -38801,7 +39151,7 @@ var init_status = __esm({
 });
 
 // src/api/resources/health/client/index.ts
-var init_client2 = __esm({
+var init_client3 = __esm({
   \\"src/api/resources/health/client/index.ts\\"() {
     \\"use strict\\";
     init_status();
@@ -38816,7 +39166,7 @@ __export(health_exports, {
 var init_health = __esm({
   \\"src/api/resources/health/index.ts\\"() {
     \\"use strict\\";
-    init_client2();
+    init_client3();
   }
 });
 
@@ -38826,6 +39176,7 @@ var init_resources = __esm({
     \\"use strict\\";
     init_remoteGen();
     init_types();
+    init_fiddle();
     init_health();
     init_requests();
   }
@@ -38843,6 +39194,7 @@ __export(api_exports, {
   RemoteGenJobId: () => RemoteGenJobId,
   RemoteGenTaskId: () => RemoteGenTaskId,
   TaskStatus: () => TaskStatus,
+  fiddle: () => fiddle_exports,
   health: () => health_exports,
   remoteGen: () => remoteGen_exports
 });
@@ -52026,6 +52378,37 @@ var init_core = __esm({
   }
 });
 
+// src/api/resources/fiddle/client/Client.ts
+var FiddleService;
+var init_Client = __esm({
+  \\"src/api/resources/fiddle/client/Client.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    init_core();
+    FiddleService = class {
+      constructor(options) {
+        this.options = options;
+      }
+      async test() {
+        const _response = await fetcher({
+          url: this.options.environment,
+          method: \\"GET\\"
+        });
+        if (_response.ok) {
+          return {
+            ok: true,
+            body: void 0
+          };
+        }
+        return {
+          ok: false,
+          error: api_exports.fiddle.test.Error._unknown(_response.error)
+        };
+      }
+    };
+  }
+});
+
 // .yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js
 var require_url_join = __commonJS({
   \\".yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js\\"(exports, module2) {
@@ -52093,7 +52476,7 @@ var require_url_join = __commonJS({
 
 // src/api/resources/health/client/Client.ts
 var import_url_join, Health;
-var init_Client = __esm({
+var init_Client2 = __esm({
   \\"src/api/resources/health/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -52731,15 +53114,15 @@ var init_types2 = __esm({
 // src/serialization/resources/remoteGen/client/createJob.ts
 var createJob_exports2 = {};
 __export(createJob_exports2, {
-  Error: () => Error6
+  Error: () => Error7
 });
-var Error6;
+var Error7;
 var init_createJob2 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJob.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error6 = schemas_exports.union(\\"error\\", {
+    Error7 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -52784,15 +53167,15 @@ var init_createJob2 = __esm({
 // src/serialization/resources/remoteGen/client/createJobV2.ts
 var createJobV2_exports2 = {};
 __export(createJobV2_exports2, {
-  Error: () => Error7
+  Error: () => Error8
 });
-var Error7;
+var Error8;
 var init_createJobV22 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJobV2.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error7 = schemas_exports.union(\\"error\\", {
+    Error8 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -52896,7 +53279,7 @@ var init_requests2 = __esm({
 });
 
 // src/serialization/resources/remoteGen/client/index.ts
-var init_client3 = __esm({
+var init_client4 = __esm({
   \\"src/serialization/resources/remoteGen/client/index.ts\\"() {
     \\"use strict\\";
     init_createJob2();
@@ -52954,7 +53337,7 @@ var init_remoteGen2 = __esm({
   \\"src/serialization/resources/remoteGen/index.ts\\"() {
     \\"use strict\\";
     init_types2();
-    init_client3();
+    init_client4();
   }
 });
 
@@ -53019,7 +53402,7 @@ var init_serialization = __esm({
 
 // src/api/resources/remoteGen/client/Client.ts
 var import_url_join2, RemoteGen;
-var init_Client2 = __esm({
+var init_Client3 = __esm({
   \\"src/api/resources/remoteGen/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -53132,14 +53515,19 @@ var init_Client2 = __esm({
 
 // src/Client.ts
 var FiddleClient;
-var init_Client3 = __esm({
+var init_Client4 = __esm({
   \\"src/Client.ts\\"() {
     \\"use strict\\";
     init_Client();
     init_Client2();
+    init_Client3();
     FiddleClient = class {
       constructor(options) {
         this.options = options;
+      }
+      _fiddle;
+      get fiddle() {
+        return this._fiddle ?? (this._fiddle = new FiddleService(this.options));
       }
       _health;
       get health() {
@@ -53163,7 +53551,7 @@ module.exports = __toCommonJS(src_exports);
 var init_src = __esm({
   \\"src/index.ts\\"() {
     init_api();
-    init_Client3();
+    init_Client4();
   }
 });
 init_src();
@@ -54051,17 +54439,67 @@ var init_remoteGen = __esm({
   }
 });
 
-// src/api/resources/health/client/status.ts
-var status_exports = {};
-__export(status_exports, {
+// src/api/resources/fiddle/client/test.ts
+var test_exports = {};
+__export(test_exports, {
   Error: () => Error5
 });
 var Error5;
+var init_test = __esm({
+  \\"src/api/resources/fiddle/client/test.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    Error5 = {
+      _unknown: (fetcherError) => {
+        return {
+          error: void 0,
+          content: fetcherError,
+          _visit: function(visitor) {
+            return api_exports.fiddle.test.Error._visit(this, visitor);
+          }
+        };
+      },
+      _visit: (value, visitor) => {
+        switch (value.error) {
+          default:
+            return visitor._other(value);
+        }
+      }
+    };
+  }
+});
+
+// src/api/resources/fiddle/client/index.ts
+var init_client2 = __esm({
+  \\"src/api/resources/fiddle/client/index.ts\\"() {
+    \\"use strict\\";
+    init_test();
+  }
+});
+
+// src/api/resources/fiddle/index.ts
+var fiddle_exports = {};
+__export(fiddle_exports, {
+  test: () => test_exports
+});
+var init_fiddle = __esm({
+  \\"src/api/resources/fiddle/index.ts\\"() {
+    \\"use strict\\";
+    init_client2();
+  }
+});
+
+// src/api/resources/health/client/status.ts
+var status_exports = {};
+__export(status_exports, {
+  Error: () => Error6
+});
+var Error6;
 var init_status = __esm({
   \\"src/api/resources/health/client/status.ts\\"() {
     \\"use strict\\";
     init_src();
-    Error5 = {
+    Error6 = {
       _unknown: (fetcherError) => {
         return {
           error: void 0,
@@ -54082,7 +54520,7 @@ var init_status = __esm({
 });
 
 // src/api/resources/health/client/index.ts
-var init_client2 = __esm({
+var init_client3 = __esm({
   \\"src/api/resources/health/client/index.ts\\"() {
     \\"use strict\\";
     init_status();
@@ -54097,7 +54535,7 @@ __export(health_exports, {
 var init_health = __esm({
   \\"src/api/resources/health/index.ts\\"() {
     \\"use strict\\";
-    init_client2();
+    init_client3();
   }
 });
 
@@ -54107,6 +54545,7 @@ var init_resources = __esm({
     \\"use strict\\";
     init_remoteGen();
     init_types();
+    init_fiddle();
     init_health();
     init_requests();
   }
@@ -54124,6 +54563,7 @@ __export(api_exports, {
   RemoteGenJobId: () => RemoteGenJobId,
   RemoteGenTaskId: () => RemoteGenTaskId,
   TaskStatus: () => TaskStatus,
+  fiddle: () => fiddle_exports,
   health: () => health_exports,
   remoteGen: () => remoteGen_exports
 });
@@ -67233,6 +67673,15 @@ var init_core = __esm({
   }
 });
 
+// src/api/resources/fiddle/client/Client.ts
+var init_Client = __esm({
+  \\"src/api/resources/fiddle/client/Client.ts\\"() {
+    \\"use strict\\";
+    init_src();
+    init_core();
+  }
+});
+
 // .yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js
 var require_url_join = __commonJS({
   \\".yarn/cache/url-join-npm-4.0.1-e1f4415722-f74e868bf2.zip/node_modules/url-join/lib/url-join.js\\"(exports, module2) {
@@ -67300,7 +67749,7 @@ var require_url_join = __commonJS({
 
 // src/api/resources/health/client/Client.ts
 var import_url_join;
-var init_Client = __esm({
+var init_Client2 = __esm({
   \\"src/api/resources/health/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -67311,7 +67760,7 @@ var init_Client = __esm({
 
 // src/api/resources/remoteGen/client/Client.ts
 var import_url_join2;
-var init_Client2 = __esm({
+var init_Client3 = __esm({
   \\"src/api/resources/remoteGen/client/Client.ts\\"() {
     \\"use strict\\";
     init_src();
@@ -67322,11 +67771,12 @@ var init_Client2 = __esm({
 });
 
 // src/Client.ts
-var init_Client3 = __esm({
+var init_Client4 = __esm({
   \\"src/Client.ts\\"() {
     \\"use strict\\";
     init_Client();
     init_Client2();
+    init_Client3();
   }
 });
 
@@ -67335,7 +67785,7 @@ var init_src = __esm({
   \\"src/index.ts\\"() {
     \\"use strict\\";
     init_api();
-    init_Client3();
+    init_Client4();
   }
 });
 
@@ -67947,15 +68397,15 @@ var init_types2 = __esm({
 // src/serialization/resources/remoteGen/client/createJob.ts
 var createJob_exports2 = {};
 __export(createJob_exports2, {
-  Error: () => Error6
+  Error: () => Error7
 });
-var Error6;
+var Error7;
 var init_createJob2 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJob.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error6 = schemas_exports.union(\\"error\\", {
+    Error7 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -68000,15 +68450,15 @@ var init_createJob2 = __esm({
 // src/serialization/resources/remoteGen/client/createJobV2.ts
 var createJobV2_exports2 = {};
 __export(createJobV2_exports2, {
-  Error: () => Error7
+  Error: () => Error8
 });
-var Error7;
+var Error8;
 var init_createJobV22 = __esm({
   \\"src/serialization/resources/remoteGen/client/createJobV2.ts\\"() {
     \\"use strict\\";
     init_src();
     init_core();
-    Error7 = schemas_exports.union(\\"error\\", {
+    Error8 = schemas_exports.union(\\"error\\", {
       IllegalApiNameError: schemas_exports.object({}),
       GeneratorsDoNotExistError: schemas_exports.object({
         content: schemas_exports.lazyObject(
@@ -68112,7 +68562,7 @@ var init_requests2 = __esm({
 });
 
 // src/serialization/resources/remoteGen/client/index.ts
-var init_client3 = __esm({
+var init_client4 = __esm({
   \\"src/serialization/resources/remoteGen/client/index.ts\\"() {
     \\"use strict\\";
     init_createJob2();
@@ -68170,7 +68620,7 @@ var init_remoteGen2 = __esm({
   \\"src/serialization/resources/remoteGen/index.ts\\"() {
     \\"use strict\\";
     init_types2();
-    init_client3();
+    init_client4();
   }
 });
 
@@ -68375,6 +68825,7 @@ export * from \\"./types/serialization\\";
             "contents": "/**
  * This file was auto-generated by Fern from our API Definition.
  */
+import { FiddleService } from \\"./api/resources/fiddle/client/Client\\";
 import { Health } from \\"./api/resources/health/client/Client\\";
 import { RemoteGen } from \\"./api/resources/remoteGen/client/Client\\";
 export declare namespace FiddleClient {
@@ -68385,6 +68836,8 @@ export declare namespace FiddleClient {
 export declare class FiddleClient {
     private readonly options;
     constructor(options: FiddleClient.Options);
+    private _fiddle;
+    get fiddle(): FiddleService;
     private _health;
     get health(): Health;
     private _remoteGen;
@@ -68404,6 +68857,77 @@ export declare class FiddleClient {
               },
               Object {
                 "contents": Array [
+                  Object {
+                    "contents": Array [
+                      Object {
+                        "contents": Array [
+                          Object {
+                            "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+import { Fiddle } from \\"../../../..\\";
+import * as core from \\"../../../../core\\";
+export declare namespace FiddleService {
+    interface Options {
+        environment: string;
+    }
+}
+export declare class FiddleService {
+    private readonly options;
+    constructor(options: FiddleService.Options);
+    test(): Promise<core.APIResponse<void, Fiddle.fiddle.test.Error>>;
+}
+",
+                            "name": "Client.d.ts",
+                            "type": "file",
+                          },
+                          Object {
+                            "contents": "export * as test from \\"./test\\";
+",
+                            "name": "index.d.ts",
+                            "type": "file",
+                          },
+                          Object {
+                            "contents": "/**
+ * This file was auto-generated by Fern from our API Definition.
+ */
+import { Fiddle } from \\"../../../..\\";
+import * as core from \\"../../../../core\\";
+export declare type Error = Fiddle.fiddle.test.Error._Unknown;
+export declare namespace Error {
+    interface _Unknown extends _Utils {
+        error: void;
+        content: core.Fetcher.Error;
+    }
+    interface _Utils {
+        _visit: <_Result>(visitor: Fiddle.fiddle.test.Error._Visitor<_Result>) => _Result;
+    }
+    interface _Visitor<_Result> {
+        _other: (value: core.Fetcher.Error) => _Result;
+    }
+}
+export declare const Error: {
+    readonly _unknown: (fetcherError: core.Fetcher.Error) => Fiddle.fiddle.test.Error._Unknown;
+    readonly _visit: <_Result>(value: Fiddle.fiddle.test.Error, visitor: Fiddle.fiddle.test.Error._Visitor<_Result>) => _Result;
+};
+",
+                            "name": "test.d.ts",
+                            "type": "file",
+                          },
+                        ],
+                        "name": "client",
+                        "type": "directory",
+                      },
+                      Object {
+                        "contents": "export * from \\"./client\\";
+",
+                        "name": "index.d.ts",
+                        "type": "file",
+                      },
+                    ],
+                    "name": "fiddle",
+                    "type": "directory",
+                  },
                   Object {
                     "contents": Array [
                       Object {
@@ -68478,6 +69002,7 @@ export declare const Error: {
                   Object {
                     "contents": "export * as remoteGen from \\"./remoteGen\\";
 export * from \\"./remoteGen/types\\";
+export * as fiddle from \\"./fiddle\\";
 export * as health from \\"./health\\";
 export * from \\"./remoteGen/client/requests\\";
 ",

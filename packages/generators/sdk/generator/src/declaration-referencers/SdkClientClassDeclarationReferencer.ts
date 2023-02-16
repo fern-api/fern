@@ -33,8 +33,10 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
         const lastFernFilepathPart = service.fernFilepath.allParts[service.fernFilepath.allParts.length - 1];
         if (lastFernFilepathPart == null) {
             return `${this.namespaceExport}Client`;
-        } else {
+        } else if (lastFernFilepathPart.pascalCase.unsafeName !== this.namespaceExport) {
             return lastFernFilepathPart.pascalCase.unsafeName;
+        } else {
+            return `${lastFernFilepathPart.pascalCase.unsafeName}Service`;
         }
     }
 
