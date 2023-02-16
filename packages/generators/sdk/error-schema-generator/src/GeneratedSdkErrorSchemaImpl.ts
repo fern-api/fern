@@ -68,7 +68,7 @@ export class GeneratedSdkErrorSchemaImpl
                 return referenceToBody;
             case "primitive":
             case "container":
-                return this.getReferenceToZurgSchema(context).parse(
+                return this.getReferenceToZurgSchema(context).parseOrThrow(
                     ts.factory.createAsExpression(referenceToBody, this.getReferenceToRawShape(context))
                 );
             default:
