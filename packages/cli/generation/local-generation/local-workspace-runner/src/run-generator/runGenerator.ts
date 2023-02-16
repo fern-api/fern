@@ -1,5 +1,6 @@
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
@@ -42,7 +43,10 @@ export async function runGenerator({
     });
     binds.push(...bindsForGenerators);
 
-    await writeFile(absolutePathToWriteConfigJson, JSON.stringify(config, undefined, 4));
+    await writeFile(
+        absolutePathToWriteConfigJson,
+        JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.json(config), undefined, 4)
+    );
 
     await runDocker({
         imageName,

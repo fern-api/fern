@@ -4120,10 +4120,12 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.101
+    "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.3
     chalk: ^5.0.1
+    decompress: ^4.2.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.0.3
