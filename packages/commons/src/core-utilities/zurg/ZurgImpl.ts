@@ -177,7 +177,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                             ts.factory.createObjectLiteralExpression(
                                 singleUnionTypes.map((singleUnionType) =>
                                     ts.factory.createPropertyAssignment(
-                                        singleUnionType.discriminantValue,
+                                        ts.factory.createStringLiteral(singleUnionType.discriminantValue),
                                         singleUnionType.nonDiscriminantProperties.isInline
                                             ? this.object(
                                                   singleUnionType.nonDiscriminantProperties.properties
