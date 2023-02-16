@@ -84245,7 +84245,7 @@ import { Client as V2Client } from \\"./api/resources/v2/client/Client\\";
 export declare namespace TraceApiClient {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class TraceApiClient {
@@ -84376,7 +84376,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -86772,7 +86772,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -87268,7 +87268,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -87584,7 +87584,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -88775,7 +88775,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -89874,7 +89874,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 /**
@@ -94038,7 +94038,7 @@ import { TraceApi } from \\"../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -94343,7 +94343,7 @@ import { Client as V3Client } from \\"../resources/v3/client/Client\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -94494,7 +94494,7 @@ import { TraceApi } from \\"../../../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -96490,7 +96490,7 @@ import { Client as ProblemClient } from \\"../resources/problem/client/Client\\"
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {
@@ -96632,7 +96632,7 @@ import { TraceApi } from \\"../../../../../../../..\\";
 export declare namespace Client {
     interface Options {
         environment?: environments.TraceApiEnvironment | string;
-        token?: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 export declare class Client {

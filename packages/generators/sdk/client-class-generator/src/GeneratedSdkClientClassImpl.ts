@@ -260,7 +260,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(
                     context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        context.base.coreUtilities.auth.BearerToken._getReferenceToType()
+                        ts.factory.createUnionTypeNode([
+                            context.base.coreUtilities.auth.BearerToken._getReferenceToType(),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                        ])
                     )
                 ),
                 hasQuestionToken: true,
