@@ -29,8 +29,3 @@ export class GeneratorNotificationServiceImpl implements GeneratorNotificationSe
         return this.client.logging.sendUpdate(this.taskId, [update]);
     }
 }
-
-export const NOOP_GENERATOR_NOTIFICATION_SERVICE: GeneratorNotificationService = {
-    sendUpdateOrThrow: (): Promise<void> => Promise.resolve(),
-    sendUpdateAndSwallowError: (): Promise<void> => Promise.resolve(),
-};

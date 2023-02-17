@@ -3,7 +3,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import decompress from "decompress";
 import execa from "execa";
-import { lstat, readdir, rm, symlink, writeFile } from "fs/promises";
+import { lstat, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { ExpressCustomConfigSchema } from "../custom-config/schema/ExpressCustomConfigSchema";
@@ -77,20 +77,16 @@ describe("runGenerator", () => {
 
                 await new ExpressGeneratorCli().run(configJsonPath);
 
-                const directoryContents = await getDirectoryContents(
-                    await getDirectoryForSnapshot({
-                        outputMode: fixture.outputMode,
-                        outputPath: AbsoluteFilePath.of(outputPath),
-                    })
-                );
+                const unzippedDirectory = await getDirectoryForSnapshot(AbsoluteFilePath.of(outputPath));
+                const directoryContents = await getDirectoryContents(unzippedDirectory);
 
                 // we don't run compile for github, so run it here to make sure it compiles
                 if (fixture.outputMode === "github") {
                     await execa("yarn", [], {
-                        cwd: outputPath,
+                        cwd: unzippedDirectory,
                     });
                     await execa("yarn", ["build"], {
-                        cwd: outputPath,
+                        cwd: unzippedDirectory,
                     });
                 }
 
@@ -167,27 +163,10 @@ async function doesPathExist(filepath: string): Promise<boolean> {
     }
 }
 
-async function getDirectoryForSnapshot({
-    outputMode,
-    outputPath,
-}: {
-    outputMode: "local" | "github" | "publish";
-    outputPath: AbsoluteFilePath;
-}): Promise<AbsoluteFilePath> {
-    switch (outputMode) {
-        case "local":
-        case "github": {
-            return AbsoluteFilePath.of(outputPath);
-        }
-        case "publish": {
-            const outputContents = await readdir(outputPath);
-            const tgzFilename = outputContents.find((item) => item.endsWith(".tgz"));
-            if (tgzFilename == null) {
-                throw new Error("No .tgz was found in output directory");
-            }
-            const unzippedPackage = (await tmp.dir()).path;
-            await decompress(path.join(outputPath, tgzFilename), unzippedPackage);
-            return AbsoluteFilePath.of(unzippedPackage);
-        }
-    }
+async function getDirectoryForSnapshot(outputPath: AbsoluteFilePath): Promise<AbsoluteFilePath> {
+    const unzippedPackage = (await tmp.dir()).path;
+    await decompress(path.join(outputPath, "output.zip"), unzippedPackage, {
+        strip: 1,
+    });
+    return AbsoluteFilePath.of(unzippedPackage);
 }

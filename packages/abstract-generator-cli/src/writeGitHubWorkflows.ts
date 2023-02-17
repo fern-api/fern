@@ -1,15 +1,16 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 export async function writeGitHubWorkflows({
-    config,
     githubOutputMode,
     isPackagePrivate,
+    pathToProject,
 }: {
-    config: FernGeneratorExec.GeneratorConfig;
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
     isPackagePrivate: boolean;
+    pathToProject: AbsoluteFilePath;
 }): Promise<void> {
     if (githubOutputMode.publishInfo != null && githubOutputMode.publishInfo.type !== "npm") {
         throw new Error(
@@ -20,7 +21,7 @@ export async function writeGitHubWorkflows({
         publishInfo: githubOutputMode.publishInfo,
         isPackagePrivate,
     });
-    const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");
+    const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
     await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml);
 }

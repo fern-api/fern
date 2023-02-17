@@ -1,7 +1,10 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { cp, rm } from "fs/promises";
+import decompress from "decompress";
+import { cp, readdir, rm } from "fs/promises";
+import { basename } from "path";
+import tmp from "tmp-promise";
 import urlJoin from "url-join";
 import { PublishInfo } from "../NpmPackage";
 
@@ -100,15 +103,85 @@ export class PersistedTypescriptProject {
         this.hasBuilt = true;
     }
 
-    public async copyProjectTo(target: AbsoluteFilePath): Promise<void> {
-        await cp(this.directory, target, { recursive: true });
+    public async copyProjectAsZipTo({
+        destinationZip,
+        logger,
+    }: {
+        destinationZip: AbsoluteFilePath;
+        logger: Logger;
+    }): Promise<void> {
+        await this.zipDirectory(this.directory, { logger, destinationZip });
     }
 
-    public async copyDistTo(target: AbsoluteFilePath, { logger }: { logger: Logger }): Promise<void> {
+    public async npmPackAsZipTo({
+        destinationZip,
+        logger,
+    }: {
+        destinationZip: AbsoluteFilePath;
+        logger: Logger;
+    }): Promise<void> {
         if (!this.hasBuilt) {
             await this.build(logger);
         }
-        await cp(join(this.directory, this.distDirectory), target, { recursive: true });
+
+        const npm = createLoggingExecutable("npm", {
+            cwd: this.directory,
+            logger,
+        });
+
+        // pack to tmp dir
+        const directoryContainingPack = AbsoluteFilePath.of((await tmp.dir()).path);
+        await npm(["pack", "--pack-destination", directoryContainingPack]);
+
+        // decompress pack to a new tmp dir
+        const directoryContainingPackItems = await readdir(directoryContainingPack);
+        const packName = directoryContainingPackItems.find((item) => item.endsWith(".tgz"));
+        if (packName == null) {
+            throw new Error("Failed to find pack");
+        }
+        const pathToPack = join(directoryContainingPack, RelativeFilePath.of(packName));
+        const directoryOfDecompressedPack = AbsoluteFilePath.of((await tmp.dir()).path);
+        await decompress(pathToPack, directoryOfDecompressedPack, {
+            strip: 1,
+        });
+
+        // zip decompressed pack into destination
+        await this.zipDirectory(directoryOfDecompressedPack, { logger, destinationZip });
+    }
+
+    public async copyDistAsZipTo({
+        destinationZip,
+        logger,
+    }: {
+        destinationZip: AbsoluteFilePath;
+        logger: Logger;
+    }): Promise<void> {
+        if (!this.hasBuilt) {
+            await this.build(logger);
+        }
+        await this.zipDirectory(join(this.directory, this.distDirectory), { logger, destinationZip });
+    }
+
+    private async zipDirectory(
+        directoryToZip: AbsoluteFilePath,
+        { destinationZip, logger }: { destinationZip: AbsoluteFilePath; logger: Logger }
+    ) {
+        // make a copy of directoryToZip as the name "output", so when you unzip
+        // you see a folder called "output"
+        const copiedSourceParent = AbsoluteFilePath.of((await tmp.dir()).path);
+        const copiedSource = join(copiedSourceParent, "output");
+        await cp(directoryToZip, copiedSource, { recursive: true });
+
+        const zip = createLoggingExecutable("zip", {
+            cwd: copiedSourceParent,
+            logger,
+            // zip is noisy
+            doNotPipeOutput: true,
+        });
+
+        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), "output.zip");
+        await zip(["-r", tmpZipLocation, basename(copiedSource)]);
+        await cp(tmpZipLocation, destinationZip);
     }
 
     public async publish({
@@ -148,19 +221,6 @@ export class PersistedTypescriptProject {
         await npm(publishCommand);
     }
 
-    public async npmPack({ logger, location }: { logger: Logger; location: AbsoluteFilePath }): Promise<void> {
-        if (!this.hasBuilt) {
-            await this.build(logger);
-        }
-
-        const npm = createLoggingExecutable("npm", {
-            cwd: this.directory,
-            logger,
-        });
-
-        await npm(["pack", "--pack-destination", location]);
-    }
-
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {
         const git = createLoggingExecutable("git", {
             cwd: this.directory,
@@ -172,5 +232,9 @@ export class PersistedTypescriptProject {
         await git(["clean", "-fdx"]);
 
         await rm(join(this.directory, ".git"), { recursive: true });
+    }
+
+    public async writeArbitraryFiles(run: (pathToProject: AbsoluteFilePath) => Promise<void>): Promise<void> {
+        await run(this.directory);
     }
 }

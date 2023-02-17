@@ -1,6 +1,6 @@
 FROM node:18.1.0-alpine
 
-RUN apk --no-cache add git && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN apk --no-cache add git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 ENV YARN_CACHE_FOLDER=/.yarn
 
