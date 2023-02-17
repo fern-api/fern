@@ -1,6 +1,7 @@
 import { H2 } from "@blueprintjs/core";
 import { FernRegistry } from "@fern-fern/registry";
 import { useParams } from "react-router-dom";
+import { RELATIVE_ENDPOINT } from "../../../routes/routes";
 import styles from "./Endpoint.module.scss";
 import { EndpointExample } from "./EndpointExample";
 import { EndpointPath } from "./EndpointPath";
@@ -16,7 +17,7 @@ export declare namespace Endpoint {
 }
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ package: package_ }) => {
-    const { endpointId } = useParams();
+    const { [RELATIVE_ENDPOINT.parameters.ENDPOINT_ID]: endpointId } = useParams();
     if (endpointId == null) {
         return null;
     }

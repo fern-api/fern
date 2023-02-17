@@ -2,7 +2,7 @@ import { Loadable } from "@fern-api/loadable";
 import { TypedQueryKey, useNullableQuery } from "@fern-api/react-query-utils";
 import { FernRegistry } from "@fern-fern/registry";
 import { useParams } from "react-router-dom";
-import { Routes } from "../../routes";
+import { FernRoutes } from "../../routes";
 import { REGISTRY_SERVICE } from "../../services/getRegistryService";
 
 export function useCurrentApiDefinition(): Loadable<
@@ -10,8 +10,8 @@ export function useCurrentApiDefinition(): Loadable<
     FernRegistry.registry.getApiForEnvironment.Error
 > {
     const {
-        [Routes.API_DEFINITION.parameters.API_ID]: apiIdParam,
-        [Routes.API_DEFINITION.parameters.ENVIRONMENT]: environmentIdParam,
+        [FernRoutes.API_DEFINITION.parameters.API_ID]: apiIdParam,
+        [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: environmentIdParam,
     } = useParams();
 
     const apiId = apiIdParam != null ? FernRegistry.ApiId(apiIdParam) : undefined;

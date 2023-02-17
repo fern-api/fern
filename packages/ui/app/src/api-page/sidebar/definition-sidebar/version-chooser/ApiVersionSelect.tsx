@@ -3,7 +3,7 @@ import { ItemRenderer, Select2, SelectPopoverProps } from "@blueprintjs/select";
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
-import { Routes } from "../../../../routes";
+import { FernRoutes } from "../../../../routes";
 import { useCurrentApiId } from "../../../../routes/getCurrentApiId";
 import { useCurrentEnvironment } from "../../../../routes/useCurrentEnvironment";
 import { useAllEnvironments } from "../../../queries/useAllEnvironments";
@@ -26,9 +26,9 @@ export const ApiVersionSelect: React.FC = () => {
                 return;
             }
             navigate(
-                generatePath(Routes.API_DEFINITION.absolutePath, {
-                    [Routes.API_DEFINITION.parameters.API_ID]: currentApiId,
-                    [Routes.API_DEFINITION.parameters.ENVIRONMENT]: newEnvironment.id,
+                generatePath(FernRoutes.API_DEFINITION.absolutePath, {
+                    [FernRoutes.API_DEFINITION.parameters.API_ID]: currentApiId,
+                    [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: newEnvironment.id,
                 })
             );
         },

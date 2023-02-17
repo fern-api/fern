@@ -9,4 +9,5 @@ export const ApiContext = React.createContext<() => ApiContextValue>(() => {
 export interface ApiContextValue {
     api: Loadable<FernRegistry.ApiDefinition, FernRegistry.registry.getApiForEnvironment.Error>;
     resolveType: (typeId: FernRegistry.TypeId) => FernRegistry.Type;
+    resolveSubpackage: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage;
 }

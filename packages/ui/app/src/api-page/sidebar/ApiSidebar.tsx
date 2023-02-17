@@ -3,7 +3,6 @@ import { IconNames } from "@blueprintjs/icons";
 import { assertNever, Values } from "@fern-api/core-utils";
 import classNames from "classnames";
 import { useCallback, useState } from "react";
-import { useMatch } from "react-router-dom";
 import styles from "./ApiSidebar.module.scss";
 import { DefinitionSidebar } from "./definition-sidebar/DefinitionSidebar";
 
@@ -15,8 +14,6 @@ type SidebarTab = Values<typeof SidebarTab>;
 
 export const ApiSidebar: React.FC = () => {
     const [selectedSidebarTab, setSelectedSidebarTab] = useState<SidebarTab>(SidebarTab.DEFINITION);
-
-    console.log("match", useMatch("/:apiId/definition/:environment/*"));
 
     const renderSidebarTab = useCallback((sidebarTab: SidebarTab) => {
         switch (sidebarTab) {

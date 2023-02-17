@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useParams } from "react-router-dom";
-import { Routes } from ".";
+import { FernRoutes } from ".";
 import { useAllEnvironments } from "../api-page/queries/useAllEnvironments";
 
 export function useCurrentEnvironment(): FernRegistry.Environment | undefined {
@@ -14,7 +14,7 @@ export function useCurrentEnvironment(): FernRegistry.Environment | undefined {
 }
 
 export function useCurrentEnvironmentId(): FernRegistry.EnvironmentId | undefined {
-    const { [Routes.API_DEFINITION.parameters.ENVIRONMENT]: environmentParam } = useParams();
+    const { [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: environmentParam } = useParams();
 
     if (environmentParam == null) {
         return undefined;

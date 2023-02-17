@@ -5,6 +5,10 @@ export interface Path<AbsolutePath extends string, Parameters = Record<string, n
     readonly addParameter: <Parameter extends string>(
         parameter: Parameter
     ) => Path<`${AbsolutePath}/:${Parameter}`, Parameters & Record<Parameter, Parameter>>;
+    readonly addSplat: () => Path<`${AbsolutePath}/*`, Parameters & Record<"*", "*">>;
+    readonly join: <OtherPath extends string, OtherParameters>(
+        suffix: Path<OtherPath, OtherParameters>
+    ) => Path<`${AbsolutePath}${OtherPath}`, Parameters & OtherParameters>;
 }
 
 export const ROOT_PATH = constructPath("", {});
@@ -15,6 +19,7 @@ function constructPath<AbsolutePath extends string, Parameters = Record<string, 
 ): Path<AbsolutePath, Parameters> {
     return {
         absolutePath,
+        parameters,
         addPath: (newPath) => constructPath(`${absolutePath}/${newPath}`, parameters),
         addParameter: <Parameter extends string>(parameter: Parameter) => {
             const newParametersMap = {
@@ -25,6 +30,15 @@ function constructPath<AbsolutePath extends string, Parameters = Record<string, 
                 ...newParametersMap,
             });
         },
-        parameters,
+        addSplat: () =>
+            constructPath(`${absolutePath}/*`, {
+                ...parameters,
+                "*": "*",
+            }),
+        join: (otherPath) =>
+            constructPath(`${absolutePath}${otherPath.absolutePath}`, {
+                ...parameters,
+                ...otherPath.parameters,
+            }),
     };
 }

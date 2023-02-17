@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ApiPage } from "./api-page/ApiPage";
 import styles from "./App.module.scss";
-import { Routes } from "./routes";
+import { FernRoutes } from "./routes";
 import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -29,12 +29,12 @@ export const App: React.FC = () => {
                     <HotkeysProvider>
                         <SplitViewProvider>
                             <RoutesWith404>
-                                <Route path={Routes.HOME.absolutePath} element={<div>home</div>} />
+                                <Route path={FernRoutes.HOME.absolutePath} element={<div>home</div>} />
                                 <Route
-                                    path={Routes.API.absolutePath}
+                                    path={FernRoutes.API.absolutePath}
                                     element={<Redirect to="/api1/definition/production" />}
                                 />
-                                <Route path="/:API_ID/definition/:ENVIRONMENT/*" element={<ApiPage />} />
+                                <Route path={FernRoutes.API_DEFINITION_PACKAGE.absolutePath} element={<ApiPage />} />
                             </RoutesWith404>
                         </SplitViewProvider>
                     </HotkeysProvider>

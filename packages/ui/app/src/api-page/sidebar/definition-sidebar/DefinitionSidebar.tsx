@@ -1,3 +1,4 @@
+import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { useApiContext } from "../../context/useApiContext";
 import styles from "./DefinitionSidebar.module.scss";
 import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
@@ -13,7 +14,7 @@ export const DefinitionSidebar: React.FC = () => {
     return (
         <div className={styles.container}>
             <ApiVersionSelect />
-            <PackageSidebarSectionContents package={api.value.rootPackage} />
+            <PackageSidebarSectionContents package={api.value.rootPackage} ancestorPackageNames={EMPTY_ARRAY} />
         </div>
     );
 };

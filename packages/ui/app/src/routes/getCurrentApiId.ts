@@ -1,9 +1,9 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useParams } from "react-router-dom";
-import { Routes } from ".";
+import { FernRoutes } from ".";
 
 export function useCurrentApiId(): FernRegistry.ApiId | undefined {
-    const { [Routes.API_DEFINITION.parameters.API_ID]: apiIdParam } = useParams();
+    const { [FernRoutes.API_DEFINITION.parameters.API_ID]: apiIdParam } = useParams();
 
     if (apiIdParam == null) {
         return undefined;

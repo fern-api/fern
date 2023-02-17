@@ -1,1 +1,1 @@
-export * as Routes from "./routes";
+export * as FernRoutes from "./routes";

@@ -5,6 +5,7 @@ import { ApiContext, ApiContextValue } from "./ApiContext";
 
 export const ApiContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const api = useCurrentApiDefinition();
+
     const resolveType = useCallback(
         (typeId: FernRegistry.TypeId): FernRegistry.Type => {
             if (api.type !== "loaded") {
@@ -19,12 +20,27 @@ export const ApiContextProvider: React.FC<React.PropsWithChildren> = ({ children
         [api]
     );
 
+    const resolveSubpackage = useCallback(
+        (subpackageId: FernRegistry.SubpackageId): FernRegistry.ApiDefinitionSubpackage => {
+            if (api.type !== "loaded") {
+                throw new Error("API is not loaded");
+            }
+            const subpackage = api.value.subpackages[subpackageId];
+            if (subpackage == null) {
+                throw new Error("Subpackage does not exist");
+            }
+            return subpackage;
+        },
+        [api]
+    );
+
     const contextValue = useCallback(
         (): ApiContextValue => ({
             api,
             resolveType,
+            resolveSubpackage,
         }),
-        [api, resolveType]
+        [api, resolveSubpackage, resolveType]
     );
 
     return <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>;

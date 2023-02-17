@@ -1,8 +1,11 @@
 import { RoutesWith404 } from "@fern-api/routing-utils";
 import { FernRegistry } from "@fern-fern/registry";
-import { useMemo } from "react";
-import { Route, useParams } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { RELATIVE_ENDPOINT, RELATIVE_TYPE } from "../../routes/routes";
 import { Endpoint } from "./endpoints/Endpoint";
+import { SubpackageRoutes } from "./SubpackageRoutes";
+
+const SUBPACKAGE_NAME_PARAM = "SUBPACKAGE_NAME";
 
 export declare namespace PackageRoutes {
     export interface Props {
@@ -12,24 +15,12 @@ export declare namespace PackageRoutes {
 }
 
 export const PackageRoutes: React.FC<PackageRoutes.Props> = ({ api, parent }) => {
-    const params = useParams();
-
-    const package_ = useMemo(() => {
-        if (params.subpackage != null) {
-            return api.packages[FernRegistry.PackageId(params.subpackage)];
-        }
-        return parent;
-    }, [api.packages, params.subpackage, parent]);
-
-    if (package_ == null) {
-        return <div>not found</div>;
-    }
-
     return (
         <RoutesWith404>
-            <Route path="/endpoints/:endpointId" element={<Endpoint package={package_} />} />
-            <Route path="/types/:typeId" element={<div>type</div>} />
-            <Route path="/:subpackage/*" element={<PackageRoutes api={api} parent={package_} />} />
+            <Route path={RELATIVE_ENDPOINT.absolutePath} element={<Endpoint package={parent} />} />
+            <Route path={RELATIVE_TYPE.absolutePath} element={<div>type</div>} />
+            <Route path={`:${SUBPACKAGE_NAME_PARAM}/*`} element={<SubpackageRoutes api={api} parent={parent} />} />
+            <Route path="" element={<div>package page</div>} />
         </RoutesWith404>
     );
 };
