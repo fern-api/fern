@@ -1,15 +1,15 @@
 import { Button, Classes } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import styles from "./ApiVersionSelect.module.scss";
+import styles from "./EnvironmentSelectButton.module.scss";
 
-export declare namespace ApiVersionSelectButton {
+export declare namespace EnvironmentSelectButton {
     export interface Props {
         environmentName: string | undefined;
     }
 }
 
-export const ApiVersionSelectButton: React.FC<ApiVersionSelectButton.Props> = ({ environmentName }) => {
+export const EnvironmentSelectButton: React.FC<EnvironmentSelectButton.Props> = ({ environmentName }) => {
     return (
         <Button
             className={classNames(styles.button, {

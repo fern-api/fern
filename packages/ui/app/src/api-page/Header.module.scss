@@ -7,22 +7,38 @@
     background-color: $dark-gray1;
 }
 
-.logo {
-    width: 50px;
-    height: 50px;
+.item {
+    display: flex;
+    flex: 1;
+
+    &.center {
+        justify-content: center;
+    }
+}
+
+.logoWrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    padding: 10px;
 
     &:hover {
         background-color: $black;
     }
 }
 
+.logo {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
 .apiName {
-    font-size: 20px;
+    font-size: 16px;
     text-transform: capitalize;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
+    color: $pt-dark-text-color;
 }

@@ -29,8 +29,8 @@ export const DiscriminatedUnionDefinition: React.FC<DiscriminatedUnionDefinition
                 return {
                     title: <SmallMutedText>{member.discriminantValue}</SmallMutedText>,
                     body: "Docs about union member",
-                    children: (
-                        <CollapsibleTree title="properties" defaultIsCollapsed>
+                    children: ({ className }) => (
+                        <CollapsibleTree className={className} title="properties" defaultIsCollapsed>
                             <ObjectDefinition object={propertiesType} />
                         </CollapsibleTree>
                     ),

@@ -17,7 +17,13 @@ export const ObjectDefinition: React.FC<ObjectDefinition.Props> = ({ object }) =
             object.properties.map((property) => ({
                 title: <PropertyTitle name={property.key} type={property.valueType} />,
                 body: "An arbitrary string attached to the object. Often useful for displaying to users.",
-                children: <TypeDefinitionDetails typeDefinition={property.valueType} defaultIsCollapsed />,
+                children: ({ className }) => (
+                    <TypeDefinitionDetails
+                        className={className}
+                        typeDefinition={property.valueType}
+                        defaultIsCollapsed
+                    />
+                ),
             })),
         [object.properties]
     );

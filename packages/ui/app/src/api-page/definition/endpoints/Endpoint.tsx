@@ -18,13 +18,9 @@ export declare namespace Endpoint {
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ package: package_ }) => {
     const { [RELATIVE_ENDPOINT.parameters.ENDPOINT_ID]: endpointId } = useParams();
-    if (endpointId == null) {
-        return null;
-    }
-
     const endpoint = package_.endpoints.find((endpoint) => endpoint.id === endpointId);
     if (endpoint == null) {
-        return null;
+        return <div>endpoint does not exist</div>;
     }
 
     return (

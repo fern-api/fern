@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { useMemo } from "react";
-import { useApiContext } from "../../context/useApiContext";
+import { useApiContext } from "../../api-context/useApiContext";
 import styles from "./TypePreview.module.scss";
 
 export declare namespace TypePreview {

@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useApiContext } from "../context/useApiContext";
+import { useApiContext } from "../api-context/useApiContext";
 import { PackageRoutes } from "./PackageRoutes";
 
 const SUBPACKAGE_NAME_PARAM = "SUBPACKAGE_NAME";

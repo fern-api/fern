@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { useApiContext } from "../../context/useApiContext";
+import { useApiContext } from "../../api-context/useApiContext";
 import { CollapsibleSidebarSection } from "./CollapsibleSidebarSection";
 import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
 

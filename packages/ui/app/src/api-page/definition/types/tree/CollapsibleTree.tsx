@@ -10,14 +10,20 @@ export declare namespace CollapsibleTree {
     export type Props = PropsWithChildren<{
         title: JSX.Element | string;
         defaultIsCollapsed: boolean;
+        className?: string;
     }>;
 }
 
-export const CollapsibleTree: React.FC<CollapsibleTree.Props> = ({ title, defaultIsCollapsed, children }) => {
+export const CollapsibleTree: React.FC<CollapsibleTree.Props> = ({
+    title,
+    defaultIsCollapsed,
+    className,
+    children,
+}) => {
     const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(defaultIsCollapsed);
 
     return (
-        <div className={styles.container}>
+        <div className={classNames(styles.container, className)}>
             <div className={classNames(styles.caret, styles.clickable)} onClick={toggleIsCollapsed}>
                 <Icon
                     className={styles.collapseIcon}

@@ -1,4 +1,4 @@
-import { useApiContext } from "../context/useApiContext";
+import { useApiContext } from "../api-context/useApiContext";
 import { PackageRoutes } from "./PackageRoutes";
 
 export const ApiDefinition: React.FC = () => {

@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { useApiContext } from "../../context/useApiContext";
+import { useApiContext } from "../../api-context/useApiContext";
 import styles from "./TypeDefinition.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 import { TypePreview } from "./TypePreview";

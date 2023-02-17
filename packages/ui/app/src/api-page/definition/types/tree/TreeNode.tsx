@@ -1,10 +1,11 @@
 import styles from "./TreeNode.module.scss";
 
 export declare namespace TreeNode {
-    export type Props = React.PropsWithChildren<{
+    export interface Props {
         title: JSX.Element | string;
         body?: JSX.Element | string;
-    }>;
+        children?: (args: { className?: string }) => JSX.Element;
+    }
 }
 
 export const TreeNode: React.FC<TreeNode.Props> = ({ title, body, children }) => {
@@ -15,7 +16,9 @@ export const TreeNode: React.FC<TreeNode.Props> = ({ title, body, children }) =>
                 {title}
             </div>
             {body != null && <div className={styles.body}>{body}</div>}
-            {children != null && <div className={styles.children}>{children}</div>}
+            {children != null && (
+                <div className={styles.childrenWrapper}>{children({ className: styles.children })}</div>
+            )}
         </div>
     );
 };

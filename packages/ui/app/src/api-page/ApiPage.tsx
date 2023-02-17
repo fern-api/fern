@@ -1,6 +1,6 @@
 import { Pane, ResizeHandlePosition, SplitView } from "@fern-api/split-view";
+import { ApiContextProvider } from "./api-context/ApiContextProvider";
 import styles from "./ApiPage.module.scss";
-import { ApiContextProvider } from "./context/ApiContextProvider";
 import { ApiDefinition } from "./definition/ApiDefinition";
 import { Header } from "./Header";
 import { DefinitionSidebar } from "./sidebar/definition-sidebar/DefinitionSidebar";

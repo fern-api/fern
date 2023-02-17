@@ -17,7 +17,9 @@ export const UnionDefinition: React.FC<UnionDefinition.Props> = ({ union }) => {
             union.members.map((member) => ({
                 title: <TypePreview type={member} />,
                 body: "Some union member docs",
-                children: <TypeDefinitionDetails typeDefinition={member} defaultIsCollapsed />,
+                children: ({ className }) => (
+                    <TypeDefinitionDetails className={className} typeDefinition={member} defaultIsCollapsed />
+                ),
             })),
         [union.members]
     );
