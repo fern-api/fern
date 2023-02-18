@@ -1,9 +1,9 @@
 import { FernRegistry } from "@fern-fern/registry";
 import React, { useCallback } from "react";
 import { useCurrentApiDefinition } from "../queries/useCurrentApiDefinition";
-import { ApiContext, ApiContextValue } from "./ApiContext";
+import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 
-export const ApiContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+export const ApiDefinitionContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
     const api = useCurrentApiDefinition();
 
     const resolveType = useCallback(
@@ -35,7 +35,7 @@ export const ApiContextProvider: React.FC<React.PropsWithChildren> = ({ children
     );
 
     const contextValue = useCallback(
-        (): ApiContextValue => ({
+        (): ApiDefinitionContextValue => ({
             api,
             resolveType,
             resolveSubpackage,
@@ -43,5 +43,5 @@ export const ApiContextProvider: React.FC<React.PropsWithChildren> = ({ children
         [api, resolveSubpackage, resolveType]
     );
 
-    return <ApiContext.Provider value={contextValue}>{children}</ApiContext.Provider>;
+    return <ApiDefinitionContext.Provider value={contextValue}>{children}</ApiDefinitionContext.Provider>;
 };

@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { useApiContext } from "../../api-context/useApiContext";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { CollapsibleSidebarSection } from "./CollapsibleSidebarSection";
 import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
 
@@ -15,7 +15,7 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({
     subpackageId,
     ancestorPackageNames,
 }) => {
-    const { resolveSubpackage } = useApiContext();
+    const { resolveSubpackage } = useApiDefinitionContext();
     const subpackage = resolveSubpackage(subpackageId);
 
     const packageNames = useMemo(

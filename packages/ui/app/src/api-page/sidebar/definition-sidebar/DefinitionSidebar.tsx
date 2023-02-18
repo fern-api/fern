@@ -1,11 +1,11 @@
 import { EMPTY_ARRAY } from "@fern-api/core-utils";
-import { useApiContext } from "../../api-context/useApiContext";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import styles from "./DefinitionSidebar.module.scss";
 import { EnvironmentSelect } from "./environment-select/EnvironmentSelect";
 import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
 
 export const DefinitionSidebar: React.FC = () => {
-    const { api } = useApiContext();
+    const { api } = useApiDefinitionContext();
 
     if (api.type !== "loaded") {
         return null;

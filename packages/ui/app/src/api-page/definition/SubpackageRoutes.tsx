@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { useApiContext } from "../api-context/useApiContext";
+import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { PackageRoutes } from "./PackageRoutes";
 
 const SUBPACKAGE_NAME_PARAM = "SUBPACKAGE_NAME";
@@ -14,7 +14,7 @@ export declare namespace SubpackageRoutes {
 }
 
 export const SubpackageRoutes: React.FC<SubpackageRoutes.Props> = ({ api, parent }) => {
-    const { resolveSubpackage } = useApiContext();
+    const { resolveSubpackage } = useApiDefinitionContext();
     const { [SUBPACKAGE_NAME_PARAM]: subpackageName } = useParams();
 
     const subpackage = useMemo(() => {

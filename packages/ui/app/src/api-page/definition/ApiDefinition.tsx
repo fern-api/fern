@@ -1,8 +1,8 @@
-import { useApiContext } from "../api-context/useApiContext";
+import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { PackageRoutes } from "./PackageRoutes";
 
 export const ApiDefinition: React.FC = () => {
-    const { api } = useApiContext();
+    const { api } = useApiDefinitionContext();
     if (api.type !== "loaded") {
         return null;
     }

@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { useApiContext } from "../../api-context/useApiContext";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import styles from "./TypeDefinition.module.scss";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 import { TypePreview } from "./TypePreview";
@@ -13,7 +13,7 @@ export declare namespace TypeDefinition {
 }
 
 export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeDefinition, defaultIsCollapsed }) => {
-    const { resolveType } = useApiContext();
+    const { resolveType } = useApiDefinitionContext();
     const isContainer = useMemo(() => isContainerRecursive(typeDefinition, resolveType), [resolveType, typeDefinition]);
 
     return (

@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { useApiContext } from "../../api-context/useApiContext";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { DiscriminatedUnionDefinition } from "./discriminated-union/DiscriminatedUnionDefinition";
 import { EnumDefinition } from "./enum/EnumDefinition";
 import { ObjectDefinition } from "./object/ObjectDefinition";
@@ -24,7 +24,7 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
     className,
     fallback,
 }) => {
-    const { resolveType } = useApiContext();
+    const { resolveType } = useApiDefinitionContext();
 
     const element = useMemo(() => {
         return typeDefinition._visit<JSX.Element | undefined>({

@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { useMemo } from "react";
-import { useApiContext } from "../../api-context/useApiContext";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import styles from "./TypePreview.module.scss";
 
 export declare namespace TypePreview {
@@ -13,7 +13,7 @@ export declare namespace TypePreview {
 }
 
 export const TypePreview: React.FC<TypePreview.Props> = ({ type, includeContainerItems = false, className }) => {
-    const { resolveType } = useApiContext();
+    const { resolveType } = useApiDefinitionContext();
     const previewString = useMemo(
         () => getTypePreviewString({ type, includeContainerItems, resolveType }),
         [type, includeContainerItems, resolveType]

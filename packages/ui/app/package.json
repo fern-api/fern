@@ -58,6 +58,7 @@
     "react-query": "^3.34.12",
     "react-router-dom": "^6.4.3",
     "react-syntax-highlighter": "^15.5.0",
+    "use-immer": "^0.8.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

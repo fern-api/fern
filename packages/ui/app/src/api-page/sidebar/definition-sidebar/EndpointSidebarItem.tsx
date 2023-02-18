@@ -1,7 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback } from "react";
-import { generatePath, useNavigate, useParams } from "react-router-dom";
+import { generatePath, useParams } from "react-router-dom";
 import { FernRoutes } from "../../../routes";
+import { useApiTabsContext } from "../../api-tabs/context/useApiTabsContext";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
 
 export declare namespace EndpointSidebarItem {
@@ -17,12 +18,13 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpo
         [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: environmentId,
     } = useParams();
 
-    const navigate = useNavigate();
+    const { openTab } = useApiTabsContext();
+
     const onClick = useCallback(() => {
         if (apiId == null || environmentId == null) {
             return;
         }
-        navigate(
+        openTab(
             [
                 generatePath(FernRoutes.API_DEFINITION.absolutePath, {
                     API_ID: apiId,
@@ -34,7 +36,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpo
                 }),
             ].join("")
         );
-    }, [ancestorPackageNames, apiId, endpoint.id, environmentId, navigate]);
+    }, [ancestorPackageNames, apiId, endpoint.id, environmentId, openTab]);
 
     return (
         <div onClick={onClick}>
