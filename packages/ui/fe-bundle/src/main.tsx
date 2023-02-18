@@ -1,8 +1,10 @@
 import { App } from "@fern-api/ui";
+import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
-const root = document.getElementById("root");
-if (root == null) {
-    throw new Error("Could not locate #root in the DOM");
-}
-ReactDOM.createRoot(root).render(<App />);
+ReactDOM.createRoot(document.getElementById("root")!).render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
