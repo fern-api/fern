@@ -5,8 +5,8 @@ import { DiscriminatedUnionDefinition } from "./discriminated-union/Discriminate
 import { EnumDefinition } from "./enum/EnumDefinition";
 import { ObjectDefinition } from "./object/ObjectDefinition";
 import { CollapsibleTree } from "./tree/CollapsibleTree";
+import { TypePreview } from "./type-preview/TypePreview";
 import { TypeDefinition } from "./TypeDefinition";
-import { TypePreview } from "./TypePreview";
 import { UnionDefinition } from "./union/UnionDefinition";
 
 export declare namespace TypeDefinitionDetails {
@@ -24,14 +24,14 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
     className,
     fallback,
 }) => {
-    const { resolveType } = useApiDefinitionContext();
+    const { resolveTypeById } = useApiDefinitionContext();
 
     const element = useMemo(() => {
         return typeDefinition._visit<JSX.Element | undefined>({
             reference: (typeId) =>
-                doesTypeHaveDetailsRecursive(typeDefinition, resolveType) ? (
+                doesTypeHaveDetailsRecursive(typeDefinition, resolveTypeById) ? (
                     <TypeDefinitionDetails
-                        typeDefinition={resolveType(typeId)}
+                        typeDefinition={resolveTypeById(typeId).shape}
                         defaultIsCollapsed={defaultIsCollapsed}
                         fallback={fallback}
                     />
@@ -47,7 +47,7 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
                 </CollapsibleTree>
             ),
             list: ({ itemType }) =>
-                doesTypeHaveDetailsRecursive(typeDefinition, resolveType) ? (
+                doesTypeHaveDetailsRecursive(typeDefinition, resolveTypeById) ? (
                     <CollapsibleTree
                         title={<TypePreview type={typeDefinition} includeContainerItems={false} />}
                         // lists never start collapsed because they are shallow (depth=1)
@@ -57,7 +57,7 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
                     </CollapsibleTree>
                 ) : undefined,
             set: ({ itemType }) =>
-                doesTypeHaveDetailsRecursive(typeDefinition, resolveType) ? (
+                doesTypeHaveDetailsRecursive(typeDefinition, resolveTypeById) ? (
                     <CollapsibleTree
                         title={<TypePreview type={typeDefinition} includeContainerItems={false} />}
                         // sets never start collapsed because they are shallow (depth=1)
@@ -67,7 +67,7 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
                     </CollapsibleTree>
                 ) : undefined,
             optional: ({ itemType }) =>
-                doesTypeHaveDetailsRecursive(typeDefinition, resolveType) ? (
+                doesTypeHaveDetailsRecursive(typeDefinition, resolveTypeById) ? (
                     <CollapsibleTree
                         title={<TypePreview type={typeDefinition} includeContainerItems={false} />}
                         // optionals never start collapsed because they are shallow (depth=1)
@@ -93,7 +93,7 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
             unknown: () => undefined,
             _other: () => undefined,
         });
-    }, [defaultIsCollapsed, fallback, resolveType, typeDefinition]);
+    }, [defaultIsCollapsed, fallback, resolveTypeById, typeDefinition]);
 
     if (element != null) {
         return <div className={className}>{element}</div>;
@@ -104,17 +104,18 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
 
 function doesTypeHaveDetailsRecursive(
     type: FernRegistry.Type,
-    resolveType: (typeId: FernRegistry.TypeId) => FernRegistry.Type
+    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
 ): boolean {
     return type._visit<boolean>({
-        reference: (typeId) => doesTypeHaveDetailsRecursive(resolveType(typeId), resolveType),
+        reference: (typeId) => doesTypeHaveDetailsRecursive(resolveTypeById(typeId).shape, resolveTypeById),
         object: () => true,
         enum: () => true,
-        list: ({ itemType }) => doesTypeHaveDetailsRecursive(itemType, resolveType),
-        set: ({ itemType }) => doesTypeHaveDetailsRecursive(itemType, resolveType),
-        optional: ({ itemType }) => doesTypeHaveDetailsRecursive(itemType, resolveType),
+        list: ({ itemType }) => doesTypeHaveDetailsRecursive(itemType, resolveTypeById),
+        set: ({ itemType }) => doesTypeHaveDetailsRecursive(itemType, resolveTypeById),
+        optional: ({ itemType }) => doesTypeHaveDetailsRecursive(itemType, resolveTypeById),
         map: ({ keyType, valueType }) =>
-            doesTypeHaveDetailsRecursive(keyType, resolveType) || doesTypeHaveDetailsRecursive(valueType, resolveType),
+            doesTypeHaveDetailsRecursive(keyType, resolveTypeById) ||
+            doesTypeHaveDetailsRecursive(valueType, resolveTypeById),
         union: () => true,
         discriminatedUnion: () => true,
         primitive: () => false,

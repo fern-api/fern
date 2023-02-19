@@ -31,6 +31,7 @@ export declare namespace ResizeHandle {
         onStopResizing?: () => void;
         position: ResizeHandlePosition;
         centerOnBorder?: boolean;
+        lineColor?: string;
     }
 }
 
@@ -40,6 +41,7 @@ export const ResizeHandle: React.FC<ResizeHandle.Props> = ({
     onStopResizing,
     position,
     centerOnBorder = false,
+    lineColor: resizeHandleLineColor,
 }) => {
     const ref = useRef<HTMLDivElement | null>(null);
 
@@ -104,7 +106,14 @@ export const ResizeHandle: React.FC<ResizeHandle.Props> = ({
                 onMouseLeave={onMouseLeave}
                 onMouseMove={onMouseMove}
             >
-                <div className={styles.resizeHandleInner} />
+                <div className={styles.resizeHandleInner}>
+                    <div
+                        className={styles.resizeHandleLine}
+                        style={{
+                            backgroundColor: resizeHandleLineColor,
+                        }}
+                    />
+                </div>
             </div>
         </DraggableCore>
     );

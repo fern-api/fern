@@ -2,8 +2,8 @@ import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
 import { TreeNode } from "../tree/TreeNode";
 import { TreeNodes } from "../tree/TreeNodes";
+import { TypePreview } from "../type-preview/TypePreview";
 import { TypeDefinitionDetails } from "../TypeDefinitionDetails";
-import { TypePreview } from "../TypePreview";
 
 export declare namespace UnionDefinition {
     export interface Props {

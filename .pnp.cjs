@@ -9558,7 +9558,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/transaction-generator", "workspace:packages/editor/transaction-generator"],\
             ["@fern-api/transaction-resolver", "workspace:packages/editor/transaction-resolver"],\
             ["@fern-fern/api-editor-sdk", "npm:0.0.38"],\
-            ["@fern-fern/registry", "npm:0.0.33"],\
+            ["@fern-fern/registry", "npm:0.0.36"],\
             ["@fontsource/actor", "npm:4.5.9"],\
             ["@fontsource/roboto-mono", "npm:4.5.8"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9576,6 +9576,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
+            ["react-icons", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.7.1"],\
             ["react-intersection-observer", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:9.4.2"],\
             ["react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:3.39.2"],\
             ["react-router-dom", "virtual:301824a638387fe2356731c202bf9f3b5e22f7e8c52233023d4376f87e83f0ceb211f10390cc7a3ae3b0dfdd64369fbbf84886319400588ab4183cb5cc6dce43#npm:6.4.3"],\
@@ -9895,10 +9896,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:0.0.33", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.33-38b9573952-ae871ae5ec.zip/node_modules/@fern-fern/registry/",\
+        ["npm:0.0.36", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.36-48664a5c78-f3f303ae0f.zip/node_modules/@fern-fern/registry/",\
           "packageDependencies": [\
-            ["@fern-fern/registry", "npm:0.0.33"],\
+            ["@fern-fern/registry", "npm:0.0.36"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
@@ -26858,6 +26859,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/react-dom",\
             "@types/react",\
             "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-icons", [\
+        ["npm:4.7.1", {\
+          "packageLocation": "./.yarn/cache/react-icons-npm-4.7.1-27c284b383-ed3cbdc5fc.zip/node_modules/react-icons/",\
+          "packageDependencies": [\
+            ["react-icons", "npm:4.7.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.7.1", {\
+          "packageLocation": "./.yarn/__virtual__/react-icons-virtual-23ca1cd5b0/0/cache/react-icons-npm-4.7.1-27c284b383-ed3cbdc5fc.zip/node_modules/react-icons/",\
+          "packageDependencies": [\
+            ["react-icons", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.7.1"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
             "react"\
           ],\
           "linkType": "HARD"\

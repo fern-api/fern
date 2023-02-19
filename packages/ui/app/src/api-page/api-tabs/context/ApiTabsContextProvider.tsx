@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { ApiTabsContext, ApiTabsContextValue } from "./ApiTabsContext";
@@ -12,7 +12,13 @@ interface TabState {
     path: string;
 }
 
-export const ApiTabsContextProvider: React.FC<PropsWithChildren> = ({ children }) => {
+export declare namespace ApiTabsContextProvider {
+    export type Props = PropsWithChildren<{
+        basePath: string;
+    }>;
+}
+
+export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({ basePath, children }) => {
     const [state, setState] = useImmer<TabsState>({
         ephemeralTabIndex: undefined,
         tabs: [],
@@ -23,26 +29,25 @@ export const ApiTabsContextProvider: React.FC<PropsWithChildren> = ({ children }
 
     const selectedTabIndex = state.tabs.findIndex((tab) => tab.path === location.pathname);
 
-    useEffect(() => {
-        if (selectedTabIndex === -1) {
-            setState((draft) => {
-                draft.ephemeralTabIndex =
-                    draft.tabs.push({
-                        path: location.pathname,
-                    }) - 1;
-            });
-        }
-    }, [location.pathname, selectedTabIndex, setState]);
+    // useEffect(() => {
+    //     if (location.pathname !== basePath && selectedTabIndex === -1) {
+    //         setState((draft) => {
+    //             draft.ephemeralTabIndex =
+    //                 draft.tabs.push({
+    //                     path: location.pathname,
+    //                 }) - 1;
+    //         });
+    //     }
+    // }, [basePath, location.pathname, selectedTabIndex, setState]);
 
     const openTab = useCallback(
-        (path: string) => {
+        (path: string, { doNotCloseExistingTab = false } = {}) => {
             const existingTabIndexForPath = state.tabs.findIndex((tab) => tab.path === path);
             if (existingTabIndexForPath === -1) {
                 setState((draft) => {
                     let indexOfNewTab = selectedTabIndex + 1;
 
-                    // delete emphemeral tab
-                    if (draft.ephemeralTabIndex != null) {
+                    if (!doNotCloseExistingTab && draft.ephemeralTabIndex != null) {
                         draft.tabs.splice(draft.ephemeralTabIndex, 1);
                         if (draft.ephemeralTabIndex <= selectedTabIndex) {
                             indexOfNewTab--;
@@ -61,17 +66,15 @@ export const ApiTabsContextProvider: React.FC<PropsWithChildren> = ({ children }
     );
 
     const closeTab = useCallback(
-        (index: number) => {
+        (path: string) => {
+            const index = state.tabs.findIndex((tab) => tab.path === path);
+
             // if deleting the selected tab, switch to the next tab.
             // if deleting the last tab, switch to the previous tab
             if (index === selectedTabIndex) {
                 const indexOfNewSelectedTab = index < state.tabs.length - 1 ? index + 1 : index - 1;
                 const newTab = state.tabs[indexOfNewSelectedTab];
-                if (newTab != null) {
-                    navigate(newTab.path);
-                } else {
-                    // TODO reset url
-                }
+                navigate(newTab != null ? newTab.path : basePath);
             }
 
             setState((draft) => {
@@ -81,7 +84,7 @@ export const ApiTabsContextProvider: React.FC<PropsWithChildren> = ({ children }
                 }
             });
         },
-        [navigate, selectedTabIndex, setState, state.tabs]
+        [basePath, navigate, selectedTabIndex, setState, state.tabs]
     );
 
     const makeTabLongLived = useCallback(

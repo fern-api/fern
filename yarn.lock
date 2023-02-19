@@ -4708,7 +4708,7 @@ __metadata:
     "@fern-api/transaction-generator": "workspace:*"
     "@fern-api/transaction-resolver": "workspace:*"
     "@fern-fern/api-editor-sdk": 0.0.38
-    "@fern-fern/registry": 0.0.33
+    "@fern-fern/registry": 0.0.36
     "@fontsource/actor": ^4.5.9
     "@fontsource/roboto-mono": ^4.5.8
     "@types/jest": ^29.0.3
@@ -4726,6 +4726,7 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-icons: ^4.7.1
     react-intersection-observer: ^9.4.2
     react-query: ^3.34.12
     react-router-dom: ^6.4.3
@@ -5013,14 +5014,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry@npm:0.0.33":
-  version: 0.0.33
-  resolution: "@fern-fern/registry@npm:0.0.33"
+"@fern-fern/registry@npm:0.0.36":
+  version: 0.0.36
+  resolution: "@fern-fern/registry@npm:0.0.36"
   dependencies:
     "@types/url-join": 4.0.1
     axios: ^0.27.2
     url-join: 4.0.1
-  checksum: ae871ae5ece3f864cb75a1cb92f400092c7df9d888ba8d9a1677cfaac6c1c189e2edd38b809ef6c7a5f02e8f2c9aeb5bc0431950127ddf6d0f8a32b0da670eb0
+  checksum: f3f303ae0ffc6d48eb7875e1adbd71fe4f7daf2bbf10a368776dae303651cbc60fd8778dd9405f183041d2793537d3dc55212233f9b6248c06f92fcbdbaa974a
   languageName: node
   linkType: hard
 
@@ -18290,6 +18291,15 @@ env-cmd@toddbluhm/env-cmd:
     react: ^16.6.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
   checksum: 7ca7e47f8af14ea186688b512a87ab912bf6041312b297f92516341b140b3f0f8aedf5a44d226d99e69ed067b0cc106e38aeb9c9b738ffcc63d10721c844db90
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.7.1":
+  version: 4.7.1
+  resolution: "react-icons@npm:4.7.1"
+  peerDependencies:
+    react: "*"
+  checksum: ed3cbdc5fc0c4d7d2debf78fdc8c4c80aeacf85a506a9a3c11b1d5922de393ac0a6542012b7fb81761e9280c54d0f26827d50a92b54ec8f0c8e52364d89970b5
   languageName: node
   linkType: hard
 

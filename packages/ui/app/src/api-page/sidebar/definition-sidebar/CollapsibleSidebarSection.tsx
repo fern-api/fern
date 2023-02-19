@@ -22,7 +22,7 @@ export const CollapsibleSidebarSection: React.FC<CollapsibleSidebarSection.Props
             <div className={styles.leftLineWrapper}>
                 <div className={styles.leftLine} />
             </div>
-            {isCollapsed || children}
+            {isCollapsed || <div className="flex flex-col">{children}</div>}
         </div>
     );
 };

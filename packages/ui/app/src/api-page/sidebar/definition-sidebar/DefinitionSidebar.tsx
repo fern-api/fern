@@ -14,7 +14,7 @@ export const DefinitionSidebar: React.FC = () => {
     return (
         <div className={styles.container}>
             <EnvironmentSelect />
-            <PackageSidebarSectionContents package={api.value.rootPackage} ancestorPackageNames={EMPTY_ARRAY} />
+            <PackageSidebarSectionContents package={api.value.rootPackage} packagePath={EMPTY_ARRAY} />
         </div>
     );
 };

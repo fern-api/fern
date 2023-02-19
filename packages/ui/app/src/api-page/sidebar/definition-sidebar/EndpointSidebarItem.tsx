@@ -1,42 +1,24 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback } from "react";
-import { generatePath, useParams } from "react-router-dom";
-import { FernRoutes } from "../../../routes";
+import { PackagePath } from "../../../commons/PackagePath";
+import { useEndpointPath } from "../../../routes/definition/useEndpointPath";
 import { useApiTabsContext } from "../../api-tabs/context/useApiTabsContext";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
 
 export declare namespace EndpointSidebarItem {
     export interface Props {
         endpoint: FernRegistry.EndpointDefinition;
-        ancestorPackageNames: readonly string[];
+        packagePath: PackagePath;
     }
 }
 
-export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint, ancestorPackageNames }) => {
-    const {
-        [FernRoutes.API_DEFINITION.parameters.API_ID]: apiId,
-        [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: environmentId,
-    } = useParams();
-
+export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint, packagePath }) => {
+    const endpointPath = useEndpointPath(packagePath, endpoint.name);
     const { openTab } = useApiTabsContext();
 
     const onClick = useCallback(() => {
-        if (apiId == null || environmentId == null) {
-            return;
-        }
-        openTab(
-            [
-                generatePath(FernRoutes.API_DEFINITION.absolutePath, {
-                    API_ID: apiId,
-                    ENVIRONMENT: environmentId,
-                }),
-                ...ancestorPackageNames.map((name) => `/${name}`),
-                generatePath(FernRoutes.RELATIVE_ENDPOINT.absolutePath, {
-                    ENDPOINT_ID: endpoint.id,
-                }),
-            ].join("")
-        );
-    }, [ancestorPackageNames, apiId, endpoint.id, environmentId, openTab]);
+        openTab(endpointPath);
+    }, [openTab, endpointPath]);
 
     return (
         <div onClick={onClick}>

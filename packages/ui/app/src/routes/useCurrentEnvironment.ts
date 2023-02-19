@@ -14,7 +14,7 @@ export function useCurrentEnvironment(): FernRegistry.Environment | undefined {
 }
 
 export function useCurrentEnvironmentId(): FernRegistry.EnvironmentId | undefined {
-    const { [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: environmentParam } = useParams();
+    const { [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT_ID]: environmentParam } = useParams();
 
     if (environmentParam == null) {
         return undefined;

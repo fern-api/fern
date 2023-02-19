@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { TypePreview } from "../types/type-preview/TypePreview";
 import { TypeDefinitionDetails } from "../types/TypeDefinitionDetails";
-import { TypePreview } from "../types/TypePreview";
 import { EndpointSection } from "./EndpointSection";
 
 export declare namespace EndpointTypeSection {

@@ -77,16 +77,29 @@ $handle-size: 6px;
 
     .resizeHandleInner {
         display: flex;
+        justify-content: center;
         flex: 1;
-        background-color: #1389fd;
-        opacity: 0;
-        transition: opacity 0.25s;
+        background-color: transparent;
+    }
+
+    .resizeHandleLine {
+        width: 1px;
+    }
+
+    .resizeHandleInner,
+    .resizeHandleLine {
+        transition: background-color 0.25s;
     }
 
     &.isDragging,
     &.isHovering {
         .resizeHandleInner {
-            opacity: 0.75;
+            background-color: rgba(#1389fd, 0.75);
+
+            .resizeHandleLine {
+                // use !important to override css-in-html
+                background-color: transparent !important;
+            }
         }
     }
 }

@@ -1,11 +1,11 @@
-import { FernRegistry } from "@fern-fern/registry";
-import { useMemo } from "react";
-import { matchPath } from "react-router-dom";
-import { FernRoutes } from "../../routes";
-import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { EndpointTitle } from "../definition/endpoints/EndpointTitle";
+import { useIsHovering } from "@fern-api/react-commons";
+import classNames from "classnames";
+import React, { useCallback, useMemo } from "react";
+import { RxCross1 } from "react-icons/rx";
 import { Tab } from "./context/ApiTabsContext";
 import { useApiTabsContext } from "./context/useApiTabsContext";
+import { TabBarItemWrapper } from "./TabBarItemWrapper";
+import { usePathTitle } from "./usePathTitle";
 
 export declare namespace ApiTabBarItem {
     export interface Props {
@@ -14,7 +14,8 @@ export declare namespace ApiTabBarItem {
 }
 
 export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
-    const { openTab, makeTabLongLived } = useApiTabsContext();
+    const { openTab, closeTab, makeTabLongLived } = useApiTabsContext();
+    const tabTitle = usePathTitle(tab.path);
 
     const onClick = useMemo(
         () => (tab.isSelected ? undefined : () => openTab(tab.path)),
@@ -26,70 +27,46 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
         [makeTabLongLived, tab.isEphemeral, tab.path]
     );
 
-    const match = matchPath(FernRoutes.API_DEFINITION_PACKAGE.absolutePath, tab.path);
-    const parsedPath = parsePath(match?.params["*"] ?? "");
-    const { api, resolveSubpackage } = useApiDefinitionContext();
-    const endpoint = useMemo(() => {
-        if (parsedPath == null || api.type !== "loaded") {
-            return undefined;
-        }
-        let package_: FernRegistry.ApiDefinitionPackage | undefined = api.value.rootPackage;
-        for (const packageName of parsedPath.packagePath) {
-            package_ = package_?.subpackages
-                .map((subpackage) => resolveSubpackage(subpackage))
-                .find((subpackage) => subpackage.name === packageName);
-        }
-        return package_?.endpoints.find((endpoint) => endpoint.id === parsedPath.endpointId);
-    }, [api, parsedPath, resolveSubpackage]);
+    const onClickCross = useCallback(
+        (event: React.MouseEvent) => {
+            closeTab(tab.path);
+            // so we don't trigger the "open tab" callback
+            event.stopPropagation();
+        },
+        [closeTab, tab.path]
+    );
 
-    if (endpoint == null) {
-        return <div>TODO unknown tab</div>;
-    }
+    const { onMouseLeave, onMouseMove, onMouseOver, isHovering } = useIsHovering();
 
     return (
-        <div
-            key={tab.path}
-            style={{
-                fontStyle: tab.isEphemeral ? "italic" : undefined,
-                color: tab.isSelected ? "red" : undefined,
-            }}
-            onClick={onClick}
-            onDoubleClick={onDoubleClick}
+        <TabBarItemWrapper
+            includeBottomBorder={!tab.isSelected}
+            className={classNames({
+                "bg-slate-300": !tab.isSelected,
+            })}
         >
-            <EndpointTitle endpoint={endpoint} />
-        </div>
+            <div
+                key={tab.path}
+                className={classNames("flex items-center pl-5 pr-1 select-none cursor-pointer", {
+                    italic: tab.isEphemeral,
+                })}
+                onClick={onClick}
+                onDoubleClick={onDoubleClick}
+                onMouseLeave={onMouseLeave}
+                onMouseMove={onMouseMove}
+                onMouseOver={onMouseOver}
+            >
+                <div className="whitespace-nowrap">{tabTitle ?? "<Unknown tab>"}</div>
+
+                <div
+                    className={classNames("ml-3 p-1 rounded-md hover:bg-zinc-600/10", {
+                        invisible: !isHovering,
+                    })}
+                    onClick={onClickCross}
+                >
+                    <RxCross1 />
+                </div>
+            </div>
+        </TabBarItemWrapper>
     );
 };
-
-const ENDPOINT_REGEX = /(.+\/)*endpoint\/(.+)/;
-// const TYPE_REGEX = /(.+\/)*type\/(.+)/;
-
-type ParsedPath = ParsedEndpointPath;
-
-interface ParsedEndpointPath {
-    type: "endpoint";
-    packagePath: string[];
-    endpointId: string;
-}
-
-function parsePath(path: string): ParsedPath | undefined {
-    return parseEndpointPath(path);
-}
-
-function parseEndpointPath(path: string): ParsedEndpointPath | undefined {
-    const match = path.match(ENDPOINT_REGEX);
-    if (match == null) {
-        return undefined;
-    }
-    const [_, packagePath = "", endpointId] = match;
-
-    if (endpointId == null) {
-        return undefined;
-    }
-
-    return {
-        type: "endpoint",
-        packagePath: packagePath.split("/").filter((part) => part.length > 0),
-        endpointId,
-    };
-}

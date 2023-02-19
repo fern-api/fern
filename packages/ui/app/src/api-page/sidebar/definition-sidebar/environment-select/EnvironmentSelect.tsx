@@ -32,7 +32,7 @@ export const EnvironmentSelect: React.FC = () => {
 
             const {
                 [FernRoutes.API_DEFINITION_PACKAGE.parameters.API_ID]: apiId,
-                [FernRoutes.API_DEFINITION_PACKAGE.parameters.ENVIRONMENT]: currentEnvironmentId,
+                [FernRoutes.API_DEFINITION_PACKAGE.parameters.ENVIRONMENT_ID]: currentEnvironmentId,
                 [FernRoutes.API_DEFINITION_PACKAGE.parameters["*"]]: splat,
             } = currentPath.params;
 
@@ -43,7 +43,7 @@ export const EnvironmentSelect: React.FC = () => {
             navigate(
                 generatePath(FernRoutes.API_DEFINITION_PACKAGE.absolutePath, {
                     [FernRoutes.API_DEFINITION.parameters.API_ID]: apiId,
-                    [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT]: newEnvironment.id,
+                    [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT_ID]: newEnvironment.id,
                     "*": splat ?? "",
                 })
             );

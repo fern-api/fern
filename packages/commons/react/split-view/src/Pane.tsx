@@ -16,6 +16,7 @@ export declare namespace Pane {
         minimumSize?: Size;
         maximumSize?: Size;
         resizeHandlePosition: ResizeHandlePosition;
+        resizeHandleLineColor?: string;
         sizeToCollapse?: Size;
         startCollapsed?: boolean;
         children: JSX.Element | ((args: ChildRendererArgs) => JSX.Element);
@@ -39,6 +40,7 @@ export const Pane: React.FC<Pane.Props> = ({
     sizeToCollapse,
     startCollapsed = false,
     resizeHandlePosition,
+    resizeHandleLineColor,
     children,
 }) => {
     const { orientation, containerSizeInPixels, disabled } = useContext(SingleSplitViewContext)();
@@ -142,6 +144,7 @@ export const Pane: React.FC<Pane.Props> = ({
                     onResize={onMoveResizeHandle}
                     position={resizeHandlePosition}
                     centerOnBorder
+                    lineColor={resizeHandleLineColor}
                     onStopResizing={onStopResizing}
                 />
             )}

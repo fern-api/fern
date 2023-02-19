@@ -1,15 +1,32 @@
+import classNames from "classnames";
+import React from "react";
+import styles from "./ApiTabBar.module.scss";
 import { ApiTabBarItem } from "./ApiTabBarItem";
 import { useApiTabsContext } from "./context/useApiTabsContext";
+import { TabBarItemWrapper } from "./TabBarItemWrapper";
 
 export const ApiTabBar: React.FC = () => {
     const { tabs } = useApiTabsContext();
 
     return (
-        <div className="flex">
-            <div className="text-3xl font-bold font-underline">Hello world!</div>
-            {tabs.map((tab) => (
-                <ApiTabBarItem key={tab.path} tab={tab} />
-            ))}
+        <div className={classNames(styles.container, "flex h-10 overflow-auto")}>
+            {tabs.map((tab, index) => {
+                const previousTab = tabs[index - 1];
+                const isPreviousTabSelected = previousTab != null && previousTab.isSelected;
+
+                return (
+                    <React.Fragment key={tab.path}>
+                        {index > 0 && (
+                            <TabBarItemWrapper
+                                includeBottomBorder={!tab.isSelected && !isPreviousTabSelected}
+                                className="w-px"
+                            />
+                        )}
+                        <ApiTabBarItem tab={tab} />
+                    </React.Fragment>
+                );
+            })}
+            <TabBarItemWrapper includeBottomBorder className="flex-1 bg-gray-500" />
         </div>
     );
 };
