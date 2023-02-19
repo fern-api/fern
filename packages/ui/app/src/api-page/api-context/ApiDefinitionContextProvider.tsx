@@ -1,12 +1,35 @@
 import { FernRegistry } from "@fern-fern/registry";
 import React, { useCallback, useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { PackagePath } from "../../commons/PackagePath";
-import { useCurrentApiDefinition } from "../queries/useCurrentApiDefinition";
+import { FernRoutes } from "../../routes";
+import { useApiDefinition } from "../queries/useCurrentApiDefinition";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 import { TypeIdToPackagePathCache } from "./TypeIdToPackagePathCache";
 
-export const ApiDefinitionContextProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
-    const api = useCurrentApiDefinition();
+export declare namespace ApiDefinitionContextProvider {
+    export type Props = React.PropsWithChildren<{
+        environmentId: FernRegistry.EnvironmentId;
+    }>;
+}
+
+export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider.Props> = ({
+    environmentId,
+    children,
+}) => {
+    /**
+     * api definition
+     */
+
+    const { [FernRoutes.API_DEFINITION.parameters.API_ID]: apiId } = useParams();
+
+    if (apiId == null) {
+        throw new Error("Api ID is not defined.");
+    }
+    const api = useApiDefinition({
+        apiId: FernRegistry.ApiId(apiId),
+        environmentId,
+    });
 
     const getApiOrThrow = useCallback(() => {
         if (api.type !== "loaded") {

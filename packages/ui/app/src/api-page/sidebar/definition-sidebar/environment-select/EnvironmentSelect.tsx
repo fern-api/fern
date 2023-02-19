@@ -1,71 +1,38 @@
 import { MenuItem } from "@blueprintjs/core";
 import { ItemRenderer, Select2, SelectPopoverProps } from "@blueprintjs/select";
 import { FernRegistry } from "@fern-fern/registry";
-import { useCallback } from "react";
-import { generatePath, matchPath, useLocation, useNavigate } from "react-router-dom";
-import { FernRoutes } from "../../../../routes";
-import { useCurrentEnvironment } from "../../../../routes/useCurrentEnvironment";
 import { useAllEnvironments } from "../../../queries/useAllEnvironments";
 import { EnvironmentSelectButton } from "./EnvironmentSelectButton";
+
+export declare namespace EnvironmentSelect {
+    export interface Props {
+        selectedEnvironment: FernRegistry.Environment;
+        onChange: (environment: FernRegistry.Environment) => void;
+    }
+}
 
 const POPOVER_PROPS: SelectPopoverProps["popoverProps"] = {
     matchTargetWidth: true,
 };
 
-export const EnvironmentSelect: React.FC = () => {
-    const currentEnvironment = useCurrentEnvironment();
+export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedEnvironment, onChange }) => {
     const environments = useAllEnvironments();
 
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    const onItemSelect = useCallback(
-        (newEnvironment: FernRegistry.Environment) => {
-            if (currentEnvironment?.id === newEnvironment.id) {
-                return;
-            }
-
-            const currentPath = matchPath(FernRoutes.API_DEFINITION_PACKAGE.absolutePath, location.pathname);
-            if (currentPath == null) {
-                return;
-            }
-
-            const {
-                [FernRoutes.API_DEFINITION_PACKAGE.parameters.API_ID]: apiId,
-                [FernRoutes.API_DEFINITION_PACKAGE.parameters.ENVIRONMENT_ID]: currentEnvironmentId,
-                [FernRoutes.API_DEFINITION_PACKAGE.parameters["*"]]: splat,
-            } = currentPath.params;
-
-            if (apiId == null || currentEnvironmentId == null) {
-                return;
-            }
-
-            navigate(
-                generatePath(FernRoutes.API_DEFINITION_PACKAGE.absolutePath, {
-                    [FernRoutes.API_DEFINITION.parameters.API_ID]: apiId,
-                    [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT_ID]: newEnvironment.id,
-                    "*": splat ?? "",
-                })
-            );
-        },
-        [currentEnvironment?.id, location.pathname, navigate]
-    );
-
-    if (environments.type !== "loaded" || !environments.value.ok) {
+    if (environments.type !== "loaded") {
         return <EnvironmentSelectButton environmentName={undefined} />;
     }
 
     return (
         <Select2<FernRegistry.Environment>
-            items={environments.value.body.environments}
-            activeItem={currentEnvironment}
+            items={environments.value.environments}
+            activeItem={selectedEnvironment}
             filterable={false}
             itemRenderer={renderFilm}
             noResults={<MenuItem disabled text="No results." roleStructure="listoption" />}
-            onItemSelect={onItemSelect}
+            onItemSelect={onChange}
             popoverProps={POPOVER_PROPS}
         >
-            <EnvironmentSelectButton environmentName={currentEnvironment?.displayName} />
+            <EnvironmentSelectButton environmentName={selectedEnvironment.displayName} />
         </Select2>
     );
 };

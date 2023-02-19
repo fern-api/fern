@@ -1,6 +1,7 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
 import { useParsedPath } from "../../routes/definition/useParsedPath";
+import { ApiDefinitionItemContextProvider } from "../definition/context/ApiDefinitionItemContextProvider";
 import { Endpoint } from "../definition/endpoints/Endpoint";
 import { Tab } from "./context/ApiTabsContext";
 
@@ -19,9 +20,17 @@ export const ApiTabContent: React.FC<ApiTabContent.Props> = ({ tab }) => {
 
     switch (parsedPath.type) {
         case "endpoint":
-            return <Endpoint endpoint={parsedPath.endpoint} />;
+            return (
+                <ApiDefinitionItemContextProvider environmentId={parsedPath.environmentId}>
+                    <Endpoint endpoint={parsedPath.endpoint} />
+                </ApiDefinitionItemContextProvider>
+            );
         case "type":
-            return <div>type page</div>;
+            return (
+                <ApiDefinitionItemContextProvider environmentId={parsedPath.environmentId}>
+                    <div>type page</div>
+                </ApiDefinitionItemContextProvider>
+            );
         default:
             assertNever(parsedPath);
     }

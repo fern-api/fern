@@ -3,7 +3,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
-import { Redirect, RoutesWith404 } from "@fern-api/routing-utils";
+import { RoutesWith404 } from "@fern-api/routing-utils";
 import { SplitViewProvider } from "@fern-api/split-view";
 import "normalize.css";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -30,11 +30,8 @@ export const App: React.FC = () => {
                         <SplitViewProvider>
                             <RoutesWith404>
                                 <Route path={FernRoutes.HOME.absolutePath} element={<div>home</div>} />
-                                <Route
-                                    path={FernRoutes.API.absolutePath}
-                                    element={<Redirect to="/api1/definition/production" />}
-                                />
-                                <Route path={FernRoutes.API_DEFINITION_PACKAGE.absolutePath} element={<ApiPage />} />
+                                <Route path={FernRoutes.API_DEFINITION.absolutePath} element={<ApiPage />} />
+                                <Route path={FernRoutes.API_PACKAGE.absolutePath} element={<ApiPage />} />
                             </RoutesWith404>
                         </SplitViewProvider>
                     </HotkeysProvider>

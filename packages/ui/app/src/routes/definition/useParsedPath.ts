@@ -1,3 +1,4 @@
+import { FernRegistry } from "@fern-fern/registry";
 import { matchPath } from "react-router-dom";
 import { FernRoutes } from "..";
 import { useApiDefinitionContext } from "../../api-page/api-context/useApiDefinitionContext";
@@ -15,14 +16,20 @@ export function useParsedPath(path: string): ParsedPath | undefined {
         return undefined;
     }
 
-    const match = matchPath(FernRoutes.API_DEFINITION_PACKAGE.absolutePath, path);
+    const match = matchPath(FernRoutes.API_PACKAGE.absolutePath, path);
     if (match == null) {
-        throw new Error("Could not match API_DEFINITION_PACKAGE path");
+        return undefined;
     }
 
-    const { ["*"]: splatMatch } = match.params;
+    const { ENVIRONMENT_ID: environmentIdParam, ["*"]: splatMatch } = match.params;
+
+    if (environmentIdParam == null) {
+        throw new Error("No environment ID param found");
+    }
+    const environmentId = FernRegistry.EnvironmentId(environmentIdParam);
+
     if (splatMatch == null) {
-        throw new Error("No * param found in API_DEFINITION_PACKAGE path");
+        throw new Error("No * param found");
     }
 
     const parsedEndpointPath = parsePackageItemPath(splatMatch, ENDPOINT_REGEX);
@@ -33,6 +40,7 @@ export function useParsedPath(path: string): ParsedPath | undefined {
         }
         return {
             type: "endpoint",
+            environmentId,
             endpoint,
         };
     }
@@ -45,6 +53,7 @@ export function useParsedPath(path: string): ParsedPath | undefined {
         }
         return {
             type: "type",
+            environmentId,
             typeDefinition: type,
         };
     }

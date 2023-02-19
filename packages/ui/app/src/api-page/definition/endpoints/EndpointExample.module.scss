@@ -3,7 +3,6 @@
 .example {
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - /* vertical padding */ (2 * 30px) - /* header */ 50px);
 }
 
 .divider {

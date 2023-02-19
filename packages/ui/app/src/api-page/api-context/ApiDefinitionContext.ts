@@ -4,7 +4,7 @@ import React from "react";
 import { PackagePath } from "../../commons/PackagePath";
 
 export const ApiDefinitionContext = React.createContext<() => ApiDefinitionContextValue>(() => {
-    throw new Error("ApiContextProvider is not present in this tree.");
+    throw new Error("ApiDefinitionContextProvider is not present in this tree.");
 });
 
 export interface ApiDefinitionContextValue {

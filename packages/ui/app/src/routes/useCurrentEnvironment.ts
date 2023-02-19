@@ -7,14 +7,14 @@ export function useCurrentEnvironment(): FernRegistry.Environment | undefined {
     const allEnvironments = useAllEnvironments();
     const currentEnvironmentId = useCurrentEnvironmentId();
 
-    if (allEnvironments.type !== "loaded" || !allEnvironments.value.ok || currentEnvironmentId == null) {
+    if (allEnvironments.type !== "loaded" || currentEnvironmentId == null) {
         return undefined;
     }
-    return allEnvironments.value.body.environments.find((environment) => environment.id === currentEnvironmentId);
+    return allEnvironments.value.environments.find((environment) => environment.id === currentEnvironmentId);
 }
 
 export function useCurrentEnvironmentId(): FernRegistry.EnvironmentId | undefined {
-    const { [FernRoutes.API_DEFINITION.parameters.ENVIRONMENT_ID]: environmentParam } = useParams();
+    const { [FernRoutes.API_ENVIRONMENT.parameters.ENVIRONMENT_ID]: environmentParam } = useParams();
 
     if (environmentParam == null) {
         return undefined;

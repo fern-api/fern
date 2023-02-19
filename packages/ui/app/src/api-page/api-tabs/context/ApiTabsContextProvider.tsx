@@ -29,17 +29,6 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
 
     const selectedTabIndex = state.tabs.findIndex((tab) => tab.path === location.pathname);
 
-    // useEffect(() => {
-    //     if (location.pathname !== basePath && selectedTabIndex === -1) {
-    //         setState((draft) => {
-    //             draft.ephemeralTabIndex =
-    //                 draft.tabs.push({
-    //                     path: location.pathname,
-    //                 }) - 1;
-    //         });
-    //     }
-    // }, [basePath, location.pathname, selectedTabIndex, setState]);
-
     const openTab = useCallback(
         (path: string, { doNotCloseExistingTab = false } = {}) => {
             const existingTabIndexForPath = state.tabs.findIndex((tab) => tab.path === path);
@@ -79,8 +68,12 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
 
             setState((draft) => {
                 draft.tabs.splice(index, 1);
-                if (draft.ephemeralTabIndex === index) {
-                    draft.ephemeralTabIndex = undefined;
+                if (draft.ephemeralTabIndex != null) {
+                    if (draft.ephemeralTabIndex === index) {
+                        draft.ephemeralTabIndex = undefined;
+                    } else if (draft.ephemeralTabIndex > index) {
+                        draft.ephemeralTabIndex--;
+                    }
                 }
             });
         },

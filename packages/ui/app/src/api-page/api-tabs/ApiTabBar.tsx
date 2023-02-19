@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./ApiTabBar.module.scss";
 import { ApiTabBarItem } from "./ApiTabBarItem";
 import { useApiTabsContext } from "./context/useApiTabsContext";
+import { TabApiDefinitionContextProvider } from "./TabApiDefinitionContextProvider";
 import { TabBarItemWrapper } from "./TabBarItemWrapper";
 
 export const ApiTabBar: React.FC = () => {
@@ -22,7 +23,9 @@ export const ApiTabBar: React.FC = () => {
                                 className="w-px"
                             />
                         )}
-                        <ApiTabBarItem tab={tab} />
+                        <TabApiDefinitionContextProvider tab={tab}>
+                            <ApiTabBarItem tab={tab} />
+                        </TabApiDefinitionContextProvider>
                     </React.Fragment>
                 );
             })}

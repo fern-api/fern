@@ -36,7 +36,7 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
         [closeTab, tab.path]
     );
 
-    const { onMouseLeave, onMouseMove, onMouseOver, isHovering } = useIsHovering();
+    const { onMouseLeave, onMouseMove, onMouseOver, onMouseEnter, isHovering } = useIsHovering();
 
     return (
         <TabBarItemWrapper
@@ -55,6 +55,7 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
                 onMouseLeave={onMouseLeave}
                 onMouseMove={onMouseMove}
                 onMouseOver={onMouseOver}
+                onMouseEnter={onMouseEnter}
             >
                 <div className="whitespace-nowrap">{tabTitle ?? "<Unknown tab>"}</div>
 

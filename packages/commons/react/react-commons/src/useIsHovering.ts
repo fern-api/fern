@@ -4,6 +4,7 @@ import { useCallback, useReducer } from "react";
 export declare namespace useIsHovering {
     export interface Return {
         isHovering: boolean;
+        onMouseEnter: () => void;
         onMouseOver: () => void;
         onMouseLeave: () => void;
         onMouseMove: () => void;
@@ -12,14 +13,19 @@ export declare namespace useIsHovering {
 
 export function useIsHovering(): useIsHovering.Return {
     const [state, dispatch] = useReducer(
-        (previousState: "inside" | "outside" | "hovering", action: "mouseover" | "mouseleave" | "mousemove") => {
+        (
+            previousState: "inside" | "outside" | "hovering",
+            action: "mouseover" | "mouseleave" | "mousemove" | "mouseenter"
+        ) => {
             switch (action) {
                 case "mouseover":
-                    return previousState === "hovering" ? previousState : "inside";
+                    return previousState === "hovering" ? "hovering" : "inside";
                 case "mouseleave":
                     return "outside";
                 case "mousemove":
                     return previousState === "inside" ? "hovering" : previousState;
+                case "mouseenter":
+                    return "hovering";
                 default:
                     assertNever(action);
             }
@@ -29,6 +35,7 @@ export function useIsHovering(): useIsHovering.Return {
 
     return {
         isHovering: state === "hovering",
+        onMouseEnter: useCallback(() => dispatch("mouseenter"), []),
         onMouseOver: useCallback(() => dispatch("mouseover"), []),
         onMouseLeave: useCallback(() => dispatch("mouseleave"), []),
         onMouseMove: useCallback(() => dispatch("mousemove"), []),
