@@ -21,7 +21,10 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeDefinition,
 
     return (
         <div className={styles.container}>
-            {isContainer || <TypePreview type={typeDefinition} />}
+            {
+                // container names are rendered in their TypeDefinitionDetails
+                isContainer || <TypePreview type={typeDefinition} />
+            }
             <TypeDefinitionDetails typeDefinition={typeDefinition} defaultIsCollapsed={defaultIsCollapsed} />
         </div>
     );

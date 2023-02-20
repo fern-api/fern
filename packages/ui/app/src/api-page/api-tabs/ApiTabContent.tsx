@@ -3,6 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { useParsedPath } from "../../routes/definition/useParsedPath";
 import { ApiDefinitionItemContextProvider } from "../definition/context/ApiDefinitionItemContextProvider";
 import { Endpoint } from "../definition/endpoints/Endpoint";
+import { TypePage } from "../definition/types/TypePage";
 import { Tab } from "./context/ApiTabsContext";
 
 export declare namespace ApiTabContent {
@@ -28,7 +29,7 @@ export const ApiTabContent: React.FC<ApiTabContent.Props> = ({ tab }) => {
         case "type":
             return (
                 <ApiDefinitionItemContextProvider environmentId={parsedPath.environmentId}>
-                    <div>type page</div>
+                    <TypePage type={parsedPath.typeDefinition} />
                 </ApiDefinitionItemContextProvider>
             );
         default:

@@ -1,6 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { TypePreview } from "../types/type-preview/TypePreview";
-import { TypeDefinitionDetails } from "../types/TypeDefinitionDetails";
+import { TypeDefinition } from "../types/TypeDefinition";
 import { EndpointSection } from "./EndpointSection";
 
 export declare namespace EndpointTypeSection {
@@ -13,11 +12,7 @@ export declare namespace EndpointTypeSection {
 export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ title, type }) => {
     return (
         <EndpointSection title={title} docs="Here is some text about the request body.">
-            <TypeDefinitionDetails
-                typeDefinition={type}
-                defaultIsCollapsed={false}
-                fallback={<TypePreview type={type} />}
-            />
+            <TypeDefinition typeDefinition={type} defaultIsCollapsed={false} />
         </EndpointSection>
     );
 };

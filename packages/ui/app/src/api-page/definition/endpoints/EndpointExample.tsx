@@ -1,19 +1,11 @@
-import styles from "./EndpointExample.module.scss";
-import { JsonExample } from "./JsonExample";
+import { FernRegistry } from "@fern-fern/registry";
 
 export declare namespace EndpointExample {
     export interface Props {
-        request: string;
-        response: string;
+        example: FernRegistry.ExampleEndpointCall;
     }
 }
 
-export const EndpointExample: React.FC<EndpointExample.Props> = () => {
-    return (
-        <div className={styles.example}>
-            <JsonExample title="Request" />
-            <div className={styles.divider} />
-            <JsonExample title="Response" />
-        </div>
-    );
+export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) => {
+    return <div>{example.url}</div>;
 };

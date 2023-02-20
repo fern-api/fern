@@ -1,0 +1,58 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: auto;
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+.body {
+    display: flex;
+    gap: 50px;
+}
+
+.definition {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleSection {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+        padding-top: 40px;
+        margin-bottom: 0;
+    }
+}
+
+.subtitle {
+    margin-top: 5px;
+    color: $gray3;
+    display: flex;
+}
+
+.leftContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    color: $pt-text-color-muted;
+    padding-bottom: 100px;
+}
+
+.rightContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    min-width: 0;
+}

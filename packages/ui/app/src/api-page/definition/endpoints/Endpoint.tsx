@@ -1,5 +1,7 @@
-import { H2 } from "@blueprintjs/core";
 import { FernRegistry } from "@fern-fern/registry";
+import { useCallback } from "react";
+import { DefinitionPage } from "../DefinitionPage";
+import { Examples } from "../examples/Examples";
 import styles from "./Endpoint.module.scss";
 import { EndpointExample } from "./EndpointExample";
 import { EndpointPath } from "./EndpointPath";
@@ -15,17 +17,17 @@ export declare namespace Endpoint {
 }
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
+    const renderExample = useCallback((example: FernRegistry.ExampleEndpointCall) => {
+        return <EndpointExample example={example} />;
+    }, []);
+
     return (
-        <div className={styles.container}>
-            <div className={styles.titleSection}>
-                <H2 className={styles.title}>
-                    <EndpointTitle endpoint={endpoint} />
-                </H2>
-                {endpoint.displayName != null && <EndpointPath className={styles.endpointPath} endpoint={endpoint} />}
-            </div>
-            <div className={styles.body}>
-                <div className={styles.definition}>
-                    {endpoint.docs != null && <div className={styles.docs}>{endpoint.docs}</div>}
+        <DefinitionPage
+            title={<EndpointTitle endpoint={endpoint} />}
+            subtitle={endpoint.displayName != null ? <EndpointPath endpoint={endpoint} /> : undefined}
+            docs={endpoint.docs}
+            leftContent={
+                <div className={styles.leftContent}>
                     {endpoint.path.pathParameters.length > 0 && (
                         <PathParametersSection pathParameters={endpoint.path.pathParameters} />
                     )}
@@ -35,10 +37,12 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     {endpoint.request != null && <EndpointTypeSection title="Request" type={endpoint.request} />}
                     {endpoint.response != null && <EndpointTypeSection title="Response" type={endpoint.response} />}
                 </div>
-                <div className={styles.examples}>
-                    <EndpointExample request="" response="" />
-                </div>
-            </div>
-        </div>
+            }
+            rightContent={
+                endpoint.examples.length > 0 ? (
+                    <Examples examples={endpoint.examples} renderExample={renderExample} />
+                ) : undefined
+            }
+        />
     );
 };
