@@ -3,7 +3,6 @@ import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
-import { basename } from "path";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
 import { PublishInfo } from "../NpmPackage";
@@ -110,7 +109,7 @@ export class PersistedTypescriptProject {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectory(this.directory, { logger, destinationZip });
+        await this.zipDirectoryContents(this.directory, { logger, destinationZip });
     }
 
     public async npmPackAsZipTo({
@@ -146,7 +145,7 @@ export class PersistedTypescriptProject {
         });
 
         // zip decompressed pack into destination
-        await this.zipDirectory(directoryOfDecompressedPack, { logger, destinationZip });
+        await this.zipDirectoryContents(directoryOfDecompressedPack, { logger, destinationZip });
     }
 
     public async copyDistAsZipTo({
@@ -159,28 +158,22 @@ export class PersistedTypescriptProject {
         if (!this.hasBuilt) {
             await this.build(logger);
         }
-        await this.zipDirectory(join(this.directory, this.distDirectory), { logger, destinationZip });
+        await this.zipDirectoryContents(join(this.directory, this.distDirectory), { logger, destinationZip });
     }
 
-    private async zipDirectory(
+    private async zipDirectoryContents(
         directoryToZip: AbsoluteFilePath,
         { destinationZip, logger }: { destinationZip: AbsoluteFilePath; logger: Logger }
     ) {
-        // make a copy of directoryToZip as the name "output", so when you unzip
-        // you see a folder called "output"
-        const copiedSourceParent = AbsoluteFilePath.of((await tmp.dir()).path);
-        const copiedSource = join(copiedSourceParent, "output");
-        await cp(directoryToZip, copiedSource, { recursive: true });
-
         const zip = createLoggingExecutable("zip", {
-            cwd: copiedSourceParent,
+            cwd: directoryToZip,
             logger,
             // zip is noisy
             doNotPipeOutput: true,
         });
 
         const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), "output.zip");
-        await zip(["-r", tmpZipLocation, basename(copiedSource)]);
+        await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))]);
         await cp(tmpZipLocation, destinationZip);
     }
 

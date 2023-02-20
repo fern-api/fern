@@ -211,8 +211,6 @@ async function doesPathExist(filepath: string): Promise<boolean> {
 
 async function getDirectoryForSnapshot(outputPath: AbsoluteFilePath): Promise<AbsoluteFilePath> {
     const unzippedPackage = (await tmp.dir()).path;
-    await decompress(path.join(outputPath, "output.zip"), unzippedPackage, {
-        strip: 1,
-    });
+    await decompress(path.join(outputPath, "output.zip"), unzippedPackage);
     return AbsoluteFilePath.of(unzippedPackage);
 }
