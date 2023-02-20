@@ -26,8 +26,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "schemes": []
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "y:types/IntegerAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -109,7 +109,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imported/x:types/StringAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -230,7 +230,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imported:types/RootString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -313,10 +313,10 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "imported:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -412,7 +412,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -439,6 +439,270 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "y:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "y",
+                        "camelCase": {
+                            "unsafeName": "y",
+                            "safeName": "y"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "y",
+                            "safeName": "y"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "Y",
+                            "safeName": "Y"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Y",
+                            "safeName": "Y"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "y",
+                    "camelCase": {
+                        "unsafeName": "y",
+                        "safeName": "y"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "y",
+                        "safeName": "y"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "Y",
+                        "safeName": "Y"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Y",
+                        "safeName": "Y"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "y",
+                "camelCase": {
+                    "unsafeName": "y",
+                    "safeName": "y"
+                },
+                "snakeCase": {
+                    "unsafeName": "y",
+                    "safeName": "y"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "Y",
+                    "safeName": "Y"
+                },
+                "pascalCase": {
+                    "unsafeName": "Y",
+                    "safeName": "Y"
+                }
+            },
+            "types": [
+                "y:types/IntegerAlias"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "imported:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imported",
+                        "camelCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTED",
+                            "safeName": "IMPORTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imported",
+                            "safeName": "Imported"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "imported",
+                        "camelCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTED",
+                            "safeName": "IMPORTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imported",
+                            "safeName": "Imported"
+                        }
+                    }
+                ]
+            },
+            "name": {
+                "originalName": "imported",
+                "camelCase": {
+                    "unsafeName": "imported",
+                    "safeName": "imported"
+                },
+                "snakeCase": {
+                    "unsafeName": "imported",
+                    "safeName": "imported"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTED",
+                    "safeName": "IMPORTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imported",
+                    "safeName": "Imported"
+                }
+            },
+            "service": "imported:service",
+            "types": [
+                "imported:types/RootString"
+            ],
+            "errors": [],
+            "subpackages": [
+                "imported/x:subpackage"
+            ]
+        },
+        "imported/x:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imported",
+                        "camelCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTED",
+                            "safeName": "IMPORTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imported",
+                            "safeName": "Imported"
+                        }
+                    },
+                    {
+                        "originalName": "x",
+                        "camelCase": {
+                            "unsafeName": "x",
+                            "safeName": "x"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "x",
+                            "safeName": "x"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "X",
+                            "safeName": "X"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "X",
+                            "safeName": "X"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "imported",
+                        "camelCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imported",
+                            "safeName": "imported"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTED",
+                            "safeName": "IMPORTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imported",
+                            "safeName": "Imported"
+                        }
+                    }
+                ],
+                "file": {
+                    "originalName": "x",
+                    "camelCase": {
+                        "unsafeName": "x",
+                        "safeName": "x"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x",
+                        "safeName": "x"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X",
+                        "safeName": "X"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "X",
+                        "safeName": "X"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "x",
+                "camelCase": {
+                    "unsafeName": "x",
+                    "safeName": "x"
+                },
+                "snakeCase": {
+                    "unsafeName": "x",
+                    "safeName": "x"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "X",
+                    "safeName": "X"
+                },
+                "pascalCase": {
+                    "unsafeName": "X",
+                    "safeName": "X"
+                }
+            },
+            "types": [
+                "imported/x:types/StringAlias"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "y:subpackage",
+            "imported:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
