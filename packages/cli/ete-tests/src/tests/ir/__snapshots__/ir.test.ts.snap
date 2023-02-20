@@ -31,8 +31,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "app:types/GetAppResponse": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -593,7 +593,7 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/AppId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -711,7 +711,7 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/Deployment": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -945,9 +945,9 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
             ],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [],
+    },
+    "errors": {},
+    "services": {},
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -974,6 +974,159 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "types": [
+                "app:types/GetAppResponse"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "commons:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "types": [
+                "commons:types/AppId",
+                "commons:types/Deployment"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage",
+            "commons:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -1012,8 +1165,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "app:types/GetAppResponse": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -1574,7 +1727,7 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/AppId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -1692,7 +1845,7 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/Deployment": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -1926,9 +2079,9 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
             ],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [],
+    },
+    "errors": {},
+    "services": {},
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -1955,6 +2108,159 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "types": [
+                "app:types/GetAppResponse"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "commons:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "types": [
+                "commons:types/AppId",
+                "commons:types/Deployment"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage",
+            "commons:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -1993,8 +2299,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "app:types/GetAppResponse": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -2555,7 +2861,7 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/AppId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -2673,7 +2979,7 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/Deployment": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -2907,9 +3213,9 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
             ],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [],
+    },
+    "errors": {},
+    "services": {},
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -2936,6 +3242,159 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "types": [
+                "app:types/GetAppResponse"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "commons:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "types": [
+                "commons:types/AppId",
+                "commons:types/Deployment"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage",
+            "commons:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -2974,8 +3433,8 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "app:types/GetAppResponse": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -3536,7 +3995,7 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/AppId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -3654,7 +4113,7 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
                 }
             ]
         },
-        {
+        "commons:types/Deployment": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -3888,9 +4347,9 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
             ],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [],
+    },
+    "errors": {},
+    "services": {},
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -3917,6 +4376,159 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "types": [
+                "app:types/GetAppResponse"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "commons:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "types": [
+                "commons:types/AppId",
+                "commons:types/Deployment"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage",
+            "commons:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -3950,10 +4562,10 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"java"} 1`] = 
         "schemes": []
     },
     "headers": [],
-    "types": [],
-    "errors": [],
-    "services": [
-        {
+    "types": {},
+    "errors": {},
+    "services": {
+        "app:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -4011,7 +4623,7 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"java"} 1`] = 
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -4144,6 +4756,87 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"java"} 1`] = 
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "service": "app:service",
+            "types": [],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -4177,10 +4870,10 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"python"} 1`] 
         "schemes": []
     },
     "headers": [],
-    "types": [],
-    "errors": [],
-    "services": [
-        {
+    "types": {},
+    "errors": {},
+    "services": {
+        "app:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -4238,7 +4931,7 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"python"} 1`] 
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -4371,6 +5064,87 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"python"} 1`] 
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "service": "app:service",
+            "types": [],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -4404,10 +5178,10 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"typescript"} 
         "schemes": []
     },
     "headers": [],
-    "types": [],
-    "errors": [],
-    "services": [
-        {
+    "types": {},
+    "errors": {},
+    "services": {
+        "app:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -4465,7 +5239,7 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"typescript"} 
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -4598,6 +5372,87 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"typescript"} 
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "service": "app:service",
+            "types": [],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -4631,10 +5486,10 @@ exports[`ir {"fixtureName":"multiple-environment-urls"} 1`] = `
         "schemes": []
     },
     "headers": [],
-    "types": [],
-    "errors": [],
-    "services": [
-        {
+    "types": {},
+    "errors": {},
+    "services": {
+        "app:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -4692,7 +5547,7 @@ exports[`ir {"fixtureName":"multiple-environment-urls"} 1`] = `
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -4825,6 +5680,87 @@ exports[`ir {"fixtureName":"multiple-environment-urls"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "app:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "app",
+                        "camelCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "app",
+                            "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "APP",
+                            "safeName": "APP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "App",
+                            "safeName": "App"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "app",
+                    "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "app",
+                "camelCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "snakeCase": {
+                    "unsafeName": "app",
+                    "safeName": "app"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "APP",
+                    "safeName": "APP"
+                },
+                "pascalCase": {
+                    "unsafeName": "App",
+                    "safeName": "App"
+                }
+            },
+            "service": "app:service",
+            "types": [],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "app:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -4862,8 +5798,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "nested:types/Response": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -5113,7 +6049,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
             ],
             "examples": []
         },
-        {
+        "nested:types/Product": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -5226,7 +6162,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "nested:types/StringAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -5344,10 +6280,10 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "nested:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -5901,7 +6837,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -5928,6 +6864,91 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "nested:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "nested",
+                    "camelCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED",
+                        "safeName": "NESTED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Nested",
+                        "safeName": "Nested"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "nested",
+                "camelCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED",
+                    "safeName": "NESTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Nested",
+                    "safeName": "Nested"
+                }
+            },
+            "service": "nested:service",
+            "types": [
+                "nested:types/Response",
+                "nested:types/Product",
+                "nested:types/StringAlias"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "nested:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -5965,8 +6986,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "nested:types/Response": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -6216,7 +7237,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
             ],
             "examples": []
         },
-        {
+        "nested:types/Product": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -6329,7 +7350,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "nested:types/StringAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -6447,10 +7468,10 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "nested:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -7004,7 +8025,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -7031,6 +8052,91 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "nested:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "nested",
+                    "camelCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED",
+                        "safeName": "NESTED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Nested",
+                        "safeName": "Nested"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "nested",
+                "camelCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED",
+                    "safeName": "NESTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Nested",
+                    "safeName": "Nested"
+                }
+            },
+            "service": "nested:service",
+            "types": [
+                "nested:types/Response",
+                "nested:types/Product",
+                "nested:types/StringAlias"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "nested:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -7068,8 +8174,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "nested:types/Response": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -7319,7 +8425,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
             ],
             "examples": []
         },
-        {
+        "nested:types/Product": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -7432,7 +8538,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "nested:types/StringAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -7550,10 +8656,10 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "nested:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -8107,7 +9213,7 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -8134,6 +9240,91 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "nested:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "nested",
+                    "camelCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED",
+                        "safeName": "NESTED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Nested",
+                        "safeName": "Nested"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "nested",
+                "camelCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED",
+                    "safeName": "NESTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Nested",
+                    "safeName": "Nested"
+                }
+            },
+            "service": "nested:service",
+            "types": [
+                "nested:types/Response",
+                "nested:types/Product",
+                "nested:types/StringAlias"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "nested:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -8171,8 +9362,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
         ]
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "nested:types/Response": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -8422,7 +9613,7 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
             ],
             "examples": []
         },
-        {
+        "nested:types/Product": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -8535,7 +9726,7 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "nested:types/StringAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -8653,10 +9844,10 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "nested:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -9210,7 +10401,7 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -9237,6 +10428,91 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "nested:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "nested",
+                    "camelCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nested",
+                        "safeName": "nested"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NESTED",
+                        "safeName": "NESTED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Nested",
+                        "safeName": "Nested"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "nested",
+                "camelCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "snakeCase": {
+                    "unsafeName": "nested",
+                    "safeName": "nested"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "NESTED",
+                    "safeName": "NESTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Nested",
+                    "safeName": "Nested"
+                }
+            },
+            "service": "nested:service",
+            "types": [
+                "nested:types/Response",
+                "nested:types/Product",
+                "nested:types/StringAlias"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "nested:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -9270,8 +10546,8 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
         "schemes": []
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "importer:types/Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -9585,7 +10861,7 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
             ],
             "examples": []
         },
-        {
+        ":types/RootString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -9628,7 +10904,7 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "package:types/PackageString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -9711,10 +10987,10 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
             "referencedTypes": [],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        ":service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -9770,7 +11046,7 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "package:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -9828,7 +11104,7 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -9855,6 +11131,163 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "importer:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "importer:types/Foo"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "package:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ]
+            },
+            "name": {
+                "originalName": "package",
+                "camelCase": {
+                    "unsafeName": "package",
+                    "safeName": "package_"
+                },
+                "snakeCase": {
+                    "unsafeName": "package",
+                    "safeName": "package_"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PACKAGE",
+                    "safeName": "PACKAGE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Package",
+                    "safeName": "Package"
+                }
+            },
+            "service": "package:service",
+            "types": [
+                "package:types/PackageString"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "service": ":service",
+        "types": [
+            ":types/RootString"
+        ],
+        "errors": [],
+        "subpackages": [
+            "importer:subpackage",
+            "package:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -9888,8 +11321,8 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
         "schemes": []
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "importer:types/Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10203,7 +11636,7 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
             ],
             "examples": []
         },
-        {
+        ":types/RootString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10246,7 +11679,7 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "package:types/PackageString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10329,10 +11762,10 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
             "referencedTypes": [],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        ":service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10388,7 +11821,7 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "package:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10446,7 +11879,7 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -10473,6 +11906,163 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "importer:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "importer:types/Foo"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "package:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ]
+            },
+            "name": {
+                "originalName": "package",
+                "camelCase": {
+                    "unsafeName": "package",
+                    "safeName": "package"
+                },
+                "snakeCase": {
+                    "unsafeName": "package",
+                    "safeName": "package"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PACKAGE",
+                    "safeName": "PACKAGE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Package",
+                    "safeName": "Package"
+                }
+            },
+            "service": "package:service",
+            "types": [
+                "package:types/PackageString"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "service": ":service",
+        "types": [
+            ":types/RootString"
+        ],
+        "errors": [],
+        "subpackages": [
+            "importer:subpackage",
+            "package:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -10506,8 +12096,8 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
         "schemes": []
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "importer:types/Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10821,7 +12411,7 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
             ],
             "examples": []
         },
-        {
+        ":types/RootString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10864,7 +12454,7 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "package:types/PackageString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -10947,10 +12537,10 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
             "referencedTypes": [],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        ":service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11006,7 +12596,7 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "package:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11064,7 +12654,7 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -11091,6 +12681,163 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "importer:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "importer:types/Foo"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "package:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package_"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ]
+            },
+            "name": {
+                "originalName": "package",
+                "camelCase": {
+                    "unsafeName": "package",
+                    "safeName": "package_"
+                },
+                "snakeCase": {
+                    "unsafeName": "package",
+                    "safeName": "package_"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PACKAGE",
+                    "safeName": "PACKAGE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Package",
+                    "safeName": "Package"
+                }
+            },
+            "service": "package:service",
+            "types": [
+                "package:types/PackageString"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "service": ":service",
+        "types": [
+            ":types/RootString"
+        ],
+        "errors": [],
+        "subpackages": [
+            "importer:subpackage",
+            "package:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -11124,8 +12871,8 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
         "schemes": []
     },
     "headers": [],
-    "types": [
-        {
+    "types": {
+        "importer:types/Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11439,7 +13186,7 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
             ],
             "examples": []
         },
-        {
+        ":types/RootString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11482,7 +13229,7 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "package:types/PackageString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11565,10 +13312,10 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
             "referencedTypes": [],
             "examples": []
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        ":service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11624,7 +13371,7 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                 }
             ]
         },
-        {
+        "package:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11682,7 +13429,7 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
             "pathParameters": [],
             "endpoints": []
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -11709,6 +13456,163 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
     },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
+    },
+    "subpackages": {
+        "importer:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "importer:types/Foo"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "package:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "package",
+                        "camelCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "package",
+                            "safeName": "package"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PACKAGE",
+                            "safeName": "PACKAGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Package",
+                            "safeName": "Package"
+                        }
+                    }
+                ]
+            },
+            "name": {
+                "originalName": "package",
+                "camelCase": {
+                    "unsafeName": "package",
+                    "safeName": "package"
+                },
+                "snakeCase": {
+                    "unsafeName": "package",
+                    "safeName": "package"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PACKAGE",
+                    "safeName": "PACKAGE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Package",
+                    "safeName": "Package"
+                }
+            },
+            "service": "package:service",
+            "types": [
+                "package:types/PackageString"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "service": ":service",
+        "types": [
+            ":types/RootString"
+        ],
+        "errors": [],
+        "subpackages": [
+            "importer:subpackage",
+            "package:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -11775,8 +13679,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -11891,7 +13795,7 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -12260,10 +14164,10 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -13323,7 +15227,7 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -13394,6 +15298,90 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/MovieId",
+                "imdb:types/CreateMovieRequest"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -13460,8 +15448,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -13984,7 +15972,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/Age": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -14102,7 +16090,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/LiteralString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -14196,7 +16184,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/CurrencyAmount": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -14295,7 +16283,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -14410,7 +16398,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/ActorId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -14492,7 +16480,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/Movie": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -15105,7 +17093,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -15474,7 +17462,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/DirectorWrapper": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -16158,7 +18146,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/Person": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -17144,7 +19132,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/RecursiveType": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -18762,9 +20750,9 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         }
-    ],
-    "errors": [
-        {
+    },
+    "errors": {
+        "imdb:errors/NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -18857,9 +20845,9 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 "_type": "primitive"
             }
         }
-    ],
-    "services": [
-        {
+    },
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -21091,7 +23079,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -21162,6 +23150,170 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "director:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "director",
+                        "camelCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTOR",
+                            "safeName": "DIRECTOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Director",
+                            "safeName": "Director"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "director",
+                    "camelCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DIRECTOR",
+                        "safeName": "DIRECTOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Director",
+                        "safeName": "Director"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "director",
+                "camelCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "snakeCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DIRECTOR",
+                    "safeName": "DIRECTOR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Director",
+                    "safeName": "Director"
+                }
+            },
+            "types": [
+                "director:types/Director",
+                "director:types/Age",
+                "director:types/LiteralString"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/CurrencyAmount",
+                "imdb:types/MovieId",
+                "imdb:types/ActorId",
+                "imdb:types/Movie",
+                "imdb:types/CreateMovieRequest",
+                "imdb:types/DirectorWrapper",
+                "imdb:types/Person",
+                "imdb:types/RecursiveType"
+            ],
+            "errors": [
+                "imdb:errors/NotFoundError"
+            ],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "director:subpackage",
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -21228,8 +23380,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -21344,7 +23496,7 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -21713,10 +23865,10 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -22776,7 +24928,7 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -22847,6 +24999,90 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/MovieId",
+                "imdb:types/CreateMovieRequest"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -22913,8 +25149,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -23437,7 +25673,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/Age": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -23555,7 +25791,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/LiteralString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -23649,7 +25885,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/CurrencyAmount": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -23748,7 +25984,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -23863,7 +26099,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/ActorId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -23945,7 +26181,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/Movie": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -24558,7 +26794,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -24927,7 +27163,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/DirectorWrapper": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -25611,7 +27847,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/Person": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -26597,7 +28833,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/RecursiveType": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -28215,9 +30451,9 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         }
-    ],
-    "errors": [
-        {
+    },
+    "errors": {
+        "imdb:errors/NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -28310,9 +30546,9 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 "_type": "primitive"
             }
         }
-    ],
-    "services": [
-        {
+    },
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -30544,7 +32780,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -30615,6 +32851,170 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "director:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "director",
+                        "camelCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTOR",
+                            "safeName": "DIRECTOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Director",
+                            "safeName": "Director"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "director",
+                    "camelCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DIRECTOR",
+                        "safeName": "DIRECTOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Director",
+                        "safeName": "Director"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "director",
+                "camelCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "snakeCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DIRECTOR",
+                    "safeName": "DIRECTOR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Director",
+                    "safeName": "Director"
+                }
+            },
+            "types": [
+                "director:types/Director",
+                "director:types/Age",
+                "director:types/LiteralString"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/CurrencyAmount",
+                "imdb:types/MovieId",
+                "imdb:types/ActorId",
+                "imdb:types/Movie",
+                "imdb:types/CreateMovieRequest",
+                "imdb:types/DirectorWrapper",
+                "imdb:types/Person",
+                "imdb:types/RecursiveType"
+            ],
+            "errors": [
+                "imdb:errors/NotFoundError"
+            ],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "director:subpackage",
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -30681,8 +33081,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -30797,7 +33197,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -31166,10 +33566,10 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 }
             ]
         }
-    ],
-    "errors": [],
-    "services": [
-        {
+    },
+    "errors": {},
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -32229,7 +34629,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -32300,6 +34700,90 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/MovieId",
+                "imdb:types/CreateMovieRequest"
+            ],
+            "errors": [],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -32366,8 +34850,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -32890,7 +35374,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/Age": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -33008,7 +35492,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/LiteralString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -33102,7 +35586,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/CurrencyAmount": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -33201,7 +35685,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -33316,7 +35800,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/ActorId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -33398,7 +35882,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/Movie": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -34011,7 +36495,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -34380,7 +36864,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/DirectorWrapper": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -35064,7 +37548,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/Person": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -36050,7 +38534,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/RecursiveType": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -37668,9 +40152,9 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         }
-    ],
-    "errors": [
-        {
+    },
+    "errors": {
+        "imdb:errors/NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -37763,9 +40247,9 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 "_type": "primitive"
             }
         }
-    ],
-    "services": [
-        {
+    },
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -39997,7 +42481,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -40069,6 +42553,170 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
         },
         "type": "property"
     },
+    "subpackages": {
+        "director:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "director",
+                        "camelCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTOR",
+                            "safeName": "DIRECTOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Director",
+                            "safeName": "Director"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "director",
+                    "camelCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DIRECTOR",
+                        "safeName": "DIRECTOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Director",
+                        "safeName": "Director"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "director",
+                "camelCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "snakeCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DIRECTOR",
+                    "safeName": "DIRECTOR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Director",
+                    "safeName": "Director"
+                }
+            },
+            "types": [
+                "director:types/Director",
+                "director:types/Age",
+                "director:types/LiteralString"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/CurrencyAmount",
+                "imdb:types/MovieId",
+                "imdb:types/ActorId",
+                "imdb:types/Movie",
+                "imdb:types/CreateMovieRequest",
+                "imdb:types/DirectorWrapper",
+                "imdb:types/Person",
+                "imdb:types/RecursiveType"
+            ],
+            "errors": [
+                "imdb:errors/NotFoundError"
+            ],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "director:subpackage",
+            "imdb:subpackage"
+        ]
+    },
     "sdkConfig": {
         "isAuthMandatory": false
     }
@@ -40134,8 +42782,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -40658,7 +43306,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/Age": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -40776,7 +43424,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "director:types/LiteralString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -40870,7 +43518,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/CurrencyAmount": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -40969,7 +43617,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -41084,7 +43732,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/ActorId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -41166,7 +43814,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/Movie": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -41779,7 +44427,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -42148,7 +44796,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/DirectorWrapper": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -42832,7 +45480,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/Person": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -43818,7 +46466,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         },
-        {
+        "imdb:types/RecursiveType": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -45436,9 +48084,9 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         }
-    ],
-    "errors": [
-        {
+    },
+    "errors": {
+        "imdb:errors/NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -45531,9 +48179,9 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 "_type": "primitive"
             }
         }
-    ],
-    "services": [
-        {
+    },
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -47765,7 +50413,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -47836,6 +50484,170 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "director:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "director",
+                        "camelCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTOR",
+                            "safeName": "DIRECTOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Director",
+                            "safeName": "Director"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "director",
+                    "camelCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DIRECTOR",
+                        "safeName": "DIRECTOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Director",
+                        "safeName": "Director"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "director",
+                "camelCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "snakeCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DIRECTOR",
+                    "safeName": "DIRECTOR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Director",
+                    "safeName": "Director"
+                }
+            },
+            "types": [
+                "director:types/Director",
+                "director:types/Age",
+                "director:types/LiteralString"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/CurrencyAmount",
+                "imdb:types/MovieId",
+                "imdb:types/ActorId",
+                "imdb:types/Movie",
+                "imdb:types/CreateMovieRequest",
+                "imdb:types/DirectorWrapper",
+                "imdb:types/Person",
+                "imdb:types/RecursiveType"
+            ],
+            "errors": [
+                "imdb:errors/NotFoundError"
+            ],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "director:subpackage",
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -47902,8 +50714,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             }
         }
     ],
-    "types": [
-        {
+    "types": {
+        "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -48426,7 +51238,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "director:types/Age": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -48544,7 +51356,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "director:types/LiteralString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -48638,7 +51450,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/CurrencyAmount": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -48737,7 +51549,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "imdb:types/MovieId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -48852,7 +51664,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "imdb:types/ActorId": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -48934,7 +51746,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "referencedTypes": [],
             "examples": []
         },
-        {
+        "imdb:types/Movie": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -49547,7 +52359,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "imdb:types/CreateMovieRequest": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -49916,7 +52728,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "imdb:types/DirectorWrapper": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -50600,7 +53412,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "imdb:types/Person": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -51586,7 +54398,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         },
-        {
+        "imdb:types/RecursiveType": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -53204,9 +56016,9 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         }
-    ],
-    "errors": [
-        {
+    },
+    "errors": {
+        "imdb:errors/NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -53299,9 +56111,9 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 "_type": "primitive"
             }
         }
-    ],
-    "services": [
-        {
+    },
+    "services": {
+        "imdb:service": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -55533,7 +58345,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 }
             ]
         }
-    ],
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -55604,6 +58416,170 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "wireValue": "content"
         },
         "type": "property"
+    },
+    "subpackages": {
+        "director:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "director",
+                        "camelCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "director",
+                            "safeName": "director"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DIRECTOR",
+                            "safeName": "DIRECTOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Director",
+                            "safeName": "Director"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "director",
+                    "camelCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "director",
+                        "safeName": "director"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DIRECTOR",
+                        "safeName": "DIRECTOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Director",
+                        "safeName": "Director"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "director",
+                "camelCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "snakeCase": {
+                    "unsafeName": "director",
+                    "safeName": "director"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DIRECTOR",
+                    "safeName": "DIRECTOR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Director",
+                    "safeName": "Director"
+                }
+            },
+            "types": [
+                "director:types/Director",
+                "director:types/Age",
+                "director:types/LiteralString"
+            ],
+            "errors": [],
+            "subpackages": []
+        },
+        "imdb:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "service": "imdb:service",
+            "types": [
+                "imdb:types/CurrencyAmount",
+                "imdb:types/MovieId",
+                "imdb:types/ActorId",
+                "imdb:types/Movie",
+                "imdb:types/CreateMovieRequest",
+                "imdb:types/DirectorWrapper",
+                "imdb:types/Person",
+                "imdb:types/RecursiveType"
+            ],
+            "errors": [
+                "imdb:errors/NotFoundError"
+            ],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "director:subpackage",
+            "imdb:subpackage"
+        ]
     },
     "sdkConfig": {
         "isAuthMandatory": false

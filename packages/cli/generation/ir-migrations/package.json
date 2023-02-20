@@ -34,7 +34,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.914",
+    "@fern-fern/ir-model": "0.0.1048",
     "@fern-fern/ir-v1-model": "0.0.1",
     "@fern-fern/ir-v2-model": "0.0.2",
     "@fern-fern/ir-v3-model": "0.0.4",
@@ -42,6 +42,7 @@
     "@fern-fern/ir-v5-model": "0.0.3",
     "@fern-fern/ir-v6-model": "0.0.33",
     "@fern-fern/ir-v7-model": "0.0.2",
+    "@fern-fern/ir-v8-model": "0.0.1",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

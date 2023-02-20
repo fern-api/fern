@@ -7,7 +7,7 @@ export async function listYamlFilesForWorkspace(absolutePathToDefinition: Absolu
     const files: FernFile[] = [];
 
     const filepaths = (
-        await glob("**/*.yml", {
+        await glob("**/*.{yml,yaml}", {
             cwd: absolutePathToDefinition,
         })
     ).map(RelativeFilePath.of);

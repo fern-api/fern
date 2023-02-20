@@ -56,13 +56,30 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
   "errorDiscriminationStrategy": {
     "type": "statusCode",
   },
-  "errors": [],
+  "errors": {},
   "headers": [],
+  "rootPackage": {
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "service": undefined,
+    "subpackages": [
+      "commons:subpackage",
+      "folder-a:subpackage",
+      "folder-b:subpackage",
+      "folder-c:subpackage",
+      "foo:subpackage",
+    ],
+    "types": [],
+  },
   "sdkConfig": {
     "isAuthMandatory": false,
   },
-  "services": [
-    {
+  "services": {
+    "folder-a/service:service": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -310,7 +327,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "pathParameters": [],
     },
-    {
+    "foo:service": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -637,9 +654,695 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "pathParameters": [],
     },
-  ],
-  "types": [
-    {
+  },
+  "subpackages": {
+    "commons:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "commons",
+            "unsafeName": "commons",
+          },
+          "originalName": "commons",
+          "pascalCase": {
+            "safeName": "Commons",
+            "unsafeName": "Commons",
+          },
+          "screamingSnakeCase": {
+            "safeName": "COMMONS",
+            "unsafeName": "COMMONS",
+          },
+          "snakeCase": {
+            "safeName": "commons",
+            "unsafeName": "commons",
+          },
+        },
+        "packagePath": [],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "commons",
+          "unsafeName": "commons",
+        },
+        "originalName": "commons",
+        "pascalCase": {
+          "safeName": "Commons",
+          "unsafeName": "Commons",
+        },
+        "screamingSnakeCase": {
+          "safeName": "COMMONS",
+          "unsafeName": "COMMONS",
+        },
+        "snakeCase": {
+          "safeName": "commons",
+          "unsafeName": "commons",
+        },
+      },
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "commons:types/Imported",
+      ],
+    },
+    "folder-a/service:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "folderA",
+              "unsafeName": "folderA",
+            },
+            "originalName": "folder-a",
+            "pascalCase": {
+              "safeName": "FolderA",
+              "unsafeName": "FolderA",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_A",
+              "unsafeName": "FOLDER_A",
+            },
+            "snakeCase": {
+              "safeName": "folder_a",
+              "unsafeName": "folder_a",
+            },
+          },
+          {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "service",
+            "unsafeName": "service",
+          },
+          "originalName": "service",
+          "pascalCase": {
+            "safeName": "Service",
+            "unsafeName": "Service",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SERVICE",
+            "unsafeName": "SERVICE",
+          },
+          "snakeCase": {
+            "safeName": "service",
+            "unsafeName": "service",
+          },
+        },
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderA",
+              "unsafeName": "folderA",
+            },
+            "originalName": "folder-a",
+            "pascalCase": {
+              "safeName": "FolderA",
+              "unsafeName": "FolderA",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_A",
+              "unsafeName": "FOLDER_A",
+            },
+            "snakeCase": {
+              "safeName": "folder_a",
+              "unsafeName": "folder_a",
+            },
+          },
+        ],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "service",
+          "unsafeName": "service",
+        },
+        "originalName": "service",
+        "pascalCase": {
+          "safeName": "Service",
+          "unsafeName": "Service",
+        },
+        "screamingSnakeCase": {
+          "safeName": "SERVICE",
+          "unsafeName": "SERVICE",
+        },
+        "snakeCase": {
+          "safeName": "service",
+          "unsafeName": "service",
+        },
+      },
+      "service": "folder-a/service:service",
+      "subpackages": [],
+      "types": [
+        "folder-a/service:types/Response",
+      ],
+    },
+    "folder-a:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "folderA",
+              "unsafeName": "folderA",
+            },
+            "originalName": "folder-a",
+            "pascalCase": {
+              "safeName": "FolderA",
+              "unsafeName": "FolderA",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_A",
+              "unsafeName": "FOLDER_A",
+            },
+            "snakeCase": {
+              "safeName": "folder_a",
+              "unsafeName": "folder_a",
+            },
+          },
+        ],
+        "file": undefined,
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderA",
+              "unsafeName": "folderA",
+            },
+            "originalName": "folder-a",
+            "pascalCase": {
+              "safeName": "FolderA",
+              "unsafeName": "FolderA",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_A",
+              "unsafeName": "FOLDER_A",
+            },
+            "snakeCase": {
+              "safeName": "folder_a",
+              "unsafeName": "folder_a",
+            },
+          },
+        ],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "folderA",
+          "unsafeName": "folderA",
+        },
+        "originalName": "folder-a",
+        "pascalCase": {
+          "safeName": "FolderA",
+          "unsafeName": "FolderA",
+        },
+        "screamingSnakeCase": {
+          "safeName": "FOLDER_A",
+          "unsafeName": "FOLDER_A",
+        },
+        "snakeCase": {
+          "safeName": "folder_a",
+          "unsafeName": "folder_a",
+        },
+      },
+      "service": undefined,
+      "subpackages": [
+        "folder-a/service:subpackage",
+      ],
+      "types": [],
+    },
+    "folder-b/common:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "folderB",
+              "unsafeName": "folderB",
+            },
+            "originalName": "folder-b",
+            "pascalCase": {
+              "safeName": "FolderB",
+              "unsafeName": "FolderB",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_B",
+              "unsafeName": "FOLDER_B",
+            },
+            "snakeCase": {
+              "safeName": "folder_b",
+              "unsafeName": "folder_b",
+            },
+          },
+          {
+            "camelCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+            "originalName": "common",
+            "pascalCase": {
+              "safeName": "Common",
+              "unsafeName": "Common",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON",
+              "unsafeName": "COMMON",
+            },
+            "snakeCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "common",
+            "unsafeName": "common",
+          },
+          "originalName": "common",
+          "pascalCase": {
+            "safeName": "Common",
+            "unsafeName": "Common",
+          },
+          "screamingSnakeCase": {
+            "safeName": "COMMON",
+            "unsafeName": "COMMON",
+          },
+          "snakeCase": {
+            "safeName": "common",
+            "unsafeName": "common",
+          },
+        },
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderB",
+              "unsafeName": "folderB",
+            },
+            "originalName": "folder-b",
+            "pascalCase": {
+              "safeName": "FolderB",
+              "unsafeName": "FolderB",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_B",
+              "unsafeName": "FOLDER_B",
+            },
+            "snakeCase": {
+              "safeName": "folder_b",
+              "unsafeName": "folder_b",
+            },
+          },
+        ],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "common",
+          "unsafeName": "common",
+        },
+        "originalName": "common",
+        "pascalCase": {
+          "safeName": "Common",
+          "unsafeName": "Common",
+        },
+        "screamingSnakeCase": {
+          "safeName": "COMMON",
+          "unsafeName": "COMMON",
+        },
+        "snakeCase": {
+          "safeName": "common",
+          "unsafeName": "common",
+        },
+      },
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "folder-b/common:types/Foo",
+      ],
+    },
+    "folder-b:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "folderB",
+              "unsafeName": "folderB",
+            },
+            "originalName": "folder-b",
+            "pascalCase": {
+              "safeName": "FolderB",
+              "unsafeName": "FolderB",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_B",
+              "unsafeName": "FOLDER_B",
+            },
+            "snakeCase": {
+              "safeName": "folder_b",
+              "unsafeName": "folder_b",
+            },
+          },
+        ],
+        "file": undefined,
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderB",
+              "unsafeName": "folderB",
+            },
+            "originalName": "folder-b",
+            "pascalCase": {
+              "safeName": "FolderB",
+              "unsafeName": "FolderB",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_B",
+              "unsafeName": "FOLDER_B",
+            },
+            "snakeCase": {
+              "safeName": "folder_b",
+              "unsafeName": "folder_b",
+            },
+          },
+        ],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "folderB",
+          "unsafeName": "folderB",
+        },
+        "originalName": "folder-b",
+        "pascalCase": {
+          "safeName": "FolderB",
+          "unsafeName": "FolderB",
+        },
+        "screamingSnakeCase": {
+          "safeName": "FOLDER_B",
+          "unsafeName": "FOLDER_B",
+        },
+        "snakeCase": {
+          "safeName": "folder_b",
+          "unsafeName": "folder_b",
+        },
+      },
+      "service": undefined,
+      "subpackages": [
+        "folder-b/common:subpackage",
+      ],
+      "types": [],
+    },
+    "folder-c/common:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "folderC",
+              "unsafeName": "folderC",
+            },
+            "originalName": "folder-c",
+            "pascalCase": {
+              "safeName": "FolderC",
+              "unsafeName": "FolderC",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_C",
+              "unsafeName": "FOLDER_C",
+            },
+            "snakeCase": {
+              "safeName": "folder_c",
+              "unsafeName": "folder_c",
+            },
+          },
+          {
+            "camelCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+            "originalName": "common",
+            "pascalCase": {
+              "safeName": "Common",
+              "unsafeName": "Common",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON",
+              "unsafeName": "COMMON",
+            },
+            "snakeCase": {
+              "safeName": "common",
+              "unsafeName": "common",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "common",
+            "unsafeName": "common",
+          },
+          "originalName": "common",
+          "pascalCase": {
+            "safeName": "Common",
+            "unsafeName": "Common",
+          },
+          "screamingSnakeCase": {
+            "safeName": "COMMON",
+            "unsafeName": "COMMON",
+          },
+          "snakeCase": {
+            "safeName": "common",
+            "unsafeName": "common",
+          },
+        },
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderC",
+              "unsafeName": "folderC",
+            },
+            "originalName": "folder-c",
+            "pascalCase": {
+              "safeName": "FolderC",
+              "unsafeName": "FolderC",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_C",
+              "unsafeName": "FOLDER_C",
+            },
+            "snakeCase": {
+              "safeName": "folder_c",
+              "unsafeName": "folder_c",
+            },
+          },
+        ],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "common",
+          "unsafeName": "common",
+        },
+        "originalName": "common",
+        "pascalCase": {
+          "safeName": "Common",
+          "unsafeName": "Common",
+        },
+        "screamingSnakeCase": {
+          "safeName": "COMMON",
+          "unsafeName": "COMMON",
+        },
+        "snakeCase": {
+          "safeName": "common",
+          "unsafeName": "common",
+        },
+      },
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "folder-c/common:types/Foo",
+      ],
+    },
+    "folder-c:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "folderC",
+              "unsafeName": "folderC",
+            },
+            "originalName": "folder-c",
+            "pascalCase": {
+              "safeName": "FolderC",
+              "unsafeName": "FolderC",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_C",
+              "unsafeName": "FOLDER_C",
+            },
+            "snakeCase": {
+              "safeName": "folder_c",
+              "unsafeName": "folder_c",
+            },
+          },
+        ],
+        "file": undefined,
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderC",
+              "unsafeName": "folderC",
+            },
+            "originalName": "folder-c",
+            "pascalCase": {
+              "safeName": "FolderC",
+              "unsafeName": "FolderC",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_C",
+              "unsafeName": "FOLDER_C",
+            },
+            "snakeCase": {
+              "safeName": "folder_c",
+              "unsafeName": "folder_c",
+            },
+          },
+        ],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "folderC",
+          "unsafeName": "folderC",
+        },
+        "originalName": "folder-c",
+        "pascalCase": {
+          "safeName": "FolderC",
+          "unsafeName": "FolderC",
+        },
+        "screamingSnakeCase": {
+          "safeName": "FOLDER_C",
+          "unsafeName": "FOLDER_C",
+        },
+        "snakeCase": {
+          "safeName": "folder_c",
+          "unsafeName": "folder_c",
+        },
+      },
+      "service": undefined,
+      "subpackages": [
+        "folder-c/common:subpackage",
+      ],
+      "types": [],
+    },
+    "foo:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+            "originalName": "foo",
+            "pascalCase": {
+              "safeName": "Foo",
+              "unsafeName": "Foo",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOO",
+              "unsafeName": "FOO",
+            },
+            "snakeCase": {
+              "safeName": "foo",
+              "unsafeName": "foo",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+          "originalName": "foo",
+          "pascalCase": {
+            "safeName": "Foo",
+            "unsafeName": "Foo",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FOO",
+            "unsafeName": "FOO",
+          },
+          "snakeCase": {
+            "safeName": "foo",
+            "unsafeName": "foo",
+          },
+        },
+        "packagePath": [],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "foo",
+          "unsafeName": "foo",
+        },
+        "originalName": "foo",
+        "pascalCase": {
+          "safeName": "Foo",
+          "unsafeName": "Foo",
+        },
+        "screamingSnakeCase": {
+          "safeName": "FOO",
+          "unsafeName": "FOO",
+        },
+        "snakeCase": {
+          "safeName": "foo",
+          "unsafeName": "foo",
+        },
+      },
+      "service": "foo:service",
+      "subpackages": [],
+      "types": [
+        "foo:types/ImportingType",
+        "foo:types/OptionalString",
+      ],
+    },
+  },
+  "types": {
+    "commons:types/Imported": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -723,7 +1426,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         },
       },
     },
-    {
+    "folder-a/service:types/Response": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1187,7 +1890,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    {
+    "folder-b/common:types/Foo": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1548,7 +2251,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    {
+    "folder-c/common:types/Foo": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1699,7 +2402,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    {
+    "foo:types/ImportingType": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1937,7 +2640,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    {
+    "foo:types/OptionalString": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2033,7 +2736,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         },
       },
     },
-  ],
+  },
 }
 `;
 
@@ -2093,14 +2796,344 @@ exports[`generateIntermediateRepresentation packages 1`] = `
   "errorDiscriminationStrategy": {
     "type": "statusCode",
   },
-  "errors": [],
+  "errors": {},
   "headers": [],
+  "rootPackage": {
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "service": undefined,
+    "subpackages": [
+      "commons:subpackage",
+      "importer:subpackage",
+    ],
+    "types": [
+      ":types/MyAlias",
+    ],
+  },
   "sdkConfig": {
     "isAuthMandatory": false,
   },
-  "services": [],
-  "types": [
-    {
+  "services": {},
+  "subpackages": {
+    "commons:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+            "originalName": "commons",
+            "pascalCase": {
+              "safeName": "Commons",
+              "unsafeName": "Commons",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMONS",
+              "unsafeName": "COMMONS",
+            },
+            "snakeCase": {
+              "safeName": "commons",
+              "unsafeName": "commons",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "commons",
+            "unsafeName": "commons",
+          },
+          "originalName": "commons",
+          "pascalCase": {
+            "safeName": "Commons",
+            "unsafeName": "Commons",
+          },
+          "screamingSnakeCase": {
+            "safeName": "COMMONS",
+            "unsafeName": "COMMONS",
+          },
+          "snakeCase": {
+            "safeName": "commons",
+            "unsafeName": "commons",
+          },
+        },
+        "packagePath": [],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "commons",
+          "unsafeName": "commons",
+        },
+        "originalName": "commons",
+        "pascalCase": {
+          "safeName": "Commons",
+          "unsafeName": "Commons",
+        },
+        "screamingSnakeCase": {
+          "safeName": "COMMONS",
+          "unsafeName": "COMMONS",
+        },
+        "snakeCase": {
+          "safeName": "commons",
+          "unsafeName": "commons",
+        },
+      },
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "commons:types/CommonType",
+      ],
+    },
+    "importer:subpackage": {
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "importer",
+              "unsafeName": "importer",
+            },
+            "originalName": "importer",
+            "pascalCase": {
+              "safeName": "Importer",
+              "unsafeName": "Importer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "IMPORTER",
+              "unsafeName": "IMPORTER",
+            },
+            "snakeCase": {
+              "safeName": "importer",
+              "unsafeName": "importer",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "importer",
+            "unsafeName": "importer",
+          },
+          "originalName": "importer",
+          "pascalCase": {
+            "safeName": "Importer",
+            "unsafeName": "Importer",
+          },
+          "screamingSnakeCase": {
+            "safeName": "IMPORTER",
+            "unsafeName": "IMPORTER",
+          },
+          "snakeCase": {
+            "safeName": "importer",
+            "unsafeName": "importer",
+          },
+        },
+        "packagePath": [],
+      },
+      "name": {
+        "camelCase": {
+          "safeName": "importer",
+          "unsafeName": "importer",
+        },
+        "originalName": "importer",
+        "pascalCase": {
+          "safeName": "Importer",
+          "unsafeName": "Importer",
+        },
+        "screamingSnakeCase": {
+          "safeName": "IMPORTER",
+          "unsafeName": "IMPORTER",
+        },
+        "snakeCase": {
+          "safeName": "importer",
+          "unsafeName": "importer",
+        },
+      },
+      "service": undefined,
+      "subpackages": [],
+      "types": [
+        "importer:types/MyOtherAlias",
+      ],
+    },
+  },
+  "types": {
+    ":types/MyAlias": {
+      "availability": {
+        "message": undefined,
+        "status": "GENERAL_AVAILABILITY",
+      },
+      "docs": undefined,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "myAlias",
+            "unsafeName": "myAlias",
+          },
+          "originalName": "MyAlias",
+          "pascalCase": {
+            "safeName": "MyAlias",
+            "unsafeName": "MyAlias",
+          },
+          "screamingSnakeCase": {
+            "safeName": "MY_ALIAS",
+            "unsafeName": "MY_ALIAS",
+          },
+          "snakeCase": {
+            "safeName": "my_alias",
+            "unsafeName": "my_alias",
+          },
+        },
+      },
+      "referencedTypes": [
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+            "packagePath": [],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "commonType",
+              "unsafeName": "commonType",
+            },
+            "originalName": "CommonType",
+            "pascalCase": {
+              "safeName": "CommonType",
+              "unsafeName": "CommonType",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON_TYPE",
+              "unsafeName": "COMMON_TYPE",
+            },
+            "snakeCase": {
+              "safeName": "common_type",
+              "unsafeName": "common_type",
+            },
+          },
+        },
+      ],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "named",
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+                "originalName": "commons",
+                "pascalCase": {
+                  "safeName": "Commons",
+                  "unsafeName": "Commons",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMMONS",
+                  "unsafeName": "COMMONS",
+                },
+                "snakeCase": {
+                  "safeName": "commons",
+                  "unsafeName": "commons",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+              "originalName": "commons",
+              "pascalCase": {
+                "safeName": "Commons",
+                "unsafeName": "Commons",
+              },
+              "screamingSnakeCase": {
+                "safeName": "COMMONS",
+                "unsafeName": "COMMONS",
+              },
+              "snakeCase": {
+                "safeName": "commons",
+                "unsafeName": "commons",
+              },
+            },
+            "packagePath": [],
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "commonType",
+              "unsafeName": "commonType",
+            },
+            "originalName": "CommonType",
+            "pascalCase": {
+              "safeName": "CommonType",
+              "unsafeName": "CommonType",
+            },
+            "screamingSnakeCase": {
+              "safeName": "COMMON_TYPE",
+              "unsafeName": "COMMON_TYPE",
+            },
+            "snakeCase": {
+              "safeName": "common_type",
+              "unsafeName": "common_type",
+            },
+          },
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+    "commons:types/CommonType": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2184,7 +3217,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
       },
     },
-    {
+    "importer:types/MyOtherAlias": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2382,178 +3415,6 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
       },
     },
-    {
-      "availability": {
-        "message": undefined,
-        "status": "GENERAL_AVAILABILITY",
-      },
-      "docs": undefined,
-      "examples": [],
-      "name": {
-        "fernFilepath": {
-          "allParts": [],
-          "file": undefined,
-          "packagePath": [],
-        },
-        "name": {
-          "camelCase": {
-            "safeName": "myAlias",
-            "unsafeName": "myAlias",
-          },
-          "originalName": "MyAlias",
-          "pascalCase": {
-            "safeName": "MyAlias",
-            "unsafeName": "MyAlias",
-          },
-          "screamingSnakeCase": {
-            "safeName": "MY_ALIAS",
-            "unsafeName": "MY_ALIAS",
-          },
-          "snakeCase": {
-            "safeName": "my_alias",
-            "unsafeName": "my_alias",
-          },
-        },
-      },
-      "referencedTypes": [
-        {
-          "fernFilepath": {
-            "allParts": [
-              {
-                "camelCase": {
-                  "safeName": "commons",
-                  "unsafeName": "commons",
-                },
-                "originalName": "commons",
-                "pascalCase": {
-                  "safeName": "Commons",
-                  "unsafeName": "Commons",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "COMMONS",
-                  "unsafeName": "COMMONS",
-                },
-                "snakeCase": {
-                  "safeName": "commons",
-                  "unsafeName": "commons",
-                },
-              },
-            ],
-            "file": {
-              "camelCase": {
-                "safeName": "commons",
-                "unsafeName": "commons",
-              },
-              "originalName": "commons",
-              "pascalCase": {
-                "safeName": "Commons",
-                "unsafeName": "Commons",
-              },
-              "screamingSnakeCase": {
-                "safeName": "COMMONS",
-                "unsafeName": "COMMONS",
-              },
-              "snakeCase": {
-                "safeName": "commons",
-                "unsafeName": "commons",
-              },
-            },
-            "packagePath": [],
-          },
-          "name": {
-            "camelCase": {
-              "safeName": "commonType",
-              "unsafeName": "commonType",
-            },
-            "originalName": "CommonType",
-            "pascalCase": {
-              "safeName": "CommonType",
-              "unsafeName": "CommonType",
-            },
-            "screamingSnakeCase": {
-              "safeName": "COMMON_TYPE",
-              "unsafeName": "COMMON_TYPE",
-            },
-            "snakeCase": {
-              "safeName": "common_type",
-              "unsafeName": "common_type",
-            },
-          },
-        },
-      ],
-      "shape": {
-        "_type": "alias",
-        "aliasOf": {
-          "_type": "named",
-          "fernFilepath": {
-            "allParts": [
-              {
-                "camelCase": {
-                  "safeName": "commons",
-                  "unsafeName": "commons",
-                },
-                "originalName": "commons",
-                "pascalCase": {
-                  "safeName": "Commons",
-                  "unsafeName": "Commons",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "COMMONS",
-                  "unsafeName": "COMMONS",
-                },
-                "snakeCase": {
-                  "safeName": "commons",
-                  "unsafeName": "commons",
-                },
-              },
-            ],
-            "file": {
-              "camelCase": {
-                "safeName": "commons",
-                "unsafeName": "commons",
-              },
-              "originalName": "commons",
-              "pascalCase": {
-                "safeName": "Commons",
-                "unsafeName": "Commons",
-              },
-              "screamingSnakeCase": {
-                "safeName": "COMMONS",
-                "unsafeName": "COMMONS",
-              },
-              "snakeCase": {
-                "safeName": "commons",
-                "unsafeName": "commons",
-              },
-            },
-            "packagePath": [],
-          },
-          "name": {
-            "camelCase": {
-              "safeName": "commonType",
-              "unsafeName": "commonType",
-            },
-            "originalName": "CommonType",
-            "pascalCase": {
-              "safeName": "CommonType",
-              "unsafeName": "CommonType",
-            },
-            "screamingSnakeCase": {
-              "safeName": "COMMON_TYPE",
-              "unsafeName": "COMMON_TYPE",
-            },
-            "snakeCase": {
-              "safeName": "common_type",
-              "unsafeName": "common_type",
-            },
-          },
-        },
-        "resolvedType": {
-          "_type": "primitive",
-          "primitive": "STRING",
-        },
-      },
-    },
-  ],
+  },
 }
 `;
