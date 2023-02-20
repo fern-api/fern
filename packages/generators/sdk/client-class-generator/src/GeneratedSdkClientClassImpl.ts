@@ -31,7 +31,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static BASIC_AUTH_OPTION_PROPERTY_NAME = "credentials";
     private static BEARER_OPTION_PROPERTY_NAME = "token";
-    private static CUSTOM_FETCHER_PROPERTY_NAME = "requestHandler";
+    private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
 
     private hasBearerAuth: boolean;
     private hasBasicAuth: boolean;

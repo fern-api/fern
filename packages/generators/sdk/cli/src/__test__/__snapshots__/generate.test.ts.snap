@@ -77026,7 +77026,7 @@ export declare namespace FernApiClient {
     interface Options {
         environment?: environments.FernApiEnvironment | environments.FernApiEnvironmentUrls;
         apiVersion: string;
-        requestHandler?: core.FetchFunction;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -77034,7 +77034,7 @@ export class FernApiClient {
     constructor(private readonly options: FernApiClient.Options) {}
 
     public async getString(): Promise<FernApi.RootString> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
@@ -77136,7 +77136,7 @@ export declare namespace Owner {
     interface Options {
         environment?: environments.FernApiEnvironment | environments.FernApiEnvironmentUrls;
         apiVersion: string;
-        requestHandler?: core.FetchFunction;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -77147,7 +77147,7 @@ export class Owner {
      * @throws {FernApi.OwnerAlreadyExistsError}
      */
     public async create(request: FernApi.CreateOwnerRequest): Promise<void> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin((this.options.environment ?? environments.FernApiEnvironment.Production).serverA, \\"/owner\\"),
             method: \\"POST\\",
             headers: {
@@ -77194,7 +77194,7 @@ export class Owner {
      * @throws {FernApi.OwnerNotFoundError}
      */
     public async get(ownerId: FernApi.OwnerId): Promise<FernApi.Owner> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
                 \`/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
@@ -77241,7 +77241,7 @@ export class Owner {
      * @throws {FernApi.OwnerNotFoundError}
      */
     public async update(ownerId: FernApi.OwnerId, request: FernApi.UpdateOwnerRequest): Promise<FernApi.Owner> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
                 \`/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
@@ -77467,7 +77467,7 @@ export declare namespace Package {
     interface Options {
         environment?: environments.FernApiEnvironment | environments.FernApiEnvironmentUrls;
         apiVersion: string;
-        requestHandler?: core.FetchFunction;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -77475,7 +77475,7 @@ export class Package {
     constructor(private readonly options: Package.Options) {}
 
     public async getString(): Promise<FernApi.package_.PackageString> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
@@ -77567,7 +77567,7 @@ export declare namespace Nested {
     interface Options {
         environment?: environments.FernApiEnvironment | environments.FernApiEnvironmentUrls;
         apiVersion: string;
-        requestHandler?: core.FetchFunction;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -77575,7 +77575,7 @@ export class Nested {
     constructor(private readonly options: Nested.Options) {}
 
     public async getString(): Promise<FernApi.package_.NestedString> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: (this.options.environment ?? environments.FernApiEnvironment.Production).serverA,
             method: \\"GET\\",
             headers: {
@@ -77708,7 +77708,7 @@ export declare namespace Token {
     interface Options {
         environment?: environments.FernApiEnvironment | environments.FernApiEnvironmentUrls;
         apiVersion: string;
-        requestHandler?: core.FetchFunction;
+        fetcher?: core.FetchFunction;
     }
 }
 
@@ -77719,7 +77719,7 @@ export class Token {
      * @throws {FernApi.OwnerNotFoundError}
      */
     public async create(request: FernApi.CreateTokenRequest): Promise<FernApi.CreateTokenResponse> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \\"/tokens/create\\"
@@ -77768,7 +77768,7 @@ export class Token {
      * @throws {FernApi.TokenNotFoundError}
      */
     public async getTokenMetadata(request: FernApi.GetTokenMetadataRequest): Promise<FernApi.TokenMetadata> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \\"/tokens/metadata\\"
@@ -77817,7 +77817,7 @@ export class Token {
      * @throws {FernApi.UnknownError}
      */
     public async getTokensForOwner(ownerId: FernApi.OwnerId): Promise<FernApi.TokenMetadata[]> {
-        const _response = await (this.options.requestHandler ?? core.fetcher)({
+        const _response = await (this.options.fetcher ?? core.fetcher)({
             url: urlJoin(
                 (this.options.environment ?? environments.FernApiEnvironment.Production).serverB,
                 \`/tokens/owner/\${await serializers.OwnerId.jsonOrThrow(ownerId)}\`
