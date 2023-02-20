@@ -19,7 +19,7 @@ export function usePathTitle(path: string): string | undefined {
             return parsedPath.endpoint.path.parts
                 .map((part) =>
                     part._visit({
-                        pathParameter: (pathParameter) => `{${pathParameter}}`,
+                        pathParameter: (pathParameter) => `:${pathParameter}`,
                         literal: (literal) => literal,
                         _other: () => "?",
                     })

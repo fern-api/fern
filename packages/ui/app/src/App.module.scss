@@ -1,7 +1,7 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 body {
-    overscroll-behavior-y: none;
+    overscroll-behavior: none;
     font-family: Actor;
     background-color: rgb(240, 240, 240);
 }

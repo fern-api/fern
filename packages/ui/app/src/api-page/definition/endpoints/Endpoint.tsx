@@ -17,9 +17,12 @@ export declare namespace Endpoint {
 }
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
-    const renderExample = useCallback((example: FernRegistry.ExampleEndpointCall) => {
-        return <EndpointExample example={example} />;
-    }, []);
+    const renderExample = useCallback(
+        (example: FernRegistry.ExampleEndpointCall) => {
+            return <EndpointExample endpoint={endpoint} example={example} />;
+        },
+        [endpoint]
+    );
 
     return (
         <DefinitionPage

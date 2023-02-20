@@ -9,7 +9,7 @@ export declare namespace TwoColumnTableRow {
         verticallyCenterLabel?: boolean;
         labelClassName?: string;
         icon?: IconName | JSX.Element;
-        label: string;
+        label: JSX.Element | string;
     }>;
 }
 

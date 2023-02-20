@@ -27,7 +27,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "start": "vite",
+    "start": "yarn compile && vite",
     "build": "yarn compile && vite build",
     "preview": "yarn compile && vite preview"
   },
