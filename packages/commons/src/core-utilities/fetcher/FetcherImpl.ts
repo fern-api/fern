@@ -13,7 +13,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         originalPathOnDocker: "/assets/fetcher" as const,
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("axios", "^0.27.2");
+            dependencyManager.addDependency("axios", "0.27.2");
         },
     };
 
@@ -52,7 +52,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             _reasonLiteralValue: "unknown",
             message: "errorMessage",
         },
-        _invoke: this.withExportedName("fetcher", (fetcher) => (args: Fetcher.Args) => {
+    };
+
+    public readonly fetcher = {
+        _getReferenceTo: this.withExportedName("fetcher", (fetcher) => () => fetcher.getExpression()),
+        _invoke: (args: Fetcher.Args, { referenceToFetcher }: { referenceToFetcher: ts.Expression }): ts.Expression => {
             const properties: ts.PropertyAssignment[] = [
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.url, args.url),
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.method, args.method),
@@ -83,11 +87,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             }
 
             return ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(fetcher.getExpression(), undefined, [
+                ts.factory.createCallExpression(referenceToFetcher, undefined, [
                     ts.factory.createObjectLiteralExpression(properties, true),
                 ])
             );
-        }),
+        },
     };
 
     public readonly APIResponse = {
@@ -138,6 +142,13 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 )
             );
         }),
+    };
+
+    public FetchFunction = {
+        _getReferenceToType: this.withExportedName(
+            "FetchFunction",
+            (FetchFunction) => () => FetchFunction.getTypeNode()
+        ),
     };
 
     private getReferenceToTypeInFetcherModule(typeName: string) {

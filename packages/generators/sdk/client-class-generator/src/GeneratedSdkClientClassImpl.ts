@@ -21,6 +21,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
+        allowCustomFetcher: boolean;
     }
 }
 
@@ -30,6 +31,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static BASIC_AUTH_OPTION_PROPERTY_NAME = "credentials";
     private static BEARER_OPTION_PROPERTY_NAME = "token";
+    private static CUSTOM_FETCHER_PROPERTY_NAME = "requestHandler";
 
     private hasBearerAuth: boolean;
     private hasBasicAuth: boolean;
@@ -39,6 +41,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private service: AugmentedService;
     private generatedEndpointImplementations: GeneratedEndpointImplementation[];
     private generatedWrappedServices: GeneratedWrappedService[];
+    private allowCustomFetcher: boolean;
 
     constructor({
         serviceClassName,
@@ -49,10 +52,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         errorDiscriminationStrategy,
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
+        allowCustomFetcher,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
         this.apiHeaders = apiHeaders;
+        this.allowCustomFetcher = allowCustomFetcher;
 
         if (service.originalService == null) {
             this.generatedEndpointImplementations = [];
@@ -303,6 +308,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        if (this.allowCustomFetcher) {
+            properties.push({
+                name: GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME,
+                type: getTextOfTsNode(context.base.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
+                hasQuestionToken: true,
+            });
+        }
+
         return {
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
             properties,
@@ -318,6 +331,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ts.factory.createThis(),
             GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
         );
+    }
+
+    public getReferenceToFetcher(context: SdkClientClassContext): ts.Expression {
+        if (this.allowCustomFetcher) {
+            return ts.factory.createBinaryExpression(
+                this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                context.base.coreUtilities.fetcher.fetcher._getReferenceTo()
+            );
+        } else {
+            return context.base.coreUtilities.fetcher.fetcher._getReferenceTo();
+        }
     }
 
     private getReferenceToOption(option: string): ts.Expression {

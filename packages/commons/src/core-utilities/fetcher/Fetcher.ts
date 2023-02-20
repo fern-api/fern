@@ -28,8 +28,16 @@ export interface Fetcher {
             _reasonLiteralValue: "unknown";
             message: "errorMessage";
         };
+    };
 
-        _invoke: (args: Fetcher.Args) => ts.Expression;
+    readonly fetcher: {
+        _getReferenceTo: () => ts.Expression;
+        _invoke: (
+            args: Fetcher.Args,
+            opts: {
+                referenceToFetcher: ts.Expression;
+            }
+        ) => ts.Expression;
     };
 
     readonly APIResponse: {
@@ -51,6 +59,10 @@ export interface Fetcher {
     readonly Supplier: {
         _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
         get: (supplier: ts.Expression) => ts.Expression;
+    };
+
+    readonly FetchFunction: {
+        _getReferenceToType: () => ts.TypeNode;
     };
 }
 

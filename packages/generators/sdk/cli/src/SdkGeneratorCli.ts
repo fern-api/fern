@@ -19,6 +19,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             outputEsm: parsed?.outputEsm ?? false,
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
+            allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
         };
     }
 
@@ -52,6 +53,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 aliasOfRoot: config.output.mode.type !== "downloadFiles" ? npmPackage.packageName : undefined,
                 outputEsm: customConfig.outputEsm,
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
+                allowCustomFetcher: customConfig.allowCustomFetcher,
             },
         });
 

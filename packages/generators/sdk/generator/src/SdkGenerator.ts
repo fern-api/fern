@@ -72,6 +72,7 @@ export declare namespace SdkGenerator {
         includeCredentialsOnCrossOriginRequests: boolean;
         aliasOfRoot: string | undefined;
         outputEsm: boolean;
+        allowCustomFetcher: boolean;
     }
 }
 
@@ -234,6 +235,7 @@ export class SdkGenerator {
             errorResolver: this.errorResolver,
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
+            allowCustomFetcher: config.allowCustomFetcher,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

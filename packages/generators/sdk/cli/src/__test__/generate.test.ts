@@ -45,6 +45,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             private: true,
+            allowCustomFetcher: true,
         },
     },
     {
@@ -86,17 +87,6 @@ describe("runGenerator", () => {
 
                 const { path: outputPath } = await tmp.dir();
 
-                // add symlink for easy access in VSCode
-                const generatedDir = path.join(fixturePath, "generated");
-                await rm(generatedDir, { force: true, recursive: true });
-                if (await doesPathExist(configJsonPath)) {
-                    await rm(configJsonPath);
-                }
-                if (await doesPathExist(irPath)) {
-                    await rm(irPath);
-                }
-                await symlink(outputPath, generatedDir);
-
                 const config: FernGeneratorExec.GeneratorConfig = {
                     dryRun: true,
                     irFilepath: irPath,
@@ -122,6 +112,18 @@ describe("runGenerator", () => {
                 await new SdkGeneratorCli().run(configJsonPath);
 
                 const unzippedDirectory = await getDirectoryForSnapshot(AbsoluteFilePath.of(outputPath));
+
+                // add symlink for easy access in VSCode
+                const generatedDir = path.join(fixturePath, "generated");
+                await rm(generatedDir, { force: true, recursive: true });
+                if (await doesPathExist(configJsonPath)) {
+                    await rm(configJsonPath);
+                }
+                if (await doesPathExist(irPath)) {
+                    await rm(irPath);
+                }
+                await symlink(unzippedDirectory, generatedDir);
+
                 const directoryContents = await getDirectoryContents(unzippedDirectory);
 
                 // we don't run compile for github, so run it here to make sure it compiles

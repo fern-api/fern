@@ -1,10 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { APIResponse } from "./APIResponse";
 
-export interface Fetcher {
-    fetch: FetchFunction;
-}
-
 export type FetchFunction = (args: Fetcher.Args) => Promise<APIResponse<unknown, Fetcher.Error>>;
 
 export declare namespace Fetcher {

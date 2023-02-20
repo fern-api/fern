@@ -202,7 +202,11 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             declarations: [
                 {
                     name: AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME,
-                    initializer: getTextOfTsNode(context.base.coreUtilities.fetcher.Fetcher._invoke(fetcherArgs)),
+                    initializer: getTextOfTsNode(
+                        context.base.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
+                            referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                        })
+                    ),
                 },
             ],
         });

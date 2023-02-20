@@ -6,4 +6,5 @@ export interface SdkCustomConfig {
     outputEsm: boolean;
     includeCredentialsOnCrossOriginRequests: boolean;
     shouldBundle: boolean;
+    allowCustomFetcher: boolean;
 }

@@ -13,10 +13,10 @@ export class AuthImpl extends CoreUtility implements Auth {
         originalPathOnDocker: "/assets/auth" as const,
         pathInCoreUtilities: [{ nameOnDisk: "auth", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("basic-auth", "^2.0.1");
-            dependencyManager.addDependency("@types/basic-auth", "^1.1.3");
-            dependencyManager.addDependency("js-base64", "^3.7.2");
-            dependencyManager.addDependency("buffer", "^6.0.3");
+            dependencyManager.addDependency("basic-auth", "2.0.1");
+            dependencyManager.addDependency("@types/basic-auth", "1.1.3");
+            dependencyManager.addDependency("js-base64", "3.7.2");
+            dependencyManager.addDependency("buffer", "6.0.3");
         },
     };
 

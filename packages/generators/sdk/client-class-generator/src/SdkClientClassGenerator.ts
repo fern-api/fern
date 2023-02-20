@@ -10,6 +10,7 @@ export declare namespace SdkClientClassGenerator {
         errorResolver: ErrorResolver;
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
+        allowCustomFetcher: boolean;
     }
 
     export namespace generateService {
@@ -25,17 +26,20 @@ export class SdkClientClassGenerator {
     private errorResolver: ErrorResolver;
     private neverThrowErrors: boolean;
     private includeCredentialsOnCrossOriginRequests: boolean;
+    private allowCustomFetcher: boolean;
 
     constructor({
         intermediateRepresentation,
         errorResolver,
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
+        allowCustomFetcher,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
         this.neverThrowErrors = neverThrowErrors;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
+        this.allowCustomFetcher = allowCustomFetcher;
     }
 
     public generateService({
@@ -51,6 +55,7 @@ export class SdkClientClassGenerator {
             errorResolver: this.errorResolver,
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
+            allowCustomFetcher: this.allowCustomFetcher,
         });
     }
 }
