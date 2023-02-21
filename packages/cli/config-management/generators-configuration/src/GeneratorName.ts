@@ -5,6 +5,7 @@ export const GeneratorName = {
     JAVA: "fernapi/fern-java",
     JAVA_MODEL: "fernapi/java-model",
     JAVA_SDK: "fernapi/fern-java-sdk",
+    JAVA_SPRING: "fernapi/fern-java-spring",
     PYTHON_FASTAPI: "fernapi/fern-fastapi-server",
     PYTHON_PYDANTIC: "fernapi/fern-pydantic-model",
     OPENAPI: "fernapi/fern-openapi",
