@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 public final class SpringServerInterfaceGenerator extends AbstractFileGenerator {
@@ -157,7 +158,9 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         if (!httpRequest.getType().isVoid()) {
             TypeName requestTypeName =
                     generatorContext.getPoetTypeNameMapper().convertToTypeName(true, httpRequest.getType());
-            parameters.add(ParameterSpec.builder(requestTypeName, "body").build());
+            parameters.add(ParameterSpec.builder(requestTypeName, "body")
+                    .addAnnotation(RequestBody.class)
+                    .build());
         }
 
         return parameters;

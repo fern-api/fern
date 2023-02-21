@@ -82,6 +82,7 @@ import com.fern.resources.blog.types.PostId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
@@ -91,7 +92,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface PostsService {
   @PostMapping("/create")
-  void createPost(CreatePostRequest body);
+  void createPost(@RequestBody CreatePostRequest body);
 
   @GetMapping("/{postId}")
   BlogPost getPost(@PathVariable("postId") PostId postId);
@@ -1198,6 +1199,7 @@ package com.fern.resources.dummy.service;
 import com.fern.resources.dummy.service.types.DummyId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
@@ -1207,7 +1209,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface DummyService {
   @PostMapping("/")
-  void getDummy(DummyId body);
+  void getDummy(@RequestBody DummyId body);
 
   @GetMapping("/health")
   void health();
