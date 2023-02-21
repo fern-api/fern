@@ -24,7 +24,7 @@ class RegisterFileGenerator:
                 service=service,
                 is_in_development=service.availability.status == ir_types.AvailabilityStatus.IN_DEVELOPMENT,
             )
-            for service in self._context.ir.services
+            for _, service in self._context.ir.services.items()
         ]
 
     def generate_registry_file(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:

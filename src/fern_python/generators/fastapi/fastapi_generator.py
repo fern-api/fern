@@ -55,7 +55,7 @@ class FastApiGenerator(AbstractGenerator):
             context=context.pydantic_generator_context,
         )
 
-        for service in ir.services:
+        for _, service in ir.services.items():
             self._generate_service(
                 context=context,
                 ir=ir,
@@ -64,7 +64,7 @@ class FastApiGenerator(AbstractGenerator):
                 project=project,
             )
 
-        for error in ir.errors:
+        for _, error in ir.errors.items():
             self._generate_error(
                 context=context,
                 ir=ir,
