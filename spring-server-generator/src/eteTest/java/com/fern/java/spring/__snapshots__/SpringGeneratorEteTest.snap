@@ -55,6 +55,7 @@ basic[resources/auth/AuthService.java]=[
 package resources.auth;
 
 import core.BearerAuth;
+import java.security.Principal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,7 +67,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 )
 public interface AuthService {
   @GetMapping("/")
-  void getAuth(@RequestHeader("Authorization") BearerAuth auth);
+  void getAuth(@RequestHeader("Authorization") BearerAuth auth, Principal principal);
 }
 
 ]

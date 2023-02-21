@@ -29,11 +29,13 @@ import com.fern.java.spring.generators.spring.AuthToSpringParameterSpecConverter
 import com.fern.java.spring.generators.spring.SpringHttpMethodToAnnotationSpec;
 import com.fern.java.spring.generators.spring.SpringParameterSpecFactory;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -110,6 +112,21 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                     new AuthToSpringParameterSpecConverter(generatorContext, auth);
             parameters.addAll(authToJerseyParameterSpecConverter.getAuthParameters(httpEndpoint));
         });
+
+        if (httpEndpoint.getAuth()) {
+            boolean isPrincipalPresent = httpService.getHeaders().stream()
+                            .anyMatch(httpHeader ->
+                                    httpHeader.getName().getCamelCase().equalsIgnoreCase("principal"))
+                    || httpService.getPathParameters().stream()
+                            .anyMatch(pathParameter ->
+                                    pathParameter.getName().getCamelCase().equalsIgnoreCase("principal"))
+                    || httpService.getPathParameters().stream()
+                            .anyMatch(queryParameter ->
+                                    queryParameter.getName().getCamelCase().equalsIgnoreCase("principal"));
+            parameters.add(ParameterSpec.builder(
+                            ClassName.get(Principal.class), isPrincipalPresent ? "_principal" : "principal")
+                    .build());
+        }
 
         // headers
         generatorContext.getGlobalHeaders().getRequiredGlobalHeaders().forEach(httpHeader -> {
