@@ -1,35 +1,27 @@
+import { Classes } from "@blueprintjs/core";
 import classNames from "classnames";
 import React from "react";
+import { ApiDefinitionContextProviderForTab } from "./ApiDefinitionContextProviderForTab";
 import styles from "./ApiTabBar.module.scss";
 import { ApiTabBarItem } from "./ApiTabBarItem";
 import { useApiTabsContext } from "./context/useApiTabsContext";
-import { TabApiDefinitionContextProvider } from "./TabApiDefinitionContextProvider";
 import { TabBarItemWrapper } from "./TabBarItemWrapper";
 
 export const ApiTabBar: React.FC = () => {
     const { tabs } = useApiTabsContext();
 
     return (
-        <div className={classNames(styles.container, "flex h-10 overflow-auto")}>
-            {tabs.map((tab, index) => {
-                const previousTab = tabs[index - 1];
-                const isPreviousTabSelected = previousTab != null && previousTab.isSelected;
-
+        <div className={classNames(styles.container, Classes.DARK, "flex h-11 overflow-auto bg-zinc-800 gap-px")}>
+            {tabs.map((tab) => {
                 return (
                     <React.Fragment key={tab.path}>
-                        {index > 0 && (
-                            <TabBarItemWrapper
-                                includeBottomBorder={!tab.isSelected && !isPreviousTabSelected}
-                                className="w-px"
-                            />
-                        )}
-                        <TabApiDefinitionContextProvider tab={tab}>
+                        <ApiDefinitionContextProviderForTab tab={tab}>
                             <ApiTabBarItem tab={tab} />
-                        </TabApiDefinitionContextProvider>
+                        </ApiDefinitionContextProviderForTab>
                     </React.Fragment>
                 );
             })}
-            <TabBarItemWrapper includeBottomBorder className="flex-1 bg-gray-500" />
+            <TabBarItemWrapper className="flex-1" />
         </div>
     );
 };

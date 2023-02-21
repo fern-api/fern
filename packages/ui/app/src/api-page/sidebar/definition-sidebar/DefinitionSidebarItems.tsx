@@ -9,5 +9,9 @@ export const DefinitionSidebarItems: React.FC = () => {
         return null;
     }
 
-    return <PackageSidebarSectionContents package={api.value.rootPackage} packagePath={EMPTY_ARRAY} />;
+    return (
+        <div className="flex flex-col overflow-auto">
+            <PackageSidebarSectionContents package={api.value.rootPackage} packagePath={EMPTY_ARRAY} />
+        </div>
+    );
 };

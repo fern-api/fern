@@ -4944,6 +4944,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/ir-model@npm:0.0.914":
+  version: 0.0.914
+  resolution: "@fern-fern/ir-model@npm:0.0.914"
+  checksum: a1a8949039e1f75137d1e13216d9bbf8a33179ad863bf6bc48057b990d9c446512bc5f09b2e17534782a615e8d5895df51f76a41cba32ecce74205032803f1b6
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-v1-model@npm:0.0.1":
   version: 0.0.1
   resolution: "@fern-fern/ir-v1-model@npm:0.0.1"

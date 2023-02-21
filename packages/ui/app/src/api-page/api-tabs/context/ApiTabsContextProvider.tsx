@@ -1,7 +1,7 @@
-import { PropsWithChildren, useCallback } from "react";
+import { PropsWithChildren, useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
-import { ApiTabsContext, ApiTabsContextValue } from "./ApiTabsContext";
+import { ApiTabsContext, ApiTabsContextValue, OpenTabOpts } from "./ApiTabsContext";
 
 interface TabsState {
     ephemeralTabIndex: number | undefined;
@@ -29,8 +29,16 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
 
     const selectedTabIndex = state.tabs.findIndex((tab) => tab.path === location.pathname);
 
+    useEffect(() => {
+        if (selectedTabIndex === -1 && location.pathname !== basePath) {
+            setState((existing) => {
+                existing.tabs.push({ path: location.pathname });
+            });
+        }
+    }, [basePath, location.pathname, selectedTabIndex, setState]);
+
     const openTab = useCallback(
-        (path: string, { doNotCloseExistingTab = false } = {}) => {
+        (path: string, { doNotCloseExistingTab = false, makeNewTabEphemeral = false }: OpenTabOpts = {}) => {
             const existingTabIndexForPath = state.tabs.findIndex((tab) => tab.path === path);
             if (existingTabIndexForPath === -1) {
                 setState((draft) => {
@@ -45,7 +53,7 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
 
                     // add new ephemeral tab to the right of the selected tab
                     draft.tabs.splice(indexOfNewTab, 0, { path });
-                    draft.ephemeralTabIndex = indexOfNewTab;
+                    draft.ephemeralTabIndex = makeNewTabEphemeral ? indexOfNewTab : undefined;
                 });
             }
 

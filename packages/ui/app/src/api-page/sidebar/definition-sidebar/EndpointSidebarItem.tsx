@@ -1,10 +1,10 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { useCallback } from "react";
+import { RiSendPlane2Fill } from "react-icons/ri";
 import { PackagePath } from "../../../commons/PackagePath";
 import { useEndpointPath } from "../../../routes/definition/useEndpointPath";
-import { useApiTabsContext } from "../../api-tabs/context/useApiTabsContext";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
 import { useApiDefinitionSidebarContext } from "./context/useApiDefinitionSidebarContext";
+import { SidebarItem } from "./SidebarItem";
 
 export declare namespace EndpointSidebarItem {
     export interface Props {
@@ -16,15 +16,8 @@ export declare namespace EndpointSidebarItem {
 export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint, packagePath }) => {
     const { environmentId } = useApiDefinitionSidebarContext();
     const endpointPath = useEndpointPath({ environmentId, packagePath, endpointName: endpoint.name });
-    const { openTab } = useApiTabsContext();
-
-    const onClick = useCallback(() => {
-        openTab(endpointPath);
-    }, [openTab, endpointPath]);
 
     return (
-        <div onClick={onClick}>
-            <EndpointTitle endpoint={endpoint} />
-        </div>
+        <SidebarItem path={endpointPath} icon={<RiSendPlane2Fill />} title={<EndpointTitle endpoint={endpoint} />} />
     );
 };

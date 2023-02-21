@@ -9809,6 +9809,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-model", "npm:0.0.1048"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:0.0.914", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-model-npm-0.0.914-d7eaa4e148-a1a8949039.zip/node_modules/@fern-fern/ir-model/",\
+          "packageDependencies": [\
+            ["@fern-fern/ir-model", "npm:0.0.914"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-fern/ir-v1-model", [\

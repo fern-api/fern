@@ -1,5 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { DefinitionPage } from "../DefinitionPage";
+import { DefinitionItemPage } from "../DefinitionItemPage";
 import { TypeDefinition } from "./TypeDefinition";
 
 export declare namespace TypePage {
@@ -10,7 +10,7 @@ export declare namespace TypePage {
 
 export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
     return (
-        <DefinitionPage
+        <DefinitionItemPage
             title={type.name}
             docs="I am some docs about this type"
             leftContent={

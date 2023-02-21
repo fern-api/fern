@@ -5,7 +5,8 @@ import { useBooleanState } from "@fern-api/react-commons";
 import { FernRegistry } from "@fern-fern/registry";
 import { size } from "lodash-es";
 import { useMemo } from "react";
-import { MonospaceText } from "../../../commons/MonospaceText";
+import { MonospaceText } from "../../../../commons/MonospaceText";
+import { getPathParameterAsString } from "../getEndpointTitleAsString";
 import { EndpointExampleUrlParameters } from "./EndpointExampleUrlParameters";
 
 export declare namespace EndpointExampleUrl {
@@ -49,11 +50,11 @@ export const EndpointExampleUrl: React.FC<EndpointExampleUrl.Props> = ({ endpoin
                     </div>
                     <div className="flex ml-5">
                         <Collapse isOpen={isViewingUrlDetails}>
-                            <TwoColumnTable className="mt-1 gap-y-1 gap-x-2">
+                            <TwoColumnTable className="pt-1 gap-y-1 gap-x-2">
                                 <EndpointExampleUrlParameters
                                     allowedKeys={allowedPathParameters}
                                     values={example.pathParameters}
-                                    renderKey={renderPathParameterKey}
+                                    renderKey={getPathParameterAsString}
                                 />
                                 <EndpointExampleUrlParameters
                                     allowedKeys={allowedQueryParameters}
@@ -67,7 +68,3 @@ export const EndpointExampleUrl: React.FC<EndpointExampleUrl.Props> = ({ endpoin
         </div>
     );
 };
-
-function renderPathParameterKey(key: string): string {
-    return `:${key}`;
-}

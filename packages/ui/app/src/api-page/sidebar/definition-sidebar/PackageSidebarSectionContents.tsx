@@ -22,6 +22,9 @@ export const PackageSidebarSectionContents: React.FC<PackageSidebarSectionConten
             {package_.endpoints.map((endpoint, endpointIndex) => (
                 <EndpointSidebarItem key={endpointIndex} endpoint={endpoint} packagePath={packagePath} />
             ))}
+            {package_.subpackages.map((subpackageId) => (
+                <PackageSidebarSection key={subpackageId} subpackageId={subpackageId} packagePath={packagePath} />
+            ))}
             {package_.types.length > 0 && (
                 <CollapsibleSidebarSection title="Types">
                     {package_.types.map((typeId) => (
@@ -29,9 +32,6 @@ export const PackageSidebarSectionContents: React.FC<PackageSidebarSectionConten
                     ))}
                 </CollapsibleSidebarSection>
             )}
-            {package_.subpackages.map((subpackageId) => (
-                <PackageSidebarSection key={subpackageId} subpackageId={subpackageId} packagePath={packagePath} />
-            ))}
         </div>
     );
 };

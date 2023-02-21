@@ -4,7 +4,6 @@ import { useCallback, useReducer } from "react";
 export declare namespace useIsHovering {
     export interface Return {
         isHovering: boolean;
-        onMouseEnter: () => void;
         onMouseOver: () => void;
         onMouseLeave: () => void;
         onMouseMove: () => void;
@@ -35,7 +34,6 @@ export function useIsHovering(): useIsHovering.Return {
 
     return {
         isHovering: state === "hovering",
-        onMouseEnter: useCallback(() => dispatch("mouseenter"), []),
         onMouseOver: useCallback(() => dispatch("mouseover"), []),
         onMouseLeave: useCallback(() => dispatch("mouseleave"), []),
         onMouseMove: useCallback(() => dispatch("mousemove"), []),

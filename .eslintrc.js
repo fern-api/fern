@@ -102,5 +102,6 @@ module.exports = {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "@typescript-eslint/await-thenable": "error",
+        "@blueprintjs/classes-constants": "off"
     },
 };

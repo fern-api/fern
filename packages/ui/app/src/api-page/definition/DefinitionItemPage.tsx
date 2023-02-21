@@ -1,7 +1,7 @@
-import { H2 } from "@blueprintjs/core";
-import styles from "./DefinitionPage.module.scss";
+import { Divider, H2 } from "@blueprintjs/core";
+import styles from "./DefinitionItemPage.module.scss";
 
-export declare namespace DefinitionPage {
+export declare namespace DefinitionItemPage {
     export interface Props {
         title: JSX.Element | string;
         subtitle?: JSX.Element | string;
@@ -11,7 +11,7 @@ export declare namespace DefinitionPage {
     }
 }
 
-export const DefinitionPage: React.FC<DefinitionPage.Props> = ({
+export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({
     title,
     subtitle,
     docs,
@@ -24,6 +24,7 @@ export const DefinitionPage: React.FC<DefinitionPage.Props> = ({
                 <H2 className={styles.title}>{title}</H2>
                 {subtitle != null && <div className={styles.subtitle}>{subtitle}</div>}
             </div>
+            <Divider className="my-3" />
             <div className={styles.body}>
                 <div className={styles.leftContent}>
                     {docs != null && <div>{docs}</div>}

@@ -5,14 +5,14 @@ import { FernRoutes } from "../../routes";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { Tab } from "./context/ApiTabsContext";
 
-export declare namespace TabApiDefinitionContextProvider {
+export declare namespace ApiDefinitionContextProviderForTab {
     export type Props = PropsWithChildren<{
         tab: Tab;
         fallback?: JSX.Element;
     }>;
 }
 
-export const TabApiDefinitionContextProvider: React.FC<TabApiDefinitionContextProvider.Props> = ({
+export const ApiDefinitionContextProviderForTab: React.FC<ApiDefinitionContextProviderForTab.Props> = ({
     tab,
     fallback = null,
     children,

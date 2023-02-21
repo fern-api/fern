@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
-import React, { useMemo } from "react";
-import { ContainerTypePreviewPart } from "./ContainerTypePreviewPart";
+import React from "react";
+import { TypePreviewPart } from "./TypePreviewPart";
 
 export declare namespace OptionalPreviewPart {
     export interface Props {
@@ -10,13 +10,15 @@ export declare namespace OptionalPreviewPart {
 }
 
 export const OptionalPreviewPart: React.FC<OptionalPreviewPart.Props> = ({ optional, includeContainerItems }) => {
-    const itemTypes = useMemo(() => [optional.itemType], [optional.itemType]);
+    if (!includeContainerItems) {
+        return <span>optional</span>;
+    }
 
     return (
-        <ContainerTypePreviewPart
-            containerName="optional"
-            itemTypes={itemTypes}
-            includeContainerItems={includeContainerItems}
-        />
+        <span>
+            optional
+            <span className="inline-block w-[3px]" />
+            <TypePreviewPart type={optional.itemType} includeContainerItems={includeContainerItems} />
+        </span>
     );
 };

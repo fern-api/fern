@@ -1,21 +1,20 @@
+import { Button, Classes } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
 import { FernLogo } from "../FernLogo";
-import styles from "./Header.module.scss";
 
 export const Header: React.FC = () => {
     return (
-        <div className={styles.container}>
-            <div className={styles.item}>
-                <div className={styles.logoWrapper}>
-                    <div className={styles.logo}>
-                        <FernLogo size={30} />
-                    </div>
-                </div>
+        <div className={classNames("flex text-white bg-zinc-900 p-2", Classes.DARK)}>
+            <div className="flex flex-1 items-center gap-2">
+                <FernLogo size={30} />
+                <div className="text-xl">Fern</div>
             </div>
-            <div className={classNames(styles.item, styles.center)}>
-                <div className={styles.apiName}>Authentication Service</div>
+            <div className="flex flex-1 justify-center items-center text-lg gap-1">
+                <div>Authentication Service</div>
+                <Button minimal icon={IconNames.CHEVRON_DOWN} />
             </div>
-            <div className={styles.item} />
+            <div className="flex flex-1" />
         </div>
     );
 };

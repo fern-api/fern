@@ -77,7 +77,7 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({
                     </CollapsibleTree>
                 ) : undefined,
             map: () => {
-                return <div>map</div>;
+                return <div>TODO map</div>;
             },
             union: (union) => (
                 <CollapsibleTree title="one of" defaultIsCollapsed={defaultIsCollapsed}>

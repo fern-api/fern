@@ -1,12 +1,12 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback } from "react";
-import { DefinitionPage } from "../DefinitionPage";
+import { DefinitionItemPage } from "../DefinitionItemPage";
 import { Examples } from "../examples/Examples";
+import { EndpointExample } from "./endpoint-example/EndpointExample";
 import styles from "./Endpoint.module.scss";
-import { EndpointExample } from "./EndpointExample";
-import { EndpointPath } from "./EndpointPath";
 import { EndpointTitle } from "./EndpointTitle";
 import { EndpointTypeSection } from "./EndpointTypeSection";
+import { getEndpointPathAsString } from "./getEndpointTitleAsString";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
 
@@ -25,9 +25,9 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
     );
 
     return (
-        <DefinitionPage
+        <DefinitionItemPage
             title={<EndpointTitle endpoint={endpoint} />}
-            subtitle={endpoint.displayName != null ? <EndpointPath endpoint={endpoint} /> : undefined}
+            subtitle={endpoint.displayName != null ? getEndpointPathAsString(endpoint) : undefined}
             docs={endpoint.docs}
             leftContent={
                 <div className={styles.leftContent}>

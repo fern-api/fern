@@ -1,4 +1,4 @@
-import { MenuItem } from "@blueprintjs/core";
+import { MenuItem, PopoverPosition } from "@blueprintjs/core";
 import { ItemRenderer, Select2, SelectPopoverProps } from "@blueprintjs/select";
 import { FernRegistry } from "@fern-fern/registry";
 import { useAllEnvironments } from "../../../queries/useAllEnvironments";
@@ -12,7 +12,7 @@ export declare namespace EnvironmentSelect {
 }
 
 const POPOVER_PROPS: SelectPopoverProps["popoverProps"] = {
-    matchTargetWidth: true,
+    position: PopoverPosition.BOTTOM_RIGHT,
 };
 
 export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedEnvironment, onChange }) => {

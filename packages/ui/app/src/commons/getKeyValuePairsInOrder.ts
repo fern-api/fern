@@ -9,8 +9,8 @@ export function getKeyValuePairsInOrder<K extends string>({
 }: {
     keysInOrder: readonly K[];
     values: Record<K, unknown>;
-}): KeyValuePair[] {
-    return keysInOrder.reduce<KeyValuePair[]>((acc, key) => {
+}): KeyValuePair<K>[] {
+    return keysInOrder.reduce<KeyValuePair<K>[]>((acc, key) => {
         const value = values[key];
         if (value != null) {
             acc.push({ key, value });

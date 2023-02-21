@@ -1,20 +1,20 @@
 import { TwoColumnTableRow } from "@fern-api/common-components";
-import { getKeyValuePairsInOrder } from "../../../commons/getKeyValuePairsInOrder";
-import { MonospaceText } from "../../../commons/MonospaceText";
+import { getKeyValuePairsInOrder } from "../../../../commons/getKeyValuePairsInOrder";
+import { MonospaceText } from "../../../../commons/MonospaceText";
 
 export declare namespace EndpointExampleUrlParameters {
-    export interface Props {
-        allowedKeys: string[];
-        values: Record<string, unknown>;
-        renderKey?: (key: string) => string;
+    export interface Props<K extends string> {
+        allowedKeys: K[];
+        values: Record<K, unknown>;
+        renderKey?: (key: K) => string;
     }
 }
 
-export const EndpointExampleUrlParameters: React.FC<EndpointExampleUrlParameters.Props> = ({
+export function EndpointExampleUrlParameters<K extends string>({
     allowedKeys,
     values,
     renderKey,
-}) => {
+}: EndpointExampleUrlParameters.Props<K>): JSX.Element {
     return (
         <>
             {getKeyValuePairsInOrder({ keysInOrder: allowedKeys, values }).map(({ key, value }) => (
@@ -31,4 +31,4 @@ export const EndpointExampleUrlParameters: React.FC<EndpointExampleUrlParameters
             ))}
         </>
     );
-};
+}

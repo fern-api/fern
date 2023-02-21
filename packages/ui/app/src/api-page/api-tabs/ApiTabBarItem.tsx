@@ -1,3 +1,4 @@
+import { Text } from "@blueprintjs/core";
 import { useIsHovering } from "@fern-api/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
@@ -36,32 +37,38 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
         [closeTab, tab.path]
     );
 
-    const { onMouseLeave, onMouseMove, onMouseOver, onMouseEnter, isHovering } = useIsHovering();
+    const { isHovering, ...hoveringCallbacks } = useIsHovering();
+
+    if (tabTitle == null) {
+        return null;
+    }
 
     return (
-        <TabBarItemWrapper
-            includeBottomBorder={!tab.isSelected}
-            className={classNames({
-                "bg-slate-300": !tab.isSelected,
-            })}
-        >
+        <TabBarItemWrapper className="flex min-w-[125px] max-w-[200px] bg-zinc-900">
             <div
                 key={tab.path}
-                className={classNames("flex items-center pl-5 pr-1 select-none cursor-pointer", {
-                    italic: tab.isEphemeral,
-                })}
+                className={classNames(
+                    "relative flex flex-1 items-center justify-between px-3 select-none cursor-pointer min-w-0 gap-3",
+                    {
+                        italic: tab.isEphemeral,
+                    }
+                )}
                 onClick={onClick}
                 onDoubleClick={onDoubleClick}
-                onMouseLeave={onMouseLeave}
-                onMouseMove={onMouseMove}
-                onMouseOver={onMouseOver}
-                onMouseEnter={onMouseEnter}
+                {...hoveringCallbacks}
             >
-                <div className="whitespace-nowrap">{tabTitle ?? "<Unknown tab>"}</div>
-
                 <div
-                    className={classNames("ml-3 p-1 rounded-md hover:bg-zinc-600/10", {
-                        invisible: !isHovering,
+                    className={classNames(
+                        "absolute top-0 left-0 right-0",
+                        tab.isSelected ? "h-1 bg-green-500" : "h-px bg-gray-600"
+                    )}
+                />
+                <Text ellipsize className="whitespace-nowrap">
+                    {tabTitle}
+                </Text>
+                <div
+                    className={classNames("text-slate-300 hover:text-white", {
+                        invisible: !tab.isSelected && !isHovering,
                     })}
                     onClick={onClickCross}
                 >

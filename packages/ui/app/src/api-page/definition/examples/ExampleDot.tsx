@@ -23,8 +23,8 @@ export const ExampleDot: React.FC<ExampleDot.Props> = ({ index, isSelected, setS
     return (
         <div
             className={classNames(
-                "rounded-full w-2.5 h-2.5 border",
-                isSelected ? "bg-black border-black" : "bg-slate-200 border-gray-400",
+                "rounded-full w-2.5 h-2.5 border border-green-700",
+                isSelected ? "bg-green-700" : "bg-slate-200",
                 {
                     "cursor-pointer": handleClick != null,
                 }

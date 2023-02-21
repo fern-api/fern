@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { useParsedPath } from "../../routes/definition/useParsedPath";
+import { getEndpointTitleAsString } from "../definition/endpoints/getEndpointTitleAsString";
 
 export function usePathTitle(path: string): string | undefined {
     const parsedPath = useParsedPath(path);
@@ -13,18 +14,7 @@ export function usePathTitle(path: string): string | undefined {
             return parsedPath.typeDefinition.name;
         }
         case "endpoint": {
-            if (parsedPath.endpoint.displayName != null) {
-                return parsedPath.endpoint.displayName;
-            }
-            return parsedPath.endpoint.path.parts
-                .map((part) =>
-                    part._visit({
-                        pathParameter: (pathParameter) => `:${pathParameter}`,
-                        literal: (literal) => literal,
-                        _other: () => "?",
-                    })
-                )
-                .join("");
+            return getEndpointTitleAsString(parsedPath.endpoint);
         }
         default:
             assertNever(parsedPath);

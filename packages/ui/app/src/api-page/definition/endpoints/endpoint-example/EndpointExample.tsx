@@ -1,8 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { size } from "lodash-es";
+import { JsonExample } from "../../examples/JsonExample";
 import { EndpointExampleUrl } from "./EndpointExampleUrl";
 import { ExampleRequestHeaders } from "./ExampleRequestHeaders";
-import { JsonExample } from "./JsonExample";
 
 export declare namespace EndpointExample {
     export interface Props {

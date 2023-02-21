@@ -1,6 +1,6 @@
 import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
 import { FernRegistry } from "@fern-fern/registry";
-import { getKeyValuePairsInOrder } from "../../../commons/getKeyValuePairsInOrder";
+import { getKeyValuePairsInOrder } from "../../../../commons/getKeyValuePairsInOrder";
 
 export declare namespace ExampleRequestHeaders {
     export interface Props {

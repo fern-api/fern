@@ -1,5 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
+import { FaBox, FaBoxOpen } from "react-icons/fa";
 import { PackagePath } from "../../../commons/PackagePath";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { CollapsibleSidebarSection } from "./CollapsibleSidebarSection";
@@ -19,7 +20,7 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({ s
     const packageNames = useMemo(() => [...packagePath, subpackage.name], [packagePath, subpackage.name]);
 
     return (
-        <CollapsibleSidebarSection title={subpackage.name}>
+        <CollapsibleSidebarSection title={subpackage.name} closedIcon={<FaBox />} openIcon={<FaBoxOpen />}>
             <PackageSidebarSectionContents package={subpackage} packagePath={packageNames} />
         </CollapsibleSidebarSection>
     );

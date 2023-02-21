@@ -1,7 +1,6 @@
-import { Button, Classes } from "@blueprintjs/core";
+import { Classes, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import styles from "./EnvironmentSelectButton.module.scss";
 
 export declare namespace EnvironmentSelectButton {
     export interface Props {
@@ -11,14 +10,15 @@ export declare namespace EnvironmentSelectButton {
 
 export const EnvironmentSelectButton: React.FC<EnvironmentSelectButton.Props> = ({ environmentName }) => {
     return (
-        <Button
-            className={classNames(styles.button, {
-                [Classes.SKELETON]: environmentName == null,
-            })}
-            text={environmentName}
-            rightIcon={IconNames.DOUBLE_CHEVRON_DOWN}
-            fill
-            outlined
-        />
+        <div className="flex items-center justify-center gap-1 text-xs cursor-pointer">
+            <div
+                className={classNames({
+                    [Classes.SKELETON]: environmentName == null,
+                })}
+            >
+                {environmentName ?? "SKELETON_TEXT"}
+            </div>
+            <Icon icon={IconNames.CHEVRON_DOWN} size={12} />
+        </div>
     );
 };
