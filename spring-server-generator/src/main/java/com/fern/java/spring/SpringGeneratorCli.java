@@ -28,11 +28,14 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,6 +93,16 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli {
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
+
+        // services
+        List<GeneratedFile> generatedServiceClients = ir.getServices().getHttp().stream()
+                .map(httpService -> {
+                    SpringServerInterfaceGenerator httpServiceClientGenerator =
+                            new SpringServerInterfaceGenerator(context, maybeAuth, httpService);
+                    return httpServiceClientGenerator.generateFile();
+                })
+                .collect(Collectors.toList());
+        generatedServiceClients.forEach(this::addGeneratedFile);
     }
 
     @Override

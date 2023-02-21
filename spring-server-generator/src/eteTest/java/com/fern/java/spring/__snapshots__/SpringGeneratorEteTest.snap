@@ -51,6 +51,54 @@ public final class ObjectMappers {
 ]
 
 
+basic[resources/auth/AuthService.java]=[
+package resources.auth;
+
+import core.BearerAuth;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "/auth",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface AuthService {
+  @GetMapping("/")
+  void getAuth(@RequestHeader("Authorization") BearerAuth auth);
+}
+
+]
+
+
+basic[resources/blog/PostsService.java]=[
+package resources.blog;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import resources.blog.types.BlogPost;
+import resources.blog.types.CreatePostRequest;
+import resources.blog.types.PostId;
+
+@RequestMapping(
+    path = "/posts",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface PostsService {
+  @PostMapping("/create")
+  void createPost(CreatePostRequest body);
+
+  @GetMapping("/{postId}")
+  BlogPost getPost(@PathVariable("postId") PostId postId);
+}
+
+]
+
+
 basic[resources/blog/types/Age.java]=[
 package resources.blog.types;
 
@@ -1138,6 +1186,30 @@ public final class UnauthorizedErrorBody {
       return new UnauthorizedErrorBody(reason);
     }
   }
+}
+
+]
+
+
+basic[resources/dummy/service/DummyService.java]=[
+package resources.dummy.service;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import resources.dummy.service.types.DummyId;
+
+@RequestMapping(
+    path = "/dummy",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface DummyService {
+  @PostMapping("/")
+  void getDummy(DummyId body);
+
+  @GetMapping("/health")
+  void health();
 }
 
 ]

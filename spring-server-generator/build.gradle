@@ -9,6 +9,7 @@ dependencies {
     implementation project(':generator-utils')
 
     implementation 'ch.qos.logback:logback-classic'
+    implementation 'org.springframework:spring-web'
 
     testImplementation project(':testing-utils')
     testImplementation 'org.junit.jupiter:junit-jupiter-params'

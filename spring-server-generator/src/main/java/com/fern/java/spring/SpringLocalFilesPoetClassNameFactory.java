@@ -16,12 +16,21 @@
 
 package com.fern.java.spring;
 
+import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
+import com.squareup.javapoet.ClassName;
 import java.util.Collections;
+import java.util.Optional;
 
 public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
     public SpringLocalFilesPoetClassNameFactory() {
         super(Collections.emptyList());
+    }
+
+    public ClassName getServiceInterfaceClassName(HttpService httpService) {
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+        return ClassName.get(packageName, httpService.getName().getName());
     }
 }
