@@ -27,6 +27,7 @@ import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
+import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.client.generators.ClientErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.ClientWrapperGenerator;
@@ -49,7 +50,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class ClientGeneratorCli extends AbstractGeneratorCli {
+public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
@@ -60,7 +61,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig) {
+            DownloadFilesCustomConfig customConfig) {
         throw new RuntimeException("Download files mode is unsupported!");
     }
 
@@ -200,6 +201,16 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli {
     @Override
     public List<String> getSubProjects() {
         return subprojects;
+    }
+
+    @Override
+    public DownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
+        if (generatorConfig.getCustomConfig().isPresent()) {
+            JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
+                    generatorConfig.getCustomConfig().get());
+            return ObjectMappers.JSON_MAPPER.convertValue(node, DownloadFilesCustomConfig.class);
+        }
+        return DownloadFilesCustomConfig.builder().build();
     }
 
     @Override

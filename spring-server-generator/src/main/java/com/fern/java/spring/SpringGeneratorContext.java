@@ -23,11 +23,14 @@ import com.fern.java.AbstractGeneratorContext;
 public final class SpringGeneratorContext extends AbstractGeneratorContext<SpringLocalFilesPoetClassNameFactory> {
 
     public SpringGeneratorContext(
-            IntermediateRepresentation ir, GeneratorConfig generatorConfig, SpringCustomConfig customConfig) {
+            IntermediateRepresentation ir,
+            GeneratorConfig generatorConfig,
+            SpringCustomConfig customConfig,
+            SpringDownloadFilesCustomConfig springDownloadFilesCustomConfig) {
         super(
                 ir,
                 generatorConfig,
                 customConfig,
-                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix()));
+                new SpringLocalFilesPoetClassNameFactory(springDownloadFilesCustomConfig.packagePrefix()));
     }
 }

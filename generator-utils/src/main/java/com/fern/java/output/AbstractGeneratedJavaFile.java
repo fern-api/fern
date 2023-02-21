@@ -19,9 +19,16 @@ package com.fern.java.output;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
+
+    private static final Logger log = LoggerFactory.getLogger(AbstractGeneratedJavaFile.class);
 
     public abstract ClassName getClassName();
 
@@ -33,9 +40,24 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
     }
 
     @Override
-    public final void writeToFile(Path directory, boolean isLocal) throws IOException {
+    public final void writeToFile(Path directory, boolean isLocal, Optional<String> packagePrefix) throws IOException {
         if (isLocal) {
-            javaFile().writeToFile(directory.toFile());
+            if (packagePrefix.isPresent()) {
+                String contents = javaFile().toString();
+                String replacedPackageName = javaFile().packageName.replace(packagePrefix.get(), "");
+                if (replacedPackageName.startsWith(".")) {
+                    replacedPackageName = replacedPackageName.substring(1);
+                }
+                String fileName = replacedPackageName.isEmpty()
+                        ? javaFile().typeSpec.name
+                        : replacedPackageName + "." + javaFile().typeSpec.name;
+                Path filepath = Paths.get(fileName.replace('.', '/') + ".java");
+                Path resolvedFilePath = directory.resolve(filepath);
+                Files.createDirectories(resolvedFilePath.getParent());
+                Files.writeString(resolvedFilePath, contents);
+            } else {
+                javaFile().writeToFile(directory.toFile());
+            }
         } else {
             javaFile().writeToFile(directory.resolve("src/main/java").toFile());
         }

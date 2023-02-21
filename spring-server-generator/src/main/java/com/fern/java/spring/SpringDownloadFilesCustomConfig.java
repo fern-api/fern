@@ -16,25 +16,22 @@
 
 package com.fern.java.spring;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.CustomConfig;
+import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-@JsonDeserialize(as = ImmutableSpringCustomConfig.class)
-public interface SpringCustomConfig extends CustomConfig {
+@JsonDeserialize(as = ImmutableSpringDownloadFilesCustomConfig.class)
+public interface SpringDownloadFilesCustomConfig extends DownloadFilesCustomConfig {
 
-    @Value.Default
-    @JsonProperty("wrapped-aliases")
     @Override
     default Boolean wrappedAliases() {
         return true;
     }
 
-    static ImmutableSpringCustomConfig.Builder builder() {
-        return ImmutableSpringCustomConfig.builder();
+    static ImmutableSpringDownloadFilesCustomConfig.Builder builder() {
+        return ImmutableSpringDownloadFilesCustomConfig.builder();
     }
 }

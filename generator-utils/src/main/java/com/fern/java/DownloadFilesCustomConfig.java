@@ -1,5 +1,5 @@
 /*
- * (c) Copyright 2023 Birch Solutions Inc. All rights reserved.
+ * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,35 @@
  * limitations under the License.
  */
 
-package com.fern.java.spring;
+package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.CustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.util.Optional;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-@JsonDeserialize(as = ImmutableSpringCustomConfig.class)
-public interface SpringCustomConfig extends CustomConfig {
+@JsonDeserialize(as = ImmutableCustomConfig.class)
+public interface DownloadFilesCustomConfig {
+
+    @Value.Default
+    @JsonProperty("unknown-as-optional")
+    default Boolean unknownAsOptional() {
+        return false;
+    }
 
     @Value.Default
     @JsonProperty("wrapped-aliases")
-    @Override
     default Boolean wrappedAliases() {
-        return true;
+        return false;
     }
 
-    static ImmutableSpringCustomConfig.Builder builder() {
-        return ImmutableSpringCustomConfig.builder();
+    @JsonProperty("package-prefix")
+    Optional<String> packagePrefix();
+
+    static ImmutableDownloadFilesCustomConfig.Builder builder() {
+        return ImmutableDownloadFilesCustomConfig.builder();
     }
 }

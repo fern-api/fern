@@ -40,7 +40,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class SpringGeneratorCli extends AbstractGeneratorCli<SpringCustomConfig> {
+public final class SpringGeneratorCli
+        extends AbstractGeneratorCli<SpringCustomConfig, SpringDownloadFilesCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(SpringGeneratorCli.class);
 
@@ -51,8 +52,15 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli<SpringCustomC
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            SpringCustomConfig customConfig) {
-        SpringGeneratorContext context = new SpringGeneratorContext(ir, generatorConfig, customConfig);
+            SpringDownloadFilesCustomConfig customConfig) {
+        SpringGeneratorContext context = new SpringGeneratorContext(
+                ir,
+                generatorConfig,
+                SpringCustomConfig.builder()
+                        .unknownAsOptional(customConfig.unknownAsOptional())
+                        .wrappedAliases(customConfig.wrappedAliases())
+                        .build(),
+                customConfig);
         generateClient(context, ir);
     }
 
@@ -73,8 +81,7 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli<SpringCustomC
             IntermediateRepresentation ir,
             SpringCustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
-        SpringGeneratorContext context = new SpringGeneratorContext(ir, generatorConfig, customConfig);
-        generateClient(context, ir);
+        throw new RuntimeException("Publish mode is unsupported!");
     }
 
     public void generateClient(SpringGeneratorContext context, IntermediateRepresentation ir) {
@@ -114,6 +121,16 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli<SpringCustomC
     @Override
     public List<String> getSubProjects() {
         return subprojects;
+    }
+
+    @Override
+    public SpringDownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
+        if (generatorConfig.getCustomConfig().isPresent()) {
+            JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
+                    generatorConfig.getCustomConfig().get());
+            return ObjectMappers.JSON_MAPPER.convertValue(node, SpringDownloadFilesCustomConfig.class);
+        }
+        return SpringDownloadFilesCustomConfig.builder().build();
     }
 
     @Override

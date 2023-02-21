@@ -54,7 +54,7 @@ import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractGeneratorCli<T extends CustomConfig> {
+public abstract class AbstractGeneratorCli<T extends CustomConfig, K extends DownloadFilesCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractGeneratorCli.class);
 
@@ -69,25 +69,27 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig> {
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
-            T customConfig = getCustomConfig(generatorConfig);
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig.getOutput().getMode().visit(new Visitor<Void>() {
 
                 @Override
                 public Void visitPublish(GeneratorPublishConfig value) {
+                    T customConfig = getCustomConfig(generatorConfig);
                     runInPublishMode(generatorExecClient, generatorConfig, ir, customConfig, value);
                     return null;
                 }
 
                 @Override
                 public Void visitDownloadFiles() {
+                    K customConfig = getDownloadFilesCustomConfig(generatorConfig);
                     runInDownloadFilesMode(generatorExecClient, generatorConfig, ir, customConfig);
                     return null;
                 }
 
                 @Override
                 public Void visitGithub(GithubOutputMode value) {
+                    T customConfig = getCustomConfig(generatorConfig);
                     runInGithubMode(generatorExecClient, generatorConfig, ir, customConfig, value);
                     return null;
                 }
@@ -114,16 +116,17 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig> {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            T customConfig) {
+            K customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, true));
+        generatedFiles.forEach(
+                generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
     }
 
     public abstract void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            T customConfig);
+            K customConfig);
 
     public final void runInGithubMode(
             DefaultGeneratorExecClient generatorExecClient,
@@ -152,7 +155,7 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig> {
                         .map(MavenGithubPublishInfo::getRegistryUrl))));
 
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
 
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
     }
@@ -186,7 +189,7 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig> {
 
         addRootProjectFiles(Optional.of(mavenCoordinate));
 
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
         runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
 
@@ -273,6 +276,9 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig> {
     }
 
     public abstract <T extends CustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
+
+    public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
+            GeneratorConfig generatorConfig);
 
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {

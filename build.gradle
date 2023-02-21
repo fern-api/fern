@@ -57,6 +57,7 @@ allprojects {
     tasks.withType(JavaCompile).configureEach {
         options.errorprone.disable 'StrictUnusedVariable'
         options.errorprone.disable 'PreferSafeLoggableExceptions'
+        options.errorprone.disable 'Slf4jConstantLogMessage'
     }
 
     sourceCompatibility = 11

@@ -26,7 +26,7 @@ public abstract class GeneratedFile {
 
     public abstract Optional<String> directoryPrefix();
 
-    public final void write(Path directory, boolean isLocal) {
+    public final void write(Path directory, boolean isLocal, Optional<String> existingPrefix) {
         Path outputDirectory = directory;
         if (directoryPrefix().isPresent()) {
             outputDirectory = directory.resolve(directoryPrefix().get());
@@ -35,11 +35,12 @@ public abstract class GeneratedFile {
             }
         }
         try {
-            writeToFile(outputDirectory, isLocal);
+            writeToFile(outputDirectory, isLocal, existingPrefix);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to write " + outputDirectory.resolve(filename()));
+            throw new RuntimeException("Failed to write " + outputDirectory.resolve(filename()), e);
         }
     }
 
-    protected abstract void writeToFile(Path directory, boolean isLocal) throws IOException;
+    protected abstract void writeToFile(Path directory, boolean isLocal, Optional<String> existingPrefix)
+            throws IOException;
 }

@@ -25,6 +25,7 @@ import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
+import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -33,14 +34,14 @@ import com.fern.java.output.gradle.GradleDependency;
 import java.util.Collections;
 import java.util.List;
 
-public final class ModelGeneratorCli extends AbstractGeneratorCli {
+public final class ModelGeneratorCli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
 
     @Override
     public void runInDownloadFilesModeHook(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig) {
+            DownloadFilesCustomConfig customConfig) {
         throw new RuntimeException("Download files mode is unsupported!");
     }
 
@@ -109,6 +110,16 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
             return ObjectMappers.JSON_MAPPER.convertValue(node, CustomConfig.class);
         }
         return CustomConfig.builder().build();
+    }
+
+    @Override
+    public DownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
+        if (generatorConfig.getCustomConfig().isPresent()) {
+            JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
+                    generatorConfig.getCustomConfig().get());
+            return ObjectMappers.JSON_MAPPER.convertValue(node, DownloadFilesCustomConfig.class);
+        }
+        return DownloadFilesCustomConfig.builder().build();
     }
 
     public static void main(String... args) {

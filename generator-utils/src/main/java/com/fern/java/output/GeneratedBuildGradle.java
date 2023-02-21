@@ -118,7 +118,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         return writer.getContents();
     }
 
-    public final void writeToFile(Path directory, boolean _isLocal) throws IOException {
+    public final void writeToFile(Path directory, boolean _isLocal, Optional<String> _existingPrefix)
+            throws IOException {
         Files.writeString(directory.resolve("build.gradle"), getContents());
     }
 
