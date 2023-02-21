@@ -22,6 +22,7 @@ import com.squareup.javapoet.ClassName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 
 public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
@@ -32,6 +33,7 @@ public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModel
     public ClassName getServiceInterfaceClassName(HttpService httpService) {
         String packageName =
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
-        return ClassName.get(packageName, httpService.getName().getName());
+        return ClassName.get(
+                packageName, StringUtils.capitalize(httpService.getName().getName()));
     }
 }
