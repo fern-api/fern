@@ -46,6 +46,6 @@ public class SpringGeneratorEteTest {
                 ? currentPath.resolve(Paths.get("src/eteTest"))
                 : currentPath.resolve(Paths.get("spring-server-generator/src/eteTest"));
         SnapshotTestRunner.snapshotLocalFiles(
-                eteTestDirectory, expect, "java-spring:latest", Optional.of(Map.of("wrapped-aliases", true)));
+                eteTestDirectory, expect, "java-spring:latest", Optional.of(Map.of("package-prefix", "com.fern")));
     }
 }

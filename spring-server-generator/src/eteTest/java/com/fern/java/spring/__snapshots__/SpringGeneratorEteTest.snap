@@ -1,5 +1,5 @@
-basic[core/BearerAuth.java]=[
-package core;
+basic[com/fern/core/BearerAuth.java]=[
+package com.fern.core;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Override;
@@ -30,8 +30,8 @@ public final class BearerAuth {
 ]
 
 
-basic[core/ObjectMappers.java]=[
-package core;
+basic[com/fern/core/ObjectMappers.java]=[
+package com.fern.core;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,10 +51,10 @@ public final class ObjectMappers {
 ]
 
 
-basic[resources/auth/AuthService.java]=[
-package resources.auth;
+basic[com/fern/resources/auth/AuthService.java]=[
+package com.fern.resources.auth;
 
-import core.BearerAuth;
+import com.fern.core.BearerAuth;
 import java.security.Principal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -73,16 +73,16 @@ public interface AuthService {
 ]
 
 
-basic[resources/blog/PostsService.java]=[
-package resources.blog;
+basic[com/fern/resources/blog/PostsService.java]=[
+package com.fern.resources.blog;
 
+import com.fern.resources.blog.types.BlogPost;
+import com.fern.resources.blog.types.CreatePostRequest;
+import com.fern.resources.blog.types.PostId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import resources.blog.types.BlogPost;
-import resources.blog.types.CreatePostRequest;
-import resources.blog.types.PostId;
 
 @RequestMapping(
     path = "/posts",
@@ -100,8 +100,8 @@ public interface PostsService {
 ]
 
 
-basic[resources/blog/types/Age.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/Age.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -152,8 +152,8 @@ public final class Age {
 ]
 
 
-basic[resources/blog/types/Author.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/Author.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -351,8 +351,8 @@ public final class Author {
 ]
 
 
-basic[resources/blog/types/BlogPost.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/BlogPost.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -537,8 +537,8 @@ public final class BlogPost {
 ]
 
 
-basic[resources/blog/types/CreatePostRequest.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/CreatePostRequest.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -723,8 +723,8 @@ public final class CreatePostRequest {
 ]
 
 
-basic[resources/blog/types/GeneratorIdAndVersion.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/GeneratorIdAndVersion.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -843,8 +843,8 @@ public final class GeneratorIdAndVersion {
 ]
 
 
-basic[resources/blog/types/PostId.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/PostId.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -894,8 +894,8 @@ public final class PostId {
 ]
 
 
-basic[resources/blog/types/PostNotFoundErrorBody.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/PostNotFoundErrorBody.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -992,8 +992,8 @@ public final class PostNotFoundErrorBody {
 ]
 
 
-basic[resources/blog/types/PostType.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/PostType.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -1094,8 +1094,8 @@ public final class PostType {
 ]
 
 
-basic[resources/blog/types/UnauthorizedErrorBody.java]=[
-package resources.blog.types;
+basic[com/fern/resources/blog/types/UnauthorizedErrorBody.java]=[
+package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -1192,13 +1192,13 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[resources/dummy/service/DummyService.java]=[
-package resources.dummy.service;
+basic[com/fern/resources/dummy/service/DummyService.java]=[
+package com.fern.resources.dummy.service;
 
+import com.fern.resources.dummy.service.types.DummyId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import resources.dummy.service.types.DummyId;
 
 @RequestMapping(
     path = "/dummy",
@@ -1216,8 +1216,8 @@ public interface DummyService {
 ]
 
 
-basic[resources/dummy/service/types/DummyId.java]=[
-package resources.dummy.service.types;
+basic[com/fern/resources/dummy/service/types/DummyId.java]=[
+package com.fern.resources.dummy.service.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

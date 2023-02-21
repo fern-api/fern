@@ -16,12 +16,13 @@
 
 package com.fern.java.spring;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
+import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
-import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class SpringGeneratorCli extends AbstractGeneratorCli {
+public final class SpringGeneratorCli extends AbstractGeneratorCli<SpringCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(SpringGeneratorCli.class);
 
@@ -50,7 +51,7 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig) {
+            SpringCustomConfig customConfig) {
         SpringGeneratorContext context = new SpringGeneratorContext(ir, generatorConfig, customConfig);
         generateClient(context, ir);
     }
@@ -60,7 +61,7 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            SpringCustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
         throw new RuntimeException("Github mode is unsupported!");
     }
@@ -70,7 +71,7 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            SpringCustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
         SpringGeneratorContext context = new SpringGeneratorContext(ir, generatorConfig, customConfig);
         generateClient(context, ir);
@@ -113,6 +114,16 @@ public final class SpringGeneratorCli extends AbstractGeneratorCli {
     @Override
     public List<String> getSubProjects() {
         return subprojects;
+    }
+
+    @Override
+    public SpringCustomConfig getCustomConfig(GeneratorConfig generatorConfig) {
+        if (generatorConfig.getCustomConfig().isPresent()) {
+            JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
+                    generatorConfig.getCustomConfig().get());
+            return ObjectMappers.JSON_MAPPER.convertValue(node, SpringCustomConfig.class);
+        }
+        return SpringCustomConfig.builder().build();
     }
 
     public static void main(String... args) {

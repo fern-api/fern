@@ -20,12 +20,13 @@ import com.fern.ir.model.services.http.HttpService;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
-    public SpringLocalFilesPoetClassNameFactory() {
-        super(Collections.emptyList());
+    public SpringLocalFilesPoetClassNameFactory(Optional<String> directoryNamePrefix) {
+        super(directoryNamePrefix.map(List::of).orElseGet(() -> Collections.emptyList()));
     }
 
     public ClassName getServiceInterfaceClassName(HttpService httpService) {

@@ -16,7 +16,6 @@
 
 package com.fern.java;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -28,7 +27,6 @@ import com.fern.generator.exec.model.logging.ExitStatusUpdate;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
-import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.generators.GithubWorkflowGenerator;
@@ -56,7 +54,7 @@ import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractGeneratorCli {
+public abstract class AbstractGeneratorCli<T extends CustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractGeneratorCli.class);
 
@@ -71,7 +69,7 @@ public abstract class AbstractGeneratorCli {
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
-            CustomConfig customConfig = getCustomConfig(generatorConfig);
+            T customConfig = getCustomConfig(generatorConfig);
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig.getOutput().getMode().visit(new Visitor<Void>() {
@@ -116,7 +114,7 @@ public abstract class AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig) {
+            T customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, true));
     }
@@ -125,13 +123,13 @@ public abstract class AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig);
+            T customConfig);
 
     public final void runInGithubMode(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            T customConfig,
             GithubOutputMode githubOutputMode) {
         Optional<MavenCoordinate> maybeMavenCoordinate = githubOutputMode
                 .getPublishInfo()
@@ -163,14 +161,14 @@ public abstract class AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            T customConfig,
             GithubOutputMode githubOutputMode);
 
     public final void runInPublishMode(
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            T customConfig,
             GeneratorPublishConfig publishOutputMode) {
         // send publishing update
         MavenRegistryConfigV2 mavenRegistryConfigV2 =
@@ -212,7 +210,7 @@ public abstract class AbstractGeneratorCli {
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            T customConfig,
             GeneratorPublishConfig publishOutputMode);
 
     public abstract List<GradleDependency> getBuildGradleDependencies();
@@ -274,14 +272,7 @@ public abstract class AbstractGeneratorCli {
         }
     }
 
-    private static CustomConfig getCustomConfig(GeneratorConfig generatorConfig) {
-        if (generatorConfig.getCustomConfig().isPresent()) {
-            JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
-                    generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, CustomConfig.class);
-        }
-        return CustomConfig.builder().build();
-    }
+    public abstract <T extends CustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {

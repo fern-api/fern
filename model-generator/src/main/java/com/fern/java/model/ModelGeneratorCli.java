@@ -16,9 +16,11 @@
 
 package com.fern.java.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
+import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
@@ -97,6 +99,16 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli {
     @Override
     public List<String> getSubProjects() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public CustomConfig getCustomConfig(GeneratorConfig generatorConfig) {
+        if (generatorConfig.getCustomConfig().isPresent()) {
+            JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
+                    generatorConfig.getCustomConfig().get());
+            return ObjectMappers.JSON_MAPPER.convertValue(node, CustomConfig.class);
+        }
+        return CustomConfig.builder().build();
     }
 
     public static void main(String... args) {

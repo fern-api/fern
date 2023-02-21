@@ -19,12 +19,15 @@ package com.fern.java.spring;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.CustomConfig;
 
 public final class SpringGeneratorContext extends AbstractGeneratorContext<SpringLocalFilesPoetClassNameFactory> {
 
     public SpringGeneratorContext(
-            IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {
-        super(ir, generatorConfig, customConfig, new SpringLocalFilesPoetClassNameFactory());
+            IntermediateRepresentation ir, GeneratorConfig generatorConfig, SpringCustomConfig customConfig) {
+        super(
+                ir,
+                generatorConfig,
+                customConfig,
+                new SpringLocalFilesPoetClassNameFactory(customConfig.packagePrefix()));
     }
 }
