@@ -29,62 +29,41 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractPoetClassNameFactory {
 
-    private final List<String> packagePrefixTokens = new ArrayList<>();
+    private final List<String> packagePrefixTokens;
 
-    public AbstractPoetClassNameFactory(IntermediateRepresentation ir, String organization) {
-        packagePrefixTokens.add("com");
-        packagePrefixTokens.addAll(splitOnNonAlphaNumericChar(organization));
-        packagePrefixTokens.addAll(splitOnNonAlphaNumericChar(ir.getApiName()));
+    public AbstractPoetClassNameFactory(List<String> packagePrefixTokens) {
+        this.packagePrefixTokens = packagePrefixTokens;
     }
 
-    public abstract String generatorTypePackage();
+    public abstract ClassName getTypeClassName(DeclaredTypeName declaredTypeName);
 
-    public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
-        String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
-        return ClassName.get(
-                packageName, declaredTypeName.getNameV3().getSafeName().getPascalCase());
-    }
+    public abstract ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName);
 
-    public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
-        String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
-        return ClassName.get(
-                packageName, "I" + declaredTypeName.getNameV3().getSafeName().getPascalCase());
-    }
-
-    public final ClassName getTopLevelClassName(String className) {
-        String packageName = getPackage(Optional.empty(), Optional.empty());
-        return ClassName.get(packageName, className);
+    public final ClassName getCoreClassName(String className) {
+        return ClassName.get(getCorePackage(), className);
     }
 
     public final ClassName getRootClassName(String className) {
         return ClassName.get(getRootPackage(), className);
     }
 
-    public final ClassName getCoreClassName(String className) {
-        return ClassName.get(getCorePackage(), className);
+    public final String getCorePackage() {
+        List<String> tokens = new ArrayList<>(packagePrefixTokens);
+        tokens.add("core");
+        return String.join(".", tokens);
     }
 
-    protected final String getTypesPackageName(FernFilepath fernFilepath) {
-        return getPackage(Optional.of(fernFilepath), getTypesPrefix());
+    public final String getRootPackage() {
+        List<String> tokens = new ArrayList<>(packagePrefixTokens);
+        return String.join(".", tokens);
     }
 
-    protected abstract Optional<String> getTypesPrefix();
-
-    protected final String getEndpointsPackageName(FernFilepath fernFilepath) {
-        return getPackage(Optional.of(fernFilepath), Optional.of("endpoints"));
-    }
-
-    protected final String getErrorsPackageName(FernFilepath fernFilepath) {
-        return getPackage(Optional.of(fernFilepath), Optional.of("errors"));
-    }
-
-    protected final String getExceptionsPackageName(FernFilepath fernFilepath) {
-        return getPackage(Optional.of(fernFilepath), Optional.of("exceptions"));
+    public final List<String> getPackagePrefixTokens() {
+        return packagePrefixTokens;
     }
 
     protected final String getPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
-        List<String> tokens = new ArrayList<>(packagePrefixTokens);
-        tokens.add(generatorTypePackage());
+        List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
         fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.get().stream()
                 .map(StringWithAllCasings::getSnakeCase)
                 .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
@@ -93,16 +72,15 @@ public abstract class AbstractPoetClassNameFactory {
         return String.join(".", tokens);
     }
 
-    protected final String getRootPackage() {
-        List<String> tokens = new ArrayList<>(packagePrefixTokens);
-        return String.join(".", tokens);
-    }
-
-    protected final String getCorePackage() {
-        return getRootPackage() + ".core";
-    }
-
-    protected static List<String> splitOnNonAlphaNumericChar(String value) {
+    public static List<String> splitOnNonAlphaNumericChar(String value) {
         return Arrays.asList(value.split("[^a-zA-Z0-9]"));
+    }
+
+    public static List<String> getPackagePrefixWithOrgAndApiName(IntermediateRepresentation ir, String organization) {
+        List<String> prefix = new ArrayList<>();
+        prefix.add("com");
+        prefix.addAll(splitOnNonAlphaNumericChar(organization));
+        prefix.addAll(splitOnNonAlphaNumericChar(ir.getApiName()));
+        return prefix;
     }
 }

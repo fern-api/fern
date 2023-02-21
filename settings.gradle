@@ -14,5 +14,6 @@ include 'runtime-utils:jackson-utils'
 include 'runtime-utils:spring-utils'
 
 include 'model-generator'
+include 'spring-server-generator'
 include 'client-generator'
 include 'generator-utils'

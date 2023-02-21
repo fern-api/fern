@@ -45,7 +45,7 @@ public class CliEteTest {
         Path fernDirPath = currentPath.endsWith("cli")
                 ? currentPath.resolve(Paths.get("src/eteTest"))
                 : currentPath.resolve(Paths.get("cli/src/eteTest"));
-        SnapshotTestRunner.snapshotTest(
+        SnapshotTestRunner.snapshotGithub(
                 fernDirPath,
                 expect,
                 "fern-java:latest",

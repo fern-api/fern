@@ -45,25 +45,25 @@ public final class SnapshotTestRunner {
 
     private SnapshotTestRunner() {}
 
-    public static void snapshotTest(Path fernDir, Expect expect, String docker) throws IOException {
-        snapshotTest(fernDir, expect, docker, Optional.empty());
+    public static void snapshotLocalFiles(Path fernDir, Expect expect, String docker, Optional<Object> customConfig)
+            throws IOException {
+        GeneratorConfig generatorConfig = GeneratorConfig.builder()
+                .dryRun(true)
+                .irFilepath("/fern/ir.json")
+                .output(GeneratorOutputConfig.builder()
+                        .path("/fern/output")
+                        .mode(OutputMode.downloadFiles())
+                        .build())
+                .workspaceName("fern")
+                .organization("fern")
+                .environment(GeneratorEnvironment.local())
+                .customConfig(customConfig)
+                .build();
+        snapshotTest(fernDir, expect, docker, generatorConfig, customConfig, false);
     }
 
-    public static void snapshotTest(Path fernDir, Expect expect, String docker, Optional<Object> customConfig)
+    public static void snapshotGithub(Path fernDir, Expect expect, String docker, Optional<Object> customConfig)
             throws IOException {
-
-        Path tmpDir = Files.createTempDirectory("fern");
-
-        Path pathToOutput = fernDir.resolve("generated-java");
-        Path pathToIr = tmpDir.resolve("ir.json");
-        Path pathToConfig = tmpDir.resolve("config.json");
-
-        if (pathToOutput.toFile().exists()) {
-            runCommand(fernDir, new String[] {"rm", "-rf", "generated-java/"});
-        } else {
-            pathToOutput.toFile().mkdirs();
-        }
-
         GeneratorConfig generatorConfig = GeneratorConfig.builder()
                 .dryRun(true)
                 .irFilepath("/fern/ir.json")
@@ -112,6 +112,30 @@ public final class SnapshotTestRunner {
                 .environment(GeneratorEnvironment.local())
                 .customConfig(customConfig)
                 .build();
+        snapshotTest(fernDir, expect, docker, generatorConfig, customConfig, true);
+    }
+
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
+    public static void snapshotTest(
+            Path fernDir,
+            Expect expect,
+            String docker,
+            GeneratorConfig generatorConfig,
+            Optional<Object> customConfig,
+            boolean compile)
+            throws IOException {
+
+        Path tmpDir = Files.createTempDirectory("fern");
+
+        Path pathToOutput = fernDir.resolve("generated-java");
+        Path pathToIr = tmpDir.resolve("ir.json");
+        Path pathToConfig = tmpDir.resolve("config.json");
+
+        if (pathToOutput.toFile().exists()) {
+            runCommand(fernDir, new String[] {"rm", "-rf", "generated-java/"});
+        } else {
+            pathToOutput.toFile().mkdirs();
+        }
 
         Files.writeString(pathToConfig, ClientObjectMappers.JSON_MAPPER.writeValueAsString(generatorConfig));
 
@@ -170,7 +194,7 @@ public final class SnapshotTestRunner {
             }
         }
 
-        if (!System.getenv().containsKey("CIRCLECI")) {
+        if (compile && !System.getenv().containsKey("CIRCLECI")) {
             runCommand(pathToOutput, new String[] {"./gradlew", "compileJava"});
         }
     }

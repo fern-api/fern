@@ -118,7 +118,7 @@ public abstract class AbstractGeneratorCli {
             IntermediateRepresentation ir,
             CustomConfig customConfig) {
         runInDownloadFilesModeHook(generatorExecClient, generatorConfig, ir, customConfig);
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, true));
     }
 
     public abstract void runInDownloadFilesModeHook(
@@ -154,7 +154,7 @@ public abstract class AbstractGeneratorCli {
                         .map(MavenGithubPublishInfo::getRegistryUrl))));
 
         // write files to disk
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false));
 
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
     }
@@ -188,7 +188,7 @@ public abstract class AbstractGeneratorCli {
 
         addRootProjectFiles(Optional.of(mavenCoordinate));
 
-        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory));
+        generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
         runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
 

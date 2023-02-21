@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package com.fern.java.model;
+package com.fern.java.spring;
 
-import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.java.AbstractModelPoetClassNameFactory;
-import com.fern.java.AbstractPoetClassNameFactory;
+import com.fern.java.AbstractNonModelPoetClassNameFactory;
+import java.util.Collections;
 
-public final class ModelPoetClassNameFactory extends AbstractModelPoetClassNameFactory {
+public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
-    public ModelPoetClassNameFactory(IntermediateRepresentation ir, String organization) {
-        super(AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, organization));
+    public SpringLocalFilesPoetClassNameFactory() {
+        super(Collections.emptyList());
     }
 }

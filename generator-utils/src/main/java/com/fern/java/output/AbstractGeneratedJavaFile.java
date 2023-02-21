@@ -33,7 +33,11 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
     }
 
     @Override
-    public final void writeToFile(Path directory) throws IOException {
-        javaFile().writeToFile(directory.resolve("src/main/java").toFile());
+    public final void writeToFile(Path directory, boolean isLocal) throws IOException {
+        if (isLocal) {
+            javaFile().writeToFile(directory.toFile());
+        } else {
+            javaFile().writeToFile(directory.resolve("src/main/java").toFile());
+        }
     }
 }

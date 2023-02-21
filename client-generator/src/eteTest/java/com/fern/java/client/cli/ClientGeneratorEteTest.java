@@ -44,7 +44,7 @@ public class ClientGeneratorEteTest {
         Path eteTestDirectory = currentPath.endsWith("client-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest"))
                 : currentPath.resolve(Paths.get("client-generator/src/eteTest"));
-        SnapshotTestRunner.snapshotTest(
+        SnapshotTestRunner.snapshotGithub(
                 eteTestDirectory, expect, "java-client:latest", Optional.of(Map.of("unknown-as-optional", true)));
     }
 }

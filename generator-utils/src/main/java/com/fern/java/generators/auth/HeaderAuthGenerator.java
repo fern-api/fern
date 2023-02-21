@@ -33,7 +33,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
-                        .getTopLevelClassName(httpHeader.getName().getPascalCase()),
+                        .getCoreClassName(httpHeader.getName().getPascalCase()),
                 generatorContext);
         this.httpHeader = httpHeader;
     }

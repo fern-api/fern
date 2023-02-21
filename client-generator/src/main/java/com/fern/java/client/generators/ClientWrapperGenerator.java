@@ -537,7 +537,7 @@ public final class ClientWrapperGenerator extends AbstractFileGenerator {
         KeyedStream.stream(nestedClients).forEach((prefix, prefixedClients) -> {
             ClassName nestedClientClassName = generatorContext
                     .getPoetClassNameFactory()
-                    .getTopLevelClassName(prefixedClients.prefixCasings.getPascalCase() + "Client");
+                    .getRootClassName(prefixedClients.prefixCasings.getPascalCase() + "Client");
             ClientConfig nestedClientConfig =
                     createClientConfig(prefixedClients.clients, fernFilePathSize + 1, nestedClientClassName);
             clientConfigBuilder.putNestedClients(prefix, nestedClientConfig);

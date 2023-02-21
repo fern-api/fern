@@ -21,24 +21,15 @@ import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.services.commons.DeclaredServiceName;
 import com.fern.ir.model.services.http.HttpEndpoint;
 import com.fern.ir.model.services.http.HttpService;
+import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.Optional;
 
-public final class ClientPoetClassNameFactory extends AbstractPoetClassNameFactory {
+public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
     public ClientPoetClassNameFactory(IntermediateRepresentation ir, String organization) {
-        super(ir, organization);
-    }
-
-    @Override
-    public String generatorTypePackage() {
-        return "client";
-    }
-
-    @Override
-    protected Optional<String> getTypesPrefix() {
-        return Optional.of("types");
+        super(AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, organization));
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
@@ -57,17 +48,20 @@ public final class ClientPoetClassNameFactory extends AbstractPoetClassNameFacto
     }
 
     public ClassName getServiceInterfaceClassName(HttpService httpService) {
-        String packageName = getPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, httpService.getName().getName());
     }
 
     public ClassName getServiceErrorDecoderClassname(HttpService httpService) {
-        String packageName = getPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, httpService.getName().getName() + "ErrorDecoder");
     }
 
     public ClassName getServiceClientClassname(HttpService httpService) {
-        String packageName = getPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, httpService.getName().getName() + "Client");
     }
 }

@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-package com.fern.java.model;
+package com.fern.java.spring;
 
+import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.java.AbstractModelPoetClassNameFactory;
-import com.fern.java.AbstractPoetClassNameFactory;
+import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.CustomConfig;
 
-public final class ModelPoetClassNameFactory extends AbstractModelPoetClassNameFactory {
+public final class SpringGeneratorContext extends AbstractGeneratorContext<SpringLocalFilesPoetClassNameFactory> {
 
-    public ModelPoetClassNameFactory(IntermediateRepresentation ir, String organization) {
-        super(AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, organization));
+    public SpringGeneratorContext(
+            IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {
+        super(ir, generatorConfig, customConfig, new SpringLocalFilesPoetClassNameFactory());
     }
 }

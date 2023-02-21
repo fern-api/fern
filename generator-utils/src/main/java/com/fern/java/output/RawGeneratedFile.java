@@ -29,7 +29,7 @@ public abstract class RawGeneratedFile extends GeneratedFile {
     public abstract String contents();
 
     @Override
-    public final void writeToFile(Path directory) throws IOException {
+    public final void writeToFile(Path directory, boolean _isLocal) throws IOException {
         Files.writeString(directory.resolve(filename()), contents());
     }
 

@@ -280,17 +280,114 @@ exec "$JAVACMD" "$@"
 ]
 
 
+basic[src/main/java/com/fern/basic/DeviceClient.java]=[
+package com.fern.basic;
+
+import com.fern.basic.core.BearerAuth;
+import com.fern.basic.core.Environment;
+import com.fern.basic.resources.raven.device.DeviceServiceClient;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
+public final class DeviceClient {
+  private final Supplier<DeviceServiceClient> deviceServiceClient;
+
+  public DeviceClient(String apiVersion) {
+    this(Environment.PROD, apiVersion);
+  }
+
+  public DeviceClient(BearerAuth auth, String apiVersion) {
+    this(Environment.PROD, auth, apiVersion);
+  }
+
+  public DeviceClient(Environment environment, String apiVersion) {
+    this.deviceServiceClient =
+        memoize(() -> new DeviceServiceClient(environment.getUrl(), apiVersion));
+  }
+
+  public DeviceClient(Environment environment, BearerAuth auth, String apiVersion) {
+    this.deviceServiceClient =
+        memoize(() -> new DeviceServiceClient(environment.getUrl(), auth, apiVersion));
+  }
+
+  public final DeviceServiceClient device() {
+    return this.deviceServiceClient.get();
+  }
+
+  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    AtomicReference<T> value = new AtomicReference<>();
+    return () -> {
+      T val = value.get();
+      if (val == null) {
+        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
+      }
+      return val;
+    };
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/EventClient.java]=[
+package com.fern.basic;
+
+import com.fern.basic.core.BearerAuth;
+import com.fern.basic.core.Environment;
+import com.fern.basic.resources.raven.event.EventServiceClient;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
+public final class EventClient {
+  private final Supplier<EventServiceClient> eventServiceClient;
+
+  public EventClient(String apiVersion) {
+    this(Environment.PROD, apiVersion);
+  }
+
+  public EventClient(BearerAuth auth, String apiVersion) {
+    this(Environment.PROD, auth, apiVersion);
+  }
+
+  public EventClient(Environment environment, String apiVersion) {
+    this.eventServiceClient =
+        memoize(() -> new EventServiceClient(environment.getUrl(), apiVersion));
+  }
+
+  public EventClient(Environment environment, BearerAuth auth, String apiVersion) {
+    this.eventServiceClient =
+        memoize(() -> new EventServiceClient(environment.getUrl(), auth, apiVersion));
+  }
+
+  public final EventServiceClient event() {
+    return this.eventServiceClient.get();
+  }
+
+  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    AtomicReference<T> value = new AtomicReference<>();
+    return () -> {
+      T val = value.get();
+      if (val == null) {
+        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
+      }
+      return val;
+    };
+  }
+}
+
+]
+
+
 basic[src/main/java/com/fern/basic/FernFernClient.java]=[
 package com.fern.basic;
 
-import com.fern.basic.client.DeviceClient;
-import com.fern.basic.client.EventClient;
-import com.fern.basic.client.UserClient;
-import com.fern.basic.client.auth.AuthServiceClient;
-import com.fern.basic.client.blog.PostsServiceClient;
-import com.fern.basic.client.dummy.service.DummyServiceClient;
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.Environment;
+import com.fern.basic.resources.auth.AuthServiceClient;
+import com.fern.basic.resources.blog.PostsServiceClient;
+import com.fern.basic.resources.dummy.service.DummyServiceClient;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -378,112 +475,12 @@ public final class FernFernClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/DeviceClient.java]=[
-package com.fern.basic.client;
+basic[src/main/java/com/fern/basic/UserClient.java]=[
+package com.fern.basic;
 
-import com.fern.basic.client.raven.device.DeviceServiceClient;
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.Environment;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
-
-public final class DeviceClient {
-  private final Supplier<DeviceServiceClient> deviceServiceClient;
-
-  public DeviceClient(String apiVersion) {
-    this(Environment.PROD, apiVersion);
-  }
-
-  public DeviceClient(BearerAuth auth, String apiVersion) {
-    this(Environment.PROD, auth, apiVersion);
-  }
-
-  public DeviceClient(Environment environment, String apiVersion) {
-    this.deviceServiceClient =
-        memoize(() -> new DeviceServiceClient(environment.getUrl(), apiVersion));
-  }
-
-  public DeviceClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.deviceServiceClient =
-        memoize(() -> new DeviceServiceClient(environment.getUrl(), auth, apiVersion));
-  }
-
-  public final DeviceServiceClient device() {
-    return this.deviceServiceClient.get();
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () -> {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    };
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/client/EventClient.java]=[
-package com.fern.basic.client;
-
-import com.fern.basic.client.raven.event.EventServiceClient;
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.Environment;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
-
-public final class EventClient {
-  private final Supplier<EventServiceClient> eventServiceClient;
-
-  public EventClient(String apiVersion) {
-    this(Environment.PROD, apiVersion);
-  }
-
-  public EventClient(BearerAuth auth, String apiVersion) {
-    this(Environment.PROD, auth, apiVersion);
-  }
-
-  public EventClient(Environment environment, String apiVersion) {
-    this.eventServiceClient =
-        memoize(() -> new EventServiceClient(environment.getUrl(), apiVersion));
-  }
-
-  public EventClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.eventServiceClient =
-        memoize(() -> new EventServiceClient(environment.getUrl(), auth, apiVersion));
-  }
-
-  public final EventServiceClient event() {
-    return this.eventServiceClient.get();
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () -> {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    };
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/client/UserClient.java]=[
-package com.fern.basic.client;
-
-import com.fern.basic.client.raven.user.UserServiceClient;
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.Environment;
+import com.fern.basic.resources.raven.user.UserServiceClient;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -527,12 +524,89 @@ public final class UserClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/auth/AuthService.java]=[
-package com.fern.basic.client.auth;
+basic[src/main/java/com/fern/basic/core/BearerAuth.java]=[
+package com.fern.basic.core;
 
-import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+public final class BearerAuth {
+  private final String token;
+
+  private BearerAuth(String token) {
+    this.token = token;
+  }
+
+  @JsonValue
+  public String getToken() {
+    return token;
+  }
+
+  @Override
+  public String toString() {
+    return "Bearer " + getToken();
+  }
+
+  public static BearerAuth of(String token) {
+    return new BearerAuth(token.startsWith("Bearer ") ? token.substring(7) : token);
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/core/Environment.java]=[
+package com.fern.basic.core;
+
+public final class Environment {
+  public static final Environment PROD = new Environment("prod.com");
+
+  public static final Environment STAGING = new Environment("staging.com");
+
+  private final String url;
+
+  private Environment(String url) {
+    this.url = url;
+  }
+
+  public String getUrl() {
+    return this.url;
+  }
+
+  public static Environment custom(String url) {
+    return new Environment(url);
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/core/ObjectMappers.java]=[
+package com.fern.basic.core;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+
+public final class ObjectMappers {
+  public static final ObjectMapper JSON_MAPPER =
+      JsonMapper.builder()
+          .addModule(new Jdk8Module())
+          .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+          .build();
+
+  private ObjectMappers() {}
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/auth/AuthService.java]=[
+package com.fern.basic.resources.auth;
+
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.auth.exceptions.GetAuthException;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -568,12 +642,12 @@ interface AuthService {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/auth/AuthServiceClient.java]=[
-package com.fern.basic.client.auth;
+basic[src/main/java/com/fern/basic/resources/auth/AuthServiceClient.java]=[
+package com.fern.basic.resources.auth;
 
-import com.fern.basic.client.auth.endpoints.GetAuth;
-import com.fern.basic.client.auth.exceptions.GetAuthException;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.auth.endpoints.GetAuth;
+import com.fern.basic.resources.auth.exceptions.GetAuthException;
 import java.util.Optional;
 
 public final class AuthServiceClient {
@@ -607,11 +681,11 @@ public final class AuthServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/auth/AuthServiceErrorDecoder.java]=[
-package com.fern.basic.client.auth;
+basic[src/main/java/com/fern/basic/resources/auth/AuthServiceErrorDecoder.java]=[
+package com.fern.basic.resources.auth;
 
-import com.fern.basic.client.auth.exceptions.GetAuthException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.auth.exceptions.GetAuthException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -644,8 +718,8 @@ final class AuthServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/auth/endpoints/GetAuth.java]=[
-package com.fern.basic.client.auth.endpoints;
+basic[src/main/java/com/fern/basic/resources/auth/endpoints/GetAuth.java]=[
+package com.fern.basic.resources.auth.endpoints;
 
 import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
@@ -724,8 +798,8 @@ public final class GetAuth {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/auth/exceptions/GetAuthException.java]=[
-package com.fern.basic.client.auth.exceptions;
+basic[src/main/java/com/fern/basic/resources/auth/exceptions/GetAuthException.java]=[
+package com.fern.basic.resources.auth.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -835,14 +909,14 @@ public final class GetAuthException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/PostsService.java]=[
-package com.fern.basic.client.blog;
+basic[src/main/java/com/fern/basic/resources/blog/PostsService.java]=[
+package com.fern.basic.resources.blog;
 
-import com.fern.basic.client.blog.exceptions.CreatePostException;
-import com.fern.basic.client.blog.exceptions.GetPostException;
-import com.fern.basic.client.blog.types.BlogPost;
-import com.fern.basic.client.blog.types.CreatePostRequest;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.blog.exceptions.CreatePostException;
+import com.fern.basic.resources.blog.exceptions.GetPostException;
+import com.fern.basic.resources.blog.types.BlogPost;
+import com.fern.basic.resources.blog.types.CreatePostRequest;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -888,14 +962,14 @@ interface PostsService {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/PostsServiceClient.java]=[
-package com.fern.basic.client.blog;
+basic[src/main/java/com/fern/basic/resources/blog/PostsServiceClient.java]=[
+package com.fern.basic.resources.blog;
 
-import com.fern.basic.client.blog.endpoints.CreatePost;
-import com.fern.basic.client.blog.endpoints.GetPost;
-import com.fern.basic.client.blog.exceptions.CreatePostException;
-import com.fern.basic.client.blog.exceptions.GetPostException;
-import com.fern.basic.client.blog.types.BlogPost;
+import com.fern.basic.resources.blog.endpoints.CreatePost;
+import com.fern.basic.resources.blog.endpoints.GetPost;
+import com.fern.basic.resources.blog.exceptions.CreatePostException;
+import com.fern.basic.resources.blog.exceptions.GetPostException;
+import com.fern.basic.resources.blog.types.BlogPost;
 
 public final class PostsServiceClient {
   private final PostsService service;
@@ -926,12 +1000,12 @@ public final class PostsServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/PostsServiceErrorDecoder.java]=[
-package com.fern.basic.client.blog;
+basic[src/main/java/com/fern/basic/resources/blog/PostsServiceErrorDecoder.java]=[
+package com.fern.basic.resources.blog;
 
-import com.fern.basic.client.blog.exceptions.CreatePostException;
-import com.fern.basic.client.blog.exceptions.GetPostException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.blog.exceptions.CreatePostException;
+import com.fern.basic.resources.blog.exceptions.GetPostException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -967,11 +1041,11 @@ final class PostsServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/endpoints/CreatePost.java]=[
-package com.fern.basic.client.blog.endpoints;
+basic[src/main/java/com/fern/basic/resources/blog/endpoints/CreatePost.java]=[
+package com.fern.basic.resources.blog.endpoints;
 
-import com.fern.basic.client.blog.types.CreatePostRequest;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.blog.types.CreatePostRequest;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -1090,8 +1164,8 @@ public final class CreatePost {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/endpoints/GetPost.java]=[
-package com.fern.basic.client.blog.endpoints;
+basic[src/main/java/com/fern/basic/resources/blog/endpoints/GetPost.java]=[
+package com.fern.basic.resources.blog.endpoints;
 
 import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
@@ -1249,12 +1323,12 @@ public final class GetPost {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/errors/GeneratorsDoNotExistError.java]=[
-package com.fern.basic.client.blog.errors;
+basic[src/main/java/com/fern/basic/resources/blog/errors/GeneratorsDoNotExistError.java]=[
+package com.fern.basic.resources.blog.errors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.basic.client.blog.types.GeneratorIdAndVersion;
+import com.fern.basic.resources.blog.types.GeneratorIdAndVersion;
 import java.util.List;
 
 public final class GeneratorsDoNotExistError {
@@ -1295,12 +1369,12 @@ public final class GeneratorsDoNotExistError {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/errors/PostNotFoundError.java]=[
-package com.fern.basic.client.blog.errors;
+basic[src/main/java/com/fern/basic/resources/blog/errors/PostNotFoundError.java]=[
+package com.fern.basic.resources.blog.errors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.basic.client.blog.types.PostNotFoundErrorBody;
+import com.fern.basic.resources.blog.types.PostNotFoundErrorBody;
 
 public final class PostNotFoundError {
   private final PostNotFoundErrorBody value;
@@ -1340,12 +1414,12 @@ public final class PostNotFoundError {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/errors/UnauthorizedError.java]=[
-package com.fern.basic.client.blog.errors;
+basic[src/main/java/com/fern/basic/resources/blog/errors/UnauthorizedError.java]=[
+package com.fern.basic.resources.blog.errors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.basic.client.blog.types.UnauthorizedErrorBody;
+import com.fern.basic.resources.blog.types.UnauthorizedErrorBody;
 
 public final class UnauthorizedError {
   private final UnauthorizedErrorBody value;
@@ -1385,8 +1459,8 @@ public final class UnauthorizedError {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/exceptions/CreatePostException.java]=[
-package com.fern.basic.client.blog.exceptions;
+basic[src/main/java/com/fern/basic/resources/blog/exceptions/CreatePostException.java]=[
+package com.fern.basic.resources.blog.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -1496,8 +1570,8 @@ public final class CreatePostException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/exceptions/GetPostException.java]=[
-package com.fern.basic.client.blog.exceptions;
+basic[src/main/java/com/fern/basic/resources/blog/exceptions/GetPostException.java]=[
+package com.fern.basic.resources.blog.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -1509,7 +1583,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.basic.client.blog.errors.PostNotFoundError;
+import com.fern.basic.resources.blog.errors.PostNotFoundError;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -1679,8 +1753,8 @@ public final class GetPostException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/Author.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/Author.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -1858,8 +1932,8 @@ public final class Author {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/BlogPost.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/BlogPost.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -2060,8 +2134,8 @@ public final class BlogPost {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/CreatePostRequest.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/CreatePostRequest.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -2305,8 +2379,8 @@ public final class CreatePostRequest {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/GeneratorIdAndVersion.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/GeneratorIdAndVersion.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -2417,8 +2491,8 @@ public final class GeneratorIdAndVersion {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/PostNotFoundErrorBody.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/PostNotFoundErrorBody.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -2507,8 +2581,8 @@ public final class PostNotFoundErrorBody {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/PostType.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/PostType.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -2604,8 +2678,8 @@ public final class PostType {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/blog/types/UnauthorizedErrorBody.java]=[
-package com.fern.basic.client.blog.types;
+basic[src/main/java/com/fern/basic/resources/blog/types/UnauthorizedErrorBody.java]=[
+package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -2694,12 +2768,12 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/dummy/service/DummyService.java]=[
-package com.fern.basic.client.dummy.service;
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyService.java]=[
+package com.fern.basic.resources.dummy.service;
 
-import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
-import com.fern.basic.client.dummy.service.exceptions.HealthException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.resources.dummy.service.exceptions.HealthException;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -2739,12 +2813,12 @@ interface DummyService {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/dummy/service/DummyServiceClient.java]=[
-package com.fern.basic.client.dummy.service;
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceClient.java]=[
+package com.fern.basic.resources.dummy.service;
 
-import com.fern.basic.client.dummy.service.endpoints.GetDummy;
-import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
-import com.fern.basic.client.dummy.service.exceptions.HealthException;
+import com.fern.basic.resources.dummy.service.endpoints.GetDummy;
+import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.resources.dummy.service.exceptions.HealthException;
 
 public final class DummyServiceClient {
   private final DummyService service;
@@ -2768,12 +2842,12 @@ public final class DummyServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/dummy/service/DummyServiceErrorDecoder.java]=[
-package com.fern.basic.client.dummy.service;
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceErrorDecoder.java]=[
+package com.fern.basic.resources.dummy.service;
 
-import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
-import com.fern.basic.client.dummy.service.exceptions.HealthException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.resources.dummy.service.exceptions.HealthException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -2809,8 +2883,8 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
-package com.fern.basic.client.dummy.service.endpoints;
+basic[src/main/java/com/fern/basic/resources/dummy/service/endpoints/GetDummy.java]=[
+package com.fern.basic.resources.dummy.service.endpoints;
 
 import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
@@ -2923,8 +2997,8 @@ public final class GetDummy {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/dummy/service/exceptions/GetDummyException.java]=[
-package com.fern.basic.client.dummy.service.exceptions;
+basic[src/main/java/com/fern/basic/resources/dummy/service/exceptions/GetDummyException.java]=[
+package com.fern.basic.resources.dummy.service.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -3034,8 +3108,8 @@ public final class GetDummyException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/dummy/service/exceptions/HealthException.java]=[
-package com.fern.basic.client.dummy.service.exceptions;
+basic[src/main/java/com/fern/basic/resources/dummy/service/exceptions/HealthException.java]=[
+package com.fern.basic.resources.dummy.service.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -3145,16 +3219,16 @@ public final class HealthException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/DeviceService.java]=[
-package com.fern.basic.client.raven.device;
+basic[src/main/java/com/fern/basic/resources/raven/device/DeviceService.java]=[
+package com.fern.basic.resources.raven.device;
 
-import com.fern.basic.client.raven.device.exceptions.AddException;
-import com.fern.basic.client.raven.device.exceptions.DeleteException;
-import com.fern.basic.client.raven.device.exceptions.GetDeviceException;
-import com.fern.basic.client.raven.device.exceptions.UpdateException;
-import com.fern.basic.client.raven.device.types.Device;
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.device.exceptions.AddException;
+import com.fern.basic.resources.raven.device.exceptions.DeleteException;
+import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
+import com.fern.basic.resources.raven.device.exceptions.UpdateException;
+import com.fern.basic.resources.raven.device.types.Device;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -3229,19 +3303,19 @@ interface DeviceService {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/DeviceServiceClient.java]=[
-package com.fern.basic.client.raven.device;
+basic[src/main/java/com/fern/basic/resources/raven/device/DeviceServiceClient.java]=[
+package com.fern.basic.resources.raven.device;
 
-import com.fern.basic.client.raven.device.endpoints.Add;
-import com.fern.basic.client.raven.device.endpoints.Delete;
-import com.fern.basic.client.raven.device.endpoints.GetDevice;
-import com.fern.basic.client.raven.device.endpoints.Update;
-import com.fern.basic.client.raven.device.exceptions.AddException;
-import com.fern.basic.client.raven.device.exceptions.DeleteException;
-import com.fern.basic.client.raven.device.exceptions.GetDeviceException;
-import com.fern.basic.client.raven.device.exceptions.UpdateException;
-import com.fern.basic.client.raven.device.types.Device;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.device.endpoints.Add;
+import com.fern.basic.resources.raven.device.endpoints.Delete;
+import com.fern.basic.resources.raven.device.endpoints.GetDevice;
+import com.fern.basic.resources.raven.device.endpoints.Update;
+import com.fern.basic.resources.raven.device.exceptions.AddException;
+import com.fern.basic.resources.raven.device.exceptions.DeleteException;
+import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
+import com.fern.basic.resources.raven.device.exceptions.UpdateException;
+import com.fern.basic.resources.raven.device.types.Device;
 import java.util.Optional;
 
 public final class DeviceServiceClient {
@@ -3340,14 +3414,14 @@ public final class DeviceServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/DeviceServiceErrorDecoder.java]=[
-package com.fern.basic.client.raven.device;
+basic[src/main/java/com/fern/basic/resources/raven/device/DeviceServiceErrorDecoder.java]=[
+package com.fern.basic.resources.raven.device;
 
-import com.fern.basic.client.raven.device.exceptions.AddException;
-import com.fern.basic.client.raven.device.exceptions.DeleteException;
-import com.fern.basic.client.raven.device.exceptions.GetDeviceException;
-import com.fern.basic.client.raven.device.exceptions.UpdateException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.device.exceptions.AddException;
+import com.fern.basic.resources.raven.device.exceptions.DeleteException;
+import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
+import com.fern.basic.resources.raven.device.exceptions.UpdateException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -3389,11 +3463,11 @@ final class DeviceServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/endpoints/Add.java]=[
-package com.fern.basic.client.raven.device.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/Add.java]=[
+package com.fern.basic.resources.raven.device.endpoints;
 
-import com.fern.basic.client.raven.device.types.Device;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.device.types.Device;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -3572,8 +3646,8 @@ public final class Add {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/endpoints/Delete.java]=[
-package com.fern.basic.client.raven.device.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/Delete.java]=[
+package com.fern.basic.resources.raven.device.endpoints;
 
 import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
@@ -3763,8 +3837,8 @@ public final class Delete {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/endpoints/GetDevice.java]=[
-package com.fern.basic.client.raven.device.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/GetDevice.java]=[
+package com.fern.basic.resources.raven.device.endpoints;
 
 import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
@@ -3954,11 +4028,11 @@ public final class GetDevice {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/endpoints/Update.java]=[
-package com.fern.basic.client.raven.device.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/Update.java]=[
+package com.fern.basic.resources.raven.device.endpoints;
 
-import com.fern.basic.client.raven.device.types.Device;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.device.types.Device;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -4175,8 +4249,8 @@ public final class Update {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/exceptions/AddException.java]=[
-package com.fern.basic.client.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/AddException.java]=[
+package com.fern.basic.resources.raven.device.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4285,8 +4359,8 @@ public final class AddException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/exceptions/DeleteException.java]=[
-package com.fern.basic.client.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/DeleteException.java]=[
+package com.fern.basic.resources.raven.device.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4396,8 +4470,8 @@ public final class DeleteException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/exceptions/GetDeviceException.java]=[
-package com.fern.basic.client.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/GetDeviceException.java]=[
+package com.fern.basic.resources.raven.device.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4507,8 +4581,8 @@ public final class GetDeviceException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/exceptions/UpdateException.java]=[
-package com.fern.basic.client.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/UpdateException.java]=[
+package com.fern.basic.resources.raven.device.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -4618,8 +4692,8 @@ public final class UpdateException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/types/Device.java]=[
-package com.fern.basic.client.raven.device.types;
+basic[src/main/java/com/fern/basic/resources/raven/device/types/Device.java]=[
+package com.fern.basic.resources.raven.device.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -5051,8 +5125,8 @@ public final class Device {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/device/types/Platform.java]=[
-package com.fern.basic.client.raven.device.types;
+basic[src/main/java/com/fern/basic/resources/raven/device/types/Platform.java]=[
+package com.fern.basic.resources.raven.device.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -5148,16 +5222,16 @@ public final class Platform {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/EventService.java]=[
-package com.fern.basic.client.raven.event;
+basic[src/main/java/com/fern/basic/resources/raven/event/EventService.java]=[
+package com.fern.basic.resources.raven.event;
 
-import com.fern.basic.client.raven.event.exceptions.SendBulkException;
-import com.fern.basic.client.raven.event.exceptions.SendException;
-import com.fern.basic.client.raven.event.types.BulkSendEventRequest;
-import com.fern.basic.client.raven.event.types.SendEventRequest;
-import com.fern.basic.client.raven.event.types.SendEventResponse;
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
+import com.fern.basic.resources.raven.event.exceptions.SendException;
+import com.fern.basic.resources.raven.event.types.BulkSendEventRequest;
+import com.fern.basic.resources.raven.event.types.SendEventRequest;
+import com.fern.basic.resources.raven.event.types.SendEventResponse;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -5209,15 +5283,15 @@ interface EventService {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/EventServiceClient.java]=[
-package com.fern.basic.client.raven.event;
+basic[src/main/java/com/fern/basic/resources/raven/event/EventServiceClient.java]=[
+package com.fern.basic.resources.raven.event;
 
-import com.fern.basic.client.raven.event.endpoints.Send;
-import com.fern.basic.client.raven.event.endpoints.SendBulk;
-import com.fern.basic.client.raven.event.exceptions.SendBulkException;
-import com.fern.basic.client.raven.event.exceptions.SendException;
-import com.fern.basic.client.raven.event.types.SendEventResponse;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.event.endpoints.Send;
+import com.fern.basic.resources.raven.event.endpoints.SendBulk;
+import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
+import com.fern.basic.resources.raven.event.exceptions.SendException;
+import com.fern.basic.resources.raven.event.types.SendEventResponse;
 import java.util.Optional;
 
 public final class EventServiceClient {
@@ -5269,12 +5343,12 @@ public final class EventServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/EventServiceErrorDecoder.java]=[
-package com.fern.basic.client.raven.event;
+basic[src/main/java/com/fern/basic/resources/raven/event/EventServiceErrorDecoder.java]=[
+package com.fern.basic.resources.raven.event;
 
-import com.fern.basic.client.raven.event.exceptions.SendBulkException;
-import com.fern.basic.client.raven.event.exceptions.SendException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
+import com.fern.basic.resources.raven.event.exceptions.SendException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -5310,11 +5384,11 @@ final class EventServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/endpoints/Send.java]=[
-package com.fern.basic.client.raven.event.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/event/endpoints/Send.java]=[
+package com.fern.basic.resources.raven.event.endpoints;
 
-import com.fern.basic.client.raven.event.types.SendEventRequest;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.event.types.SendEventRequest;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -5512,11 +5586,11 @@ public final class Send {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/endpoints/SendBulk.java]=[
-package com.fern.basic.client.raven.event.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/event/endpoints/SendBulk.java]=[
+package com.fern.basic.resources.raven.event.endpoints;
 
-import com.fern.basic.client.raven.event.types.BulkSendEventRequest;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.event.types.BulkSendEventRequest;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -5714,8 +5788,8 @@ public final class SendBulk {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/exceptions/SendBulkException.java]=[
-package com.fern.basic.client.raven.event.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/event/exceptions/SendBulkException.java]=[
+package com.fern.basic.resources.raven.event.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -5825,8 +5899,8 @@ public final class SendBulkException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/exceptions/SendException.java]=[
-package com.fern.basic.client.raven.event.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/event/exceptions/SendException.java]=[
+package com.fern.basic.resources.raven.event.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -5935,8 +6009,8 @@ public final class SendException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/Attachment.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/Attachment.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6078,8 +6152,8 @@ public final class Attachment {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/BatchEvent.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/BatchEvent.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6219,8 +6293,8 @@ public final class BatchEvent {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/BulkSendEventRequest.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/BulkSendEventRequest.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6362,8 +6436,8 @@ public final class BulkSendEventRequest {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/ChannelOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/ChannelOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6453,8 +6527,8 @@ public final class ChannelOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/EmailMessage.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/EmailMessage.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6596,8 +6670,8 @@ public final class EmailMessage {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/EmailOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/EmailOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6872,8 +6946,8 @@ public final class EmailOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/EmailRecipient.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/EmailRecipient.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6984,8 +7058,8 @@ public final class EmailRecipient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/EventOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/EventOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7326,8 +7400,8 @@ public final class EventOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/IChannelOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/IChannelOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 public interface IChannelOverride {
   long getScheduleAt();
@@ -7336,8 +7410,8 @@ public interface IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/InAppOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/InAppOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7427,8 +7501,8 @@ public final class InAppOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/Param.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/Param.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7539,8 +7613,8 @@ public final class Param {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/ProviderOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/ProviderOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7767,8 +7841,8 @@ public final class ProviderOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/PushOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/PushOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7858,8 +7932,8 @@ public final class PushOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/SendEventRequest.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/SendEventRequest.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8128,8 +8202,8 @@ public final class SendEventRequest {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/SendEventResponse.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/SendEventResponse.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8240,8 +8314,8 @@ public final class SendEventResponse {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/SlackMessage.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/SlackMessage.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8360,8 +8434,8 @@ public final class SlackMessage {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/SlackOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/SlackOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8473,8 +8547,8 @@ public final class SlackOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/SmsMessage.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/SmsMessage.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8563,8 +8637,8 @@ public final class SmsMessage {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/SmsOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/SmsOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8708,8 +8782,8 @@ public final class SmsOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/TelegramOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/TelegramOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8799,16 +8873,16 @@ public final class TelegramOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/User.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/User.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.basic.client.raven.user.types.SlackProfile;
-import com.fern.basic.client.raven.user.types.TelegramProfile;
+import com.fern.basic.resources.raven.user.types.SlackProfile;
+import com.fern.basic.resources.raven.user.types.TelegramProfile;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -9219,8 +9293,8 @@ public final class User {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/VoiceOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/VoiceOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9310,8 +9384,8 @@ public final class VoiceOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/WebhookOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/WebhookOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9401,8 +9475,8 @@ public final class WebhookOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/event/types/WhatsappOverride.java]=[
-package com.fern.basic.client.raven.event.types;
+basic[src/main/java/com/fern/basic/resources/raven/event/types/WhatsappOverride.java]=[
+package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9514,15 +9588,15 @@ public final class WhatsappOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/UserService.java]=[
-package com.fern.basic.client.raven.user;
+basic[src/main/java/com/fern/basic/resources/raven/user/UserService.java]=[
+package com.fern.basic.resources.raven.user;
 
-import com.fern.basic.client.raven.user.exceptions.CreateOrUpdateException;
-import com.fern.basic.client.raven.user.exceptions.GetException;
-import com.fern.basic.client.raven.user.types.CreateUserRequest;
-import com.fern.basic.client.raven.user.types.RavenUser;
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
+import com.fern.basic.resources.raven.user.exceptions.GetException;
+import com.fern.basic.resources.raven.user.types.CreateUserRequest;
+import com.fern.basic.resources.raven.user.types.RavenUser;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -9572,15 +9646,15 @@ interface UserService {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/UserServiceClient.java]=[
-package com.fern.basic.client.raven.user;
+basic[src/main/java/com/fern/basic/resources/raven/user/UserServiceClient.java]=[
+package com.fern.basic.resources.raven.user;
 
-import com.fern.basic.client.raven.user.endpoints.CreateOrUpdate;
-import com.fern.basic.client.raven.user.endpoints.Get;
-import com.fern.basic.client.raven.user.exceptions.CreateOrUpdateException;
-import com.fern.basic.client.raven.user.exceptions.GetException;
-import com.fern.basic.client.raven.user.types.RavenUser;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.user.endpoints.CreateOrUpdate;
+import com.fern.basic.resources.raven.user.endpoints.Get;
+import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
+import com.fern.basic.resources.raven.user.exceptions.GetException;
+import com.fern.basic.resources.raven.user.types.RavenUser;
 import java.util.Optional;
 
 public final class UserServiceClient {
@@ -9639,12 +9713,12 @@ public final class UserServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/UserServiceErrorDecoder.java]=[
-package com.fern.basic.client.raven.user;
+basic[src/main/java/com/fern/basic/resources/raven/user/UserServiceErrorDecoder.java]=[
+package com.fern.basic.resources.raven.user;
 
-import com.fern.basic.client.raven.user.exceptions.CreateOrUpdateException;
-import com.fern.basic.client.raven.user.exceptions.GetException;
 import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
+import com.fern.basic.resources.raven.user.exceptions.GetException;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -9680,11 +9754,11 @@ final class UserServiceErrorDecoder implements ErrorDecoder {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/endpoints/CreateOrUpdate.java]=[
-package com.fern.basic.client.raven.user.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/user/endpoints/CreateOrUpdate.java]=[
+package com.fern.basic.resources.raven.user.endpoints;
 
-import com.fern.basic.client.raven.user.types.CreateUserRequest;
 import com.fern.basic.core.BearerAuth;
+import com.fern.basic.resources.raven.user.types.CreateUserRequest;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -9824,8 +9898,8 @@ public final class CreateOrUpdate {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/endpoints/Get.java]=[
-package com.fern.basic.client.raven.user.endpoints;
+basic[src/main/java/com/fern/basic/resources/raven/user/endpoints/Get.java]=[
+package com.fern.basic.resources.raven.user.endpoints;
 
 import com.fern.basic.core.BearerAuth;
 import java.util.Objects;
@@ -9983,8 +10057,8 @@ public final class Get {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/exceptions/CreateOrUpdateException.java]=[
-package com.fern.basic.client.raven.user.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/user/exceptions/CreateOrUpdateException.java]=[
+package com.fern.basic.resources.raven.user.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10094,8 +10168,8 @@ public final class CreateOrUpdateException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/exceptions/GetException.java]=[
-package com.fern.basic.client.raven.user.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/user/exceptions/GetException.java]=[
+package com.fern.basic.resources.raven.user.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10204,8 +10278,8 @@ public final class GetException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/Channel.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/Channel.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -10361,8 +10435,8 @@ public final class Channel {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/ChannelPreference.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/ChannelPreference.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10451,8 +10525,8 @@ public final class ChannelPreference {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/ChannelPreferences.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/ChannelPreferences.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10697,8 +10771,8 @@ public final class ChannelPreferences {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/CreateUserRequest.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/CreateUserRequest.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10904,8 +10978,8 @@ public final class CreateUserRequest {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/RavenUser.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/RavenUser.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11430,8 +11504,8 @@ public final class RavenUser {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/SlackProfile.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/SlackProfile.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11587,8 +11661,8 @@ public final class SlackProfile {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/TelegramProfile.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/TelegramProfile.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11677,8 +11751,8 @@ public final class TelegramProfile {
 ]
 
 
-basic[src/main/java/com/fern/basic/client/raven/user/types/UserPreferences.java]=[
-package com.fern.basic.client.raven.user.types;
+basic[src/main/java/com/fern/basic/resources/raven/user/types/UserPreferences.java]=[
+package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11785,83 +11859,6 @@ public final class UserPreferences {
       return new UserPreferences(preferredChannel, channelPreferences);
     }
   }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/core/BearerAuth.java]=[
-package com.fern.basic.core;
-
-import com.fasterxml.jackson.annotation.JsonValue;
-
-public final class BearerAuth {
-  private final String token;
-
-  private BearerAuth(String token) {
-    this.token = token;
-  }
-
-  @JsonValue
-  public String getToken() {
-    return token;
-  }
-
-  @Override
-  public String toString() {
-    return "Bearer " + getToken();
-  }
-
-  public static BearerAuth of(String token) {
-    return new BearerAuth(token.startsWith("Bearer ") ? token.substring(7) : token);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/core/Environment.java]=[
-package com.fern.basic.core;
-
-public final class Environment {
-  public static final Environment PROD = new Environment("prod.com");
-
-  public static final Environment STAGING = new Environment("staging.com");
-
-  private final String url;
-
-  private Environment(String url) {
-    this.url = url;
-  }
-
-  public String getUrl() {
-    return this.url;
-  }
-
-  public static Environment custom(String url) {
-    return new Environment(url);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/core/ObjectMappers.java]=[
-package com.fern.basic.core;
-
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-
-public final class ObjectMappers {
-  public static final ObjectMapper JSON_MAPPER =
-      JsonMapper.builder()
-          .addModule(new Jdk8Module())
-          .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-          .build();
-
-  private ObjectMappers() {}
 }
 
 ]
