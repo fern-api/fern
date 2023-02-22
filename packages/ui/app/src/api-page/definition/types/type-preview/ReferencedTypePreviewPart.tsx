@@ -1,8 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
 import React, { useCallback } from "react";
-import { useTypePath } from "../../../../routes/definition/useTypePath";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { useApiTab } from "../../../api-tabs/context/useApiTab";
+import { useTypePath } from "../../../routes/useTypePath";
 import { useApiDefinitionItemContext } from "../../context/useApiDefinitionItemContext";
 
 export declare namespace ReferencedTypePreviewPart {

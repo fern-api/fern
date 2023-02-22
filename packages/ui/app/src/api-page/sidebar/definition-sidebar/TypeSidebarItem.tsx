@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { RiAlbumFill } from "react-icons/ri";
-import { useTypePath } from "../../../routes/definition/useTypePath";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { useTypePath } from "../../routes/useTypePath";
 import { useApiDefinitionSidebarContext } from "./context/useApiDefinitionSidebarContext";
 import { SidebarItem } from "./SidebarItem";
 

@@ -6,7 +6,7 @@ export declare namespace UnstyledLink {
     export interface Props extends LinkProps {
         showUnderline?: boolean;
         muted?: boolean;
-        noHoverState?: boolean;
+        hoverState?: boolean;
     }
 }
 
@@ -14,7 +14,7 @@ export const UnstyledLink: React.FC<UnstyledLink.Props> = ({
     className,
     showUnderline = false,
     muted = false,
-    noHoverState = false,
+    hoverState = false,
     ...linkProps
 }) => {
     return (
@@ -25,7 +25,7 @@ export const UnstyledLink: React.FC<UnstyledLink.Props> = ({
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 [styles.muted!]: muted,
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                [styles.hoverState!]: !noHoverState,
+                [styles.hoverState!]: hoverState,
             })}
             {...linkProps}
         />

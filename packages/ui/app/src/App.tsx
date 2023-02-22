@@ -9,6 +9,8 @@ import "normalize.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route } from "react-router-dom";
 import { ApiPage } from "./api-page/ApiPage";
+import { DefinitionRoutes } from "./api-page/routes";
+import { ApisPage } from "./apis-page/ApisPage";
 import styles from "./App.module.scss";
 import { FernRoutes } from "./routes";
 import { useAreFernFontsReady } from "./useAreFernFontsReady";
@@ -29,9 +31,11 @@ export const App: React.FC = () => {
                     <HotkeysProvider>
                         <SplitViewProvider>
                             <RoutesWith404>
-                                <Route path={FernRoutes.HOME.absolutePath} element={<div>home</div>} />
-                                <Route path={FernRoutes.API_DEFINITION.absolutePath} element={<ApiPage />} />
-                                <Route path={FernRoutes.API_PACKAGE.absolutePath} element={<ApiPage />} />
+                                <Route path={FernRoutes.HOME.absolutePath} element={<ApisPage />} />
+                                <Route
+                                    path={`${DefinitionRoutes.API_DEFINITION.absolutePath}/*`}
+                                    element={<ApiPage />}
+                                />
                             </RoutesWith404>
                         </SplitViewProvider>
                     </HotkeysProvider>

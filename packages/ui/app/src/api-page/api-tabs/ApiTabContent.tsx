@@ -1,9 +1,9 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
-import { useParsedPath } from "../../routes/definition/useParsedPath";
 import { ApiDefinitionItemContextProvider } from "../definition/context/ApiDefinitionItemContextProvider";
 import { Endpoint } from "../definition/endpoints/Endpoint";
 import { TypePage } from "../definition/types/TypePage";
+import { useParsedDefinitionPath } from "../routes/useParsedDefinitionPath";
 import { Tab } from "./context/ApiTabsContext";
 
 export declare namespace ApiTabContent {
@@ -13,26 +13,30 @@ export declare namespace ApiTabContent {
 }
 
 export const ApiTabContent: React.FC<ApiTabContent.Props> = ({ tab }) => {
-    const parsedPath = useParsedPath(tab.path);
+    const parsedPath = useParsedDefinitionPath(tab.path);
 
-    if (parsedPath == null) {
+    if (parsedPath.type !== "loaded") {
+        return null;
+    }
+
+    if (parsedPath.value == null) {
         return <NonIdealState title="Page not found" />;
     }
 
-    switch (parsedPath.type) {
+    switch (parsedPath.value.type) {
         case "endpoint":
             return (
-                <ApiDefinitionItemContextProvider environmentId={parsedPath.environmentId}>
-                    <Endpoint endpoint={parsedPath.endpoint} />
+                <ApiDefinitionItemContextProvider environmentId={parsedPath.value.environmentId}>
+                    <Endpoint endpoint={parsedPath.value.endpoint} />
                 </ApiDefinitionItemContextProvider>
             );
         case "type":
             return (
-                <ApiDefinitionItemContextProvider environmentId={parsedPath.environmentId}>
-                    <TypePage type={parsedPath.typeDefinition} />
+                <ApiDefinitionItemContextProvider environmentId={parsedPath.value.environmentId}>
+                    <TypePage type={parsedPath.value.typeDefinition} />
                 </ApiDefinitionItemContextProvider>
             );
         default:
-            assertNever(parsedPath);
+            assertNever(parsedPath.value);
     }
 };

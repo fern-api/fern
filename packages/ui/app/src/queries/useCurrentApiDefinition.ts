@@ -1,7 +1,7 @@
 import { Loadable } from "@fern-api/loadable";
 import { TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
 import { FernRegistry } from "@fern-fern/registry";
-import { REGISTRY_SERVICE } from "../../services/getRegistryService";
+import { REGISTRY_SERVICE } from "../services/getRegistryService";
 
 export function useApiDefinition({
     apiId,

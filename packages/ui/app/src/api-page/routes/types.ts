@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 
-export type ParsedPath = ParsedEndpointPath | ParsedTypePath;
+export type ParsedDefinitionPath = ParsedEndpointPath | ParsedTypePath;
 
 export interface ParsedEndpointPath {
     type: "endpoint";

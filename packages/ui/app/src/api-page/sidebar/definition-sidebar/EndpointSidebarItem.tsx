@@ -1,8 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { RiSendPlane2Fill } from "react-icons/ri";
 import { PackagePath } from "../../../commons/PackagePath";
-import { useEndpointPath } from "../../../routes/definition/useEndpointPath";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
+import { useEndpointPath } from "../../routes/useEndpointPath";
 import { useApiDefinitionSidebarContext } from "./context/useApiDefinitionSidebarContext";
 import { SidebarItem } from "./SidebarItem";
 

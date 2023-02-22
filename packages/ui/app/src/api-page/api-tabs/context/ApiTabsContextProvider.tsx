@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
 import { ApiTabsContext, ApiTabsContextValue, OpenTabOpts } from "./ApiTabsContext";
@@ -14,11 +14,14 @@ interface TabState {
 
 export declare namespace ApiTabsContextProvider {
     export type Props = PropsWithChildren<{
-        basePath: string;
+        /**
+         * this is the path we redirect to when the last tab is closed
+         */
+        noTabsRedirectPath: string;
     }>;
 }
 
-export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({ basePath, children }) => {
+export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({ noTabsRedirectPath, children }) => {
     const [state, setState] = useImmer<TabsState>({
         ephemeralTabIndex: undefined,
         tabs: [],
@@ -28,14 +31,6 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
     const location = useLocation();
 
     const selectedTabIndex = state.tabs.findIndex((tab) => tab.path === location.pathname);
-
-    useEffect(() => {
-        if (selectedTabIndex === -1 && location.pathname !== basePath) {
-            setState((existing) => {
-                existing.tabs.push({ path: location.pathname });
-            });
-        }
-    }, [basePath, location.pathname, selectedTabIndex, setState]);
 
     const openTab = useCallback(
         (path: string, { doNotCloseExistingTab = false, makeNewTabEphemeral = false }: OpenTabOpts = {}) => {
@@ -57,7 +52,11 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
                 });
             }
 
-            navigate(path);
+            // setTimeout is needed to avoid incorrect react-router warning
+            // https://github.com/remix-run/react-router/issues/7460#issuecomment-1108818335
+            setTimeout(() => {
+                navigate(path);
+            }, 0);
         },
         [navigate, selectedTabIndex, setState, state.tabs]
     );
@@ -71,7 +70,7 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
             if (index === selectedTabIndex) {
                 const indexOfNewSelectedTab = index < state.tabs.length - 1 ? index + 1 : index - 1;
                 const newTab = state.tabs[indexOfNewSelectedTab];
-                navigate(newTab != null ? newTab.path : basePath);
+                navigate(newTab != null ? newTab.path : noTabsRedirectPath);
             }
 
             setState((draft) => {
@@ -85,7 +84,7 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
                 }
             });
         },
-        [basePath, navigate, selectedTabIndex, setState, state.tabs]
+        [noTabsRedirectPath, navigate, selectedTabIndex, setState, state.tabs]
     );
 
     const makeTabLongLived = useCallback(

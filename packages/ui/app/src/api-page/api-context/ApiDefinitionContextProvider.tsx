@@ -2,8 +2,8 @@ import { FernRegistry } from "@fern-fern/registry";
 import React, { useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { PackagePath } from "../../commons/PackagePath";
-import { FernRoutes } from "../../routes";
-import { useApiDefinition } from "../queries/useCurrentApiDefinition";
+import { useApiDefinition } from "../../queries/useCurrentApiDefinition";
+import { DefinitionRoutes } from "../routes";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 import { TypeIdToPackagePathCache } from "./TypeIdToPackagePathCache";
 
@@ -21,7 +21,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
      * api definition
      */
 
-    const { [FernRoutes.API_DEFINITION.parameters.API_ID]: apiId } = useParams();
+    const { [DefinitionRoutes.API_DEFINITION.parameters.API_ID]: apiId } = useParams();
 
     if (apiId == null) {
         throw new Error("Api ID is not defined.");

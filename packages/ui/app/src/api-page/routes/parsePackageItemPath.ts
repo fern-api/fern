@@ -24,7 +24,3 @@ export function parsePackageItemPath(path: string, regexp: RegExp): ParsedPackag
         itemId: decodeURI(itemId),
     };
 }
-
-export function createPackageItemPathRegex(namespace: string): RegExp {
-    return new RegExp(`(.+/)*${namespace}/(.+)`);
-}

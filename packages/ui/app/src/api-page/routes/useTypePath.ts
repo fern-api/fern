@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useApiDefinitionContext } from "../../api-page/api-context/useApiDefinitionContext";
+import { TYPES_NAMESPACE } from "./constants";
 import { usePackageItemPath } from "./usePackageItemPath";
-import { TYPES_NAMESPACE } from "./utils";
 
 export function useTypePath({
     environmentId,

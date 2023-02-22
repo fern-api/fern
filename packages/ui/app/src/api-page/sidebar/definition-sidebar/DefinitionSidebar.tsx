@@ -1,10 +1,10 @@
 import { InputGroup } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { FernRegistry } from "@fern-fern/registry";
-import { useEffect, useState } from "react";
-import { useCurrentEnvironment } from "../../../routes/useCurrentEnvironment";
+import { useEffect, useMemo, useState } from "react";
+import { useAllEnvironments } from "../../../queries/useAllEnvironments";
 import { ApiDefinitionContextProvider } from "../../api-context/ApiDefinitionContextProvider";
-import { useAllEnvironments } from "../../queries/useAllEnvironments";
+import { useCurrentEnvironmentId } from "../../routes/useCurrentEnvironment";
 import { ApiDefinitionSidebarContextProvider } from "./context/ApiDefinitionSidebarContextProvider";
 import { DefinitionSidebarItems } from "./DefinitionSidebarItems";
 import { EnvironmentSelect } from "./environment-select/EnvironmentSelect";
@@ -35,25 +35,25 @@ export const DefinitionSidebar: React.FC = () => {
 
 function useSelectedEnvironmentState(): [
     FernRegistry.Environment | undefined,
-    (environment: FernRegistry.Environment) => void
+    (environment: FernRegistry.EnvironmentId) => void
 ] {
     const allEnvironments = useAllEnvironments();
-    const currentEnvironment = useCurrentEnvironment();
+    const currentEnvironmentId = useCurrentEnvironmentId();
 
-    const [selectedEnvironment, setSelectedEnvironment] = useState<FernRegistry.Environment>();
+    const [selectedEnvironmentId, setSelectedEnvironmentId] = useState(currentEnvironmentId);
 
     useEffect(() => {
-        if (selectedEnvironment == null) {
-            if (currentEnvironment != null) {
-                setSelectedEnvironment(currentEnvironment);
-            } else if (allEnvironments.type === "loaded") {
-                const firstEnvironment = allEnvironments.value.environments[0];
-                if (firstEnvironment != null) {
-                    setSelectedEnvironment(firstEnvironment);
-                }
-            }
+        if (selectedEnvironmentId == null && allEnvironments.type === "loaded") {
+            setSelectedEnvironmentId(allEnvironments.value.environments[0]?.id);
         }
-    }, [allEnvironments, currentEnvironment, selectedEnvironment]);
+    }, [allEnvironments, selectedEnvironmentId]);
 
-    return [selectedEnvironment, setSelectedEnvironment];
+    const selectedEnvironment = useMemo(() => {
+        if (allEnvironments.type !== "loaded" || selectedEnvironmentId == null) {
+            return undefined;
+        }
+        return allEnvironments.value.environments.find((environment) => environment.id === selectedEnvironmentId);
+    }, [allEnvironments, selectedEnvironmentId]);
+
+    return [selectedEnvironment, setSelectedEnvironmentId];
 }

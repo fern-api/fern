@@ -39,10 +39,6 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
 
     const { isHovering, ...hoveringCallbacks } = useIsHovering();
 
-    if (tabTitle == null) {
-        return null;
-    }
-
     return (
         <TabBarItemWrapper className="flex min-w-[125px] max-w-[200px] bg-zinc-900">
             <div
@@ -64,7 +60,7 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
                     )}
                 />
                 <Text ellipsize className="whitespace-nowrap">
-                    {tabTitle}
+                    {tabTitle ?? <div className="text-gray-300">Unknown</div>}
                 </Text>
                 <div
                     className={classNames("text-slate-300 hover:text-white", {

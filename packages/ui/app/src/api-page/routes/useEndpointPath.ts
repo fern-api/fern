@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { PackagePath } from "../../commons/PackagePath";
+import { ENDPOINTS_NAMESPACE } from "./constants";
 import { usePackageItemPath } from "./usePackageItemPath";
-import { ENDPOINTS_NAMESPACE } from "./utils";
 
 export function useEndpointPath({
     environmentId,

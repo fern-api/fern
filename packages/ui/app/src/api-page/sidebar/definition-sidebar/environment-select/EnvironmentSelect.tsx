@@ -1,13 +1,14 @@
 import { MenuItem, PopoverPosition } from "@blueprintjs/core";
 import { ItemRenderer, Select2, SelectPopoverProps } from "@blueprintjs/select";
 import { FernRegistry } from "@fern-fern/registry";
-import { useAllEnvironments } from "../../../queries/useAllEnvironments";
+import { useCallback } from "react";
+import { useAllEnvironments } from "../../../../queries/useAllEnvironments";
 import { EnvironmentSelectButton } from "./EnvironmentSelectButton";
 
 export declare namespace EnvironmentSelect {
     export interface Props {
         selectedEnvironment: FernRegistry.Environment;
-        onChange: (environment: FernRegistry.Environment) => void;
+        onChange: (environment: FernRegistry.EnvironmentId) => void;
     }
 }
 
@@ -17,6 +18,13 @@ const POPOVER_PROPS: SelectPopoverProps["popoverProps"] = {
 
 export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedEnvironment, onChange }) => {
     const environments = useAllEnvironments();
+
+    const handleChange = useCallback(
+        (newEnvironment: FernRegistry.Environment) => {
+            onChange(newEnvironment.id);
+        },
+        [onChange]
+    );
 
     if (environments.type !== "loaded") {
         return <EnvironmentSelectButton environmentName={undefined} />;
@@ -29,7 +37,7 @@ export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedE
             filterable={false}
             itemRenderer={renderFilm}
             noResults={<MenuItem disabled text="No results." roleStructure="listoption" />}
-            onItemSelect={onChange}
+            onItemSelect={handleChange}
             popoverProps={POPOVER_PROPS}
         >
             <EnvironmentSelectButton environmentName={selectedEnvironment.displayName} />

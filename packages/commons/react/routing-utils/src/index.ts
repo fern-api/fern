@@ -6,3 +6,4 @@ export { Redirect } from "./Redirect";
 export { UnstyledA } from "./UnstyledA";
 export { UnstyledLink } from "./UnstyledLink";
 export { useDocumentTitle } from "./useDocumentTitle";
+export { useNavigateTo } from "./useNavigateTo";
