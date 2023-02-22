@@ -1,5 +1,5 @@
 import { Button, IconName } from "@blueprintjs/core";
-import { useBooleanState } from "@fern-ui/react-commons";
+import { useBooleanState } from "@fern-api/react-commons";
 import classNames from "classnames";
 import React, { useCallback } from "react";
 import { markEventAsSelectionPreventing } from "../utils/markEventAsSelectionPreventing";

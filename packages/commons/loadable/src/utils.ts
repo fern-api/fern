@@ -60,8 +60,11 @@ export function flatMapLoadables<T, R>(
     return map(values);
 }
 
-export function flatMapLoadable<V, U>(loadable: Loadable<V> | undefined, map: (value: V) => Loadable<U>): Loadable<U> {
-    return visitLoadable<V, Loadable<U>>(loadable, {
+export function flatMapLoadable<V, U, E = unknown>(
+    loadable: Loadable<V, E> | undefined,
+    map: (value: V) => Loadable<U, E>
+): Loadable<U, E> {
+    return visitLoadable<V, Loadable<U, E>, E>(loadable, {
         loading,
         loaded: (value) => map(value),
         failed,

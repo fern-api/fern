@@ -1,6 +1,6 @@
 import { EditableText } from "@blueprintjs/core";
+import { useLocalTextState } from "@fern-api/react-commons";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useLocalTextState } from "@fern-ui/react-commons";
 import styles from "./ObjectPropertyName.module.scss";
 
 export declare namespace ObjectPropertyName {

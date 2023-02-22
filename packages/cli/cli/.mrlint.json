@@ -25,5 +25,5 @@
   "plugins": {
     "jsoncParserResolverPlugin": "./jsoncParserResolverPlugin.cjs"
   },
-  "private": false
+  "private": true
 }

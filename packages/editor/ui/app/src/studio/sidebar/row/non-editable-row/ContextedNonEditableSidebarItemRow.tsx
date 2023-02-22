@@ -1,4 +1,4 @@
-import { PREVENT_DEFAULT } from "@fern-ui/react-commons";
+import { PREVENT_DEFAULT } from "@fern-api/react-commons";
 import React from "react";
 import { BaseSidebarItemRow } from "../base-row/BaseSidebarItemRow";
 import { SidebarItemLabel } from "../label/SidebarItemLabel";

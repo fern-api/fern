@@ -1,4 +1,4 @@
-import { ROOT_PATH } from "@fern-ui/routing-utils";
+import { ROOT_PATH } from "@fern-api/routing-utils";
 
 export const STUDIO = ROOT_PATH.addPath("studio");
 export const API_CONFIGURATION = STUDIO.addPath("api-configuration");

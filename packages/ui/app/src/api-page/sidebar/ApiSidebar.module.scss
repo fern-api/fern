@@ -1,0 +1,62 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    background-color: #eaeaea;
+}
+
+.header {
+    display: flex;
+
+    .searchButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 10px 10px 15px;
+        cursor: pointer;
+        margin-right: 10px;
+
+        &:hover {
+            color: $pt-text-color-muted;
+        }
+    }
+
+    .headerItems {
+        display: flex;
+        gap: 20px;
+
+        .headerItem {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 16px;
+            user-select: none;
+
+            &.isSelected {
+                color: $pt-intent-primary;
+            }
+
+            &:not(.isSelected) {
+                cursor: pointer;
+
+                &:hover {
+                    color: $pt-text-color-muted;
+                }
+            }
+        }
+    }
+}
+
+.sidebarTab {
+    display: flex;
+    min-height: 0;
+
+    &.hidden {
+        display: none;
+    }
+}

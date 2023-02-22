@@ -1,6 +1,6 @@
+import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
 import { TransactionGenerator } from "@fern-api/transaction-generator";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import { useCallback } from "react";
 import { useApiEditorContext } from "../../../../../../../api-editor-context/ApiEditorContext";
 import { EditableItemRow } from "../../../../../shared/page/EditableItemRow";

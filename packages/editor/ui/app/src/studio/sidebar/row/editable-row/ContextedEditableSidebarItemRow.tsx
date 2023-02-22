@@ -1,6 +1,6 @@
 import { EditableText, Menu } from "@blueprintjs/core";
 import { ContextMenu2 } from "@blueprintjs/popover2";
-import { PREVENT_DEFAULT, useLocalTextState } from "@fern-ui/react-commons";
+import { PREVENT_DEFAULT, useLocalTextState } from "@fern-api/react-commons";
 import React, { useCallback, useMemo } from "react";
 import { useSidebarContext } from "../../context/useSidebarContext";
 import { BaseSidebarItemRow } from "../base-row/BaseSidebarItemRow";

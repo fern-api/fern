@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/config-management/generators-configuration"
   },
+  "private": true,
   "files": [
     "lib"
   ],
