@@ -75,7 +75,7 @@ jobs:
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-          npm publish --ignore-scripts --access ${isPackagePrivate ? "restricted" : "public"}
+          npm publish --access ${isPackagePrivate ? "restricted" : "public"}
         env:
           NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
     }

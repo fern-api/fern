@@ -71562,7 +71562,7 @@ jobs:
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-          npm publish --ignore-scripts --access restricted
+          npm publish --access restricted
         env:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}",
             "name": "ci.yml",
@@ -76242,9 +76242,9 @@ __metadata:
   linkType: hard
 
 \\"lru-cache@npm:^7.7.1\\":
-  version: 7.16.1
-  resolution: \\"lru-cache@npm:7.16.1\\"
-  checksum: 64618e3ed4fd1203afedd9bbf5247921b1419f8e3100f20e58e5f04e741f8287bd7d04fefaad332411bb53b3a73445714b235de750cf5d310cba1fa23bd82795
+  version: 7.16.2
+  resolution: \\"lru-cache@npm:7.16.2\\"
+  checksum: 8246535671a1e84ff964d31c5b81b36b60253d492dd46ef799bb6c3994db2812aa7563a595ea5fba6bf2ac8264da93f41fbd0231c40e8d55b0fbef1e8f04684a
   languageName: node
   linkType: hard
 
@@ -76918,7 +76918,7 @@ jobs:
       - name: Publish to npm
         run: |
           npm config set //registry.npmjs.org/:_authToken \${NPM_TOKEN}
-          npm publish --ignore-scripts --access restricted
+          npm publish --access restricted
         env:
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}",
             "name": "ci.yml",
@@ -81603,9 +81603,9 @@ __metadata:
   linkType: hard
 
 \\"lru-cache@npm:^7.7.1\\":
-  version: 7.16.1
-  resolution: \\"lru-cache@npm:7.16.1\\"
-  checksum: 64618e3ed4fd1203afedd9bbf5247921b1419f8e3100f20e58e5f04e741f8287bd7d04fefaad332411bb53b3a73445714b235de750cf5d310cba1fa23bd82795
+  version: 7.16.2
+  resolution: \\"lru-cache@npm:7.16.2\\"
+  checksum: 8246535671a1e84ff964d31c5b81b36b60253d492dd46ef799bb6c3994db2812aa7563a595ea5fba6bf2ac8264da93f41fbd0231c40e8d55b0fbef1e8f04684a
   languageName: node
   linkType: hard
 
