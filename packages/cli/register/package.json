@@ -26,8 +26,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-fern/ir-model": "0.0.914",
-    "@fern-fern/registry": "0.0.48"
+    "@fern-fern/ir-model": "0.0.1048",
+    "@fern-fern/registry": "0.0.70"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

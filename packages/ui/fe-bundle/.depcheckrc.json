@@ -6,7 +6,10 @@
     "@babel/preset-env",
     "@babel/preset-typescript",
     "vite",
-    "@types/react"
+    "@types/react",
+    "autoprefixer",
+    "postcss",
+    "tailwindcss"
   ],
   "ignore-patterns": ["lib"]
 }

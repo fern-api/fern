@@ -35,17 +35,12 @@
     "@blueprintjs/select": "^4.4.2",
     "@fern-api/common-components": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/editor-item-id-generator": "workspace:*",
     "@fern-api/fonts": "workspace:*",
     "@fern-api/loadable": "workspace:*",
     "@fern-api/react-commons": "workspace:*",
     "@fern-api/react-query-utils": "workspace:*",
     "@fern-api/routing-utils": "workspace:*",
     "@fern-api/split-view": "workspace:*",
-    "@fern-api/theme": "workspace:*",
-    "@fern-api/transaction-generator": "workspace:*",
-    "@fern-api/transaction-resolver": "workspace:*",
-    "@fern-fern/api-editor-sdk": "0.0.38",
     "@fern-fern/registry": "0.0.70",
     "@fontsource/actor": "^4.5.9",
     "@fontsource/roboto-mono": "^4.5.8",
@@ -57,12 +52,10 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
-    "react-intersection-observer": "^9.4.2",
     "react-query": "^3.34.12",
     "react-router-dom": "^6.4.3",
     "react-syntax-highlighter": "^15.5.0",
-    "use-immer": "^0.8.1",
-    "uuid": "^9.0.0"
+    "use-immer": "^0.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -75,13 +68,12 @@
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-syntax-highlighter": "^15.5.6",
-    "@types/uuid": "^9.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.0.3",
     "prettier": "^2.7.1",
     "stylelint": "^14.14.0",
     "typescript": "4.6.4",
-    "vite": "^4.1.1"
+    "vite": "^4.1.3"
   }
 }

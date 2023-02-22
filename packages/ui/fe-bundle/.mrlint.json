@@ -1,4 +1,9 @@
 {
   "type": "react-app",
-  "private": true
+  "private": true,
+  "rules": {
+    "depcheck": {
+      "ignores": ["autoprefixer", "postcss", "tailwindcss"]
+    }
+  }
 }

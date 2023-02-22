@@ -3520,7 +3520,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -3638,7 +3638,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -3801,7 +3801,7 @@ __metadata:
     stylelint: ^14.14.0
     typescript: 4.6.4
     uuid: ^9.0.0
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -3827,7 +3827,7 @@ __metadata:
     sass: ^1.54.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
     vite-plugin-checker: ^0.5.5
   languageName: unknown
   linkType: soft
@@ -3925,7 +3925,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4366,7 +4366,7 @@ __metadata:
     react: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4389,7 +4389,7 @@ __metadata:
     react-query: ^3.34.12
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4400,8 +4400,8 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/ir-model": 0.0.914
-    "@fern-fern/registry": 0.0.48
+    "@fern-fern/ir-model": 0.0.1048
+    "@fern-fern/registry": 0.0.70
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4473,7 +4473,7 @@ __metadata:
     react-router-dom: ^6.4.3
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4571,7 +4571,7 @@ __metadata:
     sass: ^1.54.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4613,7 +4613,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4636,7 +4636,7 @@ __metadata:
     react-dom: ^18.2.0
     stylelint: ^14.14.0
     typescript: 4.6.4
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4698,17 +4698,12 @@ __metadata:
     "@emotion/styled": ^11.9.3
     "@fern-api/common-components": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/fonts": "workspace:*"
     "@fern-api/loadable": "workspace:*"
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/react-query-utils": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/split-view": "workspace:*"
-    "@fern-api/theme": "workspace:*"
-    "@fern-api/transaction-generator": "workspace:*"
-    "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.38
     "@fern-fern/registry": 0.0.70
     "@fontsource/actor": ^4.5.9
     "@fontsource/roboto-mono": ^4.5.8
@@ -4717,7 +4712,6 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-syntax-highlighter": ^15.5.6
-    "@types/uuid": ^9.0.0
     classnames: ^2.3.1
     date-fns: ^2.29.3
     date-fns-tz: ^2.0.0
@@ -4730,15 +4724,13 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-icons: ^4.7.1
-    react-intersection-observer: ^9.4.2
     react-query: ^3.34.12
     react-router-dom: ^6.4.3
     react-syntax-highlighter: ^15.5.0
     stylelint: ^14.14.0
     typescript: 4.6.4
     use-immer: ^0.8.1
-    uuid: ^9.0.0
-    vite: ^4.1.1
+    vite: ^4.1.3
   languageName: unknown
   linkType: soft
 
@@ -4946,13 +4938,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.914":
-  version: 0.0.914
-  resolution: "@fern-fern/ir-model@npm:0.0.914"
-  checksum: a1a8949039e1f75137d1e13216d9bbf8a33179ad863bf6bc48057b990d9c446512bc5f09b2e17534782a615e8d5895df51f76a41cba32ecce74205032803f1b6
-  languageName: node
-  linkType: hard
-
 "@fern-fern/ir-v1-model@npm:0.0.1":
   version: 0.0.1
   resolution: "@fern-fern/ir-v1-model@npm:0.0.1"
@@ -5017,17 +5002,6 @@ __metadata:
     axios: ^0.27.2
     url-join: 4.0.1
   checksum: dba670df6359b496a9d79cf7cefa811c94fdc22d4e2d168f0364776f76244bcd542c092d951e2a60911485316fb6abbda6cfdcd850646b69489261baba113e26
-  languageName: node
-  linkType: hard
-
-"@fern-fern/registry@npm:0.0.48":
-  version: 0.0.48
-  resolution: "@fern-fern/registry@npm:0.0.48"
-  dependencies:
-    "@types/url-join": 4.0.1
-    axios: 0.27.2
-    url-join: 4.0.1
-  checksum: 589f027d1f97039de7dad8a32f9f8af3971f73bcecb1e5f32ab6076ed3bdaa464f4efca4eff0075bb969ad8b7c6b294f51b2ba6ac6fa9068bc0c4f92cd3b5e24
   languageName: node
   linkType: hard
 
@@ -18336,15 +18310,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-intersection-observer@npm:^9.4.2":
-  version: 9.4.2
-  resolution: "react-intersection-observer@npm:9.4.2"
-  peerDependencies:
-    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: 038786fe4678d76b71bb1f1b1e46153521cb4e91e1a4a8732b4a00aa0a818171c312b8ae04907a340d1c8cbb390d4a548a4b05fe99cab9e413d172024a5e42e8
-  languageName: node
-  linkType: hard
-
 "react-is@npm:^16.13.1, react-is@npm:^16.6.0, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -21763,44 +21728,6 @@ env-cmd@toddbluhm/env-cmd:
     vue-tsc:
       optional: true
   checksum: 632b8402de6b35184a8d762540f1a2b97842b6abdb9dfd2000048bd34fb6e310d51cc5f4c9744b3b63f86b8678f50392627e77ad0a6696c6308f513747b294f6
-  languageName: node
-  linkType: hard
-
-"vite@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "vite@npm:4.1.1"
-  dependencies:
-    esbuild: ^0.16.14
-    fsevents: ~2.3.2
-    postcss: ^8.4.21
-    resolve: ^1.22.1
-    rollup: ^3.10.0
-  peerDependencies:
-    "@types/node": ">= 14"
-    less: "*"
-    sass: "*"
-    stylus: "*"
-    sugarss: "*"
-    terser: ^5.4.0
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  peerDependenciesMeta:
-    "@types/node":
-      optional: true
-    less:
-      optional: true
-    sass:
-      optional: true
-    stylus:
-      optional: true
-    sugarss:
-      optional: true
-    terser:
-      optional: true
-  bin:
-    vite: bin/vite.js
-  checksum: aad14b660b69068f6596ab7e760dd71642862996328e404a4d265e090ae0d06c7064cf8415ffb135cd8b79d5157dc1dcb48b56386caaa96a474fb53bdd8cac3d
   languageName: node
   linkType: hard
 
