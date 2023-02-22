@@ -14,7 +14,7 @@ export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
         return queryParameters.map((queryParameter) => ({
             name: queryParameter.key,
             type: queryParameter.type,
-            docs: "I am a query param",
+            docs: queryParameter.docs,
         }));
     }, [queryParameters]);
 

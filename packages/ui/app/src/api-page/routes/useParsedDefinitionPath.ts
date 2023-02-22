@@ -13,7 +13,7 @@ const PackageItemPathRegexes = {
 } as const;
 
 export function useParsedDefinitionPath(path: string): Loadable<ParsedDefinitionPath | undefined> {
-    const { api, resolveEndpointByName, resolveTypeByName } = useApiDefinitionContext();
+    const { api, resolveEndpointById, resolveTypeByName } = useApiDefinitionContext();
 
     return mapLoadable(api, () => {
         const match = matchPath(DefinitionRoutes.API_PACKAGE.absolutePath, path);
@@ -34,7 +34,7 @@ export function useParsedDefinitionPath(path: string): Loadable<ParsedDefinition
 
         const parsedEndpointPath = parsePackageItemPath(splatMatch, PackageItemPathRegexes.ENDPOINT);
         if (parsedEndpointPath != null) {
-            const endpoint = resolveEndpointByName(parsedEndpointPath.packagePath, parsedEndpointPath.itemId);
+            const endpoint = resolveEndpointById(parsedEndpointPath.packagePath, parsedEndpointPath.itemId);
             if (endpoint == null) {
                 return undefined;
             }

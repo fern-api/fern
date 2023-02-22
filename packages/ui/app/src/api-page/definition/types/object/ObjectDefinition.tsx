@@ -16,7 +16,7 @@ export const ObjectDefinition: React.FC<ObjectDefinition.Props> = ({ object }) =
         (): TreeNode.Props[] =>
             object.properties.map((property) => ({
                 title: <PropertyTitle name={property.key} type={property.valueType} />,
-                body: "An arbitrary string attached to the object. Often useful for displaying to users.",
+                body: property.docs,
                 children: ({ className }) => (
                     <TypeDefinitionDetails
                         className={className}

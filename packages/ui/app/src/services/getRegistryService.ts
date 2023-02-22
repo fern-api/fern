@@ -1,5 +1,5 @@
 import { FernRegistryClient } from "@fern-fern/registry";
 
 export const REGISTRY_SERVICE = new FernRegistryClient({
-    environment: "http://localhost:8080",
+    environment: "https://fern-definition-registry.fly.dev",
 });

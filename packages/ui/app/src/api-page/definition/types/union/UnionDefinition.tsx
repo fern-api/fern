@@ -15,10 +15,10 @@ export const UnionDefinition: React.FC<UnionDefinition.Props> = ({ union }) => {
     const nodes = useMemo(
         (): TreeNode.Props[] =>
             union.members.map((member) => ({
-                title: <TypePreview type={member} />,
-                body: "Some union member docs",
+                title: <TypePreview type={member.type} />,
+                body: member.docs,
                 children: ({ className }) => (
-                    <TypeDefinitionDetails className={className} typeDefinition={member} defaultIsCollapsed />
+                    <TypeDefinitionDetails className={className} typeDefinition={member.type} defaultIsCollapsed />
                 ),
             })),
         [union.members]

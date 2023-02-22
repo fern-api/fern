@@ -27,7 +27,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
     return (
         <DefinitionItemPage
             title={<EndpointTitle endpoint={endpoint} />}
-            subtitle={endpoint.displayName != null ? getEndpointPathAsString(endpoint) : undefined}
+            subtitle={endpoint.name != null ? getEndpointPathAsString(endpoint) : undefined}
             docs={endpoint.docs}
             leftContent={
                 <div className={styles.leftContent}>

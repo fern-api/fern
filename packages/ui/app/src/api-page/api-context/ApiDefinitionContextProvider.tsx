@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import React, { useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { PackagePath } from "../../commons/PackagePath";
-import { useApiDefinition } from "../../queries/useCurrentApiDefinition";
+import { useApiDefinition } from "../../queries/useApiDefinition";
 import { DefinitionRoutes } from "../routes";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 import { TypeIdToPackagePathCache } from "./TypeIdToPackagePathCache";
@@ -104,13 +104,13 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
      * endpoints
      */
 
-    const resolveEndpointByName = useCallback(
-        (packagePath: PackagePath, endpointName: string): FernRegistry.EndpointDefinition | undefined => {
+    const resolveEndpointById = useCallback(
+        (packagePath: PackagePath, endpointId: string): FernRegistry.EndpointDefinition | undefined => {
             return resolvePackageItem({
                 package_: getApiOrThrow().rootPackage,
                 packagePath,
                 resolveSubpackageById,
-                getItem: (package_) => package_.endpoints.find((endpoint) => endpoint.name === endpointName),
+                getItem: (package_) => package_.endpoints.find((endpoint) => endpoint.id === endpointId),
             });
         },
         [getApiOrThrow, resolveSubpackageById]
@@ -126,10 +126,10 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
             resolveTypeById,
             resolveTypeByName,
             getPackagePathForTypeId,
-            resolveEndpointByName,
+            resolveEndpointById,
             resolveSubpackageById,
         }),
-        [api, getPackagePathForTypeId, resolveEndpointByName, resolveSubpackageById, resolveTypeById, resolveTypeByName]
+        [api, getPackagePathForTypeId, resolveEndpointById, resolveSubpackageById, resolveTypeById, resolveTypeByName]
     );
 
     return <ApiDefinitionContext.Provider value={contextValue}>{children}</ApiDefinitionContext.Provider>;

@@ -12,9 +12,6 @@ export interface ApiDefinitionContextValue {
     resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition;
     resolveTypeByName: (packagePath: PackagePath, typeName: string) => FernRegistry.TypeDefinition | undefined;
     getPackagePathForTypeId: (typeId: FernRegistry.TypeId) => PackagePath;
-    resolveEndpointByName: (
-        packagePath: PackagePath,
-        endpointName: string
-    ) => FernRegistry.EndpointDefinition | undefined;
+    resolveEndpointById: (packagePath: PackagePath, endpointId: string) => FernRegistry.EndpointDefinition | undefined;
     resolveSubpackageById: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage;
 }

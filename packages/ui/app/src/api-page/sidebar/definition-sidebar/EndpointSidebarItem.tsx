@@ -15,7 +15,7 @@ export declare namespace EndpointSidebarItem {
 
 export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint, packagePath }) => {
     const { environmentId } = useApiDefinitionSidebarContext();
-    const endpointPath = useEndpointPath({ environmentId, packagePath, endpointName: endpoint.name });
+    const endpointPath = useEndpointPath({ environmentId, packagePath, endpointId: endpoint.id });
 
     return (
         <SidebarItem path={endpointPath} icon={<RiSendPlane2Fill />} title={<EndpointTitle endpoint={endpoint} />} />

@@ -1,4 +1,4 @@
-import { Text } from "@blueprintjs/core";
+import { Classes, Text } from "@blueprintjs/core";
 import { useIsHovering } from "@fern-api/react-commons";
 import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
@@ -59,8 +59,15 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
                         tab.isSelected ? "h-1 bg-green-500" : "h-px bg-gray-600"
                     )}
                 />
-                <Text ellipsize className="whitespace-nowrap">
-                    {tabTitle ?? <div className="text-gray-300">Unknown</div>}
+                <Text
+                    ellipsize
+                    className={classNames("whitespace-nowrap", {
+                        [Classes.SKELETON]: tabTitle.type !== "loaded",
+                    })}
+                >
+                    {tabTitle.type === "loaded"
+                        ? tabTitle.value ?? <div className="text-gray-300">Unknown</div>
+                        : "SKELETON_TEXT"}
                 </Text>
                 <div
                     className={classNames("text-slate-300 hover:text-white", {

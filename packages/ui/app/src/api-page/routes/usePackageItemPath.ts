@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import { generatePath } from "react-router-dom";
 import { DefinitionRoutes } from ".";
 import { PackagePath } from "../../commons/PackagePath";
-import { useCurrentApiIdOrThrow } from "./getCurrentApiId";
+import { useCurrentApiIdOrThrow } from "./useCurrentApiId";
 
 export function usePackageItemPath({
     environmentId,

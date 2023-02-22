@@ -6,11 +6,11 @@ import { usePackageItemPath } from "./usePackageItemPath";
 export function useEndpointPath({
     environmentId,
     packagePath,
-    endpointName,
+    endpointId,
 }: {
     environmentId: FernRegistry.EnvironmentId;
     packagePath: PackagePath;
-    endpointName: string;
+    endpointId: string;
 }): string {
-    return usePackageItemPath({ environmentId, packagePath, namespace: ENDPOINTS_NAMESPACE, itemName: endpointName });
+    return usePackageItemPath({ environmentId, packagePath, namespace: ENDPOINTS_NAMESPACE, itemName: endpointId });
 }

@@ -14,8 +14,8 @@ export const EnumDefinition: React.FC<EnumDefinition.Props> = ({ enum: enum_ }) 
     const nodes = useMemo(
         (): TreeNode.Props[] =>
             enum_.values.map((value) => ({
-                title: <SmallMutedText>{`"${value}"`}</SmallMutedText>,
-                body: "I am some docs about the enum value",
+                title: <SmallMutedText>{`"${value.value}"`}</SmallMutedText>,
+                body: value.docs,
             })),
         [enum_.values]
     );

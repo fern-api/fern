@@ -40,7 +40,7 @@ export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedE
             onItemSelect={handleChange}
             popoverProps={POPOVER_PROPS}
         >
-            <EnvironmentSelectButton environmentName={selectedEnvironment.displayName} />
+            <EnvironmentSelectButton environmentName={selectedEnvironment.name} />
         </Select2>
     );
 };
@@ -54,7 +54,7 @@ const renderFilm: ItemRenderer<FernRegistry.Environment> = (item, { handleClick,
             onClick={handleClick}
             onFocus={handleFocus}
             roleStructure="listoption"
-            text={item.displayName}
+            text={item.name}
         />
     );
 };

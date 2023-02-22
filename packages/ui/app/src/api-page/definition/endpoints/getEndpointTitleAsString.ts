@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 
 export function getEndpointTitleAsString(endpoint: FernRegistry.EndpointDefinition): string {
-    return endpoint.displayName ?? getEndpointPathAsString(endpoint);
+    return endpoint.name ?? getEndpointPathAsString(endpoint);
 }
 
 export function getEndpointPathAsString(endpoint: FernRegistry.EndpointDefinition): string {

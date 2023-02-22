@@ -1,61 +1,44 @@
-import { PopoverPosition } from "@blueprintjs/core";
-import { Tooltip2 } from "@blueprintjs/popover2";
-import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
 import { FernRegistry } from "@fern-fern/registry";
-import { useMemo } from "react";
-import { generatePath, Link } from "react-router-dom";
-import { DefinitionRoutes } from "../api-page/routes";
+import React from "react";
 import { useAllEnvironments } from "../queries/useAllEnvironments";
-import { ApiCardLinkWrapper } from "./ApiCardLinkWrapper";
+import { ApiEnvironmentRow } from "./ApiEnvironmentRow";
 
 export declare namespace ApiEnvironmentsSummary {
     export interface Props {
-        api: FernRegistry.LightweightApi;
+        apiMetadata: FernRegistry.ApiMetadata;
     }
 }
 
-export const ApiEnvironmentsSummary: React.FC<ApiEnvironmentsSummary.Props> = ({ api }) => {
+export const ApiEnvironmentsSummary: React.FC<ApiEnvironmentsSummary.Props> = ({ apiMetadata }) => {
     const allEnvironments = useAllEnvironments();
 
-    const environmentsInOrder = useMemo(() => {
-        if (allEnvironments.type !== "loaded") {
-            return undefined;
-        }
-        return allEnvironments.value.environments.filter((environment) => api.deployments.has(environment.id));
-    }, [allEnvironments, api.deployments]);
-
-    if (environmentsInOrder == null || environmentsInOrder.length === 0) {
+    if (allEnvironments.type !== "loaded") {
         return null;
+    }
+
+    if (allEnvironments.value.environments.length === 0) {
+        return <div className="text-stone-500">No deployment information</div>;
     }
 
     return (
         <div className="flex flex-col">
-            <div className="text-stone-500 uppercase text-xs">Environments</div>
-            <div className="flex flex-col ml-2 mt-3">
-                <TwoColumnTable className="gap-x-10 gap-y-1.5">
-                    {environmentsInOrder.map((environment) => (
-                        <TwoColumnTableRow
+            <div className="grid grid-cols-[20%_1fr] gap-x-10 gap-y-1.5">
+                <div className="text-stone-500 uppercase text-xs">Environment</div>
+                <div className="text-stone-500 uppercase text-xs">Deployed</div>
+                {allEnvironments.value.environments.map((environment) => {
+                    const deploymentInfo = apiMetadata.deployments[environment.id];
+                    if (deploymentInfo == null) {
+                        return null;
+                    }
+                    return (
+                        <ApiEnvironmentRow
                             key={environment.id}
-                            label={
-                                <ApiCardLinkWrapper>
-                                    <Link
-                                        className="underline hover:underline underline-offset-2"
-                                        to={generatePath(DefinitionRoutes.API_ENVIRONMENT.absolutePath, {
-                                            API_ID: api.id,
-                                            ENVIRONMENT_ID: environment.id,
-                                        })}
-                                    >
-                                        {environment.displayName}
-                                    </Link>
-                                </ApiCardLinkWrapper>
-                            }
-                        >
-                            <Tooltip2 position={PopoverPosition.RIGHT} content="2023-02-22T01:42:22Z">
-                                Deployed 2 hours ago
-                            </Tooltip2>
-                        </TwoColumnTableRow>
-                    ))}
-                </TwoColumnTable>
+                            apiMetadata={apiMetadata}
+                            environment={environment}
+                            deploymentInfo={deploymentInfo}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

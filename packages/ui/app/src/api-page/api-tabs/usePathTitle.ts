@@ -1,22 +1,24 @@
 import { assertNever } from "@fern-api/core-utils";
+import { Loadable, mapLoadable } from "@fern-api/loadable";
 import { getEndpointTitleAsString } from "../definition/endpoints/getEndpointTitleAsString";
 import { useParsedDefinitionPath } from "../routes/useParsedDefinitionPath";
 
-export function usePathTitle(path: string): string | undefined {
+export function usePathTitle(path: string): Loadable<string | undefined> {
     const parsedPath = useParsedDefinitionPath(path);
 
-    if (parsedPath.type !== "loaded" || parsedPath.value == null) {
-        return undefined;
-    }
-
-    switch (parsedPath.value.type) {
-        case "type": {
-            return parsedPath.value.typeDefinition.name;
+    return mapLoadable(parsedPath, (loadedParsedPath) => {
+        if (loadedParsedPath == null) {
+            return undefined;
         }
-        case "endpoint": {
-            return getEndpointTitleAsString(parsedPath.value.endpoint);
+        switch (loadedParsedPath.type) {
+            case "type": {
+                return loadedParsedPath.typeDefinition.name;
+            }
+            case "endpoint": {
+                return getEndpointTitleAsString(loadedParsedPath.endpoint);
+            }
+            default:
+                assertNever(loadedParsedPath);
         }
-        default:
-            assertNever(parsedPath.value);
-    }
+    });
 }
