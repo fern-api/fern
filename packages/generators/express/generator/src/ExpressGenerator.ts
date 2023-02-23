@@ -59,6 +59,7 @@ export declare namespace ExpressGenerator {
     export interface Config {
         shouldUseBrandedStringAliases: boolean;
         areImplementationsOptional: boolean;
+        doNotHandleUnrecognizedErrors: boolean;
     }
 }
 
@@ -169,7 +170,9 @@ export class ExpressGenerator {
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator();
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator();
-        this.expressServiceGenerator = new ExpressServiceGenerator();
+        this.expressServiceGenerator = new ExpressServiceGenerator({
+            doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
+        });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             intermediateRepresentation: this.intermediateRepresentation,
             registerFunctionName: this.expressRegisterDeclarationReferencer.getRegisterFunctionName(),

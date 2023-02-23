@@ -14,6 +14,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             areImplementationsOptional: parsed?.optionalImplementations ?? false,
+            doNotHandleUnrecognizedErrors: parsed?.doNotHandleUnrecognizedErrors ?? false,
         };
     }
 
@@ -40,6 +41,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             config: {
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 areImplementationsOptional: customConfig.areImplementationsOptional,
+                doNotHandleUnrecognizedErrors: customConfig.doNotHandleUnrecognizedErrors,
             },
         });
 

@@ -7,6 +7,7 @@ export declare namespace GeneratedExpressServiceImpl {
     export interface Init {
         service: HttpService;
         serviceClassName: string;
+        doNotHandleUnrecognizedErrors: boolean;
     }
 }
 
@@ -17,12 +18,14 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private static TO_ROUTER_METHOD_NAME = "toRouter";
     private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
 
+    private doNotHandleUnrecognizedErrors: boolean;
     private serviceClassName: string;
     private service: HttpService;
 
-    constructor({ serviceClassName, service }: GeneratedExpressServiceImpl.Init) {
+    constructor({ serviceClassName, service, doNotHandleUnrecognizedErrors }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
+        this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
     }
 
     public writeToFile(context: ExpressServiceContext): void {
@@ -581,21 +584,23 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             ],
                             true
                         ),
-                        ts.factory.createBlock(
-                            [
-                                ts.factory.createExpressionStatement(
-                                    context.base.externalDependencies.express.Response.json({
-                                        referenceToExpressResponse:
-                                            context.base.externalDependencies.express.Response.status({
-                                                referenceToExpressResponse: expressResponse,
-                                                status: 500,
-                                            }),
-                                        valueToSend: ts.factory.createStringLiteral("Internal Server Error"),
-                                    })
-                                ),
-                            ],
-                            true
-                        )
+                        this.doNotHandleUnrecognizedErrors
+                            ? undefined
+                            : ts.factory.createBlock(
+                                  [
+                                      ts.factory.createExpressionStatement(
+                                          context.base.externalDependencies.express.Response.json({
+                                              referenceToExpressResponse:
+                                                  context.base.externalDependencies.express.Response.status({
+                                                      referenceToExpressResponse: expressResponse,
+                                                      status: 500,
+                                                  }),
+                                              valueToSend: ts.factory.createStringLiteral("Internal Server Error"),
+                                          })
+                                      ),
+                                  ],
+                                  true
+                              )
                     ),
                     ts.factory.createExpressionStatement(
                         ts.factory.createCallExpression(next, undefined, [ts.factory.createIdentifier(ERROR_NAME)])

@@ -24,6 +24,15 @@ const FIXTURES: FixtureInfo[] = [
         outputMode: "local",
         apiName: "api",
     },
+    {
+        path: "simple",
+        orgName: "fern",
+        outputMode: "local",
+        apiName: "api",
+        customConfig: {
+            doNotHandleUnrecognizedErrors: true,
+        },
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 

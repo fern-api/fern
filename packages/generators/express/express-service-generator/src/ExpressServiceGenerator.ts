@@ -3,6 +3,10 @@ import { GeneratedExpressService } from "@fern-typescript/contexts";
 import { GeneratedExpressServiceImpl } from "./GeneratedExpressServiceImpl";
 
 export declare namespace ExpressServiceGenerator {
+    export interface Init {
+        doNotHandleUnrecognizedErrors: boolean;
+    }
+
     export namespace generateService {
         export interface Args {
             service: HttpService;
@@ -12,6 +16,12 @@ export declare namespace ExpressServiceGenerator {
 }
 
 export class ExpressServiceGenerator {
+    private doNotHandleUnrecognizedErrors: boolean;
+
+    constructor({ doNotHandleUnrecognizedErrors }: ExpressServiceGenerator.Init) {
+        this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
+    }
+
     public generateService({
         service,
         serviceClassName,
@@ -19,6 +29,7 @@ export class ExpressServiceGenerator {
         return new GeneratedExpressServiceImpl({
             service,
             serviceClassName,
+            doNotHandleUnrecognizedErrors: this.doNotHandleUnrecognizedErrors,
         });
     }
 }

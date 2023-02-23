@@ -1,0 +1,7 @@
+service:
+  base-path: /service
+  auth: false
+  endpoints:
+    endpoint:
+      method: GET
+      path: ""
