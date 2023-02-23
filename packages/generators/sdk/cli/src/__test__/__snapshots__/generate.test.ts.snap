@@ -76242,9 +76242,9 @@ __metadata:
   linkType: hard
 
 \\"lru-cache@npm:^7.7.1\\":
-  version: 7.16.2
-  resolution: \\"lru-cache@npm:7.16.2\\"
-  checksum: 8246535671a1e84ff964d31c5b81b36b60253d492dd46ef799bb6c3994db2812aa7563a595ea5fba6bf2ac8264da93f41fbd0231c40e8d55b0fbef1e8f04684a
+  version: 7.17.0
+  resolution: \\"lru-cache@npm:7.17.0\\"
+  checksum: 28c2a98ad313b8d61beac1f08257b6f0ca990e39d24a9bc831030b6e209447cfb11c6d9d1a774282189bfc9609d1dfd17ebe485228dd68f7b96b6b9b7740894e
   languageName: node
   linkType: hard
 
@@ -76384,9 +76384,9 @@ __metadata:
   linkType: hard
 
 \\"minipass@npm:^4.0.0\\":
-  version: 4.0.3
-  resolution: \\"minipass@npm:4.0.3\\"
-  checksum: a09f405e2f380ae7f6ee0cbb53b45c1fcc1b6c70fc3896f4d20649d92a10e61892c57bd9960a64cedf6c90b50022cb6c195905b515039c335b423202f99e6f18
+  version: 4.2.0
+  resolution: \\"minipass@npm:4.2.0\\"
+  checksum: 3c3ce269eacdcecb56b5dfe4bb4ab905d60fea1af4c967c7ed54baadfdd4af03e4d926567fb655957504fb4c9e2e7adbb2dc636927dfb56c829f2b25f1b2b3dd
   languageName: node
   linkType: hard
 
@@ -81603,9 +81603,9 @@ __metadata:
   linkType: hard
 
 \\"lru-cache@npm:^7.7.1\\":
-  version: 7.16.2
-  resolution: \\"lru-cache@npm:7.16.2\\"
-  checksum: 8246535671a1e84ff964d31c5b81b36b60253d492dd46ef799bb6c3994db2812aa7563a595ea5fba6bf2ac8264da93f41fbd0231c40e8d55b0fbef1e8f04684a
+  version: 7.17.0
+  resolution: \\"lru-cache@npm:7.17.0\\"
+  checksum: 28c2a98ad313b8d61beac1f08257b6f0ca990e39d24a9bc831030b6e209447cfb11c6d9d1a774282189bfc9609d1dfd17ebe485228dd68f7b96b6b9b7740894e
   languageName: node
   linkType: hard
 
@@ -81745,9 +81745,9 @@ __metadata:
   linkType: hard
 
 \\"minipass@npm:^4.0.0\\":
-  version: 4.0.3
-  resolution: \\"minipass@npm:4.0.3\\"
-  checksum: a09f405e2f380ae7f6ee0cbb53b45c1fcc1b6c70fc3896f4d20649d92a10e61892c57bd9960a64cedf6c90b50022cb6c195905b515039c335b423202f99e6f18
+  version: 4.2.0
+  resolution: \\"minipass@npm:4.2.0\\"
+  checksum: 3c3ce269eacdcecb56b5dfe4bb4ab905d60fea1af4c967c7ed54baadfdd4af03e4d926567fb655957504fb4c9e2e7adbb2dc636927dfb56c829f2b25f1b2b3dd
   languageName: node
   linkType: hard
 
