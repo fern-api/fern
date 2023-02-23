@@ -13674,8 +13674,14 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -15443,8 +15449,14 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -23375,8 +23387,14 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -25144,8 +25162,14 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -33076,8 +33100,14 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -34845,8 +34875,14 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -42777,8 +42813,14 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
@@ -50709,8 +50751,14 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 "wireValue": "X-API-VERSION"
             },
             "valueType": {
-                "primitive": "STRING",
-                "_type": "primitive"
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
             }
         }
     ],
