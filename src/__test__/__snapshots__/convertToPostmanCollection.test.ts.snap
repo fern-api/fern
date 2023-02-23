@@ -239,6 +239,11 @@ exports[`convertToPostman test-api 1`] = `
                 \\"key\\": \\"x-service-header\\",
                 \\"type\\": \\"text\\",
                 \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
+              },
+              {
+                \\"type\\": \\"text\\",
+                \\"key\\": \\"Content-Type\\",
+                \\"value\\": \\"application/json\\"
               }
             ],
             \\"method\\": \\"GET\\"
@@ -276,6 +281,11 @@ exports[`convertToPostman test-api 1`] = `
                     \\"key\\": \\"x-service-header\\",
                     \\"type\\": \\"text\\",
                     \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
+                  },
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"key\\": \\"Content-Type\\",
+                    \\"value\\": \\"application/json\\"
                   }
                 ],
                 \\"method\\": \\"GET\\"
@@ -315,6 +325,11 @@ exports[`convertToPostman test-api 1`] = `
                     \\"key\\": \\"x-service-header\\",
                     \\"type\\": \\"text\\",
                     \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
+                  },
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"key\\": \\"Content-Type\\",
+                    \\"value\\": \\"application/json\\"
                   }
                 ],
                 \\"method\\": \\"GET\\"

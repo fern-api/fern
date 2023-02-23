@@ -89,6 +89,13 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
                 headers: this.httpEndpoint.headers,
                 examples: this.example.endpointHeaders,
             }),
+            ...[
+                {
+                    type: "text",
+                    key: "Content-Type",
+                    value: "application/json",
+                },
+            ],
         ];
     }
 
