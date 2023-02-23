@@ -11,6 +11,10 @@ import {
     ts,
 } from "ts-morph";
 
+/**
+ * this is disabled because we don't currently generate the zurg schemas,
+ * which are necessary to serialize the error body
+ */
 const ENABLE_ERROR_BODIES: boolean = false;
 
 export declare namespace GeneratedExpressErrorImpl {
