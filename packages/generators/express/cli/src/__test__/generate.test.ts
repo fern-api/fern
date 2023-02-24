@@ -9,6 +9,8 @@ import tmp from "tmp-promise";
 import { ExpressCustomConfigSchema } from "../custom-config/schema/ExpressCustomConfigSchema";
 import { ExpressGeneratorCli } from "../ExpressGeneratorCli";
 
+const FILENAMES_TO_IGNORE_FOR_SNAPSHOT = new Set([".pnp.cjs", ".pnp.loader.mjs", ".yarn", "yarn.lock", "node_modules"]);
+
 interface FixtureInfo {
     path: string;
     orgName: string;
@@ -88,8 +90,6 @@ describe("runGenerator", () => {
                 }
                 await symlink(unzippedDirectory, generatedDir);
 
-                const directoryContents = await getDirectoryContents(unzippedDirectory);
-
                 // we don't run compile for github, so run it here to make sure it compiles
                 if (fixture.outputMode === "github") {
                     await execa("yarn", [], {
@@ -100,6 +100,9 @@ describe("runGenerator", () => {
                     });
                 }
 
+                const directoryContents = (await getDirectoryContents(unzippedDirectory)).filter(
+                    (item) => !FILENAMES_TO_IGNORE_FOR_SNAPSHOT.has(item.name)
+                );
                 expect(directoryContents).toMatchSnapshot();
             },
             180_000
