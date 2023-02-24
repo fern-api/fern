@@ -17,6 +17,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private static ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
     private static TO_ROUTER_METHOD_NAME = "toRouter";
     private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
+    private static SEND_RESPONSE_METHOD_NAME = "send";
+    private static RESPONSE_BODY_PARAMETER_NAME = "responseBody";
 
     private doNotHandleUnrecognizedErrors: boolean;
     private serviceClassName: string;
@@ -135,11 +137,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
 
         const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters];
 
-        const returnType =
-            endpoint.response.type != null
-                ? context.type.getReferenceToType(endpoint.response.type).typeNode
-                : ts.factory.createTypeReferenceNode("void");
-
         methodsInterface.addMethod({
             name: this.getEndpointMethodName(endpoint),
             parameters: [
@@ -200,13 +197,39 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 },
                 {
                     name: RESPONSE_PARAMETER_NAME,
-                    type: getTextOfTsNode(context.base.externalDependencies.express.Response._getReferenceToType()),
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeLiteralNode([
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                ts.factory.createIdentifier(GeneratedExpressServiceImpl.SEND_RESPONSE_METHOD_NAME),
+                                undefined,
+                                ts.factory.createFunctionTypeNode(
+                                    undefined,
+                                    endpoint.response.type != null
+                                        ? [
+                                              ts.factory.createParameterDeclaration(
+                                                  undefined,
+                                                  undefined,
+                                                  undefined,
+                                                  GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME,
+                                                  undefined,
+                                                  context.type.getReferenceToType(endpoint.response.type).typeNode
+                                              ),
+                                          ]
+                                        : [],
+                                    ts.factory.createTypeReferenceNode("Promise", [
+                                        ts.factory.createTypeReferenceNode("void"),
+                                    ])
+                                )
+                            ),
+                        ])
+                    ),
                 },
             ],
             returnType: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
-                    returnType,
-                    ts.factory.createTypeReferenceNode("Promise", [returnType]),
+                    ts.factory.createTypeReferenceNode("void"),
+                    ts.factory.createTypeReferenceNode("Promise", [ts.factory.createTypeReferenceNode("void")]),
                 ])
             ),
         });
@@ -471,63 +494,81 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         endpoint: HttpEndpoint;
         context: ExpressServiceContext;
     }): ts.Statement[] {
-        const RESPONSE_VARIABLE_NAME = "response";
-
         const statements: ts.Statement[] = [];
 
-        // call impl and maybe store response in RESPONSE_VARIABLE_NAME
-        const implCall = ts.factory.createAwaitExpression(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME
-                    ),
-                    this.getEndpointMethodName(endpoint)
-                ),
-                undefined,
-                [
-                    ts.factory.createAsExpression(
-                        expressRequest,
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-                    ),
-                    expressResponse,
-                ]
-            )
-        );
-        statements.push(
-            endpoint.response.type != null
-                ? ts.factory.createVariableStatement(
-                      undefined,
-                      ts.factory.createVariableDeclarationList(
-                          [
-                              ts.factory.createVariableDeclaration(
-                                  ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME),
-                                  undefined,
-                                  undefined,
-                                  implCall
-                              ),
-                          ],
-                          ts.NodeFlags.Const
-                      )
-                  )
-                : ts.factory.createExpressionStatement(implCall)
-        );
-
-        // send response
+        // call impl
         statements.push(
             ts.factory.createExpressionStatement(
-                endpoint.response.type != null
-                    ? context.base.externalDependencies.express.Response.json({
-                          referenceToExpressResponse: expressResponse,
-                          valueToSend: context.expressEndpointTypeSchemas
-                              .getGeneratedEndpointTypeSchemas(this.service.name, endpoint.name)
-                              .serializeResponse(ts.factory.createIdentifier(RESPONSE_VARIABLE_NAME), context),
-                      })
-                    : context.base.externalDependencies.express.Response.sendStatus({
-                          referenceToExpressResponse: expressResponse,
-                          status: 204,
-                      })
+                ts.factory.createAwaitExpression(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createThis(),
+                                GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME
+                            ),
+                            this.getEndpointMethodName(endpoint)
+                        ),
+                        undefined,
+                        [
+                            ts.factory.createAsExpression(
+                                expressRequest,
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                            ),
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        GeneratedExpressServiceImpl.SEND_RESPONSE_METHOD_NAME,
+                                        ts.factory.createArrowFunction(
+                                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                            undefined,
+                                            endpoint.response.type != null
+                                                ? [
+                                                      ts.factory.createParameterDeclaration(
+                                                          undefined,
+                                                          undefined,
+                                                          undefined,
+                                                          GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME
+                                                      ),
+                                                  ]
+                                                : [],
+                                            undefined,
+                                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                            ts.factory.createBlock(
+                                                [
+                                                    ts.factory.createExpressionStatement(
+                                                        endpoint.response.type != null
+                                                            ? context.base.externalDependencies.express.Response.json({
+                                                                  referenceToExpressResponse: expressResponse,
+                                                                  valueToSend: context.expressEndpointTypeSchemas
+                                                                      .getGeneratedEndpointTypeSchemas(
+                                                                          this.service.name,
+                                                                          endpoint.name
+                                                                      )
+                                                                      .serializeResponse(
+                                                                          ts.factory.createIdentifier(
+                                                                              GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME
+                                                                          ),
+                                                                          context
+                                                                      ),
+                                                              })
+                                                            : context.base.externalDependencies.express.Response.sendStatus(
+                                                                  {
+                                                                      referenceToExpressResponse: expressResponse,
+                                                                      status: 204,
+                                                                  }
+                                                              )
+                                                    ),
+                                                ],
+                                                true
+                                            )
+                                        )
+                                    ),
+                                ],
+                                true
+                            ),
+                        ]
+                    )
+                )
             )
         );
 

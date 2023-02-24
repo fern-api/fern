@@ -110,7 +110,9 @@ __exportStar(require(\\"./service\\"), exports);
  */
 import express from \\"express\\";
 export interface ServiceServiceMethods {
-    endpoint(req: express.Request<never, never, never, never>, res: express.Response): void | Promise<void>;
+    endpoint(req: express.Request<never, never, never, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class ServiceService {
     private readonly methods;
@@ -172,8 +174,11 @@ class ServiceService {
     toRouter() {
         this.router.get(\\"\\", async (req, res, next) => {
             try {
-                await this.methods.endpoint(req, res);
-                res.sendStatus(204);
+                await this.methods.endpoint(req, {
+                    send: async () => {
+                        res.sendStatus(204);
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -428,32 +433,48 @@ import express from \\"express\\";
 export interface AdminServiceMethods {
     updateTestSubmissionStatus(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, never, TraceApi.TestSubmissionStatus, never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.TestSubmissionStatus, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     sendTestSubmissionUpdate(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, never, TraceApi.TestSubmissionUpdate, never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.TestSubmissionUpdate, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     updateWorkspaceSubmissionStatus(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, never, TraceApi.WorkspaceSubmissionStatus, never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.WorkspaceSubmissionStatus, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     sendWorkspaceSubmissionUpdate(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, never, TraceApi.WorkspaceSubmissionUpdate, never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.WorkspaceSubmissionUpdate, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     storeTracedTestCase(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: string;
     }, never, TraceApi.StoreTracedTestCaseRequest, {
         \\"some-query-param\\"?: string | null;
-    }>, res: express.Response): void | Promise<void>;
+    }>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     storeTracedTestCaseV2(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: serializers.v2.TestCaseId.Raw;
-    }, never, TraceApi.TraceResponseV2[], never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.TraceResponseV2[], never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     storeTracedWorkspace(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, never, TraceApi.StoreTracedWorkspaceRequest, never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.StoreTracedWorkspaceRequest, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
     storeTracedWorkspaceV2(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
-    }, never, TraceApi.TraceResponseV2[], never>, res: express.Response): void | Promise<void>;
+    }, never, TraceApi.TraceResponseV2[], never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class AdminService {
     private readonly methods;
@@ -519,8 +540,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.updateTestSubmissionStatus(req, res);
-                    res.sendStatus(204);
+                    await this.methods.updateTestSubmissionStatus(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -549,8 +573,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.sendTestSubmissionUpdate(req, res);
-                    res.sendStatus(204);
+                    await this.methods.sendTestSubmissionUpdate(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -579,8 +606,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.updateWorkspaceSubmissionStatus(req, res);
-                    res.sendStatus(204);
+                    await this.methods.updateWorkspaceSubmissionStatus(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -609,8 +639,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.sendWorkspaceSubmissionUpdate(req, res);
-                    res.sendStatus(204);
+                    await this.methods.sendWorkspaceSubmissionUpdate(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -639,8 +672,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedTestCase(req, res);
-                    res.sendStatus(204);
+                    await this.methods.storeTracedTestCase(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -669,8 +705,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedTestCaseV2(req, res);
-                    res.sendStatus(204);
+                    await this.methods.storeTracedTestCaseV2(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -699,8 +738,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedWorkspace(req, res);
-                    res.sendStatus(204);
+                    await this.methods.storeTracedWorkspace(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -729,8 +771,11 @@ class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedWorkspaceV2(req, res);
-                    res.sendStatus(204);
+                    await this.methods.storeTracedWorkspaceV2(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -2325,8 +2370,12 @@ __exportStar(require(\\"./service\\"), exports);
 import { TraceApi } from \\"../../../..\\";
 import express from \\"express\\";
 export interface HomepageServiceMethods {
-    getHomepageProblems(req: express.Request<never, TraceApi.ProblemId[], never, never>, res: express.Response): TraceApi.ProblemId[] | Promise<TraceApi.ProblemId[]>;
-    setHomepageProblems(req: express.Request<never, never, TraceApi.ProblemId[], never>, res: express.Response): void | Promise<void>;
+    getHomepageProblems(req: express.Request<never, TraceApi.ProblemId[], never, never>, res: {
+        send: (responseBody: TraceApi.ProblemId[]) => Promise<void>;
+    }): void | Promise<void>;
+    setHomepageProblems(req: express.Request<never, never, TraceApi.ProblemId[], never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class HomepageService {
     private readonly methods;
@@ -2389,8 +2438,11 @@ class HomepageService {
     toRouter() {
         this.router.get(\\"\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getHomepageProblems(req, res);
-                res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(response));
+                await this.methods.getHomepageProblems(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -2412,8 +2464,11 @@ class HomepageService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.setHomepageProblems(req, res);
-                    res.sendStatus(204);
+                    await this.methods.setHomepageProblems(req, {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -2696,7 +2751,9 @@ __exportStar(require(\\"./service\\"), exports);
 import { TraceApi } from \\"../../../..\\";
 import express from \\"express\\";
 export interface MigrationServiceMethods {
-    getAttemptedMigrations(req: express.Request<never, TraceApi.Migration[], never, never>, res: express.Response): TraceApi.Migration[] | Promise<TraceApi.Migration[]>;
+    getAttemptedMigrations(req: express.Request<never, TraceApi.Migration[], never, never>, res: {
+        send: (responseBody: TraceApi.Migration[]) => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class MigrationService {
     private readonly methods;
@@ -2759,8 +2816,11 @@ class MigrationService {
     toRouter() {
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getAttemptedMigrations(req, res);
-                res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(response));
+                await this.methods.getAttemptedMigrations(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -3098,25 +3158,35 @@ export interface PlaylistServiceMethods {
     }, TraceApi.Playlist, TraceApi.PlaylistCreateRequest, {
         multiple: number;
         multipleOptional?: boolean | null;
-    }>, res: express.Response): TraceApi.Playlist | Promise<TraceApi.Playlist>;
+    }>, res: {
+        send: (responseBody: TraceApi.Playlist) => Promise<void>;
+    }): void | Promise<void>;
     getPlaylists(req: express.Request<{
         serviceParam: number;
     }, TraceApi.Playlist[], never, {
         limit?: number | null;
         otherField: string;
-    }>, res: express.Response): TraceApi.Playlist[] | Promise<TraceApi.Playlist[]>;
+    }>, res: {
+        send: (responseBody: TraceApi.Playlist[]) => Promise<void>;
+    }): void | Promise<void>;
     getPlaylist(req: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
-    }, TraceApi.Playlist, never, never>, res: express.Response): TraceApi.Playlist | Promise<TraceApi.Playlist>;
+    }, TraceApi.Playlist, never, never>, res: {
+        send: (responseBody: TraceApi.Playlist) => Promise<void>;
+    }): void | Promise<void>;
     updatePlaylist(req: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
-    }, TraceApi.Playlist | undefined, TraceApi.UpdatePlaylistRequest | undefined, never>, res: express.Response): (TraceApi.Playlist | undefined) | Promise<TraceApi.Playlist | undefined>;
+    }, TraceApi.Playlist | undefined, TraceApi.UpdatePlaylistRequest | undefined, never>, res: {
+        send: (responseBody: TraceApi.Playlist | undefined) => Promise<void>;
+    }): void | Promise<void>;
     deletePlaylist(req: express.Request<{
         serviceParam: number;
         playlist_id: serializers.PlaylistId.Raw;
-    }, never, never, never>, res: express.Response): void | Promise<void>;
+    }, never, never, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class PlaylistService {
     private readonly methods;
@@ -3182,8 +3252,11 @@ class PlaylistService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    const response = await this.methods.createPlaylist(req, res);
-                    res.json(await serializers.Playlist.jsonOrThrow(response));
+                    await this.methods.createPlaylist(req, {
+                        send: async (responseBody) => {
+                            res.json(await serializers.Playlist.jsonOrThrow(responseBody));
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -3209,8 +3282,11 @@ class PlaylistService {
         });
         this.router.get(\\"/all\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getPlaylists(req, res);
-                res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(response));
+                await this.methods.getPlaylists(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -3229,8 +3305,11 @@ class PlaylistService {
         });
         this.router.get(\\"/:playlistId\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getPlaylist(req, res);
-                res.json(await serializers.Playlist.jsonOrThrow(response));
+                await this.methods.getPlaylist(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.Playlist.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -3258,8 +3337,11 @@ class PlaylistService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    const response = await this.methods.updatePlaylist(req, res);
-                    res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(response));
+                    await this.methods.updatePlaylist(req, {
+                        send: async (responseBody) => {
+                            res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody));
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -3290,8 +3372,11 @@ class PlaylistService {
         });
         this.router.delete(\\"/:playlist_id\\", async (req, res, next) => {
             try {
-                await this.methods.deletePlaylist(req, res);
-                res.sendStatus(204);
+                await this.methods.deletePlaylist(req, {
+                    send: async () => {
+                        res.sendStatus(204);
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -3794,14 +3879,22 @@ import { TraceApi } from \\"../../../..\\";
 import express from \\"express\\";
 import * as serializers from \\"../../../../serialization\\";
 export interface ProblemServiceMethods {
-    createProblem(req: express.Request<never, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, never>, res: express.Response): TraceApi.CreateProblemResponse | Promise<TraceApi.CreateProblemResponse>;
+    createProblem(req: express.Request<never, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, never>, res: {
+        send: (responseBody: TraceApi.CreateProblemResponse) => Promise<void>;
+    }): void | Promise<void>;
     updateProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.UpdateProblemResponse, TraceApi.CreateProblemRequest, never>, res: express.Response): TraceApi.UpdateProblemResponse | Promise<TraceApi.UpdateProblemResponse>;
+    }, TraceApi.UpdateProblemResponse, TraceApi.CreateProblemRequest, never>, res: {
+        send: (responseBody: TraceApi.UpdateProblemResponse) => Promise<void>;
+    }): void | Promise<void>;
     deleteProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, never, never, never>, res: express.Response): void | Promise<void>;
-    getDefaultStarterFiles(req: express.Request<never, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, never>, res: express.Response): TraceApi.GetDefaultStarterFilesResponse | Promise<TraceApi.GetDefaultStarterFilesResponse>;
+    }, never, never, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
+    getDefaultStarterFiles(req: express.Request<never, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, never>, res: {
+        send: (responseBody: TraceApi.GetDefaultStarterFilesResponse) => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class ProblemService {
     private readonly methods;
@@ -3867,8 +3960,11 @@ class ProblemService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    const response = await this.methods.createProblem(req, res);
-                    res.json(await serializers.CreateProblemResponse.jsonOrThrow(response));
+                    await this.methods.createProblem(req, {
+                        send: async (responseBody) => {
+                            res.json(await serializers.CreateProblemResponse.jsonOrThrow(responseBody));
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -3897,8 +3993,11 @@ class ProblemService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    const response = await this.methods.updateProblem(req, res);
-                    res.json(await serializers.UpdateProblemResponse.jsonOrThrow(response));
+                    await this.methods.updateProblem(req, {
+                        send: async (responseBody) => {
+                            res.json(await serializers.UpdateProblemResponse.jsonOrThrow(responseBody));
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -3924,8 +4023,11 @@ class ProblemService {
         });
         this.router.delete(\\"/delete/:problemId\\", async (req, res, next) => {
             try {
-                await this.methods.deleteProblem(req, res);
-                res.sendStatus(204);
+                await this.methods.deleteProblem(req, {
+                    send: async () => {
+                        res.sendStatus(204);
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -3947,8 +4049,11 @@ class ProblemService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    const response = await this.methods.getDefaultStarterFiles(req, res);
-                    res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(response));
+                    await this.methods.getDefaultStarterFiles(req, {
+                        send: async (responseBody) => {
+                            res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody));
+                        },
+                    });
                     next();
                 }
                 catch (error) {
@@ -4657,20 +4762,28 @@ __exportStar(require(\\"./service\\"), exports);
                     "contents": "/**
  * This file was auto-generated by Fern from our API Definition.
  */
-import { TraceApi } from \\"../../../..\\";
 import * as serializers from \\"../../../../serialization\\";
+import { TraceApi } from \\"../../../..\\";
 import express from \\"express\\";
 export interface SubmissionServiceMethods {
     createExecutionSession(req: express.Request<{
         language: serializers.Language.Raw;
-    }, TraceApi.ExecutionSessionResponse, never, never>, res: express.Response): TraceApi.ExecutionSessionResponse | Promise<TraceApi.ExecutionSessionResponse>;
+    }, TraceApi.ExecutionSessionResponse, never, never>, res: {
+        send: (responseBody: TraceApi.ExecutionSessionResponse) => Promise<void>;
+    }): void | Promise<void>;
     getExecutionSession(req: express.Request<{
         sessionId: string;
-    }, TraceApi.ExecutionSessionResponse | undefined, never, never>, res: express.Response): (TraceApi.ExecutionSessionResponse | undefined) | Promise<TraceApi.ExecutionSessionResponse | undefined>;
+    }, TraceApi.ExecutionSessionResponse | undefined, never, never>, res: {
+        send: (responseBody: TraceApi.ExecutionSessionResponse | undefined) => Promise<void>;
+    }): void | Promise<void>;
     stopExecutionSession(req: express.Request<{
         sessionId: string;
-    }, never, never, never>, res: express.Response): void | Promise<void>;
-    getExecutionSessionsState(req: express.Request<never, TraceApi.GetExecutionSessionStateResponse, never, never>, res: express.Response): TraceApi.GetExecutionSessionStateResponse | Promise<TraceApi.GetExecutionSessionStateResponse>;
+    }, never, never, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
+    getExecutionSessionsState(req: express.Request<never, TraceApi.GetExecutionSessionStateResponse, never, never>, res: {
+        send: (responseBody: TraceApi.GetExecutionSessionStateResponse) => Promise<void>;
+    }): void | Promise<void>;
 }
 /**
  * Responsible for spinning up and spinning down execution.
@@ -4739,8 +4852,11 @@ class SubmissionService {
     toRouter() {
         this.router.post(\\"/create-session/:language\\", async (req, res, next) => {
             try {
-                const response = await this.methods.createExecutionSession(req, res);
-                res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(response));
+                await this.methods.createExecutionSession(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -4759,8 +4875,11 @@ class SubmissionService {
         });
         this.router.get(\\"/:sessionId\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getExecutionSession(req, res);
-                res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(response));
+                await this.methods.getExecutionSession(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -4779,8 +4898,11 @@ class SubmissionService {
         });
         this.router.delete(\\"/stop/:sessionId\\", async (req, res, next) => {
             try {
-                await this.methods.stopExecutionSession(req, res);
-                res.sendStatus(204);
+                await this.methods.stopExecutionSession(req, {
+                    send: async () => {
+                        res.sendStatus(204);
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -4799,8 +4921,11 @@ class SubmissionService {
         });
         this.router.get(\\"/execution-sessions-state\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getExecutionSessionsState(req, res);
-                res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(response));
+                await this.methods.getExecutionSessionsState(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -8547,8 +8672,12 @@ export interface SyspropServiceMethods {
     setNumWarmInstances(req: express.Request<{
         language: serializers.Language.Raw;
         numWarmInstances: number;
-    }, never, never, never>, res: express.Response): void | Promise<void>;
-    getNumWarmInstances(req: express.Request<never, Record<TraceApi.Language, number | undefined>, never, never>, res: express.Response): Record<TraceApi.Language, number | undefined> | Promise<Record<TraceApi.Language, number | undefined>>;
+    }, never, never, never>, res: {
+        send: () => Promise<void>;
+    }): void | Promise<void>;
+    getNumWarmInstances(req: express.Request<never, Record<TraceApi.Language, number | undefined>, never, never>, res: {
+        send: (responseBody: Record<TraceApi.Language, number | undefined>) => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class SyspropService {
     private readonly methods;
@@ -8611,8 +8740,11 @@ class SyspropService {
     toRouter() {
         this.router.put(\\"/num-warm-instances/:language/:numWarmInstances\\", async (req, res, next) => {
             try {
-                await this.methods.setNumWarmInstances(req, res);
-                res.sendStatus(204);
+                await this.methods.setNumWarmInstances(req, {
+                    send: async () => {
+                        res.sendStatus(204);
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -8631,8 +8763,11 @@ class SyspropService {
         });
         this.router.get(\\"/num-warm-instances\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getNumWarmInstances(req, res);
-                res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(response));
+                await this.methods.getNumWarmInstances(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -8797,15 +8932,23 @@ import { TraceApi } from \\"../../../../../..\\";
 import express from \\"express\\";
 import * as serializers from \\"../../../../../../serialization\\";
 export interface ProblemServiceMethods {
-    getLightweightProblems(req: express.Request<never, TraceApi.v2.LightweightProblemInfoV2[], never, never>, res: express.Response): TraceApi.v2.LightweightProblemInfoV2[] | Promise<TraceApi.v2.LightweightProblemInfoV2[]>;
-    getProblems(req: express.Request<never, TraceApi.v2.ProblemInfoV2[], never, never>, res: express.Response): TraceApi.v2.ProblemInfoV2[] | Promise<TraceApi.v2.ProblemInfoV2[]>;
+    getLightweightProblems(req: express.Request<never, TraceApi.v2.LightweightProblemInfoV2[], never, never>, res: {
+        send: (responseBody: TraceApi.v2.LightweightProblemInfoV2[]) => Promise<void>;
+    }): void | Promise<void>;
+    getProblems(req: express.Request<never, TraceApi.v2.ProblemInfoV2[], never, never>, res: {
+        send: (responseBody: TraceApi.v2.ProblemInfoV2[]) => Promise<void>;
+    }): void | Promise<void>;
     getLatestProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.v2.ProblemInfoV2, never, never>, res: express.Response): TraceApi.v2.ProblemInfoV2 | Promise<TraceApi.v2.ProblemInfoV2>;
+    }, TraceApi.v2.ProblemInfoV2, never, never>, res: {
+        send: (responseBody: TraceApi.v2.ProblemInfoV2) => Promise<void>;
+    }): void | Promise<void>;
     getProblemVersion(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
-    }, TraceApi.v2.ProblemInfoV2, never, never>, res: express.Response): TraceApi.v2.ProblemInfoV2 | Promise<TraceApi.v2.ProblemInfoV2>;
+    }, TraceApi.v2.ProblemInfoV2, never, never>, res: {
+        send: (responseBody: TraceApi.v2.ProblemInfoV2) => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class ProblemService {
     private readonly methods;
@@ -8868,8 +9011,11 @@ class ProblemService {
     toRouter() {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getLightweightProblems(req, res);
-                res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(response));
+                await this.methods.getLightweightProblems(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -8888,8 +9034,11 @@ class ProblemService {
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getProblems(req, res);
-                res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(response));
+                await this.methods.getProblems(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -8908,8 +9057,11 @@ class ProblemService {
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getLatestProblem(req, res);
-                res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
+                await this.methods.getLatestProblem(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -8928,8 +9080,11 @@ class ProblemService {
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getProblemVersion(req, res);
-                res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(response));
+                await this.methods.getProblemVersion(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -10573,15 +10728,23 @@ import { TraceApi } from \\"../../../../../../../..\\";
 import express from \\"express\\";
 import * as serializers from \\"../../../../../../../../serialization\\";
 export interface ProblemServiceMethods {
-    getLightweightProblems(req: express.Request<never, TraceApi.v2.v3.LightweightProblemInfoV2[], never, never>, res: express.Response): TraceApi.v2.v3.LightweightProblemInfoV2[] | Promise<TraceApi.v2.v3.LightweightProblemInfoV2[]>;
-    getProblems(req: express.Request<never, TraceApi.v2.v3.ProblemInfoV2[], never, never>, res: express.Response): TraceApi.v2.v3.ProblemInfoV2[] | Promise<TraceApi.v2.v3.ProblemInfoV2[]>;
+    getLightweightProblems(req: express.Request<never, TraceApi.v2.v3.LightweightProblemInfoV2[], never, never>, res: {
+        send: (responseBody: TraceApi.v2.v3.LightweightProblemInfoV2[]) => Promise<void>;
+    }): void | Promise<void>;
+    getProblems(req: express.Request<never, TraceApi.v2.v3.ProblemInfoV2[], never, never>, res: {
+        send: (responseBody: TraceApi.v2.v3.ProblemInfoV2[]) => Promise<void>;
+    }): void | Promise<void>;
     getLatestProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
-    }, TraceApi.v2.v3.ProblemInfoV2, never, never>, res: express.Response): TraceApi.v2.v3.ProblemInfoV2 | Promise<TraceApi.v2.v3.ProblemInfoV2>;
+    }, TraceApi.v2.v3.ProblemInfoV2, never, never>, res: {
+        send: (responseBody: TraceApi.v2.v3.ProblemInfoV2) => Promise<void>;
+    }): void | Promise<void>;
     getProblemVersion(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
-    }, TraceApi.v2.v3.ProblemInfoV2, never, never>, res: express.Response): TraceApi.v2.v3.ProblemInfoV2 | Promise<TraceApi.v2.v3.ProblemInfoV2>;
+    }, TraceApi.v2.v3.ProblemInfoV2, never, never>, res: {
+        send: (responseBody: TraceApi.v2.v3.ProblemInfoV2) => Promise<void>;
+    }): void | Promise<void>;
 }
 export declare class ProblemService {
     private readonly methods;
@@ -10644,8 +10807,11 @@ class ProblemService {
     toRouter() {
         this.router.get(\\"/lightweight-problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getLightweightProblems(req, res);
-                res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(response));
+                await this.methods.getLightweightProblems(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -10664,8 +10830,11 @@ class ProblemService {
         });
         this.router.get(\\"/problem-info\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getProblems(req, res);
-                res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(response));
+                await this.methods.getProblems(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -10684,8 +10853,11 @@ class ProblemService {
         });
         this.router.get(\\"/problem-info/:problemId\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getLatestProblem(req, res);
-                res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
+                await this.methods.getLatestProblem(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
@@ -10704,8 +10876,11 @@ class ProblemService {
         });
         this.router.get(\\"/problem-info/:problemId/version/:problemVersion\\", async (req, res, next) => {
             try {
-                const response = await this.methods.getProblemVersion(req, res);
-                res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(response));
+                await this.methods.getProblemVersion(req, {
+                    send: async (responseBody) => {
+                        res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody));
+                    },
+                });
                 next();
             }
             catch (error) {
