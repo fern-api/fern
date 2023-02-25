@@ -23,10 +23,10 @@ exports[`validate openapi 1`] = `
        paths -> /user/login -> get
        x-request-name is required because this request has query parameters
 [api]: fern/api/definition/openapi.yml:631:15
-       components -> schemas -> Order -> properties -> status -> ...
+       components -> schemas -> Order -> properties -> status -> enum
        Enum is inlined. Please refactor as a $ref.
 [api]: fern/api/definition/openapi.yml:768:15
-       components -> schemas -> Pet -> properties -> status -> ...
+       components -> schemas -> Pet -> properties -> status -> enum
        Enum is inlined. Please refactor as a $ref."
 `;
 
