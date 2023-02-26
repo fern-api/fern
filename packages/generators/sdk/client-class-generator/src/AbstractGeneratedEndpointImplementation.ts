@@ -275,7 +275,10 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                 ...serviceBasePathPartsExceptLast,
                 {
                     pathParameter: lastServiceBasePathPart.pathParameter,
-                    tail: urlJoin(lastServiceBasePathPart.tail, "/", this.endpoint.path.head),
+                    tail:
+                        lastServiceBasePathPart.tail.length > 0
+                            ? urlJoin(lastServiceBasePathPart.tail, this.endpoint.path.head)
+                            : this.endpoint.path.head,
                 },
                 ...this.endpoint.path.parts,
             ],
