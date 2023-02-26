@@ -10,7 +10,9 @@ types:
       status: MigrationStatus
 
 service:
-  base-path: /migration-info
+  base-path: /migration-info/{serviceParam}/tail
+  path-parameters:
+    serviceParam: string
   auth: false
   endpoints:
     getAttemptedMigrations:
