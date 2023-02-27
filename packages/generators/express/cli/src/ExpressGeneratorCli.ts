@@ -55,6 +55,6 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     }
 
     protected isPackagePrivate(): boolean {
-        return true;
+        return false;
     }
 }
