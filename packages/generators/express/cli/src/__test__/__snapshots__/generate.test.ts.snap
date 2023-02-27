@@ -112,6 +112,7 @@ import express from \\"express\\";
 export interface ServiceServiceMethods {
     endpoint(req: express.Request<never, never, never, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class ServiceService {
@@ -178,6 +179,7 @@ class ServiceService {
                     send: async () => {
                         res.sendStatus(204);
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -435,21 +437,25 @@ export interface AdminServiceMethods {
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.TestSubmissionStatus, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     sendTestSubmissionUpdate(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.TestSubmissionUpdate, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     updateWorkspaceSubmissionStatus(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.WorkspaceSubmissionStatus, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     sendWorkspaceSubmissionUpdate(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.WorkspaceSubmissionUpdate, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     storeTracedTestCase(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
@@ -458,22 +464,26 @@ export interface AdminServiceMethods {
         \\"some-query-param\\"?: string | null;
     }>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     storeTracedTestCaseV2(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: serializers.v2.TestCaseId.Raw;
     }, never, TraceApi.TraceResponseV2[], never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     storeTracedWorkspace(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.StoreTracedWorkspaceRequest, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     storeTracedWorkspaceV2(req: express.Request<{
         submissionId: serializers.SubmissionId.Raw;
     }, never, TraceApi.TraceResponseV2[], never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class AdminService {
@@ -544,6 +554,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -577,6 +588,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -610,6 +622,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -643,6 +656,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -676,6 +690,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -709,6 +724,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -742,6 +758,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -775,6 +792,7 @@ class AdminService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -2372,9 +2390,11 @@ import express from \\"express\\";
 export interface HomepageServiceMethods {
     getHomepageProblems(req: express.Request<never, TraceApi.ProblemId[], never, never>, res: {
         send: (responseBody: TraceApi.ProblemId[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     setHomepageProblems(req: express.Request<never, never, TraceApi.ProblemId[], never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class HomepageService {
@@ -2442,6 +2462,7 @@ class HomepageService {
                     send: async (responseBody) => {
                         res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -2468,6 +2489,7 @@ class HomepageService {
                         send: async () => {
                             res.sendStatus(204);
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -2753,6 +2775,7 @@ import express from \\"express\\";
 export interface MigrationServiceMethods {
     getAttemptedMigrations(req: express.Request<never, TraceApi.Migration[], never, never>, res: {
         send: (responseBody: TraceApi.Migration[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class MigrationService {
@@ -2820,6 +2843,7 @@ class MigrationService {
                     send: async (responseBody) => {
                         res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -3160,6 +3184,7 @@ export interface PlaylistServiceMethods {
         multipleOptional?: boolean | null;
     }>, res: {
         send: (responseBody: TraceApi.Playlist) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getPlaylists(req: express.Request<{
         serviceParam: number;
@@ -3168,24 +3193,28 @@ export interface PlaylistServiceMethods {
         otherField: string;
     }>, res: {
         send: (responseBody: TraceApi.Playlist[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getPlaylist(req: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
     }, TraceApi.Playlist, never, never>, res: {
         send: (responseBody: TraceApi.Playlist) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     updatePlaylist(req: express.Request<{
         serviceParam: number;
         playlistId: serializers.PlaylistId.Raw;
     }, TraceApi.Playlist | undefined, TraceApi.UpdatePlaylistRequest | undefined, never>, res: {
         send: (responseBody: TraceApi.Playlist | undefined) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     deletePlaylist(req: express.Request<{
         serviceParam: number;
         playlist_id: serializers.PlaylistId.Raw;
     }, never, never, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class PlaylistService {
@@ -3256,6 +3285,7 @@ class PlaylistService {
                         send: async (responseBody) => {
                             res.json(await serializers.Playlist.jsonOrThrow(responseBody));
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -3286,6 +3316,7 @@ class PlaylistService {
                     send: async (responseBody) => {
                         res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -3309,6 +3340,7 @@ class PlaylistService {
                     send: async (responseBody) => {
                         res.json(await serializers.Playlist.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -3341,6 +3373,7 @@ class PlaylistService {
                         send: async (responseBody) => {
                             res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody));
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -3376,6 +3409,7 @@ class PlaylistService {
                     send: async () => {
                         res.sendStatus(204);
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -3881,19 +3915,23 @@ import * as serializers from \\"../../../../serialization\\";
 export interface ProblemServiceMethods {
     createProblem(req: express.Request<never, TraceApi.CreateProblemResponse, TraceApi.CreateProblemRequest, never>, res: {
         send: (responseBody: TraceApi.CreateProblemResponse) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     updateProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
     }, TraceApi.UpdateProblemResponse, TraceApi.CreateProblemRequest, never>, res: {
         send: (responseBody: TraceApi.UpdateProblemResponse) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     deleteProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
     }, never, never, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getDefaultStarterFiles(req: express.Request<never, TraceApi.GetDefaultStarterFilesResponse, TraceApi.GetDefaultStarterFilesRequest, never>, res: {
         send: (responseBody: TraceApi.GetDefaultStarterFilesResponse) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class ProblemService {
@@ -3964,6 +4002,7 @@ class ProblemService {
                         send: async (responseBody) => {
                             res.json(await serializers.CreateProblemResponse.jsonOrThrow(responseBody));
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -3997,6 +4036,7 @@ class ProblemService {
                         send: async (responseBody) => {
                             res.json(await serializers.UpdateProblemResponse.jsonOrThrow(responseBody));
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -4027,6 +4067,7 @@ class ProblemService {
                     send: async () => {
                         res.sendStatus(204);
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -4053,6 +4094,7 @@ class ProblemService {
                         send: async (responseBody) => {
                             res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody));
                         },
+                        locals: res.locals,
                     });
                     next();
                 }
@@ -4770,19 +4812,23 @@ export interface SubmissionServiceMethods {
         language: serializers.Language.Raw;
     }, TraceApi.ExecutionSessionResponse, never, never>, res: {
         send: (responseBody: TraceApi.ExecutionSessionResponse) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getExecutionSession(req: express.Request<{
         sessionId: string;
     }, TraceApi.ExecutionSessionResponse | undefined, never, never>, res: {
         send: (responseBody: TraceApi.ExecutionSessionResponse | undefined) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     stopExecutionSession(req: express.Request<{
         sessionId: string;
     }, never, never, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getExecutionSessionsState(req: express.Request<never, TraceApi.GetExecutionSessionStateResponse, never, never>, res: {
         send: (responseBody: TraceApi.GetExecutionSessionStateResponse) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 /**
@@ -4856,6 +4902,7 @@ class SubmissionService {
                     send: async (responseBody) => {
                         res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -4879,6 +4926,7 @@ class SubmissionService {
                     send: async (responseBody) => {
                         res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -4902,6 +4950,7 @@ class SubmissionService {
                     send: async () => {
                         res.sendStatus(204);
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -4925,6 +4974,7 @@ class SubmissionService {
                     send: async (responseBody) => {
                         res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -8674,9 +8724,11 @@ export interface SyspropServiceMethods {
         numWarmInstances: number;
     }, never, never, never>, res: {
         send: () => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getNumWarmInstances(req: express.Request<never, Record<TraceApi.Language, number | undefined>, never, never>, res: {
         send: (responseBody: Record<TraceApi.Language, number | undefined>) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class SyspropService {
@@ -8744,6 +8796,7 @@ class SyspropService {
                     send: async () => {
                         res.sendStatus(204);
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -8767,6 +8820,7 @@ class SyspropService {
                     send: async (responseBody) => {
                         res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -8934,20 +8988,24 @@ import * as serializers from \\"../../../../../../serialization\\";
 export interface ProblemServiceMethods {
     getLightweightProblems(req: express.Request<never, TraceApi.v2.LightweightProblemInfoV2[], never, never>, res: {
         send: (responseBody: TraceApi.v2.LightweightProblemInfoV2[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getProblems(req: express.Request<never, TraceApi.v2.ProblemInfoV2[], never, never>, res: {
         send: (responseBody: TraceApi.v2.ProblemInfoV2[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getLatestProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
     }, TraceApi.v2.ProblemInfoV2, never, never>, res: {
         send: (responseBody: TraceApi.v2.ProblemInfoV2) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getProblemVersion(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
     }, TraceApi.v2.ProblemInfoV2, never, never>, res: {
         send: (responseBody: TraceApi.v2.ProblemInfoV2) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class ProblemService {
@@ -9015,6 +9073,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -9038,6 +9097,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -9061,6 +9121,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -9084,6 +9145,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -10730,20 +10792,24 @@ import * as serializers from \\"../../../../../../../../serialization\\";
 export interface ProblemServiceMethods {
     getLightweightProblems(req: express.Request<never, TraceApi.v2.v3.LightweightProblemInfoV2[], never, never>, res: {
         send: (responseBody: TraceApi.v2.v3.LightweightProblemInfoV2[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getProblems(req: express.Request<never, TraceApi.v2.v3.ProblemInfoV2[], never, never>, res: {
         send: (responseBody: TraceApi.v2.v3.ProblemInfoV2[]) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getLatestProblem(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
     }, TraceApi.v2.v3.ProblemInfoV2, never, never>, res: {
         send: (responseBody: TraceApi.v2.v3.ProblemInfoV2) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
     getProblemVersion(req: express.Request<{
         problemId: serializers.ProblemId.Raw;
         problemVersion: number;
     }, TraceApi.v2.v3.ProblemInfoV2, never, never>, res: {
         send: (responseBody: TraceApi.v2.v3.ProblemInfoV2) => Promise<void>;
+        locals: any;
     }): void | Promise<void>;
 }
 export declare class ProblemService {
@@ -10811,6 +10877,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -10834,6 +10901,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -10857,6 +10925,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }
@@ -10880,6 +10949,7 @@ class ProblemService {
                     send: async (responseBody) => {
                         res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody));
                     },
+                    locals: res.locals,
                 });
                 next();
             }

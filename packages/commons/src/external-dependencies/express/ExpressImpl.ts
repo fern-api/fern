@@ -84,6 +84,9 @@ export class ExpressImpl extends ExternalDependency implements Express {
                 [ts.factory.createNumericLiteral(status)]
             );
         },
+        locals: ({ referenceToExpressResponse }: { referenceToExpressResponse: ts.Expression }): ts.Expression => {
+            return ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "locals");
+        },
     };
 
     public readonly Express = this.withDefaultImport("express", (withImport, express) =>

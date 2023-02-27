@@ -17,8 +17,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private static ADD_MIDDLEWARE_METHOD_NAME = "addMiddleware";
     private static TO_ROUTER_METHOD_NAME = "toRouter";
     private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
-    private static SEND_RESPONSE_METHOD_NAME = "send";
+    private static SEND_RESPONSE_PROPERTY_NAME = "send";
     private static RESPONSE_BODY_PARAMETER_NAME = "responseBody";
+    private static LOCALS_PROPERTY_NAME = "locals";
 
     private doNotHandleUnrecognizedErrors: boolean;
     private serviceClassName: string;
@@ -201,7 +202,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         ts.factory.createTypeLiteralNode([
                             ts.factory.createPropertySignature(
                                 undefined,
-                                ts.factory.createIdentifier(GeneratedExpressServiceImpl.SEND_RESPONSE_METHOD_NAME),
+                                ts.factory.createIdentifier(GeneratedExpressServiceImpl.SEND_RESPONSE_PROPERTY_NAME),
                                 undefined,
                                 ts.factory.createFunctionTypeNode(
                                     undefined,
@@ -221,6 +222,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                         ts.factory.createTypeReferenceNode("void"),
                                     ])
                                 )
+                            ),
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                ts.factory.createIdentifier(GeneratedExpressServiceImpl.LOCALS_PROPERTY_NAME),
+                                undefined,
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                             ),
                         ])
                     ),
@@ -517,7 +524,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createPropertyAssignment(
-                                        GeneratedExpressServiceImpl.SEND_RESPONSE_METHOD_NAME,
+                                        GeneratedExpressServiceImpl.SEND_RESPONSE_PROPERTY_NAME,
                                         ts.factory.createArrowFunction(
                                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                                             undefined,
@@ -562,6 +569,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                 true
                                             )
                                         )
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        GeneratedExpressServiceImpl.LOCALS_PROPERTY_NAME,
+                                        context.base.externalDependencies.express.Response.locals({
+                                            referenceToExpressResponse: expressResponse,
+                                        })
                                     ),
                                 ],
                                 true
