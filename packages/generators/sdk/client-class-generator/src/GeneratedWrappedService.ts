@@ -21,7 +21,7 @@ export class GeneratedWrappedService {
     }
 
     public addToServiceClass(class_: ClassDeclaration, context: SdkClientClassContext): void {
-        const referenceToWrapped = this.getReferenceToWrappedService(context);
+        const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
         const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass(this.wrappedService);
 
         class_.addProperty({
@@ -74,7 +74,21 @@ export class GeneratedWrappedService {
         return lastFernFilepathPart.camelCase.unsafeName;
     }
 
-    private getReferenceToWrappedService(context: SdkClientClassContext): Reference {
-        return context.sdkClientClass.getReferenceToClientClass(this.wrappedService);
+    private getReferenceToWrappedService(serviceClass: ClassDeclaration, context: SdkClientClassContext): Reference {
+        const reference = context.sdkClientClass.getReferenceToClientClass(this.wrappedService);
+        const wrappedServiceClassName = getTextOfTsNode(
+            reference.getTypeNode({
+                // we don't want to add the import unnecessarily
+                isForComment: true,
+            })
+        );
+
+        if (wrappedServiceClassName !== serviceClass.getName()) {
+            return reference;
+        } else {
+            return context.sdkClientClass.getReferenceToClientClass(this.wrappedService, {
+                importAlias: `${wrappedServiceClassName}_`,
+            });
+        }
     }
 }
