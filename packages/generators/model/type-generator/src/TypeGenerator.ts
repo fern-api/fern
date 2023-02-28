@@ -144,9 +144,7 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedAliasType<Context> {
-        return this.useBrandedStringAliases &&
-            aliasOf._type === "primitive" &&
-            aliasOf.primitive === PrimitiveType.String
+        return this.useBrandedStringAliases && isTypeStringLike(aliasOf)
             ? new GeneratedBrandedStringAliasImpl({
                   typeName,
                   shape: aliasOf,
@@ -164,4 +162,20 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
                   getReferenceToSelf,
               });
     }
+}
+
+function isTypeStringLike(type: TypeReference): boolean {
+    if (type._type !== "primitive") {
+        return false;
+    }
+    return PrimitiveType._visit(type.primitive, {
+        integer: () => false,
+        double: () => false,
+        string: () => true,
+        boolean: () => false,
+        long: () => false,
+        dateTime: () => false,
+        uuid: () => true,
+        _unknown: () => false,
+    });
 }

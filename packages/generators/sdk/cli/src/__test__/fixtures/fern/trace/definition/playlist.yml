@@ -2,6 +2,7 @@ imports:
   commons: commons.yml
 types:
   PlaylistId: integer
+  PlaylistUuid: uuid
   Playlist:
     extends: playlistCreateRequest
     properties:
