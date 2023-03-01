@@ -1,4 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { useMemo } from "react";
 import { matchPath, useLocation } from "react-router-dom";
 import { DefinitionRoutes } from ".";
 import { useAllEnvironments } from "../../queries/useAllEnvironments";
@@ -23,7 +24,7 @@ export function useCurrentEnvironment(): FernRegistry.Environment | undefined {
 
 export function useCurrentEnvironmentId(): ParsedEnvironmentId {
     const location = useLocation();
-    return parseEnvironmentIdFromPath(location.pathname);
+    return useMemo(() => parseEnvironmentIdFromPath(location.pathname), [location.pathname]);
 }
 
 export function parseEnvironmentIdFromPath(path: string): ParsedEnvironmentId {

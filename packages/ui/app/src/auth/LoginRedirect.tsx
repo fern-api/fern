@@ -7,7 +7,7 @@ export const LoginRedirect: React.FC = () => {
     const login = useLogin();
 
     useEffect(() => {
-        login({ returnTo: loginPath });
+        void login({ returnTo: loginPath });
     }, [login, loginPath]);
 
     return null;
