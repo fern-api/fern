@@ -1,13 +1,14 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useApiDefinitionContext } from "../../api-page/api-context/useApiDefinitionContext";
 import { TYPES_NAMESPACE } from "./constants";
+import { ParsedEnvironmentId } from "./useCurrentEnvironment";
 import { usePackageItemPath } from "./usePackageItemPath";
 
 export function useTypePath({
     environmentId,
     typeId,
 }: {
-    environmentId: FernRegistry.EnvironmentId;
+    environmentId: ParsedEnvironmentId;
     typeId: FernRegistry.TypeId;
 }): string {
     const { resolveTypeById, getPackagePathForTypeId } = useApiDefinitionContext();

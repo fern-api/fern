@@ -1,6 +1,6 @@
-import { FernRegistry } from "@fern-fern/registry";
 import { PackagePath } from "../../commons/PackagePath";
 import { ENDPOINTS_NAMESPACE } from "./constants";
+import { ParsedEnvironmentId } from "./useCurrentEnvironment";
 import { usePackageItemPath } from "./usePackageItemPath";
 
 export function useEndpointPath({
@@ -8,7 +8,7 @@ export function useEndpointPath({
     packagePath,
     endpointId,
 }: {
-    environmentId: FernRegistry.EnvironmentId;
+    environmentId: ParsedEnvironmentId;
     packagePath: PackagePath;
     endpointId: string;
 }): string {

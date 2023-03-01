@@ -1,11 +1,11 @@
 import { Loadable, mapLoadable } from "@fern-api/loadable";
-import { FernRegistry } from "@fern-fern/registry";
 import { matchPath } from "react-router-dom";
 import { DefinitionRoutes } from ".";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { ENDPOINTS_NAMESPACE, TYPES_NAMESPACE } from "./constants";
 import { parsePackageItemPath } from "./parsePackageItemPath";
 import { ParsedDefinitionPath } from "./types";
+import { useCurrentEnvironmentId } from "./useCurrentEnvironment";
 
 const PackageItemPathRegexes = {
     ENDPOINT: createPackageItemPathRegex(ENDPOINTS_NAMESPACE),
@@ -14,6 +14,7 @@ const PackageItemPathRegexes = {
 
 export function useParsedDefinitionPath(path: string): Loadable<ParsedDefinitionPath | undefined> {
     const { api, resolveEndpointById, resolveTypeByName } = useApiDefinitionContext();
+    const environmentId = useCurrentEnvironmentId();
 
     return mapLoadable(api, () => {
         const match = matchPath(DefinitionRoutes.API_PACKAGE.absolutePath, path);
@@ -21,12 +22,7 @@ export function useParsedDefinitionPath(path: string): Loadable<ParsedDefinition
             return undefined;
         }
 
-        const { ENVIRONMENT_ID: environmentIdParam, ["*"]: splatMatch } = match.params;
-
-        if (environmentIdParam == null) {
-            throw new Error("No environment ID param found");
-        }
-        const environmentId = FernRegistry.EnvironmentId(environmentIdParam);
+        const { ["*"]: splatMatch } = match.params;
 
         if (splatMatch == null) {
             throw new Error("No * param found");

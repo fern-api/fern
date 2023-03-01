@@ -33,7 +33,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-model": "0.0.1074",
-    "@fern-fern/registry": "0.0.158",
+    "@fern-fern/registry": "0.0.173",
     "chalk": "^5.0.1"
   },
   "devDependencies": {

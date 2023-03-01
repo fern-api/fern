@@ -1,8 +1,6 @@
-import { FernRegistry } from "@fern-fern/registry";
 import { PropsWithChildren } from "react";
-import { matchPath } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
-import { DefinitionRoutes } from "../routes";
+import { parseEnvironmentIdFromPath } from "../routes/useCurrentEnvironment";
 import { Tab } from "./context/ApiTabsContext";
 
 export declare namespace ApiDefinitionContextProviderForTab {
@@ -17,15 +15,14 @@ export const ApiDefinitionContextProviderForTab: React.FC<ApiDefinitionContextPr
     fallback = null,
     children,
 }) => {
-    const match = matchPath(DefinitionRoutes.API_PACKAGE.absolutePath, tab.path);
-    const environmentId = match?.params.ENVIRONMENT_ID;
+    const environmentId = parseEnvironmentIdFromPath(tab.path);
 
     if (environmentId == null) {
         return fallback;
     }
 
     return (
-        <ApiDefinitionContextProvider key={tab.path} environmentId={FernRegistry.EnvironmentId(environmentId)}>
+        <ApiDefinitionContextProvider key={tab.path} environmentId={environmentId}>
             {children}
         </ApiDefinitionContextProvider>
     );

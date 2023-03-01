@@ -618,6 +618,42 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@auth0/auth0-react", [\
+        ["npm:2.0.1", {\
+          "packageLocation": "./.yarn/cache/@auth0-auth0-react-npm-2.0.1-b2cf201e81-b2119c5d21.zip/node_modules/@auth0/auth0-react/",\
+          "packageDependencies": [\
+            ["@auth0/auth0-react", "npm:2.0.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:2.0.1", {\
+          "packageLocation": "./.yarn/__virtual__/@auth0-auth0-react-virtual-d548f510a4/0/cache/@auth0-auth0-react-npm-2.0.1-b2cf201e81-b2119c5d21.zip/node_modules/@auth0/auth0-react/",\
+          "packageDependencies": [\
+            ["@auth0/auth0-react", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:2.0.1"],\
+            ["@auth0/auth0-spa-js", "npm:2.0.4"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", null],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@auth0/auth0-spa-js", [\
+        ["npm:2.0.4", {\
+          "packageLocation": "./.yarn/cache/@auth0-auth0-spa-js-npm-2.0.4-e3fd0b5e2f-1ff91b47cc.zip/node_modules/@auth0/auth0-spa-js/",\
+          "packageDependencies": [\
+            ["@auth0/auth0-spa-js", "npm:2.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@babel/code-frame", [\
         ["npm:7.18.6", {\
           "packageLocation": "./.yarn/cache/@babel-code-frame-npm-7.18.6-25229a7e34-195e2be317.zip/node_modules/@babel/code-frame/",\
@@ -9236,7 +9272,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.1074"],\
-            ["@fern-fern/registry", "npm:0.0.158"],\
+            ["@fern-fern/registry", "npm:0.0.173"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
@@ -9380,7 +9416,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
-            ["@fern-fern/registry", "npm:0.0.158"],\
+            ["@fern-fern/registry", "npm:0.0.173"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -9546,6 +9582,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/ui/app/",\
           "packageDependencies": [\
             ["@fern-api/ui", "workspace:packages/ui/app"],\
+            ["@auth0/auth0-react", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:2.0.1"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
@@ -9562,9 +9599,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-api/react-query-utils", "workspace:packages/commons/react/react-query-utils"],\
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
-            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/split-view", "workspace:packages/commons/react/split-view"],\
-            ["@fern-fern/registry", "npm:0.0.158"],\
+            ["@fern-fern/registry", "npm:0.0.173"],\
             ["@fontsource/actor", "npm:4.5.9"],\
             ["@fontsource/roboto-mono", "npm:4.5.8"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9580,6 +9616,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
             ["normalize.css", "npm:8.0.1"],\
+            ["posthog-js", "npm:1.50.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
@@ -9900,15 +9937,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry", [\
-        ["npm:0.0.158", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.158-95e30a0762-276b6bd8ba.zip/node_modules/@fern-fern/registry/",\
+        ["npm:0.0.173", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.173-7ab5c48ccc-92323ca092.zip/node_modules/@fern-fern/registry/",\
           "packageDependencies": [\
-            ["@fern-fern/registry", "npm:0.0.158"],\
-            ["@types/basic-auth", "npm:1.1.3"],\
+            ["@fern-fern/registry", "npm:0.0.173"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
-            ["basic-auth", "npm:2.0.1"],\
-            ["buffer", "npm:6.0.3"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
@@ -19049,6 +19083,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["fflate", [\
+        ["npm:0.4.8", {\
+          "packageLocation": "./.yarn/cache/fflate-npm-0.4.8-4dd4e91e29-29d8cbe44d.zip/node_modules/fflate/",\
+          "packageDependencies": [\
+            ["fflate", "npm:0.4.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["figlet", [\
         ["npm:1.5.2", {\
           "packageLocation": "./.yarn/cache/figlet-npm-1.5.2-5f7d8f3af4-cc86039166.zip/node_modules/figlet/",\
@@ -26288,6 +26331,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["posthog-js", [\
+        ["npm:1.50.0", {\
+          "packageLocation": "./.yarn/cache/posthog-js-npm-1.50.0-0d166867ca-7de26cee61.zip/node_modules/posthog-js/",\
+          "packageDependencies": [\
+            ["posthog-js", "npm:1.50.0"],\
+            ["fflate", "npm:0.4.8"],\
+            ["rrweb-snapshot", "npm:1.1.14"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["posthog-node", [\
         ["npm:2.3.0", {\
           "packageLocation": "./.yarn/cache/posthog-node-npm-2.3.0-4c8ab80524-f4d530f719.zip/node_modules/posthog-node/",\
@@ -28116,6 +28170,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["rollup", "npm:3.15.0"],\
             ["fsevents", "patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["rrweb-snapshot", [\
+        ["npm:1.1.14", {\
+          "packageLocation": "./.yarn/cache/rrweb-snapshot-npm-1.1.14-4c8ef9c1da-2e9a30233b.zip/node_modules/rrweb-snapshot/",\
+          "packageDependencies": [\
+            ["rrweb-snapshot", "npm:1.1.14"]\
           ],\
           "linkType": "HARD"\
         }]\
