@@ -8,9 +8,7 @@
   "paths": {
     "/": {
       "get": {
-        "tags": [
-          "Introspection"
-        ],
+        "tags": ["Introspection"],
         "operationId": "get",
         "summary": "OpenAPI description (this document)",
         "responses": {
@@ -22,9 +20,7 @@
     },
     "/account": {
       "get": {
-        "tags": [
-          "account"
-        ],
+        "tags": ["account"],
         "operationId": "get",
         "x-request-name": "GetAccount",
         "summary": "@graphql({",
@@ -121,9 +117,7 @@
         }
       },
       "post": {
-        "tags": [
-          "account"
-        ],
+        "tags": ["account"],
         "operationId": "create",
         "x-request-name": "CreateAccount",
         "summary": "@graphql({",
@@ -146,9 +140,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "account"
-        ],
+        "tags": ["account"],
         "operationId": "delete",
         "summary": "@graphql({",
         "x-request-name": "DeleteAccount",
@@ -198,9 +190,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "account"
-        ],
+        "tags": ["account"],
         "operationId": "update",
         "summary": "@graphql({",
         "x-request-name": "UpdateAccount",
@@ -255,9 +245,7 @@
     },
     "/institution": {
       "get": {
-        "tags": [
-          "institution"
-        ],
+        "tags": ["institution"],
         "operationId": "get",
         "x-request-name": "GetInstitution",
         "parameters": [
@@ -337,9 +325,7 @@
         }
       },
       "post": {
-        "tags": [
-          "institution"
-        ],
+        "tags": ["institution"],
         "operationId": "create",
         "x-request-name": "CreateInstitution",
         "parameters": [
@@ -360,9 +346,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "institution"
-        ],
+        "tags": ["institution"],
         "operationId": "delete",
         "x-request-name": "DeleteInstitution",
         "parameters": [
@@ -395,9 +379,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "institution"
-        ],
+        "tags": ["institution"],
         "operationId": "update",
         "x-request-name": "UpdateInstitution",
         "parameters": [
@@ -435,9 +417,7 @@
     },
     "/integration": {
       "get": {
-        "tags": [
-          "integration"
-        ],
+        "tags": ["integration"],
         "operationId": "get",
         "x-request-name": "GetIntegration",
         "parameters": [
@@ -514,9 +494,7 @@
         }
       },
       "post": {
-        "tags": [
-          "integration"
-        ],
+        "tags": ["integration"],
         "operationId": "create",
         "x-request-name": "CreateIntegration",
         "parameters": [
@@ -537,9 +515,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "integration"
-        ],
+        "tags": ["integration"],
         "operationId": "delete",
         "x-request-name": "DeleteIntegration",
         "parameters": [
@@ -569,9 +545,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "integration"
-        ],
+        "tags": ["integration"],
         "operationId": "update",
         "x-request-name": "UpdateIntegration",
         "parameters": [
@@ -606,9 +580,7 @@
     },
     "/pipeline": {
       "get": {
-        "tags": [
-          "pipeline"
-        ],
+        "tags": ["pipeline"],
         "operationId": "get",
         "x-request-name": "GetPipeline",
         "parameters": [
@@ -700,9 +672,7 @@
         }
       },
       "post": {
-        "tags": [
-          "pipeline"
-        ],
+        "tags": ["pipeline"],
         "operationId": "create",
         "x-request-name": "CreatePipeline",
         "parameters": [
@@ -723,9 +693,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "pipeline"
-        ],
+        "tags": ["pipeline"],
         "operationId": "delete",
         "x-request-name": "DeletePipeline",
         "parameters": [
@@ -770,9 +738,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "pipeline"
-        ],
+        "tags": ["pipeline"],
         "operationId": "update",
         "x-request-name": "update_pipeline",
         "parameters": [
@@ -822,9 +788,7 @@
     },
     "/raw_account": {
       "get": {
-        "tags": [
-          "raw_account"
-        ],
+        "tags": ["raw_account"],
         "operationId": "get",
         "x-request-name": "get_raw_account",
         "parameters": [
@@ -910,9 +874,7 @@
         }
       },
       "post": {
-        "tags": [
-          "raw_account"
-        ],
+        "tags": ["raw_account"],
         "operationId": "create",
         "x-request-name": "create_raw_account",
         "parameters": [
@@ -933,9 +895,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "raw_account"
-        ],
+        "tags": ["raw_account"],
         "operationId": "delete",
         "x-request-name": "delete_raw_account",
         "parameters": [
@@ -974,9 +934,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "raw_account"
-        ],
+        "tags": ["raw_account"],
         "operationId": "update",
         "x-request-name": "update_raw_account",
         "parameters": [
@@ -1020,9 +978,7 @@
     },
     "/raw_commodity": {
       "get": {
-        "tags": [
-          "raw_commodity"
-        ],
+        "tags": ["raw_commodity"],
         "operationId": "get",
         "x-request-name": "get_raw_commodity",
         "parameters": [
@@ -1108,9 +1064,7 @@
         }
       },
       "post": {
-        "tags": [
-          "raw_commodity"
-        ],
+        "tags": ["raw_commodity"],
         "operationId": "create",
         "x-request-name": "create_raw_commodity",
         "parameters": [
@@ -1131,9 +1085,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "raw_commodity"
-        ],
+        "tags": ["raw_commodity"],
         "operationId": "delete",
         "x-request-name": "delete_raw_commodity",
         "parameters": [
@@ -1172,9 +1124,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "raw_commodity"
-        ],
+        "tags": ["raw_commodity"],
         "operationId": "update",
         "x-request-name": "update_raw_commodity",
         "parameters": [
@@ -1218,9 +1168,7 @@
     },
     "/raw_transaction": {
       "get": {
-        "tags": [
-          "raw_transaction"
-        ],
+        "tags": ["raw_transaction"],
         "operationId": "get",
         "x-request-name": "get_raw_transaction",
         "parameters": [
@@ -1306,9 +1254,7 @@
         }
       },
       "post": {
-        "tags": [
-          "raw_transaction"
-        ],
+        "tags": ["raw_transaction"],
         "operationId": "create",
         "x-request-name": "create_raw_transaction",
         "parameters": [
@@ -1329,9 +1275,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "raw_transaction"
-        ],
+        "tags": ["raw_transaction"],
         "operationId": "delete",
         "x-request-name": "delete_raw_transaction",
         "parameters": [
@@ -1370,9 +1314,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "raw_transaction"
-        ],
+        "tags": ["raw_transaction"],
         "operationId": "update",
         "x-request-name": "update_raw_transaction",
         "parameters": [
@@ -1416,9 +1358,7 @@
     },
     "/resource": {
       "get": {
-        "tags": [
-          "resource"
-        ],
+        "tags": ["resource"],
         "operationId": "get",
         "x-request-name": "get_resource",
         "parameters": [
@@ -1510,9 +1450,7 @@
         }
       },
       "post": {
-        "tags": [
-          "resource"
-        ],
+        "tags": ["resource"],
         "operationId": "create",
         "x-request-name": "create_resource",
         "parameters": [
@@ -1533,9 +1471,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "resource"
-        ],
+        "tags": ["resource"],
         "operationId": "delete",
         "x-request-name": "delete_resource",
         "parameters": [
@@ -1580,9 +1516,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "resource"
-        ],
+        "tags": ["resource"],
         "operationId": "update",
         "x-request-name": "update_resource",
         "parameters": [
@@ -1632,9 +1566,7 @@
     },
     "/transaction": {
       "get": {
-        "tags": [
-          "transaction"
-        ],
+        "tags": ["transaction"],
         "operationId": "get",
         "x-request-name": "get_transaction",
         "summary": "TODO: Add description of transaction data type here...",
@@ -1737,9 +1669,7 @@
         }
       },
       "post": {
-        "tags": [
-          "transaction"
-        ],
+        "tags": ["transaction"],
         "operationId": "create",
         "x-request-name": "create_transaction",
         "summary": "TODO: Add description of transaction data type here...",
@@ -1762,9 +1692,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "transaction"
-        ],
+        "tags": ["transaction"],
         "x-request-name": "delete_transaction",
         "summary": "TODO: Add description of transaction data type here...",
         "description": "@graphql({\n\t\"primary_key_columns\": [\"id\"],\n\t\"totalCount\": {\"enabled\": true},\n\t\"description\": \"Double entry transaction\",\n\t\"foreign_keys\": [\n\t\t{\n      \"local_name\": \"transactions\",\n      \"local_columns\": [\"account_id\"],\n      \"foreign_name\": \"account\",\n      \"foreign_schema\": \"public\",\n      \"foreign_table\": \"account\",\n      \"foreign_columns\": [\"id\"]\n\t\t}\n\t]\n})",
@@ -1820,9 +1748,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "transaction"
-        ],
+        "tags": ["transaction"],
         "summary": "TODO: Add description of transaction data type here...",
         "description": "@graphql({\n\t\"primary_key_columns\": [\"id\"],\n\t\"totalCount\": {\"enabled\": true},\n\t\"description\": \"Double entry transaction\",\n\t\"foreign_keys\": [\n\t\t{\n      \"local_name\": \"transactions\",\n      \"local_columns\": [\"account_id\"],\n      \"foreign_name\": \"account\",\n      \"foreign_schema\": \"public\",\n      \"foreign_table\": \"account\",\n      \"foreign_columns\": [\"id\"]\n\t\t}\n\t]\n})",
         "operationId": "create",
@@ -1883,9 +1809,7 @@
     },
     "/transaction_split": {
       "get": {
-        "tags": [
-          "transaction_split"
-        ],
+        "tags": ["transaction_split"],
         "operationId": "get",
         "x-request-name": "get_transaction_split",
         "summary": "Entities summary",
@@ -1993,9 +1917,7 @@
         "in": "header",
         "schema": {
           "type": "string",
-          "enum": [
-            "params=single-object"
-          ]
+          "enum": ["params=single-object"]
         }
       },
       "preferReturn": {
@@ -3107,14 +3029,7 @@
         "type": "object"
       },
       "institution": {
-        "required": [
-          "id",
-          "standard",
-          "external",
-          "created_at",
-          "updated_at",
-          "provider_name"
-        ],
+        "required": ["id", "standard", "external", "created_at", "updated_at", "provider_name"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
@@ -3148,9 +3063,7 @@
       },
       "count": {
         "type": "string",
-        "enum": [
-          "count=none"
-        ], 
+        "enum": ["count=none"],
         "x-enum-names": {
           "count=none": "None"
         }
@@ -3173,13 +3086,7 @@
         }
       },
       "integration": {
-        "required": [
-          "id",
-          "config",
-          "created_at",
-          "updated_at",
-          "provider_name"
-        ],
+        "required": ["id", "config", "created_at", "updated_at", "provider_name"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
@@ -3209,14 +3116,7 @@
         "type": "object"
       },
       "pipeline": {
-        "required": [
-          "id",
-          "source_state",
-          "destination_state",
-          "link_options",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "source_state", "destination_state", "link_options", "created_at", "updated_at"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
@@ -3265,14 +3165,7 @@
         "type": "object"
       },
       "raw_account": {
-        "required": [
-          "id",
-          "standard",
-          "external",
-          "created_at",
-          "updated_at",
-          "provider_name"
-        ],
+        "required": ["id", "standard", "external", "created_at", "updated_at", "provider_name"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
@@ -3314,14 +3207,7 @@
         "type": "object"
       },
       "raw_commodity": {
-        "required": [
-          "id",
-          "standard",
-          "external",
-          "created_at",
-          "updated_at",
-          "provider_name"
-        ],
+        "required": ["id", "standard", "external", "created_at", "updated_at", "provider_name"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
@@ -3363,14 +3249,7 @@
         "type": "object"
       },
       "raw_transaction": {
-        "required": [
-          "id",
-          "standard",
-          "external",
-          "created_at",
-          "updated_at",
-          "provider_name"
-        ],
+        "required": ["id", "standard", "external", "created_at", "updated_at", "provider_name"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
@@ -3412,13 +3291,7 @@
         "type": "object"
       },
       "resource": {
-        "required": [
-          "id",
-          "settings",
-          "created_at",
-          "updated_at",
-          "provider_name"
-        ],
+        "required": ["id", "settings", "created_at", "updated_at", "provider_name"],
         "properties": {
           "id": {
             "default": "public.generate_ulid()",
