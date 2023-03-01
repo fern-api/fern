@@ -12900,3 +12900,1651 @@ Please share the POST callback endpoint created in your app's backend with Telem
   },
 }
 `;
+
+exports[`open api converter venice simple 1`] = `
+{
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "default-environment": null,
+    "display-name": "Venice REST API",
+    "environments": {
+      "dev": "http://development.venice.local:3000/api/rest",
+    },
+    "headers": {},
+    "name": "api",
+  },
+  "serviceFiles": {
+    "__package__.yml": {},
+    "account.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/account",
+        "endpoints": {
+          "create": {
+            "display-name": "@graphql({",
+            "docs": "	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"foreign_keys": []
+})",
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.account",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "CreateAccount",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": "@graphql({",
+            "docs": "	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"foreign_keys": []
+})",
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "DeleteAccount",
+              "query-parameters": {
+                "available_balance": "optional<string>",
+                "created_at": "optional<string>",
+                "current_balance": "optional<string>",
+                "default_unit": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "institution_name": "optional<string>",
+                "last_four": "optional<string>",
+                "name": "optional<string>",
+                "type": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": "@graphql({",
+            "docs": "	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"foreign_keys": []
+})",
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "GetAccount",
+              "query-parameters": {
+                "available_balance": "optional<string>",
+                "created_at": "optional<string>",
+                "current_balance": "optional<string>",
+                "default_unit": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "institution_name": "optional<string>",
+                "last_four": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "name": "optional<string>",
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "type": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.account>",
+          },
+          "update": {
+            "display-name": "@graphql({",
+            "docs": "	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"foreign_keys": []
+})",
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.account",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "UpdateAccount",
+              "query-parameters": {
+                "available_balance": "optional<string>",
+                "created_at": "optional<string>",
+                "current_balance": "optional<string>",
+                "default_unit": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "institution_name": "optional<string>",
+                "last_four": "optional<string>",
+                "name": "optional<string>",
+                "type": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "commons.yml": {
+      "types": {
+        "account": {
+          "docs": "@graphql({
+	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"foreign_keys": []
+})",
+          "extends": undefined,
+          "properties": {
+            "available_balance": "optional<double>",
+            "created_at": "optional<string>",
+            "current_balance": "optional<double>",
+            "default_unit": "optional<string>",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "optional<string>",
+            },
+            "institution_name": "optional<string>",
+            "last_four": "optional<string>",
+            "name": "optional<string>",
+            "type": "optional<string>",
+            "updated_at": "optional<string>",
+          },
+        },
+        "institution": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "provider_name": "string",
+            "updated_at": "string",
+          },
+        },
+        "integration": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "provider_name": "string",
+            "updated_at": "string",
+          },
+        },
+        "pipeline": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "destination_id": {
+              "docs": "Note:
+This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "last_sync_completed_at": "optional<string>",
+            "last_sync_started_at": "optional<string>",
+            "source_id": {
+              "docs": "Note:
+This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
+              "type": "optional<string>",
+            },
+            "updated_at": "string",
+          },
+        },
+        "raw_account": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "ledger_resource_id": {
+              "docs": "Note:
+This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
+              "type": "optional<string>",
+            },
+            "provider_name": "string",
+            "source_id": "optional<string>",
+            "updated_at": "string",
+          },
+        },
+        "raw_commodity": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "ledger_resource_id": {
+              "docs": "Note:
+This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
+              "type": "optional<string>",
+            },
+            "provider_name": "string",
+            "source_id": "optional<string>",
+            "updated_at": "string",
+          },
+        },
+        "raw_transaction": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "ledger_resource_id": {
+              "docs": "Note:
+This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
+              "type": "optional<string>",
+            },
+            "provider_name": "string",
+            "source_id": "optional<string>",
+            "updated_at": "string",
+          },
+        },
+        "resource": {
+          "extends": undefined,
+          "properties": {
+            "created_at": "string",
+            "creator_id": "optional<string>",
+            "display_name": "optional<string>",
+            "env_name": "optional<string>",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "string",
+            },
+            "institution_id": {
+              "docs": "Note:
+This is a Foreign Key to \`institution.id\`.<fk table='institution' column='id'/>",
+              "type": "optional<string>",
+            },
+            "integration_id": {
+              "docs": "Note:
+This is a Foreign Key to \`integration.id\`.<fk table='integration' column='id'/>",
+              "type": "optional<string>",
+            },
+            "provider_name": "string",
+            "updated_at": "string",
+          },
+        },
+        "transaction": {
+          "docs": "TODO: Add description of transaction data type here...
+
+@graphql({
+	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"description": "Double entry transaction",
+	"foreign_keys": [
+		{
+      "local_name": "transactions",
+      "local_columns": ["account_id"],
+      "foreign_name": "account",
+      "foreign_schema": "public",
+      "foreign_table": "account",
+      "foreign_columns": ["id"]
+		}
+	]
+})",
+          "extends": undefined,
+          "properties": {
+            "account_id": "optional<string>",
+            "amount_quantity": "optional<double>",
+            "amount_unit": "optional<string>",
+            "created_at": "optional<string>",
+            "date": "optional<string>",
+            "description": "optional<string>",
+            "external_category": "optional<string>",
+            "id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "optional<string>",
+            },
+            "notes": "optional<string>",
+            "payee": "optional<string>",
+            "updated_at": "optional<string>",
+          },
+        },
+      },
+    },
+    "institution.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/institution",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.institution",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "CreateInstitution",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "DeleteInstitution",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "provider_name": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "GetInstitution",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "provider_name": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.institution>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.institution",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "UpdateInstitution",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "provider_name": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "integration.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/integration",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.integration",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "CreateIntegration",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "DeleteIntegration",
+              "query-parameters": {
+                "config": "optional<string>",
+                "created_at": "optional<string>",
+                "id": "optional<string>",
+                "provider_name": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "GetIntegration",
+              "query-parameters": {
+                "config": "optional<string>",
+                "created_at": "optional<string>",
+                "id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "provider_name": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.integration>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.integration",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "UpdateIntegration",
+              "query-parameters": {
+                "config": "optional<string>",
+                "created_at": "optional<string>",
+                "id": "optional<string>",
+                "provider_name": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "introspection.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "/",
+        "endpoints": {
+          "get": {
+            "display-name": "OpenAPI description (this document)",
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "pipeline.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/pipeline",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.pipeline",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "CreatePipeline",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "DeletePipeline",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "destination_id": "optional<string>",
+                "destination_state": "optional<string>",
+                "id": "optional<string>",
+                "last_sync_completed_at": "optional<string>",
+                "last_sync_started_at": "optional<string>",
+                "link_options": "optional<string>",
+                "source_id": "optional<string>",
+                "source_state": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "GetPipeline",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "destination_id": "optional<string>",
+                "destination_state": "optional<string>",
+                "id": "optional<string>",
+                "last_sync_completed_at": "optional<string>",
+                "last_sync_started_at": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "link_options": "optional<string>",
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "source_id": "optional<string>",
+                "source_state": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.pipeline>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.pipeline",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "update_pipeline",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "destination_id": "optional<string>",
+                "destination_state": "optional<string>",
+                "id": "optional<string>",
+                "last_sync_completed_at": "optional<string>",
+                "last_sync_started_at": "optional<string>",
+                "link_options": "optional<string>",
+                "source_id": "optional<string>",
+                "source_state": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "rawAccount.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/raw_account",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.raw_account",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "create_raw_account",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "delete_raw_account",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "get_raw_account",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "provider_name": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.raw_account>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.raw_account",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "update_raw_account",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "rawCommodity.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/raw_commodity",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.raw_commodity",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "create_raw_commodity",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "delete_raw_commodity",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "get_raw_commodity",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "provider_name": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.raw_commodity>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.raw_commodity",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "update_raw_commodity",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "rawTransaction.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/raw_transaction",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.raw_transaction",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "create_raw_transaction",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "delete_raw_transaction",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "get_raw_transaction",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "provider_name": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.raw_transaction>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.raw_transaction",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "update_raw_transaction",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "external": "optional<string>",
+                "id": "optional<string>",
+                "ledger_resource_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "source_id": "optional<string>",
+                "standard": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "resource.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/resource",
+        "endpoints": {
+          "create": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.resource",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "create_resource",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "delete_resource",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "creator_id": "optional<string>",
+                "display_name": "optional<string>",
+                "env_name": "optional<string>",
+                "id": "optional<string>",
+                "institution_id": "optional<string>",
+                "integration_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "settings": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "get_resource",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "creator_id": "optional<string>",
+                "display_name": "optional<string>",
+                "env_name": "optional<string>",
+                "id": "optional<string>",
+                "institution_id": "optional<string>",
+                "integration_id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "provider_name": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "settings": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.resource>",
+          },
+          "update": {
+            "display-name": undefined,
+            "docs": undefined,
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.resource",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "update_resource",
+              "query-parameters": {
+                "created_at": "optional<string>",
+                "creator_id": "optional<string>",
+                "display_name": "optional<string>",
+                "env_name": "optional<string>",
+                "id": "optional<string>",
+                "institution_id": "optional<string>",
+                "integration_id": "optional<string>",
+                "provider_name": "optional<string>",
+                "settings": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "transaction.yml": {
+      "imports": {
+        "commons": "commons.yml",
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/transaction",
+        "endpoints": {
+          "_unnamedOperation0": {
+            "display-name": "TODO: Add description of transaction data type here...",
+            "docs": "@graphql({
+	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"description": "Double entry transaction",
+	"foreign_keys": [
+		{
+      "local_name": "transactions",
+      "local_columns": ["account_id"],
+      "foreign_name": "account",
+      "foreign_schema": "public",
+      "foreign_table": "account",
+      "foreign_columns": ["id"]
+		}
+	]
+})",
+            "method": "PATCH",
+            "path": "",
+            "request": {
+              "body": "commons.transaction",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "create_transaction",
+              "query-parameters": {
+                "account_id": "optional<string>",
+                "amount_quantity": "optional<string>",
+                "amount_unit": "optional<string>",
+                "created_at": "optional<string>",
+                "date": "optional<string>",
+                "description": "optional<string>",
+                "external": "optional<string>",
+                "external_category": "optional<string>",
+                "id": "optional<string>",
+                "notes": "optional<string>",
+                "payee": "optional<string>",
+                "splits": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "create": {
+            "display-name": "TODO: Add description of transaction data type here...",
+            "docs": "@graphql({
+	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"description": "Double entry transaction",
+	"foreign_keys": [
+		{
+      "local_name": "transactions",
+      "local_columns": ["account_id"],
+      "foreign_name": "account",
+      "foreign_schema": "public",
+      "foreign_table": "account",
+      "foreign_columns": ["id"]
+		}
+	]
+})",
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "commons.transaction",
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "create_transaction",
+              "query-parameters": {
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+              },
+            },
+          },
+          "delete": {
+            "display-name": "TODO: Add description of transaction data type here...",
+            "docs": "@graphql({
+	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"description": "Double entry transaction",
+	"foreign_keys": [
+		{
+      "local_name": "transactions",
+      "local_columns": ["account_id"],
+      "foreign_name": "account",
+      "foreign_schema": "public",
+      "foreign_table": "account",
+      "foreign_columns": ["id"]
+		}
+	]
+})",
+            "method": "DELETE",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.return>",
+                },
+              },
+              "name": "delete_transaction",
+              "query-parameters": {
+                "account_id": "optional<string>",
+                "amount_quantity": "optional<string>",
+                "amount_unit": "optional<string>",
+                "created_at": "optional<string>",
+                "date": "optional<string>",
+                "description": "optional<string>",
+                "external": "optional<string>",
+                "external_category": "optional<string>",
+                "id": "optional<string>",
+                "notes": "optional<string>",
+                "payee": "optional<string>",
+                "splits": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+          },
+          "get": {
+            "display-name": "TODO: Add description of transaction data type here...",
+            "docs": "@graphql({
+	"primary_key_columns": ["id"],
+	"totalCount": {"enabled": true},
+	"description": "Double entry transaction",
+	"foreign_keys": [
+		{
+      "local_name": "transactions",
+      "local_columns": ["account_id"],
+      "foreign_name": "account",
+      "foreign_schema": "public",
+      "foreign_table": "account",
+      "foreign_columns": ["id"]
+		}
+	]
+})",
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "get_transaction",
+              "query-parameters": {
+                "account_id": "optional<string>",
+                "amount_quantity": "optional<string>",
+                "amount_unit": "optional<string>",
+                "created_at": "optional<string>",
+                "date": "optional<string>",
+                "description": "optional<string>",
+                "external": "optional<string>",
+                "external_category": "optional<string>",
+                "id": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "notes": "optional<string>",
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "payee": "optional<string>",
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "splits": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<commons.transaction>",
+          },
+        },
+        "path-parameters": undefined,
+      },
+    },
+    "transactionSplit.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "/transaction_split",
+        "endpoints": {
+          "get": {
+            "display-name": "Entities summary",
+            "docs": "  Entities description that
+  spans
+  multiple lines
+  
+  
+	@graphql({
+		"primary_key_columns": ["id", "key"],
+		"totalCount": {"enabled": true},
+		"foreign_keys": []
+	})
+",
+            "method": "GET",
+            "path": "",
+            "request": {
+              "headers": {
+                "Prefer": {
+                  "docs": "Preference",
+                  "type": "optional<__package__.count>",
+                },
+                "Range": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "Range-Unit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+              },
+              "name": "get_transaction_split",
+              "query-parameters": {
+                "account_id": "optional<string>",
+                "amount_quantity": "optional<string>",
+                "amount_unit": "optional<string>",
+                "created_at": "optional<string>",
+                "data": "optional<string>",
+                "key": "optional<string>",
+                "limit": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "offset": {
+                  "docs": "Limiting and Pagination",
+                  "type": "optional<string>",
+                },
+                "order": {
+                  "docs": "Ordering",
+                  "type": "optional<string>",
+                },
+                "select": {
+                  "docs": "Filtering Columns",
+                  "type": "optional<string>",
+                },
+                "transaction_id": "optional<string>",
+                "updated_at": "optional<string>",
+              },
+            },
+            "response": "list<transaction_split>",
+          },
+        },
+        "path-parameters": undefined,
+      },
+      "types": {
+        "transaction_split": {
+          "docs": "Entities summary
+
+  Entities description that
+  spans
+  multiple lines
+  
+  
+	@graphql({
+		"primary_key_columns": ["id", "key"],
+		"totalCount": {"enabled": true},
+		"foreign_keys": []
+	})
+",
+          "extends": undefined,
+          "properties": {
+            "account_id": "optional<string>",
+            "amount_quantity": "optional<string>",
+            "amount_unit": "optional<string>",
+            "created_at": "optional<string>",
+            "key": "optional<string>",
+            "transaction_id": {
+              "docs": "Note:
+This is a Primary Key.<pk/>",
+              "type": "optional<string>",
+            },
+            "updated_at": "optional<string>",
+          },
+        },
+      },
+    },
+  },
+}
+`;
