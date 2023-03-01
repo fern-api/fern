@@ -6,7 +6,7 @@ import { OpenApiV3Context, OpenAPIV3Endpoint } from "./OpenApiV3Context";
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
-export const REQUEST_REFERENCE_PREFIX = "#/components/requests/";
+export const REQUEST_REFERENCE_PREFIX = "#/components/requestBodies/";
 
 export function isReferenceObject(
     parameter:
