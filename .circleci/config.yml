@@ -95,8 +95,9 @@ jobs:
           command: git --no-pager diff --exit-code
 
   ete-tests:
-    docker:
-      - image: cimg/node:current
+    # this is machine because of the local generation tests
+    machine:
+      image: ubuntu-2004:current
     steps:
       - checkout
       - node/install-packages:
@@ -243,7 +244,7 @@ jobs:
           name: Publish ir sdks
           command: |
             export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
-            npx fern-api generate --api ir-types-v8 --group sdks
+            npx fern-api generate --api ir-types-v9 --group sdks
 
   check-release-is-allowed:
     docker:

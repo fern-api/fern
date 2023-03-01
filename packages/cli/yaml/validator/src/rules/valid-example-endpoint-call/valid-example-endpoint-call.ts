@@ -22,6 +22,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                 exampleHeaders: ({ service, endpoint, examples }, { relativeFilepath, contents: serviceFile }) => {
                     return validateExampleEndpointCallParameters({
                         allDeclarations: {
+                            ...workspace.definition.rootApiFile.contents.headers,
                             ...service.headers,
                             ...(typeof endpoint.request !== "string" ? endpoint.request?.headers : undefined),
                         },

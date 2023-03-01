@@ -1,0 +1,14 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+// hide scrollbar but allow scrolling
+// https://blog.hubspot.com/website/hide-scrollbar-css
+
+.container {
+    -ms-overflow-style: none; // for Internet Explorer, Edge
+    scrollbar-width: none; // for Firefox
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+    display: none; // for Chrome, Safari, and Opera
+}

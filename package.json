@@ -11,7 +11,7 @@
     "!packages/**/generated"
   ],
   "scripts": {
-    "clean": "yarn workspaces foreach --verbose --parallel run clean",
+    "clean": "yarn workspace @fern-api/compile-root run clean",
     "compile": "yarn workspace @fern-api/compile-root run compile",
     "test": "yarn compile && jest --passWithNoTests",
     "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/ete-tests test",
@@ -70,7 +70,7 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.109",
+    "mrlint": "^0.0.111",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",

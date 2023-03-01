@@ -1,4 +1,4 @@
-import { useAreFontsReady } from "@fern-ui/fonts";
+import { useAreFontsReady } from "@fern-api/fonts";
 import "@fontsource/actor";
 import "@fontsource/roboto-mono";
 

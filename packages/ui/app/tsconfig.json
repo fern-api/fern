@@ -1,0 +1,15 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../commons/core-utils" },
+    { "path": "../../commons/loadable" },
+    { "path": "../../commons/react/common-components" },
+    { "path": "../../commons/react/fonts" },
+    { "path": "../../commons/react/react-commons" },
+    { "path": "../../commons/react/react-query-utils" },
+    { "path": "../../commons/react/routing-utils" },
+    { "path": "../../commons/react/split-view" }
+  ]
+}

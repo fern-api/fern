@@ -1,4 +1,4 @@
-import { STOP_PROPAGATION } from "@fern-ui/react-commons";
+import { STOP_PROPAGATION } from "@fern-api/react-commons";
 import React from "react";
 import { DraftTypeReferenceContent } from "../../DraftTypeReferenceContent";
 import { SelectableDraftTypeReference } from "../../SelectableDraftTypeReference";

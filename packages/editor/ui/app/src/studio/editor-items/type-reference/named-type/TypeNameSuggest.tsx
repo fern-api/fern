@@ -1,7 +1,7 @@
 import { MenuItem } from "@blueprintjs/core";
 import { ItemRenderer, Suggest2, Suggest2Props } from "@blueprintjs/select";
+import { useBooleanState } from "@fern-api/react-commons";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { useBooleanState } from "@fern-ui/react-commons";
 import React, { useMemo } from "react";
 import { useApiEditorContext } from "../../../../api-editor-context/ApiEditorContext";
 import { TYPE_NAME_PLACEHOLDER } from "../../types/type/placeholder";

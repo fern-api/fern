@@ -1,4 +1,4 @@
-export type Loadable<V> = NotStartedLoading<V> | Loading<V> | Loaded<V> | Failed<V>;
+export type Loadable<V, E = unknown> = NotStartedLoading<V> | Loading<V> | Loaded<V> | Failed<E>;
 export type UnwrapLoadable<L> = L extends Loadable<infer V> ? V : never;
 
 export interface NotStartedLoading<_V> {
@@ -11,9 +11,9 @@ export interface Loaded<V> {
     type: "loaded";
     value: V;
 }
-export interface Failed<_V> {
+export interface Failed<E = unknown> {
     type: "failed";
-    error: unknown;
+    error: E;
 }
 export type NotFailed<V> = Exclude<Loadable<V>, Failed<V>>;
 
@@ -46,9 +46,9 @@ export function isLoaded<V>(loadable: Loadable<V> | undefined): loadable is Load
     return loadable != null && loadable.type === "loaded";
 }
 
-export function failed<V>(error: unknown): Failed<V> {
+export function failed<E>(error: E): Failed<E> {
     return { type: "failed", error };
 }
-export function isFailed<V>(loadable: Loadable<V> | undefined): loadable is Failed<V> {
+export function isFailed<V, E>(loadable: Loadable<V, E> | undefined): loadable is Failed<E> {
     return loadable != null && loadable.type === "failed";
 }

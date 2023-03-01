@@ -1,5 +1,5 @@
+import { TwoColumnTableRow } from "@fern-api/common-components";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { TwoColumnTableRow } from "@fern-ui/common-components";
 import React from "react";
 import { ObjectExtensions } from "./extensions/ObjectExtensions";
 import { ObjectProperties } from "./properties/ObjectProperties";

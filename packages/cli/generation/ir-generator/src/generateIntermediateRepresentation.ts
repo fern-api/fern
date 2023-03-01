@@ -3,6 +3,7 @@ import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-con
 import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
 import { convertApiAuth } from "./converters/convertApiAuth";
@@ -14,6 +15,8 @@ import { convertHttpHeader, convertHttpService } from "./converters/services/con
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
+import { generateRootPackage } from "./generateRootPackage";
+import { IdGenerator } from "./IdGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -37,7 +40,7 @@ export async function generateIntermediateRepresentation({
         casingsGenerator,
     });
 
-    const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig"> = {
+    const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
         apiDocs: workspace.definition.rootApiFile.contents.docs,
@@ -51,9 +54,9 @@ export async function generateIntermediateRepresentation({
                       convertHttpHeader({ headerKey, header, file: rootApiFileContext })
                   )
                 : [],
-        types: [],
-        errors: [],
-        services: [],
+        types: {},
+        errors: {},
+        services: {},
         constants: generateFernConstants(casingsGenerator),
         environments: convertEnvironments({
             casingsGenerator,
@@ -86,7 +89,8 @@ export async function generateIntermediateRepresentation({
                         typeResolver,
                         exampleResolver,
                     });
-                    intermediateRepresentation.types.push(convertedTypeDeclaration);
+                    intermediateRepresentation.types[IdGenerator.generateTypeId(convertedTypeDeclaration.name)] =
+                        convertedTypeDeclaration;
 
                     audienceIrGraph?.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
                     audienceIrGraph?.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
@@ -107,8 +111,10 @@ export async function generateIntermediateRepresentation({
                         errorDeclaration,
                         file,
                     });
+                    intermediateRepresentation.errors[IdGenerator.generateErrorId(convertedErrorDeclaration.name)] =
+                        convertedErrorDeclaration;
+
                     audienceIrGraph?.addError(convertedErrorDeclaration);
-                    intermediateRepresentation.errors.push(convertedErrorDeclaration);
                 }
             },
 
@@ -124,11 +130,12 @@ export async function generateIntermediateRepresentation({
                     typeResolver,
                     exampleResolver,
                 });
-                intermediateRepresentation.services.push(convertedHttpService);
+                intermediateRepresentation.services[IdGenerator.generateServiceId(convertedHttpService.name)] =
+                    convertedHttpService;
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    audienceIrGraph?.addEndpoint(convertedHttpService.name, httpEndpoint);
+                    audienceIrGraph?.addEndpoint(convertedHttpService, httpEndpoint);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });
                 if (service.audiences != null) {
@@ -169,12 +176,13 @@ export async function generateIntermediateRepresentation({
 
     const isAuthMandatory =
         workspace.definition.rootApiFile.contents.auth != null &&
-        intermediateRepresentationForAudiences.services.every((service) => {
+        Object.values(intermediateRepresentationForAudiences.services).every((service) => {
             return service.endpoints.every((endpoint) => endpoint.auth);
         });
 
     return {
         ...intermediateRepresentationForAudiences,
+        ...generateRootPackage(intermediateRepresentationForAudiences),
         sdkConfig: {
             isAuthMandatory,
         },
@@ -182,29 +190,22 @@ export async function generateIntermediateRepresentation({
 }
 
 function filterIntermediateRepresentationForAudiences(
-    intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig">,
+    intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,
     audienceIrGraph: AudienceIrGraph
-): Omit<IntermediateRepresentation, "sdkConfig"> {
+): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
     const filteredIr = audienceIrGraph.build();
     return {
         ...intermediateRepresentation,
-        types: intermediateRepresentation.types.filter((type) => {
-            return filteredIr.hasType(type);
-        }),
-        errors: intermediateRepresentation.errors.filter((error) => {
-            return filteredIr.hasError(error);
-        }),
-        services: intermediateRepresentation.services
-            .filter((httpService) => {
-                return filteredIr.hasService(httpService);
+        types: pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type)),
+        errors: pickBy(intermediateRepresentation.errors, (error) => filteredIr.hasError(error)),
+        services: mapValues(
+            pickBy(intermediateRepresentation.services, (httpService) => filteredIr.hasService(httpService)),
+            (httpService) => ({
+                ...httpService,
+                endpoints: httpService.endpoints.filter((httpEndpoint) =>
+                    filteredIr.hasEndpoint(httpService, httpEndpoint)
+                ),
             })
-            .map((httpService) => {
-                return {
-                    ...httpService,
-                    endpoints: httpService.endpoints.filter((httpEndpoint) => {
-                        return filteredIr.hasEndpoint(httpService, httpEndpoint);
-                    }),
-                };
-            }),
+        ),
     };
 }

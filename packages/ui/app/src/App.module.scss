@@ -1,0 +1,13 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+body {
+    overscroll-behavior-y: none;
+    font-family: Actor;
+    background-color: #f0f0f0;
+}
+
+.app {
+    flex: 1;
+    display: flex;
+    height: 100vh;
+}

@@ -3,7 +3,7 @@ docs: foo bar baz
 headers:
   X-API-VERSION:
     name: apiVersion
-    type: string
+    type: optional<string>
 error-discrimination:
   strategy: property
   property-name: error

@@ -1,7 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
 import { isFailed, isLoaded, isLoading, isNotStartedLoading, Loadable } from "./Loadable";
 
-export function visitLoadable<V, U>(loadable: Loadable<V> | undefined, visitor: LoadableVisitor<V, U>): U {
+export function visitLoadable<V, U, E = unknown>(
+    loadable: Loadable<V, E> | undefined,
+    visitor: LoadableVisitor<V, U, E>
+): U {
     if (loadable == null || isNotStartedLoading(loadable) || isLoading(loadable)) {
         return visitor.loading();
     }
@@ -14,8 +17,8 @@ export function visitLoadable<V, U>(loadable: Loadable<V> | undefined, visitor: 
     assertNever(loadable);
 }
 
-export interface LoadableVisitor<V, U> {
+export interface LoadableVisitor<V, U, E = unknown> {
     loading: () => U;
     loaded: (value: V) => U;
-    failed: (error: unknown) => U;
+    failed: (error: E) => U;
 }

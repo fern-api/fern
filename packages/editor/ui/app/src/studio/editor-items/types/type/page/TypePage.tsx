@@ -1,6 +1,6 @@
 import { EditableText, H2 } from "@blueprintjs/core";
+import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
 import { FernApiEditor } from "@fern-fern/api-editor-sdk";
-import { TwoColumnTable, TwoColumnTableRow } from "@fern-ui/common-components";
 import React from "react";
 import { TYPE_NAME_PLACEHOLDER } from "../placeholder";
 import { TypeIcon } from "../TypeIcon";

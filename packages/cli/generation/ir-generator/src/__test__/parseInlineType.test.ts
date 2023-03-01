@@ -23,6 +23,7 @@ describe("parse inline types", () => {
                 TypeReference.container(
                     ContainerType.list(
                         TypeReference.named({
+                            typeId: "a/b/c:types/Dummy",
                             fernFilepath: convertToFernFilepath({
                                 relativeFilepath: dummyFilepath,
                                 casingsGenerator,

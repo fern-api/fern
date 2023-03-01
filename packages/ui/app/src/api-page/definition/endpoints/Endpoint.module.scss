@@ -1,0 +1,8 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.leftContent {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 25px;
+}

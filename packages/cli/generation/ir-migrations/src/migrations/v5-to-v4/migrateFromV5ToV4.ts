@@ -24,6 +24,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
+        [GeneratorName.JAVA_SPRING]: AlwaysRunMigration,
         [GeneratorName.PYTHON_FASTAPI]: "0.0.33-9-gf683b5e",
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.33-9-gf683b5e",
         [GeneratorName.OPENAPI]: AlwaysRunMigration,

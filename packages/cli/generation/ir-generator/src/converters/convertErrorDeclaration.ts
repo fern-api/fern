@@ -1,6 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
+import { parseErrorName } from "../utils/parseErrorName";
 
 export function convertErrorDeclaration({
     errorName,
@@ -12,10 +13,10 @@ export function convertErrorDeclaration({
     file: FernFileContext;
 }): ErrorDeclaration {
     return {
-        name: {
-            name: file.casingsGenerator.generateName(errorName),
-            fernFilepath: file.fernFilepath,
-        },
+        name: parseErrorName({
+            errorName,
+            file,
+        }),
         discriminantValue: file.casingsGenerator.generateNameAndWireValue({
             wireValue: errorName,
             name: errorName,

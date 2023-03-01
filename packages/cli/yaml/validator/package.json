@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/yaml/validator"
   },
+  "private": true,
   "files": [
     "lib"
   ],
@@ -33,7 +34,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-model": "0.0.914",
+    "@fern-fern/ir-model": "0.0.1074",
     "chalk": "^5.0.1",
     "lodash-es": "^4.17.21",
     "strip-ansi": "^7.0.1"

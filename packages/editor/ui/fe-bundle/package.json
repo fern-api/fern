@@ -1,5 +1,5 @@
 {
-  "name": "@fern-ui/fe-bundle",
+  "name": "@fern-api/editor-fe-bundle",
   "version": "0.0.0",
   "repository": {
     "type": "git",
@@ -27,12 +27,12 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "start": "vite",
+    "start": "yarn compile && vite",
     "build": "yarn compile && vite build",
     "preview": "yarn compile && vite preview"
   },
   "dependencies": {
-    "@fern-ui/app": "workspace:*",
+    "@fern-api/editor-app": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -52,7 +52,7 @@
     "sass": "^1.54.0",
     "stylelint": "^14.14.0",
     "typescript": "4.6.4",
-    "vite": "3.0.3",
-    "vite-plugin-checker": "^0.4.9"
+    "vite": "^4.1.3",
+    "vite-plugin-checker": "^0.5.5"
   }
 }

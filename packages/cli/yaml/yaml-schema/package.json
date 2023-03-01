@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/yaml/yaml-schema"
   },
+  "private": true,
   "files": [
     "lib"
   ],
@@ -26,7 +27,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.914",
+    "@fern-fern/ir-model": "0.0.1074",
     "zod": "^3.14.3"
   },
   "devDependencies": {

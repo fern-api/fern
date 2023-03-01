@@ -25,10 +25,7 @@ export async function validateOpenAPIWorkspaceAndLogIssues(
                     line: violation.line,
                     column: violation.column,
                 },
-                breadcrumbs:
-                    violation.breadcrumbs.length > 5
-                        ? [...violation.breadcrumbs.slice(0, 5), "..."]
-                        : violation.breadcrumbs,
+                breadcrumbs: violation.breadcrumbs,
             })
         );
     }

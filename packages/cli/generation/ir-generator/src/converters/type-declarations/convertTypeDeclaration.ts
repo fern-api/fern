@@ -1,8 +1,9 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { DeclaredTypeName, ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
+import { ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
@@ -25,10 +26,10 @@ export function convertTypeDeclaration({
     exampleResolver: ExampleResolver;
 }): TypeDeclaration {
     const declaration = convertDeclaration(typeDeclaration);
-    const declaredTypeName: DeclaredTypeName = {
-        fernFilepath: file.fernFilepath,
-        name: file.casingsGenerator.generateName(typeName),
-    };
+    const declaredTypeName = parseTypeName({
+        typeName,
+        file,
+    });
     return {
         ...declaration,
         name: declaredTypeName,

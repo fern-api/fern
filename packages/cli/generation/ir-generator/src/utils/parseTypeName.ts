@@ -1,5 +1,6 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../FernFileContext";
+import { IdGenerator } from "../IdGenerator";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
 
@@ -12,11 +13,17 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
     if (reference == null) {
         throw new Error("Failed to locate type: " + typeName);
     }
-    return {
+
+    const nameWithoutId = {
         name: file.casingsGenerator.generateName(reference.typeName),
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
             casingsGenerator: file.casingsGenerator,
         }),
+    };
+
+    return {
+        ...nameWithoutId,
+        typeId: IdGenerator.generateTypeId(nameWithoutId),
     };
 }

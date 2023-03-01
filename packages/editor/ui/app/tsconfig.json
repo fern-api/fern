@@ -5,14 +5,14 @@
   "references": [
     { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/loadable" },
+    { "path": "../../../commons/react/common-components" },
+    { "path": "../../../commons/react/fonts" },
+    { "path": "../../../commons/react/react-commons" },
+    { "path": "../../../commons/react/routing-utils" },
+    { "path": "../../../commons/react/split-view" },
+    { "path": "../../../commons/react/theme" },
     { "path": "../../id-generator" },
     { "path": "../../transaction-generator" },
-    { "path": "../../transaction-resolver" },
-    { "path": "../common-components" },
-    { "path": "../fonts" },
-    { "path": "../react-commons" },
-    { "path": "../routing-utils" },
-    { "path": "../split-view" },
-    { "path": "../theme" }
+    { "path": "../../transaction-resolver" }
   ]
 }

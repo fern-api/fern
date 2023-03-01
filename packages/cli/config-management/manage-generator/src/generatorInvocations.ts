@@ -17,6 +17,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.JAVA_SDK]: {
         version: "0.0.132",
     },
+    [GeneratorName.JAVA_SPRING]: {
+        version: "0.0.133",
+    },
     [GeneratorName.TYPESCRIPT]: {
         version: "0.0.247",
     },

@@ -1,5 +1,5 @@
-import { useBooleanState, useIsHovering, useNumericState } from "@fern-ui/react-commons";
-import { useIsResizing } from "@fern-ui/split-view";
+import { useBooleanState, useIsHovering, useNumericState } from "@fern-api/react-commons";
+import { useIsResizing } from "@fern-api/split-view";
 import React, { PropsWithChildren, useCallback, useEffect, useMemo } from "react";
 import { useSelectedSidebarItemId } from "../../../routes/useSelectedSidebarItemId";
 import { useSidebarItemState } from "../../context/useSidebarContext";
