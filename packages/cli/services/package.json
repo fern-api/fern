@@ -28,7 +28,7 @@
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.0.14",
     "@fern-fern/fiddle-sdk": "^0.0.193",
-    "@fern-fern/registry": "0.0.158"
+    "@fern-fern/registry": "0.0.173"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

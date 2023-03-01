@@ -238,6 +238,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@auth0/auth0-react@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@auth0/auth0-react@npm:2.0.1"
+  dependencies:
+    "@auth0/auth0-spa-js": ^2.0.4
+  peerDependencies:
+    react: ^16.11.0 || ^17 || ^18
+    react-dom: ^16.11.0 || ^17 || ^18
+  checksum: b2119c5d2112141072ce99f7053a8f38723928ff4336f0cc2bf189c34b91e18ba0dd19cacd3f62c1bc89b115eece7e20323c91dc6669a3246be0e282b8c8b457
+  languageName: node
+  linkType: hard
+
+"@auth0/auth0-spa-js@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@auth0/auth0-spa-js@npm:2.0.4"
+  checksum: 1ff91b47cca70bfc911a0bd97ee5a4d9e055784cde7961266ca68d3c4d1721b11aba1d33fee5a1919d1808f21949682041e6cd293bb014e2f1f1edfe454e8f0c
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.16.0, @babel/code-frame@npm:^7.18.6, @babel/code-frame@npm:^7.8.3":
   version: 7.18.6
   resolution: "@babel/code-frame@npm:7.18.6"
@@ -4408,7 +4427,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.1074
-    "@fern-fern/registry": 0.0.158
+    "@fern-fern/registry": 0.0.173
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     chalk: ^5.0.1
@@ -4544,7 +4563,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.14
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry": 0.0.158
+    "@fern-fern/registry": 0.0.173
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4696,6 +4715,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ui@workspace:packages/ui/app"
   dependencies:
+    "@auth0/auth0-react": ^2.0.1
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
@@ -4712,9 +4732,8 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/react-query-utils": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
-    "@fern-api/services": "workspace:*"
     "@fern-api/split-view": "workspace:*"
-    "@fern-fern/registry": 0.0.158
+    "@fern-fern/registry": 0.0.173
     "@fontsource/actor": ^4.5.9
     "@fontsource/roboto-mono": ^4.5.8
     "@types/jest": ^29.0.3
@@ -4730,6 +4749,7 @@ __metadata:
     jest: ^29.0.3
     lodash-es: ^4.17.21
     normalize.css: ^8.0.1
+    posthog-js: ^1.50.0
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
@@ -5015,18 +5035,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry@npm:0.0.158":
-  version: 0.0.158
-  resolution: "@fern-fern/registry@npm:0.0.158"
+"@fern-fern/registry@npm:0.0.173":
+  version: 0.0.173
+  resolution: "@fern-fern/registry@npm:0.0.173"
   dependencies:
-    "@types/basic-auth": 1.1.3
     "@types/url-join": 4.0.1
     axios: 0.27.2
-    basic-auth: 2.0.1
-    buffer: 6.0.3
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 276b6bd8ba6c4e22746a845a798fb90b07a69c37a778ab6f95bb12de49cc32c7b06301cb69177ccd5b75a408f3cf8c94075f6aee9485c17b241347733c7df32a
+  checksum: 92323ca09257359514fc5fc2483feb544222056f7ea982b7f80d11b26e76e67427a1ddb5f3bd589f4b7f33a380d444f0dc45f54bb368770602b0b8f4990b56d4
   languageName: node
   linkType: hard
 
@@ -6531,7 +6548,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/basic-auth@npm:1.1.3, @types/basic-auth@npm:^1.1.3":
+"@types/basic-auth@npm:^1.1.3":
   version: 1.1.3
   resolution: "@types/basic-auth@npm:1.1.3"
   dependencies:
@@ -8645,7 +8662,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"basic-auth@npm:2.0.1, basic-auth@npm:^2.0.1":
+"basic-auth@npm:^2.0.1":
   version: 2.0.1
   resolution: "basic-auth@npm:2.0.1"
   dependencies:
@@ -8987,16 +9004,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:6.0.3, buffer@npm:^6.0.3":
-  version: 6.0.3
-  resolution: "buffer@npm:6.0.3"
-  dependencies:
-    base64-js: ^1.3.1
-    ieee754: ^1.2.1
-  checksum: 5ad23293d9a731e4318e420025800b42bf0d264004c0286c8cc010af7a270c7a0f6522e84f54b9ad65cbd6db20b8badbfd8d2ebf4f80fa03dab093b89e68c3f9
-  languageName: node
-  linkType: hard
-
 "buffer@npm:^5.2.1, buffer@npm:^5.5.0":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
@@ -9004,6 +9011,16 @@ __metadata:
     base64-js: "npm:^1.3.1"
     ieee754: "npm:^1.1.13"
   checksum: e2cf8429e1c4c7b8cbd30834ac09bd61da46ce35f5c22a78e6c2f04497d6d25541b16881e30a019c6fd3154150650ccee27a308eff3e26229d788bbdeb08ab84
+  languageName: node
+  linkType: hard
+
+"buffer@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "buffer@npm:6.0.3"
+  dependencies:
+    base64-js: ^1.3.1
+    ieee754: ^1.2.1
+  checksum: 5ad23293d9a731e4318e420025800b42bf0d264004c0286c8cc010af7a270c7a0f6522e84f54b9ad65cbd6db20b8badbfd8d2ebf4f80fa03dab093b89e68c3f9
   languageName: node
   linkType: hard
 
@@ -12332,6 +12349,13 @@ env-cmd@toddbluhm/env-cmd:
       unplugged: true
   languageName: unknown
   linkType: soft
+
+"fflate@npm:^0.4.1":
+  version: 0.4.8
+  resolution: "fflate@npm:0.4.8"
+  checksum: 29d8cbe44d5e7f53e7f5a160ac7f9cc025480c7b3bfd85c5f898cbe20dfa2dad4732daa534982664bf30b35896a90af44ea33ede5d94c5ffd1b8b0c0a0a56ca2
+  languageName: node
+  linkType: hard
 
 "figlet@npm:^1.1.1":
   version: 1.5.2
@@ -17895,6 +17919,16 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"posthog-js@npm:^1.50.0":
+  version: 1.50.0
+  resolution: "posthog-js@npm:1.50.0"
+  dependencies:
+    fflate: ^0.4.1
+    rrweb-snapshot: ^1.1.14
+  checksum: 7de26cee61712197d97f38adb7c9909b267c72d1f5f3bb0474b934725a451176544ec67a5f55491af36c96481a86f535668b55d975f826bd4d130d9049a623fe
+  languageName: node
+  linkType: hard
+
 "posthog-node@npm:^2.3.0":
   version: 2.3.0
   resolution: "posthog-node@npm:2.3.0"
@@ -19133,6 +19167,13 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     rollup: dist/bin/rollup
   checksum: 1a75b09503f705b594dcfebf65b9e1ca4536e3facdf5716e10d4272697b4bb7e6bd8ab35be1b3fe1271f864d4c4a75d012bd77cbe7a55579d5138258b9e85c23
+  languageName: node
+  linkType: hard
+
+"rrweb-snapshot@npm:^1.1.14":
+  version: 1.1.14
+  resolution: "rrweb-snapshot@npm:1.1.14"
+  checksum: 2e9a30233b542824bbca46af5588d1d7c909efafa00b38fb79d59637af17ec0f3fbe60ed37c4195448804a22aea0f47531da25a42af6ac9dc6281c3c6e5693db
   languageName: node
   linkType: hard
 

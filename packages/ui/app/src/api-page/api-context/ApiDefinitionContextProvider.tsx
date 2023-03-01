@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import { PackagePath } from "../../commons/PackagePath";
 import { useApiDefinition } from "../../queries/useApiDefinition";
 import { DefinitionRoutes } from "../routes";
+import { ParsedEnvironmentId } from "../routes/useCurrentEnvironment";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 import { TypeIdToPackagePathCache } from "./TypeIdToPackagePathCache";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
-        environmentId: FernRegistry.EnvironmentId;
+        environmentId: ParsedEnvironmentId;
     }>;
 }
 

@@ -1,31 +1,22 @@
-import { FernRegistry } from "@fern-fern/registry";
-import { PropsWithChildren } from "react";
-import { matchPath } from "react-router-dom";
+import { PropsWithChildren, useMemo } from "react";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
-import { DefinitionRoutes } from "../routes";
+import { parseEnvironmentIdFromPath } from "../routes/useCurrentEnvironment";
 import { Tab } from "./context/ApiTabsContext";
 
 export declare namespace ApiDefinitionContextProviderForTab {
     export type Props = PropsWithChildren<{
         tab: Tab;
-        fallback?: JSX.Element;
     }>;
 }
 
 export const ApiDefinitionContextProviderForTab: React.FC<ApiDefinitionContextProviderForTab.Props> = ({
     tab,
-    fallback = null,
     children,
 }) => {
-    const match = matchPath(DefinitionRoutes.API_PACKAGE.absolutePath, tab.path);
-    const environmentId = match?.params.ENVIRONMENT_ID;
-
-    if (environmentId == null) {
-        return fallback;
-    }
+    const environmentId = useMemo(() => parseEnvironmentIdFromPath(tab.path), [tab.path]);
 
     return (
-        <ApiDefinitionContextProvider key={tab.path} environmentId={FernRegistry.EnvironmentId(environmentId)}>
+        <ApiDefinitionContextProvider key={tab.path} environmentId={environmentId}>
             {children}
         </ApiDefinitionContextProvider>
     );

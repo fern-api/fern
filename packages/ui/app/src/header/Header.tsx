@@ -1,6 +1,10 @@
 import { Classes } from "@blueprintjs/core";
+import { isLoaded } from "@fern-api/loadable";
 import { useNavigateTo } from "@fern-api/routing-utils";
 import classNames from "classnames";
+import { AccountMenu } from "../auth/AccountMenu";
+import { LoginButton } from "../auth/LoginButton";
+import { useCurrentUser } from "../auth/useCurrentUser";
 import { FernLogo } from "../FernLogo";
 import { FernRoutes } from "../routes";
 
@@ -11,6 +15,7 @@ export declare namespace Header {
 }
 
 export const Header: React.FC<Header.Props> = ({ centerContent }) => {
+    const currentUser = useCurrentUser();
     const goHome = useNavigateTo(FernRoutes.HOME.absolutePath);
 
     return (
@@ -20,7 +25,10 @@ export const Header: React.FC<Header.Props> = ({ centerContent }) => {
                 <div className="text-xl">Fern</div>
             </div>
             <div className="flex flex-1 justify-center items-center">{centerContent}</div>
-            <div className="flex flex-1" />
+            <div className="flex flex-1 justify-end">
+                {isLoaded(currentUser) &&
+                    (currentUser.value != null ? <AccountMenu user={currentUser.value} /> : <LoginButton />)}
+            </div>
         </div>
     );
 };

@@ -29,6 +29,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.0.1",
     "@blueprintjs/core": "^4.11.5",
     "@blueprintjs/icons": "^4.4.0",
     "@blueprintjs/popover2": "^1.8.0",
@@ -40,9 +41,8 @@
     "@fern-api/react-commons": "workspace:*",
     "@fern-api/react-query-utils": "workspace:*",
     "@fern-api/routing-utils": "workspace:*",
-    "@fern-api/services": "workspace:*",
     "@fern-api/split-view": "workspace:*",
-    "@fern-fern/registry": "0.0.158",
+    "@fern-fern/registry": "0.0.173",
     "@fontsource/actor": "^4.5.9",
     "@fontsource/roboto-mono": "^4.5.8",
     "classnames": "^2.3.1",
@@ -50,6 +50,7 @@
     "date-fns-tz": "^2.0.0",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
+    "posthog-js": "^1.50.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
