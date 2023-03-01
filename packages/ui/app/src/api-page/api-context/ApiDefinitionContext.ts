@@ -8,7 +8,7 @@ export const ApiDefinitionContext = React.createContext<() => ApiDefinitionConte
 });
 
 export interface ApiDefinitionContextValue {
-    api: Loadable<FernRegistry.ApiDefinition, FernRegistry.registry.getApiForEnvironment.Error>;
+    api: Loadable<FernRegistry.ApiDefinition, FernRegistry.registry.getApiWithEnvironment.Error>;
     resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition;
     resolveTypeByName: (packagePath: PackagePath, typeName: string) => FernRegistry.TypeDefinition | undefined;
     getPackagePathForTypeId: (typeId: FernRegistry.TypeId) => PackagePath;

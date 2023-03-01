@@ -1,17 +1,17 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { convertToFernFilepath } from "./convertToFernFilepath";
 import { parseReferenceToTypeName } from "./parseReferenceToTypeName";
 
-export function parseTypeName({ typeName, file }: { typeName: string; file: FernFileContext }): DeclaredTypeName {
+export function parseErrorName({ errorName, file }: { errorName: string; file: FernFileContext }): DeclaredErrorName {
     const reference = parseReferenceToTypeName({
-        reference: typeName,
+        reference: errorName,
         referencedIn: file.relativeFilepath,
         imports: file.imports,
     });
     if (reference == null) {
-        throw new Error("Failed to locate type: " + typeName);
+        throw new Error("Failed to locate error " + errorName);
     }
 
     const nameWithoutId = {
@@ -24,6 +24,6 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
 
     return {
         ...nameWithoutId,
-        typeId: IdGenerator.generateTypeId(nameWithoutId),
+        errorId: IdGenerator.generateErrorId(nameWithoutId),
     };
 }

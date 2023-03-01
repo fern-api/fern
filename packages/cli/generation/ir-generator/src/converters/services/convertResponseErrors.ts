@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ResponseErrors } from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
-import { parseTypeName } from "../../utils/parseTypeName";
+import { parseErrorName } from "../../utils/parseErrorName";
 
 export function convertResponseErrors({
     errors,
@@ -13,14 +13,14 @@ export function convertResponseErrors({
     return errors == null
         ? []
         : Object.values(errors).map((errorReference) => {
-              const errorTypeName = typeof errorReference === "string" ? errorReference : errorReference.error;
-              const parsedErrorTypeName = parseTypeName({
-                  typeName: errorTypeName,
+              const referenceToError = typeof errorReference === "string" ? errorReference : errorReference.error;
+              const errorName = parseErrorName({
+                  errorName: referenceToError,
                   file,
               });
               return {
                   docs: typeof errorReference !== "string" ? errorReference.docs : undefined,
-                  error: parsedErrorTypeName,
+                  error: errorName,
               };
           });
 }

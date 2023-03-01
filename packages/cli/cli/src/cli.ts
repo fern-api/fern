@@ -21,7 +21,8 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
-import { registerApiDefinitions } from "./commands/register/registerWorkspace";
+import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
+import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
@@ -125,6 +126,7 @@ async function tryRunCli(cliContext: CliContext) {
     addIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
+    addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
 
@@ -332,11 +334,44 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             const token = await cliContext.runTask((context) => {
                 return askToLogin(context);
             });
-            await registerApiDefinitions({
+            await registerWorkspacesV1({
                 project,
                 cliContext,
                 token,
                 version: argv.version,
+            });
+        }
+    );
+}
+
+function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        ["register-v2"],
+        false, // hide from help message
+        (yargs) =>
+            yargs
+                .option("environment", {
+                    type: "string",
+                    description: "The environment this API is being deployed to",
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                }),
+        async (argv) => {
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineWorkspace: argv.api,
+                defaultToAllWorkspaces: false,
+            });
+
+            const token = await cliContext.runTask((context) => {
+                return askToLogin(context);
+            });
+            await registerWorkspacesV2({
+                project,
+                cliContext,
+                token,
+                environment: argv.environment,
             });
         }
     );

@@ -236,7 +236,8 @@ export function convertTypeReferenceExample({
             if (parsedReferenceToNamedType._type !== "named") {
                 throw new Error("Type reference is not to a named type.");
             }
-            const typeName = {
+            const typeName: DeclaredTypeName = {
+                typeId: parsedReferenceToNamedType.typeId,
                 fernFilepath: parsedReferenceToNamedType.fernFilepath,
                 name: parsedReferenceToNamedType.name,
             };
@@ -505,6 +506,7 @@ function convertUnionProperties({
                 throw new Error(`${rawValueType} is not an object`);
             }
             const typeName: DeclaredTypeName = {
+                typeId: parsedSingleUnionTypeProperties.typeId,
                 fernFilepath: parsedSingleUnionTypeProperties.fernFilepath,
                 name: parsedSingleUnionTypeProperties.name,
             };

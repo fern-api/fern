@@ -25,6 +25,7 @@ async function main() {
             "process.env.AUTH0_CLIENT_ID": getEnvironmentVariable("AUTH0_CLIENT_ID"),
             "process.env.DEFAULT_FIDDLE_ORIGIN": getEnvironmentVariable("DEFAULT_FIDDLE_ORIGIN"),
             "process.env.DEFAULT_VENUS_ORIGIN": getEnvironmentVariable("DEFAULT_VENUS_ORIGIN"),
+            "process.env.DEFAULT_FDR_ORIGIN": getEnvironmentVariable("DEFAULT_FDR_ORIGIN"),
             "process.env.VENUS_AUDIENCE": getEnvironmentVariable("VENUS_AUDIENCE"),
             "process.env.LOCAL_STORAGE_FOLDER": getEnvironmentVariable("LOCAL_STORAGE_FOLDER"),
             "process.env.POSTHOG_API_KEY": getEnvironmentVariable("POSTHOG_API_KEY"),

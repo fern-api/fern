@@ -26,7 +26,7 @@ export const ApiEnvironmentsSummary: React.FC<ApiEnvironmentsSummary.Props> = ({
                 <div className="text-stone-500 uppercase text-xs">Environment</div>
                 <div className="text-stone-500 uppercase text-xs">Deployed</div>
                 {allEnvironments.value.environments.map((environment) => {
-                    const deploymentInfo = apiMetadata.deployments[environment.id];
+                    const deploymentInfo = apiMetadata.environments?.[environment.id];
                     if (deploymentInfo == null) {
                         return null;
                     }

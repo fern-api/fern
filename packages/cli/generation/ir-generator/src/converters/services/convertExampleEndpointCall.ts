@@ -12,7 +12,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { parseTypeName } from "../../utils/parseTypeName";
+import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions,
@@ -38,6 +38,7 @@ export function convertExampleEndpointCall({
     return {
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
+        url: buildUrl({ service, endpoint, example }),
         ...convertPathParameters({ service, endpoint, example, typeResolver, exampleResolver, file }),
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file }),
         queryParameters:
@@ -306,8 +307,8 @@ function convertExampleResponse({
     if (example.response?.error != null) {
         const errorDeclaration = errorResolver.getDeclarationOrThrow(example.response.error, file);
         return ExampleResponse.error({
-            error: parseTypeName({
-                typeName: example.response.error,
+            error: parseErrorName({
+                errorName: example.response.error,
                 file,
             }),
             body:
@@ -354,4 +355,22 @@ function convertExampleResponseBody({
         fileContainingRawTypeReference: file,
         fileContainingExample: file,
     });
+}
+
+function buildUrl({
+    service,
+    endpoint,
+    example,
+}: {
+    service: RawSchemas.HttpServiceSchema;
+    endpoint: RawSchemas.HttpEndpointSchema;
+    example: RawSchemas.ExampleEndpointCallSchema;
+}): string {
+    let url = service["base-path"] + endpoint.path;
+    if (example["path-parameters"] != null) {
+        for (const [key, value] of Object.entries(example["path-parameters"])) {
+            url = url.replaceAll(`{${key}}`, `${value}`);
+        }
+    }
+    return url;
 }
