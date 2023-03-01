@@ -9,7 +9,7 @@ export function useApiMetadata(
     return useTypedQuery<FernRegistry.ApiMetadata, FernRegistry.registry.getApiMetadata.Error>(
         buildQueryKey({ apiId }),
         async () => {
-            const response = await REGISTRY_SERVICE.registry.getApiMetadata(apiId);
+            const response = await REGISTRY_SERVICE.registry.getApiMetadata(FernRegistry.OrgId("fern"), apiId);
             if (response.ok) {
                 return response.body;
             } else {

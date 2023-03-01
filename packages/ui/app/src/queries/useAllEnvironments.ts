@@ -10,7 +10,7 @@ export function useAllEnvironments(): Loadable<
     FernRegistry.environment.getAll.Error
 > {
     return useTypedQuery(QUERY_KEY, async () => {
-        const response = await REGISTRY_SERVICE.environment.getAll();
+        const response = await REGISTRY_SERVICE.environment.getAll(FernRegistry.OrgId("fern"));
         if (response.ok) {
             return response.body;
         } else {

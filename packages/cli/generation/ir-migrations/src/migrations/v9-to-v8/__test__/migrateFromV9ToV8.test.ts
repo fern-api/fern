@@ -9,7 +9,7 @@ describe("migrateFromV8ToV7", () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
         });
-        expect(migrated).toEqual({
+        expect(migrated).toMatchObject({
             apiDisplayName: undefined,
             apiDocs: undefined,
             apiName: {

@@ -115,6 +115,7 @@ types:
     extends: commons.WithDocs
     properties:
       name: optional<commons.Name>
+      url: string
       servicePathParameters: list<ExamplePathParameter>
       endpointPathParameters: list<ExamplePathParameter>
       serviceHeaders: list<ExampleHeader>

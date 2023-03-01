@@ -17,5 +17,6 @@ types:
       statusCode: {}
   DeclaredErrorName:
     properties:
+      errorId: commons.ErrorId
       fernFilepath: commons.FernFilepath
       name: commons.Name

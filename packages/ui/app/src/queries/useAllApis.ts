@@ -5,9 +5,9 @@ import { REGISTRY_SERVICE } from "../services/getRegistryService";
 
 const QUERY_KEY = TypedQueryKey.of<FernRegistry.GetAllApisResponse, ["apis"]>(["apis"]);
 
-export function useAllApis(): Loadable<FernRegistry.GetAllApisResponse, FernRegistry.registry.getAllApis.Error> {
+export function useAllApis(): Loadable<FernRegistry.GetAllApisResponse, FernRegistry.registry.getAllApiMetadata.Error> {
     return useTypedQuery(QUERY_KEY, async () => {
-        const response = await REGISTRY_SERVICE.registry.getAllApis();
+        const response = await REGISTRY_SERVICE.registry.getAllApiMetadata(FernRegistry.OrgId("fern"));
         if (response.ok) {
             return response.body;
         } else {

@@ -32,6 +32,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
+                "name": {
+                    "originalName": "IntegerAlias",
+                    "camelCase": {
+                        "unsafeName": "integerAlias",
+                        "safeName": "integerAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "integer_alias",
+                        "safeName": "integer_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INTEGER_ALIAS",
+                        "safeName": "INTEGER_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "IntegerAlias",
+                        "safeName": "IntegerAlias"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
                         {
@@ -75,25 +94,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
-                "name": {
-                    "originalName": "IntegerAlias",
-                    "camelCase": {
-                        "unsafeName": "integerAlias",
-                        "safeName": "integerAlias"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "integer_alias",
-                        "safeName": "integer_alias"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "INTEGER_ALIAS",
-                        "safeName": "INTEGER_ALIAS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "IntegerAlias",
-                        "safeName": "IntegerAlias"
-                    }
-                }
+                "typeId": "y:types/IntegerAlias"
             },
             "shape": {
                 "aliasOf": {
@@ -114,6 +115,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
+                "name": {
+                    "originalName": "StringAlias",
+                    "camelCase": {
+                        "unsafeName": "stringAlias",
+                        "safeName": "stringAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "string_alias",
+                        "safeName": "string_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STRING_ALIAS",
+                        "safeName": "STRING_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StringAlias",
+                        "safeName": "StringAlias"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
                         {
@@ -196,25 +216,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
-                "name": {
-                    "originalName": "StringAlias",
-                    "camelCase": {
-                        "unsafeName": "stringAlias",
-                        "safeName": "stringAlias"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "string_alias",
-                        "safeName": "string_alias"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "STRING_ALIAS",
-                        "safeName": "STRING_ALIAS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "StringAlias",
-                        "safeName": "StringAlias"
-                    }
-                }
+                "typeId": "imported/x:types/StringAlias"
             },
             "shape": {
                 "aliasOf": {
@@ -235,6 +237,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
+                "name": {
+                    "originalName": "RootString",
+                    "camelCase": {
+                        "unsafeName": "rootString",
+                        "safeName": "rootString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_string",
+                        "safeName": "root_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_STRING",
+                        "safeName": "ROOT_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootString",
+                        "safeName": "RootString"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
                         {
@@ -279,25 +300,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     ]
                 },
-                "name": {
-                    "originalName": "RootString",
-                    "camelCase": {
-                        "unsafeName": "rootString",
-                        "safeName": "rootString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_string",
-                        "safeName": "root_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_STRING",
-                        "safeName": "ROOT_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootString",
-                        "safeName": "RootString"
-                    }
-                }
+                "typeId": "imported:types/RootString"
             },
             "shape": {
                 "aliasOf": {

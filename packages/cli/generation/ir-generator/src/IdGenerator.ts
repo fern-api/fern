@@ -5,10 +5,10 @@ import { DeclaredServiceName } from "@fern-fern/ir-model/http";
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 
 export const IdGenerator = {
-    generateTypeId: (typeName: DeclaredTypeName): FernIr.commons.TypeId => {
+    generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
         return generateId(typeName.fernFilepath, "types", typeName.name.originalName);
     },
-    generateErrorId: (errorName: DeclaredErrorName): FernIr.commons.TypeId => {
+    generateErrorId: (errorName: Omit<DeclaredErrorName, "errorId">): FernIr.commons.TypeId => {
         return generateId(errorName.fernFilepath, "errors", errorName.name.originalName);
     },
     generateServiceId: (serviceName: DeclaredServiceName): FernIr.commons.TypeId => {

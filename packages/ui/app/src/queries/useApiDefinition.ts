@@ -9,11 +9,15 @@ export function useApiDefinition({
 }: {
     apiId: FernRegistry.ApiId;
     environmentId: FernRegistry.EnvironmentId;
-}): Loadable<FernRegistry.ApiDefinition, FernRegistry.registry.getApiForEnvironment.Error> {
-    return useTypedQuery<FernRegistry.ApiDefinition, FernRegistry.registry.getApiForEnvironment.Error>(
+}): Loadable<FernRegistry.ApiDefinition, FernRegistry.registry.getApiWithEnvironment.Error> {
+    return useTypedQuery<FernRegistry.ApiDefinition, FernRegistry.registry.getApiWithEnvironment.Error>(
         buildQueryKey({ apiId, environmentId }),
         async () => {
-            const response = await REGISTRY_SERVICE.registry.getApiForEnvironment(apiId, environmentId);
+            const response = await REGISTRY_SERVICE.registry.getApiWithEnvironment(
+                FernRegistry.OrgId("fern"),
+                apiId,
+                environmentId
+            );
             if (response.ok) {
                 return response.body;
             } else {

@@ -20,6 +20,7 @@
     { "path": "../openapi-transformer" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
+    { "path": "../register" },
     { "path": "../semver-utils" },
     { "path": "../services" },
     { "path": "../task-context" },

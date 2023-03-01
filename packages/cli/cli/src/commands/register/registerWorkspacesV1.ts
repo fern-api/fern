@@ -10,7 +10,7 @@ import tar from "tar";
 import tmp from "tmp-promise";
 import { CliContext } from "../../cli-context/CliContext";
 
-export async function registerApiDefinitions({
+export async function registerWorkspacesV1({
     project,
     cliContext,
     token,

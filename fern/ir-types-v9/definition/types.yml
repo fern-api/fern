@@ -17,6 +17,7 @@ types:
 
   DeclaredTypeName:
     properties:
+      typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
       name: commons.Name
 
