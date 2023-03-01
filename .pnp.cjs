@@ -3234,10 +3234,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@types/basic-auth", "npm:1.1.3"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/node", "npm:18.7.18"],\
-            ["basic-auth", "npm:2.0.1"],\
             ["buffer", "npm:6.0.3"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
@@ -4692,16 +4690,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/babel__traverse", "npm:7.17.1"],\
             ["@babel/types", "npm:7.18.9"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/basic-auth", [\
-        ["npm:1.1.3", {\
-          "packageLocation": "./.yarn/cache/@types-basic-auth-npm-1.1.3-f8d5471ba8-9fe87b9dab.zip/node_modules/@types/basic-auth/",\
-          "packageDependencies": [\
-            ["@types/basic-auth", "npm:1.1.3"],\
-            ["@types/node", "npm:18.6.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -6330,16 +6318,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/base64-js-npm-1.5.1-b2f7275641-669632eb37.zip/node_modules/base64-js/",\
           "packageDependencies": [\
             ["base64-js", "npm:1.5.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["basic-auth", [\
-        ["npm:2.0.1", {\
-          "packageLocation": "./.yarn/cache/basic-auth-npm-2.0.1-f1627ef330-3419b805d5.zip/node_modules/basic-auth/",\
-          "packageDependencies": [\
-            ["basic-auth", "npm:2.0.1"],\
-            ["safe-buffer", "npm:5.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
