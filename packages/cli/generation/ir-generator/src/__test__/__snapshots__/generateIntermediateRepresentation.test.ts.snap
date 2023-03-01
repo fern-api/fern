@@ -235,6 +235,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                   "unsafeName": "response",
                 },
               },
+              "typeId": "folder-a/service:types/Response",
             },
           },
           "sdkRequest": undefined,
@@ -470,6 +471,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                     "unsafeName": "optional_string",
                   },
                 },
+                "typeId": "foo:types/OptionalString",
               },
             },
           ],
@@ -540,6 +542,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                   "unsafeName": "importing_type",
                 },
               },
+              "typeId": "foo:types/ImportingType",
             },
           },
           "sdkRequest": {
@@ -1412,6 +1415,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "imported",
           },
         },
+        "typeId": "commons:types/Imported",
       },
       "referencedTypes": [],
       "shape": {
@@ -1535,6 +1539,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "response",
           },
         },
+        "typeId": "folder-a/service:types/Response",
       },
       "referencedTypes": [
         {
@@ -1639,6 +1644,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "foo",
             },
           },
+          "typeId": "folder-b/common:types/Foo",
         },
         {
           "fernFilepath": {
@@ -1742,6 +1748,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "foo",
             },
           },
+          "typeId": "folder-c/common:types/Foo",
         },
       ],
       "shape": {
@@ -1883,6 +1890,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                       "unsafeName": "foo",
                     },
                   },
+                  "typeId": "folder-b/common:types/Foo",
                 },
               },
             },
@@ -1999,6 +2007,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "foo",
           },
         },
+        "typeId": "folder-b/common:types/Foo",
       },
       "referencedTypes": [
         {
@@ -2103,6 +2112,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "foo",
             },
           },
+          "typeId": "folder-c/common:types/Foo",
         },
       ],
       "shape": {
@@ -2244,6 +2254,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                       "unsafeName": "foo",
                     },
                   },
+                  "typeId": "folder-c/common:types/Foo",
                 },
               },
             },
@@ -2360,6 +2371,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "foo",
           },
         },
+        "typeId": "folder-c/common:types/Foo",
       },
       "referencedTypes": [],
       "shape": {
@@ -2472,6 +2484,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "importing_type",
           },
         },
+        "typeId": "foo:types/ImportingType",
       },
       "referencedTypes": [
         {
@@ -2537,6 +2550,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "imported",
             },
           },
+          "typeId": "commons:types/Imported",
         },
       ],
       "shape": {
@@ -2635,6 +2649,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                   "unsafeName": "imported",
                 },
               },
+              "typeId": "commons:types/Imported",
             },
           },
         ],
@@ -2710,6 +2725,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "optional_string",
           },
         },
+        "typeId": "foo:types/OptionalString",
       },
       "referencedTypes": [],
       "shape": {
@@ -2993,6 +3009,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
             "unsafeName": "my_alias",
           },
         },
+        "typeId": ":types/MyAlias",
       },
       "referencedTypes": [
         {
@@ -3058,6 +3075,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "common_type",
             },
           },
+          "typeId": "commons:types/CommonType",
         },
       ],
       "shape": {
@@ -3126,6 +3144,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "common_type",
             },
           },
+          "typeId": "commons:types/CommonType",
         },
         "resolvedType": {
           "_type": "primitive",
@@ -3203,6 +3222,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
             "unsafeName": "common_type",
           },
         },
+        "typeId": "commons:types/CommonType",
       },
       "referencedTypes": [],
       "shape": {
@@ -3287,6 +3307,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
             "unsafeName": "my_other_alias",
           },
         },
+        "typeId": "importer:types/MyOtherAlias",
       },
       "referencedTypes": [
         {
@@ -3314,6 +3335,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "my_alias",
             },
           },
+          "typeId": ":types/MyAlias",
         },
         {
           "fernFilepath": {
@@ -3378,6 +3400,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "common_type",
             },
           },
+          "typeId": "commons:types/CommonType",
         },
       ],
       "shape": {
@@ -3408,6 +3431,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "my_alias",
             },
           },
+          "typeId": ":types/MyAlias",
         },
         "resolvedType": {
           "_type": "primitive",

@@ -24,7 +24,7 @@ describe("convertResponseErrors", () => {
             {
                 docs: undefined,
                 error: {
-                    errorId: "",
+                    errorId: "path/to/commons:errors/UnauthorizedError",
                     fernFilepath: convertToFernFilepath({ relativeFilepath: "path/to/commons", casingsGenerator }),
                     name: {
                         originalName: "UnauthorizedError",
