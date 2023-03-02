@@ -433,7 +433,7 @@ class ReferenceObjectsByTag {
         if (referenceObject.$ref in this.refToTags) {
             this.refToTags[referenceObject.$ref]?.add(tag);
         } else {
-            this.refToTags[referenceObject.$ref] = new Set(tag);
+            this.refToTags[referenceObject.$ref] = new Set([tag]);
         }
     }
 
