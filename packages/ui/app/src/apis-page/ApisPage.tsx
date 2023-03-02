@@ -1,31 +1,62 @@
-import { NonIdealState, Spinner } from "@blueprintjs/core";
+import { Button, NonIdealState, Spinner } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
 import { CenteredContent } from "@fern-api/common-components";
 import { visitLoadable } from "@fern-api/loadable";
 import { Header } from "../header/Header";
-import { useAllApis } from "../queries/useAllApis";
-import { ApiRow } from "./ApiRow";
+import { useCurrentOrganization } from "../queries/useOrganization";
+import { OrganizationOverview } from "./organization-overview/OrganizationOverview";
+import { OrganizationSidebar } from "./sidebar/OrganizationSidebar";
+import { OrganizationTabBarContextProvider } from "./tabs/context/OrganizationTabBarContextProvider";
+import { OrganizationTabBar } from "./tabs/OrganizationTabBar";
+import { OrganizationTabContent } from "./tabs/OrganizationTabContent";
 
 export const ApisPage: React.FC = () => {
-    const apis = useAllApis();
+    const organization = useCurrentOrganization();
 
     return (
-        <div className="flex-1 flex flex-col">
-            <Header />
-            {visitLoadable(apis, {
-                loaded: (loadedApis) => (
-                    <CenteredContent fill scrollable>
-                        <div className="flex-1 flex flex-col">
-                            <div className="text-4xl font-bold mt-10 mb-10">Your APIs</div>
-                            <div className="flex flex-col gap-5 pb-10">
-                                {loadedApis.apis.map((apiMetadata) => (
-                                    <ApiRow key={apiMetadata.id} apiMetadata={apiMetadata} />
-                                ))}
-                            </div>
+        <div className="flex-1 flex flex-col min-h-0">
+            <Header
+                centerContent={
+                    organization.type === "loaded" ? (
+                        <div className="flex gap-1">
+                            <div>{organization.value.displayName}</div>
+                            <Button icon={IconNames.CHEVRON_DOWN} minimal />
                         </div>
-                    </CenteredContent>
+                    ) : undefined
+                }
+            />
+            {visitLoadable(organization, {
+                loaded: (loadedOrganization) => (
+                    <div className="flex-1 flex min-h-0">
+                        <div className="flex-1 flex flex-col">
+                            <OrganizationTabBarContextProvider>
+                                <div>
+                                    <CenteredContent fill>
+                                        <div className="flex-1 flex flex-col">
+                                            <div className="flex-1 flex flex-col pt-16">
+                                                <div className="flex-1 flex mb-10">
+                                                    <OrganizationOverview organization={loadedOrganization} />
+                                                </div>
+                                            </div>
+                                            <OrganizationTabBar />
+                                        </div>
+                                    </CenteredContent>
+                                </div>
+                                <div className="h-px bg-gray-300 shrink-0" />
+                                <div className="flex-1 flex min-h-0">
+                                    <CenteredContent scrollable fill>
+                                        <OrganizationTabContent />
+                                    </CenteredContent>
+                                </div>
+                            </OrganizationTabBarContextProvider>
+                        </div>
+                        <div className="flex w-80">
+                            <OrganizationSidebar />
+                        </div>
+                    </div>
                 ),
-                failed: () => <NonIdealState title="Failed to load" />,
                 loading: () => <NonIdealState title={<Spinner />} />,
+                failed: () => <NonIdealState title="Failed to load organization" />,
             })}
         </div>
     );

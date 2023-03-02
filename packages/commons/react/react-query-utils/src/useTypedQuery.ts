@@ -1,6 +1,6 @@
 import { Loadable } from "@fern-api/loadable";
+import { QueryFunction, useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { QueryFunction, useQuery, UseQueryOptions } from "react-query";
 import { convertUseQueryResultToLoadable } from "./convertUseQueryResultToLoadable";
 import { TypedQueryKey } from "./TypedQueryKey";
 

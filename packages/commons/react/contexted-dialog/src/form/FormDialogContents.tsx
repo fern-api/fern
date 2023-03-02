@@ -12,7 +12,7 @@ export declare namespace FormDialogContents {
         children: (
             args: Pick<RenderFormDialogArgs, "shouldDisableFields" | "shouldHighlightInvalidFields">
         ) => JSX.Element;
-        onSuccessfulCreate?: (result: R) => void;
+        onSuccessfulCreate?: (result: R, payload: P) => void;
         closeDialog: () => void;
     }
 }
@@ -66,7 +66,7 @@ export function FormDialogContents<P, R>({
 
         try {
             const result = await withMinimumTime(onClickCreate(createPayload), 1_000);
-            onSuccessfulCreate?.(result);
+            onSuccessfulCreate?.(result, createPayload);
             closeDialog();
         } catch (e) {
             // eslint-disable-next-line no-console

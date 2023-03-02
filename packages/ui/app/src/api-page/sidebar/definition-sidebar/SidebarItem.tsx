@@ -1,3 +1,4 @@
+import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useCallback } from "react";
 import { useApiTab } from "../../api-tabs/context/useApiTab";
@@ -6,7 +7,7 @@ import { SidebarItemLayout } from "./SidebarItemLayout";
 export declare namespace SidebarItem {
     export interface Props {
         title: JSX.Element | string;
-        icon: JSX.Element | string;
+        icon?: JSX.Element | string;
         path: string;
     }
 }
@@ -21,13 +22,14 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({ title, icon, path }) 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
-                <div
-                    className={classNames({
+                <Text
+                    className={classNames("pr-1", {
                         "text-green-700": isSelected || isHovering,
                     })}
+                    ellipsize
                 >
                     {title}
-                </div>
+                </Text>
             );
         },
         [isSelected, title]

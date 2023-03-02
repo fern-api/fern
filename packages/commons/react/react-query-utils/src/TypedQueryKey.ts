@@ -1,4 +1,4 @@
-import { QueryKey } from "react-query";
+import { QueryKey } from "@tanstack/react-query";
 
 export type TypedQueryKey<T> = QueryKey & {
     __value: T;
