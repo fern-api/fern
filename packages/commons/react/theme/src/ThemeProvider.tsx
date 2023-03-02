@@ -13,22 +13,33 @@ const ThemeContext = createContext<() => ThemeContextValue>(() => {
 
 export declare namespace ThemeProvider {
     export type Props = React.PropsWithChildren<{
-        defaultIsDarkTheme: boolean;
+        /**
+         * supply theme for controlled usage
+         */
+        theme?: "dark" | "light";
+        defaultTheme?: "dark" | "light";
     }>;
 }
 
-export const ThemeProvider: React.FC<ThemeProvider.Props> = ({ children, defaultIsDarkTheme }) => {
+export const ThemeProvider: React.FC<ThemeProvider.Props> = ({ children, theme, defaultTheme }) => {
     const [contextValue, setContextValue] = useState(() => {
+        if (theme != null) {
+            return { isDarkTheme: theme === "dark" };
+        }
         if (window.matchMedia("(prefers-color-scheme: light)").matches) {
             return { isDarkTheme: false };
         }
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             return { isDarkTheme: true };
         }
-        return { isDarkTheme: defaultIsDarkTheme };
+        return { isDarkTheme: defaultTheme === "dark" };
     });
 
     useEffect(() => {
+        if (theme != null) {
+            return;
+        }
+
         const lightThemeListener = (event: MediaQueryListEvent) => {
             if (event.matches) {
                 setContextValue({ isDarkTheme: false });

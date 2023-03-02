@@ -20,11 +20,12 @@ export const Header: React.FC<Header.Props> = ({ centerContent }) => {
 
     return (
         <div className={classNames("flex text-white bg-zinc-900 p-2", Classes.DARK)}>
-            <div className="flex flex-1 items-center gap-2 cursor-pointer" onClick={goHome}>
-                <FernLogo size={30} />
-                <div className="text-xl">Fern</div>
+            <div className="flex flex-1 items-center gap-2">
+                <div className="cursor-pointer" onClick={goHome}>
+                    <FernLogo size={30} />
+                </div>
             </div>
-            <div className="flex flex-1 justify-center items-center">{centerContent}</div>
+            <div className="flex flex-1 justify-center items-center text-lg">{centerContent}</div>
             <div className="flex flex-1 justify-end">
                 {isLoaded(currentUser) &&
                     (currentUser.value != null ? <AccountMenu user={currentUser.value} /> : <LoginButton />)}

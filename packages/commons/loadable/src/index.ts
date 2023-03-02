@@ -13,6 +13,7 @@ export {
     flatMapLoadable,
     getLoadableValue,
     mapLoadable,
+    mapLoadableArray,
     mapLoadables,
     mapNotFailedLoadableArray,
     visitLoadableArray,

@@ -8208,7 +8208,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.20-5-gd06fd6e"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/jsonwebtoken", "npm:9.0.0"],\
             ["@types/node", "npm:18.7.18"],\
@@ -8479,7 +8479,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.20-5-gd06fd6e"],\
             ["@fern-fern/postman-sdk", "npm:0.0.20"],\
             ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9414,7 +9414,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
-            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.20-5-gd06fd6e"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
             ["@fern-fern/registry", "npm:0.0.173"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9593,6 +9593,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@emotion/react", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:11.9.3"],\
             ["@emotion/styled", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:11.9.3"],\
             ["@fern-api/common-components", "workspace:packages/commons/react/common-components"],\
+            ["@fern-api/contexted-dialog", "workspace:packages/commons/react/contexted-dialog"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fonts", "workspace:packages/commons/react/fonts"],\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
@@ -9600,9 +9601,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/react-query-utils", "workspace:packages/commons/react/react-query-utils"],\
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@fern-api/split-view", "workspace:packages/commons/react/split-view"],\
+            ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.20-5-gd06fd6e"],\
             ["@fern-fern/registry", "npm:0.0.173"],\
-            ["@fontsource/actor", "npm:4.5.9"],\
-            ["@fontsource/roboto-mono", "npm:4.5.8"],\
+            ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
+            ["@fontsource/noto-sans", "npm:4.5.11"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9665,15 +9668,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/venus-api-sdk", [\
-        ["npm:0.0.14", {\
-          "packageLocation": "./.yarn/cache/@fern-api-venus-api-sdk-npm-0.0.14-c85646055f-18fd2b7b5f.zip/node_modules/@fern-api/venus-api-sdk/",\
+        ["npm:0.0.20-5-gd06fd6e", {\
+          "packageLocation": "./.yarn/cache/@fern-api-venus-api-sdk-npm-0.0.20-5-gd06fd6e-b2a564ac04-a7773a1615.zip/node_modules/@fern-api/venus-api-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/venus-api-sdk", "npm:0.0.14"],\
-            ["@types/basic-auth", "npm:1.1.3"],\
+            ["@fern-api/venus-api-sdk", "npm:0.0.20-5-gd06fd6e"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
-            ["basic-auth", "npm:2.0.1"],\
-            ["buffer", "npm:6.0.3"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
@@ -9954,6 +9954,24 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fontsource-actor-npm-4.5.9-498cd61231-f4e263d58d.zip/node_modules/@fontsource/actor/",\
           "packageDependencies": [\
             ["@fontsource/actor", "npm:4.5.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fontsource/ibm-plex-mono", [\
+        ["npm:4.5.13", {\
+          "packageLocation": "./.yarn/cache/@fontsource-ibm-plex-mono-npm-4.5.13-80f69c13fa-f927619557.zip/node_modules/@fontsource/ibm-plex-mono/",\
+          "packageDependencies": [\
+            ["@fontsource/ibm-plex-mono", "npm:4.5.13"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fontsource/noto-sans", [\
+        ["npm:4.5.11", {\
+          "packageLocation": "./.yarn/cache/@fontsource-noto-sans-npm-4.5.11-5142918923-d11ec102ac.zip/node_modules/@fontsource/noto-sans/",\
+          "packageDependencies": [\
+            ["@fontsource/noto-sans", "npm:4.5.11"]\
           ],\
           "linkType": "HARD"\
         }]\

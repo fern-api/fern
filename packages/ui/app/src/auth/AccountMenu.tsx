@@ -22,10 +22,11 @@ export const AccountMenu: React.FC<AccountMenu.Props> = ({ user, hideProfilePict
                         <MenuItem text="Log out" icon={IconNames.LOG_OUT} onClick={logOut} />
                     </Menu>
                 }
-                renderTarget={(props) => (
-                    <div {...props}>
+                renderTarget={({ isOpen, ...props }) => (
+                    <div {...props} className="flex gap-2 items-center cursor-pointer">
                         {!hideProfilePicture && user.picture != null && (
                             <div
+                                className="w-7 h-7 rounded-full bg-contain"
                                 style={{
                                     backgroundImage: `url("${user.picture}")`,
                                 }}

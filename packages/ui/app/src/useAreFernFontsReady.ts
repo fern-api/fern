@@ -1,7 +1,7 @@
 import { useAreFontsReady } from "@fern-api/fonts";
-import "@fontsource/actor";
-import "@fontsource/roboto-mono";
+import "@fontsource/ibm-plex-mono";
+import "@fontsource/noto-sans";
 
 export function useAreFernFontsReady(): boolean {
-    return useAreFontsReady(["Actor", "Roboto Mono"]);
+    return useAreFontsReady(["Noto Sans", "IBM Plex Mono"]);
 }

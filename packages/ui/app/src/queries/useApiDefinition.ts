@@ -3,6 +3,7 @@ import { Loadable } from "@fern-api/loadable";
 import { TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
 import { FernRegistry } from "@fern-fern/registry";
 import { ParsedEnvironmentId } from "../api-page/routes/useCurrentEnvironment";
+import { useCurrentOrganizationIdOrThrow } from "../routes/useCurrentOrganization";
 import { useRegistryService } from "../services/useRegistryService";
 
 export function useApiDefinition({
@@ -15,18 +16,19 @@ export function useApiDefinition({
     FernRegistry.ApiDefinition,
     FernRegistry.registry.getApiWithEnvironment.Error | FernRegistry.registry.getApiWithoutEnvironments.Error
 > {
+    const organizationId = useCurrentOrganizationIdOrThrow();
     const registryService = useRegistryService();
 
     const loadDefinition = () => {
         switch (environmentId.type) {
             case "environment":
                 return registryService.registry.getApiWithEnvironment(
-                    FernRegistry.OrgId("fern"),
+                    organizationId,
                     apiId,
                     environmentId.environmentId
                 );
             case "latest":
-                return registryService.registry.getApiWithoutEnvironments(FernRegistry.OrgId("fern"), apiId);
+                return registryService.registry.getApiWithoutEnvironments(organizationId, apiId);
             default:
                 assertNever(environmentId);
         }
