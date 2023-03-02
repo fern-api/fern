@@ -417,7 +417,7 @@ export class OpenApiV3Context {
 }
 
 class ReferenceObjectsByTag {
-    private refToTags: Record<string, string[]> = {};
+    private refToTags: Record<string, Set<string>> = {};
 
     // TODO: read unreferenced schemas from document
     constructor(_document: OpenAPIV3.Document) {
@@ -426,19 +426,20 @@ class ReferenceObjectsByTag {
 
     public add(referenceObject: OpenAPIV3.ReferenceObject, tag: string | undefined) {
         if (tag == null) {
-            this.refToTags[referenceObject.$ref] = [];
+            this.refToTags[referenceObject.$ref] = new Set();
             return;
         }
 
         if (referenceObject.$ref in this.refToTags) {
-            this.refToTags[referenceObject.$ref]?.push(tag);
+            this.refToTags[referenceObject.$ref]?.add(tag);
         } else {
-            this.refToTags[referenceObject.$ref] = [tag];
+            this.refToTags[referenceObject.$ref] = new Set(tag);
         }
     }
 
     public getTags(referenceObject: OpenAPIV3.ReferenceObject): string[] {
-        return this.refToTags[referenceObject.$ref] ?? [];
+        const tags = this.refToTags[referenceObject.$ref];
+        return tags != null ? Array.from(tags) : [];
     }
 
     public getGroups(): {
@@ -453,11 +454,11 @@ class ReferenceObjectsByTag {
             const referenceObject: OpenAPIV3.ReferenceObject = {
                 $ref: ref,
             };
-            if (tags.length <= 0) {
+            if (tags.size <= 0) {
                 untaggedSchemaReferences.push(referenceObject);
                 continue;
-            } else if (tags.length === 1) {
-                const tag = tags[0];
+            } else if (tags.size === 1) {
+                const tag = Array.from(tags)[0];
                 if (tag != null) {
                     if (tag in schemaReferencesGroupedByTag) {
                         schemaReferencesGroupedByTag[tag]?.push(referenceObject);
