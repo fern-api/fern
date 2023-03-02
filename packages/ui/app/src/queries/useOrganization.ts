@@ -1,18 +1,18 @@
 import { Loadable } from "@fern-api/loadable";
-import { TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
+import { TypedQueryKey, useNullableQuery, useTypedQuery } from "@fern-api/react-query-utils";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
-import { useCurrentOrganizationIdOrThrow } from "../routes/useCurrentOrganization";
+import { useCurrentOrganizationId } from "../routes/useCurrentOrganization";
 import { useVenus } from "../services/useVenus";
 
-export function useCurrentOrganizationOrThrow(): Loadable<
-    FernVenusApi.Organization,
-    FernVenusApi.organization.get.Error
-> {
-    const organizationId = useCurrentOrganizationIdOrThrow();
+export function useCurrentOrganization(): Loadable<FernVenusApi.Organization, FernVenusApi.organization.get.Error> {
+    const organizationId = useCurrentOrganizationId();
     const venus = useVenus();
-    return useTypedQuery<FernVenusApi.Organization, FernVenusApi.organization.get.Error>(
-        buildQueryKey({ organizationId }),
+    return useNullableQuery<FernVenusApi.Organization, FernVenusApi.organization.get.Error>(
+        organizationId != null ? buildQueryKey({ organizationId }) : undefined,
         async () => {
+            if (organizationId == null) {
+                throw new Error("organizationId is not defined.");
+            }
             const response = await venus.organization.get(organizationId);
             if (response.ok) {
                 return response.body;

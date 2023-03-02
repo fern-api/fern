@@ -41,7 +41,7 @@ export const ApiEnvironmentRow: React.FC<ApiEnvironmentRow.Props> = ({ apiMetada
                     ORGANIZATION_ID: "todo",
                 })}
             >
-                {environment.name}
+                {environment.id}
             </Link>
             <div className="flex">
                 <Tooltip2 position={PopoverPosition.RIGHT} content={absoluteTimestamp}>

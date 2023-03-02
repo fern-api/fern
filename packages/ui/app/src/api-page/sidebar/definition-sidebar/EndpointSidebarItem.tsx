@@ -1,5 +1,4 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { RiSendPlane2Fill } from "react-icons/ri";
 import { PackagePath } from "../../../commons/PackagePath";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
 import { useEndpointPath } from "../../routes/useEndpointPath";
@@ -17,7 +16,5 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpo
     const { environmentId } = useApiDefinitionSidebarContext();
     const endpointPath = useEndpointPath({ environmentId, packagePath, endpointId: endpoint.id });
 
-    return (
-        <SidebarItem path={endpointPath} icon={<RiSendPlane2Fill />} title={<EndpointTitle endpoint={endpoint} />} />
-    );
+    return <SidebarItem path={endpointPath} title={<EndpointTitle endpoint={endpoint} />} />;
 };

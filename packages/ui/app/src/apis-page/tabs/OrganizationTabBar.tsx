@@ -1,8 +1,9 @@
 import { Classes } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
-import { loaded } from "@fern-api/loadable";
+import { loaded, mapLoadable } from "@fern-api/loadable";
 import classNames from "classnames";
 import { useCallback } from "react";
+import { useCurrentOrganization } from "../../queries/useOrganization";
 import { useNumberOfApis } from "../useNumberOfApis";
 import { useNumberOfEnvironments } from "../useNumberOfEnvironments";
 import { OrganizationTabId } from "./context/OrganizationTabId";
@@ -11,6 +12,7 @@ import { OrganizationTabBarItem } from "./OrganizationTabBarItem";
 export const OrganizationTabBar: React.FC = () => {
     const numApis = useNumberOfApis();
     const numEnvironments = useNumberOfEnvironments();
+    const organization = useCurrentOrganization();
 
     const getLabelForTab = useCallback(
         (tabId: OrganizationTabId) => {
@@ -20,14 +22,14 @@ export const OrganizationTabBar: React.FC = () => {
                 case OrganizationTabId.ENVIRONMENTS:
                     return numEnvironments;
                 case OrganizationTabId.MEMBERS:
-                    return loaded(5);
+                    return mapLoadable(organization, (loadedOrganization) => loadedOrganization.users.length);
                 case OrganizationTabId.ACCESS_TOKENS:
                     return loaded(17);
                 default:
                     assertNever(tabId);
             }
         },
-        [numApis, numEnvironments]
+        [numApis, numEnvironments, organization]
     );
 
     return (

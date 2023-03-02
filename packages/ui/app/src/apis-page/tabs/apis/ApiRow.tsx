@@ -1,12 +1,17 @@
 import { Classes } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { Loadable } from "@fern-api/loadable";
+import { AsyncEditableText } from "@fern-api/common-components";
+import { noop } from "@fern-api/core-utils";
+import { Loadable, mapLoadable } from "@fern-api/loadable";
 import { LinkButton } from "@fern-api/routing-utils";
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
+import { useMemo } from "react";
 import { generatePath } from "react-router-dom";
 import { DefinitionRoutes } from "../../../api-page/routes";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
+import { ApiEmoji } from "./ApiEmoji";
+import { ApiEmojiChooser } from "./ApiEmojiChooser";
 import { ApiEnvironmentsSummary } from "./ApiEnvironmentsSummary";
 
 export declare namespace ApiRow {
@@ -18,25 +23,40 @@ export declare namespace ApiRow {
 export const ApiRow: React.FC<ApiRow.Props> = ({ apiMetadata }) => {
     const organizationId = useCurrentOrganizationIdOrThrow();
 
+    const description = useMemo(
+        () => mapLoadable(apiMetadata, (loadedApiMetadata) => loadedApiMetadata.description ?? ""),
+        [apiMetadata]
+    );
+
     return (
         <div className="flex-1 flex bg-neutral-100 border border-gray-200 rounded overflow-hidden">
-            <div className="flex flex-col bg-neutral-50 rounded-r shadow-[0_8px_24px_rgba(17,20,24,0.2)] p-5 gap-4 w-2/5">
-                <div className="flex-1 flex items-center gap-2">
-                    <div className="flex justify-center items-center bg-neutral-200 border border-gray-300 rounded w-9 h-9 text-2xl select-none">
-                        🎥
+            <div className="flex flex-col justify-between bg-neutral-50 rounded-r shadow-[0_8px_24px_rgba(17,20,24,0.2)] p-5 gap-4 w-2/5">
+                <div className="flex flex-col">
+                    <div className="flex-1 flex items-center gap-2">
+                        {apiMetadata.type === "loaded" ? (
+                            <ApiEmojiChooser apiMetadata={apiMetadata.value} />
+                        ) : (
+                            <ApiEmoji emoji={undefined} />
+                        )}
+                        <div
+                            className={classNames("text-lg font-bold", {
+                                [Classes.SKELETON]: apiMetadata.type !== "loaded",
+                            })}
+                        >
+                            {apiMetadata.type === "loaded" ? apiMetadata.value.id : "XXXXXXXXXX"}
+                        </div>
                     </div>
-                    <div
-                        className={classNames("text-lg font-bold", {
+                    <AsyncEditableText
+                        className={classNames("text-gray-500 text-xs mt-2", {
                             [Classes.SKELETON]: apiMetadata.type !== "loaded",
                         })}
-                    >
-                        {apiMetadata.type === "loaded" ? apiMetadata.value.id : "XXXXXXXXXX"}
-                    </div>
+                        placeholder="Add description..."
+                        value={description}
+                        onConfirm={noop}
+                        multiline
+                    />
                 </div>
-                <div className="text-gray-500 text-xs">
-                    {"This is some information about this microservice. I'm a text blob! yada yada yada"}
-                </div>
-                <div className="flex-1 flex justify-center">
+                <div className="flex justify-center">
                     <LinkButton
                         to={
                             apiMetadata.type === "loaded"

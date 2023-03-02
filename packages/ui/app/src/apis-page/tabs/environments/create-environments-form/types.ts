@@ -1,3 +1,4 @@
 export interface CreateEnvironmentFormState {
-    displayName: string;
+    environmentId: string;
+    description: string;
 }

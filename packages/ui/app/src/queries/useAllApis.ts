@@ -1,6 +1,8 @@
 import { Loadable } from "@fern-api/loadable";
-import { TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
+import { performOptimisticUpdateWithoutInvalidating, TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
 import { FernRegistry } from "@fern-fern/registry";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { useCurrentOrganizationIdOrThrow } from "../routes/useCurrentOrganization";
 import { useRegistryService } from "../services/useRegistryService";
 
@@ -18,4 +20,36 @@ export function useAllApis(): Loadable<FernRegistry.GetAllApisResponse, FernRegi
             throw response.error;
         }
     });
+}
+
+export function useUpdateApiMetadataInAllApisQueryCache(
+    apiId: FernRegistry.ApiId
+): (apiMetadata: FernRegistry.ApiMetadata) => Promise<void> {
+    const queryClient = useQueryClient();
+    const allApis = useAllApis();
+
+    return useCallback(
+        async (apiMetadata) => {
+            if (allApis.type !== "loaded") {
+                return;
+            }
+            await performOptimisticUpdateWithoutInvalidating(queryClient, {
+                queryKey: QUERY_KEY,
+                value: {
+                    apis: allApis.value.apis.map((otherApiMetadata) =>
+                        otherApiMetadata.id === apiId ? apiMetadata : otherApiMetadata
+                    ),
+                },
+            });
+        },
+        [allApis, apiId, queryClient]
+    );
+}
+
+export function useInvalidateAllApis(): () => Promise<void> {
+    const queryClient = useQueryClient();
+
+    return useCallback(async () => {
+        await queryClient.invalidateQueries(QUERY_KEY, { exact: true });
+    }, [queryClient]);
 }

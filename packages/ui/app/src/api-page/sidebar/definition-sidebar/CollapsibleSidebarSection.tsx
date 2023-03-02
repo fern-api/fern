@@ -22,7 +22,7 @@ export const CollapsibleSidebarSection: React.FC<CollapsibleSidebarSection.Props
 
     const getOverlayClassName = useCallback(({ isHovering }: { isHovering: boolean }) => {
         if (isHovering) {
-            return "bg-neutral-200";
+            return "bg-neutral-400/25";
         }
         return undefined;
     }, []);
@@ -30,7 +30,7 @@ export const CollapsibleSidebarSection: React.FC<CollapsibleSidebarSection.Props
     return (
         <div className="flex flex-col">
             <SidebarItemLayout
-                title={title}
+                title={<span className="font-bold">{title}</span>}
                 icon={isCollapsed ? closedIcon : openIcon}
                 onClick={toggleIsCollapsed}
                 overlayClassName={getOverlayClassName}
@@ -46,7 +46,7 @@ export const CollapsibleSidebarSection: React.FC<CollapsibleSidebarSection.Props
                             className="z-0 -mt-[6px] w-px bg-green-500/25"
                         />
                     </div>
-                    <div className="flex flex-1 flex-col gap-[1px] mt-[1px]">{children}</div>
+                    <div className="flex flex-1 flex-col gap-[1px] mt-[1px] min-w-0">{children}</div>
                 </div>
             )}
         </div>

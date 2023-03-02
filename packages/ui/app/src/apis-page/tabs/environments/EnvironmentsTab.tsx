@@ -37,11 +37,13 @@ export const EnvironmentsTab: React.FC = () => {
                     onClick={openCreateEnvironmentForm}
                 />
             </div>
-            {mapLoadableArray(allEnvironments, (loadedEnvironments) => loadedEnvironments.environments).map(
-                (environment, index) => (
+            <div className="flex flex-col gap-10">
+                {mapLoadableArray(allEnvironments, (loadedEnvironments) => loadedEnvironments.environments, {
+                    numLoading: 1,
+                }).map((environment, index) => (
                     <EnvironmentCard key={index} environment={environment} />
-                )
-            )}
+                ))}
+            </div>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { InputGroup } from "@blueprintjs/core";
+import { InputGroup, TextArea } from "@blueprintjs/core";
 import { TwoColumnTable, TwoColumnTableRow } from "@fern-api/common-components";
 import { FormClasses, RenderFormDialogArgs } from "@fern-api/contexted-dialog";
 import classNames from "classnames";
@@ -18,25 +18,47 @@ export const CreateEnvironmentForm: React.FC<CreateEnvironmentForm.Props> = ({
     shouldHighlightInvalidFields,
     shouldDisableFields,
 }) => {
-    const setEnvironmentName = useCallback(
+    const setEnvironmentId = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
             setState({
                 ...state,
-                displayName: event.currentTarget.value,
+                environmentId: event.currentTarget.value,
+            });
+        },
+        [setState, state]
+    );
+
+    const setDescription = useCallback(
+        (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setState({
+                ...state,
+                description: event.currentTarget.value,
             });
         },
         [setState, state]
     );
 
     return (
-        <TwoColumnTable className="gap-x-2">
+        <TwoColumnTable className="gap-x-2 gap-y-3">
             <TwoColumnTableRow label="Name" verticallyCenterLabel>
                 <InputGroup
                     className={classNames({
-                        [FormClasses.INVALID]: shouldHighlightInvalidFields && state.displayName.length === 0,
+                        [FormClasses.INVALID]: shouldHighlightInvalidFields && state.environmentId.length === 0,
                     })}
-                    value={state.displayName}
-                    onChange={setEnvironmentName}
+                    value={state.environmentId}
+                    onChange={setEnvironmentId}
+                    fill
+                    disabled={shouldDisableFields}
+                    autoFocus
+                />
+            </TwoColumnTableRow>
+            <TwoColumnTableRow label="Description">
+                <TextArea
+                    className={classNames({
+                        [FormClasses.INVALID]: shouldHighlightInvalidFields && state.environmentId.length === 0,
+                    })}
+                    value={state.description}
+                    onChange={setDescription}
                     fill
                     disabled={shouldDisableFields}
                 />

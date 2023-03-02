@@ -3,7 +3,7 @@ import { IconNames } from "@blueprintjs/icons";
 import { CenteredContent } from "@fern-api/common-components";
 import { visitLoadable } from "@fern-api/loadable";
 import { Header } from "../header/Header";
-import { useCurrentOrganizationOrThrow } from "../queries/useOrganization";
+import { useCurrentOrganization } from "../queries/useOrganization";
 import { OrganizationOverview } from "./organization-overview/OrganizationOverview";
 import { OrganizationSidebar } from "./sidebar/OrganizationSidebar";
 import { OrganizationTabBarContextProvider } from "./tabs/context/OrganizationTabBarContextProvider";
@@ -11,15 +11,15 @@ import { OrganizationTabBar } from "./tabs/OrganizationTabBar";
 import { OrganizationTabContent } from "./tabs/OrganizationTabContent";
 
 export const ApisPage: React.FC = () => {
-    const organization = useCurrentOrganizationOrThrow();
+    const organization = useCurrentOrganization();
 
     return (
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col min-h-0">
             <Header
                 centerContent={
                     organization.type === "loaded" ? (
                         <div className="flex gap-1">
-                            <div>{organization.value.organizationId}</div>
+                            <div>{organization.value.displayName}</div>
                             <Button icon={IconNames.CHEVRON_DOWN} minimal />
                         </div>
                     ) : undefined

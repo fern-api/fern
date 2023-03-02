@@ -1,12 +1,12 @@
 import { IconNames } from "@blueprintjs/icons";
 import { noop } from "@fern-api/core-utils";
 import { useMemo } from "react";
-import { useCurrentOrganizationOrThrow } from "../../queries/useOrganization";
+import { useCurrentOrganization } from "../../queries/useOrganization";
 import { OrganizationMember } from "./OrganizationMember";
 import { OrganizationSidebarSection } from "./OrganizationSidebarSection";
 
 export const OrganizationMembers: React.FC = () => {
-    const organization = useCurrentOrganizationOrThrow();
+    const organization = useCurrentOrganization();
 
     const rightAction = useMemo(
         (): OrganizationSidebarSection.Props["rightAction"] => ({

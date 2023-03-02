@@ -1,14 +1,15 @@
 import { RenderFormDialogArgs, SingleContextedFormDialogProviderRenderer } from "@fern-api/contexted-dialog";
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback, useMemo, useState } from "react";
-import { useAddEnvironment } from "../../../../queries/useAllEnvironments";
+import { useAddEnvironmentToQueryCache } from "../../../../queries/useAllEnvironments";
 import { useCurrentOrganizationIdOrThrow } from "../../../../routes/useCurrentOrganization";
 import { useRegistryService } from "../../../../services/useRegistryService";
 import { CreateEnvironmentForm } from "./form/CreateEnvironmentForm";
 import { CreateEnvironmentFormState } from "./types";
 
 export const INITIAL_ENVIRONMENT_FORM_STATE: CreateEnvironmentFormState = {
-    displayName: "",
+    environmentId: "",
+    description: "",
 };
 
 export const CreateEnvironmentFormDialogProviderRenderer: SingleContextedFormDialogProviderRenderer<
@@ -17,12 +18,12 @@ export const CreateEnvironmentFormDialogProviderRenderer: SingleContextedFormDia
     const [state, setState] = useState<CreateEnvironmentFormState>();
 
     const createPayload = useMemo((): Required<FernRegistry.CreateEnvironmentRequest> | undefined => {
-        if (state == null || state.displayName.length === 0) {
+        if (state == null || state.environmentId.length === 0) {
             return undefined;
         }
         return {
-            name: state.displayName,
-            url: "",
+            id: FernRegistry.EnvironmentId(state.environmentId),
+            description: state.description,
         };
     }, [state]);
 
@@ -31,9 +32,7 @@ export const CreateEnvironmentFormDialogProviderRenderer: SingleContextedFormDia
     const onClickCreate = useCallback(
         async (createPayload: FernRegistry.CreateEnvironmentRequest) => {
             const response = await registryService.environment.create(organizationId, createPayload);
-            if (response.ok) {
-                return response.body;
-            } else {
+            if (!response.ok) {
                 // eslint-disable-next-line @typescript-eslint/no-throw-literal
                 throw response.error;
             }
@@ -45,17 +44,13 @@ export const CreateEnvironmentFormDialogProviderRenderer: SingleContextedFormDia
         return <CreateEnvironmentForm {...args} state={definedState} setState={setState} />;
     }, []);
 
-    const addEnvironment = useAddEnvironment();
+    const addEnvironmentToQueryCache = useAddEnvironmentToQueryCache();
 
     const onSucessfulCreate = useCallback(
-        async (environmentId: FernRegistry.EnvironmentId, payload: FernRegistry.CreateEnvironmentRequest) => {
-            await addEnvironment({
-                id: environmentId,
-                name: payload.name,
-                url: payload.url,
-            });
+        async (_: void, payload: FernRegistry.CreateEnvironmentRequest) => {
+            await addEnvironmentToQueryCache(payload);
         },
-        [addEnvironment]
+        [addEnvironmentToQueryCache]
     );
 
     return (

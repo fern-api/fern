@@ -1,8 +1,13 @@
 import { Loadable } from "@fern-api/loadable";
-import { performOptimisticUpdate, TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
+import {
+    performOptimisticUpdate,
+    performOptimisticUpdateWithoutInvalidating,
+    TypedQueryKey,
+    useTypedQuery,
+} from "@fern-api/react-query-utils";
 import { FernRegistry } from "@fern-fern/registry";
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
-import { useQueryClient } from "react-query";
 import { useCurrentOrganizationIdOrThrow } from "../routes/useCurrentOrganization";
 import { useRegistryService } from "../services/useRegistryService";
 
@@ -25,7 +30,7 @@ export function useAllEnvironments(): Loadable<
     });
 }
 
-export function useAddEnvironment(): (environment: FernRegistry.Environment) => Promise<void> {
+export function useAddEnvironmentToQueryCache(): (environment: FernRegistry.Environment) => Promise<void> {
     const queryClient = useQueryClient();
     const allEnvironments = useAllEnvironments();
 
@@ -43,5 +48,33 @@ export function useAddEnvironment(): (environment: FernRegistry.Environment) => 
             }
         },
         [allEnvironments, queryClient]
+    );
+}
+
+export function useDeleteEnvironment(): (environmentId: FernRegistry.EnvironmentId) => Promise<void> {
+    const queryClient = useQueryClient();
+    const allEnvironments = useAllEnvironments();
+    const organizationId = useCurrentOrganizationIdOrThrow();
+    const registryService = useRegistryService();
+
+    return useCallback(
+        async (environmentId: FernRegistry.EnvironmentId) => {
+            if (allEnvironments.type !== "loaded") {
+                await registryService.environment.delete(organizationId, environmentId);
+                await queryClient.invalidateQueries(QUERY_KEY, { exact: true });
+            } else {
+                await performOptimisticUpdateWithoutInvalidating(queryClient, {
+                    queryKey: QUERY_KEY,
+                    value: {
+                        environments: allEnvironments.value.environments.filter(
+                            (environment) => environment.id !== environmentId
+                        ),
+                    },
+                });
+                await registryService.environment.delete(organizationId, environmentId);
+                await queryClient.invalidateQueries(QUERY_KEY, { exact: true });
+            }
+        },
+        [allEnvironments, organizationId, queryClient, registryService.environment]
     );
 }

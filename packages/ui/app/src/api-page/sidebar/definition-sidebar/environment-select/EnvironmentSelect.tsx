@@ -1,8 +1,6 @@
-import { Classes, MenuItem, PopoverPosition } from "@blueprintjs/core";
+import { MenuItem, PopoverPosition } from "@blueprintjs/core";
 import { ItemRenderer, Select2, SelectPopoverProps } from "@blueprintjs/select";
 import { assertNever } from "@fern-api/core-utils";
-import { FernRegistry } from "@fern-fern/registry";
-import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useAllEnvironments } from "../../../../queries/useAllEnvironments";
 import { ParsedEnvironmentId } from "../../../routes/useCurrentEnvironment";
@@ -37,33 +35,19 @@ export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedE
         return items;
     }, [environments]);
 
-    const getEnvironmentById = useCallback(
-        (environmentId: FernRegistry.EnvironmentId): FernRegistry.Environment | undefined => {
-            if (environments.type !== "loaded") {
-                return undefined;
-            }
-            return environments.value.environments.find((e) => e.id === environmentId);
-        },
-        [environments]
-    );
-
-    const getEnvironmentLabel = useCallback(
-        (environmentId: ParsedEnvironmentId) => {
-            switch (environmentId.type) {
-                case "environment":
-                    return getEnvironmentById(environmentId.environmentId)?.name;
-                case "latest":
-                    return "Latest";
-                default:
-                    assertNever(environmentId);
-            }
-        },
-        [getEnvironmentById]
-    );
+    const getEnvironmentLabel = useCallback((environmentId: ParsedEnvironmentId) => {
+        switch (environmentId.type) {
+            case "environment":
+                return environmentId.environmentId;
+            case "latest":
+                return "Latest";
+            default:
+                assertNever(environmentId);
+        }
+    }, []);
 
     const renderItem: ItemRenderer<ParsedEnvironmentId> = useCallback(
         (item, { handleClick, handleFocus, modifiers }) => {
-            const label = getEnvironmentLabel(item);
             return (
                 <MenuItem
                     active={modifiers.active}
@@ -72,10 +56,7 @@ export const EnvironmentSelect: React.FC<EnvironmentSelect.Props> = ({ selectedE
                     onClick={handleClick}
                     onFocus={handleFocus}
                     roleStructure="listoption"
-                    textClassName={classNames({
-                        [Classes.SKELETON]: label == null,
-                    })}
-                    text={label ?? "SKELETON_TEXT"}
+                    text={getEnvironmentLabel(item)}
                 />
             );
         },

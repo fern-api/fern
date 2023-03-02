@@ -16,7 +16,7 @@ export const OrganizationOverview: React.FC<OrganizationOverview.Props> = ({ org
 
     return (
         <div className="flex-1 flex flex-col">
-            <div className="text-4xl mb-2">{organization.organizationId}</div>
+            <div className="text-4xl mb-2">{organization.displayName}</div>
             <div className="flex items-center gap-1 text-gray-500">
                 <LoadableArrayCount count={numApis} singularLabel="API" pluralLabel="APIs" />
                 <BsDot />

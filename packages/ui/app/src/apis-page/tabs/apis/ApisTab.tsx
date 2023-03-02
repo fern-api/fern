@@ -6,8 +6,8 @@ export const ApisTab: React.FC = () => {
     const allApis = useAllApis();
 
     return (
-        <div className="flex flex-col gap-4">
-            {mapLoadableArray(allApis, (loadedApis) => loadedApis.apis).map((apiMetadata, index) => (
+        <div className="flex flex-col gap-12">
+            {mapLoadableArray(allApis, (loadedApis) => loadedApis.apis, { numLoading: 1 }).map((apiMetadata, index) => (
                 <ApiRow key={index} apiMetadata={apiMetadata} />
             ))}
         </div>
