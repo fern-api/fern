@@ -1,32 +1,25 @@
 import { Classes } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { AsyncEditableText } from "@fern-api/common-components";
-import { noop } from "@fern-api/core-utils";
-import { Loadable, mapLoadable } from "@fern-api/loadable";
+import { Loadable } from "@fern-api/loadable";
 import { LinkButton } from "@fern-api/routing-utils";
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
-import { useMemo } from "react";
 import { generatePath } from "react-router-dom";
 import { DefinitionRoutes } from "../../../api-page/routes";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
+import { ApiDescription } from "./ApiDescription";
 import { ApiEmoji } from "./ApiEmoji";
 import { ApiEmojiChooser } from "./ApiEmojiChooser";
 import { ApiEnvironmentsSummary } from "./ApiEnvironmentsSummary";
 
-export declare namespace ApiRow {
+export declare namespace ApiCard {
     export interface Props {
         apiMetadata: Loadable<FernRegistry.ApiMetadata>;
     }
 }
 
-export const ApiRow: React.FC<ApiRow.Props> = ({ apiMetadata }) => {
+export const ApiCard: React.FC<ApiCard.Props> = ({ apiMetadata }) => {
     const organizationId = useCurrentOrganizationIdOrThrow();
-
-    const description = useMemo(
-        () => mapLoadable(apiMetadata, (loadedApiMetadata) => loadedApiMetadata.description ?? ""),
-        [apiMetadata]
-    );
 
     return (
         <div className="flex-1 flex bg-neutral-100 border border-gray-200 rounded overflow-hidden">
@@ -46,15 +39,13 @@ export const ApiRow: React.FC<ApiRow.Props> = ({ apiMetadata }) => {
                             {apiMetadata.type === "loaded" ? apiMetadata.value.id : "XXXXXXXXXX"}
                         </div>
                     </div>
-                    <AsyncEditableText
-                        className={classNames("text-gray-500 text-xs mt-2", {
-                            [Classes.SKELETON]: apiMetadata.type !== "loaded",
-                        })}
-                        placeholder="Add description..."
-                        value={description}
-                        onConfirm={noop}
-                        multiline
-                    />
+                    <div className="mt-2 text-xs">
+                        {apiMetadata.type === "loaded" ? (
+                            <ApiDescription apiMetadata={apiMetadata.value} />
+                        ) : (
+                            <div className={Classes.SKELETON}>XXXXXX</div>
+                        )}
+                    </div>
                 </div>
                 <div className="flex justify-center">
                     <LinkButton
