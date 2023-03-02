@@ -1014,7 +1014,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface BinaryTreeValue {
     root?: TraceApi.NodeId;
-    nodes: Record<TraceApi.NodeId, TraceApi.BinaryTreeNodeValue | undefined>;
+    nodes: Record<TraceApi.NodeId, TraceApi.BinaryTreeNodeValue>;
 }
 ",
                     "name": "BinaryTreeValue.d.ts",
@@ -1421,7 +1421,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface DoublyLinkedListValue {
     head?: TraceApi.NodeId;
-    nodes: Record<TraceApi.NodeId, TraceApi.DoublyLinkedListNodeValue | undefined>;
+    nodes: Record<TraceApi.NodeId, TraceApi.DoublyLinkedListNodeValue>;
 }
 ",
                     "name": "DoublyLinkedListValue.d.ts",
@@ -1727,7 +1727,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface SinglyLinkedListValue {
     head?: TraceApi.NodeId;
-    nodes: Record<TraceApi.NodeId, TraceApi.SinglyLinkedListNodeValue | undefined>;
+    nodes: Record<TraceApi.NodeId, TraceApi.SinglyLinkedListNodeValue>;
 }
 ",
                     "name": "SinglyLinkedListValue.d.ts",
@@ -4648,7 +4648,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import { TraceApi } from \\"../../../..\\";
 export interface ProblemsMap {
-    problemsById: Record<TraceApi.ProblemId, TraceApi.ProblemInfo | undefined>;
+    problemsById: Record<TraceApi.ProblemId, TraceApi.ProblemInfo>;
 }
 ",
                     "name": "ProblemsMap.d.ts",
@@ -5866,7 +5866,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import { TraceApi } from \\"../../../..\\";
 export interface GetExecutionSessionStateResponse {
-    states: Record<string, TraceApi.ExecutionSessionState | undefined>;
+    states: Record<string, TraceApi.ExecutionSessionState>;
     numWarmingInstances?: number;
     warmingSessionIds: string[];
 }
@@ -5937,7 +5937,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface GradedResponse {
     submissionId: TraceApi.SubmissionId;
-    testCases: Record<string, TraceApi.TestCaseResultWithStdout | undefined>;
+    testCases: Record<string, TraceApi.TestCaseResultWithStdout>;
 }
 ",
                     "name": "GradedResponse.d.ts",
@@ -5960,7 +5960,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import { TraceApi } from \\"../../../..\\";
 export interface GradedResponseV2 {
     submissionId: TraceApi.SubmissionId;
-    testCases: Record<TraceApi.v2.TestCaseId, TraceApi.TestCaseGrade | undefined>;
+    testCases: Record<TraceApi.v2.TestCaseId, TraceApi.TestCaseGrade>;
 }
 ",
                     "name": "GradedResponseV2.d.ts",
@@ -6357,7 +6357,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import { TraceApi } from \\"../../../..\\";
 export interface Scope {
-    variables: Record<string, TraceApi.DebugVariableValue | undefined>;
+    variables: Record<string, TraceApi.DebugVariableValue>;
 }
 ",
                     "name": "Scope.d.ts",
@@ -7469,7 +7469,7 @@ export declare namespace TestSubmissionStatus {
     }
     interface TestCaseIdToState extends _Utils {
         type: \\"testCaseIdToState\\";
-        value: Record<string, TraceApi.SubmissionStatusForTestCase | undefined>;
+        value: Record<string, TraceApi.SubmissionStatusForTestCase>;
     }
     interface _Unknown extends _Utils {
         type: void;
@@ -7481,7 +7481,7 @@ export declare namespace TestSubmissionStatus {
         stopped: () => _Result;
         errored: (value: TraceApi.ErrorInfo) => _Result;
         running: (value: TraceApi.RunningSubmissionState) => _Result;
-        testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase | undefined>) => _Result;
+        testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase>) => _Result;
         _other: (value: {
             type: string;
         }) => _Result;
@@ -7491,7 +7491,7 @@ export declare const TestSubmissionStatus: {
     readonly stopped: () => TraceApi.TestSubmissionStatus.Stopped;
     readonly errored: (value: TraceApi.ErrorInfo) => TraceApi.TestSubmissionStatus.Errored;
     readonly running: (value: TraceApi.RunningSubmissionState) => TraceApi.TestSubmissionStatus.Running;
-    readonly testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase | undefined>) => TraceApi.TestSubmissionStatus.TestCaseIdToState;
+    readonly testCaseIdToState: (value: Record<string, TraceApi.SubmissionStatusForTestCase>) => TraceApi.TestSubmissionStatus.TestCaseIdToState;
     readonly _unknown: (value: {
         type: string;
     }) => TraceApi.TestSubmissionStatus._Unknown;
@@ -10423,7 +10423,7 @@ import { TraceApi } from \\"../../../../../..\\";
 export interface TestCaseV2 {
     metadata: TraceApi.v2.TestCaseMetadata;
     implementation: TraceApi.v2.TestCaseImplementationReference;
-    arguments: Record<TraceApi.v2.ParameterId, TraceApi.VariableValue | undefined>;
+    arguments: Record<TraceApi.v2.ParameterId, TraceApi.VariableValue>;
     expects?: TraceApi.v2.TestCaseExpects;
 }
 ",
@@ -12227,7 +12227,7 @@ import { TraceApi } from \\"../../../../../../../..\\";
 export interface TestCaseV2 {
     metadata: TraceApi.v2.v3.TestCaseMetadata;
     implementation: TraceApi.v2.v3.TestCaseImplementationReference;
-    arguments: Record<TraceApi.v2.v3.ParameterId, TraceApi.VariableValue | undefined>;
+    arguments: Record<TraceApi.v2.v3.ParameterId, TraceApi.VariableValue>;
     expects?: TraceApi.v2.v3.TestCaseExpects;
 }
 ",
@@ -13839,10 +13839,9 @@ async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, t
                   },
                   Object {
                     "contents": "import { BaseSchema } from \\"../../Schema\\";
-import { OptionalRecord } from \\"../../utils/OptionalRecord\\";
 import { SchemaUtils } from \\"../schema-utils\\";
-export declare type RecordSchema<RawKey extends string | number, RawValue, ParsedKey extends string | number, ParsedValue> = BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> & SchemaUtils<OptionalRecord<RawKey, RawValue>, OptionalRecord<ParsedKey, ParsedValue>>;
-export declare type BaseRecordSchema<RawKey extends string | number, RawValue, ParsedKey extends string | number, ParsedValue> = BaseSchema<OptionalRecord<RawKey, RawValue>, OptionalRecord<ParsedKey, ParsedValue>>;
+export declare type RecordSchema<RawKey extends string | number, RawValue, ParsedKey extends string | number, ParsedValue> = BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> & SchemaUtils<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>>;
+export declare type BaseRecordSchema<RawKey extends string | number, RawValue, ParsedKey extends string | number, ParsedValue> = BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>>;
 ",
                     "name": "types.d.ts",
                     "type": "file",
@@ -14389,19 +14388,6 @@ __exportStar(require(\\"./builders\\"), exports);
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 ",
                 "name": "MaybePromise.js",
-                "type": "file",
-              },
-              Object {
-                "contents": "export declare type OptionalRecord<K extends string | number, V> = Record<K, V | undefined>;
-",
-                "name": "OptionalRecord.d.ts",
-                "type": "file",
-              },
-              Object {
-                "contents": "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-",
-                "name": "OptionalRecord.js",
                 "type": "file",
               },
               Object {
@@ -15256,7 +15242,7 @@ export declare const BinaryTreeValue: core.serialization.ObjectSchema<serializer
 export declare namespace BinaryTreeValue {
     interface Raw {
         root?: serializers.NodeId.Raw | null;
-        nodes: Record<serializers.NodeId.Raw, serializers.BinaryTreeNodeValue.Raw | null | undefined>;
+        nodes: Record<serializers.NodeId.Raw, serializers.BinaryTreeNodeValue.Raw>;
     }
 }
 ",
@@ -15296,7 +15282,7 @@ exports.BinaryTreeValue = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.BinaryTreeValue = core.serialization.object({
     root: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId).optional(),
-    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).BinaryTreeNodeValue).optional()),
+    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).BinaryTreeNodeValue)),
 });
 ",
                     "name": "BinaryTreeValue.js",
@@ -15753,7 +15739,7 @@ export declare const DoublyLinkedListValue: core.serialization.ObjectSchema<seri
 export declare namespace DoublyLinkedListValue {
     interface Raw {
         head?: serializers.NodeId.Raw | null;
-        nodes: Record<serializers.NodeId.Raw, serializers.DoublyLinkedListNodeValue.Raw | null | undefined>;
+        nodes: Record<serializers.NodeId.Raw, serializers.DoublyLinkedListNodeValue.Raw>;
     }
 }
 ",
@@ -15793,7 +15779,7 @@ exports.DoublyLinkedListValue = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.DoublyLinkedListValue = core.serialization.object({
     head: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId).optional(),
-    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DoublyLinkedListNodeValue).optional()),
+    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DoublyLinkedListNodeValue)),
 });
 ",
                     "name": "DoublyLinkedListValue.js",
@@ -16470,7 +16456,7 @@ export declare const SinglyLinkedListValue: core.serialization.ObjectSchema<seri
 export declare namespace SinglyLinkedListValue {
     interface Raw {
         head?: serializers.NodeId.Raw | null;
-        nodes: Record<serializers.NodeId.Raw, serializers.SinglyLinkedListNodeValue.Raw | null | undefined>;
+        nodes: Record<serializers.NodeId.Raw, serializers.SinglyLinkedListNodeValue.Raw>;
     }
 }
 ",
@@ -16510,7 +16496,7 @@ exports.SinglyLinkedListValue = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.SinglyLinkedListValue = core.serialization.object({
     head: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId).optional(),
-    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SinglyLinkedListNodeValue).optional()),
+    nodes: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NodeId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SinglyLinkedListNodeValue)),
 });
 ",
                     "name": "SinglyLinkedListValue.js",
@@ -19343,7 +19329,7 @@ import * as core from \\"../../../../core\\";
 export declare const ProblemsMap: core.serialization.ObjectSchema<serializers.ProblemsMap.Raw, TraceApi.ProblemsMap>;
 export declare namespace ProblemsMap {
     interface Raw {
-        problemsById: Record<serializers.ProblemId.Raw, serializers.ProblemInfo.Raw | null | undefined>;
+        problemsById: Record<serializers.ProblemId.Raw, serializers.ProblemInfo.Raw>;
     }
 }
 ",
@@ -19382,7 +19368,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.ProblemsMap = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.ProblemsMap = core.serialization.object({
-    problemsById: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemInfo).optional()),
+    problemsById: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemId), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ProblemInfo)),
 });
 ",
                     "name": "ProblemsMap.js",
@@ -20705,7 +20691,7 @@ import * as core from \\"../../../../core\\";
 export declare const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<serializers.GetExecutionSessionStateResponse.Raw, TraceApi.GetExecutionSessionStateResponse>;
 export declare namespace GetExecutionSessionStateResponse {
     interface Raw {
-        states: Record<string, serializers.ExecutionSessionState.Raw | null | undefined>;
+        states: Record<string, serializers.ExecutionSessionState.Raw>;
         numWarmingInstances?: number | null;
         warmingSessionIds: string[];
     }
@@ -20746,7 +20732,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.GetExecutionSessionStateResponse = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GetExecutionSessionStateResponse = core.serialization.object({
-    states: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ExecutionSessionState).optional()),
+    states: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ExecutionSessionState)),
     numWarmingInstances: core.serialization.number().optional(),
     warmingSessionIds: core.serialization.list(core.serialization.string()),
 });
@@ -20881,7 +20867,7 @@ export declare const GradedResponse: core.serialization.ObjectSchema<serializers
 export declare namespace GradedResponse {
     interface Raw {
         submissionId: serializers.SubmissionId.Raw;
-        testCases: Record<string, serializers.TestCaseResultWithStdout.Raw | null | undefined>;
+        testCases: Record<string, serializers.TestCaseResultWithStdout.Raw>;
     }
 }
 ",
@@ -20921,7 +20907,7 @@ exports.GradedResponse = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GradedResponse = core.serialization.object({
     submissionId: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionId),
-    testCases: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseResultWithStdout).optional()),
+    testCases: core.serialization.record(core.serialization.string(), core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseResultWithStdout)),
 });
 ",
                     "name": "GradedResponse.js",
@@ -20938,7 +20924,7 @@ export declare const GradedResponseV2: core.serialization.ObjectSchema<serialize
 export declare namespace GradedResponseV2 {
     interface Raw {
         submissionId: serializers.SubmissionId.Raw;
-        testCases: Record<serializers.v2.TestCaseId.Raw, serializers.TestCaseGrade.Raw | null | undefined>;
+        testCases: Record<serializers.v2.TestCaseId.Raw, serializers.TestCaseGrade.Raw>;
     }
 }
 ",
@@ -20978,7 +20964,7 @@ exports.GradedResponseV2 = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GradedResponseV2 = core.serialization.object({
     submissionId: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionId),
-    testCases: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).v2.TestCaseId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseGrade).optional()),
+    testCases: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).v2.TestCaseId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TestCaseGrade)),
 });
 ",
                     "name": "GradedResponseV2.js",
@@ -21706,7 +21692,7 @@ import * as core from \\"../../../../core\\";
 export declare const Scope: core.serialization.ObjectSchema<serializers.Scope.Raw, TraceApi.Scope>;
 export declare namespace Scope {
     interface Raw {
-        variables: Record<string, serializers.DebugVariableValue.Raw | null | undefined>;
+        variables: Record<string, serializers.DebugVariableValue.Raw>;
     }
 }
 ",
@@ -21745,7 +21731,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.Scope = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.Scope = core.serialization.object({
-    variables: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DebugVariableValue).optional()),
+    variables: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DebugVariableValue)),
 });
 ",
                     "name": "Scope.js",
@@ -23298,7 +23284,7 @@ export declare namespace TestSubmissionStatus {
     }
     interface TestCaseIdToState {
         type: \\"testCaseIdToState\\";
-        value: Record<string, serializers.SubmissionStatusForTestCase.Raw | null | undefined>;
+        value: Record<string, serializers.SubmissionStatusForTestCase.Raw>;
     }
 }
 ",
@@ -23347,7 +23333,7 @@ exports.TestSubmissionStatus = core.serialization
         value: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).RunningSubmissionState),
     }),
     testCaseIdToState: core.serialization.object({
-        value: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionStatusForTestCase).optional()),
+        value: core.serialization.record(core.serialization.string(), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SubmissionStatusForTestCase)),
     }),
 })
     .transform({
@@ -27522,7 +27508,7 @@ export declare namespace TestCaseV2 {
     interface Raw {
         metadata: serializers.v2.TestCaseMetadata.Raw;
         implementation: serializers.v2.TestCaseImplementationReference.Raw;
-        arguments: Record<serializers.v2.ParameterId.Raw, serializers.VariableValue.Raw | null | undefined>;
+        arguments: Record<serializers.v2.ParameterId.Raw, serializers.VariableValue.Raw>;
         expects?: serializers.v2.TestCaseExpects.Raw | null;
     }
 }
@@ -27564,7 +27550,7 @@ const core = __importStar(require(\\"../../../../../../core\\"));
 exports.TestCaseV2 = core.serialization.object({
     metadata: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseMetadata),
     implementation: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseImplementationReference),
-    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).VariableValue).optional()),
+    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).VariableValue)),
     expects: core.serialization
         .lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseExpects)
         .optional(),
@@ -30382,7 +30368,7 @@ export declare namespace TestCaseV2 {
     interface Raw {
         metadata: serializers.v2.v3.TestCaseMetadata.Raw;
         implementation: serializers.v2.v3.TestCaseImplementationReference.Raw;
-        arguments: Record<serializers.v2.v3.ParameterId.Raw, serializers.VariableValue.Raw | null | undefined>;
+        arguments: Record<serializers.v2.v3.ParameterId.Raw, serializers.VariableValue.Raw>;
         expects?: serializers.v2.v3.TestCaseExpects.Raw | null;
     }
 }
@@ -30424,7 +30410,7 @@ const core = __importStar(require(\\"../../../../../../../../core\\"));
 exports.TestCaseV2 = core.serialization.object({
     metadata: core.serialization.lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseMetadata),
     implementation: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseImplementationReference),
-    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).VariableValue).optional()),
+    arguments: core.serialization.record(core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.ParameterId), core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).VariableValue)),
     expects: core.serialization
         .lazyObject(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseExpects)
         .optional(),

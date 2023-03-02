@@ -2,7 +2,6 @@ import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
 import { entries } from "../../utils/entries";
 import { isPlainObject, NOT_AN_OBJECT_ERROR_MESSAGE } from "../../utils/isPlainObject";
 import { MaybePromise } from "../../utils/MaybePromise";
-import { OptionalRecord } from "../../utils/OptionalRecord";
 import { getSchemaUtils } from "../schema-utils";
 import { BaseRecordSchema, RecordSchema } from "./types";
 
@@ -46,7 +45,7 @@ async function validateAndTransformRecord<TransformedKey extends string | number
     isKeyNumeric: boolean;
     transformKey: (key: string | number) => MaybePromise<MaybeValid<TransformedKey>>;
     transformValue: (value: unknown) => MaybePromise<MaybeValid<TransformedValue>>;
-}): Promise<MaybeValid<OptionalRecord<TransformedKey, TransformedValue>>> {
+}): Promise<MaybeValid<Record<TransformedKey, TransformedValue>>> {
     if (!isPlainObject(value)) {
         return {
             ok: false,
@@ -59,7 +58,7 @@ async function validateAndTransformRecord<TransformedKey extends string | number
         };
     }
 
-    return entries(value).reduce<Promise<MaybeValid<OptionalRecord<TransformedKey, TransformedValue>>>>(
+    return entries(value).reduce<Promise<MaybeValid<Record<TransformedKey, TransformedValue>>>>(
         async (accPromise, [stringKey, value]) => {
             // skip nullish keys
             if (value == null) {
@@ -115,6 +114,6 @@ async function validateAndTransformRecord<TransformedKey extends string | number
                 errors,
             };
         },
-        Promise.resolve({ ok: true, value: {} as OptionalRecord<TransformedKey, TransformedValue> })
+        Promise.resolve({ ok: true, value: {} as Record<TransformedKey, TransformedValue> })
     );
 }

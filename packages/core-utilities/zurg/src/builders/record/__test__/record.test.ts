@@ -1,24 +1,11 @@
-import { itJson, itParse, itSchemaIdentity } from "../../../__test__/utils/itSchema";
+import { itSchemaIdentity } from "../../../__test__/utils/itSchema";
 import { itValidate } from "../../../__test__/utils/itValidate";
-import { enum_ } from "../../enum";
 import { number, string } from "../../primitives";
 import { record } from "../record";
 
 describe("record", () => {
     itSchemaIdentity(record(string(), string()), { hello: "world" });
     itSchemaIdentity(record(number(), string()), { 42: "world" });
-
-    describe("enum keys", () => {
-        itParse("parse()", record(enum_(["A", "B"]), string()), {
-            raw: { A: "world", B: undefined },
-            parsed: { A: "world" } as Record<"A" | "B", string>,
-        });
-
-        itJson("json()", record(enum_(["A", "B"]), string()), {
-            raw: { A: "world" } as Record<"A" | "B", string>,
-            parsed: { A: "world", B: undefined },
-        });
-    });
 
     itValidate(
         "non-record",
