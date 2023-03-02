@@ -301,6 +301,7 @@ export class OpenApiV3Context {
                         this.referenceObjectToTags.add(parameter, tag);
                         this.addAllReferencedSchemasFromParameter(parameter, referencedSchemas);
                     } else if (parameter.schema != null && isReferenceObject(parameter.schema)) {
+                        this.referenceObjectToTags.add(parameter.schema, tag);
                         this.addAllReferencedSchemas(parameter.schema, referencedSchemas);
                     }
                 }

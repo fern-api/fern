@@ -6336,7 +6336,6 @@ exports[`open api converter novu simple 1`] = `
     "messages.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -6365,7 +6364,7 @@ exports[`open api converter novu simple 1`] = `
               "query-parameters": {
                 "channel": {
                   "docs": "The channel for the messages you wish to list",
-                  "type": "optional<__package__.GetMessagesParametersSchema>",
+                  "type": "optional<GetMessagesParametersSchema>",
                 },
                 "limit": {
                   "docs": "The number of messages to fetch, defaults to 10",
@@ -6401,6 +6400,15 @@ exports[`open api converter novu simple 1`] = `
           "docs": "The status enum for the performed action",
           "enum": [
             "deleted",
+          ],
+        },
+        "GetMessagesParametersSchema": {
+          "enum": [
+            "in_app",
+            "email",
+            "sms",
+            "chat",
+            "push",
           ],
         },
       },
