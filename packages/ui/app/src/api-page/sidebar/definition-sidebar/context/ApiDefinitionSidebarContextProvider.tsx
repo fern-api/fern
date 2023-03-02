@@ -1,10 +1,10 @@
-import { FernRegistry } from "@fern-fern/registry";
 import { PropsWithChildren, useCallback } from "react";
+import { ParsedEnvironmentId } from "../../../routes/useCurrentEnvironment";
 import { ApiDefinitionSidebarContext, ApiDefinitionSidebarContextValue } from "./ApiDefinitionSidebarContext";
 
 export declare namespace ApiDefinitionSidebarContextProvider {
     export type Props = PropsWithChildren<{
-        environmentId: FernRegistry.EnvironmentId;
+        environmentId: ParsedEnvironmentId;
     }>;
 }
 

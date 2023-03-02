@@ -1,5 +1,4 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { RiAlbumFill } from "react-icons/ri";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { useTypePath } from "../../routes/useTypePath";
 import { useApiDefinitionSidebarContext } from "./context/useApiDefinitionSidebarContext";
@@ -18,5 +17,5 @@ export const TypeSidebarItem: React.FC<TypeSidebarItem.Props> = ({ typeId }) => 
     const { environmentId } = useApiDefinitionSidebarContext();
     const path = useTypePath({ environmentId, typeId });
 
-    return <SidebarItem path={path} icon={<RiAlbumFill />} title={type.name} />;
+    return <SidebarItem path={path} title={type.name} />;
 };

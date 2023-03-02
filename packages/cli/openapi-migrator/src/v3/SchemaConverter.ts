@@ -241,6 +241,8 @@ export class SchemaConverter {
                 resolvedType = `optional<${resolvedType}>`;
             }
             typeDeclaration = resolvedType;
+        } else {
+            typeDeclaration = "unknown";
         }
 
         if (typeDeclaration != null && schema.description != null) {

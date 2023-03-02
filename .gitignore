@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # fern
 packages/**/generated
+
+# environments
+.env*.local

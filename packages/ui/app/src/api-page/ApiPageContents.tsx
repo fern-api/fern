@@ -1,5 +1,4 @@
-import { Button, Classes } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
+import { Classes } from "@blueprintjs/core";
 import { Pane, ResizeHandlePosition, SplitView } from "@fern-api/split-view";
 import classNames from "classnames";
 import { Header } from "../header/Header";
@@ -16,15 +15,12 @@ export const ApiPageContents: React.FC = () => {
         <div className="flex-1 flex flex-col min-h-0 min-w-0">
             <Header
                 centerContent={
-                    <div className="flex text-lg gap-1">
-                        <div
-                            className={classNames({
-                                [Classes.SKELETON]: apiMetadata.type !== "loaded",
-                            })}
-                        >
-                            {apiMetadata.type === "loaded" ? apiMetadata.value.name : "SKELETON_TEXT"}
-                        </div>
-                        <Button minimal icon={IconNames.CHEVRON_DOWN} />
+                    <div
+                        className={classNames({
+                            [Classes.SKELETON]: apiMetadata.type !== "loaded",
+                        })}
+                    >
+                        {apiMetadata.type === "loaded" ? apiMetadata.value.name : "SKELETON_TEXT"}
                     </div>
                 }
             />

@@ -6,8 +6,8 @@ import "@blueprintjs/select/lib/css/blueprint-select.css";
 import { RoutesWith404 } from "@fern-api/routing-utils";
 import { SplitViewProvider } from "@fern-api/split-view";
 import { ThemeProvider } from "@fern-api/theme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "normalize.css";
-import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route } from "react-router-dom";
 import styles from "./App.module.scss";
 import { StudioRoutes } from "./studio/routes";
@@ -22,7 +22,7 @@ export const App: React.FC = () => {
         <div className={styles.app}>
             <BrowserRouter>
                 <QueryClientProvider client={queryClient}>
-                    <ThemeProvider defaultIsDarkTheme>
+                    <ThemeProvider>
                         <HotkeysProvider>
                             <SplitViewProvider>
                                 <RoutesWith404>

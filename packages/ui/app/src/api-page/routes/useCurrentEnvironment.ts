@@ -1,31 +1,40 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { useMemo } from "react";
 import { matchPath, useLocation } from "react-router-dom";
 import { DefinitionRoutes } from ".";
 import { useAllEnvironments } from "../../queries/useAllEnvironments";
+import { LATEST_VERSION_ENVIRONMENT_PATH_PARAMETER } from "./constants";
+
+export type ParsedEnvironmentId =
+    | { type: "latest" }
+    | { type: "environment"; environmentId: FernRegistry.EnvironmentId };
 
 export function useCurrentEnvironment(): FernRegistry.Environment | undefined {
     const allEnvironments = useAllEnvironments();
     const currentEnvironmentId = useCurrentEnvironmentId();
 
-    if (allEnvironments.type !== "loaded" || currentEnvironmentId == null) {
+    if (allEnvironments.type !== "loaded" || currentEnvironmentId.type !== "environment") {
         return undefined;
     }
-    return allEnvironments.value.environments.find((environment) => environment.id === currentEnvironmentId);
+
+    return allEnvironments.value.environments.find(
+        (environment) => environment.id === currentEnvironmentId.environmentId
+    );
 }
 
-export function useCurrentEnvironmentId(): FernRegistry.EnvironmentId | undefined {
+export function useCurrentEnvironmentId(): ParsedEnvironmentId {
     const location = useLocation();
-    const match = matchPath(DefinitionRoutes.API_ENVIRONMENT.absolutePath, location.pathname);
-    if (match?.params.ENVIRONMENT_ID == null) {
-        return undefined;
-    }
-    return FernRegistry.EnvironmentId(match.params.ENVIRONMENT_ID);
+    return useMemo(() => parseEnvironmentIdFromPath(location.pathname), [location.pathname]);
 }
 
-export function useCurrentEnvironmentIdOrThrow(): FernRegistry.EnvironmentId {
-    const environment = useCurrentEnvironmentId();
-    if (environment == null) {
-        throw new Error("Environment is not in the URL");
+export function parseEnvironmentIdFromPath(path: string): ParsedEnvironmentId {
+    const match = matchPath(`${DefinitionRoutes.API_ENVIRONMENT.absolutePath}/*`, path);
+    if (
+        // default to latest
+        match?.params.ENVIRONMENT_ID == null ||
+        match.params.ENVIRONMENT_ID === LATEST_VERSION_ENVIRONMENT_PATH_PARAMETER
+    ) {
+        return { type: "latest" };
     }
-    return environment;
+    return { type: "environment", environmentId: FernRegistry.EnvironmentId(match.params.ENVIRONMENT_ID) };
 }

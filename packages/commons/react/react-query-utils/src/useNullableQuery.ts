@@ -1,6 +1,6 @@
 import { flatMapLoadable, Loadable, loaded, notStartedLoading } from "@fern-api/loadable";
+import { Query, QueryFunction, QueryKey, UseQueryOptions } from "@tanstack/react-query";
 import { useMemo } from "react";
-import { EnsuredQueryKey, Query, QueryFunction, QueryKey, UseQueryOptions } from "react-query";
 import { TypedQueryKey } from "./TypedQueryKey";
 import { useTypedQuery } from "./useTypedQuery";
 
@@ -21,12 +21,13 @@ export function useNullableQuery<
             if (isNullableQueryKey(context.queryKey)) {
                 return Promise.resolve(NULLABLE_QUERY_RESULT);
             }
-            return queryFn({ ...context, queryKey: context.queryKey as EnsuredQueryKey<TQueryKey> });
+            return queryFn({ ...context, queryKey: context.queryKey as TQueryKey });
         },
         {
             ...options,
 
             // TODO wrap these
+            structuralSharing: undefined,
             queryKeyHashFn: undefined,
             behavior: undefined,
             getPreviousPageParam: undefined,

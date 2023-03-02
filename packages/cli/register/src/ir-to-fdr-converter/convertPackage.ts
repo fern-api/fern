@@ -1,5 +1,6 @@
 import * as Ir from "@fern-fern/ir-model";
 import { FernRegistry } from "@fern-fern/registry";
+import { startCase } from "lodash-es";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
 
 export function convertPackage(
@@ -22,7 +23,7 @@ function convertService(
         (irEndpoint): FernRegistry.EndpointDefinition => ({
             docs: irEndpoint.docs ?? undefined,
             id: irEndpoint.name.originalName,
-            name: irEndpoint.displayName ?? undefined,
+            name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path: {
                 pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map((pathParameter) => ({
                     docs: pathParameter.docs ?? undefined,

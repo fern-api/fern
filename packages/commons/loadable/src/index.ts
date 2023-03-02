@@ -13,7 +13,9 @@ export {
     flatMapLoadable,
     getLoadableValue,
     mapLoadable,
+    mapLoadableArray,
     mapLoadables,
     mapNotFailedLoadableArray,
     visitLoadableArray,
 } from "./utils";
+export { visitLoadable, type LoadableVisitor } from "./visitor";
