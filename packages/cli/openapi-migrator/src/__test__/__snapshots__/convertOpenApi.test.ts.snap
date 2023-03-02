@@ -216,6 +216,7 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Describes the features of a specific coverage element for a person or property, encapsulating the limits, deductibles, and premium information therein. ",
           "extends": undefined,
           "properties": {
+            "deductible": "optional<unknown>",
             "limits": {
               "docs": "A breakout of different limits and sublimits that apply to this coverage item. When the limits property is null, then the coverage described is selected but limits are not applicable for the coverage feature. The ommission of any limit scope indicates that it does not apply to the coverage.",
               "type": "optional<_InlinedType64>",
@@ -223,6 +224,10 @@ exports[`open api converter covie simple 1`] = `
             "name": {
               "docs": "The name of the coverage element being described. This is a coded value offered as a convenience method to avoid the need to introspect code to understand which branch of logic is being evaluated.",
               "type": "optional<string>",
+            },
+            "premium": {
+              "docs": "The amount of premium being charged for this coverage item at the specified limits and deductibles.",
+              "type": "optional<unknown>",
             },
           },
         },
@@ -244,6 +249,7 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Describes a discount which a policyholder is receiving for a particular covered property under a policy. When available, this object also describes the amount of savings.",
           "extends": undefined,
           "properties": {
+            "amount": "optional<unknown>",
             "code": {
               "docs": "The programming-friendly value to indicate the discount being applied. NOTE: We regularly add values to this enumeration, so your code should be able to gracefully handle unexpected enum values (though new values are documented here as they go live).",
               "type": "optional<_InlinedType71>",
@@ -379,6 +385,10 @@ exports[`open api converter covie simple 1`] = `
               "docs": "Unique identifier for the integration.",
               "type": "optional<string>",
             },
+            "is_onboarding": {
+              "docs": "Whether the integration is live, but belongs to a prepaid account that hasn't had its first refill",
+              "type": "optional<unknown>",
+            },
             "key": {
               "docs": "Integration key used in client application initialization.",
               "type": "optional<string>",
@@ -402,9 +412,14 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Describes an entity, person or company, that has a legal interest in a piece of covered property. This could represent a bank or other financial institution who owns a loan/mortgage/lien over a covered property, a landlord who owns the property a tenant is leasing, or some other recognized stakeholder who is entitled to certain information rights from the insurance company regarding the covered property.",
           "extends": undefined,
           "properties": {
+            "address": "optional<unknown>",
             "email_addresses": {
               "docs": "E-Mail addresses used to contact the interested party.",
               "type": "optional<list<EMail>>",
+            },
+            "fax": {
+              "docs": "The Fax Number by which to contact the interested party. Provided in E164 format.",
+              "type": "optional<unknown>",
             },
             "name": "optional<Name>",
             "phone_numbers": {
@@ -629,6 +644,10 @@ exports[`open api converter covie simple 1`] = `
               "docs": "A list of insureds, or policyholders assigned to this policy.",
               "type": "optional<list<Policyholder>>",
             },
+            "premium": {
+              "docs": "An integer indicating the total premium paid for the policy period. This value is null when premium access is not enabled on the customer account or is not able to be determined.",
+              "type": "optional<unknown>",
+            },
             "status": {
               "docs": "A string representation of the policy's current status.",
               "type": "optional<_InlinedType93>",
@@ -641,6 +660,7 @@ exports[`open api converter covie simple 1`] = `
           "docs": "Describes the company or person which is legally listed on, and entitled to benefits from the policy for which they are attached.",
           "extends": undefined,
           "properties": {
+            "address": "optional<unknown>",
             "email_addresses": {
               "docs": "The contact e-mail addresses of the insured, if known.",
               "type": "optional<list<EMail>>",
@@ -718,6 +738,7 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
               "docs": "A list of drivers assigned to this vehicle.",
               "type": "optional<list<Driver>>",
             },
+            "garaging_address": "optional<unknown>",
             "interests": {
               "docs": "The financial institution which presently holds a lien against the vehicle.",
               "type": "optional<list<Interest>>",
@@ -1087,7 +1108,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
           "docs": "A breakout of different limits and sublimits that apply to this coverage item. When the limits property is null, then the coverage described is selected but limits are not applicable for the coverage feature. The ommission of any limit scope indicates that it does not apply to the coverage.",
           "extends": undefined,
           "properties": {
+            "day": "optional<unknown>",
             "duration": "optional<PeriodValue>",
+            "occurrence": "optional<unknown>",
+            "person": "optional<unknown>",
             "term": "optional<CurrencyValue>",
           },
         },
@@ -1201,7 +1225,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
         "_InlinedType73": {
           "docs": "A list of deductibles that apply in addition to the coverage-specific deductibles.",
           "extends": undefined,
-          "properties": {},
+          "properties": {
+            "earthquake": "optional<unknown>",
+            "hail": "optional<unknown>",
+          },
         },
         "_InlinedType74": {
           "docs": "The type of document provided at the corresponding URL.",
@@ -2572,6 +2599,10 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
             "policyholders": {
               "docs": "A list of insureds, or policyholders assigned to this policy.",
               "type": "optional<list<commons.Policyholder>>",
+            },
+            "premium": {
+              "docs": "An integer indicating the total premium paid for the policy period. This value is null when premium access is not enabled on the customer account or is not able to be determined.",
+              "type": "optional<unknown>",
             },
             "status": {
               "docs": "A string representation of the policy's current status.",
@@ -4647,8 +4678,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "extends": undefined,
           "properties": {
             "destinationAmountDetails": "optional<TransactionAmountDetails>",
+            "destinationPaymentDetails": {
+              "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+              "type": "optional<unknown>",
+            },
             "deviceData": "optional<DeviceData>",
             "originAmountDetails": "optional<TransactionAmountDetails>",
+            "originPaymentDetails": {
+              "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+              "type": "optional<unknown>",
+            },
             "productType": {
               "docs": "Type of produce being used by the consumer (ex wallets, payments etc)",
               "type": "optional<string>",
@@ -5001,6 +5040,7 @@ exports[`open api converter partnerstack simple 1`] = `
               "body": {
                 "extends": [
                   "_InlinedType91",
+                  "_InlinedType93",
                 ],
               },
             },
@@ -5111,6 +5151,7 @@ exports[`open api converter partnerstack simple 1`] = `
             },
           },
         },
+        "_InlinedType93": "unknown",
         "_InlinedType94": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
@@ -5396,6 +5437,7 @@ exports[`open api converter partnerstack simple 1`] = `
                 "extends": [
                   "_InlinedType117",
                   "_InlinedType118",
+                  "_InlinedType119",
                 ],
               },
             },
@@ -5556,6 +5598,7 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
             },
           },
         },
+        "_InlinedType119": "unknown",
         "_InlinedType120": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
@@ -6433,6 +6476,10 @@ Typically the Deals experience is handled through a CRM integration like Salesfo
             "type": {
               "docs": "The type of field that will be presented (input, picklist, number ect.)",
               "type": "optional<string>",
+            },
+            "value": {
+              "docs": "The value that was submitted to the field and stored on the target object",
+              "type": "optional<unknown>",
             },
           },
         },
@@ -7474,6 +7521,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "The type of field that will be presented (input, picklist, number ect.)",
               "type": "optional<string>",
             },
+            "value": {
+              "docs": "The value that was submitted to the field and stored on the target object",
+              "type": "optional<unknown>",
+            },
           },
         },
         "_InlinedType191": {
@@ -8197,6 +8248,10 @@ The **partner_key** is retrievable from \`growsumo.data.partner_key\`, which is 
               "docs": "The api name of the field that you wish to update on the partnership",
               "type": "optional<string>",
             },
+            "value": {
+              "docs": "The value you wish to set for the corresponding field api_name",
+              "type": "optional<unknown>",
+            },
           },
         },
         "_InlinedType256": {
@@ -8631,6 +8686,8 @@ These customer reference fields are required, but mutually exclusive
               "body": {
                 "extends": [
                   "_InlinedType315",
+                  "_InlinedType316",
+                  "_InlinedType317",
                 ],
               },
             },
@@ -8719,6 +8776,8 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
+        "_InlinedType316": "unknown",
+        "_InlinedType317": "unknown",
         "_InlinedType318": {
           "docs": "Transaction",
           "extends": [
@@ -8780,6 +8839,7 @@ These customer reference fields are required, but mutually exclusive
               "body": {
                 "extends": [
                   "_InlinedType333",
+                  "_InlinedType335",
                 ],
               },
             },
@@ -8828,6 +8888,7 @@ These customer reference fields are required, but mutually exclusive
               "body": {
                 "extends": [
                   "_InlinedType351",
+                  "_InlinedType353",
                 ],
               },
             },
@@ -8905,6 +8966,7 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
+        "_InlinedType335": "unknown",
         "_InlinedType336": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
@@ -9069,6 +9131,7 @@ These customer reference fields are required, but mutually exclusive
             },
           },
         },
+        "_InlinedType353": "unknown",
         "_InlinedType354": {
           "docs": "Standard fields that are present on all database objects.",
           "extends": undefined,
@@ -11380,6 +11443,11 @@ entitlements with an expiration date.",
 provided by AWS Marketplace when the product listing is created.",
               "type": "optional<string>",
             },
+            "value": {
+              "docs": "The EntitlementValue represents the amount of capacity that the customer is
+entitled to for the product.",
+              "type": "optional<unknown>",
+            },
           },
         },
         "types.Tag": {
@@ -13086,6 +13154,7 @@ exports[`open api converter venice simple 1`] = `
             "created_at": "optional<string>",
             "current_balance": "optional<double>",
             "default_unit": "optional<string>",
+            "external": "optional<unknown>",
             "id": {
               "docs": "Note:
 This is a Primary Key.<pk/>",
@@ -13110,18 +13179,21 @@ This is a Primary Key.<pk/>",
           "extends": undefined,
           "properties": {
             "created_at": "string",
+            "external": "unknown",
             "id": {
               "docs": "Note:
 This is a Primary Key.<pk/>",
               "type": "string",
             },
             "provider_name": "string",
+            "standard": "unknown",
             "updated_at": "string",
           },
         },
         "integration": {
           "extends": undefined,
           "properties": {
+            "config": "unknown",
             "created_at": "string",
             "id": {
               "docs": "Note:
@@ -13141,6 +13213,7 @@ This is a Primary Key.<pk/>",
 This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
               "type": "optional<string>",
             },
+            "destination_state": "unknown",
             "id": {
               "docs": "Note:
 This is a Primary Key.<pk/>",
@@ -13148,11 +13221,13 @@ This is a Primary Key.<pk/>",
             },
             "last_sync_completed_at": "optional<string>",
             "last_sync_started_at": "optional<string>",
+            "link_options": "unknown",
             "source_id": {
               "docs": "Note:
 This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
               "type": "optional<string>",
             },
+            "source_state": "unknown",
             "updated_at": "string",
           },
         },
@@ -13160,6 +13235,7 @@ This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
           "extends": undefined,
           "properties": {
             "created_at": "string",
+            "external": "unknown",
             "id": {
               "docs": "Note:
 This is a Primary Key.<pk/>",
@@ -13172,6 +13248,7 @@ This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
             },
             "provider_name": "string",
             "source_id": "optional<string>",
+            "standard": "unknown",
             "updated_at": "string",
           },
         },
@@ -13179,6 +13256,7 @@ This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
           "extends": undefined,
           "properties": {
             "created_at": "string",
+            "external": "unknown",
             "id": {
               "docs": "Note:
 This is a Primary Key.<pk/>",
@@ -13191,6 +13269,7 @@ This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
             },
             "provider_name": "string",
             "source_id": "optional<string>",
+            "standard": "unknown",
             "updated_at": "string",
           },
         },
@@ -13198,6 +13277,7 @@ This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
           "extends": undefined,
           "properties": {
             "created_at": "string",
+            "external": "unknown",
             "id": {
               "docs": "Note:
 This is a Primary Key.<pk/>",
@@ -13210,6 +13290,7 @@ This is a Foreign Key to \`resource.id\`.<fk table='resource' column='id'/>",
             },
             "provider_name": "string",
             "source_id": "optional<string>",
+            "standard": "unknown",
             "updated_at": "string",
           },
         },
@@ -13236,6 +13317,7 @@ This is a Foreign Key to \`integration.id\`.<fk table='integration' column='id'/
               "type": "optional<string>",
             },
             "provider_name": "string",
+            "settings": "unknown",
             "updated_at": "string",
           },
         },
@@ -13289,6 +13371,7 @@ This is a Foreign Key to \`integration.id\`.<fk table='integration' column='id'/
             "created_at": "optional<string>",
             "date": "optional<string>",
             "description": "optional<string>",
+            "external": "optional<unknown>",
             "external_category": "optional<string>",
             "id": {
               "docs": "Note:
@@ -13297,6 +13380,7 @@ This is a Primary Key.<pk/>",
             },
             "notes": "optional<string>",
             "payee": "optional<string>",
+            "splits": "optional<unknown>",
             "updated_at": "optional<string>",
           },
         },
@@ -14557,6 +14641,7 @@ This is a Primary Key.<pk/>",
             "amount_quantity": "optional<string>",
             "amount_unit": "optional<string>",
             "created_at": "optional<string>",
+            "data": "optional<unknown>",
             "key": "optional<string>",
             "transaction_id": {
               "docs": "Note:

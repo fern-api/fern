@@ -188,6 +188,7 @@ types:
         docs: An indication if the insured is a business or individual.
         type: optional<_InlinedType56>
       name: optional<Name>
+      address: optional<unknown>
       email_addresses:
         docs: The contact e-mail addresses of the insured, if known.
         type: optional<list<EMail>>
@@ -301,6 +302,7 @@ types:
       drivers:
         docs: A list of drivers assigned to this vehicle.
         type: optional<list<Driver>>
+      garaging_address: optional<unknown>
       interests:
         docs: >-
           The financial institution which presently holds a lien against the
@@ -447,6 +449,7 @@ types:
           guarantor, or other.
         type: optional<_InlinedType63>
       name: optional<Name>
+      address: optional<unknown>
       email_addresses:
         docs: E-Mail addresses used to contact the interested party.
         type: optional<list<EMail>>
@@ -455,6 +458,11 @@ types:
           Phone Numbers used to call the interested party. Provided in E164
           format.
         type: optional<list<Phone>>
+      fax:
+        docs: >-
+          The Fax Number by which to contact the interested party. Provided in
+          E164 format.
+        type: optional<unknown>
 
   _InlinedType63:
     docs: >-
@@ -486,6 +494,12 @@ types:
           feature. The ommission of any limit scope indicates that it does not
           apply to the coverage.
         type: optional<_InlinedType64>
+      deductible: optional<unknown>
+      premium:
+        docs: >-
+          The amount of premium being charged for this coverage item at the
+          specified limits and deductibles.
+        type: optional<unknown>
 
   _InlinedType64:
     docs: >-
@@ -495,6 +509,9 @@ types:
       ommission of any limit scope indicates that it does not apply to the
       coverage.
     properties:
+      occurrence: optional<unknown>
+      person: optional<unknown>
+      day: optional<unknown>
       duration: optional<PeriodValue>
       term: optional<CurrencyValue>
 
@@ -633,6 +650,7 @@ types:
       friendly_name:
         docs: A human-readable, friendly name for the discount.
         type: optional<string>
+      amount: optional<unknown>
 
   _InlinedType71:
     docs: >-
@@ -725,7 +743,9 @@ types:
     docs: >-
       A list of deductibles that apply in addition to the coverage-specific
       deductibles.
-    properties: {}
+    properties:
+      hail: optional<unknown>
+      earthquake: optional<unknown>
 
   DocumentRef:
     docs: >-
@@ -850,6 +870,11 @@ types:
         type: optional<string>
       configuration: optional<_InlinedType90>
       policy_requirements: optional<map<string, unknown>>
+      is_onboarding:
+        docs: >-
+          Whether the integration is live, but belongs to a prepaid account that
+          hasn't had its first refill
+        type: optional<unknown>
 
   _InlinedType79:
     docs: String representation of the current status of the integration.
@@ -1017,6 +1042,12 @@ types:
       status:
         docs: A string representation of the policy's current status.
         type: optional<_InlinedType93>
+      premium:
+        docs: >-
+          An integer indicating the total premium paid for the policy period.
+          This value is null when premium access is not enabled on the customer
+          account or is not able to be determined.
+        type: optional<unknown>
       term_length: optional<PeriodValue>
       inception_date:
         docs: >-
@@ -2347,6 +2378,12 @@ types:
       status:
         docs: A string representation of the policy's current status.
         type: optional<_InlinedType1>
+      premium:
+        docs: >-
+          An integer indicating the total premium paid for the policy period.
+          This value is null when premium access is not enabled on the customer
+          account or is not able to be determined.
+        type: optional<unknown>
       term_length: optional<commons.PeriodValue>
       inception_date:
         docs: >-
