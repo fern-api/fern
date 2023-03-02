@@ -111,13 +111,13 @@ service:
             type: optional<string>
           status:
             docs: Filter link status; separate multiple statuses (OR'd) with commas
-            type: optional<_InlinedType43>
+            type: optional<_InlinedType65>
           has_metadata:
             docs: Filter whether a link has metadata attached
             type: optional<boolean>
           policy_type:
             docs: The type of policy linked.
-            type: optional<_InlinedType45>
+            type: optional<_InlinedType67>
           integration_ids:
             docs: >-
               If provided, only show items with any of the specified integration
@@ -146,7 +146,7 @@ service:
       response: commons.Policies
 
 types:
-  _InlinedType44:
+  _InlinedType66:
     enum:
       - new
       - new_with_metadata
@@ -156,7 +156,7 @@ types:
       - broken
       - revoked
 
-  _InlinedType46:
+  _InlinedType68:
     enum:
       - homeowner
       - personal_auto
@@ -186,7 +186,7 @@ types:
     properties:
       type:
         docs: An indication if the insured is a business or individual.
-        type: optional<_InlinedType56>
+        type: optional<_InlinedType80>
       name: optional<Name>
       address: optional<unknown>
       email_addresses:
@@ -201,7 +201,7 @@ types:
           or assumed primary as being the first insured listed on the policy.
         type: optional<boolean>
 
-  _InlinedType56:
+  _InlinedType80:
     docs: An indication if the insured is a business or individual.
     enum:
       - person
@@ -248,11 +248,11 @@ types:
       A universal base object encapsulating the phone number related to another
       object.
     properties:
-      type: optional<_InlinedType57>
+      type: optional<_InlinedType81>
       number: optional<string>
       is_primary: optional<boolean>
 
-  _InlinedType57:
+  _InlinedType81:
     enum:
       - mobile
       - home
@@ -293,12 +293,12 @@ types:
         type: optional<integer>
       usage:
         docs: The intended usage of the vehicle by the insured.
-        type: optional<_InlinedType58>
+        type: optional<_InlinedType82>
       ownership:
         docs: >-
           Whether or not the vehicle specified is owned, leased, or financed by
           the insured.
-        type: optional<_InlinedType59>
+        type: optional<_InlinedType83>
       drivers:
         docs: A list of drivers assigned to this vehicle.
         type: optional<list<Driver>>
@@ -313,19 +313,19 @@ types:
           A list of all coverages that apply to this vehicle. The omission of
           any coverage indicates that coverage was either declined or does not
           apply to this vehicle.
-        type: optional<_InlinedType60>
+        type: optional<_InlinedType84>
       discounts:
         docs: A list of discounts being applied to the premium of this vehicle.
         type: optional<list<Discount>>
 
-  _InlinedType58:
+  _InlinedType82:
     docs: The intended usage of the vehicle by the insured.
     enum:
       - commute
       - pleasure
       - business
 
-  _InlinedType59:
+  _InlinedType83:
     docs: >-
       Whether or not the vehicle specified is owned, leased, or financed by the
       insured.
@@ -334,7 +334,7 @@ types:
       - lease
       - finance
 
-  _InlinedType60:
+  _InlinedType84:
     docs: >-
       A list of all coverages that apply to this vehicle. The omission of any
       coverage indicates that coverage was either declined or does not apply to
@@ -391,10 +391,10 @@ types:
         docs: >-
           The current marital status of the driver, if provided. The \`separated\`
           value includes divorced status.
-        type: optional<_InlinedType61>
+        type: optional<_InlinedType85>
       gender:
         docs: The reported gender of the driver, when provided by the insurer.
-        type: optional<_InlinedType62>
+        type: optional<_InlinedType86>
       age_licensed:
         docs: >-
           The age in which the driver was first licensed, when provided by the
@@ -417,7 +417,7 @@ types:
           listed driver is assumed to be the primary.
         type: optional<boolean>
 
-  _InlinedType61:
+  _InlinedType85:
     docs: >-
       The current marital status of the driver, if provided. The \`separated\`
       value includes divorced status.
@@ -427,7 +427,7 @@ types:
       - separated
       - widowed
 
-  _InlinedType62:
+  _InlinedType86:
     docs: The reported gender of the driver, when provided by the insurer.
     enum:
       - male
@@ -447,7 +447,7 @@ types:
         docs: >-
           The type of interest being described. Such as: lender, landlord,
           guarantor, or other.
-        type: optional<_InlinedType63>
+        type: optional<_InlinedType87>
       name: optional<Name>
       address: optional<unknown>
       email_addresses:
@@ -464,7 +464,7 @@ types:
           E164 format.
         type: optional<unknown>
 
-  _InlinedType63:
+  _InlinedType87:
     docs: >-
       The type of interest being described. Such as: lender, landlord,
       guarantor, or other.
@@ -493,7 +493,7 @@ types:
           described is selected but limits are not applicable for the coverage
           feature. The ommission of any limit scope indicates that it does not
           apply to the coverage.
-        type: optional<_InlinedType64>
+        type: optional<_InlinedType88>
       deductible: optional<unknown>
       premium:
         docs: >-
@@ -501,7 +501,7 @@ types:
           specified limits and deductibles.
         type: optional<unknown>
 
-  _InlinedType64:
+  _InlinedType88:
     docs: >-
       A breakout of different limits and sublimits that apply to this coverage
       item. When the limits property is null, then the coverage described is
@@ -522,12 +522,12 @@ types:
     properties:
       unit:
         docs: The ISO-compatible currency code of the value being represented.
-        type: optional<_InlinedType65>
+        type: optional<_InlinedType89>
       value:
         docs: The amount of currency
         type: optional<double>
 
-  _InlinedType65:
+  _InlinedType89:
     docs: The ISO-compatible currency code of the value being represented.
     enum:
       - USD
@@ -541,7 +541,7 @@ types:
     properties:
       unit:
         docs: Always "other".
-        type: optional<_InlinedType66>
+        type: optional<_InlinedType90>
       value:
         docs: >-
           The form of measure used to calculate the relative value, such as
@@ -555,14 +555,14 @@ types:
           documents. The value may be subjective and specific to the individual
           policyholder as specified in their policy contract and should be
           manually reviewed.
-        type: optional<_InlinedType67>
+        type: optional<_InlinedType91>
 
-  _InlinedType66:
+  _InlinedType90:
     docs: Always "other".
     enum:
       - other
 
-  _InlinedType67:
+  _InlinedType91:
     docs: >-
       The form of measure used to calculate the relative value, such as "actual
       cash value" or "ACV" which looks at the original price or investment and
@@ -587,12 +587,12 @@ types:
     properties:
       unit:
         docs: Always "percentage"
-        type: optional<_InlinedType68>
+        type: optional<_InlinedType92>
       value:
         docs: The percentage amount determined by this value.
         type: optional<double>
 
-  _InlinedType68:
+  _InlinedType92:
     docs: Always "percentage"
     enum:
       - percentage
@@ -604,12 +604,12 @@ types:
     properties:
       unit:
         docs: The distance unit of the value being represented.
-        type: optional<_InlinedType69>
+        type: optional<_InlinedType93>
       value:
         docs: The amount of the distance in the units specified
         type: optional<double>
 
-  _InlinedType69:
+  _InlinedType93:
     docs: The distance unit of the value being represented.
     enum:
       - mile
@@ -622,12 +622,12 @@ types:
     properties:
       unit:
         docs: The scale of time period being represented.
-        type: optional<_InlinedType70>
+        type: optional<_InlinedType94>
       value:
         docs: The amount of time being represented.
         type: optional<integer>
 
-  _InlinedType70:
+  _InlinedType94:
     docs: The scale of time period being represented.
     enum:
       - day
@@ -646,13 +646,13 @@ types:
           NOTE: We regularly add values to this enumeration, so your code should
           be able to gracefully handle unexpected enum values (though new values
           are documented here as they go live).
-        type: optional<_InlinedType71>
+        type: optional<_InlinedType95>
       friendly_name:
         docs: A human-readable, friendly name for the discount.
         type: optional<string>
       amount: optional<unknown>
 
-  _InlinedType71:
+  _InlinedType95:
     docs: >-
       The programming-friendly value to indicate the discount being applied.
       NOTE: We regularly add values to this enumeration, so your code should be
@@ -701,12 +701,12 @@ types:
       address: optional<Address>
       coverages:
         docs: A list of coverages that apply to the location being insured.
-        type: optional<_InlinedType72>
+        type: optional<_InlinedType96>
       other_deductibles:
         docs: >-
           A list of deductibles that apply in addition to the coverage-specific
           deductibles.
-        type: optional<_InlinedType73>
+        type: optional<_InlinedType97>
       discounts:
         docs: A list of discounts being applied to the location.
         type: optional<list<Discount>>
@@ -716,7 +716,7 @@ types:
           guarantors, landlords, or others.
         type: optional<list<Interest>>
 
-  _InlinedType72:
+  _InlinedType96:
     docs: A list of coverages that apply to the location being insured.
     properties:
       dwelling: optional<Coverage>
@@ -739,7 +739,7 @@ types:
       landscaping: optional<Coverage>
       additional_structures: optional<Coverage>
 
-  _InlinedType73:
+  _InlinedType97:
     docs: >-
       A list of deductibles that apply in addition to the coverage-specific
       deductibles.
@@ -755,7 +755,7 @@ types:
     properties:
       type:
         docs: The type of document provided at the corresponding URL.
-        type: optional<_InlinedType74>
+        type: optional<_InlinedType98>
       content_type:
         docs: >-
           The content-type, or mimetype, of the document being conveyed at this
@@ -765,7 +765,7 @@ types:
         docs: The path to retrieve the document described in this object.
         type: optional<string>
 
-  _InlinedType74:
+  _InlinedType98:
     docs: The type of document provided at the corresponding URL.
     enum:
       - declaration
@@ -782,9 +782,9 @@ types:
       filtered_count:
         docs: The unpaginated number of events matching the filter
         type: optional<integer>
-      _embedded: optional<_InlinedType75>
+      _embedded: optional<_InlinedType99>
 
-  _InlinedType75:
+  _InlinedType99:
     properties:
       events: optional<list<Event>>
 
@@ -798,7 +798,7 @@ types:
         type: optional<string>
       event_type:
         docs: An enumerated string representing the type of event that occurred.
-        type: optional<_InlinedType76>
+        type: optional<_InlinedType100>
       occurred_at:
         docs: >-
           The date and time in which the event occurred, represented as an
@@ -807,9 +807,9 @@ types:
       _embedded:
         docs: A collection of the objects in which this event applies to.
         type: optional<map<string, unknown>>
-      _links: optional<_InlinedType78>
+      _links: optional<_InlinedType102>
 
-  _InlinedType76:
+  _InlinedType100:
     docs: An enumerated string representing the type of event that occurred.
     enum:
       - link.created
@@ -830,161 +830,16 @@ types:
       - policy.changed.status
       - policy.changed.premium
 
-  _InlinedType77:
+  _InlinedType101:
     docs: Link to view the full event payload.
     properties:
       href: optional<string>
 
-  _InlinedType78:
+  _InlinedType102:
     properties:
       payload:
         docs: Link to view the full event payload.
-        type: optional<_InlinedType77>
-
-  Integration:
-    docs: >-
-      Represents a connection between a client application and Covie's systems
-      allowing a client users to create and process links.
-    properties:
-      id:
-        docs: Unique identifier for the integration.
-        type: optional<string>
-      key:
-        docs: Integration key used in client application initialization.
-        type: optional<string>
-      name:
-        docs: A descriptive name of the integration.
-        type: optional<string>
-      status:
-        docs: String representation of the current status of the integration.
-        type: optional<_InlinedType85>
-      created_at:
-        docs: >-
-          The date and time, in ISO-8601 format, when the integration was first
-          created.
-        type: optional<string>
-      updated_at:
-        docs: >-
-          The date and time, in ISO-8601 format, when the integration was last
-          updated.
-        type: optional<string>
-      configuration: optional<_InlinedType90>
-      policy_requirements: optional<map<string, unknown>>
-      is_onboarding:
-        docs: >-
-          Whether the integration is live, but belongs to a prepaid account that
-          hasn't had its first refill
-        type: optional<unknown>
-
-  _InlinedType79:
-    docs: String representation of the current status of the integration.
-    enum: &ref_0
-      - active
-      - archived
-
-  _InlinedType80:
-    properties:
-      primary:
-        docs: The primary color, text style color, and background color to use.
-        type: optional<string>
-
-  _InlinedType81:
-    docs: Branding configuration for the embed.
-    properties:
-      logo:
-        docs: Brand logo to be used in the embed.
-        type: optional<string>
-      hide_logo:
-        docs: Hides the logo.
-        type: optional<boolean>
-      colors: optional<_InlinedType80>
-
-  _InlinedType82:
-    properties:
-      agency_logo:
-        docs: URL of agency logo
-        type: optional<string>
-      agency_photo:
-        docs: URL of agent photo
-        type: optional<string>
-
-  _InlinedType83:
-    properties:
-      agency_name: optional<string>
-      agent_name: optional<string>
-      agent_email: optional<string>
-      image_urls: optional<_InlinedType82>
-
-  _InlinedType84:
-    properties:
-      brand:
-        docs: Branding configuration for the embed.
-        type: optional<_InlinedType81>
-      display_name:
-        docs: >-
-          Name to display as application name in the embed, on policy selection
-          and data disclosure screens.
-        type: optional<string>
-      use_name_as_display_name:
-        docs: >-
-          Display the integration's name as the application name in the embed.
-          Cannot be set at the same time as display_name.
-        type: optional<boolean>
-      hosted: optional<_InlinedType83>
-
-  _InlinedType85:
-    docs: String representation of the current status of the integration.
-    enum: *ref_0
-
-  _InlinedType86:
-    properties:
-      primary:
-        docs: The primary color, text style color, and background color to use.
-        type: optional<string>
-
-  _InlinedType87:
-    docs: Branding configuration for the embed.
-    properties:
-      logo:
-        docs: Brand logo to be used in the embed.
-        type: optional<string>
-      hide_logo:
-        docs: Hides the logo.
-        type: optional<boolean>
-      colors: optional<_InlinedType86>
-
-  _InlinedType88:
-    properties:
-      agency_logo:
-        docs: URL of agency logo
-        type: optional<string>
-      agency_photo:
-        docs: URL of agent photo
-        type: optional<string>
-
-  _InlinedType89:
-    properties:
-      agency_name: optional<string>
-      agent_name: optional<string>
-      agent_email: optional<string>
-      image_urls: optional<_InlinedType88>
-
-  _InlinedType90:
-    properties:
-      brand:
-        docs: Branding configuration for the embed.
-        type: optional<_InlinedType87>
-      display_name:
-        docs: >-
-          Name to display as application name in the embed, on policy selection
-          and data disclosure screens.
-        type: optional<string>
-      use_name_as_display_name:
-        docs: >-
-          Display the integration's name as the application name in the embed.
-          Cannot be set at the same time as display_name.
-        type: optional<boolean>
-      hosted: optional<_InlinedType89>
+        type: optional<_InlinedType101>
 
   Policies:
     properties:
@@ -994,9 +849,9 @@ types:
       filtered_count:
         docs: The total number of policies that match the filter.
         type: optional<integer>
-      _embedded: optional<_InlinedType91>
+      _embedded: optional<_InlinedType103>
 
-  _InlinedType91:
+  _InlinedType103:
     properties:
       policies: optional<list<Policy>>
 
@@ -1033,7 +888,7 @@ types:
         type: optional<string>
       line:
         docs: A string indicating the line of business this policy encompasses.
-        type: optional<_InlinedType92>
+        type: optional<_InlinedType104>
       policyholders:
         docs: A list of insureds, or policyholders assigned to this policy.
         type: optional<list<Policyholder>>
@@ -1041,7 +896,7 @@ types:
       locations: optional<list<Location>>
       status:
         docs: A string representation of the policy's current status.
-        type: optional<_InlinedType93>
+        type: optional<_InlinedType105>
       premium:
         docs: >-
           An integer indicating the total premium paid for the policy period.
@@ -1071,7 +926,7 @@ types:
           is null when cancellation is not active or not explicitly indicated by
           the carrier systems and is not guaranteed to be provided in any
           circumstance.
-        type: optional<_InlinedType94>
+        type: optional<_InlinedType106>
       linked_at:
         docs: >-
           The date and time which the policy was initially retrieved. This date
@@ -1086,15 +941,15 @@ types:
         docs: >-
           A polymorphic list of externally linked resources related to this
           policy such as documents or logos for carriers.
-        type: optional<_InlinedType96>
+        type: optional<_InlinedType108>
       _embedded:
         docs: A container for objects wrapped by the current object.
-        type: optional<_InlinedType97>
+        type: optional<_InlinedType109>
       link_id:
         docs: Unique identifier of the link associated to the policy.
         type: optional<string>
 
-  _InlinedType92:
+  _InlinedType104:
     docs: A string indicating the line of business this policy encompasses.
     enum:
       - personal_auto
@@ -1102,7 +957,7 @@ types:
       - renter
       - motorcycle
 
-  _InlinedType93:
+  _InlinedType105:
     docs: A string representation of the policy's current status.
     enum:
       - active
@@ -1110,7 +965,7 @@ types:
       - pending
       - cancelled
 
-  _InlinedType94:
+  _InlinedType106:
     docs: >-
       The determined reason for the cancellation, such as insured_non_payment or
       carrier_non_renew or insured_action. This value is null when cancellation
@@ -1122,12 +977,12 @@ types:
       - insured_requested
       - other
 
-  _InlinedType95:
+  _InlinedType107:
     docs: A link to the logo for the carrier on the policy.
     properties:
       href: optional<string>
 
-  _InlinedType96:
+  _InlinedType108:
     docs: >-
       A polymorphic list of externally linked resources related to this policy
       such as documents or logos for carriers.
@@ -1140,75 +995,30 @@ types:
         type: optional<list<DocumentRef>>
       carrier_logo:
         docs: A link to the logo for the carrier on the policy.
-        type: optional<_InlinedType95>
+        type: optional<_InlinedType107>
 
-  _InlinedType97:
+  _InlinedType109:
     docs: A container for objects wrapped by the current object.
     properties:
       missing_fields:
         docs: A list of policy fields that were unable to be processed.
         type: optional<list<string>>
 
-  Provider:
-    docs: >-
-      Represents a connected insurance partner that can be used to authenticate
-      and return policy data.
+  Links:
     properties:
-      id:
-        docs: The unique identifier of the provider.
-        type: optional<string>
-      name:
-        docs: The friendly name of the provider in question.
-        type: optional<string>
-      _links:
+      count:
+        docs: Total number of results that can be returned.
+        type: optional<integer>
+      filtered_count:
         docs: >-
-          A collection of externally referenced material pertaining to the
-          provider, such as web addresses and images.
-        type: optional<_InlinedType100>
-      _embedded:
-        docs: >-
-          A collection of sub objects that are related to this provider, most
-          commonly consisting of co-branded or sub-issuing providers affiliated
-          with this provider.
-        type: optional<_InlinedType101>
+          If a search filter is applied, this will return the total number of
+          results that match the filter.
+        type: optional<integer>
+      _embedded: optional<_InlinedType110>
 
-  _InlinedType98:
-    docs: The logo image to be used when describing a given provider.
+  _InlinedType110:
     properties:
-      href:
-        docs: The full URL to access the provider's logo.
-        type: optional<string>
-
-  _InlinedType99:
-    docs: A reference to the provider's primary website.
-    properties:
-      href:
-        docs: The full URL of the provider's main website.
-        type: optional<string>
-
-  _InlinedType100:
-    docs: >-
-      A collection of externally referenced material pertaining to the provider,
-      such as web addresses and images.
-    properties:
-      image:
-        docs: The logo image to be used when describing a given provider.
-        type: optional<_InlinedType98>
-      website:
-        docs: A reference to the provider's primary website.
-        type: optional<_InlinedType99>
-
-  _InlinedType101:
-    docs: >-
-      A collection of sub objects that are related to this provider, most
-      commonly consisting of co-branded or sub-issuing providers affiliated with
-      this provider.
-    properties:
-      alternative_providers:
-        docs: >-
-          A collection of alternative providers which a policyholder may have
-          issued policies through this top-level provider.
-        type: optional<list<Provider>>
+      links: optional<list<Link_2>>
 
   Link_2:
     docs: >-
@@ -1237,7 +1047,7 @@ types:
           force. A link's status is an indicator of how new and complete the
           data is and whether or not it is possible to retrieve refreshed
           information.
-        type: optional<_InlinedType109>
+        type: optional<_InlinedType111>
       is_tracked:
         docs: >-
           A flag indicating if the policies provided by this link should be
@@ -1247,7 +1057,7 @@ types:
         docs: >-
           The frequency of which tracking should be performed. This value is
           \`never\` when tracking is disabled.
-        type: optional<_InlinedType110>
+        type: optional<_InlinedType112>
       updated_at:
         docs: The date and time, in ISO-8601 format, when the link was last updated.
         type: optional<string>
@@ -1263,15 +1073,15 @@ types:
           are at most 256 characters. You can have at most 32 metadata keys on a
           link.
         type: optional<map<string, unknown>>
-      _links: optional<_InlinedType114>
+      _links: optional<_InlinedType116>
 
-  _InlinedType102:
+  _InlinedType111:
     docs: >-
       A string representation of the link's current status. This is distinct
       from a policy's status which is an indicator to whether a policy is in
       force. A link's status is an indicator of how new and complete the data is
       and whether or not it is possible to retrieve refreshed information.
-    enum: &ref_1
+    enum:
       - new
       - active
       - document_uploaded
@@ -1279,155 +1089,43 @@ types:
       - revoked
       - stale
 
-  _InlinedType103:
+  _InlinedType112:
     docs: >-
       The frequency of which tracking should be performed. This value is \`never\`
       when tracking is disabled.
-    enum: &ref_2
+    enum:
       - daily
       - weekly
       - monthly
       - never
       - on_demand
 
-  _InlinedType104:
-    docs: Link to retrieve the link's details.
-    properties:
-      href: optional<string>
-
-  _InlinedType105:
-    docs: Link to the carrier's logo.
-    properties:
-      href: optional<string>
-
-  _InlinedType106:
-    properties:
-      href: optional<string>
-      content_type: optional<string>
-
-  _InlinedType107:
-    properties:
-      self:
-        docs: Link to retrieve the link's details.
-        type: optional<_InlinedType104>
-      carrier_logo:
-        docs: Link to the carrier's logo.
-        type: optional<_InlinedType105>
-      uploaded_documents:
-        docs: List of documents uploaded for the link.
-        type: optional<list<_InlinedType106>>
-
-  Links:
-    properties:
-      count:
-        docs: Total number of results that can be returned.
-        type: optional<integer>
-      filtered_count:
-        docs: >-
-          If a search filter is applied, this will return the total number of
-          results that match the filter.
-        type: optional<integer>
-      _embedded: optional<_InlinedType108>
-
-  _InlinedType108:
-    properties:
-      links: optional<list<Link_2>>
-
-  _InlinedType109:
-    docs: >-
-      A string representation of the link's current status. This is distinct
-      from a policy's status which is an indicator to whether a policy is in
-      force. A link's status is an indicator of how new and complete the data is
-      and whether or not it is possible to retrieve refreshed information.
-    enum: *ref_1
-
-  _InlinedType110:
-    docs: >-
-      The frequency of which tracking should be performed. This value is \`never\`
-      when tracking is disabled.
-    enum: *ref_2
-
-  _InlinedType111:
-    docs: Link to retrieve the link's details.
-    properties:
-      href: optional<string>
-
-  _InlinedType112:
-    docs: Link to the carrier's logo.
-    properties:
-      href: optional<string>
-
   _InlinedType113:
+    docs: Link to retrieve the link's details.
     properties:
       href: optional<string>
-      content_type: optional<string>
 
   _InlinedType114:
+    docs: Link to the carrier's logo.
+    properties:
+      href: optional<string>
+
+  _InlinedType115:
+    properties:
+      href: optional<string>
+      content_type: optional<string>
+
+  _InlinedType116:
     properties:
       self:
         docs: Link to retrieve the link's details.
-        type: optional<_InlinedType111>
+        type: optional<_InlinedType113>
       carrier_logo:
         docs: Link to the carrier's logo.
-        type: optional<_InlinedType112>
+        type: optional<_InlinedType114>
       uploaded_documents:
         docs: List of documents uploaded for the link.
-        type: optional<list<_InlinedType113>>
-
-  Webhook:
-    docs: Represents a webhook in the Covie system.
-    properties:
-      id:
-        docs: Unique identifier for the Webhook object.
-        type: optional<string>
-      uri:
-        docs: URI the webhook should make a request to when the event is triggered.
-        type: optional<string>
-      headers:
-        docs: >-
-          List of the headers and their values that should be included in the
-          request.
-        type: optional<map<string, unknown>>
-      is_enabled: optional<boolean>
-      event_types: optional<list<_InlinedType116>>
-      last_response_body:
-        docs: The response from the last request.
-        type: optional<string>
-      last_response_code:
-        docs: The response HTTP code from the last request.
-        type: optional<string>
-      last_called_at:
-        docs: The last time a request was made.
-        type: optional<string>
-      created_at:
-        docs: Date the webhook was created.
-        type: optional<string>
-      updated_at:
-        docs: Date of the last time the webhook was updated.
-        type: optional<string>
-
-  _InlinedType115:
-    enum: &ref_3
-      - link.created
-      - link.changed
-      - link.successful
-      - link.documents.available
-      - link.broken
-      - link.stale
-      - policies.unlinked
-      - policy.activated
-      - policy.cancelling
-      - policy.expired
-      - policy.reinstated
-      - policy.renewed
-      - policy.changed
-      - policy.changed.coverage
-      - policy.changed.insureds
-      - policy.changed.status
-      - policy.changed.premium
-
-  _InlinedType116:
-    enum: *ref_3
+        type: optional<list<_InlinedType115>>
 ",
                 "name": "commons.yml",
                 "type": "file",
@@ -1446,7 +1144,7 @@ service:
       method: POST
       docs: Rebroadcast an event.
       display-name: Rebroadcast Event
-      response: _InlinedType55
+      response: _InlinedType79
 
 types:
   EventBroadcast:
@@ -1474,18 +1172,18 @@ types:
         docs: Contents of the response.
         type: optional<string>
 
-  _InlinedType54:
+  _InlinedType78:
     properties:
       broadcasts:
         docs: List of broadcasts, one per endpoint called
         type: optional<list<EventBroadcast>>
 
-  _InlinedType55:
+  _InlinedType79:
     properties:
       count:
         docs: Number of endpoints called by this re-broadcast
         type: optional<integer>
-      _embedded: optional<_InlinedType54>
+      _embedded: optional<_InlinedType78>
 ",
                 "name": "event.yml",
                 "type": "file",
@@ -1514,7 +1212,7 @@ service:
             type: optional<string>
           status:
             docs: Filter active or archived integrations
-            type: optional<_InlinedType16>
+            type: optional<_InlinedType32>
       response: Integrations
 
     createIntegration:
@@ -1528,8 +1226,8 @@ service:
             name:
               docs: Descriptive name of the integration
               type: string
-            policyRequirements: optional<_InlinedType18>
-            configuration: optional<_InlinedType21>
+            policyRequirements: optional<_InlinedType34>
+            configuration: optional<_InlinedType37>
 
     getIntegration:
       path: /{integration_id}
@@ -1543,7 +1241,7 @@ service:
             valid integration under the application associated with the
             authenticated Client ID and Secret.
           type: string
-      response: commons.Integration_2
+      response: Integration_2
 
     deleteIntegration:
       path: /{integration_id}
@@ -1578,10 +1276,10 @@ service:
               type: optional<string>
             status:
               docs: String representation of the current status of the integration.
-              type: optional<_InlinedType22>
-            configuration: optional<_InlinedType25>
-            policy_requirements: optional<_InlinedType26>
-      response: commons.Integration_2
+              type: optional<_InlinedType38>
+            configuration: optional<_InlinedType41>
+            policy_requirements: optional<_InlinedType42>
+      response: Integration_2
 
     getIntegrationPolicies:
       path: /{integration_id}/policies
@@ -1640,7 +1338,7 @@ service:
             valid integration under the application associated with the
             authenticated Client ID and Secret.
           type: string
-      response: commons.Integration_2
+      response: Integration_2
 
     getIntegrationsIntegrationIdAgencyLogo:
       path: /{integration_id}/agency_logo
@@ -1667,7 +1365,7 @@ service:
             valid integration under the application associated with the
             authenticated Client ID and Secret.
           type: string
-      response: _InlinedType27
+      response: _InlinedType43
 
     deleteIntegrationsIntegrationIdAgencyLogo:
       path: /{integration_id}/agency_logo
@@ -1707,7 +1405,7 @@ service:
             valid integration under the application associated with the
             authenticated Client ID and Secret.
           type: string
-      response: _InlinedType28
+      response: _InlinedType44
 
     deleteIntegrationsIntegrationIdAgentPhoto:
       path: /{integration_id}/agent_photo
@@ -1747,7 +1445,7 @@ service:
             valid integration under the application associated with the
             authenticated Client ID and Secret.
           type: string
-      response: _InlinedType29
+      response: _InlinedType45
 
     deleteIntegrationsIntegrationIdBrandLogo:
       path: /{integration_id}/brand_logo
@@ -1781,32 +1479,238 @@ types:
 
   _InlinedType12:
     properties:
-      integrations: optional<list<commons.Integration>>
+      integrations: optional<list<Integration>>
+
+  Integration:
+    docs: >-
+      Represents a connection between a client application and Covie's systems
+      allowing a client users to create and process links.
+    properties:
+      id:
+        docs: Unique identifier for the integration.
+        type: optional<string>
+      key:
+        docs: Integration key used in client application initialization.
+        type: optional<string>
+      name:
+        docs: A descriptive name of the integration.
+        type: optional<string>
+      status:
+        docs: String representation of the current status of the integration.
+        type: optional<_InlinedType19>
+      created_at:
+        docs: >-
+          The date and time, in ISO-8601 format, when the integration was first
+          created.
+        type: optional<string>
+      updated_at:
+        docs: >-
+          The date and time, in ISO-8601 format, when the integration was last
+          updated.
+        type: optional<string>
+      configuration: optional<_InlinedType24>
+      policy_requirements: optional<map<string, unknown>>
+      is_onboarding:
+        docs: >-
+          Whether the integration is live, but belongs to a prepaid account that
+          hasn't had its first refill
+        type: optional<unknown>
+
+  _InlinedType13:
+    docs: String representation of the current status of the integration.
+    enum: &ref_0
+      - active
+      - archived
+
+  _InlinedType14:
+    properties:
+      primary:
+        docs: The primary color, text style color, and background color to use.
+        type: optional<string>
+
+  _InlinedType15:
+    docs: Branding configuration for the embed.
+    properties:
+      logo:
+        docs: Brand logo to be used in the embed.
+        type: optional<string>
+      hide_logo:
+        docs: Hides the logo.
+        type: optional<boolean>
+      colors: optional<_InlinedType14>
+
+  _InlinedType16:
+    properties:
+      agency_logo:
+        docs: URL of agency logo
+        type: optional<string>
+      agency_photo:
+        docs: URL of agent photo
+        type: optional<string>
+
+  _InlinedType17:
+    properties:
+      agency_name: optional<string>
+      agent_name: optional<string>
+      agent_email: optional<string>
+      image_urls: optional<_InlinedType16>
+
+  _InlinedType18:
+    properties:
+      brand:
+        docs: Branding configuration for the embed.
+        type: optional<_InlinedType15>
+      display_name:
+        docs: >-
+          Name to display as application name in the embed, on policy selection
+          and data disclosure screens.
+        type: optional<string>
+      use_name_as_display_name:
+        docs: >-
+          Display the integration's name as the application name in the embed.
+          Cannot be set at the same time as display_name.
+        type: optional<boolean>
+      hosted: optional<_InlinedType17>
+
+  _InlinedType19:
+    docs: String representation of the current status of the integration.
+    enum: *ref_0
+
+  _InlinedType20:
+    properties:
+      primary:
+        docs: The primary color, text style color, and background color to use.
+        type: optional<string>
+
+  _InlinedType21:
+    docs: Branding configuration for the embed.
+    properties:
+      logo:
+        docs: Brand logo to be used in the embed.
+        type: optional<string>
+      hide_logo:
+        docs: Hides the logo.
+        type: optional<boolean>
+      colors: optional<_InlinedType20>
+
+  _InlinedType22:
+    properties:
+      agency_logo:
+        docs: URL of agency logo
+        type: optional<string>
+      agency_photo:
+        docs: URL of agent photo
+        type: optional<string>
+
+  _InlinedType23:
+    properties:
+      agency_name: optional<string>
+      agent_name: optional<string>
+      agent_email: optional<string>
+      image_urls: optional<_InlinedType22>
+
+  _InlinedType24:
+    properties:
+      brand:
+        docs: Branding configuration for the embed.
+        type: optional<_InlinedType21>
+      display_name:
+        docs: >-
+          Name to display as application name in the embed, on policy selection
+          and data disclosure screens.
+        type: optional<string>
+      use_name_as_display_name:
+        docs: >-
+          Display the integration's name as the application name in the embed.
+          Cannot be set at the same time as display_name.
+        type: optional<boolean>
+      hosted: optional<_InlinedType23>
 
   Providers:
     properties:
       count: optional<integer>
-      _links: optional<_InlinedType14>
-      _embedded: optional<_InlinedType15>
+      _links: optional<_InlinedType26>
+      _embedded: optional<_InlinedType27>
 
-  _InlinedType13:
+  _InlinedType25:
     properties:
       href: optional<string>
 
-  _InlinedType14:
+  _InlinedType26:
     properties:
-      self: optional<_InlinedType13>
+      self: optional<_InlinedType25>
 
-  _InlinedType15:
+  _InlinedType27:
     properties:
-      providers: optional<list<commons.Provider>>
+      providers: optional<list<Provider>>
 
-  _InlinedType17:
+  Provider:
+    docs: >-
+      Represents a connected insurance partner that can be used to authenticate
+      and return policy data.
+    properties:
+      id:
+        docs: The unique identifier of the provider.
+        type: optional<string>
+      name:
+        docs: The friendly name of the provider in question.
+        type: optional<string>
+      _links:
+        docs: >-
+          A collection of externally referenced material pertaining to the
+          provider, such as web addresses and images.
+        type: optional<_InlinedType30>
+      _embedded:
+        docs: >-
+          A collection of sub objects that are related to this provider, most
+          commonly consisting of co-branded or sub-issuing providers affiliated
+          with this provider.
+        type: optional<_InlinedType31>
+
+  _InlinedType28:
+    docs: The logo image to be used when describing a given provider.
+    properties:
+      href:
+        docs: The full URL to access the provider's logo.
+        type: optional<string>
+
+  _InlinedType29:
+    docs: A reference to the provider's primary website.
+    properties:
+      href:
+        docs: The full URL of the provider's main website.
+        type: optional<string>
+
+  _InlinedType30:
+    docs: >-
+      A collection of externally referenced material pertaining to the provider,
+      such as web addresses and images.
+    properties:
+      image:
+        docs: The logo image to be used when describing a given provider.
+        type: optional<_InlinedType28>
+      website:
+        docs: A reference to the provider's primary website.
+        type: optional<_InlinedType29>
+
+  _InlinedType31:
+    docs: >-
+      A collection of sub objects that are related to this provider, most
+      commonly consisting of co-branded or sub-issuing providers affiliated with
+      this provider.
+    properties:
+      alternative_providers:
+        docs: >-
+          A collection of alternative providers which a policyholder may have
+          issued policies through this top-level provider.
+        type: optional<list<Provider>>
+
+  _InlinedType33:
     enum:
       - active
       - archived
 
-  _InlinedType18:
+  _InlinedType34:
     properties:
       effective_date:
         docs: Allow selection of policies that are not effective until a future date
@@ -1815,7 +1719,7 @@ types:
         docs: Allow selection of inactive policies
         type: optional<boolean>
 
-  _InlinedType19:
+  _InlinedType35:
     properties:
       primary:
         docs: >-
@@ -1823,7 +1727,7 @@ types:
           background color to the configured color.
         type: optional<string>
 
-  _InlinedType20:
+  _InlinedType36:
     docs: Branding configuration for the embed.
     properties:
       logo:
@@ -1832,13 +1736,13 @@ types:
       hide_logo:
         docs: Hides the logo.
         type: optional<boolean>
-      colors: optional<_InlinedType19>
+      colors: optional<_InlinedType35>
 
-  _InlinedType21:
+  _InlinedType37:
     properties:
       brand:
         docs: Branding configuration for the embed.
-        type: optional<_InlinedType20>
+        type: optional<_InlinedType36>
       display_name:
         docs: >-
           Name to display as application name in the embed, on policy selection
@@ -1850,13 +1754,13 @@ types:
           Cannot be set at the same time as display_name.
         type: optional<boolean>
 
-  _InlinedType22:
+  _InlinedType38:
     docs: String representation of the current status of the integration.
     enum:
       - active
       - archived
 
-  _InlinedType23:
+  _InlinedType39:
     properties:
       primary:
         docs: >-
@@ -1864,7 +1768,7 @@ types:
           background color to the configured color.
         type: optional<string>
 
-  _InlinedType24:
+  _InlinedType40:
     docs: Branding configuration for the embed.
     properties:
       logo:
@@ -1873,13 +1777,13 @@ types:
       hide_logo:
         docs: Hides the logo.
         type: optional<boolean>
-      colors: optional<_InlinedType23>
+      colors: optional<_InlinedType39>
 
-  _InlinedType25:
+  _InlinedType41:
     properties:
       brand:
         docs: Branding configuration for the embed.
-        type: optional<_InlinedType24>
+        type: optional<_InlinedType40>
       display_name:
         docs: >-
           Name to display as application name in the embed, on policy selection
@@ -1891,7 +1795,7 @@ types:
           Cannot be set at the same time as display_name.
         type: optional<boolean>
 
-  _InlinedType26:
+  _InlinedType42:
     properties:
       allow_inactive:
         docs: >-
@@ -1906,19 +1810,19 @@ types:
           pending policies to be linked. Incompatible with allow_inactive.
         type: optional<string>
 
-  _InlinedType27:
+  _InlinedType43:
     properties:
       href:
         docs: Relative URL to access agency logo
         type: optional<string>
 
-  _InlinedType28:
+  _InlinedType44:
     properties:
       href:
         docs: Relative URL to access agent photo
         type: optional<string>
 
-  _InlinedType29:
+  _InlinedType45:
     properties:
       href:
         docs: Relative URL to access brand logo
@@ -1946,7 +1850,7 @@ service:
         id:
           docs: The unique identifier of the link being inspected.
           type: string
-      response: commons.Link
+      response: Link
 
     deleteLink:
       path: /links/{id}
@@ -1981,8 +1885,8 @@ service:
               docs: >-
                 The frequency of which tracking should be performed. This value
                 is \`never\` when tracking is disabled.
-              type: optional<_InlinedType32>
-      response: commons.Link
+              type: optional<_InlinedType54>
+      response: Link
 
     getLinkPolicies:
       path: /links/{id}/policies
@@ -2022,7 +1926,7 @@ service:
             type: optional<integer>
           event_type:
             docs: Filter events by type.
-            type: optional<_InlinedType33>
+            type: optional<_InlinedType55>
       response: commons.Events
 
     attachLinkDocument:
@@ -2093,13 +1997,13 @@ service:
             type: optional<string>
           status:
             docs: Filter link status; separate multiple statuses (OR'd) with commas
-            type: optional<_InlinedType35>
+            type: optional<_InlinedType57>
           has_metadata:
             docs: Filter whether a link has metadata attached
             type: optional<boolean>
           policy_type:
             docs: The type of policy linked.
-            type: optional<_InlinedType37>
+            type: optional<_InlinedType59>
       response: commons.Links
 
     initializeLinkViaIntegration:
@@ -2136,7 +2040,7 @@ service:
                 uploaded, parsing will be attempted based on the selected
                 carrier.
               type: optional<string>
-      response: commons.Link
+      response: Link
 
     getIntegrationLinksWithPolicies:
       path: /integrations/{integration_id}/links_with_policies
@@ -2183,16 +2087,123 @@ service:
             type: optional<string>
           policy_type:
             docs: The type of policy linked.
-            type: optional<_InlinedType39>
+            type: optional<_InlinedType61>
           policy_filter_type:
             docs: >-
               Show only these types of policies within each link. Does not
               affect which links are shown. Comma-separate to allow multiple
               policy types.
-            type: optional<_InlinedType41>
+            type: optional<_InlinedType63>
       response: LinksWithPolicies
 
 types:
+  Link_2:
+    docs: >-
+      Represents the individual connections between Covie and a Policyholder's
+      account with a carrier and wraps the policies retrieved from it that have
+      been made available to the consumer.
+    properties:
+      id:
+        docs: The unique identifier of the link object.
+        type: optional<string>
+      object:
+        docs: >-
+          String representing the object’s type. Objects of the same type share
+          the same value.
+        type: optional<string>
+      integration_id:
+        docs: The identifier of the integration that was used to establish the link.
+        type: optional<string>
+      policy_count:
+        docs: The number of policies provided by this link.
+        type: optional<integer>
+      status:
+        docs: >-
+          A string representation of the link's current status. This is distinct
+          from a policy's status which is an indicator to whether a policy is in
+          force. A link's status is an indicator of how new and complete the
+          data is and whether or not it is possible to retrieve refreshed
+          information.
+        type: optional<_InlinedType46>
+      is_tracked:
+        docs: >-
+          A flag indicating if the policies provided by this link should be
+          tracked by Covie's monitoring service.
+        type: optional<boolean>
+      tracking_frequency:
+        docs: >-
+          The frequency of which tracking should be performed. This value is
+          \`never\` when tracking is disabled.
+        type: optional<_InlinedType47>
+      updated_at:
+        docs: The date and time, in ISO-8601 format, when the link was last updated.
+        type: optional<string>
+      created_at:
+        docs: >-
+          The date and time, in ISO-8601 format, when the link was first
+          created.
+        type: optional<string>
+      metadata:
+        docs: >-
+          Arbitrary key value pairs set on link creation or PATCH. Keys are
+          alphanumeric plus _, -, ., and space, at most 64 characters. Values
+          are at most 256 characters. You can have at most 32 metadata keys on a
+          link.
+        type: optional<map<string, unknown>>
+      _links: optional<_InlinedType51>
+
+  _InlinedType46:
+    docs: >-
+      A string representation of the link's current status. This is distinct
+      from a policy's status which is an indicator to whether a policy is in
+      force. A link's status is an indicator of how new and complete the data is
+      and whether or not it is possible to retrieve refreshed information.
+    enum:
+      - new
+      - active
+      - document_uploaded
+      - broken
+      - revoked
+      - stale
+
+  _InlinedType47:
+    docs: >-
+      The frequency of which tracking should be performed. This value is \`never\`
+      when tracking is disabled.
+    enum:
+      - daily
+      - weekly
+      - monthly
+      - never
+      - on_demand
+
+  _InlinedType48:
+    docs: Link to retrieve the link's details.
+    properties:
+      href: optional<string>
+
+  _InlinedType49:
+    docs: Link to the carrier's logo.
+    properties:
+      href: optional<string>
+
+  _InlinedType50:
+    properties:
+      href: optional<string>
+      content_type: optional<string>
+
+  _InlinedType51:
+    properties:
+      self:
+        docs: Link to retrieve the link's details.
+        type: optional<_InlinedType48>
+      carrier_logo:
+        docs: Link to the carrier's logo.
+        type: optional<_InlinedType49>
+      uploaded_documents:
+        docs: List of documents uploaded for the link.
+        type: optional<list<_InlinedType50>>
+
   LinksWithPolicies:
     properties:
       count:
@@ -2203,9 +2214,9 @@ types:
           If a search filter is applied, this will return the total number of
           results that match the filter.
         type: optional<integer>
-      _embedded: optional<_InlinedType30>
+      _embedded: optional<_InlinedType52>
 
-  _InlinedType30:
+  _InlinedType52:
     properties:
       links: optional<list<LinkWithPolicies>>
 
@@ -2216,15 +2227,15 @@ types:
       been made available to the consumer.
     extends:
       - commons.Link_2
-      - _InlinedType31
+      - _InlinedType53
 
-  _InlinedType31:
+  _InlinedType53:
     properties:
       policies:
         docs: List of selected policies connected to this link.
         type: optional<list<commons.Policy>>
 
-  _InlinedType32:
+  _InlinedType54:
     docs: >-
       The frequency of which tracking should be performed. This value is \`never\`
       when tracking is disabled.
@@ -2235,7 +2246,7 @@ types:
       - monthly
       - on_demand
 
-  _InlinedType34:
+  _InlinedType56:
     enum:
       - link.created
       - link.successful
@@ -2255,7 +2266,7 @@ types:
       - policy.changed.status
       - policy.changed.premium
 
-  _InlinedType36:
+  _InlinedType58:
     enum:
       - new
       - new_with_metadata
@@ -2265,17 +2276,17 @@ types:
       - broken
       - revoked
 
-  _InlinedType38:
+  _InlinedType60:
     enum: &ref_0
       - homeowner
       - personal_auto
       - renter
       - motorcycle
 
-  _InlinedType40:
+  _InlinedType62:
     enum: *ref_0
 
-  _InlinedType42:
+  _InlinedType64:
     enum:
       - homeowner
       - personal_auto
@@ -2541,7 +2552,7 @@ service:
             type: optional<integer>
           event_type:
             docs: Filter events by type.
-            type: optional<_InlinedType48>
+            type: optional<_InlinedType72>
       response: Webhooks
 
     createWebhook:
@@ -2562,7 +2573,7 @@ service:
                 List of the headers and their values that should be included in
                 the request.
               type: optional<map<string, unknown>>
-            event_types: optional<list<_InlinedType50>>
+            event_types: optional<list<_InlinedType74>>
 
     getWebhook:
       path: /{webhook_id}
@@ -2573,7 +2584,7 @@ service:
         webhook_id:
           docs: Unique identifier of the webhook.
           type: string
-      response: commons.Webhook_2
+      response: Webhook_2
 
     updateWebhook:
       path: /{webhook_id}
@@ -2598,8 +2609,8 @@ service:
                 the request.
               type: optional<map<string, unknown>>
             is_enabled: optional<boolean>
-            event_types: optional<list<_InlinedType51>>
-      response: commons.Webhook_2
+            event_types: optional<list<_InlinedType75>>
+      response: Webhook_2
 
     listWebhookEvents:
       path: /{webhook_id}/events
@@ -2620,7 +2631,7 @@ service:
             type: optional<integer>
           event_type:
             docs: Filter events by type.
-            type: optional<_InlinedType52>
+            type: optional<_InlinedType76>
       response: commons.Events
 
 types:
@@ -2632,35 +2643,47 @@ types:
       filtered_count:
         docs: Total webhooks that match the applied filter.
         type: optional<integer>
-      _embedded: optional<_InlinedType47>
+      _embedded: optional<_InlinedType69>
 
-  _InlinedType47:
+  _InlinedType69:
     properties:
-      webhooks: optional<list<commons.Webhook>>
+      webhooks: optional<list<Webhook>>
 
-  _InlinedType49:
+  Webhook:
+    docs: Represents a webhook in the Covie system.
+    properties:
+      id:
+        docs: Unique identifier for the Webhook object.
+        type: optional<string>
+      uri:
+        docs: URI the webhook should make a request to when the event is triggered.
+        type: optional<string>
+      headers:
+        docs: >-
+          List of the headers and their values that should be included in the
+          request.
+        type: optional<map<string, unknown>>
+      is_enabled: optional<boolean>
+      event_types: optional<list<_InlinedType71>>
+      last_response_body:
+        docs: The response from the last request.
+        type: optional<string>
+      last_response_code:
+        docs: The response HTTP code from the last request.
+        type: optional<string>
+      last_called_at:
+        docs: The last time a request was made.
+        type: optional<string>
+      created_at:
+        docs: Date the webhook was created.
+        type: optional<string>
+      updated_at:
+        docs: Date of the last time the webhook was updated.
+        type: optional<string>
+
+  _InlinedType70:
     enum: &ref_0
       - link.created
-      - link.successful
-      - link.documents.available
-      - link.broken
-      - link.stale
-      - link.changed
-      - policies.unlinked
-      - policy.activated
-      - policy.cancelling
-      - policy.expired
-      - policy.reinstated
-      - policy.renewed
-      - policy.changed
-      - policy.changed.coverage
-      - policy.changed.insureds
-      - policy.changed.status
-      - policy.changed.premium
-
-  _InlinedType50:
-    enum:
-      - link.created
       - link.changed
       - link.successful
       - link.documents.available
@@ -2678,28 +2701,71 @@ types:
       - policy.changed.status
       - policy.changed.premium
 
-  _InlinedType51:
-    enum:
-      - link.created
-      - link.changed
-      - link.successful
-      - link.documents.available
-      - link.broken
-      - link.stale
-      - policies.unlinked
-      - policy.activated
-      - policy.cancelling
-      - policy.expired
-      - policy.reinstated
-      - policy.renewed
-      - policy.changed
-      - policy.changed.coverage
-      - policy.changed.insureds
-      - policy.changed.status
-      - policy.changed.premium
-
-  _InlinedType53:
+  _InlinedType71:
     enum: *ref_0
+
+  _InlinedType73:
+    enum: &ref_1
+      - link.created
+      - link.successful
+      - link.documents.available
+      - link.broken
+      - link.stale
+      - link.changed
+      - policies.unlinked
+      - policy.activated
+      - policy.cancelling
+      - policy.expired
+      - policy.reinstated
+      - policy.renewed
+      - policy.changed
+      - policy.changed.coverage
+      - policy.changed.insureds
+      - policy.changed.status
+      - policy.changed.premium
+
+  _InlinedType74:
+    enum:
+      - link.created
+      - link.changed
+      - link.successful
+      - link.documents.available
+      - link.broken
+      - link.stale
+      - policies.unlinked
+      - policy.activated
+      - policy.cancelling
+      - policy.expired
+      - policy.reinstated
+      - policy.renewed
+      - policy.changed
+      - policy.changed.coverage
+      - policy.changed.insureds
+      - policy.changed.status
+      - policy.changed.premium
+
+  _InlinedType75:
+    enum:
+      - link.created
+      - link.changed
+      - link.successful
+      - link.documents.available
+      - link.broken
+      - link.stale
+      - policies.unlinked
+      - policy.activated
+      - policy.cancelling
+      - policy.expired
+      - policy.reinstated
+      - policy.renewed
+      - policy.changed
+      - policy.changed.coverage
+      - policy.changed.insureds
+      - policy.changed.status
+      - policy.changed.premium
+
+  _InlinedType77:
+    enum: *ref_1
 ",
                 "name": "webhook.yml",
                 "type": "file",
@@ -2774,140 +2840,6 @@ headers: {}
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
-  deviceModel:
-    properties:
-      object:
-        docs: Type of object is always \`deviceModel\`.
-        type: string
-      id:
-        docs: Unique identifier for the deviceModel.
-        type: string
-      brand:
-        docs: The brand of the device model.
-        type: string
-      name:
-        docs: The device model's name.
-        type: string
-      simTypes:
-        docs: List of SIM types supported by this device model.
-        type: list<_InlinedType28>
-      type:
-        docs: The type of the device model.
-        type: _InlinedType29
-
-  _InlinedType28:
-    enum:
-      - eSIM
-      - pSIM
-
-  _InlinedType29:
-    docs: The type of the device model.
-    enum:
-      - car
-      - iot
-      - laptop
-      - router
-      - smartphone
-      - feature-phone
-      - smartwatch
-      - tablet
-      - wearable
-      - other
-
-  device:
-    properties:
-      object:
-        docs: Type of object is always \`device\`.
-        type: string
-      id:
-        docs: Unique identifier for the device.
-        type: string
-      imei:
-        docs: >-
-          The IMEI (international mobile equipment identity) of the device if
-          provided.
-        type: optional<string>
-      model: _InlinedType32
-      name:
-        docs: An optional custom name for the device.
-        type: optional<string>
-      sims:
-        docs: List of SIMs added to this device.
-        type: list<sim>
-      user: _InlinedType33
-      createdAt:
-        docs: Time when the device was created.
-        type: string
-
-  _InlinedType30:
-    enum:
-      - eSIM
-      - pSIM
-
-  _InlinedType31:
-    docs: The type of the device model.
-    enum:
-      - car
-      - iot
-      - laptop
-      - router
-      - smartphone
-      - feature-phone
-      - smartwatch
-      - tablet
-      - wearable
-      - other
-
-  _InlinedType32:
-    properties:
-      object:
-        docs: Type of object is always \`deviceModel\`.
-        type: string
-      id:
-        docs: Unique identifier for the deviceModel.
-        type: string
-      brand:
-        docs: The brand of the device model.
-        type: string
-      name:
-        docs: The device model's name.
-        type: string
-      simTypes:
-        docs: List of SIM types supported by this device model.
-        type: list<_InlinedType30>
-      type:
-        docs: The type of the device model.
-        type: _InlinedType31
-
-  _InlinedType33:
-    properties:
-      object:
-        docs: Type of object is always \`user\`.
-        type: string
-      id:
-        docs: Unique identifier for the user.
-        type: string
-      birthday:
-        docs: The birthday of the user.
-        type: optional<string>
-      email:
-        docs: The primary email address of the user.
-        type: string
-      emailVerified:
-        docs: Whether the user's primary email address is verified or not.
-        type: boolean
-      fullName:
-        docs: The user's full name. Required for some Plans.
-        type: optional<string>
-      preferredLocale:
-        docs: >-
-          The user's locale preference represented as an [IETF language
-          tag](https://en.wikipedia.org/wiki/IETF_language_tag).
-        type: string
-      createdAt:
-        docs: Time when the user was created.
-        type: string
-
   sim:
     properties:
       object:
@@ -2926,22 +2858,22 @@ types:
         type: string
       status:
         docs: The status of the SIM. Can be \`active\` or \`inactive\`.
-        type: _InlinedType34
+        type: _InlinedType48
       type:
         docs: The type of the SIM. Can be \`eSIM\` or \`pSIM\`.
-        type: _InlinedType35
+        type: _InlinedType49
       createdAt:
         docs: Time when the SIM was created.
         type: string
 
-  _InlinedType34:
+  _InlinedType48:
     docs: The status of the SIM. Can be \`active\` or \`inactive\`.
     enum:
       - inactive
       - active
       - retired
 
-  _InlinedType35:
+  _InlinedType49:
     docs: The type of the SIM. Can be \`eSIM\` or \`pSIM\`.
     enum:
       - eSIM
@@ -2973,16 +2905,16 @@ types:
       name:
         docs: The plan's name, meant to be displayable to the users.
         type: string
-      price: _InlinedType36
+      price: _InlinedType50
       provider:
         docs: The ID of the network provider supported by this plan.
         type: string
-      requirements: _InlinedType41
+      requirements: _InlinedType55
       simTypes:
         docs: >-
           List of SIM types supported by this plan. Can be \`eSIM\`, \`pSIM\`, or
           both.
-        type: list<_InlinedType42>
+        type: list<_InlinedType56>
       sms:
         docs: >-
           The SMS allowance included in this plan. A value of \`-1\` indicates
@@ -2991,11 +2923,11 @@ types:
       smsUnit:
         docs: The unit of the sms value is always \`message\`.
         type: string
-      status: _InlinedType43
+      status: _InlinedType57
       tags:
         docs: List of tags describing this plan.
         type: list<string>
-      validity: _InlinedType46
+      validity: _InlinedType60
       voice:
         docs: >-
           The voice call allowance in seconds included in this plan. A value of
@@ -3008,7 +2940,7 @@ types:
         docs: Time when the plan was created.
         type: string
 
-  _InlinedType36:
+  _InlinedType50:
     properties:
       amount:
         docs: >-
@@ -3019,7 +2951,7 @@ types:
         docs: Three-letter ISO 4217 currency code. Must be a supported currency.
         type: string
 
-  _InlinedType37:
+  _InlinedType51:
     docs: >-
       The address requirements that must be fulfilled before a user may purchase
       a subscription.
@@ -3028,7 +2960,7 @@ types:
       - present
       - verified
 
-  _InlinedType38:
+  _InlinedType52:
     docs: >-
       The device requirements that must be fulfilled before a user may purchase
       a subscription.
@@ -3037,7 +2969,7 @@ types:
       - present
       - verified
 
-  _InlinedType39:
+  _InlinedType53:
     docs: >-
       The user birthday requirements that must be fulfilled before a user may
       purchase a subscription.
@@ -3046,7 +2978,7 @@ types:
       - present
       - verified
 
-  _InlinedType40:
+  _InlinedType54:
     docs: >-
       The user full name requirements that must be fulfilled before a user may
       purchase a subscription.
@@ -3055,54 +2987,54 @@ types:
       - present
       - verified
 
-  _InlinedType41:
+  _InlinedType55:
     properties:
       address:
         docs: >-
           The address requirements that must be fulfilled before a user may
           purchase a subscription.
-        type: _InlinedType37
+        type: _InlinedType51
       device:
         docs: >-
           The device requirements that must be fulfilled before a user may
           purchase a subscription.
-        type: _InlinedType38
+        type: _InlinedType52
       user.birthday:
         docs: >-
           The user birthday requirements that must be fulfilled before a user
           may purchase a subscription.
-        type: _InlinedType39
+        type: _InlinedType53
       user.fullName:
         docs: >-
           The user full name requirements that must be fulfilled before a user
           may purchase a subscription.
-        type: _InlinedType40
+        type: _InlinedType54
 
-  _InlinedType42:
+  _InlinedType56:
     enum:
       - eSIM
       - pSIM
 
-  _InlinedType43:
+  _InlinedType57:
     enum:
       - available
       - archived
       - pending
       - draft
 
-  _InlinedType44:
+  _InlinedType58:
     docs: The validity type of this plan, either \`oneTime\` or \`recurring\`.
     enum:
       - oneTime
       - recurring
 
-  _InlinedType45:
+  _InlinedType59:
     docs: The time unit of the subscription period, either \`day\` or \`month\`.
     enum:
       - day
       - month
 
-  _InlinedType46:
+  _InlinedType60:
     properties:
       minimumPeriods:
         docs: >-
@@ -3111,10 +3043,10 @@ types:
         type: integer
       type:
         docs: The validity type of this plan, either \`oneTime\` or \`recurring\`.
-        type: _InlinedType44
+        type: _InlinedType58
       unit:
         docs: The time unit of the subscription period, either \`day\` or \`month\`.
-        type: _InlinedType45
+        type: _InlinedType59
       value:
         docs: >-
           The amount of units (specified in the \`unit\` property) in each
@@ -3139,424 +3071,6 @@ types:
           A human-readable identifier of the coverage configuration, might not
           be unique.
         type: string
-
-  planDocument:
-    properties:
-      object:
-        docs: Type of object is always \`planDocument\`.
-        type: string
-      id:
-        docs: Unique identifier for the given document.
-        type: string
-      name:
-        docs: The name of the document.
-        type: string
-      plan:
-        docs: Unique identifier for the plan associated to this document.
-        type: string
-      type:
-        docs: The MIME type for the given document.
-        type: string
-      url:
-        docs: The URL at which the document can be retrieved.
-        type: string
-      createdAt:
-        docs: The time the document was created.
-        type: string
-
-  porting:
-    properties:
-      object:
-        docs: Type of object is always \`porting\`.
-        type: string
-      id:
-        docs: Unique identifier for the porting.
-        type: string
-      accountNumber:
-        docs: The account number on the donor service provider.
-        type: optional<string>
-      birthday:
-        docs: The birthday of the account holder on the donor service provider.
-        type: optional<string>
-      declinedAttempts:
-        docs: The number of declined porting attempts so far.
-        type: integer
-      donorProvider:
-        docs: The service provider from whom the number is ported.
-        type: _InlinedType47
-      firstName:
-        docs: The first name of the account holder on the donor service provider.
-        type: optional<string>
-      lastName:
-        docs: The last name of the account holder on the donor service provider.
-        type: optional<string>
-      phoneNumber:
-        docs: The phone number to port in E.164 format.
-        type: string
-      provider:
-        docs: The ID of the recipient network provider.
-        type: string
-      recipientProvider:
-        docs: The service provider to whom the number is ported.
-        type: _InlinedType48
-      required:
-        docs: >-
-          List of fields required for the porting to be processable. The fields
-          depend on the donor and recipient providers.
-        type: list<string>
-      status:
-        docs: The current status of the porting.
-        type: _InlinedType49
-      subscription:
-        docs: Unique identifier for the porting subscription.
-        type: optional<string>
-      user:
-        docs: Unique identifier for the user this porting is for.
-        type: string
-      canceledAt:
-        docs: Time when the porting was canceled.
-        type: optional<string>
-      completedAt:
-        docs: Time when the porting was completed.
-        type: optional<string>
-      createdAt:
-        docs: Time when the porting was created.
-        type: string
-      lastDeclinedAt:
-        docs: Time when the porting was last declined.
-        type: optional<string>
-      lastRequestedAt:
-        docs: Time when the porting was last requested.
-        type: optional<string>
-
-  _InlinedType47:
-    docs: The service provider from whom the number is ported.
-    properties:
-      object:
-        docs: Type of object is always \`serviceProvider\`.
-        type: string
-      id:
-        docs: Unique identifier for the service provider.
-        type: string
-      name:
-        docs: The name of the service provider, usually a brand name.
-        type: string
-      recipientProviders:
-        docs: >-
-          List of network providers IDs that can receive portings from the
-          service provider.
-        type: list<string>
-
-  _InlinedType48:
-    docs: The service provider to whom the number is ported.
-    properties:
-      object:
-        docs: Type of object is always \`serviceProvider\`.
-        type: string
-      id:
-        docs: Unique identifier for the service provider.
-        type: string
-      name:
-        docs: The name of the service provider, usually a brand name.
-        type: string
-      recipientProviders:
-        docs: >-
-          List of network providers IDs that can receive portings from the
-          service provider.
-        type: list<string>
-
-  _InlinedType49:
-    docs: The current status of the porting.
-    enum:
-      - draft
-      - pending
-      - requested
-      - declined
-      - completed
-      - canceled
-
-  serviceProvider:
-    properties:
-      object:
-        docs: Type of object is always \`serviceProvider\`.
-        type: string
-      id:
-        docs: Unique identifier for the service provider.
-        type: string
-      name:
-        docs: The name of the service provider, usually a brand name.
-        type: string
-      recipientProviders:
-        docs: >-
-          List of network providers IDs that can receive portings from the
-          service provider.
-        type: list<string>
-
-  project:
-    properties:
-      object:
-        docs: Type of object is always \`project\`.
-        type: string
-      id:
-        docs: Globally unique identifier for the project.
-        type: string
-      domain:
-        docs: The canonical domain to access the project if available.
-        type: optional<string>
-      image:
-        docs: >
-          Small-resolution project icon with an aspect ratio of \`1:1\`.
-          <!-- theme: info -->
-          > #### Preview
-          >
-          > This property is currently in preview and might change in the
-          future.
-          > We’re excited to hear your feedback and ideas. Please send an email
-          > to [support@gigs.com](mailto:support@gigs.com) to share your
-          thoughts.
-        type: optional<string>
-      images:
-        docs: >-
-          Deprecated object of project images. Please use the image property
-          instead.
-        type: _InlinedType50
-      legal:
-        docs: The legal address for the company that manages the project.
-        type: _InlinedType51
-      locales:
-        docs: >-
-          List of supported locales represented as [IETF language
-          tags](https://en.wikipedia.org/wiki/IETF_language_tag), ordered by
-          preference.
-        type: list<string>
-      name:
-        docs: A human-readable name for the project.
-        type: string
-      organization: organization
-      payments:
-        docs: Configuration parameters for the project use of payments.
-        type: _InlinedType53
-      settings:
-        docs: >-
-          Deprecated object of application and integration settings. Please use
-          the new installations endpoints instead.
-        type: map<string, unknown>
-      subscriptionOwner:
-        docs: >-
-          Indicates which entity will be registered as the owner of the
-          subscription with the providers. When \`company\` is selected the legal
-          address associated with the project will be used for the registration.
-        type: _InlinedType54
-      support:
-        docs: Contact details for consumer support requests regarding the project.
-        type: _InlinedType55
-      createdAt:
-        docs: Time when the project was created.
-        type: string
-
-  _InlinedType50:
-    docs: >-
-      Deprecated object of project images. Please use the image property
-      instead.
-    properties:
-      favicon:
-        docs: Small-resolution project favicon with an aspect ratio of \`1:1\`.
-        type: optional<string>
-      icon:
-        docs: Small-resolution project icon with an aspect ratio of \`1:1\`.
-        type: optional<string>
-      logoHorizontal:
-        docs: High-resolution project logo with an aspect ratio of \`7:1\`.
-        type: optional<string>
-
-  _InlinedType51:
-    docs: The legal address for the company that manages the project.
-    properties:
-      name:
-        docs: The company's legal name.
-        type: string
-      city:
-        docs: The city/municipality of the company's legal address.
-        type: string
-      country:
-        docs: The ISO 3166-1 alpha-2 country code for the company's legal address.
-        type: string
-      line1:
-        docs: >-
-          The first line of the company's legal address, e.g. street and house
-          number.
-        type: string
-      line2:
-        docs: The second line of the given street address, e.g. Apartment number.
-        type: optional<string>
-      postalCode:
-        docs: The postal code of the given street address.
-        type: string
-      state:
-        docs: The state/province/region of the given street address.
-        type: optional<string>
-
-  _InlinedType52:
-    docs: The mode in which the payments operate.
-    enum:
-      - live
-      - test
-
-  _InlinedType53:
-    docs: Configuration parameters for the project use of payments.
-    properties:
-      currency:
-        docs: >-
-          Three-letter ISO 4217 currency code representing the currency of the
-          project. Must be a supported currency.
-        type: string
-      mode:
-        docs: The mode in which the payments operate.
-        type: _InlinedType52
-
-  _InlinedType54:
-    docs: >-
-      Indicates which entity will be registered as the owner of the subscription
-      with the providers. When \`company\` is selected the legal address
-      associated with the project will be used for the registration.
-    enum:
-      - user
-      - company
-
-  _InlinedType55:
-    docs: Contact details for consumer support requests regarding the project.
-    properties:
-      email:
-        docs: >-
-          A publicly available email address for consumer support requests
-          regarding the project.
-        type: optional<string>
-      phoneNumber:
-        docs: >-
-          A publicly available phone number in E.164 format for consumer support
-          requests regarding the project.
-        type: optional<string>
-
-  organization:
-    properties:
-      object:
-        docs: Type of object is always \`organization\`.
-        type: string
-      id:
-        docs: Unique identifier for the organization.
-        type: string
-      name:
-        docs: Name for the organization.
-        type: string
-      createdAt:
-        docs: Time when the organization was created.
-        type: string
-
-  subscription:
-    properties:
-      object:
-        docs: Type of object is always \`subscription\`.
-        type: string
-      id:
-        docs: Unique identifier for the subscription.
-        type: string
-      currentPeriod: _InlinedType56
-      phoneNumber:
-        docs: >-
-          The phone number attached to the SIM in E.164 format. Only available
-          for voice plans.
-        type: optional<string>
-      plan: plan
-      porting:
-        docs: >
-          Unique identifier for the porting.
-          <!-- theme: info -->
-          > #### Preview
-          >
-          > This property is currently in preview and might change in the
-          future.
-          > We’re excited to hear your feedback and ideas. Please send an email
-          > to [support@gigs.com](mailto:support@gigs.com) to share your
-          thoughts.
-        type: optional<string>
-      sim: _InlinedType59
-      status:
-        docs: The current status of the subscription.
-        type: _InlinedType60
-      user: user
-      activatedAt:
-        docs: Time when the subscription was activated.
-        type: optional<string>
-      canceledAt:
-        docs: Time when the subscription was canceled.
-        type: optional<string>
-      createdAt:
-        docs: Time when the subscription was created.
-        type: string
-      endedAt:
-        docs: Time when the subscription was ended.
-        type: optional<string>
-      firstUsageAt:
-        docs: Time when the subscription was first used.
-        type: optional<string>
-
-  _InlinedType56:
-    properties:
-      number:
-        docs: Sequence number of the subscription period.
-        type: integer
-      start:
-        docs: Beginning of the current subscription period.
-        type: string
-      end:
-        docs: End of the current subscription period.
-        type: string
-
-  _InlinedType57:
-    docs: The status of the SIM. Can be \`active\` or \`inactive\`.
-    enum:
-      - inactive
-      - active
-      - retired
-
-  _InlinedType58:
-    docs: The type of the SIM. Can be \`eSIM\` or \`pSIM\`.
-    enum:
-      - eSIM
-      - pSIM
-
-  _InlinedType59:
-    properties:
-      object:
-        docs: Type of object is always \`sim\`.
-        type: string
-      id:
-        docs: Unique identifier for the SIM.
-        type: string
-      iccid:
-        docs: >-
-          The ICCID (integrated circuit card identifier) associated with the
-          SIM.
-        type: string
-      provider:
-        docs: The ID of the network provider of the SIM.
-        type: string
-      status:
-        docs: The status of the SIM. Can be \`active\` or \`inactive\`.
-        type: _InlinedType57
-      type:
-        docs: The type of the SIM. Can be \`eSIM\` or \`pSIM\`.
-        type: _InlinedType58
-      createdAt:
-        docs: Time when the SIM was created.
-        type: string
-
-  _InlinedType60:
-    docs: The current status of the subscription.
-    enum:
-      - pending
-      - active
-      - ended
 
   user:
     properties:
@@ -3586,41 +3100,6 @@ types:
       createdAt:
         docs: Time when the user was created.
         type: string
-
-  userAddress:
-    properties:
-      object:
-        docs: Type of object is always \`userAddress\`.
-        type: string
-      id:
-        docs: Unique identifier for the given address.
-        type: string
-      city:
-        docs: The city/municipality of the given street address.
-        type: string
-      country:
-        docs: The ISO 3166-1 alpha-2 country code for the given address.
-        type: string
-      line1:
-        docs: >-
-          The first line of the given street address, e.g. street and house
-          number.
-        type: string
-      line2:
-        docs: The second line of the given street address, e.g. Apartment number.
-        type: optional<string>
-      postalCode:
-        docs: The postal code of the given street address.
-        type: optional<string>
-      state:
-        docs: The state/province/region of the given street address.
-        type: optional<string>
-      user:
-        docs: Unique identifier for the given address user.
-        type: string
-      createdAt:
-        docs: The time the address was created.
-        type: string
 ",
                 "name": "commons.yml",
                 "type": "file",
@@ -3644,7 +3123,7 @@ service:
         id:
           docs: The unique identifier for the device model.
           type: string
-      response: commons.deviceModel
+      response: deviceModel
 
     deviceModelsSearch:
       path: /deviceModels/search
@@ -3659,7 +3138,7 @@ service:
                 The IMEI (international mobile equipment identity) of the
                 corresponding device.
               type: string
-      response: _InlinedType0
+      response: _InlinedType6
 
     deviceModelsList:
       path: /deviceModels
@@ -3685,7 +3164,7 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType3
+      response: _InlinedType9
 
     devicesRetrieve:
       path: /projects/{project}/devices/{id}
@@ -3703,7 +3182,7 @@ service:
         id:
           docs: The unique identifier for the device.
           type: string
-      response: commons.device
+      response: device
 
     devicesDelete:
       path: /projects/{project}/devices/{id}
@@ -3719,7 +3198,7 @@ service:
         id:
           docs: The unique identifier for the device.
           type: string
-      response: commons.device
+      response: device
 
     devicesUpdate:
       path: /projects/{project}/devices/{id}
@@ -3756,7 +3235,7 @@ service:
             user:
               docs: Unique user identifier for the device owner.
               type: optional<string>
-      response: commons.device
+      response: device
 
     devicesSearch:
       path: /projects/{project}/devices/search
@@ -3780,7 +3259,7 @@ service:
                 The IMEI (international mobile equipment identity) of the
                 device.
               type: string
-      response: _InlinedType4
+      response: _InlinedType10
 
     devicesList:
       path: /projects/{project}/devices
@@ -3818,7 +3297,7 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType5
+      response: _InlinedType11
 
     devicesCreate:
       path: /projects/{project}/devices
@@ -3850,52 +3329,148 @@ service:
               type: optional<string>
 
 types:
-  _InlinedType0:
+  deviceModel:
     properties:
       object:
-        docs: Type of object is always \`list\`.
+        docs: Type of object is always \`deviceModel\`.
         type: string
-      items:
-        docs: List of objects of type \`deviceModel\`.
-        type: list<commons.deviceModel>
-      moreItemsAfter:
+      id:
+        docs: Unique identifier for the deviceModel.
+        type: string
+      brand:
+        docs: The brand of the device model.
+        type: string
+      name:
+        docs: The device model's name.
+        type: string
+      simTypes:
+        docs: List of SIM types supported by this device model.
+        type: list<_InlinedType0>
+      type:
+        docs: The type of the device model.
+        type: _InlinedType1
+
+  _InlinedType0:
+    enum:
+      - eSIM
+      - pSIM
+
+  _InlinedType1:
+    docs: The type of the device model.
+    enum:
+      - car
+      - iot
+      - laptop
+      - router
+      - smartphone
+      - feature-phone
+      - smartwatch
+      - tablet
+      - wearable
+      - other
+
+  device:
+    properties:
+      object:
+        docs: Type of object is always \`device\`.
+        type: string
+      id:
+        docs: Unique identifier for the device.
+        type: string
+      imei:
         docs: >-
-          A unique identifier to be used as \`after\` pagination parameter if more
-          items are available sorted after the current batch of items.
+          The IMEI (international mobile equipment identity) of the device if
+          provided.
         type: optional<string>
-      moreItemsBefore:
-        docs: >-
-          A unique identifier to be used as \`before\` pagination parameter if
-          more items are available sorted before the current batch of items.
+      model: _InlinedType4
+      name:
+        docs: An optional custom name for the device.
         type: optional<string>
+      sims:
+        docs: List of SIMs added to this device.
+        type: list<commons.sim>
+      user: _InlinedType5
+      createdAt:
+        docs: Time when the device was created.
+        type: string
+
+  _InlinedType2:
+    enum:
+      - eSIM
+      - pSIM
 
   _InlinedType3:
-    properties:
-      object:
-        docs: Type of object is always \`list\`.
-        type: string
-      items:
-        docs: List of objects of type \`deviceModel\`.
-        type: list<commons.deviceModel>
-      moreItemsAfter:
-        docs: >-
-          A unique identifier to be used as \`after\` pagination parameter if more
-          items are available sorted after the current batch of items.
-        type: optional<string>
-      moreItemsBefore:
-        docs: >-
-          A unique identifier to be used as \`before\` pagination parameter if
-          more items are available sorted before the current batch of items.
-        type: optional<string>
+    docs: The type of the device model.
+    enum:
+      - car
+      - iot
+      - laptop
+      - router
+      - smartphone
+      - feature-phone
+      - smartwatch
+      - tablet
+      - wearable
+      - other
 
   _InlinedType4:
     properties:
       object:
+        docs: Type of object is always \`deviceModel\`.
+        type: string
+      id:
+        docs: Unique identifier for the deviceModel.
+        type: string
+      brand:
+        docs: The brand of the device model.
+        type: string
+      name:
+        docs: The device model's name.
+        type: string
+      simTypes:
+        docs: List of SIM types supported by this device model.
+        type: list<_InlinedType2>
+      type:
+        docs: The type of the device model.
+        type: _InlinedType3
+
+  _InlinedType5:
+    properties:
+      object:
+        docs: Type of object is always \`user\`.
+        type: string
+      id:
+        docs: Unique identifier for the user.
+        type: string
+      birthday:
+        docs: The birthday of the user.
+        type: optional<string>
+      email:
+        docs: The primary email address of the user.
+        type: string
+      emailVerified:
+        docs: Whether the user's primary email address is verified or not.
+        type: boolean
+      fullName:
+        docs: The user's full name. Required for some Plans.
+        type: optional<string>
+      preferredLocale:
+        docs: >-
+          The user's locale preference represented as an [IETF language
+          tag](https://en.wikipedia.org/wiki/IETF_language_tag).
+        type: string
+      createdAt:
+        docs: Time when the user was created.
+        type: string
+
+  _InlinedType6:
+    properties:
+      object:
         docs: Type of object is always \`list\`.
         type: string
       items:
-        docs: List of objects of type \`device\`.
-        type: list<commons.device>
+        docs: List of objects of type \`deviceModel\`.
+        type: list<deviceModel>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -3907,14 +3482,52 @@ types:
           more items are available sorted before the current batch of items.
         type: optional<string>
 
-  _InlinedType5:
+  _InlinedType9:
+    properties:
+      object:
+        docs: Type of object is always \`list\`.
+        type: string
+      items:
+        docs: List of objects of type \`deviceModel\`.
+        type: list<deviceModel>
+      moreItemsAfter:
+        docs: >-
+          A unique identifier to be used as \`after\` pagination parameter if more
+          items are available sorted after the current batch of items.
+        type: optional<string>
+      moreItemsBefore:
+        docs: >-
+          A unique identifier to be used as \`before\` pagination parameter if
+          more items are available sorted before the current batch of items.
+        type: optional<string>
+
+  _InlinedType10:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`device\`.
-        type: list<commons.device>
+        type: list<device>
+      moreItemsAfter:
+        docs: >-
+          A unique identifier to be used as \`after\` pagination parameter if more
+          items are available sorted after the current batch of items.
+        type: optional<string>
+      moreItemsBefore:
+        docs: >-
+          A unique identifier to be used as \`before\` pagination parameter if
+          more items are available sorted before the current batch of items.
+        type: optional<string>
+
+  _InlinedType11:
+    properties:
+      object:
+        docs: Type of object is always \`list\`.
+        type: string
+      items:
+        docs: List of objects of type \`device\`.
+        type: list<device>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -3976,7 +3589,7 @@ service:
         id:
           docs: The unique identifier for the document.
           type: string
-      response: commons.planDocument
+      response: planDocument
 
     planDocumentsList:
       path: /{plan}/documents
@@ -3990,7 +3603,7 @@ service:
         plan:
           docs: The unique identifier for the plan.
           type: string
-      response: _InlinedType6
+      response: _InlinedType12
 
     plansRetrieve:
       path: /{id}
@@ -4069,17 +3682,41 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType9
+      response: _InlinedType15
 
 types:
-  _InlinedType6:
+  planDocument:
+    properties:
+      object:
+        docs: Type of object is always \`planDocument\`.
+        type: string
+      id:
+        docs: Unique identifier for the given document.
+        type: string
+      name:
+        docs: The name of the document.
+        type: string
+      plan:
+        docs: Unique identifier for the plan associated to this document.
+        type: string
+      type:
+        docs: The MIME type for the given document.
+        type: string
+      url:
+        docs: The URL at which the document can be retrieved.
+        type: string
+      createdAt:
+        docs: The time the document was created.
+        type: string
+
+  _InlinedType12:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`planDocument\`.
-        type: list<commons.planDocument>
+        type: list<planDocument>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -4091,7 +3728,7 @@ types:
           more items are available sorted before the current batch of items.
         type: optional<string>
 
-  _InlinedType9:
+  _InlinedType15:
     properties:
       object:
         docs: Type of object is always \`list\`.
@@ -4115,9 +3752,6 @@ types:
               },
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-imports:
-  commons: commons.yml
 
 service:
   auth: false
@@ -4145,7 +3779,7 @@ service:
         id:
           docs: The unique identifier for the porting.
           type: string
-      response: commons.porting
+      response: porting
 
     portingRetrieve:
       path: /projects/{project}/portings/{id}
@@ -4168,7 +3802,7 @@ service:
         id:
           docs: The unique identifier for the porting.
           type: string
-      response: commons.porting
+      response: porting
 
     portingUpdate:
       path: /projects/{project}/portings/{id}
@@ -4227,7 +3861,7 @@ service:
                 The ID of the recipient network provider. This is only updatable
                 when the porting is in a status of: draft
               type: optional<string>
-      response: commons.porting
+      response: porting
 
     portingsList:
       path: /projects/{project}/portings
@@ -4265,7 +3899,7 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType10
+      response: _InlinedType19
 
     portingsCreate:
       path: /projects/{project}/portings
@@ -4344,7 +3978,7 @@ service:
         id:
           docs: The unique identifier for the service provider.
           type: string
-      response: commons.serviceProvider
+      response: serviceProvider
 
     serviceProvidersList:
       path: /serviceProviders
@@ -4365,17 +3999,145 @@ service:
               Only return service providers that have the given network provider
               as supported porting recipient.
             type: optional<string>
-      response: _InlinedType11
+      response: _InlinedType20
 
 types:
-  _InlinedType10:
+  porting:
+    properties:
+      object:
+        docs: Type of object is always \`porting\`.
+        type: string
+      id:
+        docs: Unique identifier for the porting.
+        type: string
+      accountNumber:
+        docs: The account number on the donor service provider.
+        type: optional<string>
+      birthday:
+        docs: The birthday of the account holder on the donor service provider.
+        type: optional<string>
+      declinedAttempts:
+        docs: The number of declined porting attempts so far.
+        type: integer
+      donorProvider:
+        docs: The service provider from whom the number is ported.
+        type: _InlinedType16
+      firstName:
+        docs: The first name of the account holder on the donor service provider.
+        type: optional<string>
+      lastName:
+        docs: The last name of the account holder on the donor service provider.
+        type: optional<string>
+      phoneNumber:
+        docs: The phone number to port in E.164 format.
+        type: string
+      provider:
+        docs: The ID of the recipient network provider.
+        type: string
+      recipientProvider:
+        docs: The service provider to whom the number is ported.
+        type: _InlinedType17
+      required:
+        docs: >-
+          List of fields required for the porting to be processable. The fields
+          depend on the donor and recipient providers.
+        type: list<string>
+      status:
+        docs: The current status of the porting.
+        type: _InlinedType18
+      subscription:
+        docs: Unique identifier for the porting subscription.
+        type: optional<string>
+      user:
+        docs: Unique identifier for the user this porting is for.
+        type: string
+      canceledAt:
+        docs: Time when the porting was canceled.
+        type: optional<string>
+      completedAt:
+        docs: Time when the porting was completed.
+        type: optional<string>
+      createdAt:
+        docs: Time when the porting was created.
+        type: string
+      lastDeclinedAt:
+        docs: Time when the porting was last declined.
+        type: optional<string>
+      lastRequestedAt:
+        docs: Time when the porting was last requested.
+        type: optional<string>
+
+  _InlinedType16:
+    docs: The service provider from whom the number is ported.
+    properties:
+      object:
+        docs: Type of object is always \`serviceProvider\`.
+        type: string
+      id:
+        docs: Unique identifier for the service provider.
+        type: string
+      name:
+        docs: The name of the service provider, usually a brand name.
+        type: string
+      recipientProviders:
+        docs: >-
+          List of network providers IDs that can receive portings from the
+          service provider.
+        type: list<string>
+
+  _InlinedType17:
+    docs: The service provider to whom the number is ported.
+    properties:
+      object:
+        docs: Type of object is always \`serviceProvider\`.
+        type: string
+      id:
+        docs: Unique identifier for the service provider.
+        type: string
+      name:
+        docs: The name of the service provider, usually a brand name.
+        type: string
+      recipientProviders:
+        docs: >-
+          List of network providers IDs that can receive portings from the
+          service provider.
+        type: list<string>
+
+  _InlinedType18:
+    docs: The current status of the porting.
+    enum:
+      - draft
+      - pending
+      - requested
+      - declined
+      - completed
+      - canceled
+
+  serviceProvider:
+    properties:
+      object:
+        docs: Type of object is always \`serviceProvider\`.
+        type: string
+      id:
+        docs: Unique identifier for the service provider.
+        type: string
+      name:
+        docs: The name of the service provider, usually a brand name.
+        type: string
+      recipientProviders:
+        docs: >-
+          List of network providers IDs that can receive portings from the
+          service provider.
+        type: list<string>
+
+  _InlinedType19:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`porting\`.
-        type: list<commons.porting>
+        type: list<porting>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -4387,14 +4149,14 @@ types:
           more items are available sorted before the current batch of items.
         type: optional<string>
 
-  _InlinedType11:
+  _InlinedType20:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`serviceProvider\`.
-        type: list<commons.serviceProvider>
+        type: list<serviceProvider>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -4411,9 +4173,6 @@ types:
               },
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-imports:
-  commons: commons.yml
 
 service:
   auth: false
@@ -4432,7 +4191,7 @@ service:
             The unique identifier for the
             [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
           type: string
-      response: commons.project
+      response: project
 
     projectsCredentialsRetrieve:
       path: /{project}/credentials
@@ -4452,7 +4211,7 @@ service:
             The unique identifier for the
             [project](https://developers.gigs.com/docs/api/b3A6MzMwODcxMzI-retrieve-a-project).
           type: string
-      response: _InlinedType12
+      response: _InlinedType27
 
     projectsList:
       path: ""
@@ -4481,10 +4240,170 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType13
+      response: _InlinedType28
 
 types:
-  _InlinedType12:
+  project:
+    properties:
+      object:
+        docs: Type of object is always \`project\`.
+        type: string
+      id:
+        docs: Globally unique identifier for the project.
+        type: string
+      domain:
+        docs: The canonical domain to access the project if available.
+        type: optional<string>
+      image:
+        docs: >
+          Small-resolution project icon with an aspect ratio of \`1:1\`.
+          <!-- theme: info -->
+          > #### Preview
+          >
+          > This property is currently in preview and might change in the
+          future.
+          > We’re excited to hear your feedback and ideas. Please send an email
+          > to [support@gigs.com](mailto:support@gigs.com) to share your
+          thoughts.
+        type: optional<string>
+      images:
+        docs: >-
+          Deprecated object of project images. Please use the image property
+          instead.
+        type: _InlinedType21
+      legal:
+        docs: The legal address for the company that manages the project.
+        type: _InlinedType22
+      locales:
+        docs: >-
+          List of supported locales represented as [IETF language
+          tags](https://en.wikipedia.org/wiki/IETF_language_tag), ordered by
+          preference.
+        type: list<string>
+      name:
+        docs: A human-readable name for the project.
+        type: string
+      organization: organization
+      payments:
+        docs: Configuration parameters for the project use of payments.
+        type: _InlinedType24
+      settings:
+        docs: >-
+          Deprecated object of application and integration settings. Please use
+          the new installations endpoints instead.
+        type: map<string, unknown>
+      subscriptionOwner:
+        docs: >-
+          Indicates which entity will be registered as the owner of the
+          subscription with the providers. When \`company\` is selected the legal
+          address associated with the project will be used for the registration.
+        type: _InlinedType25
+      support:
+        docs: Contact details for consumer support requests regarding the project.
+        type: _InlinedType26
+      createdAt:
+        docs: Time when the project was created.
+        type: string
+
+  _InlinedType21:
+    docs: >-
+      Deprecated object of project images. Please use the image property
+      instead.
+    properties:
+      favicon:
+        docs: Small-resolution project favicon with an aspect ratio of \`1:1\`.
+        type: optional<string>
+      icon:
+        docs: Small-resolution project icon with an aspect ratio of \`1:1\`.
+        type: optional<string>
+      logoHorizontal:
+        docs: High-resolution project logo with an aspect ratio of \`7:1\`.
+        type: optional<string>
+
+  _InlinedType22:
+    docs: The legal address for the company that manages the project.
+    properties:
+      name:
+        docs: The company's legal name.
+        type: string
+      city:
+        docs: The city/municipality of the company's legal address.
+        type: string
+      country:
+        docs: The ISO 3166-1 alpha-2 country code for the company's legal address.
+        type: string
+      line1:
+        docs: >-
+          The first line of the company's legal address, e.g. street and house
+          number.
+        type: string
+      line2:
+        docs: The second line of the given street address, e.g. Apartment number.
+        type: optional<string>
+      postalCode:
+        docs: The postal code of the given street address.
+        type: string
+      state:
+        docs: The state/province/region of the given street address.
+        type: optional<string>
+
+  _InlinedType23:
+    docs: The mode in which the payments operate.
+    enum:
+      - live
+      - test
+
+  _InlinedType24:
+    docs: Configuration parameters for the project use of payments.
+    properties:
+      currency:
+        docs: >-
+          Three-letter ISO 4217 currency code representing the currency of the
+          project. Must be a supported currency.
+        type: string
+      mode:
+        docs: The mode in which the payments operate.
+        type: _InlinedType23
+
+  _InlinedType25:
+    docs: >-
+      Indicates which entity will be registered as the owner of the subscription
+      with the providers. When \`company\` is selected the legal address
+      associated with the project will be used for the registration.
+    enum:
+      - user
+      - company
+
+  _InlinedType26:
+    docs: Contact details for consumer support requests regarding the project.
+    properties:
+      email:
+        docs: >-
+          A publicly available email address for consumer support requests
+          regarding the project.
+        type: optional<string>
+      phoneNumber:
+        docs: >-
+          A publicly available phone number in E.164 format for consumer support
+          requests regarding the project.
+        type: optional<string>
+
+  organization:
+    properties:
+      object:
+        docs: Type of object is always \`organization\`.
+        type: string
+      id:
+        docs: Unique identifier for the organization.
+        type: string
+      name:
+        docs: Name for the organization.
+        type: string
+      createdAt:
+        docs: Time when the organization was created.
+        type: string
+
+  _InlinedType27:
     properties:
       object:
         docs: Type of object is always \`projectCredentials\`.
@@ -4493,14 +4412,14 @@ types:
         docs: Publishable API key for payment integration.
         type: optional<string>
 
-  _InlinedType13:
+  _InlinedType28:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`project\`.
-        type: list<commons.project>
+        type: list<project>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -4570,8 +4489,8 @@ service:
               type: string
             type:
               docs: Optional type of the SIM card, either \`eSIM\`, \`pSIM\` or both.
-              type: optional<list<_InlinedType14>>
-      response: _InlinedType15
+              type: optional<list<_InlinedType29>>
+      response: _InlinedType30
 
     siMsList:
       path: ""
@@ -4584,7 +4503,7 @@ service:
         query-parameters:
           type:
             docs: The type for the sim to be filtered by.
-            type: optional<_InlinedType17>
+            type: optional<_InlinedType32>
           user:
             docs: The unique identifier for the user to be filtered by.
             type: optional<string>
@@ -4603,7 +4522,7 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType19
+      response: _InlinedType34
 
 types:
   simCredentials:
@@ -4628,12 +4547,12 @@ types:
         docs: Unique identifier for the SIM this credentials are for.
         type: string
 
-  _InlinedType14:
+  _InlinedType29:
     enum:
       - eSIM
       - pSIM
 
-  _InlinedType15:
+  _InlinedType30:
     properties:
       object:
         docs: Type of object is always \`list\`.
@@ -4652,12 +4571,12 @@ types:
           more items are available sorted before the current batch of items.
         type: optional<string>
 
-  _InlinedType18:
+  _InlinedType33:
     enum:
       - eSIM
       - pSIM
 
-  _InlinedType19:
+  _InlinedType34:
     properties:
       object:
         docs: Type of object is always \`list\`.
@@ -4708,7 +4627,7 @@ service:
         id:
           docs: The unique identifier for the subscription.
           type: string
-      response: commons.subscription
+      response: subscription
 
     subscriptionsRetrieve:
       path: /{id}
@@ -4722,7 +4641,7 @@ service:
         id:
           docs: The unique identifier for the subscription.
           type: string
-      response: commons.subscription
+      response: subscription
 
     subscriptionsEnd:
       path: /{id}
@@ -4736,7 +4655,7 @@ service:
         id:
           docs: The unique identifier for the subscription.
           type: string
-      response: commons.subscription
+      response: subscription
 
     subscriptionsResume:
       path: /{id}/resume
@@ -4749,7 +4668,7 @@ service:
         id:
           docs: The unique identifier for the subscription.
           type: string
-      response: commons.subscription
+      response: subscription
 
     subscriptionsList:
       path: ""
@@ -4785,7 +4704,7 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType21
+      response: _InlinedType41
 
     subscriptionsCreate:
       path: ""
@@ -4840,14 +4759,120 @@ service:
               type: optional<string>
 
 types:
-  _InlinedType21:
+  subscription:
+    properties:
+      object:
+        docs: Type of object is always \`subscription\`.
+        type: string
+      id:
+        docs: Unique identifier for the subscription.
+        type: string
+      currentPeriod: _InlinedType35
+      phoneNumber:
+        docs: >-
+          The phone number attached to the SIM in E.164 format. Only available
+          for voice plans.
+        type: optional<string>
+      plan: commons.plan
+      porting:
+        docs: >
+          Unique identifier for the porting.
+          <!-- theme: info -->
+          > #### Preview
+          >
+          > This property is currently in preview and might change in the
+          future.
+          > We’re excited to hear your feedback and ideas. Please send an email
+          > to [support@gigs.com](mailto:support@gigs.com) to share your
+          thoughts.
+        type: optional<string>
+      sim: _InlinedType38
+      status:
+        docs: The current status of the subscription.
+        type: _InlinedType39
+      user: commons.user
+      activatedAt:
+        docs: Time when the subscription was activated.
+        type: optional<string>
+      canceledAt:
+        docs: Time when the subscription was canceled.
+        type: optional<string>
+      createdAt:
+        docs: Time when the subscription was created.
+        type: string
+      endedAt:
+        docs: Time when the subscription was ended.
+        type: optional<string>
+      firstUsageAt:
+        docs: Time when the subscription was first used.
+        type: optional<string>
+
+  _InlinedType35:
+    properties:
+      number:
+        docs: Sequence number of the subscription period.
+        type: integer
+      start:
+        docs: Beginning of the current subscription period.
+        type: string
+      end:
+        docs: End of the current subscription period.
+        type: string
+
+  _InlinedType36:
+    docs: The status of the SIM. Can be \`active\` or \`inactive\`.
+    enum:
+      - inactive
+      - active
+      - retired
+
+  _InlinedType37:
+    docs: The type of the SIM. Can be \`eSIM\` or \`pSIM\`.
+    enum:
+      - eSIM
+      - pSIM
+
+  _InlinedType38:
+    properties:
+      object:
+        docs: Type of object is always \`sim\`.
+        type: string
+      id:
+        docs: Unique identifier for the SIM.
+        type: string
+      iccid:
+        docs: >-
+          The ICCID (integrated circuit card identifier) associated with the
+          SIM.
+        type: string
+      provider:
+        docs: The ID of the network provider of the SIM.
+        type: string
+      status:
+        docs: The status of the SIM. Can be \`active\` or \`inactive\`.
+        type: _InlinedType36
+      type:
+        docs: The type of the SIM. Can be \`eSIM\` or \`pSIM\`.
+        type: _InlinedType37
+      createdAt:
+        docs: Time when the SIM was created.
+        type: string
+
+  _InlinedType39:
+    docs: The current status of the subscription.
+    enum:
+      - pending
+      - active
+      - ended
+
+  _InlinedType41:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`subscription\`.
-        type: list<commons.subscription>
+        type: list<subscription>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -4909,8 +4934,8 @@ service:
               Determines the aggregation method used, defaulting to \`daily\`.
               \`period\` provides a single aggregated value for the time range or
               period requested.
-            type: optional<_InlinedType22>
-      response: _InlinedType24
+            type: optional<_InlinedType42>
+      response: _InlinedType44
 
 types:
   usageRecord:
@@ -4940,12 +4965,12 @@ types:
         docs: Amount of SMS sent and received.
         type: integer
 
-  _InlinedType23:
+  _InlinedType43:
     enum:
       - daily
       - period
 
-  _InlinedType24:
+  _InlinedType44:
     properties:
       object:
         docs: Type of object is always \`list\`.
@@ -4970,9 +4995,6 @@ types:
               {
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports:
-  commons: commons.yml
-
 service:
   auth: false
   base-path: /projects/{project}/users/{user}/addresses
@@ -4995,7 +5017,7 @@ service:
         returned are sorted by creation date, with the most recently created
         addresses appearing first.
       display-name: List all user addresses
-      response: _InlinedType25
+      response: _InlinedType45
 
     userAddressesCreate:
       path: ""
@@ -5044,7 +5066,7 @@ service:
         id:
           docs: The unique identifier for the address.
           type: string
-      response: commons.userAddress
+      response: userAddress
 
     userAddressesDelete:
       path: /{id}
@@ -5055,17 +5077,52 @@ service:
         id:
           docs: The unique identifier for the address.
           type: string
-      response: commons.userAddress
+      response: userAddress
 
 types:
-  _InlinedType25:
+  userAddress:
+    properties:
+      object:
+        docs: Type of object is always \`userAddress\`.
+        type: string
+      id:
+        docs: Unique identifier for the given address.
+        type: string
+      city:
+        docs: The city/municipality of the given street address.
+        type: string
+      country:
+        docs: The ISO 3166-1 alpha-2 country code for the given address.
+        type: string
+      line1:
+        docs: >-
+          The first line of the given street address, e.g. street and house
+          number.
+        type: string
+      line2:
+        docs: The second line of the given street address, e.g. Apartment number.
+        type: optional<string>
+      postalCode:
+        docs: The postal code of the given street address.
+        type: optional<string>
+      state:
+        docs: The state/province/region of the given street address.
+        type: optional<string>
+      user:
+        docs: Unique identifier for the given address user.
+        type: string
+      createdAt:
+        docs: The time the address was created.
+        type: string
+
+  _InlinedType45:
     properties:
       object:
         docs: Type of object is always \`list\`.
         type: string
       items:
         docs: List of objects of type \`userAddress\`.
-        type: list<commons.userAddress>
+        type: list<userAddress>
       moreItemsAfter:
         docs: >-
           A unique identifier to be used as \`after\` pagination parameter if more
@@ -5164,7 +5221,7 @@ service:
             email:
               docs: The primary email address of the user.
               type: string
-      response: _InlinedType26
+      response: _InlinedType46
 
     usersList:
       path: ""
@@ -5190,7 +5247,7 @@ service:
           limit:
             docs: The limit of items to be returned in the list, between 0 and 200.
             type: optional<integer>
-      response: _InlinedType27
+      response: _InlinedType47
 
     usersCreate:
       path: ""
@@ -5223,7 +5280,7 @@ service:
               type: optional<string>
 
 types:
-  _InlinedType26:
+  _InlinedType46:
     properties:
       object:
         docs: Type of object is always \`list\`.
@@ -5242,7 +5299,7 @@ types:
           more items are available sorted before the current batch of items.
         type: optional<string>
 
-  _InlinedType27:
+  _InlinedType47:
     properties:
       object:
         docs: Type of object is always \`list\`.
