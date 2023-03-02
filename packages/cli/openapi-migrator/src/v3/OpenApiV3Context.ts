@@ -299,7 +299,7 @@ export class OpenApiV3Context {
                 for (const parameter of endpoint.definition.parameters) {
                     if (isReferenceObject(parameter)) {
                         this.referenceObjectToTags.add(parameter, tag);
-                        this.addAllReferencedSchemas(parameter, referencedSchemas);
+                        this.addAllReferencedSchemasFromParameter(parameter, referencedSchemas);
                     } else if (parameter.schema != null && isReferenceObject(parameter.schema)) {
                         this.addAllReferencedSchemas(parameter.schema, referencedSchemas);
                     }
@@ -310,6 +310,20 @@ export class OpenApiV3Context {
                 this.referenceObjectToTags.add(referencedSchema, tag);
             }
         }
+    }
+
+    private addAllReferencedSchemasFromParameter(
+        schema: OpenAPIV3.ParameterObject | OpenAPIV3.ReferenceObject,
+        referencedSchemas: Set<OpenAPIV3.ReferenceObject>
+    ) {
+        const resolvedParameter = isReferenceObject(schema) ? this.maybeResolveParameterReference(schema) : schema;
+        if (resolvedParameter == null || resolvedParameter.schema == null) {
+            return;
+        }
+        if (isReferenceObject(resolvedParameter.schema)) {
+            referencedSchemas.add(resolvedParameter.schema);
+        }
+        this.addAllReferencedSchemas(resolvedParameter.schema, referencedSchemas);
     }
 
     private addAllReferencedSchemas(

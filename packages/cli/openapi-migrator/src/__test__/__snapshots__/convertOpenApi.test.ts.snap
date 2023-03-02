@@ -12919,7 +12919,6 @@ exports[`open api converter venice simple 1`] = `
     "account.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -12938,7 +12937,7 @@ exports[`open api converter venice simple 1`] = `
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "CreateAccount",
@@ -12962,7 +12961,7 @@ exports[`open api converter venice simple 1`] = `
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "DeleteAccount",
@@ -12993,7 +12992,7 @@ exports[`open api converter venice simple 1`] = `
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -13050,7 +13049,7 @@ exports[`open api converter venice simple 1`] = `
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "UpdateAccount",
@@ -13098,6 +13097,14 @@ This is a Primary Key.<pk/>",
             "type": "optional<string>",
             "updated_at": "optional<string>",
           },
+        },
+        "count": {
+          "enum": [
+            {
+              "name": "None",
+              "value": "count=none",
+            },
+          ],
         },
         "institution": {
           "extends": undefined,
@@ -13232,6 +13239,30 @@ This is a Foreign Key to \`integration.id\`.<fk table='integration' column='id'/
             "updated_at": "string",
           },
         },
+        "return": {
+          "enum": [
+            {
+              "name": "Representation",
+              "value": "return=representation",
+            },
+            {
+              "name": "Minimal",
+              "value": "return=minimal",
+            },
+            {
+              "name": "None",
+              "value": "return=none",
+            },
+            {
+              "name": "Ignore_Duplicates",
+              "value": "resolution=ignore-duplicates",
+            },
+            {
+              "name": "Merge_Duplicates",
+              "value": "resolution=merge-duplicates",
+            },
+          ],
+        },
         "transaction": {
           "docs": "TODO: Add description of transaction data type here...
 
@@ -13274,7 +13305,6 @@ This is a Primary Key.<pk/>",
     "institution.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13290,7 +13320,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "CreateInstitution",
@@ -13311,7 +13341,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "DeleteInstitution",
@@ -13334,7 +13364,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -13383,7 +13413,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "UpdateInstitution",
@@ -13404,7 +13434,6 @@ This is a Primary Key.<pk/>",
     "integration.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13420,7 +13449,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "CreateIntegration",
@@ -13441,7 +13470,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "DeleteIntegration",
@@ -13463,7 +13492,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -13511,7 +13540,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "UpdateIntegration",
@@ -13546,7 +13575,6 @@ This is a Primary Key.<pk/>",
     "pipeline.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13562,7 +13590,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "CreatePipeline",
@@ -13583,7 +13611,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "DeletePipeline",
@@ -13610,7 +13638,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -13663,7 +13691,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "update_pipeline",
@@ -13688,7 +13716,6 @@ This is a Primary Key.<pk/>",
     "rawAccount.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13704,7 +13731,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "create_raw_account",
@@ -13725,7 +13752,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "delete_raw_account",
@@ -13750,7 +13777,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -13801,7 +13828,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "update_raw_account",
@@ -13824,7 +13851,6 @@ This is a Primary Key.<pk/>",
     "rawCommodity.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13840,7 +13866,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "create_raw_commodity",
@@ -13861,7 +13887,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "delete_raw_commodity",
@@ -13886,7 +13912,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -13937,7 +13963,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "update_raw_commodity",
@@ -13960,7 +13986,6 @@ This is a Primary Key.<pk/>",
     "rawTransaction.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -13976,7 +14001,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "create_raw_transaction",
@@ -13997,7 +14022,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "delete_raw_transaction",
@@ -14022,7 +14047,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -14073,7 +14098,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "update_raw_transaction",
@@ -14096,7 +14121,6 @@ This is a Primary Key.<pk/>",
     "resource.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -14112,7 +14136,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "create_resource",
@@ -14133,7 +14157,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "delete_resource",
@@ -14160,7 +14184,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -14213,7 +14237,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "update_resource",
@@ -14238,7 +14262,6 @@ This is a Primary Key.<pk/>",
     "transaction.yml": {
       "imports": {
         "commons": "commons.yml",
-        "root": "__package__.yml",
       },
       "service": {
         "auth": false,
@@ -14268,7 +14291,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "create_transaction",
@@ -14313,7 +14336,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "create_transaction",
@@ -14348,7 +14371,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.return>",
+                  "type": "optional<commons.return>",
                 },
               },
               "name": "delete_transaction",
@@ -14392,7 +14415,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
@@ -14444,7 +14467,7 @@ This is a Primary Key.<pk/>",
     },
     "transactionSplit.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "commons": "commons.yml",
       },
       "service": {
         "auth": false,
@@ -14469,7 +14492,7 @@ This is a Primary Key.<pk/>",
               "headers": {
                 "Prefer": {
                   "docs": "Preference",
-                  "type": "optional<__package__.count>",
+                  "type": "optional<commons.count>",
                 },
                 "Range": {
                   "docs": "Limiting and Pagination",
