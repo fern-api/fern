@@ -21,9 +21,7 @@
             }
           }
         },
-        "tags": [
-          "inbound-parse"
-        ],
+        "tags": ["inbound-parse"],
         "x-request-name": "InboundParseController_getMxRecordStatusRequest"
       }
     },
@@ -44,9 +42,7 @@
             }
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_getCurrentEnvironmentRequest"
       }
     },
@@ -77,9 +73,7 @@
             }
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_createEnvironmentRequest"
       },
       "get": {
@@ -101,9 +95,7 @@
             }
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_getMyEnvironmentsRequest"
       }
     },
@@ -136,9 +128,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_updateMyEnvironmentRequest"
       }
     },
@@ -162,9 +152,7 @@
             }
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_getOrganizationApiKeysRequest"
       }
     },
@@ -188,9 +176,7 @@
             }
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_regenerateOrganizationApiKeysRequest"
       }
     },
@@ -221,9 +207,7 @@
             }
           }
         },
-        "tags": [
-          "Environments"
-        ],
+        "tags": ["Environments"],
         "x-request-name": "EnvironmentsController_updateWidgetSettingsRequest"
       }
     },
@@ -254,9 +238,7 @@
             }
           }
         },
-        "tags": [
-          "Notification groups"
-        ],
+        "tags": ["Notification groups"],
         "x-request-name": "NotificationGroupsController_createNotificationGroupRequest"
       },
       "get": {
@@ -278,9 +260,7 @@
             }
           }
         },
-        "tags": [
-          "Notification groups"
-        ],
+        "tags": ["Notification groups"],
         "x-request-name": "NotificationGroupsController_getNotificationGroupsRequest"
       }
     },
@@ -330,9 +310,7 @@
             }
           }
         },
-        "tags": [
-          "Changes"
-        ],
+        "tags": ["Changes"],
         "x-request-name": "ChangesController_getChangesRequest"
       }
     },
@@ -353,9 +331,7 @@
             }
           }
         },
-        "tags": [
-          "Changes"
-        ],
+        "tags": ["Changes"],
         "x-request-name": "ChangesController_getChangesCountRequest"
       }
     },
@@ -379,9 +355,7 @@
             }
           }
         },
-        "tags": [
-          "Changes"
-        ],
+        "tags": ["Changes"],
         "x-request-name": "ChangesController_bulkApplyDiffRequest"
       }
     },
@@ -414,9 +388,7 @@
             }
           }
         },
-        "tags": [
-          "Changes"
-        ],
+        "tags": ["Changes"],
         "x-request-name": "ChangesController_applyDiffRequest"
       }
     },
@@ -448,9 +420,7 @@
             }
           }
         },
-        "tags": [
-          "Layouts"
-        ],
+        "tags": ["Layouts"],
         "x-request-name": "LayoutsController_createLayoutRequest"
       },
       "get": {
@@ -491,10 +461,7 @@
             "in": "query",
             "description": "Direction of the sorting query param. Either ascending (1) or descending (-1)",
             "schema": {
-              "enum": [
-                "ASC",
-                -1
-              ],
+              "enum": ["ASC", -1],
               "type": "number"
             }
           }
@@ -514,9 +481,7 @@
             "description": "Page size can not be larger than the page size limit."
           }
         },
-        "tags": [
-          "Layouts"
-        ],
+        "tags": ["Layouts"],
         "x-request-name": "LayoutsController_filterLayoutsRequest"
       }
     },
@@ -550,9 +515,7 @@
             "description": "The layout with the layoutId provided does not exist in the database."
           }
         },
-        "tags": [
-          "Layouts"
-        ],
+        "tags": ["Layouts"],
         "x-request-name": "LayoutsController_getLayoutRequest"
       },
       "delete": {
@@ -580,9 +543,7 @@
             "description": "Either you are trying to delete a layout that is being used or a layout that is the default in the environment."
           }
         },
-        "tags": [
-          "Layouts"
-        ],
+        "tags": ["Layouts"],
         "x-request-name": "LayoutsController_deleteLayoutRequest"
       },
       "patch": {
@@ -630,9 +591,7 @@
             "description": "One default layout is needed. If you are trying to turn a default layout as not default, you should turn a different layout as default first and automatically it will be done by the system."
           }
         },
-        "tags": [
-          "Layouts"
-        ],
+        "tags": ["Layouts"],
         "x-request-name": "LayoutsController_updateLayoutRequest"
       }
     },
@@ -659,9 +618,7 @@
             "description": "The layout with the layoutId provided does not exist in the database so it can not be set as the default for the environment."
           }
         },
-        "tags": [
-          "Layouts"
-        ],
+        "tags": ["Layouts"],
         "x-request-name": "LayoutsController_setDefaultLayoutRequest"
       }
     },
@@ -702,9 +659,7 @@
             }
           }
         },
-        "tags": [
-          "Execution Details"
-        ],
+        "tags": ["Execution Details"],
         "x-request-name": "ExecutionDetailsController_getExecutionDetailsForNotificationRequest"
       }
     },
@@ -745,9 +700,7 @@
             }
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_getNotificationTemplatesRequest"
       },
       "post": {
@@ -776,9 +729,7 @@
             }
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_createNotificationTemplatesRequest"
       }
     },
@@ -818,9 +769,7 @@
             }
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_updateTemplateByIdRequest"
       },
       "delete": {
@@ -848,9 +797,7 @@
             }
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_deleteTemplateByIdRequest"
       },
       "get": {
@@ -878,9 +825,7 @@
             }
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_getNotificationTemplateByIdRequest"
       }
     },
@@ -902,9 +847,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_getNotificationTemplateBlueprintByIdRequest"
       },
       "post": {
@@ -924,9 +867,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_createNotificationTemplateFromBlueprintByIdRequest"
       }
     },
@@ -966,9 +907,7 @@
             }
           }
         },
-        "tags": [
-          "Notification templates"
-        ],
+        "tags": ["Notification templates"],
         "x-request-name": "NotificationTemplateController_changeActiveStatusRequest"
       }
     },
@@ -992,9 +931,7 @@
             }
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_getIntegrationsRequest"
       },
       "post": {
@@ -1023,9 +960,7 @@
             }
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_createIntegrationRequest"
       }
     },
@@ -1049,9 +984,7 @@
             }
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_getActiveIntegrationsRequest"
       }
     },
@@ -1074,9 +1007,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_getWebhookSupportStatusRequest"
       }
     },
@@ -1116,9 +1047,7 @@
             }
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_updateIntegrationByIdRequest"
       },
       "delete": {
@@ -1149,9 +1078,7 @@
             }
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_removeIntegrationRequest"
       }
     },
@@ -1173,9 +1100,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_getProviderLimitRequest"
       }
     },
@@ -1188,9 +1113,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Integrations"
-        ],
+        "tags": ["Integrations"],
         "x-request-name": "IntegrationsController_getInAppActivatedRequest"
       }
     },
@@ -1222,9 +1145,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "x-request-name": "EventsController_trackEventRequest"
       }
     },
@@ -1259,9 +1180,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "x-request-name": "EventsController_triggerBulkEventsRequest"
       }
     },
@@ -1293,9 +1212,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "x-request-name": "EventsController_trackEventToAllRequest"
       }
     },
@@ -1326,9 +1243,7 @@
             }
           }
         },
-        "tags": [
-          "Events"
-        ],
+        "tags": ["Events"],
         "x-request-name": "EventsController_cancelDelayedRequest"
       }
     },
@@ -1360,9 +1275,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_getSubscribersRequest"
       },
       "post": {
@@ -1392,9 +1305,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_createSubscriberRequest"
       }
     },
@@ -1425,9 +1336,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_getSubscriberRequest"
       },
       "put": {
@@ -1466,9 +1375,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_updateSubscriberRequest"
       },
       "delete": {
@@ -1497,9 +1404,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_removeSubscriberRequest"
       }
     },
@@ -1540,9 +1445,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_updateSubscriberChannelRequest"
       }
     },
@@ -1583,9 +1486,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_updateSubscriberOnlineFlagRequest"
       }
     },
@@ -1618,9 +1519,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_getSubscriberPreferenceRequest"
       }
     },
@@ -1668,9 +1567,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_updateSubscriberPreferenceRequest"
       }
     },
@@ -1724,9 +1621,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_getNotificationsFeedRequest"
       }
     },
@@ -1764,9 +1659,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_getUnseenCountRequest"
       }
     },
@@ -1806,9 +1699,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_markMessageAsSeenRequest"
       }
     },
@@ -1848,9 +1739,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_markMessageAsRequest"
       }
     },
@@ -1896,9 +1785,7 @@
             }
           }
         },
-        "tags": [
-          "Subscribers"
-        ],
+        "tags": ["Subscribers"],
         "x-request-name": "SubscribersController_markActionAsSeenRequest"
       }
     },
@@ -1930,9 +1817,7 @@
             }
           }
         },
-        "tags": [
-          "Topics"
-        ],
+        "tags": ["Topics"],
         "x-request-name": "TopicsController_createTopicRequest"
       },
       "get": {
@@ -1980,9 +1865,7 @@
             }
           }
         },
-        "tags": [
-          "Topics"
-        ],
+        "tags": ["Topics"],
         "x-request-name": "TopicsController_filterTopicsRequest"
       }
     },
@@ -2016,9 +1899,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Topics"
-        ],
+        "tags": ["Topics"],
         "x-request-name": "TopicsController_addSubscribersRequest"
       }
     },
@@ -2052,9 +1933,7 @@
             "description": ""
           }
         },
-        "tags": [
-          "Topics"
-        ],
+        "tags": ["Topics"],
         "x-request-name": "TopicsController_removeSubscribersRequest"
       }
     },
@@ -2085,9 +1964,7 @@
             }
           }
         },
-        "tags": [
-          "Topics"
-        ],
+        "tags": ["Topics"],
         "x-request-name": "TopicsController_getTopicRequest"
       },
       "patch": {
@@ -2126,9 +2003,7 @@
             }
           }
         },
-        "tags": [
-          "Topics"
-        ],
+        "tags": ["Topics"],
         "x-request-name": "TopicsController_renameTopicRequest"
       }
     },
@@ -2146,13 +2021,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "in_app",
-                  "email",
-                  "sms",
-                  "chat",
-                  "push"
-                ]
+                "enum": ["in_app", "email", "sms", "chat", "push"]
               }
             }
           },
@@ -2216,9 +2085,7 @@
             }
           }
         },
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "x-request-name": "ActivityController_getActivityFeedRequest"
       }
     },
@@ -2240,9 +2107,7 @@
             }
           }
         },
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "x-request-name": "ActivityController_getActivityStatsRequest"
       }
     },
@@ -2276,9 +2141,7 @@
             }
           }
         },
-        "tags": [
-          "Activity"
-        ],
+        "tags": ["Activity"],
         "x-request-name": "ActivityController_getActivityGraphStatsRequest"
       }
     },
@@ -2295,13 +2158,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "in_app",
-                  "email",
-                  "sms",
-                  "chat",
-                  "push"
-                ]
+                "enum": ["in_app", "email", "sms", "chat", "push"]
               }
             }
           },
@@ -2365,9 +2222,7 @@
             }
           }
         },
-        "tags": [
-          "Notification"
-        ],
+        "tags": ["Notification"],
         "x-request-name": "NotificationsController_getNotificationsRequest"
       }
     },
@@ -2388,9 +2243,7 @@
             }
           }
         },
-        "tags": [
-          "Notification"
-        ],
+        "tags": ["Notification"],
         "x-request-name": "NotificationsController_getActivityStatsRequest"
       }
     },
@@ -2423,9 +2276,7 @@
             }
           }
         },
-        "tags": [
-          "Notification"
-        ],
+        "tags": ["Notification"],
         "x-request-name": "NotificationsController_getActivityGraphStatsRequest"
       }
     },
@@ -2455,9 +2306,7 @@
             }
           }
         },
-        "tags": [
-          "Notification"
-        ],
+        "tags": ["Notification"],
         "x-request-name": "NotificationsController_getActivityRequest"
       }
     },
@@ -2488,9 +2337,7 @@
             }
           }
         },
-        "tags": [
-          "Feeds"
-        ],
+        "tags": ["Feeds"],
         "x-request-name": "FeedsController_createFeedRequest"
       },
       "get": {
@@ -2512,9 +2359,7 @@
             }
           }
         },
-        "tags": [
-          "Feeds"
-        ],
+        "tags": ["Feeds"],
         "x-request-name": "FeedsController_getFeedsRequest"
       }
     },
@@ -2547,9 +2392,7 @@
             }
           }
         },
-        "tags": [
-          "Feeds"
-        ],
+        "tags": ["Feeds"],
         "x-request-name": "FeedsController_deleteFeedByIdRequest"
       }
     },
@@ -2608,9 +2451,7 @@
             }
           }
         },
-        "tags": [
-          "Messages"
-        ],
+        "tags": ["Messages"],
         "x-request-name": "MessagesController_getMessagesRequest"
       }
     },
@@ -2632,9 +2473,7 @@
             }
           }
         },
-        "tags": [
-          "Messages"
-        ],
+        "tags": ["Messages"],
         "x-request-name": "MessagesController_deleteMessageRequest"
       }
     }
@@ -2713,9 +2552,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "mxRecordConfigured"
-        ]
+        "required": ["mxRecordConfigured"]
       },
       "ApiKey": {
         "type": "object",
@@ -2727,10 +2564,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "key",
-          "_userId"
-        ]
+        "required": ["key", "_userId"]
       },
       "WidgetSettings": {
         "type": "object",
@@ -2739,9 +2573,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "notificationCenterEncryption"
-        ]
+        "required": ["notificationCenterEncryption"]
       },
       "EnvironmentResponseDto": {
         "type": "object",
@@ -2771,14 +2603,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "_organizationId",
-          "identifier",
-          "apiKeys",
-          "widget",
-          "_parentId"
-        ]
+        "required": ["name", "_organizationId", "identifier", "apiKeys", "widget", "_parentId"]
       },
       "CreateEnvironmentRequestDto": {
         "type": "object",
@@ -2790,9 +2615,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "UpdateEnvironmentRequestDto": {
         "type": "object",
@@ -2810,9 +2633,7 @@
             "$ref": "#/components/schemas/DNSProperties"
           }
         },
-        "required": [
-          "dns"
-        ]
+        "required": ["dns"]
       },
       "UpdateWidgetSettingsRequestDto": {
         "type": "object",
@@ -2821,9 +2642,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "notificationCenterEncryption"
-        ]
+        "required": ["notificationCenterEncryption"]
       },
       "CreateNotificationGroupRequestDto": {
         "type": "object",
@@ -2832,9 +2651,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "NotificationGroupResponseDto": {
         "type": "object",
@@ -2855,11 +2672,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "_environmentId",
-          "_organizationId"
-        ]
+        "required": ["name", "_environmentId", "_organizationId"]
       },
       "ChangeResponseDto": {
         "type": "object",
@@ -2926,12 +2739,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "totalCount",
-          "data",
-          "pageSize",
-          "page"
-        ]
+        "required": ["totalCount", "data", "pageSize", "page"]
       },
       "CreateLayoutRequestDto": {
         "type": "object",
@@ -2960,10 +2768,7 @@
             "description": "Variable that defines if the layout is chosen as default when creating a layout."
           }
         },
-        "required": [
-          "name",
-          "content"
-        ]
+        "required": ["name", "content"]
       },
       "CreateLayoutResponseDto": {
         "type": "object",
@@ -2972,9 +2777,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "_id"
-        ]
+        "required": ["_id"]
       },
       "FilterLayoutsResponseDto": {
         "type": "object",
@@ -2995,12 +2798,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "data",
-          "page",
-          "pageSize",
-          "totalCount"
-        ]
+        "required": ["data", "page", "pageSize", "totalCount"]
       },
       "GetLayoutResponseDto": {
         "type": "object",
@@ -3160,36 +2958,15 @@
           "isDeleted"
         ]
       },
-      
+
       "ExecutionDetailsResponseDtoStatus": {
-        "enum": [
-          "Success",
-          "Warning",
-          "Failed",
-          "Pending",
-          "Queued",
-          "ReadConfirmation"
-        ]
+        "enum": ["Success", "Warning", "Failed", "Pending", "Queued", "ReadConfirmation"]
       },
       "ExecutionDetailsResponseDtoSource": {
-        "enum": [
-          "Credentials",
-          "Internal",
-          "Payload",
-          "Webhook"
-        ]
+        "enum": ["Credentials", "Internal", "Payload", "Webhook"]
       },
       "ExecutionDetailsResponseDtoChannel": {
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push",
-          "digest",
-          "trigger",
-          "delay"
-        ]
+        "enum": ["in_app", "email", "sms", "chat", "push", "digest", "trigger", "delay"]
       },
       "ExecutionDetailsResponseDto": {
         "type": "object",
@@ -3283,11 +3060,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "_environmentId",
-          "_organizationId"
-        ]
+        "required": ["name", "_environmentId", "_organizationId"]
       },
       "PreferenceChannels": {
         "type": "object",
@@ -3322,7 +3095,7 @@
           }
         }
       },
-      "FieldFilterPartOperator":{
+      "FieldFilterPartOperator": {
         "type": "string",
         "enum": [
           "LARGER",
@@ -3341,12 +3114,9 @@
           "IN"
         ]
       },
-      "FieldFilterPartOn":{
+      "FieldFilterPartOn": {
         "type": "string",
-        "enum": [
-          "subscriber",
-          "payload"
-        ]
+        "enum": ["subscriber", "payload"]
       },
       "FieldFilterPart": {
         "type": "object",
@@ -3364,32 +3134,15 @@
             "$ref": "#/components/schemas/FieldFilterPartOn"
           }
         },
-        "required": [
-          "field",
-          "value",
-          "operator",
-          "on"
-        ]
+        "required": ["field", "value", "operator", "on"]
       },
-      "StepFilterValue":{
+      "StepFilterValue": {
         "type": "string",
-        "enum": [
-          "AND",
-          "OR"
-        ]
+        "enum": ["AND", "OR"]
       },
-      "StepFilterType":{
+      "StepFilterType": {
         "type": "string",
-        "enum": [
-          "BOOLEAN",
-          "TEXT",
-          "DATE",
-          "NUMBER",
-          "STATEMENT",
-          "LIST",
-          "MULTI_LIST",
-          "GROUP"
-        ]
+        "enum": ["BOOLEAN", "TEXT", "DATE", "NUMBER", "STATEMENT", "LIST", "MULTI_LIST", "GROUP"]
       },
       "StepFilter": {
         "type": "object",
@@ -3410,38 +3163,19 @@
             }
           }
         },
-        "required": [
-          "isNegated",
-          "type",
-          "value",
-          "children"
-        ]
+        "required": ["isNegated", "type", "value", "children"]
       },
-      "NotificationStepMetadataUnit":{
+      "NotificationStepMetadataUnit": {
         "type": "string",
-        "enum": [
-          "seconds",
-          "minutes",
-          "hours",
-          "days"
-        ]
+        "enum": ["seconds", "minutes", "hours", "days"]
       },
-      "NotificationStepMetadataType":{
+      "NotificationStepMetadataType": {
         "type": "string",
-        "enum": [
-          "regular",
-          "backoff",
-          "scheduled"
-        ]
+        "enum": ["regular", "backoff", "scheduled"]
       },
-      "NotificationStepMetadataBackofUnit":{
+      "NotificationStepMetadataBackofUnit": {
         "type": "string",
-        "enum": [
-          "seconds",
-          "minutes",
-          "hours",
-          "days"
-        ]
+        "enum": ["seconds", "minutes", "hours", "days"]
       },
       "NotificationStepMetadata": {
         "type": "object",
@@ -3471,9 +3205,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "type"
-        ]
+        "required": ["type"]
       },
       "NotificationStep": {
         "type": "object",
@@ -3517,9 +3249,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "NotificationTrigger": {
         "type": "object",
@@ -3543,11 +3273,7 @@
             }
           }
         },
-        "required": [
-          "type",
-          "identifier",
-          "variables"
-        ]
+        "required": ["type", "identifier", "variables"]
       },
       "NotificationTemplateResponse": {
         "type": "object",
@@ -3675,10 +3401,7 @@
             "$ref": "#/components/schemas/PreferenceChannels"
           }
         },
-        "required": [
-          "name",
-          "notificationGroupId"
-        ]
+        "required": ["name", "notificationGroupId"]
       },
       "NotificationChannel": {
         "type": "object",
@@ -3734,11 +3457,7 @@
             "$ref": "#/components/schemas/PreferenceChannels"
           }
         },
-        "required": [
-          "name",
-          "notificationGroupId",
-          "steps"
-        ]
+        "required": ["name", "notificationGroupId", "steps"]
       },
       "ChangeTemplateStatusRequestDto": {
         "type": "object",
@@ -3747,9 +3466,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "active"
-        ]
+        "required": ["active"]
       },
       "CredentialsDto": {
         "type": "object",
@@ -3807,14 +3524,8 @@
           }
         }
       },
-      "IntegrationResponseDtoChannelChannel":{
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ]
+      "IntegrationResponseDtoChannelChannel": {
+        "enum": ["in_app", "email", "sms", "chat", "push"]
       },
       "IntegrationResponseDto": {
         "type": "object",
@@ -3864,13 +3575,7 @@
         ]
       },
       "CreateEnvironmentRequestDtoChannel": {
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ]
+        "enum": ["in_app", "email", "sms", "chat", "push"]
       },
       "CreateIntegrationRequestDto": {
         "type": "object",
@@ -3892,13 +3597,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "providerId",
-          "channel",
-          "credentials",
-          "active",
-          "check"
-        ]
+        "required": ["providerId", "channel", "credentials", "active", "check"]
       },
       "UpdateIntegrationRequestDto": {
         "type": "object",
@@ -3913,13 +3612,9 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "active",
-          "credentials",
-          "check"
-        ]
+        "required": ["active", "credentials", "check"]
       },
-      "TopicPayloadDtoType":{
+      "TopicPayloadDtoType": {
         "type": "string",
         "enum": []
       },
@@ -3933,10 +3628,7 @@
             "$ref": "#/components/schemas/TopicPayloadDtoType"
           }
         },
-        "required": [
-          "topicKey",
-          "type"
-        ]
+        "required": ["topicKey", "type"]
       },
       "SubscriberPayloadDto": {
         "type": "object",
@@ -3962,32 +3654,13 @@
         }
       },
       "GetLayoutResponseDtoProperties": {
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ]
+        "enum": ["in_app", "email", "sms", "chat", "push"]
       },
       "UpdateLayoutRequestDtoProperties": {
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ]
+        "enum": ["in_app", "email", "sms", "chat", "push"]
       },
       "ChangeResponseDtoProperties": {
-        "enum": [
-          "Feed",
-          "MessageTemplate",
-          "Layout",
-          "DefaultLayout",
-          "NotificationTemplate",
-          "NotificationGroup"
-        ]
+        "enum": ["Feed", "MessageTemplate", "Layout", "DefaultLayout", "NotificationTemplate", "NotificationGroup"]
       },
       "TriggerEventRequestDtoTo": {
         "oneOf": [
@@ -4015,7 +3688,7 @@
           }
         ]
       },
-      "TriggerEventRequestDtoActor":{
+      "TriggerEventRequestDtoActor": {
         "oneOf": [
           {
             "type": "string",
@@ -4068,21 +3741,12 @@
             "$ref": "#/components/schemas/TriggerEventRequestDtoActor"
           }
         },
-        "required": [
-          "name",
-          "payload",
-          "to"
-        ]
+        "required": ["name", "payload", "to"]
       },
-      "TriggerEventResponseDtoStatus":{
+      "TriggerEventResponseDtoStatus": {
         "type": "string",
         "description": "Status for trigger",
-        "enum": [
-          "processed",
-          "trigger_not_active",
-          "subscriber_id_missing",
-          "error"
-        ]
+        "enum": ["processed", "trigger_not_active", "subscriber_id_missing", "error"]
       },
       "TriggerEventResponseDto": {
         "type": "object",
@@ -4106,10 +3770,7 @@
             "description": "Transaction id for trigger"
           }
         },
-        "required": [
-          "acknowledged",
-          "status"
-        ]
+        "required": ["acknowledged", "status"]
       },
       "BulkTriggerEventDto": {
         "type": "object",
@@ -4121,9 +3782,7 @@
             }
           }
         },
-        "required": [
-          "events"
-        ]
+        "required": ["events"]
       },
       "TriggerEventToAllRequestDtoActor": {
         "description": "It is used to display the Avatar of the provided actor's subscriber id or actor object.\n    If a new actor object is provided, we will create a new subscriber in our system\n    ",
@@ -4171,10 +3830,7 @@
             "$ref": "#/components/schemas/TriggerEventToAllRequestDtoActor"
           }
         },
-        "required": [
-          "name",
-          "payload"
-        ]
+        "required": ["name", "payload"]
       },
       "ChannelCredentials": {
         "type": "object",
@@ -4191,20 +3847,11 @@
             }
           }
         },
-        "required": [
-          "webhookUrl"
-        ]
+        "required": ["webhookUrl"]
       },
       "ChannelSettingsProviderId": {
         "type": "string",
-        "enum": [
-          "slack",
-          "discord",
-          "msteams",
-          "fcm",
-          "apns",
-          "expo"
-        ],
+        "enum": ["slack", "discord", "msteams", "fcm", "apns", "expo"],
         "description": "Subscriber credentials for channel"
       },
       "ChannelSettings": {
@@ -4226,11 +3873,7 @@
             ]
           }
         },
-        "required": [
-          "_integrationId",
-          "providerId",
-          "credentials"
-        ]
+        "required": ["_integrationId", "providerId", "credentials"]
       },
       "SubscriberResponseDto": {
         "type": "object",
@@ -4328,12 +3971,7 @@
             }
           }
         },
-        "required": [
-          "page",
-          "totalCount",
-          "pageSize",
-          "data"
-        ]
+        "required": ["page", "totalCount", "pageSize", "data"]
       },
       "CreateSubscriberRequestDto": {
         "type": "object",
@@ -4365,9 +4003,7 @@
             "type": "object"
           }
         },
-        "required": [
-          "subscriberId"
-        ]
+        "required": ["subscriberId"]
       },
       "UpdateSubscriberRequestDto": {
         "type": "object",
@@ -4397,14 +4033,7 @@
       },
       "UpdateSubscriberChannelRequestDtoProviderId": {
         "type": "string",
-        "enum": [
-          "slack",
-          "discord",
-          "msteams",
-          "fcm",
-          "apns",
-          "expo"
-        ],
+        "enum": ["slack", "discord", "msteams", "fcm", "apns", "expo"],
         "description": "The provider identifier for the credentials"
       },
       "UpdateSubscriberChannelRequestDto": {
@@ -4422,10 +4051,7 @@
             ]
           }
         },
-        "required": [
-          "providerId",
-          "credentials"
-        ]
+        "required": ["providerId", "credentials"]
       },
       "UpdateSubscriberOnlineFlagRequestDto": {
         "type": "object",
@@ -4434,16 +4060,12 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "isOnline"
-        ]
+        "required": ["isOnline"]
       },
       "DeleteSubscriberResponseDtoStatus": {
         "type": "string",
         "description": "The status enum for the performed action",
-        "enum": [
-          "deleted"
-        ]
+        "enum": ["deleted"]
       },
       "DeleteSubscriberResponseDto": {
         "type": "object",
@@ -4456,10 +4078,7 @@
             "$ref": "#/components/schemas/DeleteSubscriberResponseDtoStatus"
           }
         },
-        "required": [
-          "acknowledged",
-          "status"
-        ]
+        "required": ["acknowledged", "status"]
       },
       "TemplateResponse": {
         "type": "object",
@@ -4477,11 +4096,7 @@
             "description": "Critical templates will always be delivered to the end user and should be hidden from the subscriber preferences screen"
           }
         },
-        "required": [
-          "_id",
-          "name",
-          "critical"
-        ]
+        "required": ["_id", "name", "critical"]
       },
       "Preference": {
         "type": "object",
@@ -4499,10 +4114,7 @@
             ]
           }
         },
-        "required": [
-          "enabled",
-          "channels"
-        ]
+        "required": ["enabled", "channels"]
       },
       "UpdateSubscriberPreferenceResponseDto": {
         "type": "object",
@@ -4524,20 +4136,11 @@
             ]
           }
         },
-        "required": [
-          "template",
-          "preference"
-        ]
+        "required": ["template", "preference"]
       },
       "ChannelPreferenceType": {
         "type": "string",
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ],
+        "enum": ["in_app", "email", "sms", "chat", "push"],
         "description": "The type of channel that is enabled or not"
       },
       "ChannelPreference": {
@@ -4551,10 +4154,7 @@
             "description": "If channel is enabled or not"
           }
         },
-        "required": [
-          "type",
-          "enabled"
-        ]
+        "required": ["type", "enabled"]
       },
       "UpdateSubscriberPreferenceRequestDto": {
         "type": "object",
@@ -4574,11 +4174,7 @@
         }
       },
       "EmailBlockStylesTextAlign": {
-        "enum": [
-          "left",
-          "right",
-          "center"
-        ],
+        "enum": ["left", "right", "center"],
         "type": "string"
       },
       "EmailBlockStyles": {
@@ -4590,10 +4186,7 @@
         }
       },
       "EmailBlockType": {
-        "enum": [
-          "text",
-          "button"
-        ],
+        "enum": ["text", "button"],
         "type": "string"
       },
       "EmailBlock": {
@@ -4612,10 +4205,7 @@
             "$ref": "#/components/schemas/EmailBlockStyles"
           }
         },
-        "required": [
-          "type",
-          "content"
-        ]
+        "required": ["type", "content"]
       },
       "MessageCTAData": {
         "type": "object",
@@ -4626,11 +4216,7 @@
         }
       },
       "MessageButtonType": {
-        "enum": [
-          "primary",
-          "secondary",
-          "clicked"
-        ],
+        "enum": ["primary", "secondary", "clicked"],
         "type": "string"
       },
       "MessageButton": {
@@ -4646,17 +4232,10 @@
             "type": "string"
           }
         },
-        "required": [
-          "type",
-          "content"
-        ]
+        "required": ["type", "content"]
       },
       "MessageActionResultType": {
-        "enum": [
-          "primary",
-          "secondary",
-          "clicked"
-        ],
+        "enum": ["primary", "secondary", "clicked"],
         "type": "string"
       },
       "MessageActionResult": {
@@ -4670,11 +4249,8 @@
           }
         }
       },
-      "MessageActionType":{
-        "enum": [
-          "pending",
-          "done"
-        ],
+      "MessageActionType": {
+        "enum": ["pending", "done"],
         "type": "string"
       },
       "MessageAction": {
@@ -4683,22 +4259,16 @@
           "status": {
             "$ref": "#/components/schemas/MessageActionType"
           },
-          "buttons": {
-            
-          },
+          "buttons": {},
           "result": {
             "$ref": "#/components/schemas/MessageActionResult"
           }
         },
-        "required": [
-          "result"
-        ]
+        "required": ["result"]
       },
       "MessageCTAType": {
         "type": "string",
-        "enum": [
-          "redirect"
-        ]
+        "enum": ["redirect"]
       },
       "MessageCTA": {
         "type": "object",
@@ -4713,10 +4283,7 @@
             "$ref": "#/components/schemas/MessageAction"
           }
         },
-        "required": [
-          "type",
-          "data"
-        ]
+        "required": ["type", "data"]
       },
       "MessageResponseDtoContent": {
         "oneOf": [
@@ -4729,22 +4296,12 @@
         ]
       },
       "MessageResponseDtoChannel": {
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ],
+        "enum": ["in_app", "email", "sms", "chat", "push"],
         "type": "string"
       },
       "MessageResponseDtoStatus": {
         "type": "string",
-        "enum": [
-          "sent",
-          "error",
-          "warning"
-        ]
+        "enum": ["sent", "error", "warning"]
       },
       "MessageResponseDto": {
         "type": "object",
@@ -4867,13 +4424,7 @@
         ]
       },
       "GetMessagesParametersSchema": {
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push"
-        ],
+        "enum": ["in_app", "email", "sms", "chat", "push"],
         "type": "string"
       },
       "MessagesResponseDto": {
@@ -4895,12 +4446,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "totalCount",
-          "data",
-          "pageSize",
-          "page"
-        ]
+        "required": ["totalCount", "data", "pageSize", "page"]
       },
       "UnseenCountResponse": {
         "type": "object",
@@ -4909,9 +4455,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "count"
-        ]
+        "required": ["count"]
       },
       "MarkMessageFields": {
         "type": "object",
@@ -4947,10 +4491,7 @@
             "$ref": "#/components/schemas/MarkMessageFields"
           }
         },
-        "required": [
-          "messageId",
-          "mark"
-        ]
+        "required": ["messageId", "mark"]
       },
       "CreateTopicRequestDto": {
         "type": "object",
@@ -4964,10 +4505,7 @@
             "description": "User defined custom name and provided by the user that will name the Topic created."
           }
         },
-        "required": [
-          "key",
-          "name"
-        ]
+        "required": ["key", "name"]
       },
       "CreateTopicResponseDto": {
         "type": "object",
@@ -4984,9 +4522,7 @@
             }
           }
         },
-        "required": [
-          "subscribers"
-        ]
+        "required": ["subscribers"]
       },
       "RemoveSubscribersRequestDto": {
         "type": "object",
@@ -4999,9 +4535,7 @@
             }
           }
         },
-        "required": [
-          "subscribers"
-        ]
+        "required": ["subscribers"]
       },
       "FilterTopicsResponseDto": {
         "type": "object",
@@ -5022,12 +4556,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "data",
-          "page",
-          "pageSize",
-          "totalCount"
-        ]
+        "required": ["data", "page", "pageSize", "totalCount"]
       },
       "GetTopicResponseDto": {
         "type": "object",
@@ -5054,13 +4583,7 @@
             }
           }
         },
-        "required": [
-          "_organizationId",
-          "_environmentId",
-          "key",
-          "name",
-          "subscribers"
-        ]
+        "required": ["_organizationId", "_environmentId", "key", "name", "subscribers"]
       },
       "RenameTopicRequestDto": {
         "type": "object",
@@ -5070,9 +4593,7 @@
             "description": "User defined custom name and provided by the user to rename the topic."
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "RenameTopicResponseDto": {
         "type": "object",
@@ -5099,13 +4620,7 @@
             }
           }
         },
-        "required": [
-          "_organizationId",
-          "_environmentId",
-          "key",
-          "name",
-          "subscribers"
-        ]
+        "required": ["_organizationId", "_environmentId", "key", "name", "subscribers"]
       },
       "ActivityNotificationSubscriberResponseDto": {
         "type": "object",
@@ -5126,9 +4641,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "_id"
-        ]
+        "required": ["_id"]
       },
       "ActivityNotificationTemplateResponseDto": {
         "type": "object",
@@ -5146,29 +4659,14 @@
             }
           }
         },
-        "required": [
-          "name",
-          "triggers"
-        ]
+        "required": ["name", "triggers"]
       },
       "ActivityNotificationExecutionDetailResponseDtoStatus": {
-        "enum": [
-          "Success",
-          "Warning",
-          "Failed",
-          "Pending",
-          "Queued",
-          "ReadConfirmation"
-        ],
+        "enum": ["Success", "Warning", "Failed", "Pending", "Queued", "ReadConfirmation"],
         "type": "string"
       },
       "ActivityNotificationExecutionDetailResponseDtoSource": {
-        "enum": [
-          "Credentials",
-          "Internal",
-          "Payload",
-          "Webhook"
-        ],
+        "enum": ["Credentials", "Internal", "Payload", "Webhook"],
         "type": "string"
       },
       "ActivityNotificationExecutionDetailResponseDto": {
@@ -5202,16 +4700,7 @@
             "$ref": "#/components/schemas/ActivityNotificationExecutionDetailResponseDtoSource"
           }
         },
-        "required": [
-          "_id",
-          "_jobId",
-          "status",
-          "detail",
-          "isRetry",
-          "isTest",
-          "providerId",
-          "source"
-        ]
+        "required": ["_id", "_jobId", "status", "detail", "isRetry", "isTest", "providerId", "source"]
       },
       "MessageTemplateDto": {
         "type": "object",
@@ -5233,11 +4722,7 @@
             "$ref": "#/components/schemas/MessageTemplateDto"
           }
         },
-        "required": [
-          "_id",
-          "active",
-          "filters"
-        ]
+        "required": ["_id", "active", "filters"]
       },
       "ActivityNotificationJobResponseDto": {
         "type": "object",
@@ -5270,40 +4755,15 @@
             "type": "string"
           }
         },
-        "required": [
-          "_id",
-          "type",
-          "executionDetails",
-          "step",
-          "providerId",
-          "status"
-        ]
+        "required": ["_id", "type", "executionDetails", "step", "providerId", "status"]
       },
       "ActivityNotificationResponseDtoChannels": {
         "type": "string",
         "items": {
           "type": "string",
-          "enum": [
-            "in_app",
-            "email",
-            "sms",
-            "chat",
-            "push",
-            "digest",
-            "trigger",
-            "delay"
-          ]
+          "enum": ["in_app", "email", "sms", "chat", "push", "digest", "trigger", "delay"]
         },
-        "enum": [
-          "in_app",
-          "email",
-          "sms",
-          "chat",
-          "push",
-          "digest",
-          "trigger",
-          "delay"
-        ]
+        "enum": ["in_app", "email", "sms", "chat", "push", "digest", "trigger", "delay"]
       },
       "ActivityNotificationResponseDto": {
         "type": "object",
@@ -5340,11 +4800,7 @@
             }
           }
         },
-        "required": [
-          "_environmentId",
-          "_organizationId",
-          "transactionId"
-        ]
+        "required": ["_environmentId", "_organizationId", "transactionId"]
       },
 
       "ActivitiesResponseDto": {
@@ -5366,12 +4822,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "totalCount",
-          "data",
-          "pageSize",
-          "page"
-        ]
+        "required": ["totalCount", "data", "pageSize", "page"]
       },
       "ActivityStatsResponseDto": {
         "type": "object",
@@ -5386,11 +4837,7 @@
             "type": "number"
           }
         },
-        "required": [
-          "weeklySent",
-          "monthlySent",
-          "yearlySent"
-        ]
+        "required": ["weeklySent", "monthlySent", "yearlySent"]
       },
       "ActivityGraphStatesResponse": {
         "type": "object",
@@ -5411,22 +4858,11 @@
             "type": "array",
             "items": {
               "type": "string",
-              "enum": [
-                "in_app",
-                "email",
-                "sms",
-                "chat",
-                "push"
-              ]
+              "enum": ["in_app", "email", "sms", "chat", "push"]
             }
           }
         },
-        "required": [
-          "_id",
-          "count",
-          "templates",
-          "channels"
-        ]
+        "required": ["_id", "count", "templates", "channels"]
       },
       "CreateFeedRequestDto": {
         "type": "object",
@@ -5435,9 +4871,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "name"
-        ]
+        "required": ["name"]
       },
       "FeedResponseDto": {
         "type": "object",
@@ -5458,19 +4892,12 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "identifier",
-          "_environmentId",
-          "_organizationId"
-        ]
+        "required": ["name", "identifier", "_environmentId", "_organizationId"]
       },
       "DeleteMessageResponseDtoStatus": {
         "type": "string",
         "description": "The status enum for the performed action",
-        "enum": [
-          "deleted"
-        ]
+        "enum": ["deleted"]
       },
       "DeleteMessageResponseDto": {
         "type": "object",
@@ -5483,10 +4910,7 @@
             "$ref": "#/components/schemas/DeleteMessageResponseDtoStatus"
           }
         },
-        "required": [
-          "acknowledged",
-          "status"
-        ]
+        "required": ["acknowledged", "status"]
       }
     }
   }
