@@ -241,6 +241,8 @@ export class SchemaConverter {
                 resolvedType = `optional<${resolvedType}>`;
             }
             typeDeclaration = resolvedType;
+        } else {
+            typeDeclaration = "unknown";
         }
 
         if (typeDeclaration != null && schema.description != null) {
@@ -255,11 +257,11 @@ export class SchemaConverter {
                     ...typeDeclaration,
                 };
             }
-        } else {
-            typeDeclaration = "unknown";
         }
 
-        return { typeDeclaration, additionalTypeDeclarations, imports: this.imports };
+        return typeDeclaration != null
+            ? { typeDeclaration, additionalTypeDeclarations, imports: this.imports }
+            : undefined;
     }
 }
 
