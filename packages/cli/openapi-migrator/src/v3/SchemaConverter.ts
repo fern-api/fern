@@ -255,11 +255,11 @@ export class SchemaConverter {
                     ...typeDeclaration,
                 };
             }
+        } else {
+            typeDeclaration = "unknown";
         }
 
-        return typeDeclaration != null
-            ? { typeDeclaration, additionalTypeDeclarations, imports: this.imports }
-            : undefined;
+        return { typeDeclaration, additionalTypeDeclarations, imports: this.imports };
     }
 }
 
