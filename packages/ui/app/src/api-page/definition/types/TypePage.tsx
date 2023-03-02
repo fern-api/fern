@@ -12,7 +12,7 @@ export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
     return (
         <DefinitionItemPage
             title={type.name}
-            docs="I am some docs about this type"
+            docs={type.docs}
             leftContent={
                 <div className="flex mt-4">
                     <TypeDefinition typeDefinition={type.shape} defaultIsCollapsed={false} />

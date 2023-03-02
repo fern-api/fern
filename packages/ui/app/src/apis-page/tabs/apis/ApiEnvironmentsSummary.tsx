@@ -23,8 +23,8 @@ export const ApiEnvironmentsSummary: React.FC<ApiEnvironmentsSummary.Props> = ({
     }
 
     return (
-        <div className="flex flex-col">
-            <div className="grid grid-cols-[20%_1fr] gap-x-10 gap-y-1.5">
+        <div className="flex-1 flex flex-col">
+            <div className="grid grid-cols-[20%_1fr] gap-x-10 gap-y-1.5 mt-4 ml-4">
                 <div className="text-stone-500 uppercase text-xs">Environment</div>
                 <div className="text-stone-500 uppercase text-xs">Deployed</div>
                 {allEnvironments.value.environments.map((environment) => {

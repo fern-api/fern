@@ -11,7 +11,7 @@ export declare namespace EndpointTypeSection {
 
 export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ title, type }) => {
     return (
-        <EndpointSection title={title} docs="Here is some text about the request body.">
+        <EndpointSection title={title}>
             <TypeDefinition typeDefinition={type} defaultIsCollapsed={false} />
         </EndpointSection>
     );
