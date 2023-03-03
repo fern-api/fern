@@ -5,7 +5,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.122",
     },
     [GeneratorName.TYPESCRIPT_EXPRESS]: {
-        version: "0.0.264",
+        version: "0.2.2",
         output: {
             location: "local-file-system",
             path: "../../src/fern",
@@ -24,7 +24,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.247",
     },
     [GeneratorName.TYPESCRIPT_SDK]: {
-        version: "0.0.255",
+        version: "0.2.2",
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
         version: "0.0.33",
