@@ -90,7 +90,7 @@ export async function generateWorkspaces({
     );
 }
 
-async function convertOpenApiWorkspaceToFernWorkspace(
+export async function convertOpenApiWorkspaceToFernWorkspace(
     openapiWorkspace: OpenAPIWorkspace,
     context: TaskContext
 ): Promise<FernWorkspace> {
