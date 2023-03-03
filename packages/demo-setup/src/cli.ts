@@ -51,7 +51,7 @@ export async function getSetupDemoArgs(): Promise<SetupDemoArgs> {
             type: "confirm",
             name: "didCreateOrg",
             message: (answers) =>
-                `Did you make the ${answers.orgId} repo in Github? ${chalk.dim(
+                `Did you make the ${answers.githubOrgId} repo in Github? ${chalk.dim(
                     "https://github.com/account/organizations/new?plan=free"
                 )}`,
             default: true,
