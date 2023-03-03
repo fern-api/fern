@@ -12,7 +12,7 @@ describe("valid-type-name", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: "type name must begin with a letter",
+                message: "Type name must begin with a letter",
                 nodePath: ["types", "_InvalidType"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
