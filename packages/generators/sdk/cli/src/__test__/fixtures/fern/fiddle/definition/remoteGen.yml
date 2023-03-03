@@ -211,7 +211,7 @@ errors:
     status-code: 403
 
 service:
-  auth: false
+  auth: true
   base-path: /api/remote-gen
   endpoints:
     createJob:

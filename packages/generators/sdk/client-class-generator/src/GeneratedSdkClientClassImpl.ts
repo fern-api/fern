@@ -22,6 +22,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
+        isAuthRequired: boolean;
     }
 }
 
@@ -42,6 +43,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private generatedEndpointImplementations: GeneratedEndpointImplementation[];
     private generatedWrappedServices: GeneratedWrappedService[];
     private allowCustomFetcher: boolean;
+    private isAuthRequired: boolean;
 
     constructor({
         serviceClassName,
@@ -53,11 +55,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
+        isAuthRequired,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
         this.apiHeaders = apiHeaders;
         this.allowCustomFetcher = allowCustomFetcher;
+        this.isAuthRequired = isAuthRequired;
 
         if (service.originalService == null) {
             this.generatedEndpointImplementations = [];
@@ -265,13 +269,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(
                     context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        ts.factory.createUnionTypeNode([
-                            context.base.coreUtilities.auth.BearerToken._getReferenceToType(),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                        ])
+                        this.isAuthRequired
+                            ? context.base.coreUtilities.auth.BearerToken._getReferenceToType()
+                            : ts.factory.createUnionTypeNode([
+                                  context.base.coreUtilities.auth.BearerToken._getReferenceToType(),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                              ])
                     )
                 ),
-                hasQuestionToken: true,
+                hasQuestionToken: !this.isAuthRequired,
             });
         }
 
@@ -283,19 +289,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         context.base.coreUtilities.auth.BasicAuth._getReferenceToType()
                     )
                 ),
-                hasQuestionToken: true,
+                hasQuestionToken: !this.isAuthRequired,
             });
         }
 
         for (const header of this.authHeaders) {
+            const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
             properties.push({
                 name: this.getOptionKeyForHeader(header),
                 type: getTextOfTsNode(
                     context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        context.type.getReferenceToType(header.valueType).typeNodeWithoutUndefined
+                        this.isAuthRequired
+                            ? referenceToHeaderType.typeNode
+                            : referenceToHeaderType.typeNodeWithoutUndefined
                     )
                 ),
-                hasQuestionToken: true,
+                hasQuestionToken: !this.isAuthRequired,
             });
         }
 

@@ -236,6 +236,7 @@ export class SdkGenerator {
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
+            isAuthRequired: intermediateRepresentation.sdkConfig.isAuthMandatory,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

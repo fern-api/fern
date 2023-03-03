@@ -2,3 +2,4 @@ name: fiddle
 error-discrimination:
   strategy: property
   property-name: error
+auth: bearer
