@@ -295,16 +295,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
+            const isOptional = referenceToHeaderType.isOptional || !this.isAuthRequired;
             properties.push({
                 name: this.getOptionKeyForHeader(header),
                 type: getTextOfTsNode(
                     context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.isAuthRequired
                             ? referenceToHeaderType.typeNode
-                            : referenceToHeaderType.typeNodeWithoutUndefined
+                            : ts.factory.createUnionTypeNode([
+                                  referenceToHeaderType.typeNodeWithoutUndefined,
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                              ])
                     )
                 ),
-                hasQuestionToken: !this.isAuthRequired,
+                hasQuestionToken: isOptional,
             });
         }
 
