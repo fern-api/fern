@@ -9607,7 +9607,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/registry", "npm:0.0.217"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
-            ["@fontsource/noto-sans", "npm:4.5.11"],\
+            ["@fontsource/source-sans-pro", "npm:4.5.11"],\
             ["@tanstack/react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.24.10"],\
             ["@tanstack/react-query-devtools", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.24.12"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9971,20 +9971,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@fontsource/noto-sans", [\
-        ["npm:4.5.11", {\
-          "packageLocation": "./.yarn/cache/@fontsource-noto-sans-npm-4.5.11-5142918923-d11ec102ac.zip/node_modules/@fontsource/noto-sans/",\
-          "packageDependencies": [\
-            ["@fontsource/noto-sans", "npm:4.5.11"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@fontsource/roboto-mono", [\
         ["npm:4.5.8", {\
           "packageLocation": "./.yarn/cache/@fontsource-roboto-mono-npm-4.5.8-d2377505cc-0912b468ae.zip/node_modules/@fontsource/roboto-mono/",\
           "packageDependencies": [\
             ["@fontsource/roboto-mono", "npm:4.5.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fontsource/source-sans-pro", [\
+        ["npm:4.5.11", {\
+          "packageLocation": "./.yarn/cache/@fontsource-source-sans-pro-npm-4.5.11-81526b09b1-550d5bdc43.zip/node_modules/@fontsource/source-sans-pro/",\
+          "packageDependencies": [\
+            ["@fontsource/source-sans-pro", "npm:4.5.11"]\
           ],\
           "linkType": "HARD"\
         }]\

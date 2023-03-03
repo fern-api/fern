@@ -23,7 +23,7 @@ export const ApiCard: React.FC<ApiCard.Props> = ({ apiMetadata }) => {
 
     return (
         <div className="flex-1 flex bg-neutral-100 border border-gray-200 rounded overflow-hidden">
-            <div className="flex flex-col justify-between bg-neutral-50 rounded-r shadow-[0_8px_24px_rgba(17,20,24,0.2)] p-5 gap-4 w-2/5">
+            <div className="flex flex-col justify-between bg-neutral-50 rounded-r shadow-[0_0_6px_rgba(17,20,24,0.4)] p-5 gap-4 w-2/5">
                 <div className="flex flex-col">
                     <div className="flex-1 flex items-center gap-2">
                         {apiMetadata.type === "loaded" ? (
