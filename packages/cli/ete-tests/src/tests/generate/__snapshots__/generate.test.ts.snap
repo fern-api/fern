@@ -551,9 +551,9 @@ Object.defineProperty(exports, "Supplier", { enumerable: true, get: function () 
           },
           {
             "contents": "export * from "./resources";
-pi";
-export { FernApiClient } from "./Client";
-export { FernApiError, FernApiTimeoutError } from "./errors";
+"./FernApiError";
+export { FernApiTimeoutError } from "./FernApiTimeoutError";
+meoutError } from "./errors";
 ",
             "name": "index.d.ts",
             "type": "file",
@@ -863,6 +863,8 @@ __exportStar(require("./MovieDoesNotExistError"), exports);
                   },
                   {
                     "contents": "export * from "./types";
+export * from "./errors";
+export * from "./client";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -1140,6 +1142,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.imdb = void 0;
 exports.imdb = __importStar(require("./imdb"));
 __exportStar(require("./imdb/types"), exports);
+__exportStar(require("./imdb/errors"), exports);
 ",
                 "name": "index.js",
                 "type": "file",
