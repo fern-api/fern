@@ -6,10 +6,17 @@ import {
     RawNoPropertiesSingleUnionType,
     RawSingleUnionType,
 } from "@fern-typescript/union-schema-generator";
-import { ModuleDeclaration } from "ts-morph";
+import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsObjectSingleUnionType";
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
+
+export declare namespace GeneratedUnionTypeSchemaImpl {
+    export interface Init<Context extends TypeSchemaContext>
+        extends AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context> {
+        includeUtilsOnUnionMembers: boolean;
+    }
+}
 
 export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
     extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
@@ -19,7 +26,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
 
     private generatedUnionSchema: GeneratedUnionSchema<Context>;
 
-    constructor(superInit: AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context>) {
+    constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
         super(superInit);
 
         const discriminant = this.shape.discriminant;
@@ -28,6 +35,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
             typeName: superInit.typeName,
             discriminant,
             shouldIncludeDefaultCaseInTransform: true,
+            includeUtilsOnUnionMembers,
             getReferenceToSchema: this.getReferenceToSchema,
             getGeneratedUnion: () => this.getGeneratedUnionType().getGeneratedUnion(),
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
@@ -73,5 +81,9 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
             throw new Error("Type is not an union: " + this.typeName);
         }
         return generatedType;
+    }
+
+    protected override getReferenceToParsedShape(context: Context): ts.TypeNode {
+        return this.generatedUnionSchema.getReferenceToParsedShape(context);
     }
 }

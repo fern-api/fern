@@ -13,6 +13,10 @@ export abstract class AbstractUnknownSingleUnionType<
         return undefined;
     }
 
+    public getDiscriminantValueType(): ts.TypeNode {
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+    }
+
     public getInterfaceName(): string {
         return AbstractUnknownSingleUnionType.INTERFACE_NAME;
     }

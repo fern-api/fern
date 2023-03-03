@@ -13,6 +13,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -35,10 +36,16 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
         this.errorUnion = new GeneratedUnionImpl<EndpointErrorUnionContext>({
             typeName: GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME,
+            includeUtilsOnUnionMembers: true,
             discriminant,
             getDocs: undefined,
             parsedSingleUnionTypes: endpoint.errors.map(
-                (error) => new ParsedSingleUnionTypeForError({ error, errorResolver, errorDiscriminationStrategy })
+                (error) =>
+                    new ParsedSingleUnionTypeForError({
+                        error,
+                        errorResolver,
+                        errorDiscriminationStrategy,
+                    })
             ),
             getReferenceToUnion: (context) =>
                 context.endpointErrorUnion.getReferenceToEndpointTypeExport(

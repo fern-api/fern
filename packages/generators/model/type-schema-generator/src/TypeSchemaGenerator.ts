@@ -22,6 +22,10 @@ import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchem
 import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaImpl";
 
 export declare namespace TypeSchemaGenerator {
+    export interface Init {
+        includeUtilsOnUnionMembers: boolean;
+    }
+
     export namespace generateTypeSchema {
         export interface Args<Context> {
             typeName: string;
@@ -34,6 +38,12 @@ export declare namespace TypeSchemaGenerator {
 }
 
 export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaContext> {
+    private includeUtilsOnUnionMembers: boolean;
+
+    constructor({ includeUtilsOnUnionMembers }: TypeSchemaGenerator.Init) {
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+    }
+
     public generateTypeSchema({
         shape,
         typeName,
@@ -99,6 +109,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
+            includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
         });
     }
 

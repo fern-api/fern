@@ -13,6 +13,13 @@ import { ParsedSingleUnionTypeForUnion } from "./ParsedSingleUnionTypeForUnion";
 import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
 
+export declare namespace GeneratedUnionTypeImpl {
+    export interface Init<Context extends TypeContext>
+        extends AbstractGeneratedType.Init<UnionTypeDeclaration, Context> {
+        includeUtilsOnUnionMembers: boolean;
+    }
+}
+
 export class GeneratedUnionTypeImpl<Context extends TypeContext>
     extends AbstractGeneratedType<UnionTypeDeclaration, Context>
     implements GeneratedUnionType<Context>
@@ -21,7 +28,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 
     private generatedUnion: GeneratedUnionImpl<Context>;
 
-    constructor(superInit: AbstractGeneratedType.Init<UnionTypeDeclaration, Context>) {
+    constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeImpl.Init<Context>) {
         super(superInit);
 
         const parsedSingleUnionTypes = this.shape.types.map(
@@ -29,6 +36,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
                 new ParsedSingleUnionTypeForUnion({
                     singleUnionType,
                     union: this.shape,
+                    includeUtilsOnUnionMembers,
                 })
         );
 
@@ -36,12 +44,14 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
+            includeUtilsOnUnionMembers,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs(context),
             discriminant: this.shape.discriminant.name.camelCase.unsafeName,
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
+                includeUtilsOnUnionMembers,
             }),
         });
     }

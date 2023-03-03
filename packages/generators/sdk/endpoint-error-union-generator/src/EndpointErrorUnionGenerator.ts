@@ -36,6 +36,7 @@ export class EndpointErrorUnionGenerator {
             endpoint,
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
+            includeUtilsOnUnionMembers: true,
         });
     }
 }

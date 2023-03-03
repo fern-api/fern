@@ -9,6 +9,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
+    includeUtilsOnUnionMembers: z.optional(z.boolean()),
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

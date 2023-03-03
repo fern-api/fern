@@ -60,6 +60,7 @@ export declare namespace ExpressGenerator {
         shouldUseBrandedStringAliases: boolean;
         areImplementationsOptional: boolean;
         doNotHandleUnrecognizedErrors: boolean;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -164,8 +165,13 @@ export class ExpressGenerator {
             namespaceExport,
         });
 
-        this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
-        this.typeSchemaGenerator = new TypeSchemaGenerator();
+        this.typeGenerator = new TypeGenerator({
+            useBrandedStringAliases: config.shouldUseBrandedStringAliases,
+            includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
+        });
+        this.typeSchemaGenerator = new TypeSchemaGenerator({
+            includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
+        });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator();

@@ -6,6 +6,7 @@ export interface ParsedSingleUnionType<Context extends WithBaseContextMixin> {
     getDocs(): string | null | undefined;
     getDiscriminantValue(): string | number | undefined;
     getDiscriminantValueOrThrow(): string | number;
+    getDiscriminantValueType(): ts.TypeNode;
     getInterfaceName(): string;
     getInterfaceDeclaration(
         context: Context,

@@ -7,4 +7,5 @@ export interface SdkCustomConfig {
     includeCredentialsOnCrossOriginRequests: boolean;
     shouldBundle: boolean;
     allowCustomFetcher: boolean;
+    includeUtilsOnUnionMembers: boolean;
 }

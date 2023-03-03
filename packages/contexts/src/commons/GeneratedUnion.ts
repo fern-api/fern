@@ -16,4 +16,5 @@ export interface GeneratedUnion<Context> extends GeneratedFile<Context> {
         context: Context;
     }) => ts.Expression;
     buildUnknown: (args: { existingValue: ts.Expression; context: Context }) => ts.Expression;
+    getUnknownDiscriminantValueType: () => ts.TypeNode;
 }

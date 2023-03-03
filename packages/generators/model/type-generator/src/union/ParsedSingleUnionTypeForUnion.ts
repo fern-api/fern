@@ -18,6 +18,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
         singleUnionType: SingleUnionType;
         union: UnionTypeDeclaration;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -25,7 +26,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
     private singleUnionTypeFromUnion: SingleUnionType;
     protected union: UnionTypeDeclaration;
 
-    constructor({ singleUnionType, union }: ParsedSingleUnionTypeForUnion.Init) {
+    constructor({ singleUnionType, union, includeUtilsOnUnionMembers }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
                 singleUnionType.shape,
@@ -44,6 +45,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
                     },
                 }
             ),
+            includeUtilsOnUnionMembers,
         });
 
         this.union = union;

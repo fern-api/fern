@@ -27,6 +27,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
             singleUnionType: getSingleUnionTypeGenerator({ errorDiscriminationStrategy, errorDeclaration }),
+            includeUtilsOnUnionMembers: true,
         });
 
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;

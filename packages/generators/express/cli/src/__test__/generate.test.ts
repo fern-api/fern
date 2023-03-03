@@ -25,6 +25,9 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "trace",
         outputMode: "local",
         apiName: "api",
+        customConfig: {
+            includeUtilsOnUnionMembers: true,
+        },
     },
     {
         path: "simple",
@@ -33,6 +36,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             doNotHandleUnrecognizedErrors: true,
+            includeUtilsOnUnionMembers: true,
         },
     },
 ];

@@ -29,6 +29,7 @@ const FIXTURES: FixtureInfo[] = [
             useBrandedStringAliases: true,
             neverThrowErrors: true,
             includeCredentialsOnCrossOriginRequests: true,
+            includeUtilsOnUnionMembers: true,
         },
     },
     {
@@ -38,6 +39,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             neverThrowErrors: true,
+            includeUtilsOnUnionMembers: true,
         },
     },
     {
@@ -57,6 +59,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             private: true,
+            includeUtilsOnUnionMembers: true,
         },
     },
     {
@@ -69,6 +72,7 @@ const FIXTURES: FixtureInfo[] = [
             neverThrowErrors: true,
             namespaceExport: "Fiddle",
             bundle: true,
+            includeUtilsOnUnionMembers: true,
         },
     },
 ];

@@ -26,6 +26,7 @@ import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl";
 export declare namespace TypeGenerator {
     export interface Init {
         useBrandedStringAliases: boolean;
+        includeUtilsOnUnionMembers: boolean;
     }
 
     export namespace generateType {
@@ -42,9 +43,11 @@ export declare namespace TypeGenerator {
 
 export class TypeGenerator<Context extends TypeContext = TypeContext> {
     private useBrandedStringAliases: boolean;
+    private includeUtilsOnUnionMembers: boolean;
 
-    constructor({ useBrandedStringAliases }: TypeGenerator.Init) {
+    constructor({ useBrandedStringAliases, includeUtilsOnUnionMembers }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }
 
     public generateType({
@@ -90,7 +93,15 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedUnionType<Context> {
-        return new GeneratedUnionTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
+        return new GeneratedUnionTypeImpl({
+            typeName,
+            shape,
+            examples,
+            docs,
+            fernFilepath,
+            getReferenceToSelf,
+            includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
+        });
     }
 
     private generateObject({

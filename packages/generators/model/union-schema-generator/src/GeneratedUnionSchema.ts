@@ -12,6 +12,7 @@ export declare namespace GeneratedUnionSchema {
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
         getReferenceToSchema: (context: Context) => Reference;
         shouldIncludeDefaultCaseInTransform: boolean;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -23,6 +24,7 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
     private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
     protected getReferenceToSchema: (context: Context) => Reference;
     private shouldIncludeDefaultCaseInTransform: boolean;
+    private includeUtilsOnUnionMembers: boolean;
 
     constructor({
         discriminant,
@@ -30,6 +32,7 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
         getGeneratedUnion,
         getReferenceToSchema,
         shouldIncludeDefaultCaseInTransform,
+        includeUtilsOnUnionMembers,
         ...superInit
     }: GeneratedUnionSchema.Init<Context>) {
         super(superInit);
@@ -38,8 +41,8 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
         this.getGeneratedUnion = getGeneratedUnion;
         this.getReferenceToSchema = getReferenceToSchema;
         this.shouldIncludeDefaultCaseInTransform = shouldIncludeDefaultCaseInTransform;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }
-
     public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         const interfaces = this.singleUnionTypes.map((singleUnionType) => singleUnionType.generateInterface(context));
 
@@ -62,18 +65,19 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
         module.addInterfaces(interfaces);
     }
 
-    protected override getReferenceToParsedShape(context: Context): ts.TypeNode {
+    public override getReferenceToParsedShape(context: Context): ts.TypeNode {
         return this.getReferenceToParsedUnion(context);
     }
 
     public buildSchema(context: Context): Zurg.Schema {
-        return context.base.coreUtilities.zurg
-            .union({
-                parsedDiscriminant: this.getParsedDiscriminant(context),
-                rawDiscriminant: this.discriminant.wireValue,
-                singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => singleUnionType.getSchema(context)),
-            })
-            .transform({
+        let schema: Zurg.Schema = context.base.coreUtilities.zurg.union({
+            parsedDiscriminant: this.getParsedDiscriminant(context),
+            rawDiscriminant: this.discriminant.wireValue,
+            singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => singleUnionType.getSchema(context)),
+        });
+
+        if (this.includeUtilsOnUnionMembers) {
+            schema = schema.transform({
                 newShape: this.getReferenceToParsedShape(context),
                 transform: this.generateAddVisitTransform(context),
                 untransform: ts.factory.createArrowFunction(
@@ -97,9 +101,7 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
                                     ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
                                     undefined
                                 ),
-                            ]),
-                            undefined,
-                            undefined
+                            ])
                         ),
                     ],
                     undefined,
@@ -110,6 +112,43 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
                     )
                 ),
             });
+        } else {
+            schema = schema.transform({
+                newShape: this.getReferenceToParsedShape(context),
+                transform: ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
+                        ),
+                    ],
+                    undefined,
+                    undefined,
+                    ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
+                ),
+                untransform: ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
+                        ),
+                    ],
+                    undefined,
+                    undefined,
+                    ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
+                ),
+            });
+        }
+
+        return schema;
     }
 
     public override writeSchemaToFile(context: Context): void {

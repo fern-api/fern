@@ -25,6 +25,7 @@ export declare namespace GeneratedUnionImpl {
         parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
         unknownSingleUnionType: ParsedSingleUnionType<Context>;
         getReferenceToUnion: (context: Context) => Reference;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -45,6 +46,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     private typeName: string;
     private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
     private unknownSingleUnionType: ParsedSingleUnionType<Context>;
+    private includeUtilsOnUnionMembers: boolean;
 
     constructor({
         typeName,
@@ -53,6 +55,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         parsedSingleUnionTypes,
         unknownSingleUnionType,
         getReferenceToUnion,
+        includeUtilsOnUnionMembers,
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -60,6 +63,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         this.typeName = typeName;
         this.parsedSingleUnionTypes = parsedSingleUnionTypes;
         this.unknownSingleUnionType = unknownSingleUnionType;
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }
 
     public writeToFile(context: Context): void {
@@ -146,6 +150,10 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         );
     }
 
+    public getUnknownDiscriminantValueType(): ts.TypeNode {
+        return this.unknownSingleUnionType.getDiscriminantValueType();
+    }
+
     /**************
      * TYPE ALIAS *
      **************/
@@ -189,7 +197,9 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
             hasDeclareKeyword: true,
         });
         module.addInterfaces(this.getSingleUnionTypeInterfaces(context));
-        module.addInterface(this.getUtilsInterface(context));
+        if (this.includeUtilsOnUnionMembers) {
+            module.addInterface(this.getUtilsInterface(context));
+        }
         module.addInterface(this.getVisitorInterface(context));
     }
 
@@ -198,8 +208,10 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
             singleUnionType.getInterfaceDeclaration(context, this)
         );
 
-        for (const interface_ of interfaces) {
-            interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME));
+        if (this.includeUtilsOnUnionMembers) {
+            for (const interface_ of interfaces) {
+                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME));
+            }
         }
 
         return interfaces.map((interface_) => ({
@@ -301,7 +313,10 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     }
 
     private addBuilderProperties(context: Context, writer: ObjectWriter) {
-        for (const singleUnionType of this.getAllSingleUnionTypesIncludingUnknown()) {
+        const buildableSingleUnionTypes = this.includeUtilsOnUnionMembers
+            ? this.getAllSingleUnionTypesIncludingUnknown()
+            : this.parsedSingleUnionTypes;
+        for (const singleUnionType of buildableSingleUnionTypes) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
                 value: getTextOfTsNode(singleUnionType.getBuilder(context, this)),

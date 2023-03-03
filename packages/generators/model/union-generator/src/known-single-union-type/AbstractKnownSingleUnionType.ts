@@ -11,6 +11,17 @@ export abstract class AbstractKnownSingleUnionType<Context extends WithBaseConte
 {
     public abstract override getDiscriminantValue(): string | number;
 
+    public getDiscriminantValueType(): ts.TypeNode {
+        const discriminantValue = this.getDiscriminantValue();
+        if (typeof discriminantValue === "string") {
+            return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue));
+        }
+        if (typeof discriminantValue === "number") {
+            return ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral(discriminantValue));
+        }
+        assertNever(discriminantValue);
+    }
+
     protected getNonVisitProperties({
         context,
         generatedUnion,

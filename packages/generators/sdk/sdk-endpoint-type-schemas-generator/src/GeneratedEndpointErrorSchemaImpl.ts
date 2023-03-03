@@ -31,6 +31,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
         this.GeneratedSdkErrorUnionSchema = new GeneratedUnionSchema<SdkEndpointTypeSchemasContext>({
             typeName: GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME,
             shouldIncludeDefaultCaseInTransform: false,
+            includeUtilsOnUnionMembers: true,
             discriminant: discriminationStrategy.discriminant,
             getReferenceToSchema: (context) =>
                 context.sdkEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(

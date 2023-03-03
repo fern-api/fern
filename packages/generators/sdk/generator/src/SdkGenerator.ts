@@ -73,6 +73,7 @@ export declare namespace SdkGenerator {
         aliasOfRoot: string | undefined;
         outputEsm: boolean;
         allowCustomFetcher: boolean;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -212,8 +213,13 @@ export class SdkGenerator {
             namespaceExport,
         });
 
-        this.typeGenerator = new TypeGenerator({ useBrandedStringAliases: config.shouldUseBrandedStringAliases });
-        this.typeSchemaGenerator = new TypeSchemaGenerator();
+        this.typeGenerator = new TypeGenerator({
+            useBrandedStringAliases: config.shouldUseBrandedStringAliases,
+            includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
+        });
+        this.typeSchemaGenerator = new TypeSchemaGenerator({
+            includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
+        });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.sdkErrorGenerator = new SdkErrorGenerator({
             neverThrowErrors: config.neverThrowErrors,
