@@ -190,17 +190,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
-                    .parseOrThrow(
-                        ts.factory.createAsExpression(
-                            referenceToRawResponse,
-                            context.typeSchema
-                                .getGeneratedTypeSchema(this.endpoint.response.type)
-                                .getReferenceToRawShape(context)
-                        ),
-                        {
-                            allowUnknownKeys: true,
-                        }
-                    );
+                    .parseOrThrow(referenceToRawResponse, {
+                        allowUnknownKeys: true,
+                    });
             case "primitive":
             case "container":
                 if (this.generatedResponseSchema == null) {
@@ -208,12 +200,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
-                    .parseOrThrow(
-                        ts.factory.createAsExpression(referenceToRawResponse, this.getReferenceToRawResponse(context)),
-                        {
-                            allowUnknownKeys: true,
-                        }
-                    );
+                    .parseOrThrow(referenceToRawResponse, {
+                        allowUnknownKeys: true,
+                    });
             default:
                 assertNever(this.endpoint.response.type);
         }

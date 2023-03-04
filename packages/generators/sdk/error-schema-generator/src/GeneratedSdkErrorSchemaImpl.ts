@@ -55,22 +55,14 @@ export class GeneratedSdkErrorSchemaImpl
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
-                    .parseOrThrow(
-                        ts.factory.createAsExpression(
-                            referenceToBody,
-                            context.typeSchema.getReferenceToRawNamedType(this.type).getTypeNode()
-                        ),
-                        {
-                            allowUnknownKeys: true,
-                        }
-                    );
+                    .parseOrThrow(referenceToBody, {
+                        allowUnknownKeys: true,
+                    });
             case "unknown":
                 return referenceToBody;
             case "primitive":
             case "container":
-                return this.getReferenceToZurgSchema(context).parseOrThrow(
-                    ts.factory.createAsExpression(referenceToBody, this.getReferenceToRawShape(context))
-                );
+                return this.getReferenceToZurgSchema(context).parseOrThrow(referenceToBody);
             default:
                 assertNever(this.type);
         }
