@@ -1,4 +1,3 @@
-import { Classes } from "@blueprintjs/core";
 import classNames from "classnames";
 import React from "react";
 import { ApiDefinitionContextProviderForTab } from "./ApiDefinitionContextProviderForTab";
@@ -11,7 +10,7 @@ export const ApiTabBar: React.FC = () => {
     const { tabs } = useApiTabsContext();
 
     return (
-        <div className={classNames(styles.container, Classes.DARK, "flex h-11 overflow-auto bg-zinc-800 gap-px")}>
+        <div className={classNames(styles.container, "flex h-9 overflow-auto")}>
             {tabs.map((tab) => {
                 return (
                     <React.Fragment key={tab.path}>
@@ -21,7 +20,7 @@ export const ApiTabBar: React.FC = () => {
                     </React.Fragment>
                 );
             })}
-            <TabBarItemWrapper className="flex-1" />
+            <TabBarItemWrapper className="flex-1 bg-gray-200 border-b border-gray-300" />
         </div>
     );
 };
