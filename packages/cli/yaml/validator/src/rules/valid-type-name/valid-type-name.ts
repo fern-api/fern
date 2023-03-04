@@ -8,7 +8,7 @@ export const ValidTypeNameRule: Rule = {
         return {
             serviceFile: {
                 typeDeclaration: ({ typeName }) => {
-                    if (!ALPHA_REGEX.test(typeName)) {
+                    if (!typeName.isInlined && !ALPHA_REGEX.test(typeName.name)) {
                         return [
                             {
                                 severity: "error",
