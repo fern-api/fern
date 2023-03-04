@@ -18,6 +18,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private static TO_ROUTER_METHOD_NAME = "toRouter";
     private static CATCH_BLOCK_ERROR_VARIABLE_NAME = "error";
     private static SEND_RESPONSE_PROPERTY_NAME = "send";
+    private static SEND_COOKIE_RESPONSE_PROPERTY_NAME = "cookie";
     private static RESPONSE_BODY_PARAMETER_NAME = "responseBody";
     private static LOCALS_PROPERTY_NAME = "locals";
 
@@ -136,6 +137,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         const REQUEST_PARAMETER_NAME = "req";
         const RESPONSE_PARAMETER_NAME = "res";
 
+        const COOKIE_PARAMETER_NAME = "cookie";
+        const COOKIE_VALUE_PARAMETER_NAME = "value";
+        const COOKIE_OPTIONS_PARAMETER_NAME = "options";
+
         const allPathParameters = [...this.service.pathParameters, ...endpoint.pathParameters];
 
         methodsInterface.addMethod({
@@ -219,8 +224,45 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                           ]
                                         : [],
                                     ts.factory.createTypeReferenceNode("Promise", [
-                                        ts.factory.createTypeReferenceNode("void"),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
                                     ])
+                                )
+                            ),
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                ts.factory.createIdentifier(
+                                    GeneratedExpressServiceImpl.SEND_COOKIE_RESPONSE_PROPERTY_NAME
+                                ),
+                                undefined,
+                                ts.factory.createFunctionTypeNode(
+                                    undefined,
+                                    [
+                                        ts.factory.createParameterDeclaration(
+                                            undefined,
+                                            undefined,
+                                            undefined,
+                                            COOKIE_PARAMETER_NAME,
+                                            undefined,
+                                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                        ),
+                                        ts.factory.createParameterDeclaration(
+                                            undefined,
+                                            undefined,
+                                            undefined,
+                                            COOKIE_VALUE_PARAMETER_NAME,
+                                            undefined,
+                                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                        ),
+                                        ts.factory.createParameterDeclaration(
+                                            undefined,
+                                            undefined,
+                                            undefined,
+                                            COOKIE_OPTIONS_PARAMETER_NAME,
+                                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                            context.base.externalDependencies.express.CookieOptions._getReferenceToType()
+                                        ),
+                                    ],
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                                 )
                             ),
                             ts.factory.createPropertySignature(
@@ -235,8 +277,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             ],
             returnType: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
-                    ts.factory.createTypeReferenceNode("void"),
-                    ts.factory.createTypeReferenceNode("Promise", [ts.factory.createTypeReferenceNode("void")]),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+                    ts.factory.createTypeReferenceNode("Promise", [
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+                    ]),
                 ])
             ),
         });
@@ -569,6 +613,12 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                 true
                                             )
                                         )
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        GeneratedExpressServiceImpl.SEND_COOKIE_RESPONSE_PROPERTY_NAME,
+                                        context.base.externalDependencies.express.Response.cookie._getBoundReference({
+                                            referenceToExpressResponse: expressResponse,
+                                        })
                                     ),
                                     ts.factory.createPropertyAssignment(
                                         GeneratedExpressServiceImpl.LOCALS_PROPERTY_NAME,

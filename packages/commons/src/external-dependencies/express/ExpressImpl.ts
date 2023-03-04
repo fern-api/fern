@@ -58,6 +58,27 @@ export class ExpressImpl extends ExternalDependency implements Express {
                 [valueToSend]
             );
         },
+
+        cookie: {
+            _getBoundReference: ({
+                referenceToExpressResponse,
+            }: {
+                referenceToExpressResponse: ts.Expression;
+            }): ts.Expression => {
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            referenceToExpressResponse,
+                            ts.factory.createIdentifier("cookie")
+                        ),
+                        ts.factory.createIdentifier("bind")
+                    ),
+                    undefined,
+                    [referenceToExpressResponse]
+                );
+            },
+        },
+
         status: ({
             referenceToExpressResponse,
             status,
@@ -239,4 +260,14 @@ export class ExpressImpl extends ExternalDependency implements Express {
             );
         })
     );
+
+    public readonly CookieOptions = {
+        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+            withImport(() => {
+                return ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "CookieOptions")
+                );
+            })
+        ),
+    };
 }

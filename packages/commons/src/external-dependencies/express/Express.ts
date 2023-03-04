@@ -16,6 +16,9 @@ export interface Express {
     };
     Response: {
         json: (args: { referenceToExpressResponse: ts.Expression; valueToSend: ts.Expression }) => ts.Expression;
+        cookie: {
+            _getBoundReference: (args: { referenceToExpressResponse: ts.Expression }) => ts.Expression;
+        };
         status: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
         sendStatus: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
         locals: (args: { referenceToExpressResponse: ts.Expression }) => ts.Expression;
@@ -38,6 +41,9 @@ export interface Express {
                 next: ts.Expression;
             }) => ts.ConciseBody;
         }) => ts.Statement;
+    };
+    CookieOptions: {
+        _getReferenceToType: () => ts.TypeNode;
     };
     json: () => ts.Expression;
 }
