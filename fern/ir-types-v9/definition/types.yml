@@ -82,6 +82,7 @@ types:
     properties:
       discriminant: commons.NameAndWireValue
       types: list<SingleUnionType>
+      baseProperties: list<ObjectProperty>
   SingleUnionType:
     extends: commons.WithDocs
     properties:

@@ -18413,6 +18413,7 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                     },
                     "wireValue": "type"
                 },
+                "baseProperties": [],
                 "types": [
                     {
                         "discriminantValue": {
@@ -28231,6 +28232,7 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                     },
                     "wireValue": "type"
                 },
+                "baseProperties": [],
                 "types": [
                     {
                         "discriminantValue": {
@@ -38049,6 +38051,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                     },
                     "wireValue": "type"
                 },
+                "baseProperties": [],
                 "types": [
                     {
                         "discriminantValue": {
@@ -46075,6 +46078,7 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                     },
                     "wireValue": "type"
                 },
+                "baseProperties": [],
                 "types": [
                     {
                         "discriminantValue": {
@@ -54101,6 +54105,7 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                     },
                     "wireValue": "type"
                 },
+                "baseProperties": [],
                 "types": [
                     {
                         "discriminantValue": {
