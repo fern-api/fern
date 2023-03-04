@@ -225,11 +225,11 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
         module.addInterfaces(this.getSingleUnionTypeInterfaces(context));
         if (this.includeUtilsOnUnionMembers) {
             module.addInterface(this.getUtilsInterface(context));
+            module.addInterface(this.getVisitorInterface(context));
         }
         if (this.hasBaseInterface()) {
             module.addInterface(this.getBaseInterface(context));
         }
-        module.addInterface(this.getVisitorInterface(context));
     }
 
     private getSingleUnionTypeInterfaces(context: Context): OptionalKind<InterfaceDeclarationStructure>[] {
