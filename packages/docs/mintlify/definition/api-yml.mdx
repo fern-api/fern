@@ -151,7 +151,8 @@ error-discrimination:
 You can import and list errors that will be thrown by every endpoint.
 
 ```yaml api.yml
-imports: commons.yml
+imports: 
+  commons: commons.yml
 
 errors:
   - commons.NotFoundError
