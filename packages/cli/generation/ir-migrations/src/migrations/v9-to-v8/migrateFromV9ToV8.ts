@@ -23,6 +23,12 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v9): IrVersions.V8.ir.IntermediateRepresentation => {
+        for (const [_, type] of Object.entries(v9.types)) {
+            if (type.shape._type === "union" && type.shape.baseProperties.length > 0) {
+                throw new Error("Failed to migrate IR because you're using base-properties on union.");
+            }
+        }
+
         return {
             apiName: v9.apiName,
             apiDisplayName: v9.apiDisplayName,
