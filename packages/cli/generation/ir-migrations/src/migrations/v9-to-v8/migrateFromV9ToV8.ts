@@ -10,8 +10,8 @@ export const V9_TO_V8_MIGRATION: IrMigration<
     earlierVersion: "v8",
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_SDK]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: AlwaysRunMigration,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.3.0-2-g85e8aa08",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.3.0-2-g85e8aa08",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
