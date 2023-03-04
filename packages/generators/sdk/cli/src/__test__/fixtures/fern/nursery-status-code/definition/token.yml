@@ -25,7 +25,7 @@ types:
 
   BasePropertiesTestUnion:
     base-properties:
-      hello_world: integer
+      hello_world: optional<integer>
     union:
       noProperties: {}
       string: string

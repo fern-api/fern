@@ -2,17 +2,12 @@ import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import { ObjectProperty } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import {
-    GeneratedUnion,
-    WithBaseContextMixin,
-    WithTypeContextMixin,
-    WithTypeSchemaContextMixin,
-} from "@fern-typescript/contexts";
+import { GeneratedUnion, WithBaseContextMixin, WithTypeSchemaContextMixin } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
-    export interface Init<Context extends WithBaseContextMixin & WithTypeContextMixin & WithTypeSchemaContextMixin>
+    export interface Init<Context extends WithBaseContextMixin & WithTypeSchemaContextMixin>
         extends AbstractGeneratedSchema.Init {
         discriminant: NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
@@ -25,7 +20,7 @@ export declare namespace GeneratedUnionSchema {
 }
 
 export class GeneratedUnionSchema<
-    Context extends WithBaseContextMixin & WithTypeContextMixin & WithTypeSchemaContextMixin
+    Context extends WithBaseContextMixin & WithTypeSchemaContextMixin
 > extends AbstractGeneratedSchema<Context> {
     private static VALUE_PARAMETER_NAME = "value";
     private static BASE_SCHEMA_NAME = "_Base";
@@ -88,9 +83,9 @@ export class GeneratedUnionSchema<
             module.addInterface({
                 name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
                 properties: this.baseProperties.map((property) => {
-                    const type = context.type.getReferenceToType(property.valueType);
+                    const type = context.typeSchema.getReferenceToRawType(property.valueType);
                     return {
-                        name: property.name.wireValue,
+                        name: `"${property.name.wireValue}"`,
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                         hasQuestionToken: type.isOptional,
                     };
