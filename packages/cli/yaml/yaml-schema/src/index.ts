@@ -7,6 +7,7 @@ export {
     type FernServiceFileAstNodeTypes,
     type FernServiceFileAstNodeVisitor,
     type FernServiceFileAstVisitor,
+    type TypeDeclarationName,
 } from "./ast/FernServiceFileAstVisitor";
 export { type NodePath } from "./ast/NodePath";
 export { visitFernRootApiFileYamlAst } from "./ast/visitFernRootApiFileYamlAst";

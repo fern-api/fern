@@ -59,7 +59,9 @@ async function getTypesByFilepath(workspace: FernWorkspace) {
 
         await visitFernServiceFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
-                typesForFile.add(typeName);
+                if (!typeName.isInlined) {
+                    typesForFile.add(typeName.name);
+                }
             },
         });
     });
