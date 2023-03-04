@@ -1,7 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRootApiFileAstNodeTypes, FernServiceFileAstNodeTypes, ServiceFileSchema } from "@fern-api/yaml-schema";
+import {
+    FernRootApiFileAstNodeTypes,
+    FernServiceFileAstNodeTypes,
+    RootApiFileSchema,
+    ServiceFileSchema,
+} from "@fern-api/yaml-schema";
 
 export interface Rule {
     name: string;
@@ -15,17 +20,20 @@ export interface RuleContext {
 }
 
 export interface RuleVisitors {
-    rootApiFile?: RuleVisitor<FernRootApiFileAstNodeTypes>;
-    serviceFile?: RuleVisitor<FernServiceFileAstNodeTypes>;
+    rootApiFile?: RuleVisitor<FernRootApiFileAstNodeTypes, RootApiFileSchema>;
+    serviceFile?: RuleVisitor<FernServiceFileAstNodeTypes, ServiceFileSchema>;
 }
 
-export type RuleVisitor<AstNodeTypes> = {
-    [K in keyof AstNodeTypes]?: (node: AstNodeTypes[K], args: RuleRunnerArgs) => MaybePromise<RuleViolation[]>;
+export type RuleVisitor<AstNodeTypes, FileSchema> = {
+    [K in keyof AstNodeTypes]?: (
+        node: AstNodeTypes[K],
+        args: RuleRunnerArgs<FileSchema>
+    ) => MaybePromise<RuleViolation[]>;
 };
 
-export interface RuleRunnerArgs {
+export interface RuleRunnerArgs<FileSchema> {
     relativeFilepath: RelativeFilePath;
-    contents: ServiceFileSchema;
+    contents: FileSchema;
 }
 export interface RuleViolation {
     severity: "warning" | "error";

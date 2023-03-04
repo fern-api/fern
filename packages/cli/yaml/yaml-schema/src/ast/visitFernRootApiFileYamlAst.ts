@@ -29,6 +29,12 @@ export async function visitFernRootApiFileYamlAst(
             await visitor.errorDiscrimination?.(errorDiscrimination, ["error-discrimination"]);
         },
         audiences: noop,
-        errors: noop,
+        errors: async (errors) => {
+            if (errors != null) {
+                for (const error of errors) {
+                    await visitor.errorReference?.(error, ["errors", error]);
+                }
+            }
+        },
     });
 }
