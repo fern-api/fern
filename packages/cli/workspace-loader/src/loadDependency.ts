@@ -205,6 +205,7 @@ async function validateDependencyAndGetDefinition({
             );
         },
         audiences: noop,
+        errors: noop,
     });
     if (!areRootApiFilesEquivalent) {
         context.failWithoutThrowing(
