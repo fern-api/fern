@@ -1,7 +1,7 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, ResponseErrors } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -20,6 +20,7 @@ import { IdGenerator } from "./IdGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
+import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
     workspace,
@@ -36,9 +37,20 @@ export async function generateIntermediateRepresentation({
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",
-        serviceFile: workspace.definition.rootApiFile.contents,
+        serviceFile: {
+            imports: workspace.definition.rootApiFile.contents.imports,
+        },
         casingsGenerator,
     });
+    const globalErrors: ResponseErrors = (workspace.definition.rootApiFile.contents.errors ?? []).map(
+        (referenceToError) => {
+            const errorName = parseErrorName({
+                errorName: referenceToError,
+                file: rootApiFileContext,
+            });
+            return { error: errorName, docs: undefined };
+        }
+    );
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
@@ -129,7 +141,9 @@ export async function generateIntermediateRepresentation({
                     errorResolver,
                     typeResolver,
                     exampleResolver,
+                    globalErrors,
                 });
+
                 intermediateRepresentation.services[IdGenerator.generateServiceId(convertedHttpService.name)] =
                     convertedHttpService;
 
