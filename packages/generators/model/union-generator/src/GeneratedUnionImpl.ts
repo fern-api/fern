@@ -27,6 +27,7 @@ export declare namespace GeneratedUnionImpl {
         unknownSingleUnionType: ParsedSingleUnionType<Context>;
         getReferenceToUnion: (context: Context) => Reference;
         includeUtilsOnUnionMembers: boolean;
+        includeOtherInUnionTypes: boolean;
         baseProperties?: ObjectProperty[];
     }
 }
@@ -52,6 +53,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
     private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
     private unknownSingleUnionType: ParsedSingleUnionType<Context>;
     private includeUtilsOnUnionMembers: boolean;
+    private includeOtherInUnionTypes: boolean;
     private baseProperties: ObjectProperty[];
 
     constructor({
@@ -62,6 +64,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
         unknownSingleUnionType,
         getReferenceToUnion,
         includeUtilsOnUnionMembers,
+        includeOtherInUnionTypes,
         baseProperties = [],
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
@@ -71,6 +74,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
         this.parsedSingleUnionTypes = parsedSingleUnionTypes;
         this.unknownSingleUnionType = unknownSingleUnionType;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.includeOtherInUnionTypes = includeOtherInUnionTypes;
         this.baseProperties = baseProperties;
     }
 
@@ -184,7 +188,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
         const typeAlias = context.base.sourceFile.addTypeAlias({
             name: this.typeName,
             type: getWriterForMultiLineUnionType(
-                this.getAllSingleUnionTypesIncludingUnknown().map((singleUnionType) => ({
+                this.getAllSingleUnionTypesForAlias().map((singleUnionType) => ({
                     node: this.getReferenceToSingleUnionType(singleUnionType, context),
                     docs: singleUnionType.getDocs(),
                 }))
@@ -229,7 +233,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
     }
 
     private getSingleUnionTypeInterfaces(context: Context): OptionalKind<InterfaceDeclarationStructure>[] {
-        const interfaces = this.getAllSingleUnionTypesIncludingUnknown().map((singleUnionType) =>
+        const interfaces = this.getAllSingleUnionTypesForAlias().map((singleUnionType) =>
             singleUnionType.getInterfaceDeclaration(context, this)
         );
 
@@ -465,6 +469,14 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
                 )
             ),
         });
+    }
+
+    private getAllSingleUnionTypesForAlias(): ParsedSingleUnionType<Context>[] {
+        const singleUnionTypes: ParsedSingleUnionType<Context>[] = [...this.parsedSingleUnionTypes];
+        if (this.includeOtherInUnionTypes) {
+            singleUnionTypes.push(this.unknownSingleUnionType);
+        }
+        return singleUnionTypes;
     }
 
     private getAllSingleUnionTypesIncludingUnknown(): ParsedSingleUnionType<Context>[] {

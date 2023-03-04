@@ -21,6 +21,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
             includeUtilsOnUnionMembers: parsed?.includeUtilsOnUnionMembers ?? false,
+            includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
         };
     }
 
@@ -56,6 +57,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeCredentialsOnCrossOriginRequests: customConfig.includeCredentialsOnCrossOriginRequests,
                 allowCustomFetcher: customConfig.allowCustomFetcher,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
+                includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
             },
         });
 

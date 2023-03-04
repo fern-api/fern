@@ -17,6 +17,7 @@ export declare namespace GeneratedUnionTypeImpl {
     export interface Init<Context extends TypeContext>
         extends AbstractGeneratedType.Init<UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
+        includeOtherInUnionTypes: boolean;
     }
 }
 
@@ -28,7 +29,11 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 
     private generatedUnion: GeneratedUnionImpl<Context>;
 
-    constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeImpl.Init<Context>) {
+    constructor({
+        includeUtilsOnUnionMembers,
+        includeOtherInUnionTypes,
+        ...superInit
+    }: GeneratedUnionTypeImpl.Init<Context>) {
         super(superInit);
 
         const parsedSingleUnionTypes = this.shape.types.map(
@@ -45,6 +50,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
         this.generatedUnion = new GeneratedUnionImpl({
             typeName: this.typeName,
             includeUtilsOnUnionMembers,
+            includeOtherInUnionTypes,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs(context),
             discriminant: this.shape.discriminant.name.camelCase.unsafeName,

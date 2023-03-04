@@ -30,6 +30,7 @@ const FIXTURES: FixtureInfo[] = [
             neverThrowErrors: true,
             includeCredentialsOnCrossOriginRequests: true,
             includeUtilsOnUnionMembers: true,
+            includeOtherInUnionTypes: true,
         },
     },
     {
@@ -40,6 +41,7 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             neverThrowErrors: true,
             includeUtilsOnUnionMembers: true,
+            includeOtherInUnionTypes: true,
         },
     },
     {
@@ -60,6 +62,7 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             private: true,
             includeUtilsOnUnionMembers: true,
+            includeOtherInUnionTypes: true,
         },
     },
     {
@@ -73,6 +76,7 @@ const FIXTURES: FixtureInfo[] = [
             namespaceExport: "Fiddle",
             bundle: true,
             includeUtilsOnUnionMembers: true,
+            includeOtherInUnionTypes: true,
         },
     },
 ];

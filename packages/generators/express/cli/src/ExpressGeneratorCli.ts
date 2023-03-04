@@ -16,6 +16,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             areImplementationsOptional: parsed?.optionalImplementations ?? false,
             doNotHandleUnrecognizedErrors: parsed?.doNotHandleUnrecognizedErrors ?? false,
             includeUtilsOnUnionMembers: parsed?.includeUtilsOnUnionMembers ?? false,
+            includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
         };
     }
 
@@ -44,6 +45,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 areImplementationsOptional: customConfig.areImplementationsOptional,
                 doNotHandleUnrecognizedErrors: customConfig.doNotHandleUnrecognizedErrors,
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
+                includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
             },
         });
 

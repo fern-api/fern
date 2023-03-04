@@ -3,4 +3,5 @@ export interface ExpressCustomConfig {
     areImplementationsOptional: boolean;
     doNotHandleUnrecognizedErrors: boolean;
     includeUtilsOnUnionMembers: boolean;
+    includeOtherInUnionTypes: boolean;
 }

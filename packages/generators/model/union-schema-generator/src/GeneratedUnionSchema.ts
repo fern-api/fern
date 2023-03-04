@@ -11,7 +11,7 @@ export declare namespace GeneratedUnionSchema {
         extends AbstractGeneratedSchema.Init {
         discriminant: NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
-        baseProperties: ObjectProperty[];
+        baseProperties?: ObjectProperty[];
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
         getReferenceToSchema: (context: Context) => Reference;
         shouldIncludeDefaultCaseInTransform: boolean;
@@ -36,7 +36,7 @@ export class GeneratedUnionSchema<
     constructor({
         discriminant,
         singleUnionTypes,
-        baseProperties,
+        baseProperties = [],
         getGeneratedUnion,
         getReferenceToSchema,
         shouldIncludeDefaultCaseInTransform,

@@ -8,4 +8,5 @@ export interface SdkCustomConfig {
     shouldBundle: boolean;
     allowCustomFetcher: boolean;
     includeUtilsOnUnionMembers: boolean;
+    includeOtherInUnionTypes: boolean;
 }

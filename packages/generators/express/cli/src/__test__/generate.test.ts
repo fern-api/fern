@@ -27,6 +27,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             includeUtilsOnUnionMembers: true,
+            includeOtherInUnionTypes: true,
         },
     },
     {
@@ -37,6 +38,7 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             doNotHandleUnrecognizedErrors: true,
             includeUtilsOnUnionMembers: true,
+            includeOtherInUnionTypes: true,
         },
     },
 ];

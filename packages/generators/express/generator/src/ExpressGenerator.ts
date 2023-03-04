@@ -61,6 +61,7 @@ export declare namespace ExpressGenerator {
         areImplementationsOptional: boolean;
         doNotHandleUnrecognizedErrors: boolean;
         includeUtilsOnUnionMembers: boolean;
+        includeOtherInUnionTypes: boolean;
     }
 }
 
@@ -168,6 +169,7 @@ export class ExpressGenerator {
         this.typeGenerator = new TypeGenerator({
             useBrandedStringAliases: config.shouldUseBrandedStringAliases,
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
+            includeOtherInUnionTypes: config.includeOtherInUnionTypes,
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,

@@ -56,6 +56,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             unknownSingleUnionType: new UnknownErrorSingleUnionType({
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
             }),
+            includeOtherInUnionTypes: true,
         });
     }
 

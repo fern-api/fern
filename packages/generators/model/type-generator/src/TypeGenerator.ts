@@ -27,6 +27,7 @@ export declare namespace TypeGenerator {
     export interface Init {
         useBrandedStringAliases: boolean;
         includeUtilsOnUnionMembers: boolean;
+        includeOtherInUnionTypes: boolean;
     }
 
     export namespace generateType {
@@ -44,10 +45,12 @@ export declare namespace TypeGenerator {
 export class TypeGenerator<Context extends TypeContext = TypeContext> {
     private useBrandedStringAliases: boolean;
     private includeUtilsOnUnionMembers: boolean;
+    private includeOtherInUnionTypes: boolean;
 
-    constructor({ useBrandedStringAliases, includeUtilsOnUnionMembers }: TypeGenerator.Init) {
+    constructor({ useBrandedStringAliases, includeUtilsOnUnionMembers, includeOtherInUnionTypes }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.includeOtherInUnionTypes = includeOtherInUnionTypes;
     }
 
     public generateType({
@@ -101,6 +104,7 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
             fernFilepath,
             getReferenceToSelf,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
+            includeOtherInUnionTypes: this.includeOtherInUnionTypes,
         });
     }
 

@@ -10,6 +10,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
+    includeOtherInUnionTypes: z.optional(z.boolean()),
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;
