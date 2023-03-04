@@ -23,6 +23,18 @@ types:
       expired: {}
       revoked: {}
 
+  BasePropertiesTestUnion:
+    base-properties:
+      hello_world: integer
+    union:
+      noProperties: {}
+      string: string
+      extension: SomeObject
+
+  SomeObject:
+    properties:
+      foo: string
+
 service:
   auth: false
   url: ServerB

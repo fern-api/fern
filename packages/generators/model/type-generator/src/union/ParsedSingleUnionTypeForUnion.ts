@@ -12,7 +12,7 @@ import {
     SinglePropertySingleUnionTypeGenerator,
     SingleUnionTypeGenerator,
 } from "@fern-typescript/union-generator";
-import { SamePropertyAsObjectSingleUnionTypeGenerator } from "./SamePropertyAsObjectSingleUnionTypeGenerator";
+import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
 
 export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
@@ -33,7 +33,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends 
                 {
                     noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                     samePropertiesAsObject: (extended) =>
-                        new SamePropertyAsObjectSingleUnionTypeGenerator({ extended }),
+                        new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty),

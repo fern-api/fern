@@ -56,6 +56,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
                     });
                 }
             }),
+            baseProperties: [],
         });
     }
 

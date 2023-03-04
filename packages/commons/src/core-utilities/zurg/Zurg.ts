@@ -107,9 +107,7 @@ export declare namespace Zurg {
 
         interface SingleUnionType {
             discriminantValue: string;
-            nonDiscriminantProperties:
-                | { isInline: true; properties: Zurg.Property[] }
-                | { isInline: false; objectSchema: Zurg.Schema };
+            nonDiscriminantProperties: Zurg.ObjectSchema;
         }
     }
 }

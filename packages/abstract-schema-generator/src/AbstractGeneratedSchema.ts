@@ -9,7 +9,7 @@ export declare namespace AbstractGeneratedSchema {
 }
 
 export abstract class AbstractGeneratedSchema<Context extends WithBaseContextMixin> {
-    public static RAW_TYPE_NAME = "Raw";
+    protected static RAW_TYPE_NAME = "Raw";
 
     protected typeName: string;
 

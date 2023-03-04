@@ -28,7 +28,6 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
 
     constructor({ includeUtilsOnUnionMembers, ...superInit }: GeneratedUnionTypeSchemaImpl.Init<Context>) {
         super(superInit);
-
         const discriminant = this.shape.discriminant;
 
         this.generatedUnionSchema = new GeneratedUnionSchema({
@@ -38,6 +37,7 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
             includeUtilsOnUnionMembers,
             getReferenceToSchema: this.getReferenceToSchema,
             getGeneratedUnion: () => this.getGeneratedUnionType().getGeneratedUnion(),
+            baseProperties: this.shape.baseProperties,
             singleUnionTypes: this.shape.types.map((singleUnionType) => {
                 const discriminantValue = singleUnionType.discriminantValue;
                 return SingleUnionTypeProperties._visit<RawSingleUnionType<Context>>(singleUnionType.shape, {
@@ -73,6 +73,10 @@ export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
 
     public override buildSchema(context: Context): Zurg.Schema {
         return this.generatedUnionSchema.buildSchema(context);
+    }
+
+    public override writeSchemaToFile(context: Context): void {
+        this.generatedUnionSchema.writeSchemaToFile(context);
     }
 
     private getGeneratedUnionType(): GeneratedUnionType<Context> {

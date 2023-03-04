@@ -55,17 +55,14 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
             );
         }
 
-        return {
-            isInline: true,
-            properties: [
-                {
-                    key: {
-                        parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,
-                        raw: this.discriminationStrategy.contentProperty.wireValue,
-                    },
-                    value: context.typeSchema.getSchemaOfTypeReference(errorDeclaration.type),
+        return context.base.coreUtilities.zurg.object([
+            {
+                key: {
+                    parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,
+                    raw: this.discriminationStrategy.contentProperty.wireValue,
                 },
-            ],
-        };
+                value: context.typeSchema.getSchemaOfTypeReference(errorDeclaration.type),
+            },
+        ]);
     }
 }

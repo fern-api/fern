@@ -53,6 +53,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
                 singleUnionType: unknownSingleUnionTypeGenerator,
                 includeUtilsOnUnionMembers,
             }),
+            baseProperties: this.shape.baseProperties,
         });
     }
 

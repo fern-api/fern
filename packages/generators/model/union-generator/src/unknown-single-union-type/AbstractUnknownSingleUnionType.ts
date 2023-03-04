@@ -1,9 +1,9 @@
-import { WithBaseContextMixin } from "@fern-typescript/contexts";
+import { WithBaseContextMixin, WithTypeContextMixin } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType";
 
 export abstract class AbstractUnknownSingleUnionType<
-    Context extends WithBaseContextMixin
+    Context extends WithBaseContextMixin & WithTypeContextMixin
 > extends AbstractParsedSingleUnionType<Context> {
     protected static INTERFACE_NAME = "_Unknown";
     protected static BUILDER_NAME = "_unknown";

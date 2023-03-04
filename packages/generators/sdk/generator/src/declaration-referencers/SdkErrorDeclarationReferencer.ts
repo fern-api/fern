@@ -1,6 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { ExportedFilePath, getExportedDirectoriesForFernFilepath, Reference } from "@fern-typescript/commons";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
@@ -32,11 +31,11 @@ export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer
         };
     }
 
-    public getFilename(errorName: DeclaredTypeName): string {
+    public getFilename(errorName: DeclaredErrorName): string {
         return `${this.getExportedName(errorName)}.ts`;
     }
 
-    public getExportedName(errorName: DeclaredTypeName): string {
+    public getExportedName(errorName: DeclaredErrorName): string {
         return errorName.name.pascalCase.unsafeName;
     }
 

@@ -1,14 +1,22 @@
 import { NameAndWireValue } from "@fern-fern/ir-model/commons";
+import { ObjectProperty } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import { GeneratedUnion, WithBaseContextMixin } from "@fern-typescript/contexts";
-import { ModuleDeclaration, ts } from "ts-morph";
+import {
+    GeneratedUnion,
+    WithBaseContextMixin,
+    WithTypeContextMixin,
+    WithTypeSchemaContextMixin,
+} from "@fern-typescript/contexts";
+import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
-    export interface Init<Context> extends AbstractGeneratedSchema.Init {
+    export interface Init<Context extends WithBaseContextMixin & WithTypeContextMixin & WithTypeSchemaContextMixin>
+        extends AbstractGeneratedSchema.Init {
         discriminant: NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
+        baseProperties: ObjectProperty[];
         getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
         getReferenceToSchema: (context: Context) => Reference;
         shouldIncludeDefaultCaseInTransform: boolean;
@@ -16,11 +24,15 @@ export declare namespace GeneratedUnionSchema {
     }
 }
 
-export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends AbstractGeneratedSchema<Context> {
+export class GeneratedUnionSchema<
+    Context extends WithBaseContextMixin & WithTypeContextMixin & WithTypeSchemaContextMixin
+> extends AbstractGeneratedSchema<Context> {
     private static VALUE_PARAMETER_NAME = "value";
+    private static BASE_SCHEMA_NAME = "_Base";
 
     private discriminant: NameAndWireValue;
     private singleUnionTypes: RawSingleUnionType<Context>[];
+    private baseProperties: ObjectProperty[];
     private getGeneratedUnion: (context: Context) => GeneratedUnion<Context>;
     protected getReferenceToSchema: (context: Context) => Reference;
     private shouldIncludeDefaultCaseInTransform: boolean;
@@ -29,6 +41,7 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
     constructor({
         discriminant,
         singleUnionTypes,
+        baseProperties,
         getGeneratedUnion,
         getReferenceToSchema,
         shouldIncludeDefaultCaseInTransform,
@@ -38,11 +51,13 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
         super(superInit);
         this.discriminant = discriminant;
         this.singleUnionTypes = singleUnionTypes;
+        this.baseProperties = baseProperties;
         this.getGeneratedUnion = getGeneratedUnion;
         this.getReferenceToSchema = getReferenceToSchema;
         this.shouldIncludeDefaultCaseInTransform = shouldIncludeDefaultCaseInTransform;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
     }
+
     public override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         const interfaces = this.singleUnionTypes.map((singleUnionType) => singleUnionType.generateInterface(context));
 
@@ -62,7 +77,26 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
             ),
         });
 
-        module.addInterfaces(interfaces);
+        for (const interfaceStructure of interfaces) {
+            const interface_ = module.addInterface(interfaceStructure);
+            if (this.hasBaseInterface()) {
+                interface_.insertExtends(0, GeneratedUnionSchema.BASE_SCHEMA_NAME);
+            }
+        }
+
+        if (this.hasBaseInterface()) {
+            module.addInterface({
+                name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
+                properties: this.baseProperties.map((property) => {
+                    const type = context.type.getReferenceToType(property.valueType);
+                    return {
+                        name: property.name.wireValue,
+                        type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+                        hasQuestionToken: type.isOptional,
+                    };
+                }),
+            });
+        }
     }
 
     public override getReferenceToParsedShape(context: Context): ts.TypeNode {
@@ -73,7 +107,18 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
         let schema: Zurg.Schema = context.base.coreUtilities.zurg.union({
             parsedDiscriminant: this.getParsedDiscriminant(context),
             rawDiscriminant: this.discriminant.wireValue,
-            singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => singleUnionType.getSchema(context)),
+            singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => {
+                const singleUnionTypeSchema = singleUnionType.getSchema(context);
+                if (this.hasBaseInterface()) {
+                    singleUnionTypeSchema.nonDiscriminantProperties =
+                        singleUnionTypeSchema.nonDiscriminantProperties.extend(
+                            context.base.coreUtilities.zurg.Schema._fromExpression(
+                                ts.factory.createIdentifier(GeneratedUnionSchema.BASE_SCHEMA_NAME)
+                            )
+                        );
+                }
+                return singleUnionTypeSchema;
+            }),
         });
 
         if (this.includeUtilsOnUnionMembers) {
@@ -152,9 +197,37 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
     }
 
     public override writeSchemaToFile(context: Context): void {
-        if (this.singleUnionTypes.length > 0) {
-            super.writeSchemaToFile(context);
+        if (this.singleUnionTypes.length === 0) {
+            return;
         }
+
+        if (this.hasBaseInterface()) {
+            context.base.sourceFile.addVariableStatement({
+                declarationKind: VariableDeclarationKind.Const,
+                declarations: [
+                    {
+                        name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
+                        initializer: getTextOfTsNode(
+                            context.base.coreUtilities.zurg
+                                .object(
+                                    this.baseProperties.map((baseProperty) => ({
+                                        key: {
+                                            raw: baseProperty.name.wireValue,
+                                            parsed: this.getGeneratedUnion(context).getBasePropertyKey(
+                                                baseProperty.name.wireValue
+                                            ),
+                                        },
+                                        value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType),
+                                    }))
+                                )
+                                .toExpression()
+                        ),
+                    },
+                ],
+            });
+        }
+
+        super.writeSchemaToFile(context);
     }
 
     private generateAddVisitTransform(context: Context): ts.Expression {
@@ -238,5 +311,9 @@ export class GeneratedUnionSchema<Context extends WithBaseContextMixin> extends 
             existingValue,
             context,
         });
+    }
+
+    private hasBaseInterface(): boolean {
+        return this.baseProperties.length > 0;
     }
 }

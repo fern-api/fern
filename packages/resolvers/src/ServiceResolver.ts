@@ -41,7 +41,7 @@ function constructAugmentedServices(
 ): Record<StringifiedFernFilepath, AugmentedService> {
     const resolvedServices: Record<StringifiedFernFilepath, AugmentedService> = {};
 
-    for (const service of intermediateRepresentation.services) {
+    for (const service of Object.values(intermediateRepresentation.services)) {
         const leafServiceFernFilepath = stringifyFernFilepath(service.name.fernFilepath);
         const leafService: AugmentedService = {
             name: service.name,

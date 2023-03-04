@@ -289,7 +289,7 @@ export class SdkGenerator {
     }
 
     private generateTypeDeclarations() {
-        for (const typeDeclaration of this.intermediateRepresentation.types) {
+        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -311,7 +311,7 @@ export class SdkGenerator {
     }
 
     private generateTypeSchemas() {
-        for (const typeDeclaration of this.intermediateRepresentation.types) {
+        for (const typeDeclaration of Object.values(this.intermediateRepresentation.types)) {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -337,7 +337,7 @@ export class SdkGenerator {
     }
 
     private generateErrorDeclarations() {
-        for (const errorDeclaration of this.intermediateRepresentation.errors) {
+        for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
             this.withSourceFile({
                 filepath: this.errorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -364,7 +364,7 @@ export class SdkGenerator {
     }
 
     private generateSdkErrorSchemas() {
-        for (const errorDeclaration of this.intermediateRepresentation.errors) {
+        for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
             this.withSourceFile({
                 filepath: this.sdkErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
@@ -397,7 +397,7 @@ export class SdkGenerator {
     }
 
     private generateEndpointErrorUnion() {
-        for (const service of this.intermediateRepresentation.services) {
+        for (const service of Object.values(this.intermediateRepresentation.services)) {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.endpointErrorUnionDeclarationReferencer.getExportedFilepath({
@@ -432,7 +432,7 @@ export class SdkGenerator {
     }
 
     private generateEndpointTypeSchemas() {
-        for (const service of this.intermediateRepresentation.services) {
+        for (const service of Object.values(this.intermediateRepresentation.services)) {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
@@ -473,7 +473,7 @@ export class SdkGenerator {
     }
 
     private generateRequestWrappers() {
-        for (const service of this.intermediateRepresentation.services) {
+        for (const service of Object.values(this.intermediateRepresentation.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
                     this.withSourceFile({
@@ -512,7 +512,7 @@ export class SdkGenerator {
     }
 
     private generateInlinedRequestBodySchemas() {
-        for (const service of this.intermediateRepresentation.services) {
+        for (const service of Object.values(this.intermediateRepresentation.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({

@@ -1,3 +1,4 @@
+import { ObjectProperty } from "@fern-fern/ir-model/types";
 import {
     FernWriters,
     getTextOfTsNode,
@@ -6,7 +7,7 @@ import {
     ObjectWriter,
     Reference,
 } from "@fern-typescript/commons";
-import { GeneratedUnion, WithBaseContextMixin } from "@fern-typescript/contexts";
+import { GeneratedUnion, WithBaseContextMixin, WithTypeContextMixin } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     OptionalKind,
@@ -18,7 +19,7 @@ import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnion
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 
 export declare namespace GeneratedUnionImpl {
-    export interface Init<Context extends WithBaseContextMixin> {
+    export interface Init<Context extends WithBaseContextMixin & WithTypeContextMixin> {
         typeName: string;
         discriminant: string;
         getDocs: ((context: Context) => string | null | undefined) | undefined;
@@ -26,11 +27,15 @@ export declare namespace GeneratedUnionImpl {
         unknownSingleUnionType: ParsedSingleUnionType<Context>;
         getReferenceToUnion: (context: Context) => Reference;
         includeUtilsOnUnionMembers: boolean;
+        baseProperties?: ObjectProperty[];
     }
 }
 
-export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements GeneratedUnion<Context> {
+export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeContextMixin>
+    implements GeneratedUnion<Context>
+{
     public static readonly UTILS_INTERFACE_NAME = "_Utils";
+    public static readonly BASE_INTERFACE_NAME = "_Base";
     public static readonly VISITOR_INTERFACE_NAME = "_Visitor";
     public static readonly VISITOR_RETURN_TYPE = "_Result";
     public static readonly VISITOR_PARAMETER_NAME = "visitor";
@@ -47,6 +52,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     private parsedSingleUnionTypes: KnownSingleUnionType<Context>[];
     private unknownSingleUnionType: ParsedSingleUnionType<Context>;
     private includeUtilsOnUnionMembers: boolean;
+    private baseProperties: ObjectProperty[];
 
     constructor({
         typeName,
@@ -56,6 +62,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         unknownSingleUnionType,
         getReferenceToUnion,
         includeUtilsOnUnionMembers,
+        baseProperties = [],
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -64,12 +71,15 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         this.parsedSingleUnionTypes = parsedSingleUnionTypes;
         this.unknownSingleUnionType = unknownSingleUnionType;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.baseProperties = baseProperties;
     }
 
     public writeToFile(context: Context): void {
         this.writeTypeAlias(context);
         this.writeModule(context);
-        this.writeConst(context);
+        if (this.includeUtilsOnUnionMembers) {
+            this.writeConst(context);
+        }
     }
 
     public getReferenceTo(context: Context): ts.TypeNode {
@@ -154,6 +164,18 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         return this.unknownSingleUnionType.getDiscriminantValueType();
     }
 
+    public getBasePropertyKey(rawKey: string): string {
+        const baseProperty = this.baseProperties.find((property) => property.name.wireValue == rawKey);
+        if (baseProperty == null) {
+            throw new Error("No base property exists for key " + rawKey);
+        }
+        return this._getBasePropertyKey(baseProperty);
+    }
+
+    private _getBasePropertyKey(baseProperty: ObjectProperty): string {
+        return baseProperty.name.name.camelCase.unsafeName;
+    }
+
     /**************
      * TYPE ALIAS *
      **************/
@@ -200,6 +222,9 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
         if (this.includeUtilsOnUnionMembers) {
             module.addInterface(this.getUtilsInterface(context));
         }
+        if (this.hasBaseInterface()) {
+            module.addInterface(this.getBaseInterface(context));
+        }
         module.addInterface(this.getVisitorInterface(context));
     }
 
@@ -208,8 +233,11 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
             singleUnionType.getInterfaceDeclaration(context, this)
         );
 
-        if (this.includeUtilsOnUnionMembers) {
-            for (const interface_ of interfaces) {
+        for (const interface_ of interfaces) {
+            if (this.hasBaseInterface()) {
+                interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.BASE_INTERFACE_NAME));
+            }
+            if (this.includeUtilsOnUnionMembers) {
                 interface_.extends.push(ts.factory.createTypeReferenceNode(GeneratedUnionImpl.UTILS_INTERFACE_NAME));
             }
         }
@@ -230,6 +258,21 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
                     type: getTextOfTsNode(this.getVisitSignature(context)),
                 },
             ],
+        };
+    }
+
+    private getBaseInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
+        return {
+            name: GeneratedUnionImpl.BASE_INTERFACE_NAME,
+            properties: this.baseProperties.map((property) => {
+                const type = context.type.getReferenceToType(property.valueType);
+                return {
+                    name: this._getBasePropertyKey(property),
+                    docs: property.docs != null ? [property.docs] : undefined,
+                    type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+                    hasQuestionToken: type.isOptional,
+                };
+            }),
         };
     }
 
@@ -293,6 +336,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
 
     private writeConst(context: Context): void {
         const writer = FernWriters.object.writer({ asConst: true });
+
         this.addBuilderProperties(context, writer);
         this.addVisitProperty(context, writer);
 
@@ -313,6 +357,10 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
     }
 
     private addBuilderProperties(context: Context, writer: ObjectWriter) {
+        if (this.hasBaseInterface()) {
+            throw new Error("Cannot create builders because union has base properties");
+        }
+
         const buildableSingleUnionTypes = this.includeUtilsOnUnionMembers
             ? this.getAllSingleUnionTypesIncludingUnknown()
             : this.parsedSingleUnionTypes;
@@ -421,5 +469,9 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin> implements
 
     private getAllSingleUnionTypesIncludingUnknown(): ParsedSingleUnionType<Context>[] {
         return [...this.parsedSingleUnionTypes, this.unknownSingleUnionType];
+    }
+
+    private hasBaseInterface(): boolean {
+        return this.baseProperties.length > 0;
     }
 }

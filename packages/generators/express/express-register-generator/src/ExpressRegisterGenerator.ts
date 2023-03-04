@@ -26,7 +26,7 @@ export class ExpressRegisterGenerator {
     }
 
     public generateRegisterFunction(): GeneratedExpressRegister | undefined {
-        if (this.intermediateRepresentation.services.length === 0) {
+        if (Object.keys(this.intermediateRepresentation.services).length === 0) {
             return undefined;
         }
         return new GeneratedExpressRegisterImpl({

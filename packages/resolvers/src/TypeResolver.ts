@@ -1,4 +1,3 @@
-import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     DeclaredTypeName,
@@ -21,7 +20,7 @@ export class TypeResolver {
     private allTypes: Record<Filepath, Record<SimpleTypeName, TypeDeclaration>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
-        for (const type of intermediateRepresentation.types) {
+        for (const type of Object.values(intermediateRepresentation.types)) {
             const typesAtFilepath = (this.allTypes[stringifyFernFilepath(type.name.fernFilepath)] ??= {});
             typesAtFilepath[getSimpleTypeName(type.name)] = type;
         }
@@ -85,6 +84,6 @@ function typeNameToString(typeName: DeclaredTypeName) {
     return stringifyFernFilepath(typeName.fernFilepath) + ":" + typeName.name.originalName;
 }
 
-function getSimpleTypeName(typeName: DeclaredErrorName): SimpleTypeName {
+function getSimpleTypeName(typeName: DeclaredTypeName): SimpleTypeName {
     return typeName.name.originalName;
 }

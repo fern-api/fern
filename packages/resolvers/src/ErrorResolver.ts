@@ -10,7 +10,7 @@ export class ErrorResolver {
     private resolvedErrors: Record<StringifiedFernFilepath, Record<SimpleErrorName, ErrorDeclaration>> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
-        for (const error of intermediateRepresentation.errors) {
+        for (const error of Object.values(intermediateRepresentation.errors)) {
             const errorsAtFilepath = (this.resolvedErrors[stringifyFernFilepath(error.name.fernFilepath)] ??= {});
             errorsAtFilepath[getSimpleErrorName(error.name)] = error;
         }

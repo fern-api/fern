@@ -53,7 +53,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 },
             ],
             returnType: "void",
-            statements: this.intermediateRepresentation.services
+            statements: Object.values(this.intermediateRepresentation.services)
                 .map((service) => {
                     let statement: ts.Statement = ts.factory.createExpressionStatement(
                         context.base.externalDependencies.express.App.use({
@@ -162,7 +162,7 @@ function buildServicesTree(intermediateRepresentation: IntermediateRepresentatio
         folders: [],
     };
 
-    for (const service of intermediateRepresentation.services) {
+    for (const service of Object.values(intermediateRepresentation.services)) {
         let treeForService = tree;
 
         for (let i = 0; i < service.name.fernFilepath.allParts.length - 1; i++) {
