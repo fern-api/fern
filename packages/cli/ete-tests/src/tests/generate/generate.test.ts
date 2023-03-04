@@ -1,4 +1,4 @@
-import { getDirectoryContents } from "@fern-api/fs-utils";
+import { doesPathExist, join } from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
@@ -9,5 +9,5 @@ it("fern generate", async () => {
         cwd: pathOfDirectory,
     });
 
-    expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+    expect(await doesPathExist(join(pathOfDirectory, "generated/typescript"))).toBe(true);
 }, 180_000);

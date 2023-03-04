@@ -36,7 +36,7 @@ export async function visitTypeDeclaration({
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForType: NodePath;
 }): Promise<void> {
-    await visitor.typeDeclaration?.({ typeName, declaration }, nodePathForType);
+    await visitor.typeDeclaration?.({ typeName: { isInlined: false, name: typeName }, declaration }, nodePathForType);
 
     const visitExamples = async (examples: ExampleTypeSchema[] | undefined) => {
         if (examples == null) {
@@ -130,6 +130,7 @@ export async function visitTypeDeclaration({
                         }
                     }
                 },
+                "base-properties": noop,
                 availability: noop,
                 audiences: noop,
                 examples: visitExamples,

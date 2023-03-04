@@ -1,6 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpService, PathParameter } from "@fern-fern/ir-model/http";
+import {
+    HttpEndpoint,
+    HttpHeader,
+    HttpMethod,
+    HttpService,
+    PathParameter,
+    ResponseErrors,
+} from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -19,12 +26,14 @@ export function convertHttpService({
     errorResolver,
     typeResolver,
     exampleResolver,
+    globalErrors,
 }: {
     serviceDefinition: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
     errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    globalErrors: ResponseErrors;
 }): HttpService {
     return {
         ...convertDeclaration(serviceDefinition),
@@ -96,7 +105,7 @@ export function convertHttpService({
                 requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
                 sdkRequest: convertHttpSdkRequest({ request: endpoint.request, file }),
                 response: convertHttpResponse({ response: endpoint.response, file }),
-                errors: convertResponseErrors({ errors: endpoint.errors, file }),
+                errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                 examples:
                     endpoint.examples != null
                         ? endpoint.examples.map((example) =>

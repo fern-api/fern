@@ -6,7 +6,6 @@ import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
-import { visitTypeDeclaration } from "../visitTypeDeclarations";
 
 export async function visitHttpService({
     service,
@@ -134,11 +133,42 @@ async function visitEndpoint({
                     if (typeof body === "string") {
                         await visitor.typeReference?.(body, nodePathForRequestBody);
                     } else if (isInlineRequestBody(body)) {
-                        await visitTypeDeclaration({
-                            typeName: "<Inlined Request>",
-                            declaration: body,
-                            visitor,
-                            nodePathForType: nodePathForRequestBody,
+                        await visitor.typeDeclaration?.(
+                            { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: body },
+                            nodePathForRequestBody
+                        );
+
+                        await visitObject(body, {
+                            extends: async (_extends) => {
+                                if (_extends == null) {
+                                    return;
+                                }
+                                const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
+                                for (const extendedType of extendsList) {
+                                    await visitor.typeReference?.(extendedType, [...nodePathForRequestBody, "extends"]);
+                                }
+                            },
+                            properties: async (properties) => {
+                                if (properties == null) {
+                                    return;
+                                }
+                                for (const [propertyKey, property] of Object.entries(properties)) {
+                                    const nodePathForProperty = [...nodePathForRequestBody, "properties", propertyKey];
+                                    if (typeof property === "string") {
+                                        await visitor.typeReference?.(property, nodePathForProperty);
+                                    } else {
+                                        await visitObject(property, {
+                                            name: noop,
+                                            docs: createDocsVisitor(visitor, nodePathForProperty),
+                                            availability: noop,
+                                            type: async (type) => {
+                                                await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
+                                            },
+                                            audiences: noop,
+                                        });
+                                    }
+                                }
+                            },
                         });
                     } else {
                         await createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);

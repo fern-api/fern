@@ -16,6 +16,7 @@ export interface FernRootApiFileAstNodeTypes {
         environment: string | SingleBaseUrlEnvironmentSchema | MultipleBaseUrlsEnvironmentSchema;
     };
     errorDiscrimination: ErrorDiscriminationSchema | null | undefined;
+    errorReference: string;
 }
 
 export type FernRootApiFileAstNodeVisitor<K extends keyof FernRootApiFileAstNodeTypes, R = void | Promise<void>> = (

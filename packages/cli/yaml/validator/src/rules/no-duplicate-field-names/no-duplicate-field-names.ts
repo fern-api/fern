@@ -14,6 +14,7 @@ import {
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
 } from "../../utils/getAllPropertiesForObject";
+import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
 export const NoDuplicateFieldNamesRule: Rule = {
     name: "no-duplicate-field-names",
@@ -42,8 +43,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                         },
 
                         object: (objectDeclaration) => {
+                            const typeNameString = getTypeDeclarationNameAsString(typeName);
                             const allProperties = getAllPropertiesForObject({
-                                typeName,
+                                typeName: typeNameString,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
                                 serviceFile: contents,
@@ -59,7 +61,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             (property) =>
                                                 `  - ${convertObjectPropertyWithPathToString({
                                                     property,
-                                                    prefixBreadcrumbs: [typeName],
+                                                    prefixBreadcrumbs: [typeNameString],
                                                 })}`
                                         ),
                                     ].join("\n");

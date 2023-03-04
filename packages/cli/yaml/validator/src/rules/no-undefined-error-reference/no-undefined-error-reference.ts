@@ -1,9 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import { RootApiFileSchema, ServiceFileSchema, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
 import { mapValues } from "lodash-es";
-import { Rule } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule";
 
 type ErrorName = string;
 
@@ -20,28 +20,38 @@ export const NoUndefinedErrorReferenceRule: Rule = {
             return errorsForFilepath.has(errorName);
         }
 
+        const validateErrorReference = (
+            errorReference: string,
+            relativeFilepath: RelativeFilePath,
+            contents: ServiceFileSchema | RootApiFileSchema
+        ): RuleViolation[] => {
+            const parsedReference = parseReferenceToTypeName({
+                reference: errorReference,
+                referencedIn: relativeFilepath,
+                imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
+            });
+
+            if (parsedReference != null && doesErrorExist(parsedReference.typeName, parsedReference.relativeFilepath)) {
+                return [];
+            }
+
+            return [
+                {
+                    severity: "error",
+                    message: "Error is not defined.",
+                },
+            ];
+        };
+
         return {
+            rootApiFile: {
+                errorReference: (errorReference, { relativeFilepath, contents }) => {
+                    return validateErrorReference(errorReference, relativeFilepath, contents);
+                },
+            },
             serviceFile: {
                 errorReference: (errorReference, { relativeFilepath, contents }) => {
-                    const parsedReference = parseReferenceToTypeName({
-                        reference: errorReference,
-                        referencedIn: relativeFilepath,
-                        imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
-                    });
-
-                    if (
-                        parsedReference != null &&
-                        doesErrorExist(parsedReference.typeName, parsedReference.relativeFilepath)
-                    ) {
-                        return [];
-                    }
-
-                    return [
-                        {
-                            severity: "error",
-                            message: "Error is not defined.",
-                        },
-                    ];
+                    return validateErrorReference(errorReference, relativeFilepath, contents);
                 },
             },
         };

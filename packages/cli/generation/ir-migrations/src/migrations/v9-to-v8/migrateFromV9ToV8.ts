@@ -10,8 +10,8 @@ export const V9_TO_V8_MIGRATION: IrMigration<
     earlierVersion: "v8",
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_SDK]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: AlwaysRunMigration,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.3.0-2-g85e8aa08",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.3.0-2-g85e8aa08",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
@@ -23,6 +23,12 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v9): IrVersions.V8.ir.IntermediateRepresentation => {
+        for (const [_, type] of Object.entries(v9.types)) {
+            if (type.shape._type === "union" && type.shape.baseProperties.length > 0) {
+                throw new Error(`Failed to migrate IR because ${type.name.name.originalName} uses "base-properties".`);
+            }
+        }
+
         return {
             apiName: v9.apiName,
             apiDisplayName: v9.apiDisplayName,

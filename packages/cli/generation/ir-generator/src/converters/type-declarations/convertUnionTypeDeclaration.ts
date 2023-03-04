@@ -3,6 +3,8 @@ import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from 
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getDocs } from "../../utils/getDocs";
+import { convertDeclaration } from "../convertDeclaration";
+import { getPropertyName } from "./convertObjectTypeDeclaration";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
@@ -21,6 +23,17 @@ export function convertUnionTypeDeclaration({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name,
         }),
+        baseProperties:
+            union["base-properties"] != null
+                ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
+                      ...convertDeclaration(propertyDefinition),
+                      name: file.casingsGenerator.generateNameAndWireValue({
+                          wireValue: propertyKey,
+                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+                      }),
+                      valueType: file.parseTypeReference(propertyDefinition),
+                  }))
+                : [],
         types: Object.entries(union.union).map(([unionKey, rawSingleUnionType]): SingleUnionType => {
             const rawType: string | undefined =
                 typeof rawSingleUnionType === "string"

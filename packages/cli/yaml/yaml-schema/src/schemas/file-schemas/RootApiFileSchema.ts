@@ -17,6 +17,7 @@ export const RootApiFileSchema = z.strictObject({
     "error-discrimination": z.optional(ErrorDiscriminationSchema),
     audiences: z.optional(z.array(z.string())),
     docs: z.optional(z.string()),
+    errors: z.optional(z.array(z.string())),
 });
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

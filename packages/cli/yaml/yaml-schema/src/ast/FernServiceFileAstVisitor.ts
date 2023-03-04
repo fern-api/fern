@@ -20,7 +20,10 @@ export type FernServiceFileAstVisitor<R = void | Promise<void>> = {
 export interface FernServiceFileAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
-    typeDeclaration: { typeName: string; declaration: TypeDeclarationSchema };
+    typeDeclaration: {
+        typeName: TypeDeclarationName;
+        declaration: TypeDeclarationSchema;
+    };
     exampleType: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
     exampleTypeReference: string;
     typeReference: string;
@@ -63,6 +66,8 @@ export interface FernServiceFileAstNodeTypes {
     errorDeclaration: { errorName: string; declaration: ErrorDeclarationSchema };
     errorReference: string;
 }
+
+export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: "inlinedRequest" };
 
 export type FernServiceFileAstNodeVisitor<K extends keyof FernServiceFileAstNodeTypes, R = void | Promise<void>> = (
     node: FernServiceFileAstNodeTypes[K],
