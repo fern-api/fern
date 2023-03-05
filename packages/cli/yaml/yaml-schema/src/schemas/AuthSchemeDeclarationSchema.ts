@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { AuthHeaderSchemeDeclarationSchema } from "./AuthHeaderSchemeDeclarationSchema";
+import { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
 
-export const AuthSchemeDeclarationSchema = AuthHeaderSchemeDeclarationSchema;
+export const AuthSchemeDeclarationSchema = HeaderAuthSchemeSchema;
 
 export type AuthSchemeDeclarationSchema = z.infer<typeof AuthSchemeDeclarationSchema>;
