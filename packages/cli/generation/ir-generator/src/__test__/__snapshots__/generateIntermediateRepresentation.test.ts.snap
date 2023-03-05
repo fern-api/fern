@@ -59,6 +59,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
   "errors": {},
   "headers": [],
   "rootPackage": {
+    "docs": undefined,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
@@ -90,7 +91,6 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "baseUrl": undefined,
       "displayName": undefined,
-      "docs": undefined,
       "endpoints": [
         {
           "auth": false,
@@ -339,7 +339,6 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "baseUrl": undefined,
       "displayName": undefined,
-      "docs": undefined,
       "endpoints": [
         {
           "auth": false,
@@ -660,6 +659,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
   },
   "subpackages": {
     "commons:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -730,6 +730,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       ],
     },
     "folder-a/service:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -839,6 +840,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       ],
     },
     "folder-a:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -911,6 +913,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "types": [],
     },
     "folder-b/common:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -1020,6 +1023,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       ],
     },
     "folder-b:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -1092,6 +1096,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "types": [],
     },
     "folder-c/common:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -1201,6 +1206,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       ],
     },
     "folder-c:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -1273,6 +1279,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "types": [],
     },
     "foo:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -2815,6 +2822,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
   "errors": {},
   "headers": [],
   "rootPackage": {
+    "docs": undefined,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
@@ -2836,6 +2844,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
   "services": {},
   "subpackages": {
     "commons:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -2906,6 +2915,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       ],
     },
     "importer:subpackage": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [

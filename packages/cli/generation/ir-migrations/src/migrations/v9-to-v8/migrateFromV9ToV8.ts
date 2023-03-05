@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { TaskResult } from "@fern-api/task-context";
 import { IrVersions } from "../../ir-versions";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
@@ -22,11 +23,18 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
-    migrateBackwards: (v9): IrVersions.V8.ir.IntermediateRepresentation => {
+    migrateBackwards: (v9, { taskContext, targetGenerator }): IrVersions.V8.ir.IntermediateRepresentation => {
         for (const [_, type] of Object.entries(v9.types)) {
             if (type.shape._type === "union" && type.shape.baseProperties.length > 0) {
-                throw new Error(`Failed to migrate IR because ${type.name.name.originalName} uses "base-properties".`);
+                taskContext.failWithoutThrowing(
+                    `Type ${type.name.name.originalName} uses base-properties.` +
+                        ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                        " to a compatible version."
+                );
             }
+        }
+        if (taskContext.getResult() === TaskResult.Failure) {
+            taskContext.failAndThrow();
         }
 
         return {

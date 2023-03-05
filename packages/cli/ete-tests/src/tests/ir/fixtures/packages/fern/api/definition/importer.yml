@@ -1,3 +1,4 @@
+docs: I'm an importer!
 imports:
   root: __package__.yml
   package: package/__package__.yml

@@ -95,8 +95,13 @@ export class OpenAPIConverter {
             name: "api",
             "display-name": this.document.info.title,
             headers: globalHeaders,
-            auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
-            "auth-schemes": maybeAuthScheme,
+            auth:
+                maybeAuthScheme != null
+                    ? typeof maybeAuthScheme === "string"
+                        ? maybeAuthScheme
+                        : Object.keys(maybeAuthScheme)[0]
+                    : undefined,
+            "auth-schemes": typeof maybeAuthScheme === "string" ? undefined : maybeAuthScheme,
         };
 
         const environments = this.maybeGetEnvironments(this.document);
@@ -260,7 +265,7 @@ export class OpenAPIConverter {
 
     private maybeGetAuthScheme(
         document: OpenAPIV3.Document
-    ): Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined {
+    ): Record<string, RawSchemas.AuthSchemeDeclarationSchema> | string | undefined {
         if (document.components?.securitySchemes != null) {
             for (const [name, securityScheme] of Object.entries(document.components.securitySchemes)) {
                 if (isReferenceObject(securityScheme)) {
@@ -273,6 +278,9 @@ export class OpenAPIConverter {
                             name: "apiKey",
                         },
                     };
+                }
+                if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
+                    return "bearer";
                 }
             }
         }

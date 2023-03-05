@@ -115,6 +115,7 @@ export class FernServiceFileFormatter {
         if (indent === 0) {
             const castedKey = key as keyof RawSchemas.ServiceFileSchema;
             switch (castedKey) {
+                case "docs":
                 case "imports":
                 case "types":
                 case "service":
@@ -131,6 +132,7 @@ export class FernServiceFileFormatter {
         }
 
         switch (previousLocation) {
+            case "docs":
             case "imports":
                 return undefined;
             case "service":
