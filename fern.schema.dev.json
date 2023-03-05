@@ -5,6 +5,7 @@
     "Fern Definition": {
       "type": "object",
       "properties": {
+        "docs": { "type": "string" },
         "imports": { "type": "object", "additionalProperties": { "type": "string" } },
         "types": {
           "type": "object",
