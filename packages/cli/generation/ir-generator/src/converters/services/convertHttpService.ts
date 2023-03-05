@@ -12,7 +12,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { convertDeclaration } from "../convertDeclaration";
+import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";
@@ -36,7 +36,7 @@ export function convertHttpService({
     globalErrors: ResponseErrors;
 }): HttpService {
     return {
-        ...convertDeclaration(serviceDefinition),
+        availability: convertAvailability(serviceDefinition.availability),
         name: { fernFilepath: file.fernFilepath },
         displayName: serviceDefinition["display-name"] ?? undefined,
         baseUrl: serviceDefinition.url,

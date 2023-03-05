@@ -2,6 +2,7 @@ import { visitObject } from "@fern-api/core-utils";
 import { ServiceFileSchema } from "../schemas";
 import { FernServiceFileAstVisitor } from "./FernServiceFileAstVisitor";
 import { visitHttpService } from "./visitors/services/visitHttpService";
+import { createDocsVisitor } from "./visitors/utils/createDocsVisitor";
 import { visitErrorDeclarations } from "./visitors/visitErrorDeclarations";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
@@ -11,6 +12,7 @@ export async function visitFernServiceFileYamlAst(
     visitor: Partial<FernServiceFileAstVisitor>
 ): Promise<void> {
     await visitObject(contents, {
+        docs: createDocsVisitor(visitor, []),
         imports: async (imports) => {
             await visitImports({ imports, visitor, nodePath: ["imports"] });
         },

@@ -14,7 +14,7 @@ export const IdGenerator = {
     generateServiceId: (serviceName: DeclaredServiceName): FernIr.commons.TypeId => {
         return generateId(serviceName.fernFilepath, "service");
     },
-    generateSubpackageId: (fernFilepath: FernFilepath): FernIr.commons.TypeId => {
+    generateSubpackageId: (fernFilepath: FernFilepath): FernIr.commons.SubpackageId => {
         return generateId(fernFilepath, "subpackage");
     },
 };

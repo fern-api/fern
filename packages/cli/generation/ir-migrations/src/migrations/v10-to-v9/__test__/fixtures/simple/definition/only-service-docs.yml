@@ -1,0 +1,5 @@
+service:
+  docs: service docs
+  auth: false
+  base-path: /
+  endpoints: {}
