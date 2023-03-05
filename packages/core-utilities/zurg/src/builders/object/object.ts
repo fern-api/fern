@@ -76,7 +76,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         transform: (propertyValue) => property.valueSchema.parse(propertyValue, opts),
                     };
                 },
-                allowUnknownKeys: opts?.allowUnknownKeys ?? false,
+                unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
             });
         },
 
@@ -120,7 +120,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         };
                     }
                 },
-                allowUnknownKeys: opts?.allowUnknownKeys ?? false,
+                unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
             });
         },
 
@@ -139,14 +139,14 @@ async function validateAndTransformObject<Transformed>({
     value,
     requiredKeys,
     getProperty,
-    allowUnknownKeys,
+    unrecognizedObjectKeys = "fail",
 }: {
     value: unknown;
     requiredKeys: string[];
     getProperty: (
         preTransformedKey: string
     ) => { transformedKey: string; transform: (propertyValue: unknown) => MaybePromise<MaybeValid<any>> } | undefined;
-    allowUnknownKeys: boolean;
+    unrecognizedObjectKeys: "fail" | "passthrough" | "strip" | undefined;
 }): Promise<MaybeValid<Transformed>> {
     if (!isPlainObject(value)) {
         return {
@@ -181,13 +181,20 @@ async function validateAndTransformObject<Transformed>({
                     }))
                 );
             }
-        } else if (allowUnknownKeys) {
-            transformed[preTransformedKey] = preTransformedItemValue;
         } else {
-            errors.push({
-                path: [preTransformedKey],
-                message: `Unrecognized key "${preTransformedKey}"`,
-            });
+            switch (unrecognizedObjectKeys) {
+                case "fail":
+                    errors.push({
+                        path: [preTransformedKey],
+                        message: `Unrecognized key "${preTransformedKey}"`,
+                    });
+                    break;
+                case "strip":
+                    break;
+                case "passthrough":
+                    transformed[preTransformedKey] = preTransformedItemValue;
+                    break;
+            }
         }
     }
 

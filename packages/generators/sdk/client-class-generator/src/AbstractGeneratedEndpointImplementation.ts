@@ -245,7 +245,11 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                         .getSchemaOfNamedType(pathParameter.valueType, {
                             isGeneratingSchema: false,
                         })
-                        .jsonOrThrow(referenceToPathParameterValue);
+                        .jsonOrThrow(referenceToPathParameterValue, {
+                            unrecognizedObjectKeys: "fail",
+                            allowUnrecognizedEnumValues: false,
+                            allowUnrecognizedUnionMembers: false,
+                        });
                 }
 
                 return ts.factory.createTemplateSpan(

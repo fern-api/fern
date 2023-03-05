@@ -6,7 +6,7 @@ describe("enum", () => {
     itSchemaIdentity(enum_(["A", "B", "C"]), "A");
 
     itSchemaIdentity(enum_(["A", "B", "C"]), "D" as any, {
-        opts: { allowUnknownKeys: true },
+        opts: { allowUnrecognizedEnumValues: true },
     });
 
     itValidate("invalid enum", enum_(["A", "B", "C"]), "D", [

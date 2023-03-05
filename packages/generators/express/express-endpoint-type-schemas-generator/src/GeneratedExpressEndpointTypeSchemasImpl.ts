@@ -102,13 +102,21 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
-                    .parse(referenceToRawRequest);
+                    .parse(referenceToRawRequest, {
+                        unrecognizedObjectKeys: "fail",
+                        allowUnrecognizedEnumValues: false,
+                        allowUnrecognizedUnionMembers: false,
+                    });
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
                     throw new Error("No request schema was generated");
                 }
-                return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest);
+                return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
+                    unrecognizedObjectKeys: "fail",
+                    allowUnrecognizedEnumValues: false,
+                    allowUnrecognizedUnionMembers: false,
+                });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
         }
@@ -128,7 +136,11 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
-                    .jsonOrThrow(referenceToParsedResponse);
+                    .jsonOrThrow(referenceToParsedResponse, {
+                        unrecognizedObjectKeys: "strip",
+                        allowUnrecognizedEnumValues: false,
+                        allowUnrecognizedUnionMembers: false,
+                    });
             case "primitive":
             case "container":
                 if (this.generatedResponseSchema == null) {
@@ -136,7 +148,11 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 }
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
-                    .jsonOrThrow(referenceToParsedResponse);
+                    .jsonOrThrow(referenceToParsedResponse, {
+                        unrecognizedObjectKeys: "strip",
+                        allowUnrecognizedEnumValues: false,
+                        allowUnrecognizedUnionMembers: false,
+                    });
             default:
                 assertNever(this.endpoint.response.type);
         }

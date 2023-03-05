@@ -61,10 +61,10 @@ export declare namespace Zurg {
     }
 
     interface SchemaUtils {
-        parse: (raw: ts.Expression, opts?: SchemaOptions) => ts.Expression;
-        json: (parsed: ts.Expression, opts?: SchemaOptions) => ts.Expression;
-        parseOrThrow: (raw: ts.Expression, opts?: SchemaOptions) => ts.Expression;
-        jsonOrThrow: (parsed: ts.Expression, opts?: SchemaOptions) => ts.Expression;
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
         optional: () => Zurg.Schema;
         transform: (args: {
             newShape: ts.TypeNode | undefined;

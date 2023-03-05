@@ -24,28 +24,34 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
 
     const baseSchema: BaseSchema<inferRawUnion<D, U>, inferParsedUnion<D, U>> = {
         parse: async (raw, opts) => {
-            return transformAndValidateUnion(
-                raw,
-                rawDiscriminant,
-                parsedDiscriminant,
-                (discriminantValue) => discriminantValueSchema.parse(discriminantValue, opts),
-                (discriminantValue) => union[discriminantValue],
-                opts?.allowUnknownKeys ?? false,
-                (additionalProperties, additionalPropertiesSchema) =>
-                    additionalPropertiesSchema.parse(additionalProperties, opts)
-            );
+            return transformAndValidateUnion({
+                value: raw,
+                discriminant: rawDiscriminant,
+                transformedDiscriminant: parsedDiscriminant,
+                transformDiscriminantValue: (discriminantValue) =>
+                    discriminantValueSchema.parse(discriminantValue, {
+                        allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                    }),
+                getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
+                allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
+                transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) =>
+                    additionalPropertiesSchema.parse(additionalProperties, opts),
+            });
         },
         json: async (parsed, opts) => {
-            return transformAndValidateUnion(
-                parsed,
-                parsedDiscriminant,
-                rawDiscriminant,
-                (discriminantValue) => discriminantValueSchema.json(discriminantValue, opts),
-                (discriminantValue) => union[discriminantValue],
-                opts?.allowUnknownKeys ?? false,
-                (additionalProperties, additionalPropertiesSchema) =>
-                    additionalPropertiesSchema.json(additionalProperties, opts)
-            );
+            return transformAndValidateUnion({
+                value: parsed,
+                discriminant: parsedDiscriminant,
+                transformedDiscriminant: rawDiscriminant,
+                transformDiscriminantValue: (discriminantValue) =>
+                    discriminantValueSchema.json(discriminantValue, {
+                        allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                    }),
+                getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
+                allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
+                transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) =>
+                    additionalPropertiesSchema.json(additionalProperties, opts),
+            });
         },
         getType: () => SchemaType.UNION,
     };
@@ -61,18 +67,26 @@ async function transformAndValidateUnion<
     TransformedDiscriminant extends string,
     TransformedDiscriminantValue extends string,
     TransformedAdditionalProperties
->(
-    value: unknown,
-    discriminant: string,
-    transformedDiscriminant: TransformedDiscriminant,
-    transformDiscriminantValue: (discriminantValue: unknown) => MaybePromise<MaybeValid<TransformedDiscriminantValue>>,
-    getAdditionalPropertiesSchema: (discriminantValue: string) => ObjectSchema<any, any> | undefined,
-    allowUnknownKeys: boolean,
+>({
+    value,
+    discriminant,
+    transformedDiscriminant,
+    transformDiscriminantValue,
+    getAdditionalPropertiesSchema,
+    allowUnrecognizedUnionMembers = false,
+    transformAdditionalProperties,
+}: {
+    value: unknown;
+    discriminant: string;
+    transformedDiscriminant: TransformedDiscriminant;
+    transformDiscriminantValue: (discriminantValue: unknown) => MaybePromise<MaybeValid<TransformedDiscriminantValue>>;
+    getAdditionalPropertiesSchema: (discriminantValue: string) => ObjectSchema<any, any> | undefined;
+    allowUnrecognizedUnionMembers: boolean | undefined;
     transformAdditionalProperties: (
         additionalProperties: unknown,
         additionalPropertiesSchema: ObjectSchema<any, any>
-    ) => MaybePromise<MaybeValid<TransformedAdditionalProperties>>
-): Promise<
+    ) => MaybePromise<MaybeValid<TransformedAdditionalProperties>>;
+}): Promise<
     MaybeValid<Record<TransformedDiscriminant, TransformedDiscriminantValue> & TransformedAdditionalProperties>
 > {
     if (!isPlainObject(value)) {
@@ -115,7 +129,7 @@ async function transformAndValidateUnion<
     const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
 
     if (additionalPropertiesSchema == null) {
-        if (allowUnknownKeys) {
+        if (allowUnrecognizedUnionMembers) {
             return {
                 ok: true,
                 value: {

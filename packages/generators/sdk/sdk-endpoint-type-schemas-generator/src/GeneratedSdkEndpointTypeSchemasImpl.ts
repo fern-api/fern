@@ -162,7 +162,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
-                    .jsonOrThrow(referenceToParsedRequest);
+                    .jsonOrThrow(referenceToParsedRequest, {
+                        unrecognizedObjectKeys: "strip",
+                        allowUnrecognizedEnumValues: false,
+                        allowUnrecognizedUnionMembers: false,
+                    });
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
@@ -170,7 +174,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 }
                 return this.generatedRequestSchema
                     .getReferenceToZurgSchema(context)
-                    .jsonOrThrow(referenceToParsedRequest);
+                    .jsonOrThrow(referenceToParsedRequest, {
+                        unrecognizedObjectKeys: "strip",
+                        allowUnrecognizedEnumValues: false,
+                        allowUnrecognizedUnionMembers: false,
+                    });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
         }
@@ -191,7 +199,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
                     .parseOrThrow(referenceToRawResponse, {
-                        allowUnknownKeys: true,
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
                     });
             case "primitive":
             case "container":
@@ -201,7 +211,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
                     .parseOrThrow(referenceToRawResponse, {
-                        allowUnknownKeys: true,
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
                     });
             default:
                 assertNever(this.endpoint.response.type);
@@ -213,7 +225,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
         return this.GeneratedSdkErrorSchema.getReferenceToZurgSchema(context).parseOrThrow(referenceToRawError, {
-            allowUnknownKeys: true,
+            allowUnrecognizedEnumValues: true,
+            allowUnrecognizedUnionMembers: true,
+            unrecognizedObjectKeys: "passthrough",
         });
     }
 }

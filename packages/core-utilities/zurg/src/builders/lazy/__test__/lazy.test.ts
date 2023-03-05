@@ -31,7 +31,7 @@ describe("lazy", () => {
         { foo: "hello" },
         {
             title: "passes opts through",
-            opts: { allowUnknownKeys: true },
+            opts: { unrecognizedObjectKeys: "passthrough" },
         }
     );
 

@@ -56,13 +56,19 @@ export class GeneratedSdkErrorSchemaImpl
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
                     .parseOrThrow(referenceToBody, {
-                        allowUnknownKeys: true,
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
                     });
             case "unknown":
                 return referenceToBody;
             case "primitive":
             case "container":
-                return this.getReferenceToZurgSchema(context).parseOrThrow(referenceToBody);
+                return this.getReferenceToZurgSchema(context).parseOrThrow(referenceToBody, {
+                    allowUnrecognizedEnumValues: true,
+                    allowUnrecognizedUnionMembers: true,
+                    unrecognizedObjectKeys: "passthrough",
+                });
             default:
                 assertNever(this.type);
         }

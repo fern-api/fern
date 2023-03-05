@@ -2480,7 +2480,9 @@ class HomepageService {
             try {
                 await this.methods.getHomepageProblems(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.homepage.getHomepageProblems.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -2864,7 +2866,9 @@ class MigrationService {
             try {
                 await this.methods.getAttemptedMigrations(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -3312,7 +3316,9 @@ class PlaylistService {
                 try {
                     await this.methods.createPlaylist(req, {
                         send: async (responseBody) => {
-                            res.json(await serializers.Playlist.jsonOrThrow(responseBody));
+                            res.json(await serializers.Playlist.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: \\"strip\\",
+                            }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -3344,7 +3350,9 @@ class PlaylistService {
             try {
                 await this.methods.getPlaylists(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -3369,7 +3377,7 @@ class PlaylistService {
             try {
                 await this.methods.getPlaylist(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.Playlist.jsonOrThrow(responseBody));
+                        res.json(await serializers.Playlist.jsonOrThrow(responseBody, { unrecognizedObjectKeys: \\"strip\\" }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -3403,7 +3411,9 @@ class PlaylistService {
                 try {
                     await this.methods.updatePlaylist(req, {
                         send: async (responseBody) => {
-                            res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody));
+                            res.json(await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: \\"strip\\",
+                            }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -4038,7 +4048,9 @@ class ProblemService {
                 try {
                     await this.methods.createProblem(req, {
                         send: async (responseBody) => {
-                            res.json(await serializers.CreateProblemResponse.jsonOrThrow(responseBody));
+                            res.json(await serializers.CreateProblemResponse.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: \\"strip\\",
+                            }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -4073,7 +4085,9 @@ class ProblemService {
                 try {
                     await this.methods.updateProblem(req, {
                         send: async (responseBody) => {
-                            res.json(await serializers.UpdateProblemResponse.jsonOrThrow(responseBody));
+                            res.json(await serializers.UpdateProblemResponse.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: \\"strip\\",
+                            }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -4133,7 +4147,9 @@ class ProblemService {
                 try {
                     await this.methods.getDefaultStarterFiles(req, {
                         send: async (responseBody) => {
-                            res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody));
+                            res.json(await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: \\"strip\\",
+                            }));
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
@@ -4946,7 +4962,9 @@ class SubmissionService {
             try {
                 await this.methods.createExecutionSession(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody));
+                        res.json(await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -4971,7 +4989,9 @@ class SubmissionService {
             try {
                 await this.methods.getExecutionSession(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -5021,7 +5041,9 @@ class SubmissionService {
             try {
                 await this.methods.getExecutionSessionsState(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody));
+                        res.json(await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -8871,7 +8893,9 @@ class SyspropService {
             try {
                 await this.methods.getNumWarmInstances(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.sysprop.getNumWarmInstances.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -9129,7 +9153,9 @@ class ProblemService {
             try {
                 await this.methods.getLightweightProblems(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -9154,7 +9180,9 @@ class ProblemService {
             try {
                 await this.methods.getProblems(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -9179,7 +9207,9 @@ class ProblemService {
             try {
                 await this.methods.getLatestProblem(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -9204,7 +9234,9 @@ class ProblemService {
             try {
                 await this.methods.getProblemVersion(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -10941,7 +10973,9 @@ class ProblemService {
             try {
                 await this.methods.getLightweightProblems(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.v3.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -10966,7 +11000,9 @@ class ProblemService {
             try {
                 await this.methods.getProblems(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.v3.problem.getProblems.Response.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -10991,7 +11027,9 @@ class ProblemService {
             try {
                 await this.methods.getLatestProblem(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -11016,7 +11054,9 @@ class ProblemService {
             try {
                 await this.methods.getProblemVersion(req, {
                     send: async (responseBody) => {
-                        res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody));
+                        res.json(await serializers.v2.v3.ProblemInfoV2.jsonOrThrow(responseBody, {
+                            unrecognizedObjectKeys: \\"strip\\",
+                        }));
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
@@ -12656,9 +12696,24 @@ export interface ValidationError {
 }
 export interface SchemaOptions {
     /**
+     * how to handle unrecognized keys in objects
+     *
+     * @default \\"fail\\"
+     */
+    unrecognizedObjectKeys?: \\"fail\\" | \\"passthrough\\" | \\"strip\\";
+    /**
+     * whether to fail when an unrecognized discriminant value is
+     * encountered in a union
+     *
      * @default false
      */
-    allowUnknownKeys?: boolean;
+    allowUnrecognizedUnionMembers?: boolean;
+    /**
+     * whether to fail when an unrecognized enum value is encountered
+     *
+     * @default false
+     */
+    allowUnrecognizedEnumValues?: boolean;
 }
 ",
             "name": "Schema.d.ts",
@@ -12796,8 +12851,8 @@ const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
 function enum_(values) {
     const validValues = new Set(values);
-    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnknownKeys = false } = {}) => {
-        if (typeof value === \\"string\\" && (validValues.has(value) || allowUnknownKeys)) {
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnrecognizedEnumValues } = {}) => {
+        if (typeof value === \\"string\\" && (validValues.has(value) || allowUnrecognizedEnumValues)) {
             return {
                 ok: true,
                 value: value,
@@ -13223,7 +13278,7 @@ function object(schemas) {
                         transform: (propertyValue) => property.valueSchema.parse(propertyValue, opts),
                     };
                 },
-                allowUnknownKeys: opts?.allowUnknownKeys ?? false,
+                unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
             });
         },
         json: async (parsed, opts) => {
@@ -13258,7 +13313,7 @@ function object(schemas) {
                         };
                     }
                 },
-                allowUnknownKeys: opts?.allowUnknownKeys ?? false,
+                unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
             });
         },
         getType: () => Schema_1.SchemaType.OBJECT,
@@ -13271,7 +13326,7 @@ function object(schemas) {
     };
 }
 exports.object = object;
-async function validateAndTransformObject({ value, requiredKeys, getProperty, allowUnknownKeys, }) {
+async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
@@ -13301,14 +13356,20 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, al
                 })));
             }
         }
-        else if (allowUnknownKeys) {
-            transformed[preTransformedKey] = preTransformedItemValue;
-        }
         else {
-            errors.push({
-                path: [preTransformedKey],
-                message: \`Unrecognized key \\"\${preTransformedKey}\\"\`,
-            });
+            switch (unrecognizedObjectKeys) {
+                case \\"fail\\":
+                    errors.push({
+                        path: [preTransformedKey],
+                        message: \`Unrecognized key \\"\${preTransformedKey}\\"\`,
+                    });
+                    break;
+                case \\"strip\\":
+                    break;
+                case \\"passthrough\\":
+                    transformed[preTransformedKey] = preTransformedItemValue;
+                    break;
+            }
         }
     }
     errors.push(...requiredKeys
@@ -14321,10 +14382,30 @@ function union(discriminant, union) {
     const discriminantValueSchema = (0, enum_1.enum_)((0, keys_1.keys)(union));
     const baseSchema = {
         parse: async (raw, opts) => {
-            return transformAndValidateUnion(raw, rawDiscriminant, parsedDiscriminant, (discriminantValue) => discriminantValueSchema.parse(discriminantValue, opts), (discriminantValue) => union[discriminantValue], opts?.allowUnknownKeys ?? false, (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.parse(additionalProperties, opts));
+            return transformAndValidateUnion({
+                value: raw,
+                discriminant: rawDiscriminant,
+                transformedDiscriminant: parsedDiscriminant,
+                transformDiscriminantValue: (discriminantValue) => discriminantValueSchema.parse(discriminantValue, {
+                    allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                }),
+                getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
+                allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
+                transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.parse(additionalProperties, opts),
+            });
         },
         json: async (parsed, opts) => {
-            return transformAndValidateUnion(parsed, parsedDiscriminant, rawDiscriminant, (discriminantValue) => discriminantValueSchema.json(discriminantValue, opts), (discriminantValue) => union[discriminantValue], opts?.allowUnknownKeys ?? false, (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.json(additionalProperties, opts));
+            return transformAndValidateUnion({
+                value: parsed,
+                discriminant: parsedDiscriminant,
+                transformedDiscriminant: rawDiscriminant,
+                transformDiscriminantValue: (discriminantValue) => discriminantValueSchema.json(discriminantValue, {
+                    allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                }),
+                getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
+                allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
+                transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.json(additionalProperties, opts),
+            });
         },
         getType: () => Schema_1.SchemaType.UNION,
     };
@@ -14335,7 +14416,7 @@ function union(discriminant, union) {
     };
 }
 exports.union = union;
-async function transformAndValidateUnion(value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnknownKeys, transformAdditionalProperties) {
+async function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
@@ -14371,7 +14452,7 @@ async function transformAndValidateUnion(value, discriminant, transformedDiscrim
     }
     const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
     if (additionalPropertiesSchema == null) {
-        if (allowUnknownKeys) {
+        if (allowUnrecognizedUnionMembers) {
             return {
                 ok: true,
                 value: {

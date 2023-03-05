@@ -31,7 +31,7 @@ describe("union", () => {
         }
     );
 
-    describe("allowUnknownKeys", () => {
+    describe("allowUnrecognizedUnionMembers", () => {
         itSchema(
             "transforms discriminant & passes through values when discriminant value is unrecognized",
             union(discriminant("type", "_type"), {
@@ -44,7 +44,7 @@ describe("union", () => {
                 // @ts-expect-error
                 parsed: { type: "moose", isAMoose: true },
                 opts: {
-                    allowUnknownKeys: true,
+                    allowUnrecognizedUnionMembers: true,
                 },
             }
         );
@@ -111,9 +111,6 @@ describe("union", () => {
                 path: ["type"],
                 message: "Not one of the allowed values",
             },
-        ],
-        {
-            allowUnknownKeys: false,
-        }
+        ]
     );
 });

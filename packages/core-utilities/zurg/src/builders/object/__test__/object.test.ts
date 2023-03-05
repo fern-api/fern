@@ -54,31 +54,106 @@ describe("object", () => {
         }
     );
 
-    describe("allowUnknownKeys", () => {
-        itJson(
-            "includes unknown values when includeUnknownKeysOnJson === true",
-            object({
-                foo: property("raw_foo", string()),
-                bar: stringLiteral("bar"),
-            }),
-            {
-                raw: {
-                    raw_foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                parsed: {
-                    foo: "foo",
-                    bar: "bar",
-                    // @ts-expect-error
-                    baz: "yoyo",
-                },
-                opts: {
-                    allowUnknownKeys: true,
-                },
-            }
-        );
+    describe("unrecognizedObjectKeys", () => {
+        describe("parse", () => {
+            itParse(
+                'includes unknown values when unrecognizedObjectKeys === "passthrough"',
+                object({
+                    foo: property("raw_foo", string()),
+                    bar: stringLiteral("bar"),
+                }),
+                {
+                    raw: {
+                        raw_foo: "foo",
+                        bar: "bar",
+                        // @ts-expect-error
+                        baz: "yoyo",
+                    },
+                    parsed: {
+                        foo: "foo",
+                        bar: "bar",
+                        // @ts-expect-error
+                        baz: "yoyo",
+                    },
+                    opts: {
+                        unrecognizedObjectKeys: "passthrough",
+                    },
+                }
+            );
+
+            itParse(
+                'strips unknown values when unrecognizedObjectKeys === "strip"',
+                object({
+                    foo: property("raw_foo", string()),
+                    bar: stringLiteral("bar"),
+                }),
+                {
+                    raw: {
+                        raw_foo: "foo",
+                        bar: "bar",
+                        // @ts-expect-error
+                        baz: "yoyo",
+                    },
+                    parsed: {
+                        foo: "foo",
+                        bar: "bar",
+                    },
+                    opts: {
+                        unrecognizedObjectKeys: "strip",
+                    },
+                }
+            );
+        });
+
+        describe("json", () => {
+            itJson(
+                'includes unknown values when unrecognizedObjectKeys === "passthrough"',
+                object({
+                    foo: property("raw_foo", string()),
+                    bar: stringLiteral("bar"),
+                }),
+                {
+                    raw: {
+                        raw_foo: "foo",
+                        bar: "bar",
+                        // @ts-expect-error
+                        baz: "yoyo",
+                    },
+                    parsed: {
+                        foo: "foo",
+                        bar: "bar",
+                        // @ts-expect-error
+                        baz: "yoyo",
+                    },
+                    opts: {
+                        unrecognizedObjectKeys: "passthrough",
+                    },
+                }
+            );
+
+            itJson(
+                'strips unknown values when unrecognizedObjectKeys === "strip"',
+                object({
+                    foo: property("raw_foo", string()),
+                    bar: stringLiteral("bar"),
+                }),
+                {
+                    raw: {
+                        raw_foo: "foo",
+                        bar: "bar",
+                    },
+                    parsed: {
+                        foo: "foo",
+                        bar: "bar",
+                        // @ts-expect-error
+                        baz: "yoyo",
+                    },
+                    opts: {
+                        unrecognizedObjectKeys: "strip",
+                    },
+                }
+            );
+        });
     });
 
     describe("nullish properties", () => {

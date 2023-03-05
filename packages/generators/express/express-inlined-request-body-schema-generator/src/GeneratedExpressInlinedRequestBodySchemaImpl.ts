@@ -43,7 +43,11 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         referenceToRawRequest: ts.Expression,
         context: ExpressInlinedRequestBodySchemaContext
     ): ts.Expression {
-        return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest);
+        return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
+            unrecognizedObjectKeys: "fail",
+            allowUnrecognizedEnumValues: false,
+            allowUnrecognizedUnionMembers: false,
+        });
     }
 
     protected getReferenceToSchema(context: ExpressInlinedRequestBodySchemaContext): Reference {

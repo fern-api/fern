@@ -412,18 +412,39 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         };
     }
 
-    private constructSchemaOptionsArgs(schemaOptions: SchemaOptions | undefined): ts.Expression[] {
-        if (schemaOptions?.allowUnknownKeys === true) {
-            return [
-                ts.factory.createObjectLiteralExpression([
-                    ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier("allowUnknownKeys"),
-                        ts.factory.createTrue()
-                    ),
-                ]),
-            ];
+    private constructSchemaOptionsArgs(schemaOptions: Required<SchemaOptions>): ts.Expression[] {
+        const properties: ts.ObjectLiteralElementLike[] = [];
+
+        if (schemaOptions.unrecognizedObjectKeys !== "fail") {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("unrecognizedObjectKeys"),
+                    ts.factory.createStringLiteral(schemaOptions.unrecognizedObjectKeys)
+                )
+            );
         }
-        return [];
+        if (schemaOptions.allowUnrecognizedUnionMembers) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("allowUnrecognizedUnionMembers"),
+                    ts.factory.createTrue()
+                )
+            );
+        }
+        if (schemaOptions.allowUnrecognizedEnumValues) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("allowUnrecognizedEnumValues"),
+                    ts.factory.createTrue()
+                )
+            );
+        }
+
+        if (properties.length > 0) {
+            return [ts.factory.createObjectLiteralExpression(properties)];
+        } else {
+            return [];
+        }
     }
 
     private optional(schema: Zurg.BaseSchema): Zurg.Schema {
