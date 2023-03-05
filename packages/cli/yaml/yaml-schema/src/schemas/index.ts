@@ -1,6 +1,7 @@
 export { AliasSchema } from "./AliasSchema";
 export { AnyAuthSchemesSchema } from "./AnyAuthSchemesSchema";
 export { ApiAuthSchema } from "./ApiAuthSchema";
+export { AuthHeaderSchemeDeclarationSchema } from "./AuthHeaderSchemeDeclarationSchema";
 export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
 export { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 export { AvailabilitySchema } from "./AvailabilitySchema";
