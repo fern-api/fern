@@ -7,17 +7,10 @@ export declare namespace DefinitionItemPage {
         subtitle?: JSX.Element | string;
         docs?: string;
         leftContent?: JSX.Element;
-        rightContent?: JSX.Element;
     }
 }
 
-export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({
-    title,
-    subtitle,
-    docs,
-    leftContent,
-    rightContent,
-}) => {
+export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({ title, subtitle, docs, leftContent }) => {
     return (
         <div className={styles.container}>
             <div className={styles.titleSection}>
@@ -30,7 +23,6 @@ export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({
                     {docs != null && <div>{docs}</div>}
                     {leftContent}
                 </div>
-                {rightContent != null && <div className={styles.rightContent}>{rightContent}</div>}
             </div>
         </div>
     );

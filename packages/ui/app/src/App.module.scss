@@ -3,6 +3,13 @@
 body {
     overscroll-behavior-y: none;
     font-family: "Source Sans Pro";
+
+    :global {
+        code,
+        pre {
+            font-family: "IBM Plex Mono";
+        }
+    }
 }
 
 .app {

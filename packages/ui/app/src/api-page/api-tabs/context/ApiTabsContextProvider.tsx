@@ -1,7 +1,7 @@
 import { PropsWithChildren, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useImmer } from "use-immer";
-import { ApiTabsContext, ApiTabsContextValue, OpenTabOpts } from "./ApiTabsContext";
+import { ApiTabsContext, ApiTabsContextValue, OpenTabOpts, Tab } from "./ApiTabsContext";
 
 interface TabsState {
     ephemeralTabIndex: number | undefined;
@@ -99,19 +99,23 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
         [setState, state.ephemeralTabIndex, state.tabs]
     );
 
-    const contextValue = useCallback(
-        (): ApiTabsContextValue => ({
-            tabs: state.tabs.map(({ path }, index) => ({
+    const contextValue = useCallback((): ApiTabsContextValue => {
+        const tabs = state.tabs.map(
+            ({ path }, index): Tab => ({
                 path,
                 isSelected: selectedTabIndex === index,
                 isEphemeral: state.ephemeralTabIndex === index,
-            })),
+            })
+        );
+
+        return {
+            tabs,
+            selectedTab: tabs[selectedTabIndex],
             openTab,
             closeTab,
             makeTabLongLived,
-        }),
-        [closeTab, makeTabLongLived, openTab, selectedTabIndex, state.ephemeralTabIndex, state.tabs]
-    );
+        };
+    }, [closeTab, makeTabLongLived, openTab, selectedTabIndex, state.ephemeralTabIndex, state.tabs]);
 
     return <ApiTabsContext.Provider value={contextValue}>{children}</ApiTabsContext.Provider>;
 };

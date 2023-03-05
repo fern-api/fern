@@ -45,18 +45,3 @@
     color: $pt-text-color-muted;
     padding-bottom: 100px;
 }
-
-$right-content-top-margin: 20px;
-
-.rightContent {
-    flex: 1;
-    display: flex;
-    gap: 20px;
-    position: sticky;
-    top: $right-content-top-margin;
-    align-self: flex-start;
-    min-width: 0;
-    max-height: calc(
-        100vh - /* header height */ 45px - /* tab bar */ 40px - $right-content-top-margin - /* bottom margin */ 20px
-    );
-}
