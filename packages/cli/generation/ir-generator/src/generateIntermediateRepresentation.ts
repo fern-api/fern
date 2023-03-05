@@ -15,8 +15,8 @@ import { convertHttpHeader, convertHttpService } from "./converters/services/con
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
-import { generateRootPackage } from "./generateRootPackage";
 import { IdGenerator } from "./IdGenerator";
+import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
@@ -84,9 +84,17 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
 
+    const packageTreeGenerator = new PackageTreeGenerator();
+
     const visitServiceFile = async (file: FernFileContext) => {
+        const docs = file.serviceFile.docs ?? file.serviceFile.service?.docs;
+        if (docs != null) {
+            packageTreeGenerator.addDocs(file.fernFilepath, docs);
+        }
+
         await visitObject(file.serviceFile, {
             imports: noop,
+            docs: noop,
 
             types: (types) => {
                 if (types == null) {
@@ -101,8 +109,10 @@ export async function generateIntermediateRepresentation({
                         typeResolver,
                         exampleResolver,
                     });
-                    intermediateRepresentation.types[IdGenerator.generateTypeId(convertedTypeDeclaration.name)] =
-                        convertedTypeDeclaration;
+
+                    const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
+                    intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
+                    packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
                     audienceIrGraph?.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
                     audienceIrGraph?.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
@@ -123,8 +133,10 @@ export async function generateIntermediateRepresentation({
                         errorDeclaration,
                         file,
                     });
-                    intermediateRepresentation.errors[IdGenerator.generateErrorId(convertedErrorDeclaration.name)] =
-                        convertedErrorDeclaration;
+
+                    const errorId = IdGenerator.generateErrorId(convertedErrorDeclaration.name);
+                    intermediateRepresentation.errors[errorId] = convertedErrorDeclaration;
+                    packageTreeGenerator.addError(errorId, convertedErrorDeclaration);
 
                     audienceIrGraph?.addError(convertedErrorDeclaration);
                 }
@@ -144,8 +156,9 @@ export async function generateIntermediateRepresentation({
                     globalErrors,
                 });
 
-                intermediateRepresentation.services[IdGenerator.generateServiceId(convertedHttpService.name)] =
-                    convertedHttpService;
+                const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);
+                intermediateRepresentation.services[serviceId] = convertedHttpService;
+                packageTreeGenerator.addService(serviceId, convertedHttpService);
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
@@ -196,7 +209,7 @@ export async function generateIntermediateRepresentation({
 
     return {
         ...intermediateRepresentationForAudiences,
-        ...generateRootPackage(intermediateRepresentationForAudiences),
+        ...packageTreeGenerator.build(),
         sdkConfig: {
             isAuthMandatory,
         },

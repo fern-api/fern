@@ -4,6 +4,7 @@ import { HttpServiceSchema } from "../HttpServiceSchema";
 import { TypeDeclarationSchema } from "../TypeDeclarationSchema";
 
 export const ServiceFileSchema = z.strictObject({
+    docs: z.optional(z.string()),
     imports: z.optional(z.record(z.string())),
     types: z.optional(z.record(TypeDeclarationSchema)),
     service: z.optional(HttpServiceSchema),
