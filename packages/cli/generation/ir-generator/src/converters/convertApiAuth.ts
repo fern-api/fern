@@ -1,7 +1,6 @@
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model/auth";
 import { FernFileContext } from "../FernFileContext";
-import { convertHttpHeader } from "./services/convertHttpService";
 
 export function convertApiAuth({
     rawApiFileSchema,
@@ -61,17 +60,13 @@ function convertSchemeReference({
         }
         return visitRawAuthSchemeDeclaration(declaration, {
             header: (rawHeader) =>
-                AuthScheme.header(
-                    convertHttpHeader({
-                        headerKey: rawHeader.header,
-                        header: {
-                            docs,
-                            name: rawHeader.name,
-                            type: rawHeader.type ?? "string",
-                        },
-                        file,
-                    })
-                ),
+                AuthScheme.header({
+                    docs,
+                    name: file.casingsGenerator.generateName(declaration.name ?? reference),
+                    header: declaration.header,
+                    valueType: file.parseTypeReference(rawHeader.type ?? "string"),
+                    prefix: rawHeader.prefix,
+                }),
         });
     };
 
