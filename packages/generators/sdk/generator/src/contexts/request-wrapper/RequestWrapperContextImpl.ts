@@ -1,7 +1,7 @@
 import { RequestWrapperContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
@@ -28,7 +28,7 @@ export declare namespace RequestWrapperContextImpl {
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         requestWrapperGenerator: RequestWrapperGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -48,7 +48,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
         errorResolver,
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
-        serviceResolver,
+        packageResolver,
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
         ...superInit
@@ -74,12 +74,12 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
             importsManager: this.importsManager,
             endpointErrorUnionDeclarationReferencer,
             endpointErrorUnionGenerator,
-            serviceResolver,
+            packageResolver,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({
             requestWrapperDeclarationReferencer,
             requestWrapperGenerator,
-            serviceResolver,
+            packageResolver,
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
         });

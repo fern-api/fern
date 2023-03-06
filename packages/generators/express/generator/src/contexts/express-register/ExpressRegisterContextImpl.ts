@@ -4,7 +4,7 @@ import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inl
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator";
 import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
-import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
@@ -24,7 +24,7 @@ export declare namespace ExpressRegisterContextImpl {
         typeSchemaGenerator: TypeSchemaGenerator;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
         expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
         expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
@@ -54,7 +54,7 @@ export class ExpressRegisterContextImpl extends BaseContextImpl implements Expre
         expressEndpointTypeSchemasGenerator,
         expressInlinedRequestBodySchemaDeclarationReferencer,
         expressInlinedRequestBodySchemaGenerator,
-        serviceResolver,
+        packageResolver,
         expressServiceGenerator,
         expressServiceDeclarationReferencer,
         expressRegisterGenerator,
@@ -62,7 +62,7 @@ export class ExpressRegisterContextImpl extends BaseContextImpl implements Expre
     }: ExpressRegisterContextImpl.Init) {
         super(superInit);
         this.expressService = new ExpressServiceContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             expressServiceGenerator,
             expressServiceDeclarationReferencer,
             importsManager: this.importsManager,

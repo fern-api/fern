@@ -1,12 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
-import { ExportedFilePath, Reference } from "@fern-typescript/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace SdkInlinedRequestBodyDeclarationReferencer {
     export interface Name {
-        service: DeclaredServiceName;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
     }
 }
@@ -17,7 +17,7 @@ export class SdkInlinedRequestBodyDeclarationReferencer extends AbstractSdkClien
     public getExportedFilepath(name: SdkInlinedRequestBodyDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [
-                ...this.getExportedDirectory(name.service, {
+                ...this.getExportedDirectory(name, {
                     subExports: {
                         [RelativeFilePath.of(REQUESTS_DIRECTORY_NAME)]: { exportAll: true },
                     },
@@ -51,5 +51,9 @@ export class SdkInlinedRequestBodyDeclarationReferencer extends AbstractSdkClien
         args: DeclarationReferencer.getReferenceTo.Options<SdkInlinedRequestBodyDeclarationReferencer.Name>
     ): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
+    }
+
+    protected getPackageIdFromName(name: SdkInlinedRequestBodyDeclarationReferencer.Name): PackageId {
+        return name.packageId;
     }
 }

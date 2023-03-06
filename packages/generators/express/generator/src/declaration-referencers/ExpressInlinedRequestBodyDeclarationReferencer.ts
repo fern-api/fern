@@ -1,12 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
-import { ExportedFilePath, Reference } from "@fern-typescript/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace ExpressInlinedRequestBodyDeclarationReferencer {
     export interface Name {
-        service: DeclaredServiceName;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
     }
 }
@@ -17,7 +17,7 @@ export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpr
     public getExportedFilepath(name: ExpressInlinedRequestBodyDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [
-                ...this.getExportedDirectory(name.service, {
+                ...this.getExportedDirectory(name, {
                     subExports: {
                         [RelativeFilePath.of(REQUESTS_DIRECTORY_NAME)]: { exportAll: true },
                     },
@@ -51,5 +51,9 @@ export class ExpressInlinedRequestBodyDeclarationReferencer extends AbstractExpr
         args: DeclarationReferencer.getReferenceTo.Options<ExpressInlinedRequestBodyDeclarationReferencer.Name>
     ): Reference {
         return this.getReferenceTo(this.getExportedName(args.name), args);
+    }
+
+    protected getPackageIdFromName(name: ExpressInlinedRequestBodyDeclarationReferencer.Name): PackageId {
+        return name.packageId;
     }
 }

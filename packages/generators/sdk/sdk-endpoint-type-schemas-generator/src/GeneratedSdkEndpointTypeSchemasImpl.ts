@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -12,6 +13,7 @@ import { StatusCodeDiscriminatedEndpointErrorSchema } from "./StatusCodeDiscrimi
 
 export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
     export interface Init {
+        packageId: PackageId;
         service: HttpService;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
@@ -30,6 +32,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private GeneratedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
 
     constructor({
+        packageId,
         service,
         endpoint,
         errorResolver,
@@ -45,6 +48,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 case "primitive":
                 case "container":
                     this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
+                        packageId,
                         service,
                         endpoint,
                         typeName: GeneratedSdkEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
@@ -67,6 +71,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 case "primitive":
                 case "container":
                     this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
+                        packageId,
                         service,
                         endpoint,
                         typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
@@ -86,7 +91,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
 
         this.GeneratedSdkErrorSchema = shouldGenerateErrors
             ? this.getGeneratedEndpointErrorSchema({
-                  service,
+                  packageId,
                   endpoint,
                   errorResolver,
                   errorDiscriminationStrategy,
@@ -95,12 +100,12 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     }
 
     private getGeneratedEndpointErrorSchema({
-        service,
+        packageId,
         endpoint,
         errorResolver,
         errorDiscriminationStrategy,
     }: {
-        service: HttpService;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
@@ -108,7 +113,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: (properyDiscriminationStrategy) =>
                 new GeneratedEndpointErrorSchemaImpl({
-                    service,
+                    packageId,
                     endpoint,
                     errorResolver,
                     discriminationStrategy: properyDiscriminationStrategy,

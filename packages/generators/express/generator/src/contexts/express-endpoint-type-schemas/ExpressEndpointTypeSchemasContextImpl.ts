@@ -1,6 +1,6 @@
 import { ExpressEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
-import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
@@ -21,7 +21,7 @@ export declare namespace ExpressEndpointTypeSchemasContextImpl {
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -42,7 +42,7 @@ export class ExpressEndpointTypeSchemasContextImpl
         typeReferenceExampleGenerator,
         expressEndpointSchemaDeclarationReferencer,
         expressEndpointTypeSchemasGenerator,
-        serviceResolver,
+        packageResolver,
         ...superInit
     }: ExpressEndpointTypeSchemasContextImpl.Init) {
         super(superInit);
@@ -66,7 +66,7 @@ export class ExpressEndpointTypeSchemasContextImpl
             typeSchemaGenerator,
         });
         this.expressEndpointTypeSchemas = new ExpressEndpointTypeSchemasContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             expressEndpointTypeSchemasGenerator,
             expressEndpointSchemaDeclarationReferencer,
             importsManager: this.importsManager,

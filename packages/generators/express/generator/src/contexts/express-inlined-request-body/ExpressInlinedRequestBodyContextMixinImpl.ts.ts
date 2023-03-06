@@ -1,9 +1,8 @@
 import { Name } from "@fern-fern/ir-model/commons";
-import { DeclaredServiceName } from "@fern-fern/ir-model/http";
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressInlinedRequestBodyContextMixin, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
-import { ServiceResolver } from "@fern-typescript/resolvers";
+import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
 
@@ -11,7 +10,7 @@ export declare namespace ExpressInlinedRequestBodyContextMixinImpl {
     export interface Init {
         expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
         expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
         importsManager: ImportsManager;
         sourceFile: SourceFile;
     }
@@ -20,29 +19,29 @@ export declare namespace ExpressInlinedRequestBodyContextMixinImpl {
 export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlinedRequestBodyContextMixin {
     private expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
     private expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
-    private serviceResolver: ServiceResolver;
+    private packageResolver: PackageResolver;
     private importsManager: ImportsManager;
     private sourceFile: SourceFile;
 
     constructor({
         expressInlinedRequestBodyGenerator,
         expressInlinedRequestBodyDeclarationReferencer,
-        serviceResolver,
+        packageResolver,
         importsManager,
         sourceFile,
     }: ExpressInlinedRequestBodyContextMixinImpl.Init) {
         this.expressInlinedRequestBodyGenerator = expressInlinedRequestBodyGenerator;
         this.expressInlinedRequestBodyDeclarationReferencer = expressInlinedRequestBodyDeclarationReferencer;
-        this.serviceResolver = serviceResolver;
+        this.packageResolver = packageResolver;
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
     }
 
     public getGeneratedInlinedRequestBody(
-        service: DeclaredServiceName,
+        packageId: PackageId,
         endpointName: Name
     ): GeneratedExpressInlinedRequestBody {
-        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
@@ -55,14 +54,14 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
         return this.expressInlinedRequestBodyGenerator.generateInlinedRequestBody({
             requestBody: endpoint.requestBody,
             typeName: this.expressInlinedRequestBodyDeclarationReferencer.getExportedName({
-                service,
+                packageId,
                 endpoint,
             }),
         });
     }
 
-    public getReferenceToInlinedRequestBodyType(service: DeclaredServiceName, endpointName: Name): Reference {
-        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+    public getReferenceToInlinedRequestBodyType(packageId: PackageId, endpointName: Name): Reference {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
@@ -70,7 +69,7 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.expressInlinedRequestBodyDeclarationReferencer.getReferenceToInlinedRequestBody({
-            name: { service, endpoint },
+            name: { packageId, endpoint },
             importsManager: this.importsManager,
             importStrategy: { type: "fromRoot" },
             referencedIn: this.sourceFile,

@@ -1,8 +1,9 @@
-import { Name } from "@fern-fern/ir-model/commons";
 import { HttpService } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { convertHttpPathToExpressRoute, getTextOfTsNode } from "@fern-typescript/commons";
+import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
+import { convertHttpPathToExpressRoute, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ExpressRegisterContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
+import { PackageResolver } from "@fern-typescript/resolvers";
+import { partition } from "lodash-es";
 import { ts } from "ts-morph";
 
 export declare namespace GeneratedExpressRegisterImpl {
@@ -10,6 +11,7 @@ export declare namespace GeneratedExpressRegisterImpl {
         intermediateRepresentation: IntermediateRepresentation;
         registerFunctionName: string;
         areImplementationsOptional: boolean;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -20,17 +22,18 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     private intermediateRepresentation: IntermediateRepresentation;
     private registerFunctionName: string;
     private areImplementationsOptional: boolean;
-    private servicesTree: ServicesTree;
+    private packageResolver: PackageResolver;
 
     constructor({
         intermediateRepresentation,
         registerFunctionName,
         areImplementationsOptional,
+        packageResolver,
     }: GeneratedExpressRegisterImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.registerFunctionName = registerFunctionName;
         this.areImplementationsOptional = areImplementationsOptional;
-        this.servicesTree = buildServicesTree(intermediateRepresentation);
+        this.packageResolver = packageResolver;
     }
 
     public writeToFile(context: ExpressRegisterContext): void {
@@ -49,12 +52,24 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 },
                 {
                     name: GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME,
-                    type: getTextOfTsNode(this.constructLiteralTypeNodeForServicesTree(this.servicesTree, context)),
+                    type: getTextOfTsNode(
+                        this.constructLiteralTypeNodeForServicesTree(
+                            { isRoot: true },
+                            this.intermediateRepresentation.rootPackage,
+                            context
+                        )
+                    ),
                 },
             ],
             returnType: "void",
-            statements: Object.values(this.intermediateRepresentation.services)
-                .map((service) => {
+            statements: Object.keys(this.intermediateRepresentation.subpackages)
+                .flatMap((subpackageId) => {
+                    const packageId = { isRoot: false, subpackageId };
+                    const service = this.packageResolver.getServiceDeclaration(packageId);
+                    if (service == null) {
+                        return [];
+                    }
+
                     let statement: ts.Statement = ts.factory.createExpressionStatement(
                         context.base.externalDependencies.express.App.use({
                             referenceToApp: ts.factory.createParenthesizedExpression(
@@ -67,7 +82,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             ),
                             path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService
-                                .getGeneratedExpressService(service.name)
+                                .getGeneratedExpressService(packageId)
                                 .toRouter(this.getReferenceToServiceArgument(service)),
                         })
                     );
@@ -81,7 +96,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             ts.factory.createBlock([statement], true)
                         );
                     }
-                    return statement;
+                    return [statement];
                 })
                 .map(getTextOfTsNode),
         });
@@ -96,97 +111,82 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 ts.factory.createPropertyAccessChain(
                     acc,
                     includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
-                    getKeyForFernFilepathPart(part)
+                    // TODO there's some conflation around subpackage name and fern filepath part in this file
+                    part.camelCase.unsafeName
                 ),
             ts.factory.createIdentifier(GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME)
         );
     }
 
-    private getServiceKey(service: HttpService) {
-        const lastFernFilepathPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
-        if (lastFernFilepathPart == null) {
-            throw new Error("Cannot generate register() because fern filepath is empty");
+    private getServiceKey(packageId: PackageId) {
+        if (packageId.isRoot) {
+            return "_root";
         }
-        return getKeyForFernFilepathPart(lastFernFilepathPart);
+        const subpackage = this.packageResolver.resolveSubpackage(packageId.subpackageId);
+        return subpackage.name.camelCase.unsafeName;
     }
 
     private constructLiteralTypeNodeForServicesTree(
-        root: ServicesTree,
+        rootId: PackageId,
+        root: Package,
         context: ExpressRegisterContext
     ): ts.TypeLiteralNode {
-        return ts.factory.createTypeLiteralNode([
-            ...root.services.map((service) =>
+        const [leaves, otherChildren] = partition(
+            root.subpackages,
+            (subpackageId) => this.packageResolver.resolveSubpackage(subpackageId).subpackages.length === 0
+        );
+
+        const members: ts.TypeElement[] = [];
+        if (root.service != null) {
+            members.push(this.getPropertySignatureForService(rootId, context));
+        }
+
+        for (const leafId of leaves) {
+            const leaf = this.packageResolver.resolveSubpackage(leafId);
+            if (leaf.service != null) {
+                members.push(this.getPropertySignatureForService({ isRoot: false, subpackageId: leafId }, context));
+            }
+        }
+
+        for (const otherChildId of otherChildren) {
+            const otherChild = this.packageResolver.resolveSubpackage(otherChildId);
+            members.push(
                 ts.factory.createPropertySignature(
                     undefined,
-                    this.getServiceKey(service),
+                    // TODO put in function
+                    otherChild.name.camelCase.unsafeName,
                     this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-                    context.expressService
-                        .getReferenceToExpressService(service.name, {
-                            importAlias: this.getImportAliasForService(service),
-                        })
-                        .getTypeNode()
+                    this.constructLiteralTypeNodeForServicesTree(
+                        { isRoot: false, subpackageId: otherChildId },
+                        otherChild,
+                        context
+                    )
                 )
-            ),
-            ...root.folders.map((folder) =>
-                ts.factory.createPropertySignature(
-                    undefined,
-                    folder.name,
-                    this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-                    this.constructLiteralTypeNodeForServicesTree(folder, context)
-                )
-            ),
-        ]);
+            );
+        }
+
+        return ts.factory.createTypeLiteralNode(members);
     }
 
-    private getImportAliasForService(service: HttpService): string {
+    private getPropertySignatureForService(packageId: PackageId, context: ExpressRegisterContext): ts.TypeElement {
+        return ts.factory.createPropertySignature(
+            undefined,
+            this.getServiceKey(packageId),
+            this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
+            context.expressService
+                .getReferenceToExpressService(packageId, {
+                    importAlias: this.getImportAliasForService(packageId),
+                })
+                .getTypeNode()
+        );
+    }
+
+    private getImportAliasForService(packageId: PackageId): string {
+        const service = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const lastPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
         return [
             ...service.name.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
             `${lastPart != null ? lastPart.pascalCase.unsafeName : "Root"}Service`,
         ].join("_");
     }
-}
-
-interface ServicesTree {
-    services: HttpService[];
-    folders: ServicesTreeFolderNode[];
-}
-
-interface ServicesTreeFolderNode extends ServicesTree {
-    name: string;
-}
-
-function buildServicesTree(intermediateRepresentation: IntermediateRepresentation): ServicesTree {
-    const tree: ServicesTree = {
-        services: [],
-        folders: [],
-    };
-
-    for (const service of Object.values(intermediateRepresentation.services)) {
-        let treeForService = tree;
-
-        for (let i = 0; i < service.name.fernFilepath.allParts.length - 1; i++) {
-            const name = getKeyForFernFilepathPart(service.name.fernFilepath.allParts[i]!);
-            let subTree: ServicesTreeFolderNode | undefined = treeForService.folders.find(
-                (other) => other.name === name
-            );
-            if (subTree == null) {
-                subTree = {
-                    name,
-                    services: [],
-                    folders: [],
-                };
-                treeForService.folders.push(subTree);
-            }
-            treeForService = subTree;
-        }
-
-        treeForService.services.push(service);
-    }
-
-    return tree;
-}
-
-function getKeyForFernFilepathPart(part: Name): string {
-    return part.camelCase.unsafeName;
 }

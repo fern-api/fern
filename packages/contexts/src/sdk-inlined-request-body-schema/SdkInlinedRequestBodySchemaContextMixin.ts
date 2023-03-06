@@ -1,14 +1,13 @@
 import { Name } from "@fern-fern/ir-model/commons";
-import { DeclaredServiceName } from "@fern-fern/ir-model/http";
-import { Reference } from "@fern-typescript/commons";
+import { PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema } from "./GeneratedSdkInlinedRequestBodySchema";
 
 export interface SdkInlinedRequestBodySchemaContextMixin {
     getGeneratedInlinedRequestBodySchema: (
-        service: DeclaredServiceName,
+        packageId: PackageId,
         endpointName: Name
     ) => GeneratedSdkInlinedRequestBodySchema;
-    getReferenceToInlinedRequestBody: (service: DeclaredServiceName, endpointName: Name) => Reference;
+    getReferenceToInlinedRequestBody: (packageId: PackageId, endpointName: Name) => Reference;
 }
 
 export interface WithSdkInlinedRequestBodySchemaContextMixin {

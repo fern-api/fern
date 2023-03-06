@@ -1,18 +1,18 @@
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
-import { ExportedFilePath, Reference } from "@fern-typescript/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { ExportedFilePath, PackageId, Reference } from "@fern-typescript/commons";
 import { AbstractExpressServiceDeclarationReferencer } from "./AbstractExpressServiceDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace EndpointDeclarationReferencer {
     export interface Name {
-        service: DeclaredServiceName;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
     }
 }
 export class EndpointDeclarationReferencer extends AbstractExpressServiceDeclarationReferencer<EndpointDeclarationReferencer.Name> {
     public getExportedFilepath(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
-            directories: this.getExportedDirectory(name.service),
+            directories: this.getExportedDirectory(name),
             file: {
                 nameOnDisk: this.getFilename(name),
                 exportDeclaration: {
@@ -38,8 +38,12 @@ export class EndpointDeclarationReferencer extends AbstractExpressServiceDeclara
 
     protected override getExportedFilepathForReference(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
-            directories: this.getExportedDirectory(name.service),
+            directories: this.getExportedDirectory(name),
             file: undefined,
         };
+    }
+
+    protected getPackageIdFromName(name: EndpointDeclarationReferencer.Name): PackageId {
+        return name.packageId;
     }
 }

@@ -1,6 +1,6 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
-import { Zurg } from "@fern-typescript/commons";
+import { PackageId, Zurg } from "@fern-typescript/commons";
 import { EndpointErrorUnionContext, GeneratedUnion, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
@@ -10,7 +10,7 @@ import { RawSinglePropertyErrorSingleUnionType } from "./RawSinglePropertyErrorS
 
 export declare namespace GeneratedEndpointErrorSchemaImpl {
     export interface Init {
-        service: HttpService;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
         discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
@@ -20,12 +20,12 @@ export declare namespace GeneratedEndpointErrorSchemaImpl {
 export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorSchema {
     private static ERROR_SCHEMA_NAME = "Error";
 
-    private service: HttpService;
+    private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private GeneratedSdkErrorUnionSchema: GeneratedUnionSchema<SdkEndpointTypeSchemasContext>;
 
-    constructor({ service, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {
-        this.service = service;
+    constructor({ packageId, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {
+        this.packageId = packageId;
         this.endpoint = endpoint;
 
         this.GeneratedSdkErrorUnionSchema = new GeneratedUnionSchema<SdkEndpointTypeSchemasContext>({
@@ -35,7 +35,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
             discriminant: discriminationStrategy.discriminant,
             getReferenceToSchema: (context) =>
                 context.sdkEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
-                    service.name,
+                    packageId,
                     endpoint.name,
                     GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME
                 ),
@@ -73,7 +73,7 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
 
     private getErrorUnion(context: SdkEndpointTypeSchemasContext): GeneratedUnion<EndpointErrorUnionContext> {
         return context.endpointErrorUnion
-            .getGeneratedEndpointErrorUnion(this.service.name, this.endpoint.name)
+            .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
             .getErrorUnion();
     }
 }

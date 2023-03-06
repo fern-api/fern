@@ -1,5 +1,6 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { PackageId } from "@fern-typescript/commons";
 import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion, GeneratedUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
@@ -9,7 +10,7 @@ import { UnknownErrorSingleUnionTypeGenerator } from "./error/UnknownErrorSingle
 
 export declare namespace GeneratedEndpointErrorUnionImpl {
     export interface Init {
-        service: HttpService;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
@@ -25,7 +26,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     private errorUnion: GeneratedUnionImpl<EndpointErrorUnionContext>;
 
     constructor({
-        service,
+        packageId,
         endpoint,
         errorResolver,
         errorDiscriminationStrategy,
@@ -49,7 +50,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             ),
             getReferenceToUnion: (context) =>
                 context.endpointErrorUnion.getReferenceToEndpointTypeExport(
-                    service.name,
+                    packageId,
                     this.endpoint.name,
                     GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME
                 ),

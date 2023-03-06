@@ -1,5 +1,6 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedEndpointErrorUnionImpl } from "./GeneratedEndpointErrorUnionImpl";
@@ -12,7 +13,7 @@ export declare namespace EndpointErrorUnionGenerator {
 
     export namespace generateEndpointErrorUnion {
         export interface Args {
-            service: HttpService;
+            packageId: PackageId;
             endpoint: HttpEndpoint;
         }
     }
@@ -28,11 +29,11 @@ export class EndpointErrorUnionGenerator {
     }
 
     public generateEndpointErrorUnion({
-        service,
+        packageId,
         endpoint,
     }: EndpointErrorUnionGenerator.generateEndpointErrorUnion.Args): GeneratedEndpointErrorUnion {
         return new GeneratedEndpointErrorUnionImpl({
-            service,
+            packageId,
             endpoint,
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,

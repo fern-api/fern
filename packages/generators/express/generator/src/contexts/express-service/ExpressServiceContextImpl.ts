@@ -5,7 +5,7 @@ import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inl
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
 import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
@@ -33,7 +33,7 @@ export declare namespace ExpressServiceContextImpl {
         typeSchemaGenerator: TypeSchemaGenerator;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
         expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
         expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
@@ -73,7 +73,7 @@ export class ExpressServiceContextImpl extends BaseContextImpl implements Expres
         expressEndpointTypeSchemasGenerator,
         expressInlinedRequestBodySchemaDeclarationReferencer,
         expressInlinedRequestBodySchemaGenerator,
-        serviceResolver,
+        packageResolver,
         expressServiceGenerator,
         expressServiceDeclarationReferencer,
         errorDeclarationReferencer,
@@ -105,26 +105,26 @@ export class ExpressServiceContextImpl extends BaseContextImpl implements Expres
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextMixinImpl({
             expressInlinedRequestBodyDeclarationReferencer,
             expressInlinedRequestBodyGenerator,
-            serviceResolver,
+            packageResolver,
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
         });
         this.expressInlinedRequestBodySchema = new ExpressInlinedRequestBodySchemaContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
             expressInlinedRequestBodySchemaGenerator,
             expressInlinedRequestBodySchemaDeclarationReferencer,
         });
         this.expressEndpointTypeSchemas = new ExpressEndpointTypeSchemasContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             expressEndpointTypeSchemasGenerator,
             expressEndpointSchemaDeclarationReferencer,
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
         });
         this.expressService = new ExpressServiceContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             expressServiceGenerator,
             expressServiceDeclarationReferencer,
             importsManager: this.importsManager,

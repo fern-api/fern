@@ -13,7 +13,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     } {
         const isOptional = this.getGeneratedRequestWrapper(context).areAllPropertiesOptional(context);
         return {
-            type: context.requestWrapper.getReferenceToRequestWrapper(this.service.name, this.endpoint.name),
+            type: context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name),
             hasQuestionToken: false,
             initializer: isOptional ? ts.factory.createObjectLiteralExpression([], false) : undefined,
         };
@@ -105,6 +105,6 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     }
 
     private getGeneratedRequestWrapper(context: SdkClientClassContext): GeneratedRequestWrapper {
-        return context.requestWrapper.getGeneratedRequestWrapper(this.service.name, this.endpoint.name);
+        return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 }

@@ -143,7 +143,7 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
                         ts.factory.createReturnStatement(
                             context.base.coreUtilities.fetcher.APIResponse.FailedResponse._build(
                                 context.endpointErrorUnion
-                                    .getGeneratedEndpointErrorUnion(this.service.name, this.endpoint.name)
+                                    .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                                     .getErrorUnion()
                                     .build({
                                         discriminantValueToBuild: errorDeclaration.statusCode,
@@ -182,13 +182,13 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
                 ? context.type.getReferenceToType(this.endpoint.response.type).typeNode
                 : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
             context.endpointErrorUnion
-                .getGeneratedEndpointErrorUnion(this.service.name, this.endpoint.name)
+                .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                 .getErrorUnion()
                 .getReferenceTo(context)
         );
     }
 
     private getGeneratedEndpointErrorUnion(context: SdkClientClassContext): GeneratedEndpointErrorUnion {
-        return context.endpointErrorUnion.getGeneratedEndpointErrorUnion(this.service.name, this.endpoint.name);
+        return context.endpointErrorUnion.getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name);
     }
 }

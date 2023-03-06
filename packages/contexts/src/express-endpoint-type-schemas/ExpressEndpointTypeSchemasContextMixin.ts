@@ -1,15 +1,11 @@
 import { Name } from "@fern-fern/ir-model/commons";
-import { DeclaredServiceName } from "@fern-fern/ir-model/http";
-import { Reference } from "@fern-typescript/commons";
+import { PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedExpressEndpointTypeSchemas } from "./GeneratedExpressEndpointTypeSchemas";
 
 export interface ExpressEndpointTypeSchemasContextMixin {
-    getGeneratedEndpointTypeSchemas: (
-        service: DeclaredServiceName,
-        endpointName: Name
-    ) => GeneratedExpressEndpointTypeSchemas;
+    getGeneratedEndpointTypeSchemas: (packageId: PackageId, endpointName: Name) => GeneratedExpressEndpointTypeSchemas;
     getReferenceToEndpointTypeSchemaExport: (
-        service: DeclaredServiceName,
+        packageId: PackageId,
         endpointName: Name,
         export_: string | string[]
     ) => Reference;

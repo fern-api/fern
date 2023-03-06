@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { PackageId } from "@fern-typescript/commons";
 import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
@@ -7,6 +8,7 @@ import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaIm
 
 export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
     export interface Init {
+        packageId: PackageId;
         service: HttpService;
         endpoint: HttpEndpoint;
     }
@@ -20,7 +22,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
 
-    constructor({ service, endpoint }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
+    constructor({ packageId, service, endpoint }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
 
         // only generate request schemas for referenced request bodies.  inlined
@@ -30,6 +32,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 case "primitive":
                 case "container":
                     this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
+                        packageId,
                         service,
                         endpoint,
                         typeName: GeneratedExpressEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
@@ -52,6 +55,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 case "primitive":
                 case "container":
                     this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
+                        packageId,
                         service,
                         endpoint,
                         typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,

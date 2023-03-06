@@ -1,9 +1,8 @@
 import { Name } from "@fern-fern/ir-model/commons";
-import { DeclaredServiceName } from "@fern-fern/ir-model/http";
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressEndpointTypeSchemasContextMixin, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
-import { ServiceResolver } from "@fern-typescript/resolvers";
+import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
@@ -12,7 +11,7 @@ export declare namespace ExpressEndpointTypeSchemasContextMixinImpl {
     export interface Init {
         expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
         expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
         sourceFile: SourceFile;
         importsManager: ImportsManager;
     }
@@ -20,7 +19,7 @@ export declare namespace ExpressEndpointTypeSchemasContextMixinImpl {
 
 export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpointTypeSchemasContextMixin {
     private expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
-    private serviceResolver: ServiceResolver;
+    private packageResolver: PackageResolver;
     private expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
     private sourceFile: SourceFile;
     private importsManager: ImportsManager;
@@ -30,20 +29,20 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
         importsManager,
         expressEndpointTypeSchemasGenerator,
         expressEndpointSchemaDeclarationReferencer,
-        serviceResolver,
+        packageResolver,
     }: ExpressEndpointTypeSchemasContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
-        this.serviceResolver = serviceResolver;
+        this.packageResolver = packageResolver;
         this.expressEndpointTypeSchemasGenerator = expressEndpointTypeSchemasGenerator;
         this.expressEndpointSchemaDeclarationReferencer = expressEndpointSchemaDeclarationReferencer;
     }
 
     public getGeneratedEndpointTypeSchemas(
-        service: DeclaredServiceName,
+        packageId: PackageId,
         endpointName: Name
     ): GeneratedExpressEndpointTypeSchemas {
-        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
@@ -51,17 +50,18 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.expressEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
+            packageId,
             service: serviceDeclaration,
             endpoint,
         });
     }
 
     public getReferenceToEndpointTypeSchemaExport(
-        service: DeclaredServiceName,
+        packageId: PackageId,
         endpointName: Name,
         export_: string | string[]
     ): Reference {
-        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
@@ -69,7 +69,7 @@ export class ExpressEndpointTypeSchemasContextMixinImpl implements ExpressEndpoi
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.expressEndpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
-            name: { service, endpoint },
+            name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),

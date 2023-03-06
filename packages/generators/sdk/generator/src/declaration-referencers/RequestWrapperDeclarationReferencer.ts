@@ -1,13 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
-import { ExportedFilePath } from "@fern-typescript/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { ExportedFilePath, PackageId } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
 export declare namespace RequestWrapperDeclarationReferencer {
     export interface Name {
-        service: DeclaredServiceName;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
     }
 }
@@ -18,7 +18,7 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
     public getExportedFilepath(name: RequestWrapperDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: [
-                ...this.getExportedDirectory(name.service, {
+                ...this.getExportedDirectory(name, {
                     subExports: {
                         [RelativeFilePath.of(REQUESTS_DIRECTORY_NAME)]: { exportAll: true },
                     },
@@ -52,5 +52,9 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
         args: DeclarationReferencer.getReferenceTo.Options<RequestWrapperDeclarationReferencer.Name>
     ): ts.TypeNode {
         return this.getReferenceTo(this.getExportedName(args.name), args).getTypeNode();
+    }
+
+    protected getPackageIdFromName(name: RequestWrapperDeclarationReferencer.Name): PackageId {
+        return name.packageId;
     }
 }

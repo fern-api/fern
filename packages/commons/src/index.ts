@@ -1,4 +1,3 @@
-export { type AugmentedService } from "./AugmentedService";
 export * from "./core-utilities";
 export { type Zurg } from "./core-utilities/zurg/Zurg";
 export { DependencyManager, DependencyType, type PackageDependencies } from "./dependency-manager/DependencyManager";
@@ -8,6 +7,7 @@ export { type ExpressionReferenceNode } from "./ExpressionReferenceNode";
 export * from "./external-dependencies";
 export * from "./imports-manager";
 export { type NpmPackage, type PublishInfo } from "./NpmPackage";
+export { type PackageId } from "./PackageId";
 export * from "./referencing";
 export { stringifyFernFilepath } from "./stringifyFernFilepath";
 export { type TypeReferenceNode } from "./TypeReferenceNode";

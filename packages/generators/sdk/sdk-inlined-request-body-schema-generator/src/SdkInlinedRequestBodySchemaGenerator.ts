@@ -1,11 +1,12 @@
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema } from "@fern-typescript/contexts";
 import { GeneratedSdkInlinedRequestBodySchemaImpl } from "./GeneratedSdkInlinedRequestBodySchemaImpl";
 
 export declare namespace SdkInlinedRequestBodySchemaGenerator {
     export namespace generateInlinedRequestBodySchema {
         export interface Args {
-            service: HttpService;
+            packageId: PackageId;
             endpoint: HttpEndpoint;
             typeName: string;
         }
@@ -14,7 +15,7 @@ export declare namespace SdkInlinedRequestBodySchemaGenerator {
 
 export class SdkInlinedRequestBodySchemaGenerator {
     public generateInlinedRequestBodySchema({
-        service,
+        packageId,
         endpoint,
         typeName,
     }: SdkInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema.Args): GeneratedSdkInlinedRequestBodySchema {
@@ -22,7 +23,7 @@ export class SdkInlinedRequestBodySchemaGenerator {
             throw new Error("Request is not inlined");
         }
         return new GeneratedSdkInlinedRequestBodySchemaImpl({
-            service,
+            packageId,
             endpoint,
             inlinedRequestBody: endpoint.requestBody,
             typeName,

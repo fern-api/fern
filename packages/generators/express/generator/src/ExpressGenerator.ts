@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     convertExportedFilePathToFilePath,
@@ -9,6 +10,7 @@ import {
     ExportsManager,
     ImportsManager,
     NpmPackage,
+    PackageId,
     SimpleTypescriptProject,
     TypescriptProject,
 } from "@fern-typescript/commons";
@@ -20,7 +22,7 @@ import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/expre
 import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator";
 import { ExpressServiceGenerator } from "@fern-typescript/express-service-generator";
 import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
@@ -77,7 +79,7 @@ export class ExpressGenerator {
     private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
-    private serviceResolver: ServiceResolver;
+    private packageResolver: PackageResolver;
 
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
@@ -114,7 +116,7 @@ export class ExpressGenerator {
         this.rootDirectory = this.project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
-        this.serviceResolver = new ServiceResolver(intermediateRepresentation);
+        this.packageResolver = new PackageResolver(intermediateRepresentation);
 
         const apiDirectory: ExportedDirectory[] = [
             {
@@ -138,18 +140,22 @@ export class ExpressGenerator {
             namespaceExport,
         });
         this.expressInlinedRequestBodyDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
+            packageResolver: this.packageResolver,
             containingDirectory: apiDirectory,
             namespaceExport,
         });
         this.expressInlinedRequestBodySchemaDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
+            packageResolver: this.packageResolver,
             containingDirectory: schemaDirectory,
             namespaceExport,
         });
         this.expressEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
+            packageResolver: this.packageResolver,
             containingDirectory: schemaDirectory,
             namespaceExport,
         });
         this.expressServiceDeclarationReferencer = new ExpressServiceDeclarationReferencer({
+            packageResolver: this.packageResolver,
             containingDirectory: apiDirectory,
             namespaceExport,
         });
@@ -179,9 +185,11 @@ export class ExpressGenerator {
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator();
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator();
         this.expressServiceGenerator = new ExpressServiceGenerator({
+            packageResolver: this.packageResolver,
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
+            packageResolver: this.packageResolver,
             intermediateRepresentation: this.intermediateRepresentation,
             registerFunctionName: this.expressRegisterDeclarationReferencer.getRegisterFunctionName(),
             areImplementationsOptional: config.areImplementationsOptional,
@@ -292,12 +300,12 @@ export class ExpressGenerator {
     }
 
     private generateInlinedRequestBodies() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.expressInlinedRequestBodyDeclarationReferencer.getExportedFilepath({
-                            service: service.name,
+                            packageId,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -314,25 +322,25 @@ export class ExpressGenerator {
                                 expressInlinedRequestBodyDeclarationReferencer:
                                     this.expressInlinedRequestBodyDeclarationReferencer,
                                 expressInlinedRequestBodyGenerator: this.expressInlinedRequestBodyGenerator,
-                                serviceResolver: this.serviceResolver,
+                                packageResolver: this.packageResolver,
                             });
                             context.expressInlinedRequestBody
-                                .getGeneratedInlinedRequestBody(service.name, endpoint.name)
+                                .getGeneratedInlinedRequestBody(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
                 }
             }
-        }
+        });
     }
 
     private generateInlinedRequestBodySchemas() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.expressInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
-                            service: service.name,
+                            packageId,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -346,7 +354,7 @@ export class ExpressGenerator {
                                 typeDeclarationReferencer: this.typeDeclarationReferencer,
                                 typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                                 typeGenerator: this.typeGenerator,
-                                serviceResolver: this.serviceResolver,
+                                packageResolver: this.packageResolver,
                                 expressInlinedRequestBodyDeclarationReferencer:
                                     this.expressInlinedRequestBodyDeclarationReferencer,
                                 expressInlinedRequestBodyGenerator: this.expressInlinedRequestBodyGenerator,
@@ -357,21 +365,21 @@ export class ExpressGenerator {
                                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                             });
                             context.expressInlinedRequestBodySchema
-                                .getGeneratedInlinedRequestBodySchema(service.name, endpoint.name)
+                                .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
                 }
             }
-        }
+        });
     }
 
     private generateEndpointTypeSchemas() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.expressEndpointSchemaDeclarationReferencer.getExportedFilepath({
-                        service: service.name,
+                        packageId,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -387,23 +395,23 @@ export class ExpressGenerator {
                             typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                             expressEndpointSchemaDeclarationReferencer: this.expressEndpointSchemaDeclarationReferencer,
                             typeGenerator: this.typeGenerator,
-                            serviceResolver: this.serviceResolver,
+                            packageResolver: this.packageResolver,
                             expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
                             typeSchemaGenerator: this.typeSchemaGenerator,
                         });
                         endpointTypeSchemasContext.expressEndpointTypeSchemas
-                            .getGeneratedEndpointTypeSchemas(service.name, endpoint.name)
+                            .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                             .writeToFile(endpointTypeSchemasContext);
                     },
                 });
             }
-        }
+        });
     }
 
     private generateExpressServices() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((_service, packageId) => {
             this.withSourceFile({
-                filepath: this.expressServiceDeclarationReferencer.getExportedFilepath(service.name),
+                filepath: this.expressServiceDeclarationReferencer.getExportedFilepath(packageId),
                 run: ({ sourceFile, importsManager }) => {
                     const expressServiceContext = new ExpressServiceContextImpl({
                         sourceFile,
@@ -417,7 +425,7 @@ export class ExpressGenerator {
                         typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                         expressEndpointSchemaDeclarationReferencer: this.expressEndpointSchemaDeclarationReferencer,
                         typeGenerator: this.typeGenerator,
-                        serviceResolver: this.serviceResolver,
+                        packageResolver: this.packageResolver,
                         expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
                         typeSchemaGenerator: this.typeSchemaGenerator,
                         expressInlinedRequestBodyDeclarationReferencer:
@@ -435,11 +443,11 @@ export class ExpressGenerator {
                         genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
                     });
                     expressServiceContext.expressService
-                        .getGeneratedExpressService(service.name)
+                        .getGeneratedExpressService(packageId)
                         .writeToFile(expressServiceContext);
                 },
             });
-        }
+        });
     }
 
     private generateExpressRegister() {
@@ -458,7 +466,7 @@ export class ExpressGenerator {
                     typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                     expressEndpointSchemaDeclarationReferencer: this.expressEndpointSchemaDeclarationReferencer,
                     typeGenerator: this.typeGenerator,
-                    serviceResolver: this.serviceResolver,
+                    packageResolver: this.packageResolver,
                     expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
                     typeSchemaGenerator: this.typeSchemaGenerator,
                     expressInlinedRequestBodyDeclarationReferencer: this.expressInlinedRequestBodyDeclarationReferencer,
@@ -526,6 +534,24 @@ export class ExpressGenerator {
             });
 
             this.context.logger.debug(`Generated ${filepathStr}`);
+        }
+    }
+
+    private getAllPackageIds(): PackageId[] {
+        return [
+            { isRoot: true },
+            ...Object.keys(this.intermediateRepresentation.subpackages).map(
+                (subpackageId): PackageId => ({ isRoot: false, subpackageId })
+            ),
+        ];
+    }
+
+    private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
+        for (const packageId of this.getAllPackageIds()) {
+            const service = this.packageResolver.getServiceDeclaration(packageId);
+            if (service != null) {
+                run(service, packageId);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
-import { HttpEndpoint, HttpService, InlinedRequestBody } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import {
     ExpressInlinedRequestBodySchemaContext,
     GeneratedExpressInlinedRequestBodySchema,
@@ -9,7 +9,7 @@ import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedExpressInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
-        service: HttpService;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
     }
@@ -19,18 +19,18 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     extends AbstractGeneratedSchema<ExpressInlinedRequestBodySchemaContext>
     implements GeneratedExpressInlinedRequestBodySchema
 {
-    private service: HttpService;
+    private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
 
     constructor({
-        service,
+        packageId,
         endpoint,
         inlinedRequestBody,
         ...superInit
     }: GeneratedExpressInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
-        this.service = service;
+        this.packageId = packageId;
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
     }
@@ -52,7 +52,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
 
     protected getReferenceToSchema(context: ExpressInlinedRequestBodySchemaContext): Reference {
         return context.expressInlinedRequestBodySchema.getReferenceToInlinedRequestBody(
-            this.service.name,
+            this.packageId,
             this.endpoint.name
         );
     }
@@ -79,7 +79,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
 
     protected getReferenceToParsedShape(context: ExpressInlinedRequestBodySchemaContext): ts.TypeNode {
         return context.expressInlinedRequestBody
-            .getReferenceToInlinedRequestBodyType(this.service.name, this.endpoint.name)
+            .getReferenceToInlinedRequestBodyType(this.packageId, this.endpoint.name)
             .getTypeNode();
     }
 
@@ -88,7 +88,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.expressInlinedRequestBody
-                        .getGeneratedInlinedRequestBody(this.service.name, this.endpoint.name)
+                        .getGeneratedInlinedRequestBody(this.packageId, this.endpoint.name)
                         .getPropertyKey(property),
                     raw: property.name.wireValue,
                 },

@@ -1,6 +1,6 @@
 import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
@@ -23,7 +23,7 @@ export declare namespace EndpointErrorUnionContextImpl {
         errorDeclarationReferencer: SdkErrorDeclarationReferencer;
         endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -42,7 +42,7 @@ export class EndpointErrorUnionContextImpl extends BaseContextImpl implements En
         errorDeclarationReferencer,
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
-        serviceResolver,
+        packageResolver,
         ...superInit
     }: EndpointErrorUnionContextImpl.Init) {
         super(superInit);
@@ -66,7 +66,7 @@ export class EndpointErrorUnionContextImpl extends BaseContextImpl implements En
             importsManager: this.importsManager,
             endpointErrorUnionDeclarationReferencer,
             endpointErrorUnionGenerator,
-            serviceResolver,
+            packageResolver,
         });
     }
 }

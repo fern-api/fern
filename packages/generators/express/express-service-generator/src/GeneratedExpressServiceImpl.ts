@@ -1,10 +1,13 @@
 import { HttpEndpoint, HttpMethod, HttpRequestBody, HttpService, PathParameter } from "@fern-fern/ir-model/http";
-import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { Package } from "@fern-fern/ir-model/ir";
+import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { ExpressServiceContext, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
 
 export declare namespace GeneratedExpressServiceImpl {
     export interface Init {
+        packageId: PackageId;
+        package: Package;
         service: HttpService;
         serviceClassName: string;
         doNotHandleUnrecognizedErrors: boolean;
@@ -25,11 +28,21 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private doNotHandleUnrecognizedErrors: boolean;
     private serviceClassName: string;
     private service: HttpService;
+    private packageId: PackageId;
+    private package_: Package;
 
-    constructor({ serviceClassName, service, doNotHandleUnrecognizedErrors }: GeneratedExpressServiceImpl.Init) {
+    constructor({
+        packageId,
+        package: package_,
+        serviceClassName,
+        service,
+        doNotHandleUnrecognizedErrors,
+    }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
         this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
+        this.packageId = packageId;
+        this.package_ = package_;
     }
 
     public writeToFile(context: ExpressServiceContext): void {
@@ -46,7 +59,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             name: this.serviceClassName,
             isExported: true,
         });
-        maybeAddDocs(serviceClass, this.service.docs);
+        maybeAddDocs(serviceClass, this.package_.docs);
 
         serviceClass.addProperty({
             scope: Scope.Private,
@@ -592,7 +605,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                   referenceToExpressResponse: expressResponse,
                                                                   valueToSend: context.expressEndpointTypeSchemas
                                                                       .getGeneratedEndpointTypeSchemas(
-                                                                          this.service.name,
+                                                                          this.packageId,
                                                                           endpoint.name
                                                                       )
                                                                       .serializeResponse(
@@ -818,7 +831,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return HttpRequestBody._visit(requestBody, {
             inlinedRequestBody: () =>
                 context.expressInlinedRequestBody
-                    .getReferenceToInlinedRequestBodyType(this.service.name, endpoint.name)
+                    .getReferenceToInlinedRequestBodyType(this.packageId, endpoint.name)
                     .getTypeNode(),
             reference: ({ requestBodyType }) => context.type.getReferenceToType(requestBodyType).typeNode,
             _unknown: () => {
@@ -841,11 +854,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return HttpRequestBody._visit(requestBodyType, {
             inlinedRequestBody: () =>
                 context.expressInlinedRequestBodySchema
-                    .getGeneratedInlinedRequestBodySchema(this.service.name, endpoint.name)
+                    .getGeneratedInlinedRequestBodySchema(this.packageId, endpoint.name)
                     .deserializeRequest(referenceToBody, context),
             reference: () =>
                 context.expressEndpointTypeSchemas
-                    .getGeneratedEndpointTypeSchemas(this.service.name, endpoint.name)
+                    .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
                     .deserializeRequest(referenceToBody, context),
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);

@@ -1,7 +1,7 @@
 import { SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
@@ -36,7 +36,7 @@ export declare namespace SdkEndpointTypeSchemasContextImpl {
         requestWrapperGenerator: RequestWrapperGenerator;
         sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -64,7 +64,7 @@ export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implement
         requestWrapperGenerator,
         endpointErrorUnionGenerator,
         sdkEndpointTypeSchemasGenerator,
-        serviceResolver,
+        packageResolver,
         ...superInit
     }: SdkEndpointTypeSchemasContextImpl.Init) {
         super(superInit);
@@ -99,17 +99,17 @@ export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implement
             importsManager: this.importsManager,
             endpointErrorUnionDeclarationReferencer,
             endpointErrorUnionGenerator,
-            serviceResolver,
+            packageResolver,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({
             requestWrapperDeclarationReferencer,
             requestWrapperGenerator,
-            serviceResolver,
+            packageResolver,
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
         });
         this.sdkEndpointTypeSchemas = new SdkEndpointTypeSchemasContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             sdkEndpointTypeSchemasGenerator,
             sdkEndpointSchemaDeclarationReferencer,
             importsManager: this.importsManager,

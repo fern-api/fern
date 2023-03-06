@@ -1,9 +1,9 @@
-import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpHeader } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { AugmentedService, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
+import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
+import { HttpHeader, HttpService } from "@fern-fern/ir-model/http";
+import { ErrorDiscriminationStrategy, IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
+import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { GeneratedHeader } from "./GeneratedHeader";
@@ -13,16 +13,15 @@ import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
-        apiAuth: ApiAuth;
-        apiHeaders: HttpHeader[];
-        service: AugmentedService;
+        intermediateRepresentation: IntermediateRepresentation;
+        packageId: PackageId;
         serviceClassName: string;
         errorResolver: ErrorResolver;
+        packageResolver: PackageResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
-        isAuthRequired: boolean;
     }
 }
 
@@ -34,52 +33,58 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static BEARER_OPTION_PROPERTY_NAME = "token";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
 
+    private intermediateRepresentation: IntermediateRepresentation;
     private hasBearerAuth: boolean;
     private hasBasicAuth: boolean;
-    private authHeaders: HttpHeader[];
-    private apiHeaders: HttpHeader[];
+    private authHeaders: HeaderAuthScheme[];
     private serviceClassName: string;
-    private service: AugmentedService;
+    private package_: Package;
+    private service: HttpService | undefined;
     private generatedEndpointImplementations: GeneratedEndpointImplementation[];
     private generatedWrappedServices: GeneratedWrappedService[];
     private allowCustomFetcher: boolean;
-    private isAuthRequired: boolean;
+    private packageResolver: PackageResolver;
 
     constructor({
+        intermediateRepresentation,
         serviceClassName,
-        service,
-        apiAuth,
-        apiHeaders,
+        packageId,
         errorResolver,
+        packageResolver,
         errorDiscriminationStrategy,
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
-        isAuthRequired,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
-        this.service = service;
-        this.apiHeaders = apiHeaders;
+        this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
-        this.isAuthRequired = isAuthRequired;
+        this.packageResolver = packageResolver;
 
-        if (service.originalService == null) {
+        const package_ = packageResolver.resolvePackage(packageId);
+        this.package_ = package_;
+
+        const service = packageResolver.getServiceDeclaration(packageId);
+        this.service = service;
+
+        if (service == null) {
             this.generatedEndpointImplementations = [];
         } else {
-            const { originalService } = service;
-            this.generatedEndpointImplementations = service.originalService.endpoints.map((endpoint) =>
+            this.generatedEndpointImplementations = service.endpoints.map((endpoint) =>
                 neverThrowErrors
                     ? new GeneratedNonThrowingEndpointImplementation({
+                          packageId,
                           endpoint,
-                          service: originalService,
+                          service,
                           generatedSdkClientClass: this,
                           errorResolver,
                           errorDiscriminationStrategy,
                           includeCredentialsOnCrossOriginRequests,
                       })
                     : new GeneratedThrowingEndpointImplementation({
+                          packageId,
                           endpoint,
-                          service: originalService,
+                          service,
                           generatedSdkClientClass: this,
                           errorResolver,
                           errorDiscriminationStrategy,
@@ -88,14 +93,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         }
 
-        this.generatedWrappedServices = service.wrappedServices.map(
-            (wrappedService) => new GeneratedWrappedService({ wrappedService, wrapperService: this })
+        this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
+            (acc, wrappedSubpackageId) => {
+                const subpackage = this.packageResolver.resolveSubpackage(wrappedSubpackageId);
+                if (subpackage.hasEndpointsInTree) {
+                    acc.push(
+                        new GeneratedWrappedService({
+                            wrappedSubpackageId,
+                            wrappedSubpackage: this.packageResolver.resolveSubpackage(wrappedSubpackageId),
+                            wrapperService: this,
+                        })
+                    );
+                }
+                return acc;
+            },
+            []
         );
 
         let hasBearerAuth = false;
         let hasBasicAuth = false;
-        const authHeaders: HttpHeader[] = [];
-        for (const authScheme of apiAuth.schemes) {
+        const authHeaders: HeaderAuthScheme[] = [];
+        for (const authScheme of intermediateRepresentation.auth.schemes) {
             AuthScheme._visit(authScheme, {
                 basic: () => {
                     hasBasicAuth = true;
@@ -139,7 +157,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             name: this.serviceClassName,
             isExported: true,
         });
-        maybeAddDocs(serviceClass, this.service.originalService?.docs);
+        maybeAddDocs(serviceClass, this.package_.docs);
 
         serviceClass.addConstructor({
             parameters: [
@@ -185,7 +203,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
             referenceToEnvironmentValue,
-            baseUrlId: this.service.originalService?.baseUrl ?? undefined,
+            baseUrlId: this.service?.baseUrl ?? undefined,
         });
     }
 
@@ -214,10 +232,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         for (const header of this.authHeaders) {
-            const headerValues = (headerNameToValues[header.name.wireValue] ??= []);
+            const headerValues = (headerNameToValues[header.header] ??= []);
             headerValues.push(
                 context.base.coreUtilities.fetcher.Supplier.get(
-                    this.getReferenceToOption(this.getOptionKeyForHeader(header))
+                    this.getReferenceToOption(this.getOptionKeyForAuthHeader(header))
                 )
             );
         }
@@ -243,9 +261,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getApiHeaders(): GeneratedHeader[] {
-        return this.apiHeaders.map((header) => ({
+        return this.intermediateRepresentation.headers.map((header) => ({
             header: header.name.wireValue,
-            value: this.getReferenceToOption(this.getOptionKeyForHeader(header)),
+            value: this.getReferenceToOption(this.getOptionKeyForGlobalHeader(header)),
         }));
     }
 
@@ -269,7 +287,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(
                     context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        this.isAuthRequired
+                        this.intermediateRepresentation.sdkConfig.isAuthMandatory
                             ? context.base.coreUtilities.auth.BearerToken._getReferenceToType()
                             : ts.factory.createUnionTypeNode([
                                   context.base.coreUtilities.auth.BearerToken._getReferenceToType(),
@@ -277,7 +295,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ])
                     )
                 ),
-                hasQuestionToken: !this.isAuthRequired,
+                hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
             });
         }
 
@@ -289,18 +307,19 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         context.base.coreUtilities.auth.BasicAuth._getReferenceToType()
                     )
                 ),
-                hasQuestionToken: !this.isAuthRequired,
+                hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
             });
         }
 
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
-            const isOptional = referenceToHeaderType.isOptional || !this.isAuthRequired;
+            const isOptional =
+                referenceToHeaderType.isOptional || !this.intermediateRepresentation.sdkConfig.isAuthMandatory;
             properties.push({
-                name: this.getOptionKeyForHeader(header),
+                name: this.getOptionKeyForAuthHeader(header),
                 type: getTextOfTsNode(
                     context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        this.isAuthRequired
+                        this.intermediateRepresentation.sdkConfig.isAuthMandatory
                             ? referenceToHeaderType.typeNode
                             : ts.factory.createUnionTypeNode([
                                   referenceToHeaderType.typeNodeWithoutUndefined,
@@ -312,10 +331,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        for (const header of this.apiHeaders) {
+        for (const header of this.intermediateRepresentation.headers) {
             const type = context.type.getReferenceToType(header.valueType);
             properties.push({
-                name: this.getOptionKeyForHeader(header),
+                name: this.getOptionKeyForGlobalHeader(header),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
             });
@@ -362,7 +381,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
     }
 
-    private getOptionKeyForHeader(header: HttpHeader): string {
+    private getOptionKeyForGlobalHeader(header: HttpHeader): string {
         return header.name.name.camelCase.unsafeName;
+    }
+
+    private getOptionKeyForAuthHeader(header: HeaderAuthScheme): string {
+        return header.name.camelCase.unsafeName;
     }
 }

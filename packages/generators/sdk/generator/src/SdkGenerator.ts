@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     BundledTypescriptProject,
@@ -10,6 +11,7 @@ import {
     ExportsManager,
     ImportsManager,
     NpmPackage,
+    PackageId,
     SimpleTypescriptProject,
     TypescriptProject,
 } from "@fern-typescript/commons";
@@ -19,7 +21,7 @@ import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/error-schema-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { ErrorResolver, ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
@@ -91,7 +93,7 @@ export class SdkGenerator {
     private coreUtilitiesManager: CoreUtilitiesManager;
     private typeResolver: TypeResolver;
     private errorResolver: ErrorResolver;
-    private serviceResolver: ServiceResolver;
+    private packageResolver: PackageResolver;
 
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
@@ -137,7 +139,7 @@ export class SdkGenerator {
         this.rootDirectory = this.project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
         this.errorResolver = new ErrorResolver(intermediateRepresentation);
-        this.serviceResolver = new ServiceResolver(intermediateRepresentation);
+        this.packageResolver = new PackageResolver(intermediateRepresentation);
 
         const apiDirectory: ExportedDirectory[] = [
             {
@@ -176,26 +178,31 @@ export class SdkGenerator {
             containingDirectory: apiDirectory,
             aliasOfRoot,
             namespaceExport,
+            packageResolver: this.packageResolver,
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
             aliasOfRoot,
             namespaceExport,
+            packageResolver: this.packageResolver,
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             aliasOfRoot,
             namespaceExport,
+            packageResolver: this.packageResolver,
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
             aliasOfRoot,
             namespaceExport,
+            packageResolver: this.packageResolver,
         });
         this.sdkEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             aliasOfRoot,
             namespaceExport,
+            packageResolver: this.packageResolver,
         });
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
@@ -241,10 +248,10 @@ export class SdkGenerator {
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation: this.intermediateRepresentation,
             errorResolver: this.errorResolver,
+            packageResolver: this.packageResolver,
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
-            isAuthRequired: intermediateRepresentation.sdkConfig.isAuthMandatory,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -399,11 +406,11 @@ export class SdkGenerator {
     }
 
     private generateEndpointErrorUnion() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.endpointErrorUnionDeclarationReferencer.getExportedFilepath({
-                        service: service.name,
+                        packageId,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -420,25 +427,25 @@ export class SdkGenerator {
                             endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
                             sdkErrorGenerator: this.sdkErrorGenerator,
                             errorResolver: this.errorResolver,
+                            packageResolver: this.packageResolver,
                             typeGenerator: this.typeGenerator,
-                            serviceResolver: this.serviceResolver,
                             endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                         });
                         endpointErrorUnionContext.endpointErrorUnion
-                            .getGeneratedEndpointErrorUnion(service.name, endpoint.name)
+                            .getGeneratedEndpointErrorUnion(packageId, endpoint.name)
                             .writeToFile(endpointErrorUnionContext);
                     },
                 });
             }
-        }
+        });
     }
 
     private generateEndpointTypeSchemas() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 this.withSourceFile({
                     filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
-                        service: service.name,
+                        packageId,
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
@@ -461,26 +468,26 @@ export class SdkGenerator {
                             typeGenerator: this.typeGenerator,
                             sdkErrorGenerator: this.sdkErrorGenerator,
                             errorResolver: this.errorResolver,
-                            serviceResolver: this.serviceResolver,
+                            packageResolver: this.packageResolver,
                             sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
                             typeSchemaGenerator: this.typeSchemaGenerator,
                         });
                         endpointTypeSchemasContext.sdkEndpointTypeSchemas
-                            .getGeneratedEndpointTypeSchemas(service.name, endpoint.name)
+                            .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                             .writeToFile(endpointTypeSchemasContext);
                     },
                 });
             }
-        }
+        });
     }
 
     private generateRequestWrappers() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
                     this.withSourceFile({
                         filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
-                            service: service.name,
+                            packageId,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -497,29 +504,29 @@ export class SdkGenerator {
                                 errorDeclarationReferencer: this.errorDeclarationReferencer,
                                 sdkErrorGenerator: this.sdkErrorGenerator,
                                 errorResolver: this.errorResolver,
-                                serviceResolver: this.serviceResolver,
+                                packageResolver: this.packageResolver,
                                 endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
                                 endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                                 requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                                 requestWrapperGenerator: this.requestWrapperGenerator,
                             });
                             context.requestWrapper
-                                .getGeneratedRequestWrapper(service.name, endpoint.name)
+                                .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
                 }
             }
-        }
+        });
     }
 
     private generateInlinedRequestBodySchemas() {
-        for (const service of Object.values(this.intermediateRepresentation.services)) {
+        this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.requestBody?.type === "inlinedRequestBody") {
                     this.withSourceFile({
                         filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
-                            service: service.name,
+                            packageId,
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
@@ -530,10 +537,10 @@ export class SdkGenerator {
                                 fernConstants: this.intermediateRepresentation.constants,
                                 importsManager,
                                 typeResolver: this.typeResolver,
+                                packageResolver: this.packageResolver,
                                 typeDeclarationReferencer: this.typeDeclarationReferencer,
                                 typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                                 typeGenerator: this.typeGenerator,
-                                serviceResolver: this.serviceResolver,
                                 requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                                 requestWrapperGenerator: this.requestWrapperGenerator,
                                 sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
@@ -543,20 +550,23 @@ export class SdkGenerator {
                                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                             });
                             context.sdkInlinedRequestBodySchema
-                                .getGeneratedInlinedRequestBodySchema(service.name, endpoint.name)
+                                .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
                         },
                     });
                 }
             }
-        }
+        });
     }
 
     private generateServiceDeclarations() {
-        const services = this.serviceResolver.getAllAugmentedServices();
-        for (const service of services) {
+        for (const packageId of this.getAllPackageIds()) {
+            const package_ = this.packageResolver.resolvePackage(packageId);
+            if (!package_.hasEndpointsInTree) {
+                continue;
+            }
             this.withSourceFile({
-                filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(service.name),
+                filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId),
                 run: ({ sourceFile, importsManager }) => {
                     const sdkClientClassContext = new SdkClientClassContextImpl({
                         intermediateRepresentation: this.intermediateRepresentation,
@@ -582,7 +592,7 @@ export class SdkGenerator {
                         typeGenerator: this.typeGenerator,
                         sdkErrorGenerator: this.sdkErrorGenerator,
                         errorResolver: this.errorResolver,
-                        serviceResolver: this.serviceResolver,
+                        packageResolver: this.packageResolver,
                         sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
                         typeSchemaGenerator: this.typeSchemaGenerator,
                         sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
@@ -596,7 +606,7 @@ export class SdkGenerator {
                         timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
                     });
                     sdkClientClassContext.sdkClientClass
-                        .getGeneratedSdkClientClass(service.name)
+                        .getGeneratedSdkClientClass(packageId)
                         .writeToFile(sdkClientClassContext);
                 },
             });
@@ -695,6 +705,24 @@ export class SdkGenerator {
             });
 
             this.context.logger.debug(`Generated ${filepathStr}`);
+        }
+    }
+
+    private getAllPackageIds(): PackageId[] {
+        return [
+            { isRoot: true },
+            ...Object.keys(this.intermediateRepresentation.subpackages).map(
+                (subpackageId): PackageId => ({ isRoot: false, subpackageId })
+            ),
+        ];
+    }
+
+    private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
+        for (const packageId of this.getAllPackageIds()) {
+            const service = this.packageResolver.getServiceDeclaration(packageId);
+            if (service != null) {
+                run(service, packageId);
+            }
         }
     }
 }

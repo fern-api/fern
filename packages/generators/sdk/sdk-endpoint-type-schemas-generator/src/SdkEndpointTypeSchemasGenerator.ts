@@ -1,5 +1,6 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedSdkEndpointTypeSchemasImpl } from "./GeneratedSdkEndpointTypeSchemasImpl";
@@ -13,6 +14,7 @@ export declare namespace SdkEndpointTypeSchemasGenerator {
 
     export namespace generateEndpointTypeSchemas {
         export interface Args {
+            packageId: PackageId;
             service: HttpService;
             endpoint: HttpEndpoint;
         }
@@ -35,10 +37,12 @@ export class SdkEndpointTypeSchemasGenerator {
     }
 
     public generateEndpointTypeSchemas({
+        packageId,
         service,
         endpoint,
     }: SdkEndpointTypeSchemasGenerator.generateEndpointTypeSchemas.Args): GeneratedSdkEndpointTypeSchemas {
         return new GeneratedSdkEndpointTypeSchemasImpl({
+            packageId,
             service,
             endpoint,
             errorResolver: this.errorResolver,

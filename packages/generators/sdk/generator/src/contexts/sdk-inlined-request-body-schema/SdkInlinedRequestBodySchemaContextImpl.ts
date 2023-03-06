@@ -1,6 +1,6 @@
 import { SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
@@ -26,7 +26,7 @@ export declare namespace SdkInlinedRequestBodySchemaContextImpl {
         requestWrapperGenerator: RequestWrapperGenerator;
         sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
         sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -50,7 +50,7 @@ export class SdkInlinedRequestBodySchemaContextImpl
         sdkInlinedRequestBodySchemaGenerator,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         requestWrapperGenerator,
-        serviceResolver,
+        packageResolver,
         ...superInit
     }: SdkInlinedRequestBodySchemaContextImpl.Init) {
         super(superInit);
@@ -76,12 +76,12 @@ export class SdkInlinedRequestBodySchemaContextImpl
         this.requestWrapper = new RequestWrapperContextMixinImpl({
             requestWrapperDeclarationReferencer,
             requestWrapperGenerator,
-            serviceResolver,
+            packageResolver,
             sourceFile: this.sourceFile,
             importsManager: this.importsManager,
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
             sdkInlinedRequestBodySchemaGenerator,

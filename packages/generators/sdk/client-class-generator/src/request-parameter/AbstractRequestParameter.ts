@@ -1,11 +1,12 @@
 import { HttpEndpoint, HttpHeader, HttpService, QueryParameter, SdkRequest } from "@fern-fern/ir-model/http";
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { RequestParameter } from "./RequestParameter";
 
 export declare namespace AbstractRequestParameter {
     export interface Init {
+        packageId: PackageId;
         service: HttpService;
         endpoint: HttpEndpoint;
         sdkRequest: SdkRequest;
@@ -13,11 +14,13 @@ export declare namespace AbstractRequestParameter {
 }
 
 export abstract class AbstractRequestParameter implements RequestParameter {
+    protected packageId: PackageId;
     protected service: HttpService;
     protected endpoint: HttpEndpoint;
     protected sdkRequest: SdkRequest;
 
-    constructor({ service, endpoint, sdkRequest }: AbstractRequestParameter.Init) {
+    constructor({ packageId, service, endpoint, sdkRequest }: AbstractRequestParameter.Init) {
+        this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.sdkRequest = sdkRequest;

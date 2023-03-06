@@ -1,7 +1,7 @@
 import { ExpressInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
-import { ServiceResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
@@ -25,7 +25,7 @@ export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
         expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
         expressInlinedRequestBodySchemaDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -49,7 +49,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl
         expressInlinedRequestBodyDeclarationReferencer,
         expressInlinedRequestBodySchemaGenerator,
         expressInlinedRequestBodySchemaDeclarationReferencer,
-        serviceResolver,
+        packageResolver,
         ...superInit
     }: ExpressInlinedRequestBodySchemaContextImpl.Init) {
         super(superInit);
@@ -73,14 +73,14 @@ export class ExpressInlinedRequestBodySchemaContextImpl
             typeSchemaGenerator,
         });
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
             expressInlinedRequestBodyGenerator,
             expressInlinedRequestBodyDeclarationReferencer,
         });
         this.expressInlinedRequestBodySchema = new ExpressInlinedRequestBodySchemaContextMixinImpl({
-            serviceResolver,
+            packageResolver,
             importsManager: this.importsManager,
             sourceFile: this.base.sourceFile,
             expressInlinedRequestBodySchemaGenerator,

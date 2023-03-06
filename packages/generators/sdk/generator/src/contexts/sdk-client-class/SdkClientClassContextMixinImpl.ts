@@ -1,7 +1,6 @@
-import { DeclaredServiceName } from "@fern-fern/ir-model/http";
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContextMixin } from "@fern-typescript/contexts";
-import { ServiceResolver } from "@fern-typescript/resolvers";
+import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
 import { SourceFile } from "ts-morph";
 import { SdkClientClassDeclarationReferencer } from "../../declaration-referencers/SdkClientClassDeclarationReferencer";
@@ -12,7 +11,7 @@ export declare namespace SdkClientClassContextMixinImpl {
         importsManager: ImportsManager;
         sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
         sdkClientClassGenerator: SdkClientClassGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -21,35 +20,29 @@ export class SdkClientClassContextMixinImpl implements SdkClientClassContextMixi
     private importsManager: ImportsManager;
     private sdkClientClassGenerator: SdkClientClassGenerator;
     private sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
-    private serviceResolver: ServiceResolver;
 
     constructor({
         sourceFile,
         importsManager,
         sdkClientClassGenerator,
         sdkClientClassDeclarationReferencer,
-        serviceResolver,
     }: SdkClientClassContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.sdkClientClassGenerator = sdkClientClassGenerator;
         this.sdkClientClassDeclarationReferencer = sdkClientClassDeclarationReferencer;
-        this.serviceResolver = serviceResolver;
     }
 
-    public getGeneratedSdkClientClass(service: DeclaredServiceName): GeneratedSdkClientClass {
+    public getGeneratedSdkClientClass(packageId: PackageId): GeneratedSdkClientClass {
         return this.sdkClientClassGenerator.generateService({
-            service: this.serviceResolver.getAugmentedServiceFromName(service),
-            serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(service),
+            packageId,
+            serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
         });
     }
 
-    public getReferenceToClientClass(
-        service: DeclaredServiceName,
-        { importAlias }: { importAlias?: string } = {}
-    ): Reference {
+    public getReferenceToClientClass(packageId: PackageId, { importAlias }: { importAlias?: string } = {}): Reference {
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
-            name: service,
+            name: packageId,
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: { type: "direct", alias: importAlias },

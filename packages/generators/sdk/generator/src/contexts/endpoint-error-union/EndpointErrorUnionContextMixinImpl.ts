@@ -1,9 +1,8 @@
 import { Name } from "@fern-fern/ir-model/commons";
-import { DeclaredServiceName } from "@fern-fern/ir-model/http";
-import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { EndpointErrorUnionContextMixin, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
-import { ServiceResolver } from "@fern-typescript/resolvers";
+import { PackageResolver } from "@fern-typescript/resolvers";
 import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
 
@@ -13,7 +12,7 @@ export declare namespace EndpointErrorUnionContextMixinImpl {
         importsManager: ImportsManager;
         endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
-        serviceResolver: ServiceResolver;
+        packageResolver: PackageResolver;
     }
 }
 
@@ -22,27 +21,24 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
     private importsManager: ImportsManager;
     private endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
     private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
-    private serviceResolver: ServiceResolver;
+    private packageResolver: PackageResolver;
 
     constructor({
         sourceFile,
         importsManager,
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
-        serviceResolver,
+        packageResolver,
     }: EndpointErrorUnionContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
         this.endpointErrorUnionDeclarationReferencer = endpointErrorUnionDeclarationReferencer;
         this.endpointErrorUnionGenerator = endpointErrorUnionGenerator;
-        this.serviceResolver = serviceResolver;
+        this.packageResolver = packageResolver;
     }
 
-    public getGeneratedEndpointErrorUnion(
-        service: DeclaredServiceName,
-        endpointName: Name
-    ): GeneratedEndpointErrorUnion {
-        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+    public getGeneratedEndpointErrorUnion(packageId: PackageId, endpointName: Name): GeneratedEndpointErrorUnion {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
@@ -50,17 +46,17 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.endpointErrorUnionGenerator.generateEndpointErrorUnion({
-            service: serviceDeclaration,
+            packageId,
             endpoint,
         });
     }
 
     public getReferenceToEndpointTypeExport(
-        service: DeclaredServiceName,
+        packageId: PackageId,
         endpointName: Name,
         export_: string | string[]
     ): Reference {
-        const serviceDeclaration = this.serviceResolver.getServiceDeclarationFromName(service);
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
         const endpoint = serviceDeclaration.endpoints.find(
             (endpoint) => endpoint.name.originalName === endpointName.originalName
         );
@@ -68,7 +64,7 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
         return this.endpointErrorUnionDeclarationReferencer.getReferenceToEndpointExport({
-            name: { service, endpoint },
+            name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: { type: "fromRoot" },

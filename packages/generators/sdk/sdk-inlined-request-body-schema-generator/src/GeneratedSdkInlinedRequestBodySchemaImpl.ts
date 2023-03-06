@@ -1,12 +1,12 @@
-import { HttpEndpoint, HttpService, InlinedRequestBody } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
     export interface Init extends AbstractGeneratedSchema.Init {
-        service: HttpService;
+        packageId: PackageId;
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
     }
@@ -16,18 +16,18 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     extends AbstractGeneratedSchema<SdkInlinedRequestBodySchemaContext>
     implements GeneratedSdkInlinedRequestBodySchema
 {
-    private service: HttpService;
+    private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
 
     constructor({
-        service,
+        packageId,
         endpoint,
         inlinedRequestBody,
         ...superInit
     }: GeneratedSdkInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
-        this.service = service;
+        this.packageId = packageId;
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
     }
@@ -48,10 +48,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     }
 
     protected getReferenceToSchema(context: SdkInlinedRequestBodySchemaContext): Reference {
-        return context.sdkInlinedRequestBodySchema.getReferenceToInlinedRequestBody(
-            this.service.name,
-            this.endpoint.name
-        );
+        return context.sdkInlinedRequestBodySchema.getReferenceToInlinedRequestBody(this.packageId, this.endpoint.name);
     }
 
     protected generateRawTypeDeclaration(context: SdkInlinedRequestBodySchemaContext, module: ModuleDeclaration): void {
@@ -73,11 +70,11 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
 
     protected getReferenceToParsedShape(context: SdkInlinedRequestBodySchemaContext): ts.TypeNode {
         const referenceToRequestWrapper = context.requestWrapper.getReferenceToRequestWrapper(
-            this.service.name,
+            this.packageId,
             this.endpoint.name
         );
         const generatedRequestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
-            this.service.name,
+            this.packageId,
             this.endpoint.name
         );
         const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys();
@@ -100,7 +97,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.requestWrapper
-                        .getGeneratedRequestWrapper(this.service.name, this.endpoint.name)
+                        .getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
                         .getInlinedRequestBodyPropertyKey(property),
                     raw: property.name.wireValue,
                 },

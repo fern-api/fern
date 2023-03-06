@@ -6,7 +6,7 @@ import {
     PathParameter,
     SdkRequestShape,
 } from "@fern-fern/ir-model/http";
-import { Fetcher, getTextOfTsNode } from "@fern-typescript/commons";
+import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
@@ -29,6 +29,7 @@ import { RequestWrapperParameter } from "./request-parameter/RequestWrapperParam
 
 export declare namespace AbstractGeneratedEndpointImplementation {
     export interface Init {
+        packageId: PackageId;
         service: HttpService;
         endpoint: HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -41,6 +42,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     protected static RESPONSE_VARIABLE_NAME = "_response";
     protected static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
 
+    protected packageId: PackageId;
     protected service: HttpService;
     protected endpoint: HttpEndpoint;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -48,11 +50,13 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     private includeCredentialsOnCrossOriginRequests: boolean;
 
     constructor({
+        packageId,
         service,
         endpoint,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
     }: AbstractGeneratedEndpointImplementation.Init) {
+        this.packageId = packageId;
         this.service = service;
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -63,8 +67,8 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
                       justRequestBody: (requestBodyReference) =>
-                          new RequestBodyParameter({ requestBodyReference, service, endpoint, sdkRequest }),
-                      wrapper: () => new RequestWrapperParameter({ service, endpoint, sdkRequest }),
+                          new RequestBodyParameter({ packageId, requestBodyReference, service, endpoint, sdkRequest }),
+                      wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
                       _unknown: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
                       },
@@ -321,12 +325,12 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return HttpRequestBody._visit(this.endpoint.requestBody, {
             inlinedRequestBody: () => {
                 return context.sdkInlinedRequestBodySchema
-                    .getGeneratedInlinedRequestBodySchema(this.service.name, this.endpoint.name)
+                    .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
             },
             reference: () =>
                 context.sdkEndpointTypeSchemas
-                    .getGeneratedEndpointTypeSchemas(this.service.name, this.endpoint.name)
+                    .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context),
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody type: " + this.endpoint.requestBody?.type);
@@ -335,7 +339,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     }
 
     protected getGeneratedEndpointTypeSchemas(context: SdkClientClassContext): GeneratedSdkEndpointTypeSchemas {
-        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.service.name, this.endpoint.name);
+        return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name);
     }
 
     private getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[] {

@@ -1,22 +1,22 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { AugmentedService } from "@fern-typescript/commons";
+import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
+import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         errorResolver: ErrorResolver;
+        packageResolver: PackageResolver;
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
-        isAuthRequired: boolean;
     }
 
     export namespace generateService {
         export interface Args {
-            service: AugmentedService;
+            packageId: PackageId;
             serviceClassName: string;
         }
     }
@@ -25,42 +25,41 @@ export declare namespace SdkClientClassGenerator {
 export class SdkClientClassGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private errorResolver: ErrorResolver;
+    private packageResolver: PackageResolver;
     private neverThrowErrors: boolean;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private allowCustomFetcher: boolean;
-    private isAuthRequired: boolean;
 
     constructor({
         intermediateRepresentation,
         errorResolver,
+        packageResolver,
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
-        isAuthRequired,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
+        this.packageResolver = packageResolver;
         this.neverThrowErrors = neverThrowErrors;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
-        this.isAuthRequired = isAuthRequired;
     }
 
     public generateService({
-        service,
+        packageId,
         serviceClassName,
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
-            apiHeaders: this.intermediateRepresentation.headers,
-            apiAuth: this.intermediateRepresentation.auth,
-            service,
+            intermediateRepresentation: this.intermediateRepresentation,
+            packageId,
+            packageResolver: this.packageResolver,
             serviceClassName,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             errorResolver: this.errorResolver,
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
-            isAuthRequired: this.isAuthRequired,
         });
     }
 }
