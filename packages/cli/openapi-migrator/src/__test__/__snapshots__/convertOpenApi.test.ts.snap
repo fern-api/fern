@@ -2996,6 +2996,7 @@ exports[`open api converter flagright simple 1`] = `
       "x-api-key": {
         "header": "x-api-key",
         "name": "apiKey",
+        "prefix": undefined,
       },
     },
     "display-name": "Flagright API",
@@ -15187,6 +15188,7 @@ exports[`open api converter telematica simple 1`] = `
       "bearerAuth": {
         "header": "Authorization",
         "name": "apiKey",
+        "prefix": undefined,
       },
     },
     "display-name": "Telematica EV APIs",

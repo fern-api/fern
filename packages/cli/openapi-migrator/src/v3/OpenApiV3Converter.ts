@@ -276,6 +276,8 @@ export class OpenAPIConverter {
                         [name]: {
                             header: securityScheme.name,
                             name: "apiKey",
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            prefix: (securityScheme as any)["x-header-prefix"] as string | undefined,
                         },
                     };
                 }
