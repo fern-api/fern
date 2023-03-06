@@ -33,6 +33,7 @@ types:
 
   PostmanCollectionContainerItem:
     properties:
+      description: optional<string>
       name: string
       item: list<PostmanCollectionItem>
 
@@ -156,40 +157,38 @@ types:
       createdAt: datetime
       from: string
 
-services:
-  http:
-    CollectionService:
-      auth: true
-      base-path: /collections
-      endpoints:
-        createCollection:
-          method: POST
-          path: /
-          request:
-            name: CreateCollectionRequest
-            body: PostmanCollection
-            query-parameters:
-              workspace: optional<workspace.WorkspaceId>
+service:
+  auth: true
+  base-path: /collections
+  endpoints:
+    createCollection:
+      method: POST
+      path: ""
+      request:
+        name: CreateCollectionRequest
+        body: PostmanCollection
+        query-parameters:
+          workspace: optional<workspace.WorkspaceId>
 
-        getCollection:
-          method: GET
-          path: /{collectionId}
-          path-parameters:
-            collectionId: CollectionId
-          response: PostmanCollection
+    getCollection:
+      method: GET
+      path: /{collectionId}
+      path-parameters:
+        collectionId: CollectionId
+      response: PostmanCollection
 
-        getAllCollectionMetadata:
-          method: GET
-          path: /
-          request:
-            name: GetAllCollectionMetadataRequest
-            query-parameters:
-              workspace: optional<workspace.WorkspaceId>
-          response: GetAllCollectionMetadataResponse
+    getAllCollectionMetadata:
+      method: GET
+      path: ""
+      request:
+        name: GetAllCollectionMetadataRequest
+        query-parameters:
+          workspace: optional<workspace.WorkspaceId>
+      response: GetAllCollectionMetadataResponse
 
-        updateCollection:
-          method: PUT
-          path: /{collectionId}
-          path-parameters:
-            collectionId: CollectionId
-          request: PostmanCollection
+    updateCollection:
+      method: PUT
+      path: /{collectionId}
+      path-parameters:
+        collectionId: CollectionId
+      request: PostmanCollection

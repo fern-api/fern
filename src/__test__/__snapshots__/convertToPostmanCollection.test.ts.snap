@@ -29,6 +29,7 @@ exports[`convertToPostman any-auth 1`] = `
     }
   ],
   \\"auth\\": {
+    \\"type\\": \\"basic\\",
     \\"basic\\": [
       {
         \\"key\\": \\"username\\",
@@ -40,16 +41,19 @@ exports[`convertToPostman any-auth 1`] = `
         \\"value\\": \\"{{password}}\\",
         \\"type\\": \\"string\\"
       }
-    ],
-    \\"type\\": \\"basic\\"
+    ]
   },
   \\"item\\": [
     {
+      \\"_type\\": \\"container\\",
+      \\"description\\": null,
       \\"name\\": \\"Blog\\",
       \\"item\\": [
         {
+          \\"_type\\": \\"endpoint\\",
           \\"name\\": \\"Create Post\\",
           \\"request\\": {
+            \\"description\\": null,
             \\"url\\": {
               \\"raw\\": \\"{{baseUrl}}/create\\",
               \\"host\\": [
@@ -65,10 +69,12 @@ exports[`convertToPostman any-auth 1`] = `
               {
                 \\"key\\": \\"My-Header\\",
                 \\"value\\": \\"{{headerAuth}}\\",
-                \\"type\\": \\"string\\"
+                \\"type\\": \\"string\\",
+                \\"description\\": null
               }
             ],
             \\"method\\": \\"POST\\",
+            \\"auth\\": null,
             \\"body\\": {
               \\"mode\\": \\"raw\\",
               \\"raw\\": \\"{\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
@@ -79,12 +85,13 @@ exports[`convertToPostman any-auth 1`] = `
               }
             }
           },
-          \\"response\\": [],
-          \\"_type\\": \\"endpoint\\"
+          \\"response\\": []
         },
         {
+          \\"_type\\": \\"endpoint\\",
           \\"name\\": \\"Get Post\\",
           \\"request\\": {
+            \\"description\\": null,
             \\"url\\": {
               \\"raw\\": \\"{{baseUrl}}/:postId\\",
               \\"host\\": [
@@ -97,7 +104,8 @@ exports[`convertToPostman any-auth 1`] = `
               \\"variable\\": [
                 {
                   \\"key\\": \\"postId\\",
-                  \\"value\\": \\"\\"
+                  \\"value\\": \\"\\",
+                  \\"description\\": null
                 }
               ]
             },
@@ -105,16 +113,17 @@ exports[`convertToPostman any-auth 1`] = `
               {
                 \\"key\\": \\"My-Header\\",
                 \\"value\\": \\"{{headerAuth}}\\",
-                \\"type\\": \\"string\\"
+                \\"type\\": \\"string\\",
+                \\"description\\": null
               }
             ],
-            \\"method\\": \\"GET\\"
+            \\"method\\": \\"GET\\",
+            \\"auth\\": null,
+            \\"body\\": null
           },
-          \\"response\\": [],
-          \\"_type\\": \\"endpoint\\"
+          \\"response\\": []
         }
-      ],
-      \\"_type\\": \\"container\\"
+      ]
     }
   ]
 }"
@@ -139,6 +148,7 @@ exports[`convertToPostman test-api 1`] = `
     }
   ],
   \\"auth\\": {
+    \\"type\\": \\"apikey\\",
     \\"apikey\\": [
       {
         \\"key\\": \\"value\\",
@@ -155,14 +165,16 @@ exports[`convertToPostman test-api 1`] = `
         \\"value\\": \\"header\\",
         \\"type\\": \\"string\\"
       }
-    ],
-    \\"type\\": \\"apikey\\"
+    ]
   },
   \\"item\\": [
     {
+      \\"_type\\": \\"container\\",
+      \\"description\\": null,
       \\"name\\": \\"Blog\\",
       \\"item\\": [
         {
+          \\"_type\\": \\"endpoint\\",
           \\"name\\": \\"Create Blog Post\\",
           \\"request\\": {
             \\"description\\": \\"Creates a blog post and returns blog post id.\\",
@@ -181,10 +193,12 @@ exports[`convertToPostman test-api 1`] = `
               {
                 \\"key\\": \\"X-API-Key\\",
                 \\"value\\": \\"{{apiKey}}\\",
-                \\"type\\": \\"string\\"
+                \\"type\\": \\"string\\",
+                \\"description\\": null
               },
               {
                 \\"key\\": \\"x-service-header\\",
+                \\"description\\": null,
                 \\"type\\": \\"text\\",
                 \\"value\\": \\"\\\\\\"example\\\\\\"\\"
               },
@@ -196,6 +210,7 @@ exports[`convertToPostman test-api 1`] = `
               }
             ],
             \\"method\\": \\"POST\\",
+            \\"auth\\": null,
             \\"body\\": {
               \\"mode\\": \\"raw\\",
               \\"raw\\": \\"{\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"author\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"name\\\\\\",\\\\n        \\\\\\"value\\\\\\": \\\\\\"George Washington\\\\\\"\\\\n    },\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n}\\",
@@ -206,10 +221,10 @@ exports[`convertToPostman test-api 1`] = `
               }
             }
           },
-          \\"response\\": [],
-          \\"_type\\": \\"endpoint\\"
+          \\"response\\": []
         },
         {
+          \\"_type\\": \\"endpoint\\",
           \\"name\\": \\"Get Post\\",
           \\"request\\": {
             \\"description\\": \\"Gets a blog post.\\",
@@ -225,6 +240,7 @@ exports[`convertToPostman test-api 1`] = `
               \\"variable\\": [
                 {
                   \\"key\\": \\"postId\\",
+                  \\"description\\": null,
                   \\"value\\": \\"123e4567-e89b-12d3-a456-426614174000\\"
                 }
               ]
@@ -233,10 +249,12 @@ exports[`convertToPostman test-api 1`] = `
               {
                 \\"key\\": \\"X-API-Key\\",
                 \\"value\\": \\"{{apiKey}}\\",
-                \\"type\\": \\"string\\"
+                \\"type\\": \\"string\\",
+                \\"description\\": null
               },
               {
                 \\"key\\": \\"x-service-header\\",
+                \\"description\\": null,
                 \\"type\\": \\"text\\",
                 \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
               },
@@ -246,7 +264,9 @@ exports[`convertToPostman test-api 1`] = `
                 \\"value\\": \\"application/json\\"
               }
             ],
-            \\"method\\": \\"GET\\"
+            \\"method\\": \\"GET\\",
+            \\"auth\\": null,
+            \\"body\\": null
           },
           \\"response\\": [
             {
@@ -267,6 +287,7 @@ exports[`convertToPostman test-api 1`] = `
                   \\"variable\\": [
                     {
                       \\"key\\": \\"postId\\",
+                      \\"description\\": null,
                       \\"value\\": \\"123e4567-e89b-12d3-a456-426614174000\\"
                     }
                   ]
@@ -275,10 +296,12 @@ exports[`convertToPostman test-api 1`] = `
                   {
                     \\"key\\": \\"X-API-Key\\",
                     \\"value\\": \\"{{apiKey}}\\",
-                    \\"type\\": \\"string\\"
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
                   },
                   {
                     \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
                     \\"type\\": \\"text\\",
                     \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
                   },
@@ -288,8 +311,11 @@ exports[`convertToPostman test-api 1`] = `
                     \\"value\\": \\"application/json\\"
                   }
                 ],
-                \\"method\\": \\"GET\\"
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
               },
+              \\"description\\": null,
               \\"body\\": \\"{\\\\n    \\\\\\"writtenDate\\\\\\": \\\\\\"2022-12-15T22:06:28+00:00\\\\\\",\\\\n    \\\\\\"id\\\\\\": \\\\\\"123e4567-e89b-12d3-a456-426614174000\\\\\\",\\\\n    \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\",\\\\n    \\\\\\"title\\\\\\": \\\\\\"My Post\\\\\\",\\\\n    \\\\\\"author\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    },\\\\n    \\\\\\"content\\\\\\": \\\\\\"I'm a blog post\\\\\\"\\\\n}\\",
               \\"_postman_previewlanguage\\": \\"json\\"
             },
@@ -311,6 +337,7 @@ exports[`convertToPostman test-api 1`] = `
                   \\"variable\\": [
                     {
                       \\"key\\": \\"postId\\",
+                      \\"description\\": null,
                       \\"value\\": \\"123e4567-e89b-12d3-a456-426614174000\\"
                     }
                   ]
@@ -319,10 +346,12 @@ exports[`convertToPostman test-api 1`] = `
                   {
                     \\"key\\": \\"X-API-Key\\",
                     \\"value\\": \\"{{apiKey}}\\",
-                    \\"type\\": \\"string\\"
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
                   },
                   {
                     \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
                     \\"type\\": \\"text\\",
                     \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
                   },
@@ -332,29 +361,38 @@ exports[`convertToPostman test-api 1`] = `
                     \\"value\\": \\"application/json\\"
                   }
                 ],
-                \\"method\\": \\"GET\\"
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
               },
+              \\"description\\": null,
               \\"body\\": \\"{\\\\n    \\\\\\"id\\\\\\": \\\\\\"123e4567-e89b-12d3-a456-426614174000\\\\\\"\\\\n}\\",
               \\"_postman_previewlanguage\\": \\"json\\"
             }
-          ],
-          \\"_type\\": \\"endpoint\\"
+          ]
         }
-      ],
-      \\"_type\\": \\"container\\"
+      ]
     },
     {
+      \\"_type\\": \\"container\\",
+      \\"description\\": \\"I'm some docs about MyFolder\\",
       \\"name\\": \\"My Folder\\",
       \\"item\\": [
         {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
           \\"name\\": \\"My Folder\\",
           \\"item\\": [
             {
+              \\"_type\\": \\"container\\",
+              \\"description\\": null,
               \\"name\\": \\"Nested\\",
               \\"item\\": [
                 {
+                  \\"_type\\": \\"endpoint\\",
                   \\"name\\": \\"Get\\",
                   \\"request\\": {
+                    \\"description\\": null,
                     \\"url\\": {
                       \\"raw\\": \\"{{baseUrl}}\\",
                       \\"host\\": [
@@ -368,31 +406,36 @@ exports[`convertToPostman test-api 1`] = `
                       {
                         \\"key\\": \\"X-API-Key\\",
                         \\"value\\": \\"{{apiKey}}\\",
-                        \\"type\\": \\"string\\"
+                        \\"type\\": \\"string\\",
+                        \\"description\\": null
                       },
                       {
                         \\"key\\": \\"x-service-header\\",
+                        \\"description\\": null,
                         \\"type\\": \\"text\\",
                         \\"value\\": \\"\\\\\\"example\\\\\\"\\"
                       }
                     ],
-                    \\"method\\": \\"GET\\"
+                    \\"method\\": \\"GET\\",
+                    \\"auth\\": null,
+                    \\"body\\": null
                   },
-                  \\"response\\": [],
-                  \\"_type\\": \\"endpoint\\"
+                  \\"response\\": []
                 }
-              ],
-              \\"_type\\": \\"container\\"
+              ]
             }
-          ],
-          \\"_type\\": \\"container\\"
+          ]
         },
         {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
           \\"name\\": \\"Nested\\",
           \\"item\\": [
             {
+              \\"_type\\": \\"endpoint\\",
               \\"name\\": \\"Get\\",
               \\"request\\": {
+                \\"description\\": null,
                 \\"url\\": {
                   \\"raw\\": \\"{{baseUrl}}\\",
                   \\"host\\": [
@@ -406,24 +449,25 @@ exports[`convertToPostman test-api 1`] = `
                   {
                     \\"key\\": \\"X-API-Key\\",
                     \\"value\\": \\"{{apiKey}}\\",
-                    \\"type\\": \\"string\\"
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
                   },
                   {
                     \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
                     \\"type\\": \\"text\\",
                     \\"value\\": \\"\\\\\\"example\\\\\\"\\"
                   }
                 ],
-                \\"method\\": \\"GET\\"
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
               },
-              \\"response\\": [],
-              \\"_type\\": \\"endpoint\\"
+              \\"response\\": []
             }
-          ],
-          \\"_type\\": \\"container\\"
+          ]
         }
-      ],
-      \\"_type\\": \\"container\\"
+      ]
     }
   ]
 }"

@@ -1,4 +1,4 @@
-import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/resources";
+import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api";
 import { getMockRequestBody } from "../getMockBody";
 import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
 

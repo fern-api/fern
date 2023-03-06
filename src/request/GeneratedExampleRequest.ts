@@ -5,7 +5,7 @@ import {
     HttpHeader,
     PathParameter,
 } from "@fern-fern/ir-model/http";
-import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/resources";
+import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api";
 import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
 
 export declare namespace GeneratedExampleRequest {

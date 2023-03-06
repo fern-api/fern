@@ -8,7 +8,7 @@ import {
     PostmanCollectionItem,
     PostmanCollectionSchema,
     PostmanHeader,
-} from "@fern-fern/postman-sdk/resources";
+} from "@fern-fern/postman-sdk/api";
 import { startCase } from "lodash";
 import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
@@ -106,12 +106,12 @@ function getCollectionItemsForPackage(
         if (subpackage == null) {
             throw new Error("Subpackage does not exist: " + subpackageId);
         }
-        items.push(
-            PostmanCollectionItem.container({
-                name: startCase(subpackage.name.originalName),
-                item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
-            })
-        );
+        items.push({
+            type: "container",
+            description: subpackage.docs ?? undefined,
+            name: startCase(subpackage.name.originalName),
+            item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
+        });
     }
 
     if (package_.service != null) {
@@ -120,16 +120,17 @@ function getCollectionItemsForPackage(
             throw new Error("Service does not exist: " + package_.service);
         }
         items.push(
-            ...service.endpoints.map((httpEndpoint) =>
-                PostmanCollectionItem.endpoint(
-                    convertEndpoint({
+            ...service.endpoints.map(
+                (httpEndpoint): PostmanCollectionItem.Endpoint => ({
+                    type: "endpoint",
+                    ...convertEndpoint({
                         authHeaders,
                         httpEndpoint,
                         httpService: service,
                         allTypes: Object.values(ir.types),
                         allErrors: Object.values(ir.errors),
-                    })
-                )
+                    }),
+                })
             )
         );
     }

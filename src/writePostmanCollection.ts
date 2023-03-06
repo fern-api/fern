@@ -46,7 +46,9 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                 })
             );
             const _collectionDefinition = convertToPostmanCollection(ir);
-            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.json(_collectionDefinition);
+            const rawCollectionDefinition = await PostmanParsing.PostmanCollectionSchema.jsonOrThrow(
+                _collectionDefinition
+            );
             console.log("Converted ir to postman collection");
 
             await writeFile(
@@ -80,6 +82,15 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     },
                     collectionDefinition: {
                         ...rawCollectionDefinition,
+                        item: rawCollectionDefinition.item.map((item) => {
+                            if (item._type !== "container") {
+                                return item;
+                            }
+                            return {
+                                ...item,
+                                description: item.description ?? undefined,
+                            };
+                        }),
                         auth: rawCollectionDefinition.auth ?? undefined,
                     },
                 });
@@ -95,6 +106,15 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     publishConfig: postmanGeneratorConfig.publishing,
                     collectionDefinition: {
                         ...rawCollectionDefinition,
+                        item: rawCollectionDefinition.item.map((item) => {
+                            if (item._type !== "container") {
+                                return item;
+                            }
+                            return {
+                                ...item,
+                                description: item.description ?? undefined,
+                            };
+                        }),
                         auth: rawCollectionDefinition.auth ?? undefined,
                     },
                 });
@@ -128,35 +148,31 @@ async function publishCollection({
 }) {
     console.log("Publishing postman collection...");
     const postman = new FernPostmanClient({
-        auth: {
-            apiKey: publishConfig.apiKey,
-        },
+        apiKey: publishConfig.apiKey,
     });
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
     console.log(`Workspace id is ${workspace}`);
     const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
         workspace,
     });
-    if (!getCollectionMetadataResponse.ok) {
-        return;
-    }
-    const collectionsToUpdate = getCollectionMetadataResponse.body.collections.filter((collectionMetadata) => {
+    const collectionsToUpdate = getCollectionMetadataResponse.collections.filter((collectionMetadata) => {
         return collectionMetadata.name === collectionDefinition.info?.name;
     });
     if (collectionsToUpdate.length === 0) {
         console.log("Creating new postman collection!");
         await postman.collection.createCollection({
             workspace,
-            _body: { collection: new Collection(collectionDefinition) },
+            body: { collection: new Collection(collectionDefinition) },
         });
     } else {
-        collectionsToUpdate.forEach(async (collectionMetadata) => {
-            console.log("Updating postman collection!");
-            await postman.collection.updateCollection({
-                collectionId: collectionMetadata.uid,
-                _body: { collection: new Collection(collectionDefinition) },
-            });
-        });
+        await Promise.all(
+            collectionsToUpdate.map(async (collectionMetadata) => {
+                console.log("Updating postman collection!");
+                await postman.collection.updateCollection(collectionMetadata.uid, {
+                    collection: new Collection(collectionDefinition),
+                });
+            })
+        );
     }
 }
 

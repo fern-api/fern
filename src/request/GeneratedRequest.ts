@@ -1,4 +1,4 @@
-import { PostmanRequest } from "@fern-fern/postman-sdk/resources";
+import { PostmanRequest } from "@fern-fern/postman-sdk/api";
 
 export interface GeneratedRequest {
     get: () => PostmanRequest;

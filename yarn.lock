@@ -1378,14 +1378,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/postman-sdk@npm:0.0.17":
-  version: 0.0.17
-  resolution: "@fern-fern/postman-sdk@npm:0.0.17"
+"@fern-fern/postman-sdk@npm:0.0.39":
+  version: 0.0.39
+  resolution: "@fern-fern/postman-sdk@npm:0.0.39"
   dependencies:
     "@types/url-join": 4.0.1
-    axios: ^0.27.2
+    axios: 0.27.2
     url-join: 4.0.1
-  checksum: 9944a25fd5c5484bfab92d74f07cbcd79783d34afd33c34644f6470baecdb596ce772faf2b44f27dbcf9702213d8abb6b25fe074b4e901d12c66d00293f7f215
+  checksum: 7bfad8fa00ae1707a37b40164c3b8bf4752a8d7ab0ce3427fc00d079a449ac3f7970201e3e8ec4d9b4fca243f4cc1a992b27771b62c6f26272ffcb44f0238bc5
   languageName: node
   linkType: hard
 
@@ -2620,7 +2620,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.27.2":
+"axios@npm:0.27.2, axios@npm:^0.27.2":
   version: 0.27.2
   resolution: "axios@npm:0.27.2"
   dependencies:
@@ -3776,7 +3776,7 @@ __metadata:
     "@fern-api/config-management-commons": 0.0.188-13-g68e2f408
     "@fern-fern/generator-exec-sdk": ^0.0.42
     "@fern-fern/ir-model": 0.0.1165
-    "@fern-fern/postman-sdk": 0.0.17
+    "@fern-fern/postman-sdk": 0.0.39
     "@types/jest": ^27.5.0
     "@types/lodash": ^4.14.182
     "@types/postman-collection": ^3.5.7

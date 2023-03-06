@@ -7,7 +7,7 @@ import {
     PostmanRequest,
     PostmanRequestBodyMode,
     PostmanUrlVariable,
-} from "@fern-fern/postman-sdk/resources";
+} from "@fern-fern/postman-sdk/api";
 import { getMockBodyFromTypeReference } from "../getMockBody";
 import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils";
 import { GeneratedRequest } from "./GeneratedRequest";

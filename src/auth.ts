@@ -1,5 +1,5 @@
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/resources";
+import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
 import { getReferenceToVariable } from "./utils";
 
 const BASIC_AUTH_USERNAME_VARIABLE = "username";
@@ -9,8 +9,9 @@ const BEARER_AUTH_TOKEN_VARIABLE = "token";
 export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefined {
     for (const scheme of schemes) {
         const auth = AuthScheme._visit<PostmanRequestAuth | undefined>(scheme, {
-            basic: () =>
-                PostmanRequestAuth.basic([
+            basic: () => ({
+                type: "basic",
+                basic: [
                     {
                         key: "username",
                         value: getReferenceToVariable(BASIC_AUTH_USERNAME_VARIABLE),
@@ -21,33 +22,39 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                         value: getReferenceToVariable(BASIC_AUTH_PASSWORD_VARIABLE),
                         type: "string",
                     },
-                ]),
-            bearer: () =>
-                PostmanRequestAuth.bearer([
+                ],
+            }),
+            bearer: () => ({
+                type: "bearer",
+                bearer: [
                     {
                         key: "token",
                         value: getReferenceToVariable(BEARER_AUTH_TOKEN_VARIABLE),
                         type: "string",
                     },
-                ]),
+                ],
+            }),
             header: (header) => {
-                return PostmanRequestAuth.apikey([
-                    {
-                        key: "value",
-                        value: getReferenceToVariable(getVariableForAuthHeader(header)),
-                        type: "string",
-                    },
-                    {
-                        key: "key",
-                        value: header.header,
-                        type: "string",
-                    },
-                    {
-                        key: "in",
-                        value: "header",
-                        type: "string",
-                    },
-                ]);
+                return {
+                    type: "apikey",
+                    apikey: [
+                        {
+                            key: "value",
+                            value: getReferenceToVariable(getVariableForAuthHeader(header)),
+                            type: "string",
+                        },
+                        {
+                            key: "key",
+                            value: header.header,
+                            type: "string",
+                        },
+                        {
+                            key: "in",
+                            value: "header",
+                            type: "string",
+                        },
+                    ],
+                };
             },
             _unknown: () => {
                 throw new Error("Unknown auth scheme: " + scheme._type);

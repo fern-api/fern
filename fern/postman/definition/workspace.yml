@@ -1,25 +1,23 @@
-services:
-  http:
-    WorkspaceService:
-      auth: true
-      base-path: /workspaces
-      endpoints:
-        getWorkspace:
-          method: GET
-          path: /{workspaceId}
-          path-parameters:
-            workspaceId: WorkspaceId
-          response: GetWorkspaceResponse
+service:
+  auth: true
+  base-path: /workspaces
+  endpoints:
+    getWorkspace:
+      method: GET
+      path: /{workspaceId}
+      path-parameters:
+        workspaceId: WorkspaceId
+      response: GetWorkspaceResponse
 
-        create:
-          method: POST
-          path: ""
-          request:
-            name: CreateWorkspaceRequest
-            body:
-              properties:
-                workspace: NestedCreateWorkspaceRequest
-          response: CreateWorkspaceResponse
+    create:
+      method: POST
+      path: ""
+      request:
+        name: CreateWorkspaceRequest
+        body:
+          properties:
+            workspace: NestedCreateWorkspaceRequest
+      response: CreateWorkspaceResponse
 
 types:
   WorkspaceId: string

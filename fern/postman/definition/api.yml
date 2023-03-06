@@ -7,4 +7,3 @@ auth-schemes:
 default-environment: Production
 environments:
   Production: https://api.getpostman.com
-  
