@@ -93,7 +93,8 @@ exports[`ir {"fixtureName":"auth-header-prefix","language":"java"} 1`] = `
         },
         "types": [],
         "errors": [],
-        "subpackages": []
+        "subpackages": [],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -194,7 +195,8 @@ exports[`ir {"fixtureName":"auth-header-prefix","language":"python"} 1`] = `
         },
         "types": [],
         "errors": [],
-        "subpackages": []
+        "subpackages": [],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -295,7 +297,8 @@ exports[`ir {"fixtureName":"auth-header-prefix","language":"typescript"} 1`] = `
         },
         "types": [],
         "errors": [],
-        "subpackages": []
+        "subpackages": [],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -396,7 +399,8 @@ exports[`ir {"fixtureName":"auth-header-prefix"} 1`] = `
         },
         "types": [],
         "errors": [],
-        "subpackages": []
+        "subpackages": [],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -1458,7 +1462,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
                 "app:types/GetAppResponse"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "commons:subpackage": {
             "fernFilepath": {
@@ -1528,7 +1533,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
                 "commons:types/Deployment"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -1541,7 +1547,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"java"} 1`] = `
         "subpackages": [
             "app:subpackage",
             "commons:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -2603,7 +2610,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
                 "app:types/GetAppResponse"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "commons:subpackage": {
             "fernFilepath": {
@@ -2673,7 +2681,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
                 "commons:types/Deployment"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -2686,7 +2695,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"python"} 1`] = `
         "subpackages": [
             "app:subpackage",
             "commons:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -3748,7 +3758,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
                 "app:types/GetAppResponse"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "commons:subpackage": {
             "fernFilepath": {
@@ -3818,7 +3829,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
                 "commons:types/Deployment"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -3831,7 +3843,8 @@ exports[`ir {"fixtureName":"extended-examples","language":"typescript"} 1`] = `
         "subpackages": [
             "app:subpackage",
             "commons:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -4893,7 +4906,8 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
                 "app:types/GetAppResponse"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "commons:subpackage": {
             "fernFilepath": {
@@ -4963,7 +4977,8 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
                 "commons:types/Deployment"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -4976,7 +4991,8 @@ exports[`ir {"fixtureName":"extended-examples"} 1`] = `
         "subpackages": [
             "app:subpackage",
             "commons:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": false
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -5272,7 +5288,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"java"} 1`] = 
             "service": "app:service",
             "types": [],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -5284,7 +5301,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"java"} 1`] = 
         "errors": [],
         "subpackages": [
             "app:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -5580,7 +5598,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"python"} 1`] 
             "service": "app:service",
             "types": [],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -5592,7 +5611,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"python"} 1`] 
         "errors": [],
         "subpackages": [
             "app:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -5888,7 +5908,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"typescript"} 
             "service": "app:service",
             "types": [],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -5900,7 +5921,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls","language":"typescript"} 
         "errors": [],
         "subpackages": [
             "app:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -6196,7 +6218,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls"} 1`] = `
             "service": "app:service",
             "types": [],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -6208,7 +6231,8 @@ exports[`ir {"fixtureName":"multiple-environment-urls"} 1`] = `
         "errors": [],
         "subpackages": [
             "app:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -7395,7 +7419,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
                 "nested:types/StringAlias"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -7407,7 +7432,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"java"} 1`] = `
         "errors": [],
         "subpackages": [
             "nested:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -8594,7 +8620,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
                 "nested:types/StringAlias"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -8606,7 +8633,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"python"} 1`] =
         "errors": [],
         "subpackages": [
             "nested:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -9793,7 +9821,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
                 "nested:types/StringAlias"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -9805,7 +9834,8 @@ exports[`ir {"fixtureName":"nested-example-reference","language":"typescript"} 1
         "errors": [],
         "subpackages": [
             "nested:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -10992,7 +11022,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
                 "nested:types/StringAlias"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -11004,7 +11035,8 @@ exports[`ir {"fixtureName":"nested-example-reference"} 1`] = `
         "errors": [],
         "subpackages": [
             "nested:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": true
@@ -11700,7 +11732,8 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                 "importer:types/Foo"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "package:subpackage": {
             "fernFilepath": {
@@ -11771,7 +11804,8 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                 "package:types/PackageString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -11787,7 +11821,8 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
         "subpackages": [
             "importer:subpackage",
             "package:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -12483,7 +12518,8 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                 "importer:types/Foo"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "package:subpackage": {
             "fernFilepath": {
@@ -12554,7 +12590,8 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                 "package:types/PackageString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -12570,7 +12607,8 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
         "subpackages": [
             "importer:subpackage",
             "package:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -13266,7 +13304,8 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                 "importer:types/Foo"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "package:subpackage": {
             "fernFilepath": {
@@ -13337,7 +13376,8 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                 "package:types/PackageString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -13353,7 +13393,8 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
         "subpackages": [
             "importer:subpackage",
             "package:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -14049,7 +14090,8 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                 "importer:types/Foo"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "package:subpackage": {
             "fernFilepath": {
@@ -14120,7 +14162,8 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                 "package:types/PackageString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -14136,7 +14179,8 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
         "subpackages": [
             "importer:subpackage",
             "package:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -16073,7 +16117,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -16144,7 +16189,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -16223,7 +16269,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -16237,7 +16284,8 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -24463,7 +24511,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -24534,7 +24583,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -24613,7 +24663,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -24627,7 +24678,8 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -26564,7 +26616,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -26635,7 +26688,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -26714,7 +26768,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -26728,7 +26783,8 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -34954,7 +35010,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -35025,7 +35082,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -35104,7 +35162,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -35118,7 +35177,8 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -37055,7 +37115,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -37126,7 +37187,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -37205,7 +37267,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -37219,7 +37282,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -45445,7 +45509,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -45516,7 +45581,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -45595,7 +45661,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -45609,7 +45676,8 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -53835,7 +53903,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -53906,7 +53975,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -53985,7 +54055,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -53999,7 +54070,8 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
@@ -62225,7 +62297,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "errors": [
                 "commons:errors/BadRequestError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "director:subpackage": {
             "fernFilepath": {
@@ -62296,7 +62369,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                 "director:types/LiteralString"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imdb:subpackage": {
             "fernFilepath": {
@@ -62375,7 +62449,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "errors": [
                 "imdb:errors/NotFoundError"
             ],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": true
         }
     },
     "rootPackage": {
@@ -62389,7 +62464,8 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
             "commons:subpackage",
             "director:subpackage",
             "imdb:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false

@@ -53,6 +53,7 @@ types:
       types: list<commons.TypeId>
       errors: list<commons.ErrorId>
       subpackages: list<commons.SubpackageId>
+      hasEndpointsInTree: boolean
   Subpackage:
     extends: Package
     properties:
