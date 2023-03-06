@@ -21,7 +21,7 @@ export const V11_TO_V10_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.POSTMAN]: AlwaysRunMigration,
+        [GeneratorName.POSTMAN]: "0.0.40-1-g9aa2117",
     },
     migrateBackwards: (v11, context): IrVersions.V10.ir.IntermediateRepresentation => {
         return {
