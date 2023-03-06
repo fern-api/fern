@@ -276,6 +276,7 @@ export class OpenAPIConverter {
                         [name]: {
                             header: securityScheme.name,
                             name: "apiKey",
+                            prefix: (securityScheme as any)["x-header-prefix"] as string | undefined,
                         },
                     };
                 }
