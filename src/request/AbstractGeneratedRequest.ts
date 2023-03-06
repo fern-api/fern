@@ -1,5 +1,5 @@
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-v4-model/services/http";
-import { TypeDeclaration } from "@fern-fern/ir-v4-model/types";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/http";
+import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import {
     PostmanHeader,
     PostmanMethod,
@@ -36,10 +36,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
 
     public get(): PostmanRequest {
         const hostArr = [getReferenceToVariable(ORIGIN_VARIABLE_NAME)];
-        const pathArr = this.getPathArray({
-            basePath: this.httpService.basePath,
-            endpointPath: this.httpEndpoint.path,
-        });
+        const pathArr = [...this.getPathArray(this.httpService.basePath), ...this.getPathArray(this.httpEndpoint.path)];
         const queryParams = this.getQueryParams();
 
         let rawUrl = [...hostArr, ...pathArr].join("/");
@@ -100,21 +97,12 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
         });
     }
 
-    private getPathArray({
-        basePath,
-        endpointPath,
-    }: {
-        basePath: string | undefined | null;
-        endpointPath: HttpPath;
-    }): string[] {
+    private getPathArray(path: HttpPath): string[] {
         const urlParts: string[] = [];
-        if (basePath != null) {
-            this.splitPathString(basePath).forEach((splitPart) => urlParts.push(splitPart));
+        if (path.head !== "/") {
+            this.splitPathString(path.head).forEach((splitPart) => urlParts.push(splitPart));
         }
-        if (endpointPath.head !== "/") {
-            this.splitPathString(endpointPath.head).forEach((splitPart) => urlParts.push(splitPart));
-        }
-        endpointPath.parts.forEach((part) => {
+        path.parts.forEach((part) => {
             urlParts.push(`:${part.pathParameter}`);
             this.splitPathString(part.tail).forEach((splitPart) => urlParts.push(splitPart));
         });

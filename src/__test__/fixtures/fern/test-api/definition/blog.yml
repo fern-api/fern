@@ -21,8 +21,9 @@ types:
       anonymous: {}
       name: string
     examples:
-      - type: name
-        value: George Washington
+      - value:
+          type: name
+          value: George Washington
   PostNotFoundErrorBody:
     properties:
       id: PostId
@@ -30,65 +31,63 @@ errors:
   PostNotFoundError:
     status-code: 400
     type: PostNotFoundErrorBody
-services:
-  http:
-    PostsService:
+service:
+  auth: false
+  headers:
+    x-service-header: string
+  base-path: /
+  endpoints:
+    createPost:
+      docs: Creates a blog post and returns blog post id.
+      display-name: Create Blog Post
+      method: POST
+      path: /create
+      request:
+        name: CreatePostRequest
+        body:
+          properties:
+            title: string
+            author:
+              type: Author
+              docs: Author is the writer.
+            content: string
+            postType: PostType
+        headers:
+          x-endpoint-header:
+            docs: I'm a header!
+            type: string
+      response: PostId
+    getPost:
+      docs: Gets a blog post.
+      method: GET
       auth: false
-      headers:
-        x-service-header: string
-      base-path: /
-      endpoints:
-        createPost:
-          docs: Creates a blog post and returns blog post id.
-          display-name: Create Blog Post
-          method: POST
-          path: /create
-          request:
-            name: CreatePostRequest
-            body:
-              properties:
-                title: string
-                author:
-                  type: Author
-                  docs: Author is the writer.
-                content: string
-                postType: PostType
-            headers:
-              x-endpoint-header:
-                docs: I'm a header!
-                type: string
-          response: PostId
-        getPost:
-          docs: Gets a blog post.
-          method: GET
-          auth: false
-          path: /{postId}
+      path: /{postId}
+      path-parameters:
+        postId: PostId
+      request:
+        name: GetPostRequest
+      response: BlogPost
+      errors:
+        - PostNotFoundError
+      examples:
+        - headers:
+            x-service-header: I'm a service header!
           path-parameters:
-            postId: PostId
-          request:
-            name: GetPostRequest
-          response: BlogPost
-          errors:
-            - PostNotFoundError
-          examples:
-            - headers:
-                x-service-header: I'm a service header!
-              path-parameters:
-                postId: 123e4567-e89b-12d3-a456-426614174000
-              response:
-                body:
-                  writtenDate: "2022-12-15T22:06:28+00:00"
-                  id: 123e4567-e89b-12d3-a456-426614174000
-                  type: LONG
-                  title: My Post
-                  author:
-                    type: anonymous
-                  content: I'm a blog post
-            - headers:
-                x-service-header: I'm a service header!
-              path-parameters:
-                postId: 123e4567-e89b-12d3-a456-426614174000
-              response:
-                error: PostNotFoundError
-                body:
-                  id: 123e4567-e89b-12d3-a456-426614174000
+            postId: 123e4567-e89b-12d3-a456-426614174000
+          response:
+            body:
+              writtenDate: "2022-12-15T22:06:28+00:00"
+              id: 123e4567-e89b-12d3-a456-426614174000
+              type: LONG
+              title: My Post
+              author:
+                type: anonymous
+              content: I'm a blog post
+        - headers:
+            x-service-header: I'm a service header!
+          path-parameters:
+            postId: 123e4567-e89b-12d3-a456-426614174000
+          response:
+            error: PostNotFoundError
+            body:
+              id: 123e4567-e89b-12d3-a456-426614174000

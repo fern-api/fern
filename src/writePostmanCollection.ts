@@ -1,7 +1,7 @@
 import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-sdk/resources";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { IntermediateRepresentation } from "@fern-fern/ir-v4-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";

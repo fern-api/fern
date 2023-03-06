@@ -13,7 +13,7 @@ export class GeneratedDummyRequest extends AbstractGeneratedRequest {
 
     protected getPathParams(): PostmanUrlVariable[] {
         return [...this.httpService.pathParameters, ...this.httpEndpoint.pathParameters].map((pathParam) => ({
-            key: pathParam.name.originalValue,
+            key: pathParam.name.originalName,
             value: "",
             description: pathParam.docs ?? undefined,
         }));

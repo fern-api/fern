@@ -1,4 +1,4 @@
-import { HttpRequestBody } from "@fern-fern/ir-v4-model/services/http";
+import { HttpRequestBody } from "@fern-fern/ir-model/http";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -8,8 +8,7 @@ import {
     Type,
     TypeDeclaration,
     TypeReference,
-} from "@fern-fern/ir-v4-model/types";
-import { isEqual } from "lodash";
+} from "@fern-fern/ir-model/types";
 
 const ISO_DATE = "1994-11-05T13:15:30Z";
 const UUID = "3d20db99-b2d9-4643-8f04-13452707b8e8";
@@ -35,7 +34,6 @@ export function getMockBodyFromTypeReference({
                     throw new Error("Encountered unknown primtiveType: " + primitive);
                 },
             }),
-        void: () => undefined,
         container: (container) =>
             ContainerType._visit<any>(container, {
                 list: (value) => [getMockBodyFromTypeReference({ typeReference: value, allTypes })],
@@ -99,7 +97,7 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[])
             if (firstValue == null) {
                 throw new Error("No values for enum.");
             }
-            return firstValue.value;
+            return firstValue.name.wireValue;
         },
         union: (unionDeclaration) => {
             const firstUnionType = unionDeclaration.types[0];
@@ -108,7 +106,7 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[])
             }
 
             const discriminantProperties: Record<string, string> = {
-                [unionDeclaration.discriminantV3.wireValue]: firstUnionType.discriminantValueV2.wireValue,
+                [unionDeclaration.discriminant.wireValue]: firstUnionType.discriminantValue.wireValue,
             };
 
             return SingleUnionTypeProperties._visit(firstUnionType.shape, {
@@ -125,7 +123,7 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[])
                 singleProperty: (value: SingleUnionTypeProperty) => {
                     return {
                         ...discriminantProperties,
-                        [value.nameV2.wireValue]: getMockBodyFromTypeReference({
+                        [value.name.wireValue]: getMockBodyFromTypeReference({
                             typeReference: value.type,
                             allTypes,
                         }),
@@ -137,7 +135,7 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[])
                     };
                 },
                 _unknown: () => {
-                    throw new Error("Encountered unknown typeReference: " + firstUnionType.valueType._type);
+                    throw new Error("Encountered unknown typeReference: " + firstUnionType.shape._type);
                 },
             });
         },
@@ -148,12 +146,9 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[])
 }
 
 function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]): TypeDeclaration {
-    const namedType = allTypes.find(
-        (val) =>
-            val.name.name === declaredTypeName.name && isEqual(val.name.fernFilepath, declaredTypeName.fernFilepath)
-    );
+    const namedType = allTypes.find((val) => val.name.typeId === declaredTypeName.typeId);
     if (namedType == null) {
-        throw new Error("Cannot find type: " + declaredTypeName.name);
+        throw new Error("Cannot find type: " + declaredTypeName.name.originalName);
     }
     return namedType;
 }

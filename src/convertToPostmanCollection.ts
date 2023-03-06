@@ -1,8 +1,8 @@
-import { ApiAuth, AuthScheme } from "@fern-fern/ir-v4-model/auth";
-import { ErrorDeclaration } from "@fern-fern/ir-v4-model/errors";
-import { IntermediateRepresentation } from "@fern-fern/ir-v4-model/ir";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-v4-model/services/http";
-import { TypeDeclaration } from "@fern-fern/ir-v4-model/types";
+import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
+import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
+import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import {
     PostmanCollectionEndpointItem,
     PostmanCollectionItem,
@@ -24,7 +24,7 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Post
 
     return {
         info: {
-            name: ir.apiDisplayName ?? id,
+            name: ir.apiDisplayName ?? startCase(id.originalName),
             schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         },
         variable: [
@@ -41,14 +41,23 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Post
 }
 
 function getOriginaVariableValue(ir: IntermediateRepresentation): string {
-    if (ir.defaultEnvironment != null) {
-        const defaultEnvironment = ir.environments.find((env) => env.id === ir.defaultEnvironment);
-        if (defaultEnvironment == null) {
-            throw new Error("Environment does not exist: " + ir.defaultEnvironment);
+    if (ir.environments?.environments.type === "singleBaseUrl") {
+        if (ir.environments.defaultEnvironment != null) {
+            const defaultEnvironment = ir.environments.environments.environments.find(
+                (env) => env.id === ir.environments?.defaultEnvironment
+            );
+            if (defaultEnvironment == null) {
+                throw new Error("Environment does not exist: " + ir.environments.defaultEnvironment);
+            }
+            return defaultEnvironment.url;
         }
-        return defaultEnvironment.url;
+        const firstEnvironment = ir.environments.environments.environments[0];
+        if (firstEnvironment != null) {
+            return firstEnvironment.url;
+        }
     }
-    return ir.environments[0]?.url ?? "";
+
+    return "";
 }
 
 function filterAuthSchemes(auth: ApiAuth): AuthScheme[] {
@@ -82,71 +91,50 @@ function getCollectionItems({
     ir: IntermediateRepresentation;
     authHeaders: PostmanHeader[];
 }): PostmanCollectionItem[] {
-    const rootItems: PostmanCollectionItem[] = [];
-    for (const httpService of ir.services.http) {
-        let container = rootItems;
-        for (let i = 0; i < httpService.name.fernFilepathV2.length; ++i) {
-            const fernFilepathPart = httpService.name.fernFilepathV2[i];
-            if (fernFilepathPart == null) {
-                continue;
-            }
-            const existingContainerForFernFilepathPart = container
-                .filter((item): item is PostmanCollectionItem.Container => item.type === "container")
-                .find((item) => item.name === startCase(fernFilepathPart.unsafeName.originalValue));
-            if (existingContainerForFernFilepathPart != null) {
-                container = existingContainerForFernFilepathPart.item;
-            } else if (i == httpService.name.fernFilepathV2.length - 1 && httpService.displayName != null) {
-                const newContainer = PostmanCollectionItem.container({
-                    name: httpService.displayName,
-                    item: [],
-                });
-                container.push(newContainer);
-                container.sort((a, b) => {
-                    if (a.type == "container" && b.type == "container") {
-                        return a.name.localeCompare(b.name);
-                    } else if (a.type == "container" && b.type == "endpoint") {
-                        return -1;
-                    } else if (a.type == "endpoint" && b.type == "container") {
-                        return 1;
-                    }
-                    return -1;
-                });
-                container = newContainer.item;
-            } else {
-                const newContainer = PostmanCollectionItem.container({
-                    name: startCase(fernFilepathPart.unsafeName.originalValue),
-                    item: [],
-                });
-                container.push(newContainer);
-                container.sort((a, b) => {
-                    if (a.type == "container" && b.type == "container") {
-                        return a.name.localeCompare(b.name);
-                    } else if (a.type == "container" && b.type == "endpoint") {
-                        return -1;
-                    } else if (a.type == "endpoint" && b.type == "container") {
-                        return 1;
-                    }
-                    return -1;
-                });
-                container = newContainer.item;
-            }
-        }
+    return getCollectionItemsForPackage(ir.rootPackage, ir, authHeaders);
+}
 
-        container.push(
-            ...httpService.endpoints.map((httpEndpoint) =>
+function getCollectionItemsForPackage(
+    package_: Package,
+    ir: IntermediateRepresentation,
+    authHeaders: PostmanHeader[]
+): PostmanCollectionItem[] {
+    const items: PostmanCollectionItem[] = [];
+
+    for (const subpackageId of package_.subpackages) {
+        const subpackage = ir.subpackages[subpackageId];
+        if (subpackage == null) {
+            throw new Error("Subpackage does not exist: " + subpackageId);
+        }
+        items.push(
+            PostmanCollectionItem.container({
+                name: startCase(subpackage.name.originalName),
+                item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
+            })
+        );
+    }
+
+    if (package_.service != null) {
+        const service = ir.services[package_.service];
+        if (service == null) {
+            throw new Error("Service does not exist: " + package_.service);
+        }
+        items.push(
+            ...service.endpoints.map((httpEndpoint) =>
                 PostmanCollectionItem.endpoint(
                     convertEndpoint({
                         authHeaders,
                         httpEndpoint,
-                        httpService,
-                        allTypes: ir.types,
-                        allErrors: ir.errors,
+                        httpService: service,
+                        allTypes: Object.values(ir.types),
+                        allErrors: Object.values(ir.errors),
                     })
                 )
             )
         );
     }
-    return rootItems;
+
+    return items;
 }
 
 function convertEndpoint({
@@ -169,7 +157,7 @@ function convertEndpoint({
             : new GeneratedDummyRequest({ authHeaders, httpService, httpEndpoint, allTypes });
 
     return {
-        name: httpEndpoint.displayName ?? httpEndpoint.id,
+        name: httpEndpoint.displayName ?? startCase(httpEndpoint.name.originalName),
         request: generatedRequest.get(),
         response: httpEndpoint.examples.map((example) =>
             convertExampleEndpointCall({ authHeaders, httpService, httpEndpoint, allTypes, allErrors, example })

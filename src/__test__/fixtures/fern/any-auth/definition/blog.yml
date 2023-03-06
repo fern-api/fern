@@ -6,26 +6,24 @@ types:
       id: PostId
       title: string
       content: string
-services:
-  http:
-    PostsService:
-      auth: true
-      base-path: /
-      endpoints:
-        createPost:
-          method: POST
-          path: /create
-          request:
-            name: CreatePostRequest
-            body:
-              properties:
-                title: string
-                content: string
-          response: PostId
-        getPost:
-          method: GET
-          auth: false
-          path: /{postId}
-          path-parameters:
-            postId: PostId
-          response: BlogPost
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    createPost:
+      method: POST
+      path: /create
+      request:
+        name: CreatePostRequest
+        body:
+          properties:
+            title: string
+            content: string
+      response: PostId
+    getPost:
+      method: GET
+      auth: false
+      path: /{postId}
+      path-parameters:
+        postId: PostId
+      response: BlogPost

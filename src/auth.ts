@@ -1,5 +1,4 @@
-import { AuthScheme } from "@fern-fern/ir-v4-model/auth";
-import { HttpHeader } from "@fern-fern/ir-v4-model/services/http";
+import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
 import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/resources";
 import { getReferenceToVariable } from "./utils";
 
@@ -40,7 +39,7 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                     },
                     {
                         key: "key",
-                        value: header.nameV2.wireValue,
+                        value: header.header,
                         type: "string",
                     },
                     {
@@ -70,7 +69,7 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
             bearer: () => [],
             header: (header) => [
                 {
-                    key: header.name.wireValue,
+                    key: header.header,
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
                     type: "string",
                     description: header.docs ?? undefined,
@@ -117,6 +116,6 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
     });
 }
 
-function getVariableForAuthHeader(header: HttpHeader): string {
-    return header.name.camelCase;
+function getVariableForAuthHeader(header: HeaderAuthScheme): string {
+    return header.name.camelCase.unsafeName;
 }

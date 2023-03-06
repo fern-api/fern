@@ -9,8 +9,8 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "test": "jest --passWithNoTests",
+    "compile": "tsc",
+    "test": "yarn compile && jest --passWithNoTests",
     "depcheck": "depcheck",
     "lint": "eslint --max-warnings 0",
     "lint:fix": "eslint --max-warnings 0 . --fix",
@@ -48,7 +48,7 @@
   "dependencies": {
     "@fern-api/config-management-commons": "0.0.188-13-g68e2f408",
     "@fern-fern/generator-exec-sdk": "^0.0.42",
-    "@fern-fern/ir-v4-model": "0.0.4",
+    "@fern-fern/ir-model": "0.0.1165",
     "@fern-fern/postman-sdk": "0.0.17",
     "@types/lodash": "^4.14.182",
     "endent": "^2.1.0",

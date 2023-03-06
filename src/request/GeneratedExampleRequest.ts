@@ -4,7 +4,7 @@ import {
     ExamplePathParameter,
     HttpHeader,
     PathParameter,
-} from "@fern-fern/ir-v4-model/services/http";
+} from "@fern-fern/ir-model/http";
 import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/resources";
 import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
 
@@ -25,7 +25,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     protected getQueryParams(): PostmanUrlVariable[] {
         return this.example.queryParameters.map((exampleQueryParameter) => {
             const queryParameterDeclaration = this.httpEndpoint.queryParameters.find(
-                (param) => param.nameV2.wireValue === exampleQueryParameter.wireKey
+                (param) => param.name.wireValue === exampleQueryParameter.wireKey
             );
             if (queryParameterDeclaration == null) {
                 throw new Error(`Cannot find query parameter ${exampleQueryParameter.wireKey}`);
@@ -63,7 +63,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     }) {
         return examples.map((examplePathParameter) => {
             const pathParameterDeclaration = pathParameters.find(
-                (param) => param.nameV2.unsafeName.originalValue === examplePathParameter.key
+                (param) => param.name.originalName === examplePathParameter.key
             );
             if (pathParameterDeclaration == null) {
                 throw new Error(`Cannot find path parameter ${examplePathParameter.key}`);
@@ -107,7 +107,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         examples: ExampleHeader[];
     }): PostmanHeader[] {
         return examples.map((exampleHeader) => {
-            const headerDeclaration = headers.find((header) => header.nameV2.wireValue === exampleHeader.wireKey);
+            const headerDeclaration = headers.find((header) => header.name.wireValue === exampleHeader.wireKey);
             if (headerDeclaration == null) {
                 throw new Error(`Cannot find header ${exampleHeader.wireKey}`);
             }

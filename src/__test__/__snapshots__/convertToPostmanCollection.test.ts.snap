@@ -3,7 +3,7 @@
 exports[`convertToPostman any-auth 1`] = `
 "{
   \\"info\\": {
-    \\"name\\": \\"any-auth\\",
+    \\"name\\": \\"Any Auth\\",
     \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
   },
   \\"variable\\": [
@@ -23,7 +23,7 @@ exports[`convertToPostman any-auth 1`] = `
       \\"type\\": \\"string\\"
     },
     {
-      \\"key\\": \\"myHeader\\",
+      \\"key\\": \\"headerAuth\\",
       \\"value\\": \\"\\",
       \\"type\\": \\"string\\"
     }
@@ -48,7 +48,7 @@ exports[`convertToPostman any-auth 1`] = `
       \\"name\\": \\"Blog\\",
       \\"item\\": [
         {
-          \\"name\\": \\"createPost\\",
+          \\"name\\": \\"Create Post\\",
           \\"request\\": {
             \\"url\\": {
               \\"raw\\": \\"{{baseUrl}}/create\\",
@@ -64,7 +64,7 @@ exports[`convertToPostman any-auth 1`] = `
             \\"header\\": [
               {
                 \\"key\\": \\"My-Header\\",
-                \\"value\\": \\"{{myHeader}}\\",
+                \\"value\\": \\"{{headerAuth}}\\",
                 \\"type\\": \\"string\\"
               }
             ],
@@ -83,7 +83,7 @@ exports[`convertToPostman any-auth 1`] = `
           \\"_type\\": \\"endpoint\\"
         },
         {
-          \\"name\\": \\"getPost\\",
+          \\"name\\": \\"Get Post\\",
           \\"request\\": {
             \\"url\\": {
               \\"raw\\": \\"{{baseUrl}}/:postId\\",
@@ -104,7 +104,7 @@ exports[`convertToPostman any-auth 1`] = `
             \\"header\\": [
               {
                 \\"key\\": \\"My-Header\\",
-                \\"value\\": \\"{{myHeader}}\\",
+                \\"value\\": \\"{{headerAuth}}\\",
                 \\"type\\": \\"string\\"
               }
             ],
@@ -210,7 +210,7 @@ exports[`convertToPostman test-api 1`] = `
           \\"_type\\": \\"endpoint\\"
         },
         {
-          \\"name\\": \\"getPost\\",
+          \\"name\\": \\"Get Post\\",
           \\"request\\": {
             \\"description\\": \\"Gets a blog post.\\",
             \\"url\\": {
@@ -353,7 +353,7 @@ exports[`convertToPostman test-api 1`] = `
               \\"name\\": \\"Nested\\",
               \\"item\\": [
                 {
-                  \\"name\\": \\"get\\",
+                  \\"name\\": \\"Get\\",
                   \\"request\\": {
                     \\"url\\": {
                       \\"raw\\": \\"{{baseUrl}}\\",
@@ -391,7 +391,7 @@ exports[`convertToPostman test-api 1`] = `
           \\"name\\": \\"Nested\\",
           \\"item\\": [
             {
-              \\"name\\": \\"get\\",
+              \\"name\\": \\"Get\\",
               \\"request\\": {
                 \\"url\\": {
                   \\"raw\\": \\"{{baseUrl}}\\",
