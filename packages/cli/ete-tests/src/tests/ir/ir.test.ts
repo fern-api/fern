@@ -9,6 +9,9 @@ const FIXTURES: Fixture[] = [
         name: "nested-example-reference",
     },
     {
+        name: "auth-header-prefix",
+    },
+    {
         name: "simple",
     },
     {
