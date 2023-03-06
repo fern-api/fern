@@ -66,6 +66,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "file": undefined,
       "packagePath": [],
     },
+    "hasEndpointsInTree": true,
     "service": undefined,
     "subpackages": [
       "commons:subpackage",
@@ -704,6 +705,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "commons",
@@ -814,6 +816,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
           "safeName": "service",
@@ -887,6 +890,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
           "safeName": "folderA",
@@ -997,6 +1001,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "common",
@@ -1070,6 +1075,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "folderB",
@@ -1180,6 +1186,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "common",
@@ -1253,6 +1260,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "folderC",
@@ -1324,6 +1332,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
           "safeName": "foo",
@@ -2829,6 +2838,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "file": undefined,
       "packagePath": [],
     },
+    "hasEndpointsInTree": false,
     "service": undefined,
     "subpackages": [
       "commons:subpackage",
@@ -2889,6 +2899,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "commons",
@@ -2960,6 +2971,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "importer",

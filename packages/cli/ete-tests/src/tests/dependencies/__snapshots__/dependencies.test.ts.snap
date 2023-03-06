@@ -511,7 +511,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "y:types/IntegerAlias"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "imported:subpackage": {
             "fernFilepath": {
@@ -584,7 +585,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "errors": [],
             "subpackages": [
                 "imported/x:subpackage"
-            ]
+            ],
+            "hasEndpointsInTree": true
         },
         "imported/x:subpackage": {
             "fernFilepath": {
@@ -692,7 +694,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "imported/x:types/StringAlias"
             ],
             "errors": [],
-            "subpackages": []
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -705,7 +708,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "subpackages": [
             "y:subpackage",
             "imported:subpackage"
-        ]
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false
