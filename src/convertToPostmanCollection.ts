@@ -106,12 +106,14 @@ function getCollectionItemsForPackage(
         if (subpackage == null) {
             throw new Error("Subpackage does not exist: " + subpackageId);
         }
-        items.push({
-            type: "container",
-            description: subpackage.docs ?? undefined,
-            name: startCase(subpackage.name.originalName),
-            item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
-        });
+        if (subpackage.hasEndpointsInTree) {
+            items.push({
+                type: "container",
+                description: subpackage.docs ?? undefined,
+                name: startCase(subpackage.name.originalName),
+                item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
+            });
+        }
     }
 
     if (package_.service != null) {
