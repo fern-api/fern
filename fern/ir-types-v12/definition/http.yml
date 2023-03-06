@@ -98,10 +98,37 @@ types:
     properties:
       wrapperName: commons.Name
       bodyKey: commons.Name
+
   HttpResponse:
+    union:
+      nonStreaming: NonStreamingResponse
+      streaming: StreamingResponse
+      maybeStreaming: MaybeStreamingResponse
+
+  NonStreamingResponse:
     extends: commons.WithDocs
     properties:
-      type: optional<types.TypeReference>
+      responseBodyType: optional<types.TypeReference>
+
+  StreamingResponse:
+    properties:
+      dataEventType: types.TypeReference
+      terminator: optional<string>
+
+  MaybeStreamingResponse:
+    properties:
+      condition: StreamingCondition
+      nonStreaming: NonStreamingResponse
+      streaming: StreamingResponse
+
+  StreamingCondition:
+    properties:
+      requestPropertyKey:
+        docs: |
+          The name of a boolean property on the request. If it is true, the response
+          should be streamed. Otherwise, it should not be streamed.
+        type: string
+
   ResponseErrors: list<ResponseError>
   ResponseError:
     extends: commons.WithDocs

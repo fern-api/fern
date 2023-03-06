@@ -43,20 +43,8 @@ export const V10_TO_V9_MIGRATION: IrMigration<
         }
 
         return {
-            apiName: v10.apiName,
-            apiDisplayName: v10.apiDisplayName,
-            apiDocs: v10.apiDocs,
-            auth: v10.auth,
-            headers: v10.headers,
-            types: v10.types,
-            errors: v10.errors,
+            ...v10,
             services: v9Services,
-            constants: v10.constants,
-            environments: v10.environments,
-            errorDiscriminationStrategy: v10.errorDiscriminationStrategy,
-            sdkConfig: v10.sdkConfig,
-            rootPackage: v10.rootPackage,
-            subpackages: v10.subpackages,
         };
     },
 };
