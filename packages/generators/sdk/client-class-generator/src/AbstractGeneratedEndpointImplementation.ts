@@ -295,6 +295,17 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
 
     private getHeadersForFetcherArgs(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
         const elements: GeneratedHeader[] = [];
+
+        const authorizationHederValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
+        if (authorizationHederValue != null) {
+            elements.push({
+                header: "Authorization",
+                value: authorizationHederValue,
+            });
+        }
+
+        elements.push(...this.generatedSdkClientClass.getApiHeaders(context));
+
         if (this.requestParameter != null) {
             for (const header of this.requestParameter.getAllHeaders(context)) {
                 elements.push({
@@ -303,10 +314,6 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                 });
             }
         }
-        elements.push(
-            ...this.generatedSdkClientClass.getApiHeaders(),
-            ...this.generatedSdkClientClass.getAuthorizationHeaders(context)
-        );
 
         return elements.map(({ header, value }) =>
             ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
