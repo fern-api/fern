@@ -74,7 +74,7 @@ export function convertType({
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
-        undiscriminatedUnion: () => convertUndiscriminatedUnionTypeDeclaration(),
+        undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
         enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file }),
     });
 }
