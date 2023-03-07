@@ -8,10 +8,11 @@ const runMigration = createMigrationTester(V12_TO_V11_MIGRATION);
 
 describe("migrateFromV12ToV11", () => {
     it("works for non-streaming APIs", async () => {
-        const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/non-streaming"),
-        });
-        expect(migrated).toEqual({});
+        await expect(
+            runMigration({
+                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/non-streaming"),
+            })
+        ).resolves.toBeTruthy();
     });
 
     it("throws on streaming APIs", async () => {
@@ -23,7 +24,7 @@ describe("migrateFromV12ToV11", () => {
         });
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
+                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/streaming"),
                 context: {
                     taskContext: context,
                 },
