@@ -1,5 +1,5 @@
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
-import { isRawObjectDefinition, isRawUnionDefinition } from "@fern-api/yaml-schema";
+import { isRawDiscriminatedUnionDefinition, isRawObjectDefinition } from "@fern-api/yaml-schema";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -12,7 +12,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
             serviceFile: {
                 typeDeclaration: ({ declaration }, { relativeFilepath, contents }) => {
                     const violations: RuleViolation[] = [];
-                    if (!isRawUnionDefinition(declaration)) {
+                    if (!isRawDiscriminatedUnionDefinition(declaration)) {
                         return violations;
                     }
 

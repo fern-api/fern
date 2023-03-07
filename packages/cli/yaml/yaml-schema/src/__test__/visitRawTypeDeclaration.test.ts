@@ -6,7 +6,8 @@ describe("visitRawTypeDeclaration", () => {
         const declaration: ObjectSchema = { extends: "SomeType" };
         const isObject = visitRawTypeDeclaration(declaration, {
             object: () => true,
-            union: () => false,
+            discriminatedUnion: () => false,
+            undiscriminatedUnion: () => false,
             enum: () => false,
             alias: () => false,
         });

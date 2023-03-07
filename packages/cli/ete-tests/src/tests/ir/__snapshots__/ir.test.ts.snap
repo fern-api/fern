@@ -16450,7 +16450,9 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -16696,6 +16698,125 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
         }
     ],
     "types": {
+        "commons:types/UndiscriminatedUnion": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "UndiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedUnion",
+                        "safeName": "undiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_union",
+                        "safeName": "undiscriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_UNION",
+                        "safeName": "UNDISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedUnion",
+                        "safeName": "UndiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "commons:types/UndiscriminatedUnion"
+            },
+            "shape": {
+                "members": [
+                    {
+                        "type": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    },
+                    {
+                        "type": {
+                            "primitive": "INTEGER",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "container": {
+                                        "list": {
+                                            "primitive": "INTEGER",
+                                            "_type": "primitive"
+                                        },
+                                        "_type": "list"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "undiscriminatedUnion"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -24980,7 +25101,9 @@ exports[`ir {"fixtureName":"simple","language":"java"} 1`] = `
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -27154,7 +27277,9 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -27400,6 +27525,125 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
         }
     ],
     "types": {
+        "commons:types/UndiscriminatedUnion": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "UndiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedUnion",
+                        "safeName": "undiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_union",
+                        "safeName": "undiscriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_UNION",
+                        "safeName": "UNDISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedUnion",
+                        "safeName": "UndiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "commons:types/UndiscriminatedUnion"
+            },
+            "shape": {
+                "members": [
+                    {
+                        "type": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    },
+                    {
+                        "type": {
+                            "primitive": "INTEGER",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "container": {
+                                        "list": {
+                                            "primitive": "INTEGER",
+                                            "_type": "primitive"
+                                        },
+                                        "_type": "list"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "undiscriminatedUnion"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -35684,7 +35928,9 @@ exports[`ir {"fixtureName":"simple","language":"python"} 1`] = `
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -37858,7 +38104,9 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -38104,6 +38352,125 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
         }
     ],
     "types": {
+        "commons:types/UndiscriminatedUnion": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "UndiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedUnion",
+                        "safeName": "undiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_union",
+                        "safeName": "undiscriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_UNION",
+                        "safeName": "UNDISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedUnion",
+                        "safeName": "UndiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "commons:types/UndiscriminatedUnion"
+            },
+            "shape": {
+                "members": [
+                    {
+                        "type": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    },
+                    {
+                        "type": {
+                            "primitive": "INTEGER",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "container": {
+                                        "list": {
+                                            "primitive": "INTEGER",
+                                            "_type": "primitive"
+                                        },
+                                        "_type": "list"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "undiscriminatedUnion"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -46388,7 +46755,9 @@ exports[`ir {"fixtureName":"simple","language":"typescript"} 1`] = `
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -46634,6 +47003,125 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
         }
     ],
     "types": {
+        "commons:types/UndiscriminatedUnion": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "UndiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedUnion",
+                        "safeName": "undiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_union",
+                        "safeName": "undiscriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_UNION",
+                        "safeName": "UNDISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedUnion",
+                        "safeName": "UndiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "commons:types/UndiscriminatedUnion"
+            },
+            "shape": {
+                "members": [
+                    {
+                        "type": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    },
+                    {
+                        "type": {
+                            "primitive": "INTEGER",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "container": {
+                                        "list": {
+                                            "primitive": "INTEGER",
+                                            "_type": "primitive"
+                                        },
+                                        "_type": "list"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "undiscriminatedUnion"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -54918,7 +55406,9 @@ exports[`ir {"fixtureName":"simple"} 1`] = `
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],
@@ -55164,6 +55654,125 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
         }
     ],
     "types": {
+        "commons:types/UndiscriminatedUnion": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "UndiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "undiscriminatedUnion",
+                        "safeName": "undiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "undiscriminated_union",
+                        "safeName": "undiscriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNDISCRIMINATED_UNION",
+                        "safeName": "UNDISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UndiscriminatedUnion",
+                        "safeName": "UndiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "commons:types/UndiscriminatedUnion"
+            },
+            "shape": {
+                "members": [
+                    {
+                        "type": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    },
+                    {
+                        "type": {
+                            "primitive": "INTEGER",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "container": {
+                                "list": {
+                                    "container": {
+                                        "list": {
+                                            "primitive": "INTEGER",
+                                            "_type": "primitive"
+                                        },
+                                        "_type": "list"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        }
+                    }
+                ],
+                "_type": "undiscriminatedUnion"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "director:types/Director": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -63448,7 +64057,9 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
                     "safeName": "Commons"
                 }
             },
-            "types": [],
+            "types": [
+                "commons:types/UndiscriminatedUnion"
+            ],
             "errors": [
                 "commons:errors/BadRequestError"
             ],

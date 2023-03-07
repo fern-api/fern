@@ -29,6 +29,7 @@ types:
       enum: EnumTypeDeclaration
       object: ObjectTypeDeclaration
       union: UnionTypeDeclaration
+      undiscriminatedUnion: UndiscriminatedUnionTypeDeclaration
 
   AliasTypeDeclaration:
     properties:
@@ -56,6 +57,7 @@ types:
       - ENUM
       - OBJECT
       - UNION
+      - UNDISCRIMINATED_UNION
 
   EnumTypeDeclaration:
     properties:
@@ -98,6 +100,15 @@ types:
   SingleUnionTypeProperty:
     properties:
       name: commons.NameAndWireValue
+      type: TypeReference
+
+  UndiscriminatedUnionTypeDeclaration:
+    extends: commons.WithDocs
+    properties:
+      members: list<UndiscriminatedUnionMember>
+  UndiscriminatedUnionMember:
+    extends: commons.WithDocs
+    properties:
       type: TypeReference
 
   TypeReference:

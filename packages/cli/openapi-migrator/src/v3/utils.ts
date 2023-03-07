@@ -87,7 +87,8 @@ export function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarati
             return schema.type;
         },
         object: () => undefined,
-        union: () => undefined,
+        discriminatedUnion: () => undefined,
+        undiscriminatedUnion: () => undefined,
         enum: () => undefined,
     });
 }

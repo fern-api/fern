@@ -13,7 +13,8 @@ export const ValidFieldNamesRule: Rule = {
                         alias: () => [],
                         enum: validateEnumNames,
                         object: () => [],
-                        union: validateUnionNames,
+                        undiscriminatedUnion: () => [],
+                        discriminatedUnion: validateUnionNames,
                     });
                 },
             },

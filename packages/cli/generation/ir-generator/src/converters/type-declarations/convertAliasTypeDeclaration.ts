@@ -1,5 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { isRawEnumDefinition, isRawObjectDefinition, isRawUnionDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import {
+    isRawDiscriminatedUnionDefinition,
+    isRawEnumDefinition,
+    isRawObjectDefinition,
+    isRawUndiscriminatedUnionDefinition,
+    RawSchemas,
+} from "@fern-api/yaml-schema";
 import { ResolvedTypeReference, ShapeType, Type } from "@fern-fern/ir-model/types";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -38,10 +44,12 @@ function constructResolvedTypeReference({
         case "named": {
             const shapeType = isRawObjectDefinition(resolvedType.declaration)
                 ? ShapeType.Object
-                : isRawUnionDefinition(resolvedType.declaration)
+                : isRawDiscriminatedUnionDefinition(resolvedType.declaration)
                 ? ShapeType.Union
                 : isRawEnumDefinition(resolvedType.declaration)
                 ? ShapeType.Enum
+                : isRawUndiscriminatedUnionDefinition(resolvedType.declaration)
+                ? ShapeType.UndiscriminatedUnion
                 : assertNever(resolvedType.declaration);
             return ResolvedTypeReference.named({
                 name: resolvedType.name,
