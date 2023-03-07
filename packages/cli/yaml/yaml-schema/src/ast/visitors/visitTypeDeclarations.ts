@@ -136,8 +136,27 @@ export async function visitTypeDeclaration({
                 examples: visitExamples,
             });
         },
-        undiscriminatedUnion: async () => {
-            return;
+        undiscriminatedUnion: async (union) => {
+            await visitObject(union, {
+                docs: createDocsVisitor(visitor, nodePathForType),
+                discriminated: noop,
+                union: async (unionMembers) => {
+                    for (const [index, unionMember] of unionMembers.entries()) {
+                        const nodePathForUnionType = [...nodePathForType, `union[${index}]`];
+                        if (typeof unionMember !== "string") {
+                            await visitObject(unionMember, {
+                                docs: createDocsVisitor(visitor, nodePathForUnionType),
+                                type: async (type) => {
+                                    await visitor.typeReference?.(type, [...nodePathForType, "type"]);
+                                },
+                            });
+                        }
+                    }
+                },
+                availability: noop,
+                audiences: noop,
+                examples: visitExamples,
+            });
         },
         enum: async (_enum) => {
             await visitObject(_enum, {
