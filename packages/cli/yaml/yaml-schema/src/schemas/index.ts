@@ -30,6 +30,7 @@ export { HttpReferencedRequestBodySchema } from "./HttpReferencedRequestBodySche
 export { HttpRequestBodySchema } from "./HttpRequestBodySchema";
 export { HttpRequestSchema } from "./HttpRequestSchema";
 export { HttpResponseSchema } from "./HttpResponseSchema";
+export { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
 export { ObjectPropertySchema } from "./ObjectPropertySchema";

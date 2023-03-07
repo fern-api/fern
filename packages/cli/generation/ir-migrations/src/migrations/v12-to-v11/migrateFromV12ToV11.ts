@@ -54,9 +54,15 @@ function convertEndpoint(
 }
 
 function convertResponse(
-    response: IrVersions.V12.http.HttpResponse,
+    response: IrVersions.V12.http.HttpResponse | null | undefined,
     { taskContext, targetGenerator }: IrMigrationContext
 ): IrVersions.V11.http.HttpResponse {
+    if (response == null) {
+        return {
+            docs: undefined,
+            type: undefined,
+        };
+    }
     switch (response.type) {
         case "nonStreaming":
             return {

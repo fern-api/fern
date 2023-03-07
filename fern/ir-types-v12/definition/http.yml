@@ -32,7 +32,7 @@ types:
       queryParameters: list<QueryParameter>
       requestBody: optional<HttpRequestBody>
       sdkRequest: optional<SdkRequest>
-      response: HttpResponse
+      response: optional<HttpResponse>
       errors: ResponseErrors
       auth: boolean
       examples: list<ExampleEndpointCall>
@@ -108,7 +108,7 @@ types:
   NonStreamingResponse:
     extends: commons.WithDocs
     properties:
-      responseBodyType: optional<types.TypeReference>
+      responseBodyType: types.TypeReference
 
   StreamingResponse:
     properties:
@@ -117,11 +117,11 @@ types:
 
   MaybeStreamingResponse:
     properties:
-      condition: StreamingCondition
+      condition: StreamCondition
       nonStreaming: NonStreamingResponse
       streaming: StreamingResponse
 
-  StreamingCondition:
+  StreamCondition:
     properties:
       requestPropertyKey:
         docs: |

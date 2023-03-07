@@ -4,6 +4,7 @@ import { ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpRequestSchema } from "./HttpRequestSchema";
 import { HttpResponseSchema } from "./HttpResponseSchema";
+import { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 
 export const HttpEndpointSchema = DeclarationSchema.extend({
@@ -14,6 +15,8 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     auth: z.optional(z.boolean()),
     request: z.optional(z.union([z.string(), HttpRequestSchema])),
     response: z.optional(HttpResponseSchema),
+    "stream-condition": z.optional(z.string()),
+    "response-stream": z.optional(HttpResponseStreamSchema),
     errors: z.optional(ResponseErrorsSchema),
     examples: z.optional(z.array(ExampleEndpointCallSchema)),
 });
