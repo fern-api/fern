@@ -110,8 +110,8 @@ export class TypeResolverImpl implements TypeResolver {
                           },
                           originalTypeReference: TypeReference.container(
                               ContainerType.map({
-                                  keyType: keyType.originalTypeReference,
-                                  valueType: valueType.originalTypeReference,
+                                  keyType: getOriginalTypeReferenceFromResolvedType(keyType),
+                                  valueType: getOriginalTypeReferenceFromResolvedType(valueType),
                               })
                           ),
                       }
@@ -125,7 +125,7 @@ export class TypeResolverImpl implements TypeResolver {
                               itemType,
                           },
                           originalTypeReference: TypeReference.container(
-                              ContainerType.list(itemType.originalTypeReference)
+                              ContainerType.list(getOriginalTypeReferenceFromResolvedType(itemType))
                           ),
                       }
                     : undefined,
@@ -138,7 +138,7 @@ export class TypeResolverImpl implements TypeResolver {
                               itemType,
                           },
                           originalTypeReference: TypeReference.container(
-                              ContainerType.optional(itemType.originalTypeReference)
+                              ContainerType.optional(getOriginalTypeReferenceFromResolvedType(itemType))
                           ),
                       }
                     : undefined,
@@ -151,7 +151,7 @@ export class TypeResolverImpl implements TypeResolver {
                               itemType,
                           },
                           originalTypeReference: TypeReference.container(
-                              ContainerType.set(itemType.originalTypeReference)
+                              ContainerType.set(getOriginalTypeReferenceFromResolvedType(itemType))
                           ),
                       }
                     : undefined,
@@ -169,6 +169,9 @@ export class TypeResolverImpl implements TypeResolver {
                     file,
                     objectPath: [...objectPath, referenceToNamedType],
                 }),
+            file: () => ({
+                _type: "file",
+            }),
         });
     }
 
@@ -237,4 +240,11 @@ export class TypeResolverImpl implements TypeResolver {
             }),
         };
     }
+}
+
+function getOriginalTypeReferenceFromResolvedType(resolvedType: ResolvedType): TypeReference {
+    if (resolvedType._type === "file") {
+        throw new Error("Cannot get original TypeReference for file");
+    }
+    return resolvedType.originalTypeReference;
 }

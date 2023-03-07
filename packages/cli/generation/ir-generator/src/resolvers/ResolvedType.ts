@@ -7,6 +7,7 @@ export declare type ResolvedType =
     | ResolvedType.Container
     | ResolvedType.Named
     | ResolvedType.Primitive
+    | ResolvedType.File
     | ResolvedType.Unknown;
 
 export declare namespace ResolvedType {
@@ -32,6 +33,10 @@ export declare namespace ResolvedType {
         _type: "primitive";
         primitive: PrimitiveType;
         originalTypeReference: TypeReference.Primitive;
+    }
+
+    interface File {
+        _type: "file";
     }
 
     interface Unknown {
