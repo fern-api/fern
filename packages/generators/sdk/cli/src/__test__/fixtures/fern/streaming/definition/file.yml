@@ -19,6 +19,19 @@ service:
       method: POST
       response-stream:
         data: boolean
+    maybeStream:
+      path: /maybe-stream
+      method: POST
+      request:
+        name: MaybeStreamRequest
+        body:
+          properties:
+            foo: string
+            stream: optional<boolean>
+      response: integer
+      response-stream:
+        data: boolean
+      stream-condition: $request.stream
 
 types:
   StreamPart:

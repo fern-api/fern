@@ -1,7 +1,7 @@
 import { StreamingResponse } from "@fern-fern/ir-model/http";
 import { Fetcher, getTextOfTsNode, StreamingFetcher } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
-import { OptionalKind, ParameterDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { AbstractGeneratedEndpointImplementation } from "./AbstractGeneratedEndpointImplementation";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
@@ -11,7 +11,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
 }
 
 export class GeneratedStreamingEndpointImplementation extends AbstractGeneratedEndpointImplementation {
-    private static DB_CALLBACK_NAME = "cb";
+    private static CB_CALLBACK_NAME = "cb";
     private static DATA_PARAMETER_NAME = "data";
     private static OPTS_PARAMETER_NAME = "opts";
 
@@ -27,7 +27,7 @@ export class GeneratedStreamingEndpointImplementation extends AbstractGeneratedE
     ): OptionalKind<ParameterDeclarationStructure>[] {
         return [
             {
-                name: GeneratedStreamingEndpointImplementation.DB_CALLBACK_NAME,
+                name: GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME,
                 type: getTextOfTsNode(
                     ts.factory.createFunctionTypeNode(
                         undefined,
@@ -86,14 +86,11 @@ export class GeneratedStreamingEndpointImplementation extends AbstractGeneratedE
         return [];
     }
 
-    protected invokeFetcher(
-        fetcherArgs: Fetcher.Args,
-        context: SdkClientClassContext
-    ): (StatementStructures | WriterFunction | string)[] {
+    protected invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[] {
         const PARSED_DATA_VARIABLE_NAME = "parsed";
 
         return [
-            getTextOfTsNode(
+            ts.factory.createExpressionStatement(
                 context.base.coreUtilities.streamingFetcher.streamingFetcher._invoke(
                     {
                         ...fetcherArgs,
@@ -141,10 +138,11 @@ export class GeneratedStreamingEndpointImplementation extends AbstractGeneratedE
                                         {
                                             valid: (validData) => [
                                                 ts.factory.createExpressionStatement(
-                                                    ts.factory.createCallExpression(
+                                                    ts.factory.createCallChain(
                                                         ts.factory.createIdentifier(
-                                                            GeneratedStreamingEndpointImplementation.DB_CALLBACK_NAME
+                                                            GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
                                                         ),
+                                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                                         undefined,
                                                         [validData]
                                                     )
@@ -192,8 +190,6 @@ export class GeneratedStreamingEndpointImplementation extends AbstractGeneratedE
     }
 
     protected getResponseType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-        ]);
+        return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
 }

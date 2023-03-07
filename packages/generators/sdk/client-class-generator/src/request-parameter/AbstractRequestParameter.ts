@@ -26,14 +26,22 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         this.sdkRequest = sdkRequest;
     }
 
-    public getParameterDeclaration(context: SdkClientClassContext): OptionalKind<ParameterDeclarationStructure> {
-        const type = this.getParameterType(context);
+    public getParameterDeclaration(
+        context: SdkClientClassContext,
+        { typeIntersection }: { typeIntersection?: ts.TypeNode } = {}
+    ): OptionalKind<ParameterDeclarationStructure> {
+        const typeInfo = this.getParameterType(context);
+
+        let type = typeInfo.type;
+        if (typeIntersection != null) {
+            type = ts.factory.createIntersectionTypeNode([type, typeIntersection]);
+        }
 
         return {
             name: this.getRequestParameterName(),
-            type: getTextOfTsNode(type.type),
-            hasQuestionToken: type.hasQuestionToken,
-            initializer: type.initializer != null ? getTextOfTsNode(type.initializer) : undefined,
+            type: getTextOfTsNode(type),
+            hasQuestionToken: typeInfo.hasQuestionToken,
+            initializer: typeInfo.initializer != null ? getTextOfTsNode(typeInfo.initializer) : undefined,
         };
     }
 

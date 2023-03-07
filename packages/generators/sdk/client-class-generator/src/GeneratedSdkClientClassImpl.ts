@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpHeader, HttpService } from "@fern-fern/ir-model/http";
+import { HttpHeader, HttpService, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy, IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
@@ -8,6 +8,7 @@ import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { GeneratedHeader } from "./GeneratedHeader";
+import { GeneratedMaybeStreamingEndpointImplementation } from "./GeneratedMaybeStreamingEndpointImplementation";
 import { GeneratedNonThrowingEndpointImplementation } from "./GeneratedNonThrowingEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./GeneratedStreamingEndpointImplementation";
 import { GeneratedThrowingEndpointImplementation } from "./GeneratedThrowingEndpointImplementation";
@@ -74,37 +75,60 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             this.generatedEndpointImplementations = [];
         } else {
             this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
-                if (endpoint.streamingResponse != null) {
-                    return new GeneratedStreamingEndpointImplementation({
+                const getNonStreamingEndpointImplementation = () => {
+                    if (neverThrowErrors) {
+                        return new GeneratedNonThrowingEndpointImplementation({
+                            packageId,
+                            endpoint,
+                            service,
+                            generatedSdkClientClass: this,
+                            errorResolver,
+                            errorDiscriminationStrategy,
+                            includeCredentialsOnCrossOriginRequests,
+                        });
+                    } else {
+                        return new GeneratedThrowingEndpointImplementation({
+                            packageId,
+                            endpoint,
+                            service,
+                            generatedSdkClientClass: this,
+                            errorResolver,
+                            errorDiscriminationStrategy,
+                            includeCredentialsOnCrossOriginRequests,
+                        });
+                    }
+                };
+
+                const getStreamingEndpointImplementation = (streamingResponse: StreamingResponse) =>
+                    new GeneratedStreamingEndpointImplementation({
                         packageId,
                         endpoint,
                         service,
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
-                        response: endpoint.streamingResponse,
+                        response: streamingResponse,
                     });
+
+                if (endpoint.sdkResponse == null) {
+                    return getNonStreamingEndpointImplementation();
                 }
-                if (neverThrowErrors) {
-                    return new GeneratedNonThrowingEndpointImplementation({
-                        packageId,
-                        endpoint,
-                        service,
-                        generatedSdkClientClass: this,
-                        errorResolver,
-                        errorDiscriminationStrategy,
-                        includeCredentialsOnCrossOriginRequests,
-                    });
-                } else {
-                    return new GeneratedThrowingEndpointImplementation({
-                        packageId,
-                        endpoint,
-                        service,
-                        generatedSdkClientClass: this,
-                        errorResolver,
-                        errorDiscriminationStrategy,
-                        includeCredentialsOnCrossOriginRequests,
-                    });
-                }
+
+                return SdkResponse._visit<GeneratedEndpointImplementation>(endpoint.sdkResponse, {
+                    nonStreaming: getNonStreamingEndpointImplementation,
+                    streaming: getStreamingEndpointImplementation,
+                    maybeStreaming: (maybeStreamingResponse) =>
+                        new GeneratedMaybeStreamingEndpointImplementation({
+                            endpoint,
+                            response: maybeStreamingResponse,
+                            nonStreamingEndpointImplementation: getNonStreamingEndpointImplementation(),
+                            streamingEndpointImplementation: getStreamingEndpointImplementation(
+                                maybeStreamingResponse.streaming
+                            ),
+                        }),
+                    _unknown: () => {
+                        throw new Error("Unknown SdkResponse type: " + endpoint.sdkResponse?.type);
+                    },
+                });
             });
         }
 
@@ -193,7 +217,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         for (const endpoint of this.generatedEndpointImplementations) {
-            const method = serviceClass.addMethod(endpoint.getImplementation(context));
+            const signature = endpoint.getSignature(context);
+            const method = serviceClass.addMethod({
+                name: endpoint.endpoint.name.camelCase.unsafeName,
+                parameters: signature.parameters,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode("Promise", [signature.returnTypeWithoutPromise])
+                ),
+                scope: Scope.Public,
+                isAsync: true,
+                statements: endpoint.getStatements(context).map(getTextOfTsNode),
+                overloads: endpoint.getOverloads(context).map((overload) => ({
+                    parameters: overload.parameters,
+                    returnType: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
+                    ),
+                })),
+            });
             maybeAddDocs(method, endpoint.getDocs(context));
         }
 

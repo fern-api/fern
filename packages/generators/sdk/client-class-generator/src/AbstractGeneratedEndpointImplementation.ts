@@ -8,19 +8,9 @@ import {
 } from "@fern-fern/ir-model/http";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
-import {
-    MethodDeclarationStructure,
-    OptionalKind,
-    ParameterDeclarationStructure,
-    Scope,
-    StatementStructures,
-    StructureKind,
-    ts,
-    VariableDeclarationKind,
-    WriterFunction,
-} from "ts-morph";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import urlJoin from "url-join";
-import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
+import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "./request-parameter/RequestBodyParameter";
@@ -42,9 +32,9 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     protected static RESPONSE_VARIABLE_NAME = "_response";
     protected static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
 
+    public readonly endpoint: HttpEndpoint;
     protected packageId: PackageId;
     protected service: HttpService;
-    protected endpoint: HttpEndpoint;
     protected generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private requestParameter: RequestParameter | undefined;
     private includeCredentialsOnCrossOriginRequests: boolean;
@@ -76,14 +66,17 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                 : undefined;
     }
 
-    public getImplementation(context: SdkClientClassContext): OptionalKind<MethodDeclarationStructure> {
+    public getOverloads(): EndpointSignature[] {
+        return [];
+    }
+
+    public getSignature(
+        context: SdkClientClassContext,
+        { requestBodyIntersection }: { requestBodyIntersection?: ts.TypeNode } = {}
+    ): EndpointSignature {
         return {
-            name: this.endpoint.name.camelCase.unsafeName,
-            parameters: this.getEndpointParameters(context),
-            returnType: getTextOfTsNode(ts.factory.createTypeReferenceNode("Promise", [this.getResponseType(context)])),
-            scope: Scope.Public,
-            isAsync: true,
-            statements: this.generateMethodBody(context),
+            parameters: this.getEndpointParameters(context, { requestBodyIntersection }),
+            returnTypeWithoutPromise: this.getResponseType(context),
         };
     }
 
@@ -102,7 +95,14 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return parts.join("\n");
     }
 
-    private getEndpointParameters(context: SdkClientClassContext): OptionalKind<ParameterDeclarationStructure>[] {
+    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
+        return this.requestParameter?.getReferenceToRequestBody(context);
+    }
+
+    private getEndpointParameters(
+        context: SdkClientClassContext,
+        { requestBodyIntersection }: { requestBodyIntersection: ts.TypeNode | undefined }
+    ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
             parameters.push({
@@ -111,7 +111,9 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             });
         }
         if (this.requestParameter != null) {
-            parameters.push(this.requestParameter.getParameterDeclaration(context));
+            parameters.push(
+                this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
+            );
         }
         parameters.push(...this.getAdditionalEndpointParameters(context));
         return parameters;
@@ -125,34 +127,40 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return pathParameter.name.camelCase.unsafeName;
     }
 
-    private generateMethodBody(context: SdkClientClassContext): (StatementStructures | WriterFunction | string)[] {
-        const statements: (StatementStructures | WriterFunction | string)[] = [];
+    public getStatements(context: SdkClientClassContext): ts.Statement[] {
+        const statements: ts.Statement[] = [];
 
         let urlSearchParamsVariable: ts.Expression | undefined;
         if (this.requestParameter != null) {
-            statements.push(...this.requestParameter.getInitialStatements(context).map(getTextOfTsNode));
+            statements.push(...this.requestParameter.getInitialStatements(context));
             const queryParameters = this.requestParameter.getAllQueryParameters(context);
             if (queryParameters.length > 0) {
-                statements.push({
-                    kind: StructureKind.VariableStatement,
-                    declarationKind: VariableDeclarationKind.Const,
-                    declarations: [
-                        {
-                            name: AbstractGeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME,
-                            initializer: getTextOfTsNode(
-                                ts.factory.createNewExpression(
-                                    ts.factory.createIdentifier("URLSearchParams"),
+                statements.push(
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    AbstractGeneratedEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME,
                                     undefined,
-                                    []
-                                )
-                            ),
-                        },
-                    ],
-                });
+                                    undefined,
+                                    ts.factory.createNewExpression(
+                                        ts.factory.createIdentifier("URLSearchParams"),
+                                        undefined,
+                                        []
+                                    )
+                                ),
+                            ],
+                            ts.NodeFlags.Const
+                        )
+                    )
+                );
                 for (const queryParameter of queryParameters) {
                     statements.push(
-                        ...this.requestParameter
-                            .withQueryParameter(queryParameter, context, (referenceToQueryParameter) => {
+                        ...this.requestParameter.withQueryParameter(
+                            queryParameter,
+                            context,
+                            (referenceToQueryParameter) => {
                                 return [
                                     ts.factory.createExpressionStatement(
                                         ts.factory.createCallExpression(
@@ -173,8 +181,8 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                                         )
                                     ),
                                 ];
-                            })
-                            .map(getTextOfTsNode)
+                            }
+                        )
                     );
                 }
                 urlSearchParamsVariable = ts.factory.createIdentifier(
@@ -195,7 +203,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
 
         statements.push(...this.invokeFetcher(fetcherArgs, context));
 
-        statements.push(...this.getReturnResponseStatements(context).map(getTextOfTsNode));
+        statements.push(...this.getReturnResponseStatements(context));
 
         return statements;
     }
@@ -343,10 +351,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         context: SdkClientClassContext
     ): OptionalKind<ParameterDeclarationStructure>[];
     protected abstract getAdditionalDocLines(context: SdkClientClassContext): string[];
-    protected abstract invokeFetcher(
-        fetcherArgs: Fetcher.Args,
-        context: SdkClientClassContext
-    ): (StatementStructures | WriterFunction | string)[];
+    protected abstract invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[];
     protected abstract getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[];
     protected abstract getResponseType(context: SdkClientClassContext): ts.TypeNode;
 }

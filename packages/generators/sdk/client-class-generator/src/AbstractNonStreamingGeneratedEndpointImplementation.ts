@@ -1,15 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
-import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { Fetcher, PackageId } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
-import {
-    OptionalKind,
-    ParameterDeclarationStructure,
-    StatementStructures,
-    StructureKind,
-    ts,
-    VariableDeclarationKind,
-    WriterFunction,
-} from "ts-morph";
+import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { AbstractGeneratedEndpointImplementation } from "./AbstractGeneratedEndpointImplementation";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 
@@ -67,25 +59,24 @@ export abstract class AbstractNonStreamingGeneratedEndpointImplementation extend
         return [];
     }
 
-    protected invokeFetcher(
-        fetcherArgs: Fetcher.Args,
-        context: SdkClientClassContext
-    ): (StatementStructures | WriterFunction | string)[] {
+    protected invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[] {
         return [
-            {
-                kind: StructureKind.VariableStatement,
-                declarationKind: VariableDeclarationKind.Const,
-                declarations: [
-                    {
-                        name: AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME,
-                        initializer: getTextOfTsNode(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME,
+                            undefined,
+                            undefined,
                             context.base.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
                             })
                         ),
-                    },
-                ],
-            },
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
         ];
     }
 
