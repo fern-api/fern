@@ -227,6 +227,41 @@
                 },
                 "required": ["enum"],
                 "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "availability": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                  },
+                  "audiences": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                  },
+                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "union": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        { "type": "string" },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "docs": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                            },
+                            "type": { "type": "string" }
+                          },
+                          "required": ["type"],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "discriminated": { "type": "boolean", "const": false }
+                },
+                "required": ["union", "discriminated"],
+                "additionalProperties": false
               }
             ]
           }
