@@ -23,6 +23,18 @@ just have one API, then `api` is a sufficient name.
 name: api
 ```
 
+## API docs
+
+You can define top level API docs. These docs will come through in the
+OpenAPI spec and Postman Collection.
+
+```yaml api.yml
+name: api
+docs: |
+  ## Header
+  This API provides access to...
+```
+
 ## Authentication
 
 You can specify the authentication scheme used by your API.
