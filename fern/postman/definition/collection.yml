@@ -22,6 +22,7 @@ types:
     properties:
       name: string
       schema: string
+      description: optional<string>
 
   PostmanCollectionItem:
     discriminant:

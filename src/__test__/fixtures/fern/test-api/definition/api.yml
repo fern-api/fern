@@ -1,6 +1,10 @@
 name: blog-post-api
 display-name: Blog Post API
 auth: apiKey
+docs: |
+  These are my docs.
+  ## Welcome to my title
+  More docs with [links](http://localhost.com)
 auth-schemes:
   apiKey:
     header: X-API-Key

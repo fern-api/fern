@@ -26,6 +26,7 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Post
         info: {
             name: ir.apiDisplayName ?? startCase(id.originalName),
             schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+            description: ir.apiDocs ?? undefined,
         },
         variable: [
             {
