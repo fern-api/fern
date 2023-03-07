@@ -19,7 +19,7 @@ import {
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getSingleUnionTypeProperties, getUnionDiscriminant } from "./convertUnionTypeDeclaration";
+import { getSingleUnionTypeProperties, getUnionDiscriminant } from "./convertDiscriminatedUnionTypeDeclaration";
 
 export function convertTypeExample({
     typeName,
@@ -62,7 +62,7 @@ export function convertTypeExample({
                 exampleResolver,
             });
         },
-        union: (rawUnion) => {
+        discriminatedUnion: (rawUnion) => {
             const discriminant = getUnionDiscriminant(rawUnion);
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
@@ -108,6 +108,9 @@ export function convertTypeExample({
             return ExampleTypeShape.enum({
                 wireValue: example,
             });
+        },
+        undiscriminatedUnion: () => {
+            throw new Error("Unsupported!");
         },
     });
 }

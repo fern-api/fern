@@ -6,13 +6,13 @@ export {
     DEFAULT_REQUEST_PARAMETER_NAME,
 } from "./converters/services/convertHttpSdkRequest";
 export { getHeaderName, getQueryParameterName } from "./converters/services/convertHttpService";
-export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
-export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
 export {
     getSingleUnionTypeName,
     getUnionDiscriminant,
     getUnionDiscriminantName,
-} from "./converters/type-declarations/convertUnionTypeDeclaration";
+} from "./converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
+export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
+export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
 export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
 export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";

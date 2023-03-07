@@ -42,7 +42,7 @@ export function getReferencedTypesFromRawDeclaration({
             }
             return types;
         },
-        union: (unionDeclaration) => {
+        discriminatedUnion: (unionDeclaration) => {
             return Object.values(unionDeclaration.union).reduce<string[]>((types, singleUnionType) => {
                 const rawType = typeof singleUnionType === "string" ? singleUnionType : singleUnionType.type;
                 if (typeof rawType === "string") {
@@ -51,6 +51,7 @@ export function getReferencedTypesFromRawDeclaration({
                 return types;
             }, []);
         },
+        undiscriminatedUnion: () => [],
         enum: () => [],
     });
 

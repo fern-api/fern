@@ -107,7 +107,7 @@ export async function visitTypeDeclaration({
                 examples: visitExamples,
             });
         },
-        union: async (union) => {
+        discriminatedUnion: async (union) => {
             await visitObject(union, {
                 docs: createDocsVisitor(visitor, nodePathForType),
                 discriminant: noop,
@@ -135,6 +135,9 @@ export async function visitTypeDeclaration({
                 audiences: noop,
                 examples: visitExamples,
             });
+        },
+        undiscriminatedUnion: async () => {
+            return;
         },
         enum: async (_enum) => {
             await visitObject(_enum, {

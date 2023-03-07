@@ -2,9 +2,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { constructFernFileContext, ResolvedType, TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
+    isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUnionDefinition,
+    isRawUndiscriminatedUnionDefinition,
     ServiceFileSchema,
 } from "@fern-api/yaml-schema";
 import { RuleRunnerArgs } from "./Rule";
@@ -46,7 +47,11 @@ export class ComplexTypeDetector {
     }
 
     private isNamedTypeComplex(type: ResolvedType.Named): boolean {
-        if (isRawObjectDefinition(type.declaration) || isRawUnionDefinition(type.declaration)) {
+        if (
+            isRawObjectDefinition(type.declaration) ||
+            isRawDiscriminatedUnionDefinition(type.declaration) ||
+            isRawUndiscriminatedUnionDefinition(type.declaration)
+        ) {
             return true;
         }
         if (isRawEnumDefinition(type.declaration)) {

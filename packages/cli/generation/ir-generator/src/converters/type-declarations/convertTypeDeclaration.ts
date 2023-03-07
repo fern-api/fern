@@ -6,10 +6,11 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
+import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
 import { convertTypeExample } from "./convertExampleType";
 import { convertObjectTypeDeclaration } from "./convertObjectTypeDeclaration";
-import { convertUnionTypeDeclaration } from "./convertUnionTypeDeclaration";
+import { convertUndiscriminatedUnionTypeDeclaration } from "./convertUndiscriminatedUnionTypeDeclaration";
 import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRawDeclaration";
 
 export function convertTypeDeclaration({
@@ -72,7 +73,8 @@ export function convertType({
     return visitRawTypeDeclaration<Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
-        union: (union) => convertUnionTypeDeclaration({ union, file, typeResolver }),
+        discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),
+        undiscriminatedUnion: () => convertUndiscriminatedUnionTypeDeclaration(),
         enum: (enum_) => convertEnumTypeDeclaration({ _enum: enum_, file }),
     });
 }
