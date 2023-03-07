@@ -63627,3 +63627,1739 @@ exports[`ir {"fixtureName":"simple"} 2`] = `
     }
 }"
 `;
+
+exports[`ir {"fixtureName":"streaming","language":"java"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": []
+    },
+    "headers": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "streaming:service": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "streaming",
+                            "camelCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAMING",
+                                "safeName": "STREAMING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Streaming",
+                                "safeName": "Streaming"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/movies",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    "sdkResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "streaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "maybeStreaming",
+                        "camelCase": {
+                            "unsafeName": "maybeStreaming",
+                            "safeName": "maybeStreaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "maybe_streaming",
+                            "safeName": "maybe_streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MAYBE_STREAMING",
+                            "safeName": "MAYBE_STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MaybeStreaming",
+                            "safeName": "MaybeStreaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/maybe-streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "name": {
+                            "originalName": "maybeStreamingRequest",
+                            "camelCase": {
+                                "unsafeName": "maybeStreamingRequest",
+                                "safeName": "maybeStreamingRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "maybe_streaming_request",
+                                "safeName": "maybe_streaming_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                "safeName": "MAYBE_STREAMING_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MaybeStreamingRequest",
+                                "safeName": "MaybeStreamingRequest"
+                            }
+                        },
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "stream",
+                                        "camelCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STREAM",
+                                            "safeName": "STREAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Stream",
+                                            "safeName": "Stream"
+                                        }
+                                    },
+                                    "wireValue": "stream"
+                                },
+                                "valueType": {
+                                    "primitive": "BOOLEAN",
+                                    "_type": "primitive"
+                                }
+                            }
+                        ],
+                        "type": "inlinedRequestBody"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "maybeStreamingRequest",
+                                "camelCase": {
+                                    "unsafeName": "maybeStreamingRequest",
+                                    "safeName": "maybeStreamingRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "maybe_streaming_request",
+                                    "safeName": "maybe_streaming_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                    "safeName": "MAYBE_STREAMING_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MaybeStreamingRequest",
+                                    "safeName": "MaybeStreamingRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "BOOLEAN",
+                            "_type": "primitive"
+                        }
+                    },
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "terminator": "[DONE]"
+                    },
+                    "sdkResponse": {
+                        "streaming": {
+                            "dataEventType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "terminator": "[DONE]"
+                        },
+                        "nonStreaming": {
+                            "responseBodyType": {
+                                "primitive": "BOOLEAN",
+                                "_type": "primitive"
+                            }
+                        },
+                        "condition": {
+                            "requestPropertyKey": "stream"
+                        },
+                        "type": "maybeStreaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "subpackages": {
+        "streaming:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "streaming",
+                    "camelCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAMING",
+                        "safeName": "STREAMING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Streaming",
+                        "safeName": "Streaming"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "streaming",
+                "camelCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "snakeCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "STREAMING",
+                    "safeName": "STREAMING"
+                },
+                "pascalCase": {
+                    "unsafeName": "Streaming",
+                    "safeName": "Streaming"
+                }
+            },
+            "service": "streaming:service",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "streaming:subpackage"
+        ],
+        "hasEndpointsInTree": true
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
+    }
+}"
+`;
+
+exports[`ir {"fixtureName":"streaming","language":"python"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": []
+    },
+    "headers": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "streaming:service": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "streaming",
+                            "camelCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAMING",
+                                "safeName": "STREAMING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Streaming",
+                                "safeName": "Streaming"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/movies",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    "sdkResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "streaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "maybeStreaming",
+                        "camelCase": {
+                            "unsafeName": "maybeStreaming",
+                            "safeName": "maybeStreaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "maybe_streaming",
+                            "safeName": "maybe_streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MAYBE_STREAMING",
+                            "safeName": "MAYBE_STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MaybeStreaming",
+                            "safeName": "MaybeStreaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/maybe-streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "name": {
+                            "originalName": "maybeStreamingRequest",
+                            "camelCase": {
+                                "unsafeName": "maybeStreamingRequest",
+                                "safeName": "maybeStreamingRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "maybe_streaming_request",
+                                "safeName": "maybe_streaming_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                "safeName": "MAYBE_STREAMING_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MaybeStreamingRequest",
+                                "safeName": "MaybeStreamingRequest"
+                            }
+                        },
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "stream",
+                                        "camelCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STREAM",
+                                            "safeName": "STREAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Stream",
+                                            "safeName": "Stream"
+                                        }
+                                    },
+                                    "wireValue": "stream"
+                                },
+                                "valueType": {
+                                    "primitive": "BOOLEAN",
+                                    "_type": "primitive"
+                                }
+                            }
+                        ],
+                        "type": "inlinedRequestBody"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "maybeStreamingRequest",
+                                "camelCase": {
+                                    "unsafeName": "maybeStreamingRequest",
+                                    "safeName": "maybeStreamingRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "maybe_streaming_request",
+                                    "safeName": "maybe_streaming_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                    "safeName": "MAYBE_STREAMING_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MaybeStreamingRequest",
+                                    "safeName": "MaybeStreamingRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "BOOLEAN",
+                            "_type": "primitive"
+                        }
+                    },
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "terminator": "[DONE]"
+                    },
+                    "sdkResponse": {
+                        "streaming": {
+                            "dataEventType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "terminator": "[DONE]"
+                        },
+                        "nonStreaming": {
+                            "responseBodyType": {
+                                "primitive": "BOOLEAN",
+                                "_type": "primitive"
+                            }
+                        },
+                        "condition": {
+                            "requestPropertyKey": "stream"
+                        },
+                        "type": "maybeStreaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "subpackages": {
+        "streaming:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "streaming",
+                    "camelCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAMING",
+                        "safeName": "STREAMING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Streaming",
+                        "safeName": "Streaming"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "streaming",
+                "camelCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "snakeCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "STREAMING",
+                    "safeName": "STREAMING"
+                },
+                "pascalCase": {
+                    "unsafeName": "Streaming",
+                    "safeName": "Streaming"
+                }
+            },
+            "service": "streaming:service",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "streaming:subpackage"
+        ],
+        "hasEndpointsInTree": true
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
+    }
+}"
+`;
+
+exports[`ir {"fixtureName":"streaming","language":"typescript"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": []
+    },
+    "headers": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "streaming:service": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "streaming",
+                            "camelCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAMING",
+                                "safeName": "STREAMING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Streaming",
+                                "safeName": "Streaming"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/movies",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    "sdkResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "streaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "maybeStreaming",
+                        "camelCase": {
+                            "unsafeName": "maybeStreaming",
+                            "safeName": "maybeStreaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "maybe_streaming",
+                            "safeName": "maybe_streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MAYBE_STREAMING",
+                            "safeName": "MAYBE_STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MaybeStreaming",
+                            "safeName": "MaybeStreaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/maybe-streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "name": {
+                            "originalName": "maybeStreamingRequest",
+                            "camelCase": {
+                                "unsafeName": "maybeStreamingRequest",
+                                "safeName": "maybeStreamingRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "maybe_streaming_request",
+                                "safeName": "maybe_streaming_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                "safeName": "MAYBE_STREAMING_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MaybeStreamingRequest",
+                                "safeName": "MaybeStreamingRequest"
+                            }
+                        },
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "stream",
+                                        "camelCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STREAM",
+                                            "safeName": "STREAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Stream",
+                                            "safeName": "Stream"
+                                        }
+                                    },
+                                    "wireValue": "stream"
+                                },
+                                "valueType": {
+                                    "primitive": "BOOLEAN",
+                                    "_type": "primitive"
+                                }
+                            }
+                        ],
+                        "type": "inlinedRequestBody"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "maybeStreamingRequest",
+                                "camelCase": {
+                                    "unsafeName": "maybeStreamingRequest",
+                                    "safeName": "maybeStreamingRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "maybe_streaming_request",
+                                    "safeName": "maybe_streaming_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                    "safeName": "MAYBE_STREAMING_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MaybeStreamingRequest",
+                                    "safeName": "MaybeStreamingRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "BOOLEAN",
+                            "_type": "primitive"
+                        }
+                    },
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "terminator": "[DONE]"
+                    },
+                    "sdkResponse": {
+                        "streaming": {
+                            "dataEventType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "terminator": "[DONE]"
+                        },
+                        "nonStreaming": {
+                            "responseBodyType": {
+                                "primitive": "BOOLEAN",
+                                "_type": "primitive"
+                            }
+                        },
+                        "condition": {
+                            "requestPropertyKey": "stream"
+                        },
+                        "type": "maybeStreaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "subpackages": {
+        "streaming:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "streaming",
+                    "camelCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAMING",
+                        "safeName": "STREAMING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Streaming",
+                        "safeName": "Streaming"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "streaming",
+                "camelCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "snakeCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "STREAMING",
+                    "safeName": "STREAMING"
+                },
+                "pascalCase": {
+                    "unsafeName": "Streaming",
+                    "safeName": "Streaming"
+                }
+            },
+            "service": "streaming:service",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "streaming:subpackage"
+        ],
+        "hasEndpointsInTree": true
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
+    }
+}"
+`;
+
+exports[`ir {"fixtureName":"streaming"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": []
+    },
+    "headers": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "streaming:service": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "streaming",
+                            "camelCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "streaming",
+                                "safeName": "streaming"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAMING",
+                                "safeName": "STREAMING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Streaming",
+                                "safeName": "Streaming"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/movies",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    "sdkResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "streaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "maybeStreaming",
+                        "camelCase": {
+                            "unsafeName": "maybeStreaming",
+                            "safeName": "maybeStreaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "maybe_streaming",
+                            "safeName": "maybe_streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "MAYBE_STREAMING",
+                            "safeName": "MAYBE_STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "MaybeStreaming",
+                            "safeName": "MaybeStreaming"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/maybe-streaming",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "name": {
+                            "originalName": "maybeStreamingRequest",
+                            "camelCase": {
+                                "unsafeName": "maybeStreamingRequest",
+                                "safeName": "maybeStreamingRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "maybe_streaming_request",
+                                "safeName": "maybe_streaming_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                "safeName": "MAYBE_STREAMING_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "MaybeStreamingRequest",
+                                "safeName": "MaybeStreamingRequest"
+                            }
+                        },
+                        "extends": [],
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "stream",
+                                        "camelCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "stream",
+                                            "safeName": "stream"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STREAM",
+                                            "safeName": "STREAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Stream",
+                                            "safeName": "Stream"
+                                        }
+                                    },
+                                    "wireValue": "stream"
+                                },
+                                "valueType": {
+                                    "primitive": "BOOLEAN",
+                                    "_type": "primitive"
+                                }
+                            }
+                        ],
+                        "type": "inlinedRequestBody"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "maybeStreamingRequest",
+                                "camelCase": {
+                                    "unsafeName": "maybeStreamingRequest",
+                                    "safeName": "maybeStreamingRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "maybe_streaming_request",
+                                    "safeName": "maybe_streaming_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MAYBE_STREAMING_REQUEST",
+                                    "safeName": "MAYBE_STREAMING_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MaybeStreamingRequest",
+                                    "safeName": "MaybeStreamingRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "BOOLEAN",
+                            "_type": "primitive"
+                        }
+                    },
+                    "streamingResponse": {
+                        "dataEventType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "terminator": "[DONE]"
+                    },
+                    "sdkResponse": {
+                        "streaming": {
+                            "dataEventType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "terminator": "[DONE]"
+                        },
+                        "nonStreaming": {
+                            "responseBodyType": {
+                                "primitive": "BOOLEAN",
+                                "_type": "primitive"
+                            }
+                        },
+                        "condition": {
+                            "requestPropertyKey": "stream"
+                        },
+                        "type": "maybeStreaming"
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "subpackages": {
+        "streaming:subpackage": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "streaming",
+                        "camelCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "streaming",
+                            "safeName": "streaming"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAMING",
+                            "safeName": "STREAMING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Streaming",
+                            "safeName": "Streaming"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "streaming",
+                    "camelCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "streaming",
+                        "safeName": "streaming"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAMING",
+                        "safeName": "STREAMING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Streaming",
+                        "safeName": "Streaming"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "streaming",
+                "camelCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "snakeCase": {
+                    "unsafeName": "streaming",
+                    "safeName": "streaming"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "STREAMING",
+                    "safeName": "STREAMING"
+                },
+                "pascalCase": {
+                    "unsafeName": "Streaming",
+                    "safeName": "Streaming"
+                }
+            },
+            "service": "streaming:service",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "streaming:subpackage"
+        ],
+        "hasEndpointsInTree": true
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false
+    }
+}"
+`;
