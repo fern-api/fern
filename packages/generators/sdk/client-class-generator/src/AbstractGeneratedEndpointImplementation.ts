@@ -45,7 +45,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     protected packageId: PackageId;
     protected service: HttpService;
     protected endpoint: HttpEndpoint;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    protected generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private requestParameter: RequestParameter | undefined;
     private includeCredentialsOnCrossOriginRequests: boolean;
 
@@ -102,8 +102,6 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return parts.join("\n");
     }
 
-    protected abstract getAdditionalDocLines(context: SdkClientClassContext): string[];
-
     private getEndpointParameters(context: SdkClientClassContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
@@ -115,6 +113,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         if (this.requestParameter != null) {
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
+        parameters.push(...this.getAdditionalEndpointParameters(context));
         return parameters;
     }
 
@@ -184,40 +183,31 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
             }
         }
 
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
-        const url = this.buildUrl(context);
-
         const fetcherArgs: Fetcher.Args = {
-            url:
-                url != null
-                    ? context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url])
-                    : referenceToEnvironment,
+            url: this.getReferenceToEnvironment(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
-            headers: this.getHeadersForFetcherArgs(context),
+            headers: this.getHeaders(context),
             queryParameters: urlSearchParamsVariable,
             body: this.getSerializedRequestBody(context),
             timeoutMs: undefined,
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
         };
 
-        statements.push({
-            kind: StructureKind.VariableStatement,
-            declarationKind: VariableDeclarationKind.Const,
-            declarations: [
-                {
-                    name: AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME,
-                    initializer: getTextOfTsNode(
-                        context.base.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
-                            referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                        })
-                    ),
-                },
-            ],
-        });
+        statements.push(...this.invokeFetcher(fetcherArgs, context));
 
         statements.push(...this.getReturnResponseStatements(context).map(getTextOfTsNode));
 
         return statements;
+    }
+
+    private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
+        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
+        const url = this.buildUrl(context);
+        if (url != null) {
+            return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+        } else {
+            return referenceToEnvironment;
+        }
     }
 
     private buildUrl(context: SdkClientClassContext): ts.Expression | undefined {
@@ -293,7 +283,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         };
     }
 
-    private getHeadersForFetcherArgs(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
+    private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
         const elements: GeneratedHeader[] = [];
 
         const authorizationHederValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
@@ -349,46 +339,14 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
         return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name);
     }
 
-    private getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[] {
-        return [this.getReturnResponseIfOk(context), ...this.getReturnFailedResponse(context)];
-    }
-
-    private getReturnResponseIfOk(context: SdkClientClassContext): ts.Statement {
-        return ts.factory.createIfStatement(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME),
-                ts.factory.createIdentifier("ok")
-            ),
-            ts.factory.createBlock([ts.factory.createReturnStatement(this.getReturnValueForOkResponse(context))], true)
-        );
-    }
-
-    protected getOkResponseBody(context: SdkClientClassContext): ts.Expression {
-        const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
-        return generatedEndpointTypeSchemas.deserializeResponse(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier(AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME),
-                context.base.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
-            ),
-            context
-        );
-    }
-
-    protected getReferenceToError(context: SdkClientClassContext): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier(AbstractGeneratedEndpointImplementation.RESPONSE_VARIABLE_NAME),
-            context.base.coreUtilities.fetcher.APIResponse.FailedResponse.error
-        );
-    }
-
-    protected getReferenceToErrorBody(context: SdkClientClassContext): ts.Expression {
-        return ts.factory.createPropertyAccessExpression(
-            this.getReferenceToError(context),
-            context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
-        );
-    }
-
+    protected abstract getAdditionalEndpointParameters(
+        context: SdkClientClassContext
+    ): OptionalKind<ParameterDeclarationStructure>[];
+    protected abstract getAdditionalDocLines(context: SdkClientClassContext): string[];
+    protected abstract invokeFetcher(
+        fetcherArgs: Fetcher.Args,
+        context: SdkClientClassContext
+    ): (StatementStructures | WriterFunction | string)[];
+    protected abstract getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[];
     protected abstract getResponseType(context: SdkClientClassContext): ts.TypeNode;
-    protected abstract getReturnValueForOkResponse(context: SdkClientClassContext): ts.Expression | undefined;
-    protected abstract getReturnFailedResponse(context: SdkClientClassContext): ts.Statement[];
 }

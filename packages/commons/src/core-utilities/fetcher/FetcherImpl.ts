@@ -19,13 +19,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
 
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
-            url: "url",
-            method: "method",
-            headers: "headers",
-            queryParameters: "queryParameters",
-            body: "body",
-            timeoutMs: "timeoutMs",
-            withCredentials: "withCredentials",
+            properties: {
+                url: "url",
+                method: "method",
+                headers: "headers",
+                queryParameters: "queryParameters",
+                body: "body",
+                timeoutMs: "timeoutMs",
+                withCredentials: "withCredentials",
+            },
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args"),
         },
         Error: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Error"),
@@ -58,31 +61,39 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         _getReferenceTo: this.withExportedName("fetcher", (fetcher) => () => fetcher.getExpression()),
         _invoke: (args: Fetcher.Args, { referenceToFetcher }: { referenceToFetcher: ts.Expression }): ts.Expression => {
             const properties: ts.PropertyAssignment[] = [
-                ts.factory.createPropertyAssignment(this.Fetcher.Args.url, args.url),
-                ts.factory.createPropertyAssignment(this.Fetcher.Args.method, args.method),
+                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.url, args.url),
+                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method),
             ];
             if (args.headers.length > 0) {
                 properties.push(
                     ts.factory.createPropertyAssignment(
-                        this.Fetcher.Args.headers,
+                        this.Fetcher.Args.properties.headers,
                         ts.factory.createObjectLiteralExpression(args.headers, true)
                     )
                 );
             }
             if (args.queryParameters != null) {
                 properties.push(
-                    ts.factory.createPropertyAssignment(this.Fetcher.Args.queryParameters, args.queryParameters)
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.queryParameters,
+                        args.queryParameters
+                    )
                 );
             }
             if (args.body != null) {
-                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.body, args.body));
+                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.body, args.body));
             }
             if (args.timeoutMs != null) {
-                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.timeoutMs, args.timeoutMs));
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.timeoutMs, args.timeoutMs)
+                );
             }
             if (args.withCredentials) {
                 properties.push(
-                    ts.factory.createPropertyAssignment(this.Fetcher.Args.withCredentials, ts.factory.createTrue())
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.withCredentials,
+                        ts.factory.createTrue()
+                    )
                 );
             }
 

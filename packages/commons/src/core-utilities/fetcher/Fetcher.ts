@@ -1,8 +1,12 @@
+import { Fetcher as ActualFetcher } from "@fern-typescript/fetcher";
 import { ts } from "ts-morph";
 
 export interface Fetcher {
     readonly Fetcher: {
-        Args: { [Arg in keyof Fetcher.Args]-?: string };
+        Args: {
+            _getReferenceToType: () => ts.TypeNode;
+            properties: { [Arg in keyof ActualFetcher.Args]-?: Arg };
+        };
         Error: {
             _getReferenceToType: () => ts.TypeNode;
             reason: "reason";

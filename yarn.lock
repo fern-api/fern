@@ -1727,6 +1727,8 @@ __metadata:
     "@fern-api/logger": 0.0.248-7-gb4189be0
     "@fern-api/logging-execa": 0.0.248-7-gb4189be0
     "@fern-fern/ir-model": 0.0.1170
+    "@fern-typescript/fetcher": "workspace:*"
+    "@fern-typescript/streaming-fetcher": "workspace:*"
     "@fern-typescript/zurg": "workspace:*"
     "@types/decompress": ^4.2.4
     "@types/esutils": ^2.0.0
@@ -2051,7 +2053,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/fetcher@workspace:packages/core-utilities/fetcher":
+"@fern-typescript/fetcher@workspace:*, @fern-typescript/fetcher@workspace:packages/core-utilities/fetcher":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/fetcher@workspace:packages/core-utilities/fetcher"
   dependencies:
@@ -2320,6 +2322,24 @@ __metadata:
     jest: ^28.1.3
     prettier: ^2.7.1
     ts-morph: ^15.1.0
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/streaming-fetcher@workspace:*, @fern-typescript/streaming-fetcher@workspace:packages/core-utilities/streaming-fetcher":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/streaming-fetcher@workspace:packages/core-utilities/streaming-fetcher"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    axios: ^0.27.2
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft

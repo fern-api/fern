@@ -14,4 +14,8 @@ export interface GeneratedSdkEndpointTypeSchemas extends GeneratedFile<SdkEndpoi
         context: SdkEndpointTypeSchemasContext
     ) => ts.Expression;
     deserializeError: (referenceToRawError: ts.Expression, context: SdkEndpointTypeSchemasContext) => ts.Expression;
+    deserializeStreamData: (
+        referenceToRawStreamData: ts.Expression,
+        context: SdkEndpointTypeSchemasContext
+    ) => ts.Expression;
 }

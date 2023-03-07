@@ -1,0 +1,26 @@
+service:
+  base-path: /{param}
+  auth: false
+  path-parameters:
+    param: string
+  endpoints:
+    stream:
+      path: /stream
+      method: POST
+      request:
+        name: StreamRequest
+        query-parameters:
+          query: optional<string>
+        body: boolean
+      response-stream:
+        data: StreamPart
+    streamBooleans:
+      path: /stream-booleans
+      method: POST
+      response-stream:
+        data: boolean
+
+types:
+  StreamPart:
+    properties:
+      foo: string

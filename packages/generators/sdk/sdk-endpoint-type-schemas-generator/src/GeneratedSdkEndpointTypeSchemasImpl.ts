@@ -25,11 +25,13 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
 export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpointTypeSchemas {
     private static REQUEST_SCHEMA_NAME = "Request";
     private static RESPONSE_SCHEMA_NAME = "Response";
+    private static STREAM_DATA_SCHEMA_NAME = "StreamData";
 
     private endpoint: HttpEndpoint;
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
-    private GeneratedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
+    private generatedStreamDataSchema: GeneratedEndpointTypeSchemaImpl | undefined;
+    private generatedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
 
     constructor({
         packageId,
@@ -89,7 +91,30 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             }
         }
 
-        this.GeneratedSdkErrorSchema = shouldGenerateErrors
+        if (endpoint.streamingResponse != null) {
+            switch (endpoint.streamingResponse.dataEventType._type) {
+                case "primitive":
+                case "container":
+                    this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
+                        packageId,
+                        service,
+                        endpoint,
+                        typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
+                        type: endpoint.streamingResponse.dataEventType,
+                    });
+                    break;
+                // named response bodies are not generated - consumers should
+                // (de)serialize the named type directly.
+                // unknown response bodies don't need to be deserialized.
+                case "named":
+                case "unknown":
+                    break;
+                default:
+                    assertNever(endpoint.streamingResponse.dataEventType);
+            }
+        }
+
+        this.generatedSdkErrorSchema = shouldGenerateErrors
             ? this.getGeneratedEndpointErrorSchema({
                   packageId,
                   endpoint,
@@ -136,7 +161,12 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             context.base.sourceFile.addStatements("\n");
         }
 
-        this.GeneratedSdkErrorSchema?.writeToFile(context);
+        if (this.generatedStreamDataSchema != null) {
+            this.generatedStreamDataSchema.writeSchemaToFile(context);
+            context.base.sourceFile.addStatements("\n");
+        }
+
+        this.generatedSdkErrorSchema?.writeToFile(context);
     }
 
     public getReferenceToRawResponse(context: SdkEndpointTypeSchemasContext): ts.TypeNode {
@@ -147,10 +177,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     }
 
     public getReferenceToRawError(context: SdkEndpointTypeSchemasContext): ts.TypeNode {
-        if (this.GeneratedSdkErrorSchema == null) {
+        if (this.generatedSdkErrorSchema == null) {
             throw new Error("Cannot get reference to raw endpoint error because it is not defined.");
         }
-        return this.GeneratedSdkErrorSchema.getReferenceToRawShape(context);
+        return this.generatedSdkErrorSchema.getReferenceToRawShape(context);
     }
 
     public serializeRequest(
@@ -226,13 +256,49 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     }
 
     public deserializeError(referenceToRawError: ts.Expression, context: SdkEndpointTypeSchemasContext): ts.Expression {
-        if (this.GeneratedSdkErrorSchema == null) {
+        if (this.generatedSdkErrorSchema == null) {
             throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
-        return this.GeneratedSdkErrorSchema.getReferenceToZurgSchema(context).parseOrThrow(referenceToRawError, {
+        return this.generatedSdkErrorSchema.getReferenceToZurgSchema(context).parseOrThrow(referenceToRawError, {
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true,
             unrecognizedObjectKeys: "passthrough",
         });
+    }
+
+    public deserializeStreamData(
+        referenceToRawStreamData: ts.Expression,
+        context: SdkEndpointTypeSchemasContext
+    ): ts.Expression {
+        if (this.endpoint.streamingResponse == null) {
+            throw new Error("Cannot deserialize stream data because it's not defined");
+        }
+
+        switch (this.endpoint.streamingResponse.dataEventType._type) {
+            case "unknown":
+                return referenceToRawStreamData;
+            case "named":
+                return context.typeSchema
+                    .getSchemaOfNamedType(this.endpoint.streamingResponse.dataEventType, { isGeneratingSchema: false })
+                    .parse(referenceToRawStreamData, {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                    });
+            case "primitive":
+            case "container":
+                if (this.generatedStreamDataSchema == null) {
+                    throw new Error("No stream data schema was generated");
+                }
+                return this.generatedStreamDataSchema
+                    .getReferenceToZurgSchema(context)
+                    .parse(referenceToRawStreamData, {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                    });
+            default:
+                assertNever(this.endpoint.streamingResponse.dataEventType);
+        }
     }
 }

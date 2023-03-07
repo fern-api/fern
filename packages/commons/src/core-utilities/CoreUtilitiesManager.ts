@@ -12,6 +12,7 @@ import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./fetcher/FetcherImpl";
+import { StreamingFetcherImpl } from "./fetcher/StreamingFetcherImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
 
 export declare namespace CoreUtilitiesManager {
@@ -36,6 +37,7 @@ export class CoreUtilitiesManager {
         return {
             zurg: new ZurgImpl({ getReferenceToExport }),
             fetcher: new FetcherImpl({ getReferenceToExport }),
+            streamingFetcher: new StreamingFetcherImpl({ getReferenceToExport }),
             auth: new AuthImpl({ getReferenceToExport }),
             base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
         };

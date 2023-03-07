@@ -9,6 +9,7 @@ import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure
 import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedNonThrowingEndpointImplementation } from "./GeneratedNonThrowingEndpointImplementation";
+import { GeneratedStreamingEndpointImplementation } from "./GeneratedStreamingEndpointImplementation";
 import { GeneratedThrowingEndpointImplementation } from "./GeneratedThrowingEndpointImplementation";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
@@ -72,27 +73,39 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (service == null) {
             this.generatedEndpointImplementations = [];
         } else {
-            this.generatedEndpointImplementations = service.endpoints.map((endpoint) =>
-                neverThrowErrors
-                    ? new GeneratedNonThrowingEndpointImplementation({
-                          packageId,
-                          endpoint,
-                          service,
-                          generatedSdkClientClass: this,
-                          errorResolver,
-                          errorDiscriminationStrategy,
-                          includeCredentialsOnCrossOriginRequests,
-                      })
-                    : new GeneratedThrowingEndpointImplementation({
-                          packageId,
-                          endpoint,
-                          service,
-                          generatedSdkClientClass: this,
-                          errorResolver,
-                          errorDiscriminationStrategy,
-                          includeCredentialsOnCrossOriginRequests,
-                      })
-            );
+            this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
+                if (endpoint.streamingResponse != null) {
+                    return new GeneratedStreamingEndpointImplementation({
+                        packageId,
+                        endpoint,
+                        service,
+                        generatedSdkClientClass: this,
+                        includeCredentialsOnCrossOriginRequests,
+                        response: endpoint.streamingResponse,
+                    });
+                }
+                if (neverThrowErrors) {
+                    return new GeneratedNonThrowingEndpointImplementation({
+                        packageId,
+                        endpoint,
+                        service,
+                        generatedSdkClientClass: this,
+                        errorResolver,
+                        errorDiscriminationStrategy,
+                        includeCredentialsOnCrossOriginRequests,
+                    });
+                } else {
+                    return new GeneratedThrowingEndpointImplementation({
+                        packageId,
+                        endpoint,
+                        service,
+                        generatedSdkClientClass: this,
+                        errorResolver,
+                        errorDiscriminationStrategy,
+                        includeCredentialsOnCrossOriginRequests,
+                    });
+                }
+            });
         }
 
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(

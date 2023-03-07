@@ -3,6 +3,7 @@ import { GeneratedEndpointErrorUnion, SdkClientClassContext } from "@fern-typesc
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { AbstractGeneratedEndpointImplementation } from "./AbstractGeneratedEndpointImplementation";
+import { AbstractNonStreamingGeneratedEndpointImplementation } from "./AbstractNonStreamingGeneratedEndpointImplementation";
 
 export declare namespace GeneratedNonThrowingEndpointImplementation {
     export interface Init extends AbstractGeneratedEndpointImplementation.Init {
@@ -11,7 +12,7 @@ export declare namespace GeneratedNonThrowingEndpointImplementation {
     }
 }
 
-export class GeneratedNonThrowingEndpointImplementation extends AbstractGeneratedEndpointImplementation {
+export class GeneratedNonThrowingEndpointImplementation extends AbstractNonStreamingGeneratedEndpointImplementation {
     private errorResolver: ErrorResolver;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
 
