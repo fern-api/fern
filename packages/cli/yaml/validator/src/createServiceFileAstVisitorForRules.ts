@@ -57,6 +57,7 @@ export function createServiceFileAstVisitorForRules({
         ...createAstNodeVisitor("pathParameter"),
         ...createAstNodeVisitor("queryParameter"),
         ...createAstNodeVisitor("header"),
+        ...createAstNodeVisitor("streamCondition"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
         ...createAstNodeVisitor("exampleType"),

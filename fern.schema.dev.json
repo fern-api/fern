@@ -407,6 +407,13 @@
                       }
                     ]
                   },
+                  "stream-condition": { "type": "string" },
+                  "response-stream": {
+                    "type": "object",
+                    "properties": { "data": { "type": "string" }, "terminator": { "type": "string" } },
+                    "required": ["data"],
+                    "additionalProperties": false
+                  },
                   "errors": {
                     "type": "array",
                     "items": {

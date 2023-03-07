@@ -1,0 +1,22 @@
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    streaming:
+      path: /streaming
+      method: POST
+      response-stream:
+        data: string
+    maybeStreaming:
+      path: /maybe-streaming
+      method: POST
+      request:
+        name: maybeStreamingRequest
+        body:
+          properties:
+            stream: boolean
+      stream-condition: $request.stream
+      response: boolean
+      response-stream:
+        data: string
+        terminator: "[DONE]"

@@ -24,18 +24,12 @@ export const V8_TO_V7_MIGRATION: IrMigration<
     },
     migrateBackwards: (v8): IrVersions.V7.ir.IntermediateRepresentation => {
         return {
-            apiName: v8.apiName,
-            apiDisplayName: v8.apiDisplayName,
-            apiDocs: v8.apiDocs,
+            ...v8,
             auth: convertAuth(v8.auth),
             headers: v8.headers.map((header) => convertHeader(header)),
             types: v8.types.map((type) => convertTypeDeclaration(type)),
             errors: v8.errors.map((error) => convertErrorDeclaration(error)),
             services: v8.services.map((service) => convertHttpService(service)),
-            constants: v8.constants,
-            environments: v8.environments,
-            errorDiscriminationStrategy: v8.errorDiscriminationStrategy,
-            sdkConfig: v8.sdkConfig,
         };
     },
 };

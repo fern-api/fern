@@ -91,8 +91,11 @@ export class AudienceIrGraph {
                 },
             });
         }
-        if (httpEndpoint.response.type != null) {
-            populateReferencesFromTypeReference(httpEndpoint.response.type, referencedTypes);
+        if (httpEndpoint.response != null) {
+            populateReferencesFromTypeReference(httpEndpoint.response.responseBodyType, referencedTypes);
+        }
+        if (httpEndpoint.streamingResponse != null) {
+            populateReferencesFromTypeReference(httpEndpoint.streamingResponse.dataEventType, referencedTypes);
         }
         httpEndpoint.errors.forEach((responseError) => {
             referencedErrors.add(getErrorId(responseError.error));

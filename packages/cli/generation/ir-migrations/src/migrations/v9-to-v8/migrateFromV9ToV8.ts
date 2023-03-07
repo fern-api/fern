@@ -38,18 +38,10 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         }
 
         return {
-            apiName: v9.apiName,
-            apiDisplayName: v9.apiDisplayName,
-            apiDocs: v9.apiDocs,
-            auth: v9.auth,
-            headers: v9.headers,
+            ...v9,
             types: Object.values(v9.types),
             errors: Object.values(v9.errors),
             services: Object.values(v9.services),
-            constants: v9.constants,
-            environments: v9.environments,
-            errorDiscriminationStrategy: v9.errorDiscriminationStrategy,
-            sdkConfig: v9.sdkConfig,
         };
     },
 };

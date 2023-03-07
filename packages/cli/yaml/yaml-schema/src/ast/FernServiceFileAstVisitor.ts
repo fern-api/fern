@@ -30,6 +30,7 @@ export interface FernServiceFileAstNodeTypes {
     typeName: string;
     httpService: HttpServiceSchema;
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
+    streamCondition: { streamCondition: string | undefined; endpoint: HttpEndpointSchema };
     exampleHttpEndpointCall: {
         example: ExampleEndpointCallSchema;
         endpoint: HttpEndpointSchema;

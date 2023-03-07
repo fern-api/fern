@@ -4,6 +4,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { IrMigrationContext } from "./IrMigrationContext";
 import { V10_TO_V9_MIGRATION } from "./migrations/v10-to-v9/migrateFromV10ToV9";
 import { V11_TO_V10_MIGRATION } from "./migrations/v11-to-v10/migrateFromV11ToV10";
+import { V12_TO_V11_MIGRATION } from "./migrations/v12-to-v11/migrateFromV12ToV11";
 import { V2_TO_V1_MIGRATION } from "./migrations/v2-to-v1/migrateFromV2ToV1";
 import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
@@ -165,6 +166,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V12_TO_V11_MIGRATION)
     .withMigration(V11_TO_V10_MIGRATION)
     .withMigration(V10_TO_V9_MIGRATION)
     .withMigration(V9_TO_V8_MIGRATION)

@@ -24,15 +24,7 @@ export const V6_TO_V5_MIGRATION: IrMigration<
     },
     migrateBackwards: (v6, { taskContext, targetGenerator }): IrVersions.V5.ir.IntermediateRepresentation => {
         return {
-            apiName: v6.apiName,
-            apiDisplayName: v6.apiDisplayName,
-            apiDocs: v6.apiDocs,
-            auth: v6.auth,
-            headers: v6.headers,
-            types: v6.types,
-            services: v6.services,
-            errors: v6.errors,
-            constants: v6.constants,
+            ...v6,
             defaultEnvironment: v6.environments?.defaultEnvironment,
             environments:
                 v6.environments != null
@@ -55,8 +47,6 @@ export const V6_TO_V5_MIGRATION: IrMigration<
                           }
                       )
                     : [],
-            errorDiscriminationStrategy: v6.errorDiscriminationStrategy,
-            sdkConfig: v6.sdkConfig,
         };
     },
 };

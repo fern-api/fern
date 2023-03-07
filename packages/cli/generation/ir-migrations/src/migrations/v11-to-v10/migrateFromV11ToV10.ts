@@ -25,28 +25,15 @@ export const V11_TO_V10_MIGRATION: IrMigration<
     },
     migrateBackwards: (v11, context): IrVersions.V10.ir.IntermediateRepresentation => {
         return {
-            apiName: v11.apiName,
-            apiDisplayName: v11.apiDisplayName,
-            apiDocs: v11.apiDocs,
+            ...v11,
             auth: convertAuth(v11.auth, context),
-            headers: v11.headers,
-            types: v11.types,
-            errors: v11.errors,
-            services: v11.services,
-            constants: v11.constants,
-            environments: v11.environments,
-            errorDiscriminationStrategy: v11.errorDiscriminationStrategy,
-            sdkConfig: v11.sdkConfig,
-            rootPackage: v11.rootPackage,
-            subpackages: v11.subpackages,
         };
     },
 };
 
 function convertAuth(auth: IrVersions.V11.auth.ApiAuth, context: IrMigrationContext): IrVersions.V10.auth.ApiAuth {
     return {
-        docs: auth.docs,
-        requirement: auth.requirement,
+        ...auth,
         schemes: auth.schemes.map((scheme) => convertAuthScheme(scheme, context)),
     };
 }

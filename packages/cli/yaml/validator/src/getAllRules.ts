@@ -27,6 +27,7 @@ import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-cal
 import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
+import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 
 export function getAllRules(): Rule[] {
@@ -60,6 +61,7 @@ export function getAllRules(): Rule[] {
         ValidEndpointPathRule,
         NoConflictingEndpointPathsRule,
         ValidTypeNameRule,
+        ValidStreamConditionRule,
     ];
 }
 

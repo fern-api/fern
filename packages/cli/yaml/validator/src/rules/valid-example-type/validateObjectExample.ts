@@ -49,9 +49,7 @@ export function validateObjectExample({
     const allPropertiesByWireKey = keyBy(allPropertiesForObject, (property) => property.wireKey);
 
     // ensure required properties are present
-    const requiredProperties = allPropertiesForObject.filter(
-        (property) => property.isOptional != null && !property.isOptional
-    );
+    const requiredProperties = allPropertiesForObject.filter((property) => !property.isOptional);
     for (const requiredProperty of requiredProperties) {
         if (example[requiredProperty.wireKey] == null) {
             let message = `Example is missing required property "${requiredProperty.wireKey}"`;

@@ -43,7 +43,8 @@ function convertService(
                 type: convertTypeReference(header.valueType),
             })),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
-            response: irEndpoint.response.type != null ? convertTypeReference(irEndpoint.response.type) : undefined,
+            response:
+                irEndpoint.response != null ? convertTypeReference(irEndpoint.response.responseBodyType) : undefined,
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );

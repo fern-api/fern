@@ -408,8 +408,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "pathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "response": {
-                    },
                     "errors": [],
                     "examples": []
                 }
