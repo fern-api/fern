@@ -37,8 +37,8 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
     }
 
     protected getResponseType(context: SdkClientClassContext): ts.TypeNode {
-        return this.endpoint.response.type != null
-            ? context.type.getReferenceToType(this.endpoint.response.type).typeNode
+        return this.endpoint.response != null
+            ? context.type.getReferenceToType(this.endpoint.response.responseBodyType).typeNode
             : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }
 
@@ -264,6 +264,6 @@ export class GeneratedThrowingEndpointImplementation extends AbstractGeneratedEn
     }
 
     protected getReturnValueForOkResponse(context: SdkClientClassContext): ts.Expression | undefined {
-        return this.endpoint.response.type != null ? this.getOkResponseBody(context) : undefined;
+        return this.endpoint.response != null ? this.getOkResponseBody(context) : undefined;
     }
 }

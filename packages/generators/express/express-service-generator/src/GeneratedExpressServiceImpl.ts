@@ -208,8 +208,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                       })
                                     : undefined,
                             response:
-                                endpoint.response.type != null
-                                    ? context.type.getReferenceToType(endpoint.response.type).typeNode
+                                endpoint.response != null
+                                    ? context.type.getReferenceToType(endpoint.response.responseBodyType).typeNode
                                     : undefined,
                         })
                     ),
@@ -224,7 +224,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 undefined,
                                 ts.factory.createFunctionTypeNode(
                                     undefined,
-                                    endpoint.response.type != null
+                                    endpoint.response != null
                                         ? [
                                               ts.factory.createParameterDeclaration(
                                                   undefined,
@@ -232,7 +232,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                   undefined,
                                                   GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME,
                                                   undefined,
-                                                  context.type.getReferenceToType(endpoint.response.type).typeNode
+                                                  context.type.getReferenceToType(endpoint.response.responseBodyType)
+                                                      .typeNode
                                               ),
                                           ]
                                         : [],
@@ -585,7 +586,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                         ts.factory.createArrowFunction(
                                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                                             undefined,
-                                            endpoint.response.type != null
+                                            endpoint.response != null
                                                 ? [
                                                       ts.factory.createParameterDeclaration(
                                                           undefined,
@@ -600,7 +601,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                             ts.factory.createBlock(
                                                 [
                                                     ts.factory.createExpressionStatement(
-                                                        endpoint.response.type != null
+                                                        endpoint.response != null
                                                             ? context.base.externalDependencies.express.Response.json({
                                                                   referenceToExpressResponse: expressResponse,
                                                                   valueToSend: context.expressEndpointTypeSchemas

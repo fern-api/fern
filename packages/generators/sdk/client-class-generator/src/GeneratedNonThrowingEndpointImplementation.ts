@@ -35,9 +35,7 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
 
     protected getReturnValueForOkResponse(context: SdkClientClassContext): ts.Expression | undefined {
         return context.base.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
-            this.endpoint.response.type != null
-                ? this.getOkResponseBody(context)
-                : ts.factory.createIdentifier("undefined")
+            this.endpoint.response != null ? this.getOkResponseBody(context) : ts.factory.createIdentifier("undefined")
         );
     }
 
@@ -178,8 +176,8 @@ export class GeneratedNonThrowingEndpointImplementation extends AbstractGenerate
 
     protected getResponseType(context: SdkClientClassContext): ts.TypeNode {
         return context.base.coreUtilities.fetcher.APIResponse._getReferenceToType(
-            this.endpoint.response.type != null
-                ? context.type.getReferenceToType(this.endpoint.response.type).typeNode
+            this.endpoint.response != null
+                ? context.type.getReferenceToType(this.endpoint.response.responseBodyType).typeNode
                 : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)

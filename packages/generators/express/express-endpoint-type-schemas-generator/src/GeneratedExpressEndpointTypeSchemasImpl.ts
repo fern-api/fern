@@ -50,8 +50,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             }
         }
 
-        if (endpoint.response.type != null) {
-            switch (endpoint.response.type._type) {
+        if (endpoint.response != null) {
+            switch (endpoint.response.responseBodyType._type) {
                 case "primitive":
                 case "container":
                     this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -59,7 +59,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         service,
                         endpoint,
                         typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                        type: endpoint.response.type,
+                        type: endpoint.response.responseBodyType,
                     });
                     break;
                 // named response bodies are not generated - consumers should
@@ -69,7 +69,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 case "unknown":
                     break;
                 default:
-                    assertNever(endpoint.response.type);
+                    assertNever(endpoint.response.responseBodyType);
             }
         }
     }
@@ -130,16 +130,16 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         referenceToParsedResponse: ts.Expression,
         context: ExpressEndpointTypeSchemasContext
     ): ts.Expression {
-        if (this.endpoint.response.type == null) {
+        if (this.endpoint.response == null) {
             throw new Error("Cannot deserialize response because it's not defined");
         }
 
-        switch (this.endpoint.response.type._type) {
+        switch (this.endpoint.response.responseBodyType._type) {
             case "unknown":
                 return referenceToParsedResponse;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.type, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.responseBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedResponse, {
                         unrecognizedObjectKeys: "strip",
                         allowUnrecognizedEnumValues: false,
@@ -158,7 +158,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedUnionMembers: false,
                     });
             default:
-                assertNever(this.endpoint.response.type);
+                assertNever(this.endpoint.response.responseBodyType);
         }
     }
 }
