@@ -203,6 +203,14 @@ describe("valid-example-type", () => {
                 nodePath: ["types", "MyStringAlias", { key: "examples", arrayIndex: 0 }],
             },
 
+            // undiscriminated-union.yml
+            {
+                severity: "error",
+                relativeFilepath: "undiscriminated-union.yml",
+                message: "Expected example to be an object. Example is: 123",
+                nodePath: ["types", "Animal", { key: "examples", arrayIndex: 2 }],
+            },
+
             // union.yml
             {
                 severity: "error",

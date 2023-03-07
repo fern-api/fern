@@ -1,0 +1,15 @@
+types:
+  Animal:
+    discriminated: false
+    union:
+      - Dog
+      - string
+    examples:
+      - value:
+          name: Fido
+      - value: hello world
+      - value: 123
+
+  Dog:
+    properties:
+      name: string
