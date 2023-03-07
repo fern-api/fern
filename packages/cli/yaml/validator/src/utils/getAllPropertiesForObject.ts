@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { constructFernFileContext, getPropertyName, TypeResolver } from "@fern-api/ir-generator";
+import { constructFernFileContext, getPropertyName, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { CASINGS_GENERATOR } from "./casingsGenerator";
@@ -9,10 +9,9 @@ export interface ObjectPropertyWithPath {
     name: string;
     filepathOfDeclaration: RelativeFilePath;
     path: ObjectPropertyPath;
-    finalPropertyKey: string;
     propertyType: string;
-    // undefined if we can't locate the property type
-    isOptional: boolean | undefined;
+    resolvedPropertyType: ResolvedType;
+    isOptional: boolean;
 }
 
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
@@ -68,20 +67,19 @@ export function getAllPropertiesForObject({
             const propertyType =
                 typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
             const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
-
-            properties.push({
-                wireKey: propertyKey,
-                name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
-                filepathOfDeclaration,
-                path,
-                finalPropertyKey: propertyKey,
-                propertyType,
-                isOptional:
-                    resolvedPropertyType != null
-                        ? resolvedPropertyType._type === "container" &&
-                          resolvedPropertyType.container._type === "optional"
-                        : undefined,
-            });
+            if (resolvedPropertyType != null) {
+                properties.push({
+                    wireKey: propertyKey,
+                    name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
+                    filepathOfDeclaration,
+                    path,
+                    propertyType,
+                    resolvedPropertyType,
+                    isOptional:
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "optional",
+                });
+            }
         }
     }
 
@@ -132,6 +130,40 @@ export function getAllPropertiesForObject({
     return properties;
 }
 
+export function getAllPropertiesForType({
+    typeName,
+    filepathOfDeclaration,
+    serviceFile,
+    workspace,
+    typeResolver,
+}: {
+    typeName: TypeName;
+    filepathOfDeclaration: RelativeFilePath;
+    serviceFile: RawSchemas.ServiceFileSchema;
+    workspace: FernWorkspace;
+    typeResolver: TypeResolver;
+}): ObjectPropertyWithPath[] {
+    const resolvedType = typeResolver.resolveNamedType({
+        referenceToNamedType: typeName,
+        file: constructFernFileContext({
+            relativeFilepath: filepathOfDeclaration,
+            serviceFile,
+            casingsGenerator: CASINGS_GENERATOR,
+        }),
+    });
+    if (resolvedType == null || resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
+        return [];
+    }
+    return getAllPropertiesForObject({
+        typeName,
+        objectDeclaration: resolvedType.declaration,
+        filepathOfDeclaration,
+        serviceFile,
+        workspace,
+        typeResolver,
+    });
+}
+
 export function convertObjectPropertyWithPathToString({
     property,
     prefixBreadcrumbs = [],
@@ -139,11 +171,7 @@ export function convertObjectPropertyWithPathToString({
     property: ObjectPropertyWithPath;
     prefixBreadcrumbs?: string[];
 }): string {
-    const parts = [
-        ...prefixBreadcrumbs,
-        ...convertObjectPropertyPathToStrings(property.path),
-        property.finalPropertyKey,
-    ];
+    const parts = [...prefixBreadcrumbs, ...convertObjectPropertyPathToStrings(property.path), property.wireKey];
     return parts.join(" -> ");
 }
 

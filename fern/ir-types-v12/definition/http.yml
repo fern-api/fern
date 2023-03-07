@@ -32,7 +32,9 @@ types:
       queryParameters: list<QueryParameter>
       requestBody: optional<HttpRequestBody>
       sdkRequest: optional<SdkRequest>
-      response: optional<HttpResponse>
+      response: optional<NonStreamingResponse>
+      streamingResponse: optional<StreamingResponse>
+      sdkResponse: optional<SdkResponse>
       errors: ResponseErrors
       auth: boolean
       examples: list<ExampleEndpointCall>
@@ -99,7 +101,7 @@ types:
       wrapperName: commons.Name
       bodyKey: commons.Name
 
-  HttpResponse:
+  SdkResponse:
     union:
       nonStreaming: NonStreamingResponse
       streaming: StreamingResponse

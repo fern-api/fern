@@ -1,4 +1,3 @@
-import { assertNever } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
@@ -45,40 +44,22 @@ function convertService(
 
 function convertEndpoint(
     endpoint: IrVersions.V12.http.HttpEndpoint,
-    context: IrMigrationContext
+    { taskContext, targetGenerator }: IrMigrationContext
 ): IrVersions.V11.http.HttpEndpoint {
+    if (endpoint.streamingResponse != null) {
+        return taskContext.failAndThrow(
+            `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                " does not support streaming responses." +
+                ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                " to a compatible version."
+        );
+    }
+
     return {
         ...endpoint,
-        response: convertResponse(endpoint.response, context),
+        response:
+            endpoint.response != null
+                ? { docs: endpoint.response.docs, type: endpoint.response.responseBodyType }
+                : { docs: undefined, type: undefined },
     };
-}
-
-function convertResponse(
-    response: IrVersions.V12.http.HttpResponse | null | undefined,
-    { taskContext, targetGenerator }: IrMigrationContext
-): IrVersions.V11.http.HttpResponse {
-    if (response == null) {
-        return {
-            docs: undefined,
-            type: undefined,
-        };
-    }
-    switch (response.type) {
-        case "nonStreaming":
-            return {
-                docs: response.docs,
-                type: response.responseBodyType,
-            };
-        case "maybeStreaming":
-        case "streaming":
-            return taskContext.failAndThrow(
-                `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                    " does not support streaming responses." +
-                    ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                    " to a compatible version."
-            );
-
-        default:
-            assertNever(response);
-    }
 }

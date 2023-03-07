@@ -23,7 +23,7 @@ describe("migrateFromV12ToV11", () => {
         });
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/steaming"),
+                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
                 context: {
                     taskContext: context,
                 },

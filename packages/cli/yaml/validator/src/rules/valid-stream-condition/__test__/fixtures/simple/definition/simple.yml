@@ -1,0 +1,84 @@
+types:
+  ObjectWithStream:
+    properties:
+      stream: boolean
+
+  ObjectWithoutStream:
+    properties:
+      notStream: boolean
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    streamConditionButNoResponse:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: boolean
+      stream-condition: $request.stream
+    responsesButNoStreamCondition:
+      path: ""
+      method: POST
+      response: string
+      response-stream:
+        data: string
+    invalidStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: boolean
+      stream-condition: invalid-selector
+      response: string
+      response-stream:
+        data: string
+    missingRequestBody:
+      path: ""
+      method: POST
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        data: string
+    missingPropertyStreamCondition:
+      path: ""
+      method: POST
+      request: ObjectWithoutStream
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        data: string
+    nonBooleanStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: string
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        data: string
+    booleanStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body: ObjectWithStream
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        data: string
+    optionalBooleanStreamCondition:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            stream: optional<boolean>
+      stream-condition: $request.stream
+      response: string
+      response-stream:
+        data: string
