@@ -25,57 +25,59 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v12, { taskContext, targetGenerator }): IrVersions.V11.ir.IntermediateRepresentation => {
-        const v11Types: Record<string, IrVersions.V11.types.TypeDeclaration> = {};
-        Object.entries(v12.types).forEach(([typeName, typeDeclaration]) => {
-            v11Types[typeName] = {
-                ...typeDeclaration,
-                shape: IrVersions.V12.types.Type._visit<IrVersions.V11.types.Type>(typeDeclaration.shape, {
-                    union: IrVersions.V11.types.Type.union,
-                    enum: IrVersions.V11.types.Type.enum,
-                    object: IrVersions.V11.types.Type.object,
-                    alias: (aliasTypeDeclaration) => {
-                        return IrVersions.V11.types.Type.alias({
-                            aliasOf: aliasTypeDeclaration.aliasOf,
-                            resolvedType:
-                                IrVersions.V12.types.ResolvedTypeReference._visit<IrVersions.V11.types.ResolvedTypeReference>(
-                                    aliasTypeDeclaration.resolvedType,
-                                    {
-                                        container: IrVersions.V11.types.ResolvedTypeReference.container,
-                                        primitive: IrVersions.V11.types.ResolvedTypeReference.primitive,
-                                        named: (namedType) => {
-                                            if (namedType.shape === "UNDISCRIMINATED_UNION") {
-                                                return taskContext.failAndThrow(
-                                                    getUndiscriminatedUnionsErrorMessage({
-                                                        taskContext,
-                                                        targetGenerator,
-                                                    })
-                                                );
-                                            } else {
-                                                return IrVersions.V11.types.ResolvedTypeReference.named({
-                                                    shape: namedType.shape,
-                                                    name: namedType.name,
-                                                });
-                                            }
-                                        },
-                                        unknown: IrVersions.V11.types.ResolvedTypeReference.unknown,
-                                        _unknown: () => {
-                                            throw new Error("Encountered unknown alias");
-                                        },
-                                    }
-                                ),
-                        });
-                    },
-                    undiscriminatedUnion: () => {
-                        return taskContext.failAndThrow(
-                            getUndiscriminatedUnionsErrorMessage({ taskContext, targetGenerator })
-                        );
-                    },
-                    _unknown: () => {
-                        throw new Error("Encountered unknown shape");
-                    },
-                }),
-            };
-        });
+        const v11Types: Record<string, IrVersions.V11.types.TypeDeclaration> = mapValues(
+            v12.types,
+            (typeDeclaration) => {
+                return {
+                    ...typeDeclaration,
+                    shape: IrVersions.V12.types.Type._visit<IrVersions.V11.types.Type>(typeDeclaration.shape, {
+                        union: IrVersions.V11.types.Type.union,
+                        enum: IrVersions.V11.types.Type.enum,
+                        object: IrVersions.V11.types.Type.object,
+                        alias: (aliasTypeDeclaration) => {
+                            return IrVersions.V11.types.Type.alias({
+                                aliasOf: aliasTypeDeclaration.aliasOf,
+                                resolvedType:
+                                    IrVersions.V12.types.ResolvedTypeReference._visit<IrVersions.V11.types.ResolvedTypeReference>(
+                                        aliasTypeDeclaration.resolvedType,
+                                        {
+                                            container: IrVersions.V11.types.ResolvedTypeReference.container,
+                                            primitive: IrVersions.V11.types.ResolvedTypeReference.primitive,
+                                            named: (namedType) => {
+                                                if (namedType.shape === "UNDISCRIMINATED_UNION") {
+                                                    return taskContext.failAndThrow(
+                                                        getUndiscriminatedUnionsErrorMessage({
+                                                            taskContext,
+                                                            targetGenerator,
+                                                        })
+                                                    );
+                                                } else {
+                                                    return IrVersions.V11.types.ResolvedTypeReference.named({
+                                                        shape: namedType.shape,
+                                                        name: namedType.name,
+                                                    });
+                                                }
+                                            },
+                                            unknown: IrVersions.V11.types.ResolvedTypeReference.unknown,
+                                            _unknown: () => {
+                                                throw new Error("Encountered unknown alias");
+                                            },
+                                        }
+                                    ),
+                            });
+                        },
+                        undiscriminatedUnion: () => {
+                            return taskContext.failAndThrow(
+                                getUndiscriminatedUnionsErrorMessage({ taskContext, targetGenerator })
+                            );
+                        },
+                        _unknown: () => {
+                            throw new Error("Encountered unknown shape");
+                        },
+                    }),
+                };
+            }
+        );
 
         return {
             ...v12,
