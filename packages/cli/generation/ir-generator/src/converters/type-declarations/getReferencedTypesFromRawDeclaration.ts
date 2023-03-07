@@ -51,7 +51,15 @@ export function getReferencedTypesFromRawDeclaration({
                 return types;
             }, []);
         },
-        undiscriminatedUnion: () => [],
+        undiscriminatedUnion: (unionDeclaration) => {
+            return Object.values(unionDeclaration.union).reduce<string[]>((types, unionMember) => {
+                const rawType = typeof unionMember === "string" ? unionMember : unionMember.type;
+                if (typeof rawType === "string") {
+                    types.push(rawType);
+                }
+                return types;
+            }, []);
+        },
         enum: () => [],
     });
 
