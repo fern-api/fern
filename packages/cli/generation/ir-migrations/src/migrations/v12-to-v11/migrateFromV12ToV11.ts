@@ -24,14 +24,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
-    migrateBackwards: (v12, context): IrVersions.V11.ir.IntermediateRepresentation => {
-        const hasUndiscriminatedUnions = Object.entries(v12.types).some(([_, typeDeclaration]) => {
-            return typeDeclaration.shape._type === "undiscriminatedUnion";
-        });
-        if (hasUndiscriminatedUnions) {
-            throw new Error("Upgrade your generator because it doesn't support undiscriminated unions");
-        }
-
+    migrateBackwards: (v12, { taskContext, targetGenerator }): IrVersions.V11.ir.IntermediateRepresentation => {
         const v11Types: Record<string, IrVersions.V11.types.TypeDeclaration> = {};
         Object.entries(v12.types).forEach(([typeName, typeDeclaration]) => {
             IrVersions.V12.types.Type._visit(typeDeclaration.shape, {
@@ -81,7 +74,9 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                         },
                         named: (namedType) => {
                             if (namedType.shape === "UNDISCRIMINATED_UNION") {
-                                return;
+                                taskContext.failAndThrow(
+                                    getUndiscriminatedUnionsErrorMessage({ taskContext, targetGenerator })
+                                );
                             } else {
                                 v11Types[typeName] = {
                                     ...typeDeclaration,
@@ -105,12 +100,12 @@ export const V12_TO_V11_MIGRATION: IrMigration<
                             };
                         },
                         _unknown: () => {
-                            throw new Error("Encountered unknown shape");
+                            throw new Error("Encountered unknown alias");
                         },
                     });
                 },
                 undiscriminatedUnion: () => {
-                    throw new Error("Upgrade your generator because it doesn't support undiscriminated unions");
+                    taskContext.failAndThrow(getUndiscriminatedUnionsErrorMessage({ taskContext, targetGenerator }));
                 },
                 _unknown: () => {
                     throw new Error("Encountered unknown shape");
@@ -123,10 +118,19 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         return {
             ...v12,
             types: v11Types,
-            services: mapValues(v12.services, (service) => convertService(service, context)),
+            services: mapValues(v12.services, (service) => convertService(service, { taskContext, targetGenerator })),
         };
     },
 };
+
+function getUndiscriminatedUnionsErrorMessage(context: IrMigrationContext): string {
+    return (
+        `Generator ${context.targetGenerator.name}@${context.targetGenerator.version}` +
+        " does not support undiscriminated unions" +
+        ` If you'd like to use this feature, please upgrade ${context.targetGenerator.name}` +
+        " to a compatible version."
+    );
+}
 
 function convertService(
     service: IrVersions.V12.http.HttpService,
