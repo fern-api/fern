@@ -129,6 +129,113 @@ exports[`convertToPostman any-auth 1`] = `
 }"
 `;
 
+exports[`convertToPostman loop-test-api 1`] = `
+"{
+  \\"info\\": {
+    \\"name\\": \\"Loop API\\",
+    \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\"
+  },
+  \\"variable\\": [
+    {
+      \\"key\\": \\"baseUrl\\",
+      \\"value\\": \\"prod.fern.com\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"apiKey\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    }
+  ],
+  \\"auth\\": {
+    \\"type\\": \\"apikey\\",
+    \\"apikey\\": [
+      {
+        \\"key\\": \\"value\\",
+        \\"value\\": \\"{{apiKey}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"key\\",
+        \\"value\\": \\"X-API-Key\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"in\\",
+        \\"value\\": \\"header\\",
+        \\"type\\": \\"string\\"
+      }
+    ]
+  },
+  \\"item\\": [
+    {
+      \\"_type\\": \\"container\\",
+      \\"description\\": null,
+      \\"name\\": \\"Orders\\",
+      \\"item\\": [
+        {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
+          \\"name\\": \\"Pet\\",
+          \\"item\\": [
+            {
+              \\"_type\\": \\"endpoint\\",
+              \\"name\\": \\"Create Pet\\",
+              \\"request\\": {
+                \\"description\\": \\"Creates a pet and returns pet id.\\",
+                \\"url\\": {
+                  \\"raw\\": \\"{{baseUrl}}/create\\",
+                  \\"host\\": [
+                    \\"{{baseUrl}}\\"
+                  ],
+                  \\"path\\": [
+                    \\"create\\"
+                  ],
+                  \\"query\\": [],
+                  \\"variable\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{apiKey}}\\",
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
+                  },
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  },
+                  {
+                    \\"key\\": \\"x-endpoint-header\\",
+                    \\"description\\": \\"I'm a header!\\",
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"POST\\",
+                \\"auth\\": null,
+                \\"body\\": {
+                  \\"mode\\": \\"raw\\",
+                  \\"raw\\": \\"{\\\\n    \\\\\\"type\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"CAT\\\\\\",\\\\n        \\\\\\"friends\\\\\\": [\\\\n            null\\\\n        ]\\\\n    },\\\\n    \\\\\\"name\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"owner\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"description\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
+                  \\"options\\": {
+                    \\"raw\\": {
+                      \\"language\\": \\"json\\"
+                    }
+                  }
+                }
+              },
+              \\"response\\": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}"
+`;
+
 exports[`convertToPostman test-api 1`] = `
 "{
   \\"info\\": {
