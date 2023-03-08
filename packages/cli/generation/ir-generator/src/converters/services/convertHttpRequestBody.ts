@@ -1,5 +1,10 @@
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpRequestBody, HttpRequestBodyReference } from "@fern-fern/ir-model/http";
+import { isInlineRequestBody, parseFileUploadRequest, RawSchemas } from "@fern-api/yaml-schema";
+import {
+    FileUploadRequestProperty,
+    HttpRequestBody,
+    HttpRequestBodyReference,
+    InlinedRequestBodyProperty,
+} from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
@@ -19,6 +24,27 @@ export function convertHttpRequestBody({
         return undefined;
     }
 
+    const fileUploadRequest = parseFileUploadRequest(request);
+    if (fileUploadRequest != null) {
+        return HttpRequestBody.fileUpload({
+            name: file.casingsGenerator.generateName(fileUploadRequest.name),
+            properties: fileUploadRequest.properties.map((property) => {
+                if (property.isFile) {
+                    return FileUploadRequestProperty.file({
+                        key: file.casingsGenerator.generateNameAndWireValue({
+                            wireValue: property.key,
+                            name: property.key,
+                        }),
+                    });
+                } else {
+                    return FileUploadRequestProperty.property(
+                        convertInlinedRequestProperty(property.key, property.propertyType, property.docs, file)
+                    );
+                }
+            }),
+        });
+    }
+
     if (isInlineRequestBody(request.body)) {
         if (request.name == null) {
             throw new Error("Name is missing for inlined request");
@@ -31,14 +57,14 @@ export function convertHttpRequestBody({
             ),
             properties:
                 request.body.properties != null
-                    ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) => ({
-                          docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                          name: file.casingsGenerator.generateNameAndWireValue({
-                              wireValue: propertyKey,
-                              name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
-                          }),
-                          valueType: file.parseTypeReference(propertyDefinition),
-                      }))
+                    ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) =>
+                          convertInlinedRequestProperty(
+                              propertyKey,
+                              propertyDefinition,
+                              typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                              file
+                          )
+                      )
                     : [],
         });
     }
@@ -53,5 +79,21 @@ export function convertReferenceHttpRequestBody(
     return {
         docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
+    };
+}
+
+function convertInlinedRequestProperty(
+    propertyKey: string,
+    propertyDefinition: RawSchemas.ObjectPropertySchema,
+    docs: string | undefined,
+    file: FernFileContext
+): InlinedRequestBodyProperty {
+    return {
+        docs,
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: propertyKey,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+        }),
+        valueType: file.parseTypeReference(propertyDefinition),
     };
 }

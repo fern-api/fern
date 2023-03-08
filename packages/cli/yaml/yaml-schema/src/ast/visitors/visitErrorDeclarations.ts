@@ -3,6 +3,7 @@ import { ErrorDeclarationSchema } from "../../schemas";
 import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
+import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";
 
 export async function visitErrorDeclarations({
@@ -35,8 +36,10 @@ async function visitErrorDeclaration({
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForError: NodePath;
 }) {
+    const visitTypeReference = createTypeReferenceVisitor(visitor);
+
     if (typeof declaration === "string") {
-        await visitor.typeReference?.(declaration, nodePathForError);
+        await visitTypeReference(declaration, nodePathForError);
     } else {
         await visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
@@ -47,7 +50,7 @@ async function visitErrorDeclaration({
                 }
                 const nodePathForErrorType = [...nodePathForError, "type"];
                 if (typeof type === "string") {
-                    await visitor.typeReference?.(type, nodePathForErrorType);
+                    await visitTypeReference(type, nodePathForErrorType);
                 } else {
                     await visitTypeDeclaration({
                         typeName: errorName,

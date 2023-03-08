@@ -11,6 +11,7 @@ import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
 import { NoDuplicateExampleNamesRule } from "./rules/no-duplicate-example-names";
 import { NoDuplicateFieldNamesRule } from "./rules/no-duplicate-field-names";
 import { NoErrorStatusCodeConflictRule } from "./rules/no-error-status-code-conflict";
+import { NoExtensionsWithFileUploadRule } from "./rules/no-extensions-with-file-upload";
 import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
 import { NoMissingAuthRule } from "./rules/no-missing-auth";
 import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
@@ -62,6 +63,7 @@ export function getAllRules(): Rule[] {
         NoConflictingEndpointPathsRule,
         ValidTypeNameRule,
         ValidStreamConditionRule,
+        NoExtensionsWithFileUploadRule,
     ];
 }
 

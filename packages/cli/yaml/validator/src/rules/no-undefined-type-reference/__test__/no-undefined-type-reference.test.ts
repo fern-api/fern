@@ -11,6 +11,24 @@ describe("no-undefined-type-reference", () => {
 
         expect(violations).toEqual([
             {
+                message: "The file type can only be used as properties in inlined requests.",
+                nodePath: ["types", "FileAlias"],
+                relativeFilepath: "file-upload.yml",
+                severity: "error",
+            },
+            {
+                message: "The file type can only be used as properties in inlined requests.",
+                nodePath: ["service", "endpoints", "noProperties", "request", "body"],
+                relativeFilepath: "file-upload.yml",
+                severity: "error",
+            },
+            {
+                message: "The file type can only be used as properties in inlined requests.",
+                nodePath: ["service", "endpoints", "listOfFiles", "request", "body", "properties", "file"],
+                relativeFilepath: "file-upload.yml",
+                severity: "error",
+            },
+            {
                 message: "Type MissingType is not defined.",
                 nodePath: ["types", "MyType"],
                 relativeFilepath: "simple.yml",

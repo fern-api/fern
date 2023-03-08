@@ -1,6 +1,12 @@
 import { noop } from "@fern-api/core-utils";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName, HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/http";
+import {
+    DeclaredServiceName,
+    FileUploadRequestProperty,
+    HttpEndpoint,
+    HttpRequestBody,
+    HttpService,
+} from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
@@ -85,6 +91,19 @@ export class AudienceIrGraph {
                 },
                 reference: ({ requestBodyType }) => {
                     populateReferencesFromTypeReference(requestBodyType, referencedTypes);
+                },
+                fileUpload: ({ properties }) => {
+                    for (const property of properties) {
+                        FileUploadRequestProperty._visit(property, {
+                            file: noop,
+                            property: ({ valueType }) => {
+                                populateReferencesFromTypeReference(valueType, referencedTypes);
+                            },
+                            _unknown: () => {
+                                throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                            },
+                        });
+                    }
                 },
                 _unknown: () => {
                     throw new Error("Unknown HttpRequestBody: " + httpEndpoint.requestBody?.type);

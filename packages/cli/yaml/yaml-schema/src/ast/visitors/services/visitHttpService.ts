@@ -2,10 +2,11 @@ import { noop, visitObject } from "@fern-api/core-utils";
 import { RawSchemas } from "../../..";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
-import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
+import { FernServiceFileAstVisitor, TypeReferenceLocation } from "../../FernServiceFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
+import { createTypeReferenceVisitor } from "../utils/visitTypeReference";
 
 export async function visitHttpService({
     service,
@@ -62,6 +63,8 @@ async function visitEndpoint({
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
+    const visitTypeReference = createTypeReferenceVisitor(visitor);
+
     await visitor.httpEndpoint?.({ endpointId, endpoint, service }, nodePathForEndpoint);
     await visitObject(endpoint, {
         docs: createDocsVisitor(visitor, nodePathForEndpoint),
@@ -81,7 +84,7 @@ async function visitEndpoint({
             }
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
             if (typeof request === "string") {
-                await visitor.typeReference?.(request, nodePathForRequest);
+                await visitTypeReference(request, nodePathForRequest);
                 return;
             }
             await visitObject(request, {
@@ -102,14 +105,14 @@ async function visitEndpoint({
                         );
 
                         if (typeof queryParameter === "string") {
-                            await visitor.typeReference?.(queryParameter, nodePathForQueryParameter);
+                            await visitTypeReference(queryParameter, nodePathForQueryParameter);
                         } else {
                             await visitObject(queryParameter, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForQueryParameter),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitor.typeReference?.(type, [...nodePathForQueryParameter, "type"]);
+                                    await visitTypeReference(type, [...nodePathForQueryParameter, "type"]);
                                 },
                                 "allow-multiple": noop,
                                 audiences: noop,
@@ -131,7 +134,7 @@ async function visitEndpoint({
                     const nodePathForRequestBody = [...nodePathForRequest, "body"];
 
                     if (typeof body === "string") {
-                        await visitor.typeReference?.(body, nodePathForRequestBody);
+                        await visitTypeReference(body, nodePathForRequestBody);
                     } else if (isInlineRequestBody(body)) {
                         await visitor.typeDeclaration?.(
                             { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: body },
@@ -145,7 +148,7 @@ async function visitEndpoint({
                                 }
                                 const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                                 for (const extendedType of extendsList) {
-                                    await visitor.typeReference?.(extendedType, [...nodePathForRequestBody, "extends"]);
+                                    await visitTypeReference(extendedType, [...nodePathForRequestBody, "extends"]);
                                 }
                             },
                             properties: async (properties) => {
@@ -155,14 +158,18 @@ async function visitEndpoint({
                                 for (const [propertyKey, property] of Object.entries(properties)) {
                                     const nodePathForProperty = [...nodePathForRequestBody, "properties", propertyKey];
                                     if (typeof property === "string") {
-                                        await visitor.typeReference?.(property, nodePathForProperty);
+                                        await visitTypeReference(property, nodePathForProperty, {
+                                            location: TypeReferenceLocation.InlinedRequestProperty,
+                                        });
                                     } else {
                                         await visitObject(property, {
                                             name: noop,
                                             docs: createDocsVisitor(visitor, nodePathForProperty),
                                             availability: noop,
                                             type: async (type) => {
-                                                await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
+                                                await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                                    location: TypeReferenceLocation.InlinedRequestProperty,
+                                                });
                                             },
                                             audiences: noop,
                                         });
@@ -172,7 +179,7 @@ async function visitEndpoint({
                         });
                     } else {
                         await createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);
-                        await visitor.typeReference?.(body.type, nodePathForRequestBody);
+                        await visitTypeReference(body.type, nodePathForRequestBody);
                     }
                 },
             });
@@ -190,7 +197,7 @@ async function visitEndpoint({
             if (responseStream == null) {
                 return;
             }
-            await visitor.typeReference?.(responseStream.data, [...nodePathForEndpoint, "response-stream"]);
+            await visitTypeReference(responseStream.data, [...nodePathForEndpoint, "response-stream"]);
         },
         response: async (response) => {
             if (response == null) {
@@ -198,12 +205,12 @@ async function visitEndpoint({
             }
             const nodePathForResponse = [...nodePathForEndpoint, "response"];
             if (typeof response === "string") {
-                await visitor.typeReference?.(response, nodePathForResponse);
+                await visitTypeReference(response, nodePathForResponse);
             } else {
                 await visitObject(response, {
                     docs: createDocsVisitor(visitor, nodePathForResponse),
                     type: async (type) => {
-                        await visitor.typeReference?.(type, [...nodePathForResponse, "type"]);
+                        await visitTypeReference(type, [...nodePathForResponse, "type"]);
                     },
                 });
             }
@@ -378,19 +385,20 @@ async function visitPathParameters({
     if (pathParameters == null) {
         return;
     }
+    const visitTypeReference = createTypeReferenceVisitor(visitor);
     for (const [pathParameterKey, pathParameter] of Object.entries(pathParameters)) {
         const nodePathForPathParameter = [...nodePath, pathParameterKey];
 
         await visitor.pathParameter?.({ pathParameterKey, pathParameter }, nodePathForPathParameter);
 
         if (typeof pathParameter === "string") {
-            await visitor.typeReference?.(pathParameter, nodePathForPathParameter);
+            await visitTypeReference(pathParameter, nodePathForPathParameter);
         } else {
             await visitObject(pathParameter, {
                 docs: createDocsVisitor(visitor, nodePathForPathParameter),
                 availability: noop,
                 type: async (type) => {
-                    await visitor.typeReference?.(type, [...nodePathForPathParameter, "type"]);
+                    await visitTypeReference(type, [...nodePathForPathParameter, "type"]);
                 },
                 audiences: noop,
             });
@@ -410,19 +418,22 @@ async function visitHeaders({
     if (headers == null) {
         return;
     }
+
+    const visitTypeReference = createTypeReferenceVisitor(visitor);
+
     for (const [headerKey, header] of Object.entries(headers)) {
         const nodePathForHeader = [...nodePath, headerKey];
 
         await visitor.header?.({ headerKey, header }, nodePathForHeader);
 
         if (typeof header === "string") {
-            await visitor.typeReference?.(header, nodePathForHeader);
+            await visitTypeReference(header, nodePathForHeader);
         } else {
             await visitObject(header, {
                 name: noop,
                 availability: noop,
                 type: async (type) => {
-                    await visitor.typeReference?.(type, nodePathForHeader);
+                    await visitTypeReference(type, nodePathForHeader);
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,

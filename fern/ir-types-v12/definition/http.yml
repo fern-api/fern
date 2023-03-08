@@ -88,7 +88,7 @@ types:
   FileUploadRequest:
     properties:
       name: commons.Name
-      properties: FileUploadRequestProperty
+      properties: list<FileUploadRequestProperty>
   FileUploadRequestProperty:
     union:
       file: FileInformation

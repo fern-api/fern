@@ -5,6 +5,7 @@ import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
+import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 
 export async function visitTypeDeclarations({
     typeDeclarations,
@@ -36,6 +37,8 @@ export async function visitTypeDeclaration({
     visitor: Partial<FernServiceFileAstVisitor>;
     nodePathForType: NodePath;
 }): Promise<void> {
+    const visitTypeReference = createTypeReferenceVisitor(visitor);
+
     await visitor.typeDeclaration?.({ typeName: { isInlined: false, name: typeName }, declaration }, nodePathForType);
 
     const visitExamples = async (examples: ExampleTypeSchema[] | undefined) => {
@@ -56,11 +59,11 @@ export async function visitTypeDeclaration({
     await visitRawTypeDeclaration(declaration, {
         alias: async (alias) => {
             if (typeof alias === "string") {
-                await visitor.typeReference?.(alias, nodePathForType);
+                await visitTypeReference(alias, nodePathForType);
             } else {
                 await visitObject(alias, {
                     type: async (aliasOf) => {
-                        await visitor.typeReference?.(aliasOf, [...nodePathForType, "type"]);
+                        await visitTypeReference(aliasOf, [...nodePathForType, "type"]);
                     },
                     docs: createDocsVisitor(visitor, nodePathForType),
                     availability: noop,
@@ -78,7 +81,7 @@ export async function visitTypeDeclaration({
                     }
                     const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                     for (const extendedType of extendsList) {
-                        await visitor.typeReference?.(extendedType, [...nodePathForType, "extends"]);
+                        await visitTypeReference(extendedType, [...nodePathForType, "extends"]);
                     }
                 },
                 properties: async (properties) => {
@@ -88,14 +91,14 @@ export async function visitTypeDeclaration({
                     for (const [propertyKey, property] of Object.entries(properties)) {
                         const nodePathForProperty = [...nodePathForType, "properties", propertyKey];
                         if (typeof property === "string") {
-                            await visitor.typeReference?.(property, nodePathForProperty);
+                            await visitTypeReference(property, nodePathForProperty);
                         } else {
                             await visitObject(property, {
                                 name: noop,
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitor.typeReference?.(type, [...nodePathForProperty, "type"]);
+                                    await visitTypeReference(type, [...nodePathForProperty, "type"]);
                                 },
                                 audiences: noop,
                             });
@@ -115,7 +118,7 @@ export async function visitTypeDeclaration({
                     for (const [discriminantValue, unionType] of Object.entries(unionTypes)) {
                         const nodePathForUnionType = [...nodePathForType, "union", discriminantValue];
                         if (typeof unionType === "string") {
-                            await visitor.typeReference?.(unionType, nodePathForUnionType);
+                            await visitTypeReference(unionType, nodePathForUnionType);
                         } else {
                             await visitObject(unionType, {
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
@@ -123,7 +126,7 @@ export async function visitTypeDeclaration({
                                 key: noop,
                                 type: async (type) => {
                                     if (typeof type === "string") {
-                                        await visitor.typeReference?.(type, [...nodePathForType, "type"]);
+                                        await visitTypeReference(type, [...nodePathForType, "type"]);
                                     }
                                 },
                             });
@@ -147,7 +150,7 @@ export async function visitTypeDeclaration({
                             await visitObject(unionMember, {
                                 docs: createDocsVisitor(visitor, nodePathForUnionType),
                                 type: async (type) => {
-                                    await visitor.typeReference?.(type, [...nodePathForType, "type"]);
+                                    await visitTypeReference(type, [...nodePathForType, "type"]);
                                 },
                             });
                         }

@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { getRequestBody } from "@fern-api/yaml-schema";
 import { Rule } from "../../Rule";
 
 export const NoGetRequestBodyRule: Rule = {
@@ -7,7 +7,7 @@ export const NoGetRequestBodyRule: Rule = {
         return {
             serviceFile: {
                 httpEndpoint: ({ endpoint }) => {
-                    if (endpoint.method === "GET" && hasRequestBody(endpoint.request)) {
+                    if (endpoint.method === "GET" && getRequestBody(endpoint) != null) {
                         return [
                             {
                                 severity: "error",
@@ -21,7 +21,3 @@ export const NoGetRequestBodyRule: Rule = {
         };
     },
 };
-
-function hasRequestBody(request: RawSchemas.HttpRequestSchema | string | undefined): boolean {
-    return typeof request === "string" || request?.body != null;
-}

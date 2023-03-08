@@ -4,6 +4,7 @@ export {
     type FernRootApiFileAstVisitor,
 } from "./ast/FernRootApiFileAstVisitor";
 export {
+    TypeReferenceLocation,
     type FernServiceFileAstNodeTypes,
     type FernServiceFileAstNodeVisitor,
     type FernServiceFileAstVisitor,
@@ -15,7 +16,9 @@ export { visitFernServiceFileYamlAst } from "./ast/visitFernServiceFileYamlAst";
 export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
 export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
+export { getRequestBody } from "./utils/getRequestBody";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
+export { FILE_TYPE, parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
 export { RawPrimitiveType } from "./utils/RawPrimitiveType";
 export { recursivelyVisitRawTypeReference } from "./utils/recursivelyVisitRawTypeReference";
 export { isAnyAuthSchemes, isSingleAuthScheme, visitRawApiAuth, type RawApiAuthVisitor } from "./utils/visitRawApiAuth";

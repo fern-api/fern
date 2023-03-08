@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoMissingRequestNameRule } from "../no-missing-request-name";
 
-describe("o-missing-request-name", () => {
+describe("no-missing-request-name", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoMissingRequestNameRule,
