@@ -18,7 +18,8 @@ export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export { getRequestBody } from "./utils/getRequestBody";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
-export { FILE_TYPE, parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
+export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
+export { parseRawFileType, type RawFileType } from "./utils/parseRawFileType";
 export { RawPrimitiveType } from "./utils/RawPrimitiveType";
 export { recursivelyVisitRawTypeReference } from "./utils/recursivelyVisitRawTypeReference";
 export { isAnyAuthSchemes, isSingleAuthScheme, visitRawApiAuth, type RawApiAuthVisitor } from "./utils/visitRawApiAuth";
@@ -41,4 +42,4 @@ export {
     visitRawTypeDeclaration,
     type RawTypeDeclarationVisitor,
 } from "./utils/visitRawTypeDeclaration";
-export { visitRawTypeReference } from "./utils/visitRawTypeReference";
+export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";
