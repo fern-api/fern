@@ -82,3 +82,33 @@ service:
       response: string
       response-stream:
         data: string
+    validQueryParam:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          stream: optional<boolean>
+      stream-condition: $query.stream
+      response: string
+      response-stream:
+        data: string
+    missingQueryParam:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          foo: optional<boolean>
+      stream-condition: $query.stream
+      response: string
+      response-stream:
+        data: string
+    nonBooleanQueryParam:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          stream: integer
+      stream-condition: $query.stream
+      response: string
+      response-stream:
+        data: string

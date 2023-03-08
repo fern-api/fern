@@ -137,7 +137,12 @@ types:
       streaming: StreamingResponse
 
   StreamCondition:
-    properties:
+    union:
+      queryParameterKey:
+        docs: |
+          The name of a boolean query parameter. If it is true, the response
+          should be streamed. Otherwise, it should not be streamed.
+        type: string
       requestPropertyKey:
         docs: |
           The name of a boolean property on the request. If it is true, the response
