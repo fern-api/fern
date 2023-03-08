@@ -13,7 +13,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
         [GeneratorName.TYPESCRIPT_SDK]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: AlwaysRunMigration,
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.0-rc0-6-g80f89f98",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
