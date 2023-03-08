@@ -1,7 +1,6 @@
 import { HttpRequestSchema, ObjectPropertySchema } from "../schemas";
 import { isInlineRequestBody } from "./isInlineRequestBody";
-
-export const FILE_TYPE = "file";
+import { parseRawFileType } from "./parseRawFileType";
 
 export interface RawFileUploadRequest {
     name: string;
@@ -14,6 +13,7 @@ export declare namespace RawFileUploadRequest {
 
     export interface FileProperty extends BaseProperty {
         isFile: true;
+        isOptional: boolean;
     }
 
     export interface InlinedRequestBodyProperty extends BaseProperty {
@@ -42,8 +42,11 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
     const properties = Object.entries(request.body.properties).reduce<RawFileUploadRequest.Property[]>(
         (acc, [key, propertyType]) => {
             const docs = typeof propertyType === "string" ? propertyType : propertyType.docs;
-            if (propertyType === FILE_TYPE) {
-                acc.push({ isFile: true, key, docs });
+            const maybeParsedFileType = parseRawFileType(
+                typeof propertyType === "string" ? propertyType : propertyType.type
+            );
+            if (maybeParsedFileType != null) {
+                acc.push({ isFile: true, key, docs, isOptional: maybeParsedFileType.isOptional });
             } else {
                 acc.push({ isFile: false, key, propertyType, docs });
             }

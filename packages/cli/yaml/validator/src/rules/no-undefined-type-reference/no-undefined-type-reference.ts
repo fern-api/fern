@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
 import {
-    FILE_TYPE,
+    parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
     visitFernServiceFileYamlAst,
@@ -32,7 +32,10 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         return {
             serviceFile: {
                 typeReference: ({ typeReference, location }, { relativeFilepath, contents }) => {
-                    if (typeReference === FILE_TYPE && location === TypeReferenceLocation.InlinedRequestProperty) {
+                    if (
+                        location === TypeReferenceLocation.InlinedRequestProperty &&
+                        parseRawFileType(typeReference) != null
+                    ) {
                         return [];
                     }
 
@@ -43,7 +46,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     });
 
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
-                        if (namedType.parsed?.typeName === FILE_TYPE) {
+                        if (namedType.parsed?.typeName != null && parseRawFileType(namedType.parsed.typeName) != null) {
                             violations.push({
                                 severity: "error",
                                 message: "The file type can only be used as properties in inlined requests.",

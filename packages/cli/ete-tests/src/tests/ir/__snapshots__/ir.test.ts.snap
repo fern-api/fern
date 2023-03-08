@@ -5191,6 +5191,7 @@ exports[`ir {"fixtureName":"file-upload","language":"java"} 1`] = `
                                     },
                                     "wireValue": "file"
                                 },
+                                "isOptional": false,
                                 "type": "file"
                             },
                             {
@@ -5601,6 +5602,7 @@ exports[`ir {"fixtureName":"file-upload","language":"python"} 1`] = `
                                     },
                                     "wireValue": "file"
                                 },
+                                "isOptional": false,
                                 "type": "file"
                             },
                             {
@@ -6011,6 +6013,7 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                                     },
                                     "wireValue": "file"
                                 },
+                                "isOptional": false,
                                 "type": "file"
                             },
                             {
@@ -6421,6 +6424,7 @@ exports[`ir {"fixtureName":"file-upload"} 1`] = `
                                     },
                                     "wireValue": "file"
                                 },
+                                "isOptional": false,
                                 "type": "file"
                             },
                             {

@@ -11,6 +11,15 @@ service:
           properties:
             foo: string
             file: file
+    optionalFile:
+      method: POST
+      path: /
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            foo: string
+            file: optional<file>
     noProperties:
       method: POST
       path: /

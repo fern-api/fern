@@ -91,11 +91,12 @@ types:
       properties: list<FileUploadRequestProperty>
   FileUploadRequestProperty:
     union:
-      file: FileInformation
+      file: FileProperty
       bodyProperty: InlinedRequestBodyProperty
-  FileInformation:
+  FileProperty:
     properties:
       key: commons.NameAndWireValue
+      isOptional: boolean
   HttpRequestBodyReference:
     extends: commons.WithDocs
     properties:
