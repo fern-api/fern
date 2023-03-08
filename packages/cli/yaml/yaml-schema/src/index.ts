@@ -31,9 +31,10 @@ export {
 } from "./utils/visitRawEnvironmentDeclaration";
 export {
     isRawAliasDefinition,
+    isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUnionDefinition,
+    isRawUndiscriminatedUnionDefinition,
     visitRawTypeDeclaration,
     type RawTypeDeclarationVisitor,
 } from "./utils/visitRawTypeDeclaration";

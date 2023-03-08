@@ -53,7 +53,7 @@ export function validateTypeExample({
                 workspace,
             });
         },
-        union: (rawUnion) => {
+        discriminatedUnion: (rawUnion) => {
             return validateUnionExample({
                 typeName,
                 rawUnion,
@@ -64,5 +64,6 @@ export function validateTypeExample({
                 workspace,
             });
         },
+        undiscriminatedUnion: () => [],
     });
 }

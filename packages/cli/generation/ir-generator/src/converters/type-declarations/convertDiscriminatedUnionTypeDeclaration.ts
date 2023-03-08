@@ -8,12 +8,12 @@ import { getPropertyName } from "./convertObjectTypeDeclaration";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
-export function convertUnionTypeDeclaration({
+export function convertDiscriminatedUnionTypeDeclaration({
     union,
     file,
     typeResolver,
 }: {
-    union: RawSchemas.UnionSchema;
+    union: RawSchemas.DiscriminatedUnionSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): Type {
@@ -74,7 +74,7 @@ export function convertUnionTypeDeclaration({
     });
 }
 
-export function getUnionDiscriminant(union: RawSchemas.UnionSchema): string {
+export function getUnionDiscriminant(union: RawSchemas.DiscriminatedUnionSchema): string {
     if (union.discriminant == null) {
         return "type";
     }
@@ -84,7 +84,10 @@ export function getUnionDiscriminant(union: RawSchemas.UnionSchema): string {
     return union.discriminant.value;
 }
 
-export function getUnionDiscriminantName(union: RawSchemas.UnionSchema): { name: string; wasExplicitlySet: boolean } {
+export function getUnionDiscriminantName(union: RawSchemas.DiscriminatedUnionSchema): {
+    name: string;
+    wasExplicitlySet: boolean;
+} {
     if (union.discriminant != null && typeof union.discriminant !== "string" && union.discriminant.name != null) {
         return {
             name: union.discriminant.name,

@@ -73,7 +73,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             }
                         },
 
-                        union: (unionDeclaration) => {
+                        undiscriminatedUnion: () => [],
+
+                        discriminatedUnion: (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 Object.entries(unionDeclaration.union),
                                 ([unionKey, rawSingleUnionType]) =>
