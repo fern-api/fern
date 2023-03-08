@@ -34,5 +34,6 @@ export declare namespace StreamingFetcher {
         onError: ts.Expression | undefined;
         onFinish: ts.Expression | undefined;
         abortController: ts.Expression | undefined;
+        terminator: ts.Expression | undefined;
     }
 }

@@ -19,6 +19,7 @@ service:
       method: POST
       response-stream:
         data: boolean
+        terminator: "[DONE]"
     maybeStream:
       path: /maybe-stream
       method: POST
@@ -32,6 +33,18 @@ service:
       response-stream:
         data: boolean
       stream-condition: $request.stream
+    maybeStreamWithQueryParam:
+      path: /maybe-stream
+      method: POST
+      request:
+        name: MaybeStreamWithQueryParamRequest
+        query-parameters:
+          foo: string
+          stream: optional<boolean>
+      response: integer
+      response-stream:
+        data: boolean
+      stream-condition: $query.stream
 
 types:
   StreamPart:

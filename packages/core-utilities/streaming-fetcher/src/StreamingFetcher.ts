@@ -16,6 +16,7 @@ export declare namespace StreamingFetcher {
         onError?: (err: unknown) => void;
         onFinish?: () => void;
         abortController?: AbortController;
+        terminator?: string;
     }
 }
 
@@ -53,7 +54,7 @@ export async function streamingFetcher(args: StreamingFetcher.Args): Promise<voi
     response.data.on("data", (data: Buffer) => {
         for (const line of data.toString().split("\n")) {
             const data = line.match(DATA_EVENT_REGEX)?.[1];
-            if (data == null) {
+            if (data == null || data === args.terminator) {
                 continue;
             }
 

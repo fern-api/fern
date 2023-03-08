@@ -1,4 +1,0 @@
-{
-  "organization": "fern",
-  "workspaces": ["packages/generation/ir/ir-types"]
-}

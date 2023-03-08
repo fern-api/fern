@@ -87,10 +87,10 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
 
     public getSignature(
         context: SdkClientClassContext,
-        { requestBodyIntersection }: { requestBodyIntersection?: ts.TypeNode } = {}
+        { requestParameterIntersection }: { requestParameterIntersection?: ts.TypeNode } = {}
     ): EndpointSignature {
         return {
-            parameters: this.getEndpointParameters(context, { requestBodyIntersection }),
+            parameters: this.getEndpointParameters(context, { requestParameterIntersection }),
             returnTypeWithoutPromise: this.getResponseType(context),
         };
     }
@@ -117,7 +117,7 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
 
     private getEndpointParameters(
         context: SdkClientClassContext,
-        { requestBodyIntersection }: { requestBodyIntersection: ts.TypeNode | undefined }
+        { requestParameterIntersection }: { requestParameterIntersection: ts.TypeNode | undefined }
     ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
@@ -128,7 +128,9 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
         }
         if (this.requestParameter != null) {
             parameters.push(
-                this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
+                this.requestParameter.getParameterDeclaration(context, {
+                    typeIntersection: requestParameterIntersection,
+                })
             );
         }
         return parameters;
@@ -145,7 +147,6 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        let urlSearchParamsVariable: ts.Expression | undefined;
         if (this.requestParameter != null) {
             statements.push(...this.requestParameter.getInitialStatements(context));
             const queryParameters = this.requestParameter.getAllQueryParameters(context);
@@ -200,30 +201,17 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
                         )
                     );
                 }
-                urlSearchParamsVariable = ts.factory.createIdentifier(
-                    GeneratedThrowingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
-                );
             }
         }
 
-        const fetcherArgs: Fetcher.Args = {
-            url: this.getReferenceToEnvironment(context),
-            method: ts.factory.createStringLiteral(this.endpoint.method),
-            headers: this.getHeaders(context),
-            queryParameters: urlSearchParamsVariable,
-            body: this.getSerializedRequestBody(context),
-            timeoutMs: undefined,
-            withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            contentType: "application/json",
-        };
-
-        statements.push(...this.invokeFetcher(fetcherArgs, context));
-
-        statements.push(...this.getReturnResponseStatements(context));
+        statements.push(...this.invokeFetcherAndReturnResponse(context));
 
         return statements;
     }
 
+    public invokeFetcherAndReturnResponse(context: SdkClientClassContext): ts.Statement[] {
+        return [...this.invokeFetcher(context), ...this.getReturnResponseStatements(context)];
+    }
     private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
         const url = this.buildUrl(context);
@@ -396,7 +384,21 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
         );
     }
 
-    private invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[] {
+    private invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
+        const fetcherArgs: Fetcher.Args = {
+            url: this.getReferenceToEnvironment(context),
+            method: ts.factory.createStringLiteral(this.endpoint.method),
+            headers: this.getHeaders(context),
+            queryParameters:
+                this.endpoint.queryParameters.length > 0
+                    ? ts.factory.createIdentifier(GeneratedThrowingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME)
+                    : undefined,
+            body: this.getSerializedRequestBody(context),
+            timeoutMs: undefined,
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            contentType: "application/json",
+        };
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -650,9 +652,5 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
 
     private getReturnValueForOkResponse(context: SdkClientClassContext): ts.Expression | undefined {
         return this.endpoint.response != null ? this.getOkResponseBody(context) : undefined;
-    }
-
-    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
-        return this.requestParameter?.getReferenceToRequestBody(context);
     }
 }

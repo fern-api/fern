@@ -11,9 +11,6 @@ export interface GeneratedEndpointImplementation {
     endpoint: HttpEndpoint;
     getStatements: (context: SdkClientClassContext) => ts.Statement[];
     getOverloads: (context: SdkClientClassContext) => EndpointSignature[];
-    getSignature: (
-        context: SdkClientClassContext,
-        opts?: { requestBodyIntersection?: ts.TypeNode }
-    ) => EndpointSignature;
+    getSignature: (context: SdkClientClassContext) => EndpointSignature;
     getDocs: (context: SdkClientClassContext) => string | undefined;
 }

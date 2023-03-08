@@ -1,4 +1,4 @@
-import { HttpEndpoint, MaybeStreamingResponse } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, MaybeStreamingResponse, StreamCondition } from "@fern-fern/ir-model/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { zip } from "lodash-es";
@@ -40,30 +40,56 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
-        const referenceToRequestBody = this.nonStreamingEndpointImplementation.getReferenceToRequestBody(context);
-        if (referenceToRequestBody == null) {
-            throw new Error("Cannot generate maybe-streaming endpoint because request parameter is not defined.");
-        }
-
         return [
+            ...this.streamingEndpointImplementation.getRequestBuilderStatements(context),
             ts.factory.createIfStatement(
-                ts.factory.createPropertyAccessExpression(
-                    referenceToRequestBody,
-                    ts.factory.createIdentifier(this.response.condition.requestPropertyKey)
-                ),
-                ts.factory.createBlock(this.streamingEndpointImplementation.getStatements(context), true),
-                ts.factory.createBlock(this.nonStreamingEndpointImplementation.getStatements(context), true)
+                this.getReferenceToStreamConditionVariable(context),
+                ts.factory.createBlock(this.streamingEndpointImplementation.invokeFetcher(context), true),
+                ts.factory.createBlock(
+                    this.nonStreamingEndpointImplementation.invokeFetcherAndReturnResponse(context),
+                    true
+                )
             ),
         ];
     }
 
+    private getReferenceToStreamConditionVariable(context: SdkClientClassContext): ts.Expression {
+        return StreamCondition._visit<ts.Expression>(this.response.condition, {
+            queryParameterKey: (queryParameterKey) => {
+                return this.streamingEndpointImplementation.getReferenceToQueryParameter(queryParameterKey, context);
+            },
+            requestPropertyKey: (requestPropertyKey) => {
+                const referenceToRequestBody = this.streamingEndpointImplementation.getReferenceToRequestBody(context);
+                if (referenceToRequestBody == null) {
+                    throw new Error(
+                        "Cannot generate maybe-streaming endpoint because request parameter is not defined."
+                    );
+                }
+                return ts.factory.createPropertyAccessExpression(
+                    referenceToRequestBody,
+                    ts.factory.createIdentifier(requestPropertyKey)
+                );
+            },
+            _unknown: () => {
+                throw new Error("Unknown StreamCondition: " + this.response.condition.type);
+            },
+        });
+    }
+
     public getOverloads(context: SdkClientClassContext): EndpointSignature[] {
+        const requestParameterKeyForStreamCondition = StreamCondition._visit(this.response.condition, {
+            queryParameterKey: (queryParameterKey) => queryParameterKey,
+            requestPropertyKey: (requestPropertyKey) => requestPropertyKey,
+            _unknown: () => {
+                throw new Error("Unknown StreamCondition: " + this.response.condition.type);
+            },
+        });
         return [
             this.nonStreamingEndpointImplementation.getSignature(context, {
-                requestBodyIntersection: ts.factory.createTypeLiteralNode([
+                requestParameterIntersection: ts.factory.createTypeLiteralNode([
                     ts.factory.createPropertySignature(
                         undefined,
-                        ts.factory.createIdentifier(this.response.condition.requestPropertyKey),
+                        ts.factory.createIdentifier(requestParameterKeyForStreamCondition),
                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                         ts.factory.createLiteralTypeNode(ts.factory.createFalse())
                     ),
@@ -71,10 +97,10 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
             }),
 
             this.streamingEndpointImplementation.getSignature(context, {
-                requestBodyIntersection: ts.factory.createTypeLiteralNode([
+                requestParameterIntersection: ts.factory.createTypeLiteralNode([
                     ts.factory.createPropertySignature(
                         undefined,
-                        ts.factory.createIdentifier(this.response.condition.requestPropertyKey),
+                        ts.factory.createIdentifier(requestParameterKeyForStreamCondition),
                         undefined,
                         ts.factory.createLiteralTypeNode(ts.factory.createTrue())
                     ),

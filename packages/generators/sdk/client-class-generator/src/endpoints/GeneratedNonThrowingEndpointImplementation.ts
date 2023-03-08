@@ -132,7 +132,6 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        let urlSearchParamsVariable: ts.Expression | undefined;
         if (this.requestParameter != null) {
             statements.push(...this.requestParameter.getInitialStatements(context));
             const queryParameters = this.requestParameter.getAllQueryParameters(context);
@@ -187,28 +186,16 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
                         )
                     );
                 }
-                urlSearchParamsVariable = ts.factory.createIdentifier(
-                    GeneratedNonThrowingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
-                );
             }
         }
 
-        const fetcherArgs: Fetcher.Args = {
-            url: this.getReferenceToEnvironment(context),
-            method: ts.factory.createStringLiteral(this.endpoint.method),
-            headers: this.getHeaders(context),
-            queryParameters: urlSearchParamsVariable,
-            body: this.getSerializedRequestBody(context),
-            timeoutMs: undefined,
-            withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            contentType: "application/json",
-        };
-
-        statements.push(...this.invokeFetcher(fetcherArgs, context));
-
-        statements.push(...this.getReturnResponseStatements(context));
+        statements.push(...this.invokeFetcherAndReturnResponse(context));
 
         return statements;
+    }
+
+    public invokeFetcherAndReturnResponse(context: SdkClientClassContext): ts.Statement[] {
+        return [...this.invokeFetcher(context), ...this.getReturnResponseStatements(context)];
     }
 
     private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
@@ -383,7 +370,21 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
         );
     }
 
-    private invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[] {
+    private invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
+        const fetcherArgs: Fetcher.Args = {
+            url: this.getReferenceToEnvironment(context),
+            method: ts.factory.createStringLiteral(this.endpoint.method),
+            headers: this.getHeaders(context),
+            queryParameters:
+                this.endpoint.queryParameters.length > 0
+                    ? ts.factory.createIdentifier(GeneratedNonThrowingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME)
+                    : undefined,
+            body: this.getSerializedRequestBody(context),
+            timeoutMs: undefined,
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            contentType: "application/json",
+        };
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -567,9 +568,5 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
 
     private getGeneratedEndpointErrorUnion(context: SdkClientClassContext): GeneratedEndpointErrorUnion {
         return context.endpointErrorUnion.getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name);
-    }
-
-    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
-        return this.requestParameter?.getReferenceToRequestBody(context);
     }
 }

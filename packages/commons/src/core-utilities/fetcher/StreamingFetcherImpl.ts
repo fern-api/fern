@@ -31,6 +31,7 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                 onError: "onError",
                 onFinish: "onFinish",
                 abortController: "abortController",
+                terminator: "terminator",
             },
             _getReferenceToType: this.getReferenceToTypeInStreamingFetcherModule("Args"),
         },
@@ -101,6 +102,14 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                     ts.factory.createPropertyAssignment(
                         this.StreamingFetcher.Args.properties.abortController,
                         args.abortController
+                    )
+                );
+            }
+            if (args.terminator != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.StreamingFetcher.Args.properties.terminator,
+                        args.terminator
                     )
                 );
             }

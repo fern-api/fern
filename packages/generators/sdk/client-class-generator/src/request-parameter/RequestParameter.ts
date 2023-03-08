@@ -9,6 +9,7 @@ export interface RequestParameter {
         opts?: { typeIntersection?: ts.TypeNode }
     ) => OptionalKind<ParameterDeclarationStructure>;
     getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
+    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkClientClassContext) => ts.Expression;
     getAllQueryParameters: (context: SdkClientClassContext) => QueryParameter[];
     getAllHeaders: (context: SdkClientClassContext) => HttpHeader[];
     getReferenceToHeader: (header: HttpHeader, context: SdkClientClassContext) => ts.Expression;

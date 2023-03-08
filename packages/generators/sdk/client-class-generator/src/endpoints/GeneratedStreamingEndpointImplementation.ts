@@ -83,10 +83,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getSignature(
         context: SdkClientClassContext,
-        { requestBodyIntersection }: { requestBodyIntersection?: ts.TypeNode } = {}
+        { requestParameterIntersection }: { requestParameterIntersection?: ts.TypeNode } = {}
     ): EndpointSignature {
         return {
-            parameters: this.getEndpointParameters(context, { requestBodyIntersection }),
+            parameters: this.getEndpointParameters(context, { requestParameterIntersection }),
             returnTypeWithoutPromise: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
         };
     }
@@ -113,7 +113,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     private getEndpointParameters(
         context: SdkClientClassContext,
-        { requestBodyIntersection }: { requestBodyIntersection: ts.TypeNode | undefined }
+        { requestParameterIntersection }: { requestParameterIntersection: ts.TypeNode | undefined }
     ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
@@ -124,7 +124,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
         if (this.requestParameter != null) {
             parameters.push(
-                this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
+                this.requestParameter.getParameterDeclaration(context, {
+                    typeIntersection: requestParameterIntersection,
+                })
             );
         }
         parameters.push(
@@ -194,9 +196,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
+        return [...this.getRequestBuilderStatements(context), ...this.invokeFetcher(context)];
+    }
+
+    public getRequestBuilderStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        let urlSearchParamsVariable: ts.Expression | undefined;
         if (this.requestParameter != null) {
             statements.push(...this.requestParameter.getInitialStatements(context));
             const queryParameters = this.requestParameter.getAllQueryParameters(context);
@@ -251,24 +256,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                         )
                     );
                 }
-                urlSearchParamsVariable = ts.factory.createIdentifier(
-                    GeneratedStreamingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
-                );
             }
         }
-
-        const fetcherArgs: Fetcher.Args = {
-            url: this.getReferenceToEnvironment(context),
-            method: ts.factory.createStringLiteral(this.endpoint.method),
-            headers: this.getHeaders(context),
-            queryParameters: urlSearchParamsVariable,
-            body: this.getSerializedRequestBody(context),
-            timeoutMs: undefined,
-            withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            contentType: "application/json",
-        };
-
-        statements.push(...this.invokeFetcher(fetcherArgs, context));
 
         return statements;
     }
@@ -387,7 +376,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         if (this.requestParameter == null || this.requestBody == null) {
             return undefined;
         }
-        const referenceToRequestBody = this.requestParameter.getReferenceToRequestBody(context);
+        const referenceToRequestBody = this.getReferenceToRequestBody(context);
         if (referenceToRequestBody == null) {
             return undefined;
         }
@@ -406,8 +395,22 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
     }
 
-    private invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[] {
+    public invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
         const PARSED_DATA_VARIABLE_NAME = "parsed";
+
+        const fetcherArgs: Fetcher.Args = {
+            url: this.getReferenceToEnvironment(context),
+            method: ts.factory.createStringLiteral(this.endpoint.method),
+            headers: this.getHeaders(context),
+            queryParameters:
+                this.endpoint.queryParameters.length > 0
+                    ? ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME)
+                    : undefined,
+            body: this.getSerializedRequestBody(context),
+            timeoutMs: undefined,
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            contentType: "application/json",
+        };
 
         return [
             ts.factory.createExpressionStatement(
@@ -487,6 +490,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                         onError: this.getReferenceToOpt("onError"),
                         onFinish: this.getReferenceToOpt("onFinish"),
                         abortController: this.getReferenceToOpt("abortController"),
+                        terminator:
+                            this.response.terminator != null
+                                ? ts.factory.createStringLiteral(this.response.terminator)
+                                : undefined,
                     },
                     {
                         referenceToFetcher:
@@ -503,5 +510,16 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(key)
         );
+    }
+
+    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
+        return this.requestParameter?.getReferenceToRequestBody(context);
+    }
+
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+        if (this.requestParameter == null) {
+            throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
+        }
+        return this.requestParameter.getReferenceToQueryParameter(queryParameterKey, context);
     }
 }

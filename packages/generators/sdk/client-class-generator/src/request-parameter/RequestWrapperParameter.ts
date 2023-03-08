@@ -100,6 +100,17 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         });
     }
 
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+        const queryParameter = this.endpoint.queryParameters.find(
+            (queryParam) => queryParam.name.wireValue === queryParameterKey
+        );
+        if (queryParameter == null) {
+            throw new Error("Query parameter does not exist: " + queryParameterKey);
+        }
+        const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
+        return ts.factory.createIdentifier(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter));
+    }
+
     public getReferenceToHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
         return ts.factory.createIdentifier(this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header));
     }
