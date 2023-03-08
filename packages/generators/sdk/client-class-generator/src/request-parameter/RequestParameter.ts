@@ -6,7 +6,7 @@ export interface RequestParameter {
     getInitialStatements: (context: SdkClientClassContext) => ts.Statement[];
     getParameterDeclaration: (
         context: SdkClientClassContext,
-        opts?: { typeIntersection?: ts.TypeNode }
+        opts?: { typeIntersection?: ts.TypeNode; excludeInitializers?: boolean }
     ) => OptionalKind<ParameterDeclarationStructure>;
     getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkClientClassContext) => ts.Expression;

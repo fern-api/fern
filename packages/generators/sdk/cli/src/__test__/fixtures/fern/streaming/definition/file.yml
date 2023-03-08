@@ -36,10 +36,10 @@ service:
     maybeStreamWithQueryParam:
       path: /maybe-stream
       method: POST
+      docs: I am some docs
       request:
         name: MaybeStreamWithQueryParamRequest
         query-parameters:
-          foo: string
           stream: optional<boolean>
       response: integer
       response-stream:

@@ -251,6 +251,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const endpoint of this.generatedEndpointImplementations) {
             const signature = endpoint.getSignature(context);
+            const docs = endpoint.getDocs(context);
+            const overloads = endpoint.getOverloads(context);
+
             const method = serviceClass.addMethod({
                 name: endpoint.endpoint.name.camelCase.unsafeName,
                 parameters: signature.parameters,
@@ -260,14 +263,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 scope: Scope.Public,
                 isAsync: true,
                 statements: endpoint.getStatements(context).map(getTextOfTsNode),
-                overloads: endpoint.getOverloads(context).map((overload) => ({
+                overloads: overloads.map((overload, index) => ({
+                    docs: index === 0 && docs != null ? ["\n" + docs] : undefined,
                     parameters: overload.parameters,
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [overload.returnTypeWithoutPromise])
                     ),
                 })),
             });
-            maybeAddDocs(method, endpoint.getDocs(context));
+
+            if (overloads.length === 0) {
+                maybeAddDocs(method, docs);
+            }
         }
 
         for (const wrappedService of this.generatedWrappedServices) {

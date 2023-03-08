@@ -28,7 +28,10 @@ export abstract class AbstractRequestParameter implements RequestParameter {
 
     public getParameterDeclaration(
         context: SdkClientClassContext,
-        { typeIntersection }: { typeIntersection?: ts.TypeNode } = {}
+        {
+            typeIntersection,
+            excludeInitializers = false,
+        }: { typeIntersection?: ts.TypeNode; excludeInitializers?: boolean } = {}
     ): OptionalKind<ParameterDeclarationStructure> {
         const typeInfo = this.getParameterType(context);
 
@@ -41,7 +44,10 @@ export abstract class AbstractRequestParameter implements RequestParameter {
             name: this.getRequestParameterName(),
             type: getTextOfTsNode(type),
             hasQuestionToken: typeInfo.hasQuestionToken,
-            initializer: typeInfo.initializer != null ? getTextOfTsNode(typeInfo.initializer) : undefined,
+            initializer:
+                typeInfo.initializer != null && !excludeInitializers
+                    ? getTextOfTsNode(typeInfo.initializer)
+                    : undefined,
         };
     }
 

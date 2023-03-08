@@ -94,6 +94,7 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
                         ts.factory.createLiteralTypeNode(ts.factory.createFalse())
                     ),
                 ]),
+                excludeInitializers: true,
             }),
 
             this.streamingEndpointImplementation.getSignature(context, {
@@ -105,6 +106,7 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
                         ts.factory.createLiteralTypeNode(ts.factory.createTrue())
                     ),
                 ]),
+                excludeInitializers: true,
             }),
         ];
     }
@@ -133,14 +135,15 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
             if (aParam != null && bParam != null && aParam.type !== bParam.type) {
                 throw new Error("Two parameters at same index hae different types.");
             }
+
+            const aIsOptional = aParam == null || aParam.hasQuestionToken === true || aParam.initializer != null;
+            const bIsOptional = bParam == null || bParam.hasQuestionToken === true || bParam.initializer != null;
+
             return {
                 name: firstDefinedParam.name,
-                hasQuestionToken:
-                    aParam == null ||
-                    bParam == null ||
-                    (aParam.hasQuestionToken ?? false) ||
-                    (bParam.hasQuestionToken ?? false),
+                hasQuestionToken: (aIsOptional || bIsOptional) && firstDefinedParam.initializer == null,
                 type: firstDefinedParam.type,
+                initializer: firstDefinedParam.initializer,
             };
         });
     }

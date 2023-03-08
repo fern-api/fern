@@ -87,10 +87,13 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
 
     public getSignature(
         context: SdkClientClassContext,
-        { requestParameterIntersection }: { requestParameterIntersection?: ts.TypeNode } = {}
+        {
+            requestParameterIntersection,
+            excludeInitializers = false,
+        }: { requestParameterIntersection?: ts.TypeNode; excludeInitializers?: boolean } = {}
     ): EndpointSignature {
         return {
-            parameters: this.getEndpointParameters(context, { requestParameterIntersection }),
+            parameters: this.getEndpointParameters(context, { requestParameterIntersection, excludeInitializers }),
             returnTypeWithoutPromise: this.getResponseType(context),
         };
     }
@@ -117,7 +120,10 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
 
     private getEndpointParameters(
         context: SdkClientClassContext,
-        { requestParameterIntersection }: { requestParameterIntersection: ts.TypeNode | undefined }
+        {
+            requestParameterIntersection,
+            excludeInitializers,
+        }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
     ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
@@ -130,6 +136,7 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
             parameters.push(
                 this.requestParameter.getParameterDeclaration(context, {
                     typeIntersection: requestParameterIntersection,
+                    excludeInitializers,
                 })
             );
         }

@@ -90,10 +90,13 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
 
     public getSignature(
         context: SdkClientClassContext,
-        { requestBodyIntersection }: { requestBodyIntersection?: ts.TypeNode } = {}
+        {
+            requestParameterIntersection,
+            excludeInitializers = false,
+        }: { requestParameterIntersection?: ts.TypeNode; excludeInitializers?: boolean } = {}
     ): EndpointSignature {
         return {
-            parameters: this.getEndpointParameters(context, { requestBodyIntersection }),
+            parameters: this.getEndpointParameters(context, { requestParameterIntersection, excludeInitializers }),
             returnTypeWithoutPromise: this.getResponseType(context),
         };
     }
@@ -104,7 +107,10 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
 
     private getEndpointParameters(
         context: SdkClientClassContext,
-        { requestBodyIntersection }: { requestBodyIntersection: ts.TypeNode | undefined }
+        {
+            requestParameterIntersection,
+            excludeInitializers,
+        }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
     ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
@@ -115,7 +121,10 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
         }
         if (this.requestParameter != null) {
             parameters.push(
-                this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
+                this.requestParameter.getParameterDeclaration(context, {
+                    typeIntersection: requestParameterIntersection,
+                    excludeInitializers,
+                })
             );
         }
         return parameters;
