@@ -1,4 +1,5 @@
 import { noop } from "@fern-api/core-utils";
+import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import {
     DeclaredServiceName,
@@ -8,6 +9,7 @@ import {
     HttpService,
 } from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+import { IdGenerator } from "../IdGenerator";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
     AudienceId,
@@ -15,11 +17,8 @@ import {
     EndpointNode,
     ErrorId,
     ErrorNode,
-    getEndpointId,
-    getErrorId,
-    getServiceId,
-    getTypeId,
     ServiceId,
+    SubpackageId,
     TypeId,
     TypeNode,
 } from "./ids";
@@ -32,29 +31,31 @@ export class AudienceIrGraph {
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
     private audiences: Set<AudienceId> = new Set();
+    private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
 
     public constructor(audiences: AudienceId[]) {
         this.audiences = new Set(audiences);
     }
 
     public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
-        const typeId = getTypeId(declaredTypeName);
+        const typeId = IdGenerator.generateTypeId(declaredTypeName);
         const typeNode: TypeNode = {
             typeId,
-            descendants: new Set(descendants.map((declaredTypeName) => getTypeId(declaredTypeName))),
+            descendants: new Set(descendants.map((declaredTypeName) => IdGenerator.generateTypeId(declaredTypeName))),
         };
         this.types[typeId] = typeNode;
     }
 
     public markTypeForAudiences(declaredTypeName: DeclaredTypeName, audiences: string[]): void {
-        const typeId = getTypeId(declaredTypeName);
+        const typeId = IdGenerator.generateTypeId(declaredTypeName);
         if (this.hasAudience(audiences)) {
             this.typesNeededForAudience.add(typeId);
+            this.addSubpackages(declaredTypeName.fernFilepath);
         }
     }
 
     public addError(errorDeclaration: ErrorDeclaration): void {
-        const errorId = getErrorId(errorDeclaration.name);
+        const errorId = IdGenerator.generateErrorId(errorDeclaration.name);
         const referencedTypes = new Set<TypeId>();
         if (errorDeclaration.type != null) {
             populateReferencesFromTypeReference(errorDeclaration.type, referencedTypes);
@@ -67,7 +68,7 @@ export class AudienceIrGraph {
     }
 
     public addEndpoint(service: HttpService, httpEndpoint: HttpEndpoint): void {
-        const endpointId = getEndpointId(service.name, httpEndpoint);
+        const endpointId = IdGenerator.generateEndpointId(service.name, httpEndpoint);
         const referencedTypes = new Set<TypeId>();
         const referencedErrors = new Set<ErrorId>();
         for (const header of [...service.headers, ...httpEndpoint.headers]) {
@@ -117,7 +118,7 @@ export class AudienceIrGraph {
             populateReferencesFromTypeReference(httpEndpoint.streamingResponse.dataEventType, referencedTypes);
         }
         httpEndpoint.errors.forEach((responseError) => {
-            referencedErrors.add(getErrorId(responseError.error));
+            referencedErrors.add(IdGenerator.generateErrorId(responseError.error));
         });
         this.endpoints[endpointId] = {
             endpointId,
@@ -132,13 +133,14 @@ export class AudienceIrGraph {
         audiences: AudienceId[]
     ): void {
         if (this.hasAudience(audiences)) {
-            const serviceId = getServiceId(declaredServiceName);
+            const serviceId = IdGenerator.generateServiceId(declaredServiceName);
             this.servicesNeededForAudience.add(serviceId);
             httpEndpoints.forEach((httpEndpoint) => {
-                const endpointId = getEndpointId(declaredServiceName, httpEndpoint);
+                const endpointId = IdGenerator.generateEndpointId(declaredServiceName, httpEndpoint);
                 this.endpointsNeededForAudience.add(endpointId);
             });
             this.servicesNeededForAudience.add(serviceId);
+            this.addSubpackages(declaredServiceName.fernFilepath);
         }
     }
 
@@ -163,6 +165,7 @@ export class AudienceIrGraph {
             errors: errorIds,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
+            subpackages: this.subpackagesNeededForAudience,
         });
     }
 
@@ -206,6 +209,16 @@ export class AudienceIrGraph {
     private hasAudience(audiences: AudienceId[]): boolean {
         return audiences.some((audienceId) => this.audiences.has(audienceId));
     }
+
+    private addSubpackages(fernFilePath: FernFilepath): void {
+        for (let i = 1; i <= fernFilePath.allParts.length; ++i) {
+            const packageFilePath = {
+                ...fernFilePath,
+                allParts: fernFilePath.allParts.slice(0, i),
+            };
+            this.subpackagesNeededForAudience.add(IdGenerator.generateSubpackageId(packageFilePath));
+        }
+    }
 }
 
 function populateReferencesFromTypeReference(typeReference: TypeReference, referencedTypes: Set<TypeId>) {
@@ -223,7 +236,7 @@ function populateReferencesFromTypeReference(typeReference: TypeReference, refer
 }
 
 function populateReferencesFromTypeName(typeName: DeclaredTypeName, referencedTypes: Set<TypeId>) {
-    referencedTypes.add(getTypeId(typeName));
+    referencedTypes.add(IdGenerator.generateTypeId(typeName));
 }
 
 function populateReferencesFromContainer(containerType: ContainerType, referencedTypes: Set<TypeId>) {
