@@ -24,7 +24,7 @@ describe("valid-stream-condition", () => {
             },
             {
                 message:
-                    "stream-condition is not valid. You should specify a selector for a boolean request body property, e.g. $request.yourProperty.",
+                    "stream-condition is not valid. You should specify a selector for a boolean request property, e.g. $request.yourProperty or $query.yourQueryParameter",
                 nodePath: ["service", "endpoints", "invalidStreamCondition", "stream-condition"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
@@ -44,6 +44,18 @@ describe("valid-stream-condition", () => {
             {
                 message: 'Property "stream" is not a boolean.',
                 nodePath: ["service", "endpoints", "nonBooleanStreamCondition", "stream-condition"],
+                relativeFilepath: "simple.yml",
+                severity: "error",
+            },
+            {
+                message: 'Query parameter "stream" does not exist on this endpoint.',
+                nodePath: ["service", "endpoints", "missingQueryParam", "stream-condition"],
+                relativeFilepath: "simple.yml",
+                severity: "error",
+            },
+            {
+                message: 'Query parameter "stream" is not a boolean.',
+                nodePath: ["service", "endpoints", "nonBooleanQueryParam", "stream-condition"],
                 relativeFilepath: "simple.yml",
                 severity: "error",
             },

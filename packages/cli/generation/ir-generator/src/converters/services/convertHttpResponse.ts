@@ -65,13 +65,18 @@ function constructNonStreamingResponse(
     };
 }
 
-const STREAM_CONDITION_REGEX = /\$request.(.*)/;
+const REQUEST_PROPERTY_STREAM_CONDITION_REGEX = /\$request.(.*)/;
+const QUERY_PARAMETER_STREAM_CONDITION_REGEX = /\$query.(.*)/;
 export function constructStreamCondition(rawStreamCondition: string): StreamCondition | undefined {
-    const requestPropertyKey = rawStreamCondition.match(STREAM_CONDITION_REGEX)?.[1];
-    if (requestPropertyKey == null) {
-        return undefined;
+    const requestPropertyKey = rawStreamCondition.match(REQUEST_PROPERTY_STREAM_CONDITION_REGEX)?.[1];
+    if (requestPropertyKey != null) {
+        return StreamCondition.requestPropertyKey(requestPropertyKey);
     }
-    return {
-        requestPropertyKey,
-    };
+
+    const queryParameterKey = rawStreamCondition.match(QUERY_PARAMETER_STREAM_CONDITION_REGEX)?.[1];
+    if (queryParameterKey != null) {
+        return StreamCondition.queryParameterKey(queryParameterKey);
+    }
+
+    return undefined;
 }
