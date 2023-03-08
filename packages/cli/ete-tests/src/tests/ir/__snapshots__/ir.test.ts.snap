@@ -6060,7 +6060,7 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                                         },
                                         "pascalCase": {
                                             "unsafeName": "File",
-                                            "safeName": "File"
+                                            "safeName": "File_"
                                         }
                                     },
                                     "wireValue": "file"
