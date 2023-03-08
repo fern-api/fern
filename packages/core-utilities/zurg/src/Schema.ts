@@ -26,6 +26,7 @@ export const SchemaType = {
     RECORD: "record",
     SET: "set",
     UNION: "union",
+    UNDISCRIMINATED_UNION: "undiscriminatedUnion",
     OPTIONAL: "optional",
 } as const;
 export type SchemaType = typeof SchemaType[keyof typeof SchemaType];

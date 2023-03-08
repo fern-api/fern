@@ -9,4 +9,5 @@ export * from "./primitives";
 export * from "./record";
 export * from "./schema-utils";
 export * from "./set";
+export * from "./undiscriminated-union";
 export * from "./union";

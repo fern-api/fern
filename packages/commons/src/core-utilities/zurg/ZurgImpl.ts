@@ -211,6 +211,24 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             }
     );
 
+    public undiscriminatedUnion = this.withExportedName(
+        "undiscriminatedUnion",
+        (undiscriminatedUnion: Reference) => (schemas: Zurg.Schema[]) => {
+            const baseSchema: Zurg.BaseSchema = {
+                isOptional: false,
+                toExpression: () =>
+                    ts.factory.createCallExpression(undiscriminatedUnion.getExpression(), undefined, [
+                        ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression())),
+                    ]),
+            };
+
+            return {
+                ...baseSchema,
+                ...this.getSchemaUtils(baseSchema),
+            };
+        }
+    );
+
     public list = this.withExportedName("list", (list: Reference) => (itemSchema: Zurg.Schema) => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,

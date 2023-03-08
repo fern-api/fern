@@ -6,6 +6,7 @@ import {
     PrimitiveType,
     Type,
     TypeReference,
+    UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import { Reference } from "@fern-typescript/commons";
@@ -14,6 +15,7 @@ import {
     GeneratedEnumType,
     GeneratedObjectType,
     GeneratedType,
+    GeneratedUndiscriminatedUnionType,
     GeneratedUnionType,
     TypeContext,
 } from "@fern-typescript/contexts";
@@ -21,6 +23,7 @@ import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
 import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
 import { GeneratedEnumTypeImpl } from "./enum/GeneratedEnumTypeImpl";
 import { GeneratedObjectTypeImpl } from "./object/GeneratedObjectTypeImpl";
+import { GeneratedUndiscriminatedUnionTypeImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl";
 import { GeneratedUnionTypeImpl } from "./union/GeneratedUnionTypeImpl";
 
 export declare namespace TypeGenerator {
@@ -63,6 +66,15 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
     }: TypeGenerator.generateType.Args<Context>): GeneratedType<Context> {
         return Type._visit<GeneratedType<Context>>(shape, {
             union: (shape) => this.generateUnion({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
+            undiscriminatedUnion: (shape) =>
+                this.generateUndiscriminatedUnion({
+                    typeName,
+                    shape,
+                    examples,
+                    docs,
+                    fernFilepath,
+                    getReferenceToSelf,
+                }),
             object: (shape) =>
                 this.generateObject({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
             enum: (shape) => this.generateEnum({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
@@ -78,6 +90,31 @@ export class TypeGenerator<Context extends TypeContext = TypeContext> {
             _unknown: () => {
                 throw new Error("Unknown type declaration shape: " + shape._type);
             },
+        });
+    }
+
+    private generateUndiscriminatedUnion({
+        typeName,
+        shape,
+        examples,
+        docs,
+        fernFilepath,
+        getReferenceToSelf,
+    }: {
+        typeName: string;
+        shape: UndiscriminatedUnionTypeDeclaration;
+        examples: ExampleType[];
+        docs: string | undefined;
+        fernFilepath: FernFilepath;
+        getReferenceToSelf: (context: Context) => Reference;
+    }): GeneratedUndiscriminatedUnionType<Context> {
+        return new GeneratedUndiscriminatedUnionTypeImpl({
+            typeName,
+            shape,
+            examples,
+            docs,
+            fernFilepath,
+            getReferenceToSelf,
         });
     }
 

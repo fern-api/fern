@@ -27,6 +27,7 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 {
     public readonly type = "union";
 
+    private includeUtilsOnUnionMembers: boolean;
     private generatedUnion: GeneratedUnionImpl<Context>;
 
     constructor({
@@ -35,6 +36,8 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
         ...superInit
     }: GeneratedUnionTypeImpl.Init<Context>) {
         super(superInit);
+
+        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
 
         const parsedSingleUnionTypes = this.shape.types.map(
             (singleUnionType) =>
@@ -77,7 +80,10 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
         if (example.type !== "union") {
-            throw new Error("Example is not for an enum");
+            throw new Error("Example is not for an union");
+        }
+        if (!this.includeUtilsOnUnionMembers) {
+            throw new Error("Cannot build example union because includeUtilsOnUnionMembers is disabled");
         }
 
         return this.generatedUnion.build({

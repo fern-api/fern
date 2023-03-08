@@ -173,10 +173,7 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
                                             undefined,
                                             [
                                                 ts.factory.createStringLiteral(queryParameter.name.wireValue),
-                                                context.type.stringify(
-                                                    referenceToQueryParameter,
-                                                    queryParameter.valueType
-                                                ),
+                                                stringify(referenceToQueryParameter),
                                             ]
                                         )
                                     ),
@@ -354,4 +351,25 @@ export abstract class AbstractGeneratedEndpointImplementation implements Generat
     protected abstract invokeFetcher(fetcherArgs: Fetcher.Args, context: SdkClientClassContext): ts.Statement[];
     protected abstract getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[];
     protected abstract getResponseType(context: SdkClientClassContext): ts.TypeNode;
+}
+
+function stringify(maybeString: ts.Expression): ts.Expression {
+    return ts.factory.createConditionalExpression(
+        ts.factory.createBinaryExpression(
+            ts.factory.createTypeOfExpression(maybeString),
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("string")
+        ),
+        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+        maybeString,
+        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+        ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier("JSON"),
+                ts.factory.createIdentifier("stringify")
+            ),
+            undefined,
+            [maybeString]
+        )
+    );
 }

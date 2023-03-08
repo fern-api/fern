@@ -69,6 +69,11 @@ export class TypeResolver {
                     name: typeName,
                     shape: ShapeType.Union,
                 }),
+            undiscriminatedUnion: () =>
+                ResolvedTypeReference.named({
+                    name: typeName,
+                    shape: ShapeType.UndiscriminatedUnion,
+                }),
             _unknown: () => {
                 throw new Error("Unknown type declaration type: " + declaration._type);
             },

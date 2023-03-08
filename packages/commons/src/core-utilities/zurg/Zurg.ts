@@ -4,6 +4,7 @@ import { ts } from "ts-morph";
 export interface Zurg {
     object: (properties: Zurg.Property[]) => Zurg.ObjectSchema;
     union: (args: Zurg.union.Args) => Zurg.ObjectLikeSchema;
+    undiscriminatedUnion: (schemas: Zurg.Schema[]) => Zurg.Schema;
     list: (itemSchema: Zurg.Schema) => Zurg.Schema;
     set: (itemSchema: Zurg.Schema) => Zurg.Schema;
     record: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;

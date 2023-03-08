@@ -8,12 +8,9 @@ import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/c
 import { GeneratedType, GeneratedTypeReferenceExample, TypeContextMixin } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
-import {
-    TypeReferenceToParsedTypeNodeConverter,
-    TypeReferenceToStringExpressionConverter,
-} from "@fern-typescript/type-reference-converters";
+import { TypeReferenceToParsedTypeNodeConverter } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { SourceFile, ts } from "ts-morph";
+import { SourceFile } from "ts-morph";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 
 export declare namespace TypeContextMixinImpl {
@@ -32,7 +29,6 @@ export class TypeContextMixinImpl implements TypeContextMixin {
     private importsManager: ImportsManager;
     private typeDeclarationReferencer: TypeDeclarationReferencer;
     private typeReferenceToParsedTypeNodeConverter: TypeReferenceToParsedTypeNodeConverter;
-    private typeReferenceToStringExpressionConverter: TypeReferenceToStringExpressionConverter;
     private typeResolver: TypeResolver;
     private typeGenerator: TypeGenerator;
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
@@ -54,9 +50,6 @@ export class TypeContextMixinImpl implements TypeContextMixin {
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
-            typeResolver,
-        });
-        this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
         });
     }
@@ -92,10 +85,6 @@ export class TypeContextMixinImpl implements TypeContextMixin {
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
         });
-    }
-
-    public stringify(valueToStringify: ts.Expression, valueType: TypeReference): ts.Expression {
-        return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify).expression;
     }
 
     public getGeneratedExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {

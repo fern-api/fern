@@ -3,6 +3,7 @@ import {
     ObjectTypeDeclaration,
     Type,
     TypeReference,
+    UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import { Reference } from "@fern-typescript/commons";
@@ -19,6 +20,7 @@ import { ts } from "ts-morph";
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
 import { GeneratedEnumTypeSchemaImpl } from "./enum/GeneratedEnumTypeSchemaImpl";
 import { GeneratedObjectTypeSchemaImpl } from "./object/GeneratedObjectTypeSchemaImpl";
+import { GeneratedUndiscriminatedUnionTypeSchemaImpl } from "./undiscriminated-union/GeneratedUndiscriminatedUnionTypeSchemaImpl";
 import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaImpl";
 
 export declare namespace TypeSchemaGenerator {
@@ -54,6 +56,14 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         return Type._visit<GeneratedTypeSchema<Context>>(shape, {
             union: (shape) =>
                 this.generateUnion({
+                    typeName,
+                    shape,
+                    getGeneratedType,
+                    getReferenceToGeneratedType,
+                    getReferenceToGeneratedTypeSchema,
+                }),
+            undiscriminatedUnion: (shape) =>
+                this.generateUndiscriminatedUnion({
                     typeName,
                     shape,
                     getGeneratedType,
@@ -173,6 +183,28 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
         return new GeneratedAliasTypeSchemaImpl({
             typeName,
             shape: aliasOf,
+            getGeneratedType,
+            getReferenceToGeneratedType,
+            getReferenceToGeneratedTypeSchema,
+        });
+    }
+
+    private generateUndiscriminatedUnion({
+        typeName,
+        shape,
+        getGeneratedType,
+        getReferenceToGeneratedType,
+        getReferenceToGeneratedTypeSchema,
+    }: {
+        typeName: string;
+        shape: UndiscriminatedUnionTypeDeclaration;
+        getGeneratedType: () => GeneratedType<Context>;
+        getReferenceToGeneratedType: () => ts.TypeNode;
+        getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
+    }): GeneratedUndiscriminatedUnionTypeSchemaImpl<Context> {
+        return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
+            typeName,
+            shape,
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
