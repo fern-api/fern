@@ -96,7 +96,7 @@ export class AudienceIrGraph {
                     for (const property of properties) {
                         FileUploadRequestProperty._visit(property, {
                             file: noop,
-                            property: ({ valueType }) => {
+                            bodyProperty: ({ valueType }) => {
                                 populateReferencesFromTypeReference(valueType, referencedTypes);
                             },
                             _unknown: () => {

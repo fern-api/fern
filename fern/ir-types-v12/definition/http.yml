@@ -92,7 +92,7 @@ types:
   FileUploadRequestProperty:
     union:
       file: FileInformation
-      property: InlinedRequestBodyProperty
+      bodyProperty: InlinedRequestBodyProperty
   FileInformation:
     properties:
       key: commons.NameAndWireValue
