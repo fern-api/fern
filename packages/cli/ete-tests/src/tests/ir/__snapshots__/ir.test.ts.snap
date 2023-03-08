@@ -5195,6 +5195,32 @@ exports[`ir {"fixtureName":"file-upload","language":"java"} 1`] = `
                                 "type": "file"
                             },
                             {
+                                "key": {
+                                    "name": {
+                                        "originalName": "optionalFile",
+                                        "camelCase": {
+                                            "unsafeName": "optionalFile",
+                                            "safeName": "optionalFile"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_file",
+                                            "safeName": "optional_file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_FILE",
+                                            "safeName": "OPTIONAL_FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalFile",
+                                            "safeName": "OptionalFile"
+                                        }
+                                    },
+                                    "wireValue": "optionalFile"
+                                },
+                                "isOptional": true,
+                                "type": "file"
+                            },
+                            {
                                 "docs": "integer",
                                 "name": {
                                     "name": {
@@ -5603,6 +5629,32 @@ exports[`ir {"fixtureName":"file-upload","language":"python"} 1`] = `
                                     "wireValue": "file"
                                 },
                                 "isOptional": false,
+                                "type": "file"
+                            },
+                            {
+                                "key": {
+                                    "name": {
+                                        "originalName": "optionalFile",
+                                        "camelCase": {
+                                            "unsafeName": "optionalFile",
+                                            "safeName": "optionalFile"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_file",
+                                            "safeName": "optional_file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_FILE",
+                                            "safeName": "OPTIONAL_FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalFile",
+                                            "safeName": "OptionalFile"
+                                        }
+                                    },
+                                    "wireValue": "optionalFile"
+                                },
+                                "isOptional": true,
                                 "type": "file"
                             },
                             {
@@ -6017,6 +6069,32 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                                 "type": "file"
                             },
                             {
+                                "key": {
+                                    "name": {
+                                        "originalName": "optionalFile",
+                                        "camelCase": {
+                                            "unsafeName": "optionalFile",
+                                            "safeName": "optionalFile"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_file",
+                                            "safeName": "optional_file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_FILE",
+                                            "safeName": "OPTIONAL_FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalFile",
+                                            "safeName": "OptionalFile"
+                                        }
+                                    },
+                                    "wireValue": "optionalFile"
+                                },
+                                "isOptional": true,
+                                "type": "file"
+                            },
+                            {
                                 "docs": "integer",
                                 "name": {
                                     "name": {
@@ -6425,6 +6503,32 @@ exports[`ir {"fixtureName":"file-upload"} 1`] = `
                                     "wireValue": "file"
                                 },
                                 "isOptional": false,
+                                "type": "file"
+                            },
+                            {
+                                "key": {
+                                    "name": {
+                                        "originalName": "optionalFile",
+                                        "camelCase": {
+                                            "unsafeName": "optionalFile",
+                                            "safeName": "optionalFile"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_file",
+                                            "safeName": "optional_file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_FILE",
+                                            "safeName": "OPTIONAL_FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalFile",
+                                            "safeName": "OptionalFile"
+                                        }
+                                    },
+                                    "wireValue": "optionalFile"
+                                },
+                                "isOptional": true,
                                 "type": "file"
                             },
                             {

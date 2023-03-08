@@ -11,4 +11,5 @@ service:
           properties:
             foo: string
             file: file
+            optionalFile: optional<file>
             bar: integer
