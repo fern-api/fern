@@ -5166,7 +5166,7 @@ exports[`ir {"fixtureName":"file-upload","language":"java"} 1`] = `
                                     "primitive": "STRING",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             },
                             {
                                 "key": {
@@ -5221,7 +5221,7 @@ exports[`ir {"fixtureName":"file-upload","language":"java"} 1`] = `
                                     "primitive": "INTEGER",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             }
                         ],
                         "type": "fileUpload"
@@ -5576,7 +5576,7 @@ exports[`ir {"fixtureName":"file-upload","language":"python"} 1`] = `
                                     "primitive": "STRING",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             },
                             {
                                 "key": {
@@ -5631,7 +5631,7 @@ exports[`ir {"fixtureName":"file-upload","language":"python"} 1`] = `
                                     "primitive": "INTEGER",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             }
                         ],
                         "type": "fileUpload"
@@ -5986,7 +5986,7 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                                     "primitive": "STRING",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             },
                             {
                                 "key": {
@@ -6041,7 +6041,7 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                                     "primitive": "INTEGER",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             }
                         ],
                         "type": "fileUpload"
@@ -6396,7 +6396,7 @@ exports[`ir {"fixtureName":"file-upload"} 1`] = `
                                     "primitive": "STRING",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             },
                             {
                                 "key": {
@@ -6451,7 +6451,7 @@ exports[`ir {"fixtureName":"file-upload"} 1`] = `
                                     "primitive": "INTEGER",
                                     "_type": "primitive"
                                 },
-                                "type": "property"
+                                "type": "bodyProperty"
                             }
                         ],
                         "type": "fileUpload"

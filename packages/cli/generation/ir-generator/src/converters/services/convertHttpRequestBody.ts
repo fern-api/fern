@@ -37,7 +37,7 @@ export function convertHttpRequestBody({
                         }),
                     });
                 } else {
-                    return FileUploadRequestProperty.property(
+                    return FileUploadRequestProperty.bodyProperty(
                         convertInlinedRequestProperty(property.key, property.propertyType, property.docs, file)
                     );
                 }
