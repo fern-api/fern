@@ -93,7 +93,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return generatedRequestWrapper.withQueryParameter({
             queryParameter,
             referenceToQueryParameterProperty: ts.factory.createIdentifier(
-                generatedRequestWrapper.getPropertyNameOfHeader(queryParameter)
+                generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter)
             ),
             context,
             callback,

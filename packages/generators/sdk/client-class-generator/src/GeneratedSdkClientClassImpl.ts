@@ -6,12 +6,14 @@ import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commo
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
-import { GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
+import { GeneratedEndpointImplementation } from "./endpoints/GeneratedEndpointImplementation";
+import { GeneratedMaybeStreamingEndpointImplementation } from "./endpoints/GeneratedMaybeStreamingEndpointImplementation";
+import { GeneratedNonThrowingEndpointImplementation } from "./endpoints/GeneratedNonThrowingEndpointImplementation";
+import { GeneratedNonThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedNonThrowingFileUploadEndpointImplementation";
+import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
+import { GeneratedThrowingEndpointImplementation } from "./endpoints/GeneratedThrowingEndpointImplementation";
+import { GeneratedThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedThrowingFileUploadEndpointImplementation";
 import { GeneratedHeader } from "./GeneratedHeader";
-import { GeneratedMaybeStreamingEndpointImplementation } from "./GeneratedMaybeStreamingEndpointImplementation";
-import { GeneratedNonThrowingEndpointImplementation } from "./GeneratedNonThrowingEndpointImplementation";
-import { GeneratedStreamingEndpointImplementation } from "./GeneratedStreamingEndpointImplementation";
-import { GeneratedThrowingEndpointImplementation } from "./GeneratedThrowingEndpointImplementation";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
 export declare namespace GeneratedSdkClientClassImpl {
@@ -75,6 +77,34 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             this.generatedEndpointImplementations = [];
         } else {
             this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
+                const requestBody = endpoint.requestBody ?? undefined;
+
+                if (requestBody?.type === "fileUpload") {
+                    if (neverThrowErrors) {
+                        return new GeneratedNonThrowingFileUploadEndpointImplementation({
+                            packageId,
+                            endpoint,
+                            service,
+                            generatedSdkClientClass: this,
+                            errorResolver,
+                            errorDiscriminationStrategy,
+                            includeCredentialsOnCrossOriginRequests,
+                            requestBody,
+                        });
+                    } else {
+                        return new GeneratedThrowingFileUploadEndpointImplementation({
+                            packageId,
+                            endpoint,
+                            service,
+                            generatedSdkClientClass: this,
+                            errorResolver,
+                            errorDiscriminationStrategy,
+                            includeCredentialsOnCrossOriginRequests,
+                            requestBody,
+                        });
+                    }
+                }
+
                 const getNonStreamingEndpointImplementation = () => {
                     if (neverThrowErrors) {
                         return new GeneratedNonThrowingEndpointImplementation({
@@ -85,6 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorResolver,
                             errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
+                            requestBody,
                         });
                     } else {
                         return new GeneratedThrowingEndpointImplementation({
@@ -95,6 +126,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorResolver,
                             errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
+                            requestBody,
                         });
                     }
                 };
@@ -107,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         response: streamingResponse,
+                        requestBody,
                     });
 
                 if (endpoint.sdkResponse == null) {

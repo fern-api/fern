@@ -75,6 +75,7 @@ export declare namespace Fetcher {
         url: ts.Expression;
         method: ts.Expression;
         headers: ts.ObjectLiteralElementLike[];
+        contentType: string;
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
         timeoutMs: ts.Expression | undefined;

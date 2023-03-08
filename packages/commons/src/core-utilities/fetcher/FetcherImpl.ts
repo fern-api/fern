@@ -23,6 +23,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 url: "url",
                 method: "method",
                 headers: "headers",
+                contentType: "contentType",
                 queryParameters: "queryParameters",
                 body: "body",
                 timeoutMs: "timeoutMs",
@@ -72,6 +73,12 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     )
                 );
             }
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.Fetcher.Args.properties.contentType,
+                    ts.factory.createStringLiteral(args.contentType)
+                )
+            );
             if (args.queryParameters != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(

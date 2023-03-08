@@ -1,4 +1,6 @@
+import { noop } from "@fern-api/core-utils";
 import {
+    FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
     HttpRequestBody,
@@ -9,7 +11,7 @@ import {
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
-import { ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperImpl {
     export interface Init {
@@ -68,12 +70,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             HttpRequestBody._visit(this.endpoint.requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of inlinedRequestBody.properties) {
-                        const type = context.type.getReferenceToType(property.valueType);
-                        requestInterface.addProperty({
-                            name: this.getInlinedRequestBodyPropertyKey(property),
-                            type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                            hasQuestionToken: type.isOptional,
-                        });
+                        requestInterface.addProperty(this.getInlineProperty(property, context));
                     }
                     for (const extension of inlinedRequestBody.extends) {
                         requestInterface.addExtends(
@@ -90,11 +87,37 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     });
                     maybeAddDocs(property, referenceToRequestBody.docs);
                 },
+                fileUpload: (fileUploadRequest) => {
+                    for (const property of fileUploadRequest.properties) {
+                        FileUploadRequestProperty._visit(property, {
+                            file: noop,
+                            bodyProperty: (inlinedProperty) => {
+                                requestInterface.addProperty(this.getInlineProperty(inlinedProperty, context));
+                            },
+                            _unknown: () => {
+                                throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                            },
+                        });
+                    }
+                },
                 _unknown: () => {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 },
             });
         }
+    }
+
+    private getInlineProperty(
+        property: InlinedRequestBodyProperty,
+        context: RequestWrapperContext
+    ): OptionalKind<PropertySignatureStructure> {
+        const type = context.type.getReferenceToType(property.valueType);
+        return {
+            name: this.getInlinedRequestBodyPropertyKey(property),
+            type: getTextOfTsNode(type.typeNodeWithoutUndefined),
+            hasQuestionToken: type.isOptional,
+            docs: property.docs != null ? [property.docs] : undefined,
+        };
     }
 
     public areBodyPropertiesInlined(): boolean {
@@ -224,6 +247,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             if (!this.isTypeOptional(property.type, context)) {
                                 return false;
                             }
+                        }
+                    }
+                    return true;
+                },
+                fileUpload: (fileUploadRequest) => {
+                    for (const property of fileUploadRequest.properties) {
+                        const isPropertyRequired = FileUploadRequestProperty._visit(property, {
+                            // not present in the body
+                            file: () => false,
+                            bodyProperty: ({ valueType }) => !this.isTypeOptional(valueType, context),
+                            _unknown: () => {
+                                throw new Error(
+                                    "Unknown FileUploadRequestProperty: " + this.endpoint.requestBody?.type
+                                );
+                            },
+                        });
+                        if (isPropertyRequired) {
+                            return false;
                         }
                     }
                     return true;

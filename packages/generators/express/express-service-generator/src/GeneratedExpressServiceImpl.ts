@@ -835,6 +835,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     .getReferenceToInlinedRequestBodyType(this.packageId, endpoint.name)
                     .getTypeNode(),
             reference: ({ requestBodyType }) => context.type.getReferenceToType(requestBodyType).typeNode,
+            fileUpload: () => {
+                throw new Error("File upload is not supported");
+            },
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBody.type);
             },
@@ -861,6 +864,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 context.expressEndpointTypeSchemas
                     .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
                     .deserializeRequest(referenceToBody, context),
+            fileUpload: () => {
+                throw new Error("File upload is not supported");
+            },
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);
             },

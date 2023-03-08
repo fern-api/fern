@@ -1,0 +1,26 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request:
+        name: MyRequest
+        body:
+          properties:
+            a: optional<string>
+            b: integer
+            c: file
+            d: optional<file>
+      response: MyUnion
+
+types:
+  MyUnion:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>
