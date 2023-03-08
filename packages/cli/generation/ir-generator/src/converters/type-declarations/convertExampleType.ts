@@ -110,7 +110,7 @@ export function convertTypeExample({
             });
         },
         undiscriminatedUnion: () => {
-            throw new Error("Unsupported!");
+            throw new Error("Examples are not supported for undiscriminated unions");
         },
     });
 }
