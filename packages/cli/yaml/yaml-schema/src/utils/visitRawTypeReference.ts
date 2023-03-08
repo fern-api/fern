@@ -15,7 +15,6 @@ export interface RawTypeReferenceVisitor<R> {
     optional: (valueType: string) => R;
     literal: (literalValue: string) => R;
     named: (named: string) => R;
-    file: () => R;
     unknown: () => R;
 }
 

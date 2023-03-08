@@ -254,9 +254,6 @@ export function convertTypeReferenceExample({
                 }),
             });
         },
-        file: () => {
-            throw new Error("Cannot generate example for file");
-        },
         unknown: () => {
             return ExampleTypeReferenceShape.unknown(jsonExample);
         },

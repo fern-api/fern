@@ -26,9 +26,6 @@ export function parseInlineType({ type, file }: parseInlineType.Args): TypeRefer
                     file,
                 })
             ),
-        file: () => {
-            throw new Error("Cannot parse file");
-        },
     });
 }
 
