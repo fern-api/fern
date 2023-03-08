@@ -9,7 +9,8 @@ export declare namespace ExternalDependency {
 
     export interface Package {
         name: string;
-        version: string;
+        // not defined for built-ins
+        version?: string;
     }
 }
 
@@ -53,8 +54,10 @@ export abstract class ExternalDependency {
     ): T {
         return run(<F extends Function>(f: F): F => {
             const wrapped = (...args: unknown[]) => {
-                this.dependencyManager.addDependency(this.PACKAGE.name, this.PACKAGE.version);
-                if (this.TYPES_PACKAGE != null) {
+                if (this.PACKAGE.version != null) {
+                    this.dependencyManager.addDependency(this.PACKAGE.name, this.PACKAGE.version);
+                }
+                if (this.TYPES_PACKAGE?.version != null) {
                     this.dependencyManager.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version);
                 }
                 this.importsManager.addImport(this.PACKAGE.name, importDeclaration);

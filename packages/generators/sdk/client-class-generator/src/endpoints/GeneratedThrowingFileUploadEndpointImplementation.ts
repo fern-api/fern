@@ -5,7 +5,6 @@ import {
     HttpPath,
     HttpRequestBody,
     HttpService,
-    InlinedRequestBodyProperty,
     PathParameter,
     ResponseError,
 } from "@fern-fern/ir-model/http";
@@ -126,14 +125,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             if (property.type === "file") {
                 parameters.push({
                     name: this.getParameterNameForFile(property),
-                    type: getTextOfTsNode(
-                        property.isOptional
-                            ? ts.factory.createUnionTypeNode([
-                                  ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("File"), undefined),
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
-                              ])
-                            : ts.factory.createIdentifier("File")
-                    ),
+                    type: getTextOfTsNode(this.getFileParameterType(property, context)),
                 });
             }
         }
@@ -147,6 +139,17 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
         );
         return parameters;
+    }
+
+    private getFileParameterType(property: FileProperty, context: SdkClientClassContext): ts.TypeNode {
+        const types = [
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("File"), undefined),
+            context.base.externalDependencies.fs.ReadStream._getReferenceToType(),
+        ];
+        if (property.isOptional) {
+            types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
+        }
+        return ts.factory.createUnionTypeNode(types);
     }
 
     private getAllPathParameters(): PathParameter[] {
@@ -229,7 +232,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
                             GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            ts.factory.createNewExpression(ts.factory.createIdentifier("FormData"), undefined, [])
+                            context.base.externalDependencies.formData._instantiate()
                         ),
                     ],
                     ts.NodeFlags.Const
@@ -272,80 +275,37 @@ export class GeneratedThrowingFileUploadEndpointImplementation
 
     private addPropertyToFormData(property: FileUploadRequestProperty, context: SdkClientClassContext): ts.Statement {
         return FileUploadRequestProperty._visit(property, {
-            file: (property) => this.addFilePropertyToFormData(property),
-            bodyProperty: (bodyProperty) => this.addBodyPropertyToFormData(bodyProperty, context),
+            file: (property) => {
+                return context.base.externalDependencies.formData.append({
+                    referencetoFormData: ts.factory.createIdentifier(
+                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
+                    ),
+                    key: property.key.wireValue,
+                    value: {
+                        expression: ts.factory.createIdentifier(this.getParameterNameForFile(property)),
+                        isNullable: property.isOptional,
+                    },
+                });
+            },
+            bodyProperty: (property) => {
+                return context.base.externalDependencies.formData.append({
+                    referencetoFormData: ts.factory.createIdentifier(
+                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
+                    ),
+                    key: property.name.wireValue,
+                    value: {
+                        expression: context.type.stringify(
+                            this.requestParameter.getReferenceToBodyProperty(property, context),
+                            property.valueType
+                        ),
+                        isNullable: context.type.getReferenceToType(property.valueType).isOptional,
+                    },
+                });
+            },
             _unknown: () => {
                 throw new Error("Unknown addPropertyToFormData: " + property.type);
             },
         });
-    }
-
-    private addFilePropertyToFormData(property: FileProperty): ts.Statement {
-        let appendStatement: ts.Statement = ts.factory.createExpressionStatement(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(
-                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
-                    ),
-                    ts.factory.createIdentifier("append")
-                ),
-                undefined,
-                [
-                    ts.factory.createStringLiteral(property.key.wireValue),
-                    ts.factory.createIdentifier(this.getParameterNameForFile(property)),
-                ]
-            )
-        );
-
-        if (property.isOptional) {
-            appendStatement = ts.factory.createIfStatement(
-                ts.factory.createBinaryExpression(
-                    ts.factory.createIdentifier(this.getParameterNameForFile(property)),
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
-                ),
-                ts.factory.createBlock([appendStatement], true)
-            );
-        }
-
-        return appendStatement;
-    }
-
-    private addBodyPropertyToFormData(
-        property: InlinedRequestBodyProperty,
-        context: SdkClientClassContext
-    ): ts.Statement {
-        let appendStatement: ts.Statement = ts.factory.createExpressionStatement(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(
-                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
-                    ),
-                    ts.factory.createIdentifier("append")
-                ),
-                undefined,
-                [
-                    ts.factory.createStringLiteral(property.name.wireValue),
-                    context.type.stringify(
-                        this.requestParameter.getReferenceToBodyProperty(property, context),
-                        property.valueType
-                    ),
-                ]
-            )
-        );
-
-        if (context.type.getReferenceToType(property.valueType).isOptional) {
-            appendStatement = ts.factory.createIfStatement(
-                ts.factory.createBinaryExpression(
-                    this.requestParameter.getReferenceToBodyProperty(property, context),
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
-                ),
-                ts.factory.createBlock([appendStatement], true)
-            );
-        }
-
-        return appendStatement;
     }
 
     private buildUrl(context: SdkClientClassContext): ts.Expression | undefined {
