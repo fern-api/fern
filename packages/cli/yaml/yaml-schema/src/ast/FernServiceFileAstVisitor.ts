@@ -1,3 +1,4 @@
+import { Values } from "@fern-api/core-utils";
 import {
     ErrorDeclarationSchema,
     ExampleEndpointCallSchema,
@@ -26,7 +27,7 @@ export interface FernServiceFileAstNodeTypes {
     };
     exampleType: { typeName: string; typeDeclaration: TypeDeclarationSchema; example: ExampleTypeSchema };
     exampleTypeReference: string;
-    typeReference: string;
+    typeReference: { typeReference: string; location?: TypeReferenceLocation };
     typeName: string;
     httpService: HttpServiceSchema;
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
@@ -69,6 +70,11 @@ export interface FernServiceFileAstNodeTypes {
 }
 
 export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: "inlinedRequest" };
+
+export const TypeReferenceLocation = {
+    InlinedRequestProperty: "inlinedRequestProperty",
+} as const;
+export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>;
 
 export type FernServiceFileAstNodeVisitor<K extends keyof FernServiceFileAstNodeTypes, R = void | Promise<void>> = (
     node: FernServiceFileAstNodeTypes[K],

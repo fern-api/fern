@@ -121,6 +121,27 @@ function convertEndpoint(
 
     return {
         ...endpoint,
+        requestBody:
+            endpoint.requestBody != null
+                ? IrVersions.V12.http.HttpRequestBody._visit<IrVersions.V11.http.HttpRequestBody>(
+                      endpoint.requestBody,
+                      {
+                          inlinedRequestBody: IrVersions.V11.http.HttpRequestBody.inlinedRequestBody,
+                          reference: IrVersions.V11.http.HttpRequestBody.reference,
+                          fileUpload: () => {
+                              return taskContext.failAndThrow(
+                                  `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                                      " does not support file upload requests." +
+                                      ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                                      " to a compatible version."
+                              );
+                          },
+                          _unknown: () => {
+                              throw new Error("Unknown HttpRequestBody type: " + endpoint.requestBody?.type);
+                          },
+                      }
+                  )
+                : undefined,
         response:
             endpoint.response != null
                 ? { docs: endpoint.response.docs, type: endpoint.response.responseBodyType }

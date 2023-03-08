@@ -1,7 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { recursivelyVisitRawTypeReference, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import {
+    FILE_TYPE,
+    recursivelyVisitRawTypeReference,
+    TypeReferenceLocation,
+    visitFernServiceFileYamlAst,
+} from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -26,15 +31,24 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
         return {
             serviceFile: {
-                typeReference: (type, { relativeFilepath, contents }) => {
+                typeReference: ({ typeReference, location }, { relativeFilepath, contents }) => {
+                    if (typeReference === FILE_TYPE && location === TypeReferenceLocation.InlinedRequestProperty) {
+                        return [];
+                    }
+
                     const namedTypes = getAllNamedTypes({
-                        type,
+                        type: typeReference,
                         relativeFilepath,
                         imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
                     });
 
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
-                        if (!doesTypeExist(namedType)) {
+                        if (namedType.parsed?.typeName === FILE_TYPE) {
+                            violations.push({
+                                severity: "error",
+                                message: "The file type can only be used as properties in inlined requests.",
+                            });
+                        } else if (!doesTypeExist(namedType)) {
                             violations.push({
                                 severity: "error",
                                 message: `Type ${chalk.bold(

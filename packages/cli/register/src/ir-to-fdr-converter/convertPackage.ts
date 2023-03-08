@@ -79,6 +79,9 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.Ty
         reference: (reference) => {
             return convertTypeReference(reference.requestBodyType);
         },
+        fileUpload: () => {
+            throw new Error("File upload is not supported: " + irRequest.type);
+        },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody: " + irRequest.type);
         },

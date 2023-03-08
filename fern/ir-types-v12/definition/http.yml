@@ -74,6 +74,7 @@ types:
     union:
       inlinedRequestBody: InlinedRequestBody
       reference: HttpRequestBodyReference
+      fileUpload: FileUploadRequest
   InlinedRequestBody:
     properties:
       name: commons.Name
@@ -84,6 +85,17 @@ types:
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
+  FileUploadRequest:
+    properties:
+      name: commons.Name
+      properties: list<FileUploadRequestProperty>
+  FileUploadRequestProperty:
+    union:
+      file: FileInformation
+      property: InlinedRequestBodyProperty
+  FileInformation:
+    properties:
+      key: commons.NameAndWireValue
   HttpRequestBodyReference:
     extends: commons.WithDocs
     properties:
