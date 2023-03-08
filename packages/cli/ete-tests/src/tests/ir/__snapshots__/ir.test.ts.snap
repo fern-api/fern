@@ -66295,7 +66295,8 @@ exports[`ir {"fixtureName":"streaming","language":"java"} 1`] = `
                             }
                         },
                         "condition": {
-                            "requestPropertyKey": "stream"
+                            "requestPropertyKey": "stream",
+                            "type": "requestPropertyKey"
                         },
                         "type": "maybeStreaming"
                     },
@@ -66729,7 +66730,8 @@ exports[`ir {"fixtureName":"streaming","language":"python"} 1`] = `
                             }
                         },
                         "condition": {
-                            "requestPropertyKey": "stream"
+                            "requestPropertyKey": "stream",
+                            "type": "requestPropertyKey"
                         },
                         "type": "maybeStreaming"
                     },
@@ -67163,7 +67165,8 @@ exports[`ir {"fixtureName":"streaming","language":"typescript"} 1`] = `
                             }
                         },
                         "condition": {
-                            "requestPropertyKey": "stream"
+                            "requestPropertyKey": "stream",
+                            "type": "requestPropertyKey"
                         },
                         "type": "maybeStreaming"
                     },
@@ -67597,7 +67600,8 @@ exports[`ir {"fixtureName":"streaming"} 1`] = `
                             }
                         },
                         "condition": {
-                            "requestPropertyKey": "stream"
+                            "requestPropertyKey": "stream",
+                            "type": "requestPropertyKey"
                         },
                         "type": "maybeStreaming"
                     },
