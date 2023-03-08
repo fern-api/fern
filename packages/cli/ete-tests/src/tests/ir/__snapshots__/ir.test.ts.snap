@@ -18135,6 +18135,77 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
         "type": "property"
     },
     "subpackages": {
+        "subpackage_commons": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "service": null,
+            "types": [],
+            "errors": [
+                "error_commons:BadRequestError"
+            ],
+            "subpackages": [],
+            "hasEndpointsInTree": false
+        },
         "subpackage_imdb": {
             "fernFilepath": {
                 "allParts": [
@@ -18217,6 +18288,7 @@ exports[`ir {"fixtureName":"simple","language":"java","audiences":["test"]} 1`] 
         "types": [],
         "errors": [],
         "subpackages": [
+            "subpackage_commons",
             "subpackage_imdb"
         ],
         "hasEndpointsInTree": true
@@ -28809,6 +28881,77 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
         "type": "property"
     },
     "subpackages": {
+        "subpackage_commons": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "service": null,
+            "types": [],
+            "errors": [
+                "error_commons:BadRequestError"
+            ],
+            "subpackages": [],
+            "hasEndpointsInTree": false
+        },
         "subpackage_imdb": {
             "fernFilepath": {
                 "allParts": [
@@ -28891,6 +29034,7 @@ exports[`ir {"fixtureName":"simple","language":"python","audiences":["test"]} 1`
         "types": [],
         "errors": [],
         "subpackages": [
+            "subpackage_commons",
             "subpackage_imdb"
         ],
         "hasEndpointsInTree": true
@@ -39483,6 +39627,77 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
         "type": "property"
     },
     "subpackages": {
+        "subpackage_commons": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "service": null,
+            "types": [],
+            "errors": [
+                "error_commons:BadRequestError"
+            ],
+            "subpackages": [],
+            "hasEndpointsInTree": false
+        },
         "subpackage_imdb": {
             "fernFilepath": {
                 "allParts": [
@@ -39565,6 +39780,7 @@ exports[`ir {"fixtureName":"simple","language":"typescript","audiences":["test"]
         "types": [],
         "errors": [],
         "subpackages": [
+            "subpackage_commons",
             "subpackage_imdb"
         ],
         "hasEndpointsInTree": true
