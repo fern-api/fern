@@ -4,6 +4,7 @@ import { HttpService } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation, Package, Subpackage } from "@fern-fern/ir-model/ir";
 import { TypeDeclaration } from "@fern-fern/ir-model/types";
 import { mapValues } from "lodash-es";
+import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
@@ -48,7 +49,45 @@ export class PackageTreeGenerator {
         package_.service = serviceId;
     }
 
-    public build(): Pick<IntermediateRepresentation, "subpackages" | "rootPackage"> {
+    public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, "subpackages" | "rootPackage"> {
+        if (filteredIr != null) {
+            Object.entries(this.subpackages).forEach(([subpackageId, subpackage]) => {
+                if (!filteredIr.hasSubpackageId(subpackageId)) {
+                    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                    delete this.subpackages[subpackageId];
+                } else {
+                    this.subpackages[subpackageId] = {
+                        ...subpackage,
+                        types: subpackage.types.filter((typeId) => filteredIr.hasTypeId(typeId)),
+                        errors: subpackage.errors.filter((errorId) => filteredIr.hasErrorId(errorId)),
+                        service:
+                            subpackage.service != null
+                                ? filteredIr.hasServiceId(subpackage.service)
+                                    ? subpackage.service
+                                    : null
+                                : null,
+                        subpackages: subpackage.subpackages.filter((subpackageId) =>
+                            filteredIr.hasSubpackageId(subpackageId)
+                        ),
+                    };
+                }
+            });
+
+            this.rootPackage = {
+                ...this.rootPackage,
+                types: this.rootPackage.types.filter((typeId) => filteredIr.hasTypeId(typeId)),
+                errors: this.rootPackage.errors.filter((errorId) => filteredIr.hasErrorId(errorId)),
+                service:
+                    this.rootPackage.service != null
+                        ? filteredIr.hasServiceId(this.rootPackage.service)
+                            ? this.rootPackage.service
+                            : null
+                        : null,
+                subpackages: this.rootPackage.subpackages.filter((subpackageId) =>
+                    filteredIr.hasSubpackageId(subpackageId)
+                ),
+            };
+        }
         const allSubpackagesWithEndpoints = new Set(this.getAllChildrenWithEndpoints(this.rootPackage));
         return {
             subpackages: mapValues(this.subpackages, (subpackage, subpackageId) => ({

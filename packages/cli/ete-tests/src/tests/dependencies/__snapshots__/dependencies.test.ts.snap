@@ -27,7 +27,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "headers": [],
     "types": {
-        "y:types/IntegerAlias": {
+        "type_y:IntegerAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -94,7 +94,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
-                "typeId": "y:types/IntegerAlias"
+                "typeId": "type_y:IntegerAlias"
             },
             "shape": {
                 "aliasOf": {
@@ -110,7 +110,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        "imported/x:types/StringAlias": {
+        "type_imported/x:StringAlias": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -216,7 +216,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     }
                 },
-                "typeId": "imported/x:types/StringAlias"
+                "typeId": "type_imported/x:StringAlias"
             },
             "shape": {
                 "aliasOf": {
@@ -232,7 +232,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "referencedTypes": [],
             "examples": []
         },
-        "imported:types/RootString": {
+        "type_imported:RootString": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -300,7 +300,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         }
                     ]
                 },
-                "typeId": "imported:types/RootString"
+                "typeId": "type_imported:RootString"
             },
             "shape": {
                 "aliasOf": {
@@ -319,7 +319,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "errors": {},
     "services": {
-        "imported:service": {
+        "service_imported": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -442,7 +442,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "type": "statusCode"
     },
     "subpackages": {
-        "y:subpackage": {
+        "subpackage_y": {
             "fernFilepath": {
                 "allParts": [
                     {
@@ -506,13 +506,13 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 }
             },
             "types": [
-                "y:types/IntegerAlias"
+                "type_y:IntegerAlias"
             ],
             "errors": [],
             "subpackages": [],
             "hasEndpointsInTree": false
         },
-        "imported:subpackage": {
+        "subpackage_imported": {
             "fernFilepath": {
                 "allParts": [
                     {
@@ -576,17 +576,17 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "safeName": "Imported"
                 }
             },
-            "service": "imported:service",
+            "service": "service_imported",
             "types": [
-                "imported:types/RootString"
+                "type_imported:RootString"
             ],
             "errors": [],
             "subpackages": [
-                "imported/x:subpackage"
+                "subpackage_imported/x"
             ],
             "hasEndpointsInTree": true
         },
-        "imported/x:subpackage": {
+        "subpackage_imported/x": {
             "fernFilepath": {
                 "allParts": [
                     {
@@ -689,7 +689,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 }
             },
             "types": [
-                "imported/x:types/StringAlias"
+                "type_imported/x:StringAlias"
             ],
             "errors": [],
             "subpackages": [],
@@ -704,8 +704,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "types": [],
         "errors": [],
         "subpackages": [
-            "y:subpackage",
-            "imported:subpackage"
+            "subpackage_y",
+            "subpackage_imported"
         ],
         "hasEndpointsInTree": true
     },

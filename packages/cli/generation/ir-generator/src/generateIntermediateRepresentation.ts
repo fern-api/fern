@@ -15,6 +15,7 @@ import { convertHttpHeader, convertHttpService } from "./converters/services/con
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
+import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
@@ -196,10 +197,11 @@ export async function generateIntermediateRepresentation({
         );
     });
 
-    const intermediateRepresentationForAudiences =
-        audienceIrGraph != null
-            ? filterIntermediateRepresentationForAudiences(intermediateRepresentation, audienceIrGraph)
-            : intermediateRepresentation;
+    const filteredIr = audienceIrGraph != null ? audienceIrGraph.build() : undefined;
+    const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
+        intermediateRepresentation,
+        filteredIr
+    );
 
     const isAuthMandatory =
         workspace.definition.rootApiFile.contents.auth != null &&
@@ -209,7 +211,7 @@ export async function generateIntermediateRepresentation({
 
     return {
         ...intermediateRepresentationForAudiences,
-        ...packageTreeGenerator.build(),
+        ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
             isAuthMandatory,
         },
@@ -218,9 +220,11 @@ export async function generateIntermediateRepresentation({
 
 function filterIntermediateRepresentationForAudiences(
     intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,
-    audienceIrGraph: AudienceIrGraph
+    filteredIr: FilteredIr | undefined
 ): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
-    const filteredIr = audienceIrGraph.build();
+    if (filteredIr == null) {
+        return intermediateRepresentation;
+    }
     return {
         ...intermediateRepresentation,
         types: pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type)),
