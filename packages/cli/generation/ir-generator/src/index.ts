@@ -4,6 +4,7 @@ export { constructStreamCondition } from "./converters/services/convertHttpRespo
 export {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     DEFAULT_REQUEST_PARAMETER_NAME,
+    doesRequestHaveNonBodyProperties,
 } from "./converters/services/convertHttpSdkRequest";
 export { getHeaderName, getQueryParameterName } from "./converters/services/convertHttpService";
 export {

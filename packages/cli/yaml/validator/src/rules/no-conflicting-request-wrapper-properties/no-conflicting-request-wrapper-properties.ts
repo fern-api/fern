@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+    doesRequestHaveNonBodyProperties,
     getHeaderName,
     getQueryParameterName,
     TypeResolverImpl,
@@ -108,10 +109,15 @@ function getRequestWrapperPropertiesByName({
         propertiesForName.push(property);
     };
 
-    addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
-        type: "referenced-body",
-        propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
-    });
+    if (endpoint.request != null && typeof endpoint.request !== "string") {
+        const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body);
+        if (isBodyReferenced && doesRequestHaveNonBodyProperties(endpoint.request)) {
+            addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
+                type: "referenced-body",
+                propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+            });
+        }
+    }
 
     if (service.headers != null) {
         for (const [headerKey, header] of Object.entries(service.headers)) {

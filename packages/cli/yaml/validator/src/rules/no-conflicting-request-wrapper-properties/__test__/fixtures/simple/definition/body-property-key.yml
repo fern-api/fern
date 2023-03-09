@@ -1,0 +1,27 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    a:
+      path: ""
+      method: POST
+      request:
+        body:
+          properties:
+            body: string
+    b:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          foo: string
+        body:
+          properties:
+            body: string
+    c:
+      path: ""
+      method: POST
+      request:
+        query-parameters:
+          body: string
+        body: string

@@ -39,8 +39,8 @@ function convertHttpSdkRequestShape({
         return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody(request, file));
     }
 
-    const { headers = {}, "query-parameters": queryParameters = {}, body } = request;
-    if (size(headers) > 0 || size(queryParameters) > 0 || (body != null && isInlineRequestBody(body))) {
+    const { body } = request;
+    if (doesRequestHaveNonBodyProperties(request) || (body != null && isInlineRequestBody(body))) {
         if (request.name == null) {
             throw new Error("Name is missing for request wrapper");
         }
@@ -55,4 +55,9 @@ function convertHttpSdkRequestShape({
     }
 
     return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody(body, file));
+}
+
+export function doesRequestHaveNonBodyProperties(request: RawSchemas.HttpRequestSchema): boolean {
+    const { headers = {}, "query-parameters": queryParameters = {} } = request;
+    return size(headers) > 0 || size(queryParameters) > 0;
 }
