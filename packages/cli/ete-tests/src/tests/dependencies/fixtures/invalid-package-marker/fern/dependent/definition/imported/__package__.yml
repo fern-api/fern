@@ -1,4 +1,2 @@
 export: "@fern/dependency"
-
-types:
-  Foo: string
+docs: I am some docs

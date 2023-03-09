@@ -44,7 +44,8 @@ export declare namespace WorkspaceLoader {
     export type DependencyFailure =
         | DependencyNotListedFailure
         | FailedToLoadDependencyFailure
-        | ExportPackageHasDefinitionsFailure;
+        | ExportPackageHasDefinitionsFailure
+        | ExportingPackageMarkerHasOtherKeysFailure;
 
     export interface DependencyNotListedFailure {
         type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED;
@@ -60,6 +61,11 @@ export declare namespace WorkspaceLoader {
         type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS;
         pathToPackage: RelativeFilePath;
     }
+
+    export interface ExportingPackageMarkerHasOtherKeysFailure {
+        type: WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS;
+        pathOfPackageMarker: RelativeFilePath;
+    }
 }
 
 export enum WorkspaceLoaderFailureType {
@@ -69,5 +75,6 @@ export enum WorkspaceLoaderFailureType {
     STRUCTURE_VALIDATION = "STRUCTURE_VALIDATION",
     DEPENDENCY_NOT_LISTED = "DEPENDENCY_NOT_LISTED",
     FAILED_TO_LOAD_DEPENDENCY = "FAILED_TO_LOAD_DEPENDENCY",
+    EXPORTING_PACKAGE_MARKER_OTHER_KEYS = "EXPORTING_PACKAGE_MARKER_OTHER_KEYS",
     EXPORT_PACKAGE_HAS_DEFINITIONS = "EXPORT_PACKAGE_HAS_DEFINITIONS",
 }
