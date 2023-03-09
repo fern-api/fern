@@ -41,7 +41,7 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
 
     const properties = Object.entries(request.body.properties).reduce<RawFileUploadRequest.Property[]>(
         (acc, [key, propertyType]) => {
-            const docs = typeof propertyType === "string" ? propertyType : propertyType.docs;
+            const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
             const maybeParsedFileType = parseRawFileType(
                 typeof propertyType === "string" ? propertyType : propertyType.type
             );

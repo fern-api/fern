@@ -39,7 +39,12 @@ export function convertHttpRequestBody({
                     });
                 } else {
                     return FileUploadRequestProperty.bodyProperty(
-                        convertInlinedRequestProperty(property.key, property.propertyType, property.docs, file)
+                        convertInlinedRequestProperty({
+                            propertyKey: property.key,
+                            propertyDefinition: property.propertyType,
+                            docs: property.docs,
+                            file,
+                        })
                     );
                 }
             }),
@@ -59,12 +64,12 @@ export function convertHttpRequestBody({
             properties:
                 request.body.properties != null
                     ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) =>
-                          convertInlinedRequestProperty(
+                          convertInlinedRequestProperty({
                               propertyKey,
                               propertyDefinition,
-                              typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
-                              file
-                          )
+                              docs: typeof propertyDefinition !== "string" ? propertyDefinition.docs : undefined,
+                              file,
+                          })
                       )
                     : [],
         });
@@ -83,12 +88,17 @@ export function convertReferenceHttpRequestBody(
     };
 }
 
-function convertInlinedRequestProperty(
-    propertyKey: string,
-    propertyDefinition: RawSchemas.ObjectPropertySchema,
-    docs: string | undefined,
-    file: FernFileContext
-): InlinedRequestBodyProperty {
+function convertInlinedRequestProperty({
+    propertyKey,
+    propertyDefinition,
+    docs,
+    file,
+}: {
+    propertyKey: string;
+    propertyDefinition: RawSchemas.ObjectPropertySchema;
+    docs: string | undefined;
+    file: FernFileContext;
+}): InlinedRequestBodyProperty {
     return {
         docs,
         name: file.casingsGenerator.generateNameAndWireValue({

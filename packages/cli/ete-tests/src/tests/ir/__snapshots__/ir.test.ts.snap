@@ -5139,7 +5139,6 @@ exports[`ir {"fixtureName":"file-upload","language":"java"} 1`] = `
                         },
                         "properties": [
                             {
-                                "docs": "string",
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -5221,7 +5220,6 @@ exports[`ir {"fixtureName":"file-upload","language":"java"} 1`] = `
                                 "type": "file"
                             },
                             {
-                                "docs": "integer",
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
@@ -5576,7 +5574,6 @@ exports[`ir {"fixtureName":"file-upload","language":"python"} 1`] = `
                         },
                         "properties": [
                             {
-                                "docs": "string",
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -5658,7 +5655,6 @@ exports[`ir {"fixtureName":"file-upload","language":"python"} 1`] = `
                                 "type": "file"
                             },
                             {
-                                "docs": "integer",
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
@@ -6013,7 +6009,6 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                         },
                         "properties": [
                             {
-                                "docs": "string",
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -6095,7 +6090,6 @@ exports[`ir {"fixtureName":"file-upload","language":"typescript"} 1`] = `
                                 "type": "file"
                             },
                             {
-                                "docs": "integer",
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
@@ -6450,7 +6444,6 @@ exports[`ir {"fixtureName":"file-upload"} 1`] = `
                         },
                         "properties": [
                             {
-                                "docs": "string",
                                 "name": {
                                     "name": {
                                         "originalName": "foo",
@@ -6532,7 +6525,6 @@ exports[`ir {"fixtureName":"file-upload"} 1`] = `
                                 "type": "file"
                             },
                             {
-                                "docs": "integer",
                                 "name": {
                                     "name": {
                                         "originalName": "bar",
