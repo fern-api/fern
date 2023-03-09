@@ -39,6 +39,7 @@ services:
             - UnauthorizedError
 
 types:
+  MovieId: string
   Movie:
     properties:
       title: string
