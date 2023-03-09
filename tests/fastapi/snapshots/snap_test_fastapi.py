@@ -832,3 +832,75 @@ snapshots['test_fastapi resources_v_2_service___init__'] = FileSnapshot('snap_te
 snapshots['test_fastapi resources_v_2_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi resources_v_2_service_service.py')
 
 snapshots['test_fastapi security'] = FileSnapshot('snap_test_fastapi/test_fastapi security.py')
+
+snapshots['test_fastapi_error_status_code __init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code __init__.py')
+
+snapshots['test_fastapi_error_status_code core___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core___init__.py')
+
+snapshots['test_fastapi_error_status_code core_abstract_fern_service'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_abstract_fern_service.py')
+
+snapshots['test_fastapi_error_status_code core_datetime_utils'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_datetime_utils.py')
+
+snapshots['test_fastapi_error_status_code core_exceptions___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_exceptions___init__.py')
+
+snapshots['test_fastapi_error_status_code core_exceptions_fern_http_exception'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_exceptions_fern_http_exception.py')
+
+snapshots['test_fastapi_error_status_code core_exceptions_handlers'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_exceptions_handlers.py')
+
+snapshots['test_fastapi_error_status_code core_exceptions_unauthorized'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_exceptions_unauthorized.py')
+
+snapshots['test_fastapi_error_status_code core_route_args'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_route_args.py')
+
+snapshots['test_fastapi_error_status_code core_security___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_security___init__.py')
+
+snapshots['test_fastapi_error_status_code core_security_bearer'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code core_security_bearer.py')
+
+snapshots['test_fastapi_error_status_code filepaths'] = [
+    '__init__.py',
+    'core/__init__.py',
+    'core/abstract_fern_service.py',
+    'core/datetime_utils.py',
+    'core/exceptions/__init__.py',
+    'core/exceptions/fern_http_exception.py',
+    'core/exceptions/handlers.py',
+    'core/exceptions/unauthorized.py',
+    'core/route_args.py',
+    'core/security/__init__.py',
+    'core/security/bearer.py',
+    'register.py',
+    'resources/__init__.py',
+    'resources/movie/__init__.py',
+    'resources/movie/errors/__init__.py',
+    'resources/movie/errors/invalid_movie_error.py',
+    'resources/movie/errors/movie_already_exists_error.py',
+    'resources/movie/errors/movie_not_found_error.py',
+    'resources/movie/service/__init__.py',
+    'resources/movie/service/service.py',
+    'resources/movie/types/__init__.py',
+    'resources/movie/types/movie.py',
+    'resources/movie/types/movie_id.py'
+]
+
+snapshots['test_fastapi_error_status_code register'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code register.py')
+
+snapshots['test_fastapi_error_status_code resources___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources___init__.py')
+
+snapshots['test_fastapi_error_status_code resources_movie___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie___init__.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_errors___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_errors___init__.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_errors_invalid_movie_error'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_errors_invalid_movie_error.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_errors_movie_already_exists_error'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_errors_movie_already_exists_error.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_errors_movie_not_found_error'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_errors_movie_not_found_error.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_service___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_service___init__.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_service_service'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_service_service.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_types___init__'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_types___init__.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_types_movie'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_types_movie.py')
+
+snapshots['test_fastapi_error_status_code resources_movie_types_movie_id'] = FileSnapshot('snap_test_fastapi/test_fastapi_error_status_code resources_movie_types_movie_id.py')

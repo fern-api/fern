@@ -9,3 +9,7 @@ from ..snapshot_helpers import run_snapshot_test
 
 def test_fastapi(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(snapshot=snapshot, fixture_name="trace", tmpdir=tmpdir, cli=cli, filename_of_test=__file__)
+
+
+def test_fastapi_error_status_code(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(snapshot=snapshot, fixture_name="imdb", tmpdir=tmpdir, cli=cli, filename_of_test=__file__)
