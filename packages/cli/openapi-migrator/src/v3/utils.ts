@@ -72,7 +72,7 @@ export function getFernReferenceForSchema(
 
     const typeName = schemaReference.$ref.replace(referencePrefix, "");
     if (tag !== serviceFileName) {
-        imports[serviceFileName === UNTAGGED_FILE_NAME ? "root" : serviceFileName] = `${serviceFileName}.yml`;
+        imports[serviceFileName === UNTAGGED_FILE_NAME ? "__package__" : serviceFileName] = `${serviceFileName}.yml`;
     }
 
     return tag === serviceFileName ? typeName : `${serviceFileName}.${typeName}`;
