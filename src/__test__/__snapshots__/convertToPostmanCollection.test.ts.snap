@@ -281,7 +281,7 @@ exports[`convertToPostman test-api 1`] = `
     {
       \\"_type\\": \\"container\\",
       \\"description\\": null,
-      \\"name\\": \\"Blog\\",
+      \\"name\\": \\"Blog Service\\",
       \\"item\\": [
         {
           \\"_type\\": \\"endpoint\\",

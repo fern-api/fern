@@ -108,10 +108,11 @@ function getCollectionItemsForPackage(
             throw new Error("Subpackage does not exist: " + subpackageId);
         }
         if (subpackage.hasEndpointsInTree) {
+            const service = subpackage.service != null ? ir.services[subpackage.service] : undefined;
             items.push({
                 type: "container",
                 description: subpackage.docs ?? undefined,
-                name: startCase(subpackage.name.originalName),
+                name: service?.displayName ?? startCase(subpackage.name.originalName),
                 item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
             });
         }

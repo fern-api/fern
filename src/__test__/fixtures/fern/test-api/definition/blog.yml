@@ -33,6 +33,7 @@ errors:
     type: PostNotFoundErrorBody
 service:
   auth: false
+  display-name: Blog Service
   headers:
     x-service-header: string
   base-path: /
