@@ -108,7 +108,7 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
             const referenceToError = context.sdkError
                 .getReferenceToError(error.error)
                 .getExpression({ isForComment: true });
-            return `@throws {${getTextOfTsNode(referenceToError)}}`;
+            lines.push(`@throws {${getTextOfTsNode(referenceToError)}}`);
         }
 
         if (lines.length === 0) {
