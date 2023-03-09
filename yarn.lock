@@ -1715,6 +1715,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-typescript/callback-queue@workspace:packages/core-utilities/callback-queue":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/callback-queue@workspace:packages/core-utilities/callback-queue"
+  dependencies:
+    "@babel/core": ^7.19.1
+    "@babel/preset-env": ^7.19.1
+    "@babel/preset-typescript": ^7.18.6
+    "@types/jest": ^28.1.6
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.3
+    eslint: ^8.23.1
+    jest: ^28.1.3
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:packages/commons":
   version: 0.0.0-use.local
   resolution: "@fern-typescript/commons@workspace:packages/commons"

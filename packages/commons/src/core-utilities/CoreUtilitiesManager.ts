@@ -9,10 +9,11 @@ import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
 import { AuthImpl } from "./auth/AuthImpl";
 import { BaseCoreUtilitiesImpl } from "./base/BaseCoreUtilitiesImpl";
+import { CallbackQueueImpl } from "./callback-queue/CallbackQueueImpl";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
 import { FetcherImpl } from "./fetcher/FetcherImpl";
-import { StreamingFetcherImpl } from "./fetcher/StreamingFetcherImpl";
+import { StreamingFetcherImpl } from "./streaming-fetcher/StreamingFetcherImpl";
 import { ZurgImpl } from "./zurg/ZurgImpl";
 
 export declare namespace CoreUtilitiesManager {
@@ -40,6 +41,7 @@ export class CoreUtilitiesManager {
             streamingFetcher: new StreamingFetcherImpl({ getReferenceToExport }),
             auth: new AuthImpl({ getReferenceToExport }),
             base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
+            callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
         };
     }
 

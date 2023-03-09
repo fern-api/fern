@@ -36,6 +36,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private static CB_CALLBACK_NAME = "cb";
     private static DATA_PARAMETER_NAME = "data";
     private static OPTS_PARAMETER_NAME = "opts";
+    private static CALLBACK_QUEUE_VARIABLE_NAME = "_queue";
 
     public readonly endpoint: HttpEndpoint;
     private packageId: PackageId;
@@ -420,82 +421,131 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         };
 
         return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME,
+                            undefined,
+                            undefined,
+                            context.base.coreUtilities.callbackQueue._instantiate()
+                        ),
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
             ts.factory.createExpressionStatement(
                 context.base.coreUtilities.streamingFetcher.streamingFetcher._invoke(
                     {
                         ...fetcherArgs,
-                        onData: ts.factory.createArrowFunction(
-                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                            undefined,
-                            [
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                ),
-                            ],
-                            undefined,
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            ts.factory.createBlock(
+                        onData: context.base.coreUtilities.callbackQueue.wrap({
+                            referenceToCallbackQueue: ts.factory.createIdentifier(
+                                GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME
+                            ),
+                            functionToWrap: ts.factory.createArrowFunction(
+                                [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                undefined,
                                 [
-                                    ts.factory.createVariableStatement(
+                                    ts.factory.createParameterDeclaration(
                                         undefined,
-                                        ts.factory.createVariableDeclarationList(
-                                            [
-                                                ts.factory.createVariableDeclaration(
-                                                    PARSED_DATA_VARIABLE_NAME,
-                                                    undefined,
-                                                    undefined,
-                                                    context.sdkEndpointTypeSchemas
-                                                        .getGeneratedEndpointTypeSchemas(
-                                                            this.packageId,
-                                                            this.endpoint.name
-                                                        )
-                                                        .deserializeStreamData(
-                                                            ts.factory.createIdentifier(
-                                                                GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                            ),
-                                                            context
-                                                        )
-                                                ),
-                                            ],
-                                            ts.NodeFlags.Const
-                                        )
-                                    ),
-                                    ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
-                                        ts.factory.createIdentifier(PARSED_DATA_VARIABLE_NAME),
-                                        {
-                                            valid: (validData) => [
-                                                ts.factory.createExpressionStatement(
-                                                    ts.factory.createCallChain(
-                                                        ts.factory.createIdentifier(
-                                                            GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
-                                                        ),
-                                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                        undefined,
-                                                        [validData]
-                                                    )
-                                                ),
-                                            ],
-                                            invalid: (errors) => [
-                                                ts.factory.createExpressionStatement(
-                                                    ts.factory.createCallChain(
-                                                        this.getReferenceToOpt("onError"),
-                                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                        undefined,
-                                                        [errors]
-                                                    )
-                                                ),
-                                            ],
-                                        }
+                                        undefined,
+                                        undefined,
+                                        GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
                                     ),
                                 ],
-                                true
-                            )
+                                undefined,
+                                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                ts.factory.createBlock(
+                                    [
+                                        ts.factory.createVariableStatement(
+                                            undefined,
+                                            ts.factory.createVariableDeclarationList(
+                                                [
+                                                    ts.factory.createVariableDeclaration(
+                                                        PARSED_DATA_VARIABLE_NAME,
+                                                        undefined,
+                                                        undefined,
+                                                        context.sdkEndpointTypeSchemas
+                                                            .getGeneratedEndpointTypeSchemas(
+                                                                this.packageId,
+                                                                this.endpoint.name
+                                                            )
+                                                            .deserializeStreamData(
+                                                                ts.factory.createIdentifier(
+                                                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                                                ),
+                                                                context
+                                                            )
+                                                    ),
+                                                ],
+                                                ts.NodeFlags.Const
+                                            )
+                                        ),
+                                        ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
+                                            ts.factory.createIdentifier(PARSED_DATA_VARIABLE_NAME),
+                                            {
+                                                valid: (validData) => [
+                                                    ts.factory.createExpressionStatement(
+                                                        ts.factory.createCallChain(
+                                                            ts.factory.createIdentifier(
+                                                                GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
+                                                            ),
+                                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                            undefined,
+                                                            [validData]
+                                                        )
+                                                    ),
+                                                ],
+                                                invalid: (errors) => [
+                                                    ts.factory.createExpressionStatement(
+                                                        ts.factory.createCallChain(
+                                                            this.getReferenceToOpt("onError"),
+                                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                            undefined,
+                                                            [errors]
+                                                        )
+                                                    ),
+                                                ],
+                                            }
+                                        ),
+                                    ],
+                                    true
+                                )
+                            ),
+                        }),
+                        onError: ts.factory.createConditionalExpression(
+                            ts.factory.createBinaryExpression(
+                                this.getReferenceToOpt("onError"),
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                            context.base.coreUtilities.callbackQueue.wrap({
+                                referenceToCallbackQueue: ts.factory.createIdentifier(
+                                    GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME
+                                ),
+                                functionToWrap: this.getReferenceToOpt("onError", { isNotNull: true }),
+                            }),
+                            ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                            ts.factory.createIdentifier("undefined")
                         ),
-                        onError: this.getReferenceToOpt("onError"),
-                        onFinish: this.getReferenceToOpt("onFinish"),
+                        onFinish: ts.factory.createConditionalExpression(
+                            ts.factory.createBinaryExpression(
+                                this.getReferenceToOpt("onFinish"),
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                            context.base.coreUtilities.callbackQueue.wrap({
+                                referenceToCallbackQueue: ts.factory.createIdentifier(
+                                    GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME
+                                ),
+                                functionToWrap: this.getReferenceToOpt("onFinish", { isNotNull: true }),
+                            }),
+                            ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                            ts.factory.createIdentifier("undefined")
+                        ),
                         abortController: this.getReferenceToOpt("abortController"),
                         terminator:
                             this.response.terminator != null
@@ -511,10 +561,13 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    private getReferenceToOpt(key: keyof StreamingFetcher.Args): ts.Expression {
+    private getReferenceToOpt(
+        key: keyof StreamingFetcher.Args,
+        { isNotNull }: { isNotNull?: boolean } = {}
+    ): ts.Expression {
         return ts.factory.createPropertyAccessChain(
             ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.OPTS_PARAMETER_NAME),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            isNotNull ? undefined : ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(key)
         );
     }
