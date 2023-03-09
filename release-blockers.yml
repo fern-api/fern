@@ -1,5 +1,2 @@
 # if there are any release blockers in this list, releasing will fail on Circle
-release-blockers:
-  - Response streaming (YAML break)
-  - No fern check rules for undiscriminated unions
-  - Examples aren't suppported for undiscriminated unions
+release-blockers: []
