@@ -7,5 +7,8 @@ export interface FormData {
 
 export interface FormDataValue {
     expression: ts.Expression;
-    isNullable: boolean;
+    nullCheck?: {
+        // defaults to expression
+        expressionToCheck: ts.Expression | undefined;
+    };
 }

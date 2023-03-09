@@ -275,7 +275,7 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
                     key: property.key.wireValue,
                     value: {
                         expression: ts.factory.createIdentifier(this.getParameterNameForFile(property)),
-                        isNullable: property.isOptional,
+                        nullCheck: property.isOptional ? { expressionToCheck: undefined } : undefined,
                     },
                 });
             },
@@ -290,7 +290,14 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
                             this.requestParameter.getReferenceToBodyProperty(property, context),
                             property.valueType
                         ),
-                        isNullable: context.type.getReferenceToType(property.valueType).isOptional,
+                        nullCheck: context.type.getReferenceToType(property.valueType).isOptional
+                            ? {
+                                  expressionToCheck: this.requestParameter.getReferenceToBodyProperty(
+                                      property,
+                                      context
+                                  ),
+                              }
+                            : undefined,
                     },
                 });
             },

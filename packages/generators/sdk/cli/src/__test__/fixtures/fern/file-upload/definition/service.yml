@@ -13,6 +13,7 @@ service:
             b: integer
             c: file
             d: optional<file>
+            int: optional<integer>
       response: MyUnion
 
 types:

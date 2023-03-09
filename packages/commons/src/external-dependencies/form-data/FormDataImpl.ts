@@ -29,10 +29,10 @@ export class FormDataImpl extends ExternalDependency implements FormData {
             )
         );
 
-        if (value.isNullable) {
+        if (value.nullCheck != null) {
             statement = ts.factory.createIfStatement(
                 ts.factory.createBinaryExpression(
-                    value.expression,
+                    value.nullCheck.expressionToCheck ?? value.expression,
                     ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                     ts.factory.createNull()
                 ),
