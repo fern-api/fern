@@ -81,5 +81,5 @@ def run_snapshot_test(
 
     run_command_in_output_directory(["poetry", "init", "--no-interaction", "--python", PYTHON_VERSION])
     run_command_in_output_directory(["poetry", "env", "use", PYTHON_VERSION])
-    run_command_in_output_directory(["poetry", "add", "fastapi", "pydantic", "mypy"])
+    run_command_in_output_directory(["poetry", "add", "fastapi=0.92.0", "pydantic=1.10.5", "mypy=1.0.1"])
     run_command_in_output_directory(["poetry", "run", "mypy", "."])
