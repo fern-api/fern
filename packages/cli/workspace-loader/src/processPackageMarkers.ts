@@ -45,32 +45,35 @@ export async function processPackageMarkers({
             if (packageMarker.contents.export == null) {
                 packageMarkers[pathOfPackageMarker] = packageMarker;
             } else {
-                const { types = {}, errors = {}, service } = packageMarker.contents;
-                const pathToPackage = dirname(pathOfPackageMarker);
-                const areDefinitionsDefinedInPackage =
-                    size(types) > 0 ||
-                    size(errors) > 0 ||
-                    service != null ||
-                    keys(structuralValidationResult.serviceFiles).some(
-                        (filepath) => filepath !== pathOfPackageMarker && filepath.startsWith(pathToPackage)
-                    );
-                if (areDefinitionsDefinedInPackage) {
+                const { export: _, ...otherPackageMarkerKeys } = packageMarker.contents;
+                if (size(otherPackageMarkerKeys) > 0) {
                     failures[pathOfPackageMarker] = {
-                        type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS,
-                        pathToPackage,
+                        type: WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS,
+                        pathOfPackageMarker,
                     };
                 } else {
-                    const loadDependencyResult = await loadDependency({
-                        dependencyName: packageMarker.contents.export,
-                        dependenciesConfiguration,
-                        context,
-                        rootApiFile: structuralValidationResult.rootApiFile.contents,
-                        cliVersion,
-                    });
-                    if (loadDependencyResult.didSucceed) {
-                        importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;
+                    const pathToPackage = dirname(pathOfPackageMarker);
+                    const areDefinitionsDefinedInPackage = keys(structuralValidationResult.serviceFiles).some(
+                        (filepath) => filepath !== pathOfPackageMarker && filepath.startsWith(pathToPackage)
+                    );
+                    if (areDefinitionsDefinedInPackage) {
+                        failures[pathOfPackageMarker] = {
+                            type: WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS,
+                            pathToPackage,
+                        };
                     } else {
-                        failures[pathOfPackageMarker] = loadDependencyResult.failure;
+                        const loadDependencyResult = await loadDependency({
+                            dependencyName: packageMarker.contents.export,
+                            dependenciesConfiguration,
+                            context,
+                            rootApiFile: structuralValidationResult.rootApiFile.contents,
+                            cliVersion,
+                        });
+                        if (loadDependencyResult.didSucceed) {
+                            importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;
+                        } else {
+                            failures[pathOfPackageMarker] = loadDependencyResult.failure;
+                        }
                     }
                 }
             }
