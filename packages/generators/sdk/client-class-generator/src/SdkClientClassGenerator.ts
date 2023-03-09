@@ -12,6 +12,7 @@ export declare namespace SdkClientClassGenerator {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
+        requireDefaultEnvironment: boolean;
     }
 
     export namespace generateService {
@@ -29,6 +30,7 @@ export class SdkClientClassGenerator {
     private neverThrowErrors: boolean;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private allowCustomFetcher: boolean;
+    private requireDefaultEnvironment: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -37,6 +39,7 @@ export class SdkClientClassGenerator {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
+        requireDefaultEnvironment,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -44,6 +47,7 @@ export class SdkClientClassGenerator {
         this.neverThrowErrors = neverThrowErrors;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
+        this.requireDefaultEnvironment = requireDefaultEnvironment;
     }
 
     public generateService({
@@ -60,6 +64,7 @@ export class SdkClientClassGenerator {
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
+            requireDefaultEnvironment: this.requireDefaultEnvironment,
         });
     }
 }

@@ -9,4 +9,5 @@ export interface SdkCustomConfig {
     allowCustomFetcher: boolean;
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
+    requireDefaultEnvironment: boolean;
 }

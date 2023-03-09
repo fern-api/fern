@@ -27,6 +27,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
+        requireDefaultEnvironment: boolean;
     }
 }
 
@@ -50,6 +51,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private generatedWrappedServices: GeneratedWrappedService[];
     private allowCustomFetcher: boolean;
     private packageResolver: PackageResolver;
+    private requireDefaultEnvironment: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -61,11 +63,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
+        requireDefaultEnvironment,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.packageResolver = packageResolver;
+        this.requireDefaultEnvironment = requireDefaultEnvironment;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -304,6 +308,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const defaultEnvironment = context.environments
             .getGeneratedEnvironments()
             .getReferenceToDefaultEnvironment(context);
+
+        if (this.requireDefaultEnvironment) {
+            if (defaultEnvironment == null) {
+                throw new Error("Cannot use default environment because none exists");
+            }
+            return defaultEnvironment;
+        }
+
         if (defaultEnvironment != null) {
             referenceToEnvironmentValue = ts.factory.createBinaryExpression(
                 referenceToEnvironmentValue,
@@ -349,15 +361,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      ***********/
 
     private generateOptionsInterface(context: SdkClientClassContext): OptionalKind<InterfaceDeclarationStructure> {
-        const generatedEnvironments = context.environments.getGeneratedEnvironments();
+        const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
-        const properties: OptionalKind<PropertySignatureStructure>[] = [
-            {
+        if (!this.requireDefaultEnvironment) {
+            const generatedEnvironments = context.environments.getGeneratedEnvironments();
+            properties.push({
                 name: GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(generatedEnvironments.getTypeForUserSuppliedEnvironment(context)),
                 hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
-            },
-        ];
+            });
+        }
 
         if (this.hasBearerAuth) {
             properties.push({

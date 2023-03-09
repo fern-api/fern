@@ -85,7 +85,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
             esModuleInterop: true,
             skipLibCheck: true,
             declaration: true,
-            noUnusedLocals: true,
             noUnusedParameters: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: SimpleTypescriptProject.SRC_DIRECTORY,

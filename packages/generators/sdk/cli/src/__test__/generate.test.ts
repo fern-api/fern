@@ -26,6 +26,9 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        customConfig: {
+            requireDefaultEnvironment: true,
+        },
     },
     {
         path: "trace",

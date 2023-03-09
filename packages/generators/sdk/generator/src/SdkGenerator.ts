@@ -77,6 +77,7 @@ export declare namespace SdkGenerator {
         allowCustomFetcher: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
+        requireDefaultEnvironment: boolean;
     }
 }
 
@@ -252,6 +253,7 @@ export class SdkGenerator {
             neverThrowErrors: config.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
+            requireDefaultEnvironment: config.requireDefaultEnvironment,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
