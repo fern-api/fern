@@ -1,12 +1,12 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
+import { getAllDefinitionFiles } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ImportFileExistsRule: Rule = {
     name: "import-file-exists",
     create: ({ workspace }) => {
-        const relativePaths = Object.keys(getAllNamedDefinitionFiles(workspace.definition));
+        const relativePaths = Object.keys(getAllDefinitionFiles(workspace.definition));
 
         const absolutePaths = new Set<string>();
         relativePaths.forEach((relativeFilepath) => {

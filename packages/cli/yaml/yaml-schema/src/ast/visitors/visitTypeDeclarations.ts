@@ -1,7 +1,7 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { ExampleTypeSchema, TypeDeclarationSchema } from "../../schemas";
 import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
-import { FernDefinitionFileAstVisitor } from "../FernDefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
@@ -13,7 +13,7 @@ export async function visitTypeDeclarations({
     nodePath,
 }: {
     typeDeclarations: Record<string, TypeDeclarationSchema> | undefined;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (typeDeclarations == null) {
@@ -34,7 +34,7 @@ export async function visitTypeDeclaration({
 }: {
     typeName: string;
     declaration: TypeDeclarationSchema;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForType: NodePath;
 }): Promise<void> {
     const visitTypeReference = createTypeReferenceVisitor(visitor);

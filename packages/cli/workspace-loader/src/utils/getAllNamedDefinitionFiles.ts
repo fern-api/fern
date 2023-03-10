@@ -10,7 +10,6 @@ export function getAllNamedDefinitionFiles(
 ): Record<RelativeFilePath, ParsedFernFile<DefinitionFileSchema>> {
     return {
         ...definition.namedDefinitionFiles,
-        ...definition.packageMarkers,
         ...entries(definition.importedDefinitions).reduce((acc, [pathToImportedDefinition, definition]) => {
             return {
                 ...acc,

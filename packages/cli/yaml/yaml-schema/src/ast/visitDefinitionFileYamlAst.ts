@@ -1,15 +1,15 @@
 import { visitObject } from "@fern-api/core-utils";
 import { DefinitionFileSchema } from "../schemas";
-import { FernDefinitionFileAstVisitor } from "./FernDefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor } from "./DefinitionFileAstVisitor";
 import { visitHttpService } from "./visitors/services/visitHttpService";
 import { createDocsVisitor } from "./visitors/utils/createDocsVisitor";
 import { visitErrorDeclarations } from "./visitors/visitErrorDeclarations";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
 
-export async function visitFernDefinitionFileYamlAst(
+export async function visitDefinitionFileYamlAst(
     contents: DefinitionFileSchema,
-    visitor: Partial<FernDefinitionFileAstVisitor>
+    visitor: Partial<DefinitionFileAstVisitor>
 ): Promise<void> {
     await visitObject(contents, {
         docs: createDocsVisitor(visitor, []),

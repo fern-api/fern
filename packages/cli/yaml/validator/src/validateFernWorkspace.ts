@@ -1,14 +1,17 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import {
     DefinitionFileSchema,
+    PackageMarkerFileSchema,
     RootApiFileSchema,
-    visitFernDefinitionFileYamlAst,
-    visitFernRootApiFileYamlAst,
+    visitDefinitionFileYamlAst,
+    visitPackageMarkerYamlAst,
+    visitRootApiFileYamlAst,
 } from "@fern-api/yaml-schema";
 import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
+import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
 import { getAllEnabledRules } from "./getAllRules";
 import { Rule, RuleVisitors } from "./Rule";
@@ -47,6 +50,15 @@ export async function runRulesOnWorkspace({
         violations.push(...violationsForFile);
     });
 
+    await visitAllPackageMarkers(workspace, async (relativeFilepath, file) => {
+        const violationsForFile = await validatePackageMarker({
+            relativeFilepath,
+            contents: file,
+            allRuleVisitors,
+        });
+        violations.push(...violationsForFile);
+    });
+
     return violations;
 }
 
@@ -69,7 +81,7 @@ async function validateDefinitionFile({
             violations.push(...newViolations);
         },
     });
-    await visitFernDefinitionFileYamlAst(contents, astVisitor);
+    await visitDefinitionFileYamlAst(contents, astVisitor);
 
     return violations;
 }
@@ -91,7 +103,31 @@ async function validateRootApiFile({
             violations.push(...newViolations);
         },
     });
-    await visitFernRootApiFileYamlAst(contents, astVisitor);
+    await visitRootApiFileYamlAst(contents, astVisitor);
+
+    return violations;
+}
+
+async function validatePackageMarker({
+    relativeFilepath,
+    contents,
+    allRuleVisitors,
+}: {
+    relativeFilepath: RelativeFilePath;
+    contents: PackageMarkerFileSchema;
+    allRuleVisitors: RuleVisitors[];
+}): Promise<ValidationViolation[]> {
+    const violations: ValidationViolation[] = [];
+
+    const astVisitor = createPackageMarkerAstVisitorForRules({
+        relativeFilepath,
+        contents,
+        allRuleVisitors,
+        addViolations: (newViolations: ValidationViolation[]) => {
+            violations.push(...newViolations);
+        },
+    });
+    await visitPackageMarkerYamlAst(contents, astVisitor);
 
     return violations;
 }

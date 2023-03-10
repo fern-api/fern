@@ -1,5 +1,5 @@
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { RawSchemas, visitFernDefinitionFileYamlAst } from "@fern-api/yaml-schema";
+import { RawSchemas, visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import { noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -51,7 +51,7 @@ async function getErrorDeclarations(
 ): Promise<Record<string, RawSchemas.ErrorDeclarationSchema>> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
     await visitAllDefinitionFiles(workspace, async (_relativeFilepath, file) => {
-        await visitFernDefinitionFileYamlAst(file, {
+        await visitDefinitionFileYamlAst(file, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {
                 errorDeclarations[errorName] = declaration;

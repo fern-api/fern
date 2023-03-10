@@ -101,6 +101,24 @@ export class PackageTreeGenerator {
         };
     }
 
+    public sortRootPackage(subpackagesInOrder: SubpackageId[]): void {
+        if (!isEqualIgnoreOrder(this.rootPackage.subpackages, subpackagesInOrder)) {
+            throw new Error("Sorted subpackages differ from unsorted packages");
+        }
+        this.rootPackage.subpackages = subpackagesInOrder;
+    }
+
+    public sortSubpackage(subpackageId: SubpackageId, subpackagesInOrder: SubpackageId[]): void {
+        const subpackage = this.subpackages[subpackageId];
+        if (subpackage == null) {
+            throw new Error("Subpackage does not exist: " + subpackageId);
+        }
+        if (!isEqualIgnoreOrder(subpackage.subpackages, subpackagesInOrder)) {
+            throw new Error("Sorted subpackages differ from unsorted packages");
+        }
+        subpackage.subpackages = subpackagesInOrder;
+    }
+
     private getAllSubpackagesWithEndpoints(root: SubpackageId): SubpackageId[] {
         const subpackage = this.subpackages[root];
         if (subpackage == null) {
@@ -165,4 +183,19 @@ export class PackageTreeGenerator {
 
         return this.getPackageForFernFilepath(fernFilepath, nextIndex, nextParent);
     }
+}
+
+function isEqualIgnoreOrder(a: string[], b: string[]) {
+    if (a.length !== b.length) {
+        return false;
+    }
+
+    const aSet = new Set(a);
+    for (const bElement of b) {
+        if (!aSet.has(bElement)) {
+            return false;
+        }
+    }
+
+    return true;
 }

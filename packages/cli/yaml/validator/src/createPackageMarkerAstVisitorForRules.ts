@@ -1,31 +1,34 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     NodePath,
-    RootApiFileAstNodeTypes,
-    RootApiFileAstNodeVisitor,
-    RootApiFileAstVisitor,
-    RootApiFileSchema,
+    PackageMarkerAstNodeTypes,
+    PackageMarkerAstNodeVisitor,
+    PackageMarkerAstVisitor,
+    PackageMarkerFileSchema,
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
-export function createRootApiFileAstVisitorForRules({
+export function createPackageMarkerAstVisitorForRules({
     relativeFilepath,
     contents,
     allRuleVisitors,
     addViolations,
 }: {
     relativeFilepath: RelativeFilePath;
-    contents: RootApiFileSchema;
+    contents: PackageMarkerFileSchema;
     allRuleVisitors: RuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): RootApiFileAstVisitor {
-    function createAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes>(
+}): PackageMarkerAstVisitor {
+    function createAstNodeVisitor<K extends keyof PackageMarkerAstNodeTypes>(
         nodeType: K
-    ): Record<K, RootApiFileAstNodeVisitor<K>> {
-        const visit: RootApiFileAstNodeVisitor<K> = async (node: RootApiFileAstNodeTypes[K], nodePath: NodePath) => {
+    ): Record<K, PackageMarkerAstNodeVisitor<K>> {
+        const visit: PackageMarkerAstNodeVisitor<K> = async (
+            node: PackageMarkerAstNodeTypes[K],
+            nodePath: NodePath
+        ) => {
             for (const ruleVisitors of allRuleVisitors) {
-                const visitFromRule = ruleVisitors.rootApiFile?.[nodeType];
+                const visitFromRule = ruleVisitors.packageMarker?.[nodeType];
                 if (visitFromRule != null) {
                     const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
@@ -40,13 +43,11 @@ export function createRootApiFileAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, RootApiFileAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, PackageMarkerAstNodeVisitor<K>>;
     }
 
     return {
-        ...createAstNodeVisitor("defaultEnvironment"),
-        ...createAstNodeVisitor("environment"),
-        ...createAstNodeVisitor("errorDiscrimination"),
-        ...createAstNodeVisitor("errorReference"),
+        ...createAstNodeVisitor("export"),
+        ...createAstNodeVisitor("navigation"),
     };
 }

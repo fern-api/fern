@@ -1,6 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { EXAMPLE_REFERENCE_PREFIX } from "../../../constants";
-import { FernDefinitionFileAstVisitor } from "../../FernDefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 import { NodePath } from "../../NodePath";
 
 export async function visitAllReferencesInExample({
@@ -9,7 +9,7 @@ export async function visitAllReferencesInExample({
     nodePath,
 }: {
     example: unknown;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (typeof example === "string") {

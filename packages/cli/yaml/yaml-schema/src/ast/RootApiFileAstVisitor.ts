@@ -5,11 +5,11 @@ import {
 } from "../schemas";
 import { NodePath } from "./NodePath";
 
-export type FernRootApiFileAstVisitor<R = void | Promise<void>> = {
-    [K in keyof FernRootApiFileAstNodeTypes]: FernRootApiFileAstNodeVisitor<K, R>;
+export type RootApiFileAstVisitor<R = void | Promise<void>> = {
+    [K in keyof RootApiFileAstNodeTypes]: RootApiFileAstNodeVisitor<K, R>;
 };
 
-export interface FernRootApiFileAstNodeTypes {
+export interface RootApiFileAstNodeTypes {
     defaultEnvironment: string | null | undefined;
     environment: {
         environmentId: string;
@@ -19,7 +19,7 @@ export interface FernRootApiFileAstNodeTypes {
     errorReference: string;
 }
 
-export type FernRootApiFileAstNodeVisitor<K extends keyof FernRootApiFileAstNodeTypes, R = void | Promise<void>> = (
-    node: FernRootApiFileAstNodeTypes[K],
+export type RootApiFileAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes, R = void | Promise<void>> = (
+    node: RootApiFileAstNodeTypes[K],
     nodePath: NodePath
 ) => R;

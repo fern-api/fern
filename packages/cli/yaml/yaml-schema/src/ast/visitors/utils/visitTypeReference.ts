@@ -1,8 +1,8 @@
-import { FernDefinitionFileAstVisitor, TypeReferenceLocation } from "../../FernDefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 import { NodePath } from "../../NodePath";
 
 export function createTypeReferenceVisitor(
-    visitor: Partial<FernDefinitionFileAstVisitor>
+    visitor: Partial<DefinitionFileAstVisitor>
 ): (typeReference: string, nodePath: NodePath, opts?: { location?: TypeReferenceLocation }) => Promise<void> {
     return async (typeReference, nodePath, { location } = {}) => {
         await visitor.typeReference?.(

@@ -5,7 +5,7 @@ import {
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
-    visitFernDefinitionFileYamlAst,
+    visitDefinitionFileYamlAst,
 } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
@@ -74,7 +74,7 @@ async function getTypesByFilepath(workspace: FernWorkspace) {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitFernDefinitionFileYamlAst(file, {
+        await visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
                     typesForFile.add(typeName.name);
