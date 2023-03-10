@@ -33,6 +33,10 @@ export class PackageTreeGenerator {
         package_.docs = docs;
     }
 
+    public addSubpackage(fernFilepath: FernFilepath): void {
+        this.getPackageForFernFilepath(fernFilepath);
+    }
+
     public addType(typeId: TypeId, type: TypeDeclaration): void {
         this.getPackageForFernFilepath(type.name.fernFilepath).types.push(typeId);
     }
@@ -103,7 +107,7 @@ export class PackageTreeGenerator {
 
     public sortRootPackage(subpackagesInOrder: SubpackageId[]): void {
         if (!isEqualIgnoreOrder(this.rootPackage.subpackages, subpackagesInOrder)) {
-            throw new Error("Sorted subpackages differ from unsorted packages");
+            throw new Error("Sorted subpackages differ from unsorted packages in root");
         }
         this.rootPackage.subpackages = subpackagesInOrder;
     }
