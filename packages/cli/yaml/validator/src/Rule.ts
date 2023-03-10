@@ -2,10 +2,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
+    DefinitionFileSchema,
+    FernDefinitionFileAstNodeTypes,
     FernRootApiFileAstNodeTypes,
-    FernServiceFileAstNodeTypes,
     RootApiFileSchema,
-    ServiceFileSchema,
 } from "@fern-api/yaml-schema";
 
 export interface Rule {
@@ -21,7 +21,7 @@ export interface RuleContext {
 
 export interface RuleVisitors {
     rootApiFile?: RuleVisitor<FernRootApiFileAstNodeTypes, RootApiFileSchema>;
-    serviceFile?: RuleVisitor<FernServiceFileAstNodeTypes, ServiceFileSchema>;
+    definitionFile?: RuleVisitor<FernDefinitionFileAstNodeTypes, DefinitionFileSchema>;
 }
 
 export type RuleVisitor<AstNodeTypes, FileSchema> = {

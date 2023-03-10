@@ -11,7 +11,7 @@ describe("convertResponseErrors", () => {
             errors: ["commons.UnauthorizedError"],
             file: constructFernFileContext({
                 relativeFilepath: "path/to/other",
-                serviceFile: {
+                definitionFile: {
                     imports: {
                         commons: "./commons",
                     },

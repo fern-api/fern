@@ -1,34 +1,34 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
-    FernServiceFileAstNodeTypes,
-    FernServiceFileAstNodeVisitor,
-    FernServiceFileAstVisitor,
+    DefinitionFileSchema,
+    FernDefinitionFileAstNodeTypes,
+    FernDefinitionFileAstNodeVisitor,
+    FernDefinitionFileAstVisitor,
     NodePath,
-    ServiceFileSchema,
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
-export function createServiceFileAstVisitorForRules({
+export function createDefinitionFileAstVisitorForRules({
     relativeFilepath,
     contents,
     allRuleVisitors,
     addViolations,
 }: {
     relativeFilepath: RelativeFilePath;
-    contents: ServiceFileSchema;
+    contents: DefinitionFileSchema;
     allRuleVisitors: RuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): FernServiceFileAstVisitor {
-    function createAstNodeVisitor<K extends keyof FernServiceFileAstNodeTypes>(
+}): FernDefinitionFileAstVisitor {
+    function createAstNodeVisitor<K extends keyof FernDefinitionFileAstNodeTypes>(
         nodeType: K
-    ): Record<K, FernServiceFileAstNodeVisitor<K>> {
-        const visit: FernServiceFileAstNodeVisitor<K> = async (
-            node: FernServiceFileAstNodeTypes[K],
+    ): Record<K, FernDefinitionFileAstNodeVisitor<K>> {
+        const visit: FernDefinitionFileAstNodeVisitor<K> = async (
+            node: FernDefinitionFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
             for (const ruleVisitors of allRuleVisitors) {
-                const visitFromRule = ruleVisitors.serviceFile?.[nodeType];
+                const visitFromRule = ruleVisitors.definitionFile?.[nodeType];
                 if (visitFromRule != null) {
                     const ruleViolations = await visitFromRule(node, { relativeFilepath, contents });
                     addViolations(
@@ -43,7 +43,7 @@ export function createServiceFileAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, FernServiceFileAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, FernDefinitionFileAstNodeVisitor<K>>;
     }
 
     return {

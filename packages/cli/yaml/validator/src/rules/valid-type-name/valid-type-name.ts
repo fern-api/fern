@@ -6,7 +6,7 @@ export const ValidTypeNameRule: Rule = {
     name: "valid-type-name",
     create: async () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 typeDeclaration: ({ typeName }) => {
                     if (!typeName.isInlined && !ALPHA_REGEX.test(typeName.name)) {
                         return [

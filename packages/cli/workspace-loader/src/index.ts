@@ -4,7 +4,7 @@ export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result
 export {
     type FernDefinition,
     type FernWorkspace,
-    type OnDiskServiceFile,
+    type OnDiskNamedDefinitionFile,
     type OpenAPIWorkspace,
     type Workspace,
 } from "./types/Workspace";

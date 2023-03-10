@@ -17,7 +17,7 @@ export const ValidStreamConditionRule: Rule = {
     name: "valid-stream-condition",
     create: async ({ workspace }) => {
         return {
-            serviceFile: {
+            definitionFile: {
                 streamCondition: (
                     { endpoint, streamCondition: rawStreamCondition },
                     { relativeFilepath, contents }
@@ -99,14 +99,14 @@ function isBooleanOrOptionalBoolean(resolvedType: ResolvedType): boolean {
 function validatePropertyKeyStreamCondition(
     endpoint: RawSchemas.HttpEndpointSchema,
     relativeFilepath: RelativeFilePath,
-    serviceFile: RawSchemas.ServiceFileSchema,
+    definitionFile: RawSchemas.DefinitionFileSchema,
     workspace: FernWorkspace,
     requestPropertyKey: string
 ): RuleViolation[] {
     const properties = getAllPropertiesForRequest({
         endpoint,
         filepath: relativeFilepath,
-        serviceFile,
+        definitionFile,
         workspace,
     });
 
@@ -158,7 +158,7 @@ function getQueryParameterType(endpoint: RawSchemas.HttpEndpointSchema, queryPar
 function validateQueryParameterKeyStreamCondition(
     endpoint: RawSchemas.HttpEndpointSchema,
     relativeFilepath: RelativeFilePath,
-    serviceFile: RawSchemas.ServiceFileSchema,
+    definitionFile: RawSchemas.DefinitionFileSchema,
     queryParameterKey: string,
     workspace: FernWorkspace
 ): RuleViolation[] {
@@ -178,7 +178,7 @@ function validateQueryParameterKeyStreamCondition(
         type: queryParamType,
         file: constructFernFileContext({
             relativeFilepath,
-            serviceFile,
+            definitionFile,
             casingsGenerator: CASINGS_GENERATOR,
         }),
     });

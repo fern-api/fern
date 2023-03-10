@@ -15,10 +15,10 @@ export const NoCircularImportsRule: Rule = {
     name: "no-circular-imports",
     DISABLE_RULE: true,
     create: ({ workspace }) => {
-        const circularImports = findCircularImports(workspace.definition.serviceFiles);
+        const circularImports = findCircularImports(workspace.definition.namedDefinitionFiles);
 
         return {
-            serviceFile: {
+            definitionFile: {
                 import: async ({ importPath }, { relativeFilepath }) => {
                     const circularImportsForFile = circularImports[relativeFilepath];
                     if (circularImportsForFile == null) {
@@ -51,11 +51,11 @@ export const NoCircularImportsRule: Rule = {
     },
 };
 
-function findCircularImports(serviceFiles: FernDefinition["serviceFiles"]): CircularImports {
+function findCircularImports(definitionFiles: FernDefinition["namedDefinitionFiles"]): CircularImports {
     const circularImports: CircularImports = {};
 
-    for (const filepath of keys(serviceFiles)) {
-        circularImports[filepath] = findCircularImportsRecursive(filepath, [filepath], serviceFiles);
+    for (const filepath of keys(definitionFiles)) {
+        circularImports[filepath] = findCircularImportsRecursive(filepath, [filepath], definitionFiles);
     }
 
     return circularImports;
@@ -64,11 +64,11 @@ function findCircularImports(serviceFiles: FernDefinition["serviceFiles"]): Circ
 function findCircularImportsRecursive(
     filepath: RelativeFilePath,
     path: RelativeFilePath[],
-    serviceFiles: FernDefinition["serviceFiles"]
+    definitionFiles: FernDefinition["namedDefinitionFiles"]
 ): CircularImport[] {
     const circularImports: CircularImport[] = [];
 
-    const file = serviceFiles[filepath];
+    const file = definitionFiles[filepath];
     if (file == null) {
         // import points to a file that doesn't exist.
         // this will be flagged by the import-file-exists rule
@@ -93,7 +93,7 @@ function findCircularImportsRecursive(
                 }
             } else {
                 circularImports.push(
-                    ...findCircularImportsRecursive(resolvedImportPath, [...path, resolvedImportPath], serviceFiles)
+                    ...findCircularImportsRecursive(resolvedImportPath, [...path, resolvedImportPath], definitionFiles)
                 );
             }
         }

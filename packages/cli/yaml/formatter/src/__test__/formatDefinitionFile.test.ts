@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-import { formatServiceFile } from "../formatServiceFile";
+import { formatDefinitionFile } from "../formatDefinitionFile";
 
 const FIXTURES: RelativeFilePath[] = [
     "lang-server/without-lang-server.yml",
@@ -11,7 +11,7 @@ const FIXTURES: RelativeFilePath[] = [
     "headers/file-header-without-newline.yml",
 ];
 
-describe("formatServiceFile", () => {
+describe("formatDefinitionFile", () => {
     for (const fixturePath of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixturePath, async () => {
@@ -23,7 +23,7 @@ describe("formatServiceFile", () => {
 
 async function formatForTest(fixturePath: RelativeFilePath): Promise<string> {
     const absoluteFilepath = join(AbsoluteFilePath.of(__dirname), "fixtures", fixturePath);
-    return formatServiceFile({
+    return formatDefinitionFile({
         absoluteFilepath,
         fileContents: (await readFile(absoluteFilepath)).toString(),
     });

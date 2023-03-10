@@ -60,22 +60,24 @@ export function getFernReferenceForSchema(
 ): string {
     const tags = context.getTagForReference(schemaReference);
 
-    let serviceFileName = UNTAGGED_FILE_NAME;
+    let definitionFileName = UNTAGGED_FILE_NAME;
     const [firstTag, ...remainingTags] = tags;
     if (firstTag != null) {
         if (remainingTags.length === 0) {
-            serviceFileName = firstTag;
+            definitionFileName = firstTag;
         } else {
-            serviceFileName = COMMONS_SERVICE_FILE_NAME;
+            definitionFileName = COMMONS_SERVICE_FILE_NAME;
         }
     }
 
     const typeName = schemaReference.$ref.replace(referencePrefix, "");
-    if (tag !== serviceFileName) {
-        imports[serviceFileName === UNTAGGED_FILE_NAME ? "__package__" : serviceFileName] = `${serviceFileName}.yml`;
+    if (tag !== definitionFileName) {
+        imports[
+            definitionFileName === UNTAGGED_FILE_NAME ? "__package__" : definitionFileName
+        ] = `${definitionFileName}.yml`;
     }
 
-    return tag === serviceFileName ? typeName : `${serviceFileName}.${typeName}`;
+    return tag === definitionFileName ? typeName : `${definitionFileName}.${typeName}`;
 }
 
 export function maybeGetAliasReference(typeDeclaration: RawSchemas.TypeDeclarationSchema): string | undefined {

@@ -4,7 +4,7 @@ export const ValidEndpointPathRule: Rule = {
     name: "valid-endpoint-path",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     if (endpoint.path === "") {
                         return [];

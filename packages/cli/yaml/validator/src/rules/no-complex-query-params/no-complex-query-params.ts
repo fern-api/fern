@@ -7,7 +7,7 @@ export const NoComplexQueryParamsRule: Rule = {
         const complexTypeDetector = new ComplexTypeDetector(workspace);
 
         return {
-            serviceFile: {
+            definitionFile: {
                 queryParameter: ({ queryParameter }, ruleRunnerArgs) => {
                     const type = typeof queryParameter === "string" ? queryParameter : queryParameter.type;
 

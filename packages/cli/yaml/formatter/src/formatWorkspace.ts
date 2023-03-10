@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
-import { formatServiceFile } from "./formatServiceFile";
+import { formatDefinitionFile } from "./formatDefinitionFile";
 
 export async function formatFernWorkspace({
     workspace,
@@ -14,8 +14,8 @@ export async function formatFernWorkspace({
     context: TaskContext;
     shouldFix: boolean;
 }): Promise<void> {
-    for (const [relativeFilepath, file] of entries(workspace.definition.serviceFiles)) {
-        const formatted = formatServiceFile({
+    for (const [relativeFilepath, file] of entries(workspace.definition.namedDefinitionFiles)) {
+        const formatted = formatDefinitionFile({
             fileContents: file.rawContents,
             absoluteFilepath: file.absoluteFilepath,
         });

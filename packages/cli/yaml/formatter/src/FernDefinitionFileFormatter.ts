@@ -8,9 +8,9 @@ const LANG_SERVER_BANNER =
 
 const YAML_KEY_REGEX = /^(\s*)(\S+):.*$/;
 
-type FernFileCursorLocation = keyof RawSchemas.ServiceFileSchema | "endpoint" | "type" | "error" | "unknown";
+type FernFileCursorLocation = keyof RawSchemas.DefinitionFileSchema | "endpoint" | "type" | "error" | "unknown";
 
-export class FernServiceFileFormatter {
+export class FernDefinitionFileFormatter {
     private tabWidth: number | undefined;
     private fileContents: string;
     private absoluteFilepath: AbsoluteFilePath;
@@ -113,7 +113,7 @@ export class FernServiceFileFormatter {
         const indent = this.tabWidth != null ? indentStr.length / this.tabWidth : 0;
 
         if (indent === 0) {
-            const castedKey = key as keyof RawSchemas.ServiceFileSchema;
+            const castedKey = key as keyof RawSchemas.DefinitionFileSchema;
             switch (castedKey) {
                 case "docs":
                 case "imports":

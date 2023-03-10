@@ -3,7 +3,7 @@ import { ErrorDeclarationSchema } from "../ErrorDeclarationSchema";
 import { HttpServiceSchema } from "../HttpServiceSchema";
 import { TypeDeclarationSchema } from "../TypeDeclarationSchema";
 
-export const ServiceFileSchema = z.strictObject({
+export const DefinitionFileSchema = z.strictObject({
     docs: z.optional(z.string()),
     imports: z.optional(z.record(z.string())),
     types: z.optional(z.record(TypeDeclarationSchema)),
@@ -11,4 +11,4 @@ export const ServiceFileSchema = z.strictObject({
     errors: z.optional(z.record(ErrorDeclarationSchema)),
 });
 
-export type ServiceFileSchema = z.infer<typeof ServiceFileSchema>;
+export type DefinitionFileSchema = z.infer<typeof DefinitionFileSchema>;

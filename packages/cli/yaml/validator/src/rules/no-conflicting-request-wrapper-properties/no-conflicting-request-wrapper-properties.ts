@@ -8,7 +8,7 @@ import {
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isInlineRequestBody, RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 import {
@@ -21,13 +21,13 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
     name: "no-conflicting-request-wrapper-properties",
     create: ({ workspace }) => {
         return {
-            serviceFile: {
-                httpEndpoint: ({ endpoint, service }, { contents: serviceFile, relativeFilepath }) => {
+            definitionFile: {
+                httpEndpoint: ({ endpoint, service }, { contents: definitionFile, relativeFilepath }) => {
                     const nameToProperties = getRequestWrapperPropertiesByName({
                         endpoint,
                         service,
                         relativeFilepath,
-                        serviceFile,
+                        definitionFile,
                         workspace,
                     });
 
@@ -94,13 +94,13 @@ function getRequestWrapperPropertiesByName({
     endpoint,
     service,
     relativeFilepath,
-    serviceFile,
+    definitionFile,
     workspace,
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     service: RawSchemas.HttpServiceSchema;
     relativeFilepath: RelativeFilePath;
-    serviceFile: ServiceFileSchema;
+    definitionFile: DefinitionFileSchema;
     workspace: FernWorkspace;
 }): Record<string, RequestWrapperProperty[]> {
     const nameToProperties: Record<string, RequestWrapperProperty[]> = {};
@@ -158,7 +158,7 @@ function getRequestWrapperPropertiesByName({
                     properties: endpoint.request.body.properties ?? {},
                 },
                 filepathOfDeclaration: relativeFilepath,
-                serviceFile,
+                definitionFile,
                 workspace,
                 typeResolver: new TypeResolverImpl(workspace),
             });

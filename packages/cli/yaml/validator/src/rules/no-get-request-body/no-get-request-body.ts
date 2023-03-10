@@ -5,7 +5,7 @@ export const NoGetRequestBodyRule: Rule = {
     name: "no-get-request-body",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     if (endpoint.method === "GET" && getRequestBody(endpoint) != null) {
                         return [

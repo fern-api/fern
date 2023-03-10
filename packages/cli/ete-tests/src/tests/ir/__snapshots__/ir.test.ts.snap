@@ -13087,6 +13087,134 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
     },
     "headers": [],
     "types": {
+        "type_:RootString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "RootString",
+                    "camelCase": {
+                        "unsafeName": "rootString",
+                        "safeName": "rootString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_string",
+                        "safeName": "root_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_STRING",
+                        "safeName": "ROOT_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootString",
+                        "safeName": "RootString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                },
+                "typeId": "type_:RootString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
+        "type_package:PackageString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "PackageString",
+                    "camelCase": {
+                        "unsafeName": "packageString",
+                        "safeName": "packageString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "package_string",
+                        "safeName": "package_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PACKAGE_STRING",
+                        "safeName": "PACKAGE_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PackageString",
+                        "safeName": "PackageString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ]
+                },
+                "typeId": "type_package:PackageString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "type_importer:Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -13405,134 +13533,6 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
                 }
             ],
             "examples": []
-        },
-        "type_:RootString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "RootString",
-                    "camelCase": {
-                        "unsafeName": "rootString",
-                        "safeName": "rootString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_string",
-                        "safeName": "root_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_STRING",
-                        "safeName": "ROOT_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootString",
-                        "safeName": "RootString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                },
-                "typeId": "type_:RootString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
-        },
-        "type_package:PackageString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "PackageString",
-                    "camelCase": {
-                        "unsafeName": "packageString",
-                        "safeName": "packageString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_string",
-                        "safeName": "package_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_STRING",
-                        "safeName": "PACKAGE_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageString",
-                        "safeName": "PackageString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ]
-                },
-                "typeId": "type_package:PackageString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
         }
     },
     "errors": {},
@@ -13678,77 +13678,6 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
         "type": "statusCode"
     },
     "subpackages": {
-        "subpackage_importer": {
-            "docs": "I'm an importer!",
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "importer",
-                        "camelCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTER",
-                            "safeName": "IMPORTER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Importer",
-                            "safeName": "Importer"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "importer",
-                    "camelCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "IMPORTER",
-                        "safeName": "IMPORTER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Importer",
-                        "safeName": "Importer"
-                    }
-                }
-            },
-            "name": {
-                "originalName": "importer",
-                "camelCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "snakeCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMPORTER",
-                    "safeName": "IMPORTER"
-                },
-                "pascalCase": {
-                    "unsafeName": "Importer",
-                    "safeName": "Importer"
-                }
-            },
-            "types": [
-                "type_importer:Foo"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "hasEndpointsInTree": false
-        },
         "subpackage_package": {
             "fernFilepath": {
                 "allParts": [
@@ -13820,6 +13749,77 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
             "errors": [],
             "subpackages": [],
             "hasEndpointsInTree": true
+        },
+        "subpackage_importer": {
+            "docs": "I'm an importer!",
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "type_importer:Foo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -13833,8 +13833,8 @@ exports[`ir {"fixtureName":"packages","language":"java"} 1`] = `
         ],
         "errors": [],
         "subpackages": [
-            "subpackage_importer",
-            "subpackage_package"
+            "subpackage_package",
+            "subpackage_importer"
         ],
         "hasEndpointsInTree": true
     },
@@ -13871,6 +13871,134 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
     },
     "headers": [],
     "types": {
+        "type_:RootString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "RootString",
+                    "camelCase": {
+                        "unsafeName": "rootString",
+                        "safeName": "rootString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_string",
+                        "safeName": "root_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_STRING",
+                        "safeName": "ROOT_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootString",
+                        "safeName": "RootString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                },
+                "typeId": "type_:RootString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
+        "type_package:PackageString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "PackageString",
+                    "camelCase": {
+                        "unsafeName": "packageString",
+                        "safeName": "packageString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "package_string",
+                        "safeName": "package_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PACKAGE_STRING",
+                        "safeName": "PACKAGE_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PackageString",
+                        "safeName": "PackageString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ]
+                },
+                "typeId": "type_package:PackageString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "type_importer:Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -14189,134 +14317,6 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
                 }
             ],
             "examples": []
-        },
-        "type_:RootString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "RootString",
-                    "camelCase": {
-                        "unsafeName": "rootString",
-                        "safeName": "rootString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_string",
-                        "safeName": "root_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_STRING",
-                        "safeName": "ROOT_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootString",
-                        "safeName": "RootString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                },
-                "typeId": "type_:RootString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
-        },
-        "type_package:PackageString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "PackageString",
-                    "camelCase": {
-                        "unsafeName": "packageString",
-                        "safeName": "packageString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_string",
-                        "safeName": "package_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_STRING",
-                        "safeName": "PACKAGE_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageString",
-                        "safeName": "PackageString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ]
-                },
-                "typeId": "type_package:PackageString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
         }
     },
     "errors": {},
@@ -14462,77 +14462,6 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
         "type": "statusCode"
     },
     "subpackages": {
-        "subpackage_importer": {
-            "docs": "I'm an importer!",
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "importer",
-                        "camelCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTER",
-                            "safeName": "IMPORTER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Importer",
-                            "safeName": "Importer"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "importer",
-                    "camelCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "IMPORTER",
-                        "safeName": "IMPORTER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Importer",
-                        "safeName": "Importer"
-                    }
-                }
-            },
-            "name": {
-                "originalName": "importer",
-                "camelCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "snakeCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMPORTER",
-                    "safeName": "IMPORTER"
-                },
-                "pascalCase": {
-                    "unsafeName": "Importer",
-                    "safeName": "Importer"
-                }
-            },
-            "types": [
-                "type_importer:Foo"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "hasEndpointsInTree": false
-        },
         "subpackage_package": {
             "fernFilepath": {
                 "allParts": [
@@ -14604,6 +14533,77 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
             "errors": [],
             "subpackages": [],
             "hasEndpointsInTree": true
+        },
+        "subpackage_importer": {
+            "docs": "I'm an importer!",
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "type_importer:Foo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -14617,8 +14617,8 @@ exports[`ir {"fixtureName":"packages","language":"python"} 1`] = `
         ],
         "errors": [],
         "subpackages": [
-            "subpackage_importer",
-            "subpackage_package"
+            "subpackage_package",
+            "subpackage_importer"
         ],
         "hasEndpointsInTree": true
     },
@@ -14655,6 +14655,134 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
     },
     "headers": [],
     "types": {
+        "type_:RootString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "RootString",
+                    "camelCase": {
+                        "unsafeName": "rootString",
+                        "safeName": "rootString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_string",
+                        "safeName": "root_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_STRING",
+                        "safeName": "ROOT_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootString",
+                        "safeName": "RootString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                },
+                "typeId": "type_:RootString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
+        "type_package:PackageString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "PackageString",
+                    "camelCase": {
+                        "unsafeName": "packageString",
+                        "safeName": "packageString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "package_string",
+                        "safeName": "package_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PACKAGE_STRING",
+                        "safeName": "PACKAGE_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PackageString",
+                        "safeName": "PackageString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package_"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ]
+                },
+                "typeId": "type_package:PackageString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "type_importer:Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -14973,134 +15101,6 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
                 }
             ],
             "examples": []
-        },
-        "type_:RootString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "RootString",
-                    "camelCase": {
-                        "unsafeName": "rootString",
-                        "safeName": "rootString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_string",
-                        "safeName": "root_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_STRING",
-                        "safeName": "ROOT_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootString",
-                        "safeName": "RootString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                },
-                "typeId": "type_:RootString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
-        },
-        "type_package:PackageString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "PackageString",
-                    "camelCase": {
-                        "unsafeName": "packageString",
-                        "safeName": "packageString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_string",
-                        "safeName": "package_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_STRING",
-                        "safeName": "PACKAGE_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageString",
-                        "safeName": "PackageString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package_"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ]
-                },
-                "typeId": "type_package:PackageString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
         }
     },
     "errors": {},
@@ -15246,77 +15246,6 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
         "type": "statusCode"
     },
     "subpackages": {
-        "subpackage_importer": {
-            "docs": "I'm an importer!",
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "importer",
-                        "camelCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTER",
-                            "safeName": "IMPORTER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Importer",
-                            "safeName": "Importer"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "importer",
-                    "camelCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "IMPORTER",
-                        "safeName": "IMPORTER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Importer",
-                        "safeName": "Importer"
-                    }
-                }
-            },
-            "name": {
-                "originalName": "importer",
-                "camelCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "snakeCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMPORTER",
-                    "safeName": "IMPORTER"
-                },
-                "pascalCase": {
-                    "unsafeName": "Importer",
-                    "safeName": "Importer"
-                }
-            },
-            "types": [
-                "type_importer:Foo"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "hasEndpointsInTree": false
-        },
         "subpackage_package": {
             "fernFilepath": {
                 "allParts": [
@@ -15388,6 +15317,77 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
             "errors": [],
             "subpackages": [],
             "hasEndpointsInTree": true
+        },
+        "subpackage_importer": {
+            "docs": "I'm an importer!",
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "type_importer:Foo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -15401,8 +15401,8 @@ exports[`ir {"fixtureName":"packages","language":"typescript"} 1`] = `
         ],
         "errors": [],
         "subpackages": [
-            "subpackage_importer",
-            "subpackage_package"
+            "subpackage_package",
+            "subpackage_importer"
         ],
         "hasEndpointsInTree": true
     },
@@ -15439,6 +15439,134 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
     },
     "headers": [],
     "types": {
+        "type_:RootString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "RootString",
+                    "camelCase": {
+                        "unsafeName": "rootString",
+                        "safeName": "rootString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_string",
+                        "safeName": "root_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_STRING",
+                        "safeName": "ROOT_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootString",
+                        "safeName": "RootString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                },
+                "typeId": "type_:RootString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
+        "type_package:PackageString": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "PackageString",
+                    "camelCase": {
+                        "unsafeName": "packageString",
+                        "safeName": "packageString"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "package_string",
+                        "safeName": "package_string"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PACKAGE_STRING",
+                        "safeName": "PACKAGE_STRING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PackageString",
+                        "safeName": "PackageString"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "package",
+                            "camelCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "package",
+                                "safeName": "package"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PACKAGE",
+                                "safeName": "PACKAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Package",
+                                "safeName": "Package"
+                            }
+                        }
+                    ]
+                },
+                "typeId": "type_package:PackageString"
+            },
+            "shape": {
+                "aliasOf": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "resolvedType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "_type": "alias"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "type_importer:Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -15757,134 +15885,6 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
                 }
             ],
             "examples": []
-        },
-        "type_:RootString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "RootString",
-                    "camelCase": {
-                        "unsafeName": "rootString",
-                        "safeName": "rootString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "root_string",
-                        "safeName": "root_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ROOT_STRING",
-                        "safeName": "ROOT_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "RootString",
-                        "safeName": "RootString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                },
-                "typeId": "type_:RootString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
-        },
-        "type_package:PackageString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
-            "name": {
-                "name": {
-                    "originalName": "PackageString",
-                    "camelCase": {
-                        "unsafeName": "packageString",
-                        "safeName": "packageString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "package_string",
-                        "safeName": "package_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PACKAGE_STRING",
-                        "safeName": "PACKAGE_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PackageString",
-                        "safeName": "PackageString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "package",
-                            "camelCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "package",
-                                "safeName": "package"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PACKAGE",
-                                "safeName": "PACKAGE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Package",
-                                "safeName": "Package"
-                            }
-                        }
-                    ]
-                },
-                "typeId": "type_package:PackageString"
-            },
-            "shape": {
-                "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
-            },
-            "referencedTypes": [],
-            "examples": []
         }
     },
     "errors": {},
@@ -16030,77 +16030,6 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
         "type": "statusCode"
     },
     "subpackages": {
-        "subpackage_importer": {
-            "docs": "I'm an importer!",
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "importer",
-                        "camelCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "importer",
-                            "safeName": "importer"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "IMPORTER",
-                            "safeName": "IMPORTER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Importer",
-                            "safeName": "Importer"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "importer",
-                    "camelCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "importer",
-                        "safeName": "importer"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "IMPORTER",
-                        "safeName": "IMPORTER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Importer",
-                        "safeName": "Importer"
-                    }
-                }
-            },
-            "name": {
-                "originalName": "importer",
-                "camelCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "snakeCase": {
-                    "unsafeName": "importer",
-                    "safeName": "importer"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMPORTER",
-                    "safeName": "IMPORTER"
-                },
-                "pascalCase": {
-                    "unsafeName": "Importer",
-                    "safeName": "Importer"
-                }
-            },
-            "types": [
-                "type_importer:Foo"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "hasEndpointsInTree": false
-        },
         "subpackage_package": {
             "fernFilepath": {
                 "allParts": [
@@ -16172,6 +16101,77 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
             "errors": [],
             "subpackages": [],
             "hasEndpointsInTree": true
+        },
+        "subpackage_importer": {
+            "docs": "I'm an importer!",
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "importer",
+                        "camelCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "importer",
+                            "safeName": "importer"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMPORTER",
+                            "safeName": "IMPORTER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Importer",
+                            "safeName": "Importer"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "importer",
+                    "camelCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "importer",
+                        "safeName": "importer"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMPORTER",
+                        "safeName": "IMPORTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Importer",
+                        "safeName": "Importer"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "importer",
+                "camelCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "snakeCase": {
+                    "unsafeName": "importer",
+                    "safeName": "importer"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTER",
+                    "safeName": "IMPORTER"
+                },
+                "pascalCase": {
+                    "unsafeName": "Importer",
+                    "safeName": "Importer"
+                }
+            },
+            "types": [
+                "type_importer:Foo"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": false
         }
     },
     "rootPackage": {
@@ -16185,8 +16185,8 @@ exports[`ir {"fixtureName":"packages"} 1`] = `
         ],
         "errors": [],
         "subpackages": [
-            "subpackage_importer",
-            "subpackage_package"
+            "subpackage_package",
+            "subpackage_importer"
         ],
         "hasEndpointsInTree": true
     },

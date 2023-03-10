@@ -10,15 +10,18 @@ export const ValidExampleTypeRule: Rule = {
         const exampleResolver = new ExampleResolverImpl(typeResolver);
 
         return {
-            serviceFile: {
-                exampleType: ({ typeName, typeDeclaration, example }, { relativeFilepath, contents: serviceFile }) => {
+            definitionFile: {
+                exampleType: (
+                    { typeName, typeDeclaration, example },
+                    { relativeFilepath, contents: definitionFile }
+                ) => {
                     return validateTypeExample({
                         typeName,
                         typeDeclaration,
                         example: example.value,
                         file: constructFernFileContext({
                             relativeFilepath,
-                            serviceFile,
+                            definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                         typeResolver,

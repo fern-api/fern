@@ -2,14 +2,7 @@
 
 exports[`open api converter covie simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "Policy API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "account.yml": {
       "service": {
@@ -2985,25 +2978,19 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
       },
     },
   },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "display-name": "Policy API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter flagright simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": "x-api-key",
-    "auth-schemes": {
-      "x-api-key": {
-        "header": "x-api-key",
-        "name": "apiKey",
-        "prefix": undefined,
-      },
-    },
-    "display-name": "Flagright API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {
       "service": {
         "auth": true,
@@ -4996,24 +4983,25 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "commons.yml": {},
   },
+  "rootApiFile": {
+    "auth": "x-api-key",
+    "auth-schemes": {
+      "x-api-key": {
+        "header": "x-api-key",
+        "name": "apiKey",
+        "prefix": undefined,
+      },
+    },
+    "display-name": "Flagright API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter novu simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": "bearer",
-    "auth-schemes": undefined,
-    "default-environment": null,
-    "display-name": "Novu API",
-    "environments": {
-      "Cloud": "https://api.novu.co",
-      "Local": "http://localhost:3000",
-    },
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {
       "service": {
         "auth": true,
@@ -7517,19 +7505,24 @@ exports[`open api converter novu simple 1`] = `
       },
     },
   },
+  "rootApiFile": {
+    "auth": "bearer",
+    "auth-schemes": undefined,
+    "default-environment": null,
+    "display-name": "Novu API",
+    "environments": {
+      "Cloud": "https://api.novu.co",
+      "Local": "http://localhost:3000",
+    },
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter partnerstack simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "PartnerStack API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "actions.yml": {
       "service": {
@@ -11754,19 +11747,19 @@ These customer reference fields are required, but mutually exclusive
       },
     },
   },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "display-name": "PartnerStack API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter suger simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "Suger API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "apiAuth.yml": {
       "service": {
@@ -15177,25 +15170,19 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
   },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "display-name": "Suger API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter telematica simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": "bearerAuth",
-    "auth-schemes": {
-      "bearerAuth": {
-        "header": "Authorization",
-        "name": "apiKey",
-        "prefix": undefined,
-      },
-    },
-    "display-name": "Telematica EV APIs",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "commons.yml": {
       "types": {
@@ -15529,23 +15516,25 @@ Please share the POST callback endpoint created in your app's backend with Telem
       },
     },
   },
+  "rootApiFile": {
+    "auth": "bearerAuth",
+    "auth-schemes": {
+      "bearerAuth": {
+        "header": "Authorization",
+        "name": "apiKey",
+        "prefix": undefined,
+      },
+    },
+    "display-name": "Telematica EV APIs",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter venice simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "default-environment": null,
-    "display-name": "Venice REST API",
-    "environments": {
-      "dev": "http://development.venice.local:3000/api/rest",
-    },
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "account.yml": {
       "imports": {
@@ -17234,6 +17223,17 @@ This is a Primary Key.<pk/>",
         },
       },
     },
+  },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "default-environment": null,
+    "display-name": "Venice REST API",
+    "environments": {
+      "dev": "http://development.venice.local:3000/api/rest",
+    },
+    "headers": {},
+    "name": "api",
   },
 }
 `;

@@ -6,7 +6,7 @@ export const NoDuplicateExampleNamesRule: Rule = {
     name: "no-duplicate-example-names",
     create: async () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 typeDeclaration: ({ declaration }) => {
                     if (typeof declaration === "string" || declaration.examples == null) {
                         return [];

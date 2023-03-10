@@ -1,12 +1,12 @@
 import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/project-configuration";
-import { PackageMarkerFileSchema, RootApiFileSchema, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import path from "path";
 import { ZodError } from "zod";
 import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { OnDiskServiceFile } from "./types/Workspace";
+import { OnDiskNamedDefinitionFile } from "./types/Workspace";
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
@@ -14,7 +14,7 @@ export declare namespace validateStructureOfYamlFiles {
     export interface SuccessfulResult {
         didSucceed: true;
         rootApiFile: ParsedFernFile<RootApiFileSchema>;
-        serviceFiles: Record<RelativeFilePath, OnDiskServiceFile>;
+        namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
     }
 
@@ -35,7 +35,7 @@ export function validateStructureOfYamlFiles({
     absolutePathToDefinition: AbsoluteFilePath;
 }): validateStructureOfYamlFiles.Return {
     let rootApiFile: ParsedFernFile<RootApiFileSchema> | undefined = undefined;
-    const serviceFiles: Record<RelativeFilePath, OnDiskServiceFile> = {};
+    const namesDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile> = {};
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
 
     const failures: Record<
@@ -74,9 +74,9 @@ export function validateStructureOfYamlFiles({
                 addFailure(maybeValidFileContents.error);
             }
         } else {
-            const maybeValidFileContents = ServiceFileSchema.safeParse(parsedFileContents);
+            const maybeValidFileContents = DefinitionFileSchema.safeParse(parsedFileContents);
             if (maybeValidFileContents.success) {
-                serviceFiles[relativeFilepath] = {
+                namesDefinitionFiles[relativeFilepath] = {
                     contents: maybeValidFileContents.data,
                     rawContents: file.rawContents,
                     absoluteFilepath: join(absolutePathToDefinition, relativeFilepath),
@@ -107,7 +107,7 @@ export function validateStructureOfYamlFiles({
     } else {
         return {
             didSucceed: true,
-            serviceFiles,
+            namedDefinitionFiles: namesDefinitionFiles,
             rootApiFile,
             packageMarkers,
         };

@@ -5,7 +5,7 @@ export const NoMissingAuthRule: Rule = {
     create: (context) => {
         const authIsDefined = context.workspace.definition.rootApiFile.contents.auth != null;
         return {
-            serviceFile: {
+            definitionFile: {
                 httpService: (service) => {
                     if (service.auth && !authIsDefined) {
                         return [

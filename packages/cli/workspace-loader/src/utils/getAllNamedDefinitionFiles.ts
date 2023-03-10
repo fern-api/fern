@@ -1,20 +1,20 @@
 import { entries } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema } from "@fern-api/yaml-schema";
 import { mapKeys } from "lodash-es";
 import { ParsedFernFile } from "../types/FernFile";
 import { FernDefinition } from "../types/Workspace";
 
-export function getAllServiceFiles(
+export function getAllNamedDefinitionFiles(
     definition: FernDefinition
-): Record<RelativeFilePath, ParsedFernFile<ServiceFileSchema>> {
+): Record<RelativeFilePath, ParsedFernFile<DefinitionFileSchema>> {
     return {
-        ...definition.serviceFiles,
+        ...definition.namedDefinitionFiles,
         ...definition.packageMarkers,
         ...entries(definition.importedDefinitions).reduce((acc, [pathToImportedDefinition, definition]) => {
             return {
                 ...acc,
-                ...mapKeys(getAllServiceFiles(definition), (_serviceFile, path) =>
+                ...mapKeys(getAllNamedDefinitionFiles(definition), (_file, path) =>
                     join(pathToImportedDefinition, RelativeFilePath.of(path))
                 ),
             };

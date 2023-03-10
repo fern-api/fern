@@ -1,5 +1,5 @@
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { RawSchemas, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { RawSchemas, visitFernDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import { noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -11,7 +11,7 @@ export const NoErrorStatusCodeConflictRule: Rule = {
         }
         const errorDeclarations = await getErrorDeclarations(workspace);
         return {
-            serviceFile: {
+            definitionFile: {
                 httpEndpoint: async ({ endpoint }) => {
                     if (endpoint.errors == null) {
                         return [];
@@ -50,8 +50,8 @@ async function getErrorDeclarations(
     workspace: FernWorkspace
 ): Promise<Record<string, RawSchemas.ErrorDeclarationSchema>> {
     const errorDeclarations: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
-    await visitAllServiceFiles(workspace, async (_relativeFilepath, file) => {
-        await visitFernServiceFileYamlAst(file, {
+    await visitAllDefinitionFiles(workspace, async (_relativeFilepath, file) => {
+        await visitFernDefinitionFileYamlAst(file, {
             typeName: noop,
             errorDeclaration: ({ errorName, declaration }) => {
                 errorDeclarations[errorName] = declaration;

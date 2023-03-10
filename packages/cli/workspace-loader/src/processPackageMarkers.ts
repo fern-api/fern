@@ -53,7 +53,7 @@ export async function processPackageMarkers({
                     };
                 } else {
                     const pathToPackage = dirname(pathOfPackageMarker);
-                    const areDefinitionsDefinedInPackage = keys(structuralValidationResult.serviceFiles).some(
+                    const areDefinitionsDefinedInPackage = keys(structuralValidationResult.namedDefinitionFiles).some(
                         (filepath) => filepath !== pathOfPackageMarker && filepath.startsWith(pathToPackage)
                     );
                     if (areDefinitionsDefinedInPackage) {

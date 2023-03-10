@@ -14,7 +14,7 @@ describe("parse inline types", () => {
             type: "optional<list<" + dummyTypeName + ">>",
             file: constructFernFileContext({
                 relativeFilepath: dummyFilepath,
-                serviceFile: {},
+                definitionFile: {},
                 casingsGenerator,
             }),
         });
