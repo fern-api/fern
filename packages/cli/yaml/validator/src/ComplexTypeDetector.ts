@@ -2,11 +2,11 @@ import { assertNever } from "@fern-api/core-utils";
 import { constructFernFileContext, ResolvedType, TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
+    DefinitionFileSchema,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition,
-    ServiceFileSchema,
 } from "@fern-api/yaml-schema";
 import { RuleRunnerArgs } from "./Rule";
 import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
@@ -18,12 +18,12 @@ export class ComplexTypeDetector {
         this.typeResolver = new TypeResolverImpl(workspace);
     }
 
-    public isTypeComplex(type: string, ruleRunnerArgs: RuleRunnerArgs<ServiceFileSchema>): boolean | undefined {
+    public isTypeComplex(type: string, ruleRunnerArgs: RuleRunnerArgs<DefinitionFileSchema>): boolean | undefined {
         const resolvedType = this.typeResolver.resolveType({
             type,
             file: constructFernFileContext({
                 relativeFilepath: ruleRunnerArgs.relativeFilepath,
-                serviceFile: ruleRunnerArgs.contents,
+                definitionFile: ruleRunnerArgs.contents,
                 casingsGenerator: CASINGS_GENERATOR,
             }),
         });

@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, getPropertyName, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { CASINGS_GENERATOR } from "./casingsGenerator";
 
@@ -27,7 +27,7 @@ export function getAllPropertiesForObject({
     typeName,
     objectDeclaration,
     filepathOfDeclaration,
-    serviceFile,
+    definitionFile,
     workspace,
     typeResolver,
     // used only for recursive calls
@@ -38,7 +38,7 @@ export function getAllPropertiesForObject({
     typeName: TypeName | undefined;
     objectDeclaration: RawSchemas.ObjectSchema;
     filepathOfDeclaration: RelativeFilePath;
-    serviceFile: RawSchemas.ServiceFileSchema;
+    definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
     // these are for recursive calls only
@@ -58,7 +58,7 @@ export function getAllPropertiesForObject({
 
     const file = constructFernFileContext({
         relativeFilepath: filepathOfDeclaration,
-        serviceFile,
+        definitionFile,
         casingsGenerator: CASINGS_GENERATOR,
     });
 
@@ -96,14 +96,14 @@ export function getAllPropertiesForObject({
                 resolvedTypeOfExtension?._type === "named" &&
                 isRawObjectDefinition(resolvedTypeOfExtension.declaration)
             ) {
-                const serviceFile = getServiceFile(workspace, resolvedTypeOfExtension.filepath);
-                if (serviceFile != null) {
+                const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
+                if (definitionFile != null) {
                     properties.push(
                         ...getAllPropertiesForObject({
                             typeName: resolvedTypeOfExtension.rawName,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
-                            serviceFile,
+                            definitionFile,
                             workspace,
                             typeResolver,
                             path: [
@@ -133,13 +133,13 @@ export function getAllPropertiesForObject({
 export function getAllPropertiesForType({
     typeName,
     filepathOfDeclaration,
-    serviceFile,
+    definitionFile,
     workspace,
     typeResolver,
 }: {
     typeName: TypeName;
     filepathOfDeclaration: RelativeFilePath;
-    serviceFile: RawSchemas.ServiceFileSchema;
+    definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
 }): ObjectPropertyWithPath[] {
@@ -147,7 +147,7 @@ export function getAllPropertiesForType({
         referenceToNamedType: typeName,
         file: constructFernFileContext({
             relativeFilepath: filepathOfDeclaration,
-            serviceFile,
+            definitionFile,
             casingsGenerator: CASINGS_GENERATOR,
         }),
     });
@@ -158,7 +158,7 @@ export function getAllPropertiesForType({
         typeName,
         objectDeclaration: resolvedType.declaration,
         filepathOfDeclaration,
-        serviceFile,
+        definitionFile,
         workspace,
         typeResolver,
     });

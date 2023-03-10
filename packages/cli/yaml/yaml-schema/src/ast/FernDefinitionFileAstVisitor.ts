@@ -14,11 +14,11 @@ import {
 } from "../schemas";
 import { NodePath } from "./NodePath";
 
-export type FernServiceFileAstVisitor<R = void | Promise<void>> = {
-    [K in keyof FernServiceFileAstNodeTypes]: FernServiceFileAstNodeVisitor<K, R>;
+export type FernDefinitionFileAstVisitor<R = void | Promise<void>> = {
+    [K in keyof FernDefinitionFileAstNodeTypes]: FernDefinitionFileAstNodeVisitor<K, R>;
 };
 
-export interface FernServiceFileAstNodeTypes {
+export interface FernDefinitionFileAstNodeTypes {
     docs: string;
     import: { importPath: string; importedAs: string };
     typeDeclaration: {
@@ -76,7 +76,7 @@ export const TypeReferenceLocation = {
 } as const;
 export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>;
 
-export type FernServiceFileAstNodeVisitor<K extends keyof FernServiceFileAstNodeTypes, R = void | Promise<void>> = (
-    node: FernServiceFileAstNodeTypes[K],
-    nodePath: NodePath
-) => R;
+export type FernDefinitionFileAstNodeVisitor<
+    K extends keyof FernDefinitionFileAstNodeTypes,
+    R = void | Promise<void>
+> = (node: FernDefinitionFileAstNodeTypes[K], nodePath: NodePath) => R;

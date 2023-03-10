@@ -1,3 +1,4 @@
-export { getAllServiceFiles } from "./getAllServiceFiles";
-export { getServiceFile } from "./getServiceFile";
-export { visitAllServiceFiles } from "./visitAllServiceFiles";
+export { getAllNamedDefinitionFiles } from "./getAllNamedDefinitionFiles";
+export { getAllPackageMarkers } from "./getAllPackageMarkers";
+export { getDefinitionFile } from "./getDefinitionFile";
+export { visitAllDefinitionFiles } from "./visitAllDefinitionFiles";

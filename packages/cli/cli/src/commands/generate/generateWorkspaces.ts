@@ -117,11 +117,11 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile),
             },
-            serviceFiles: mapValues(definition.serviceFiles, (serviceFile) => ({
+            namedDefinitionFiles: mapValues(definition.definitionFiles, (definitionFile) => ({
                 // these files doesn't live on disk, so there's no absolute filepath
                 absoluteFilepath: "/DUMMY_PATH",
-                rawContents: yaml.dump(serviceFile),
-                contents: serviceFile,
+                rawContents: yaml.dump(definitionFile),
+                contents: definitionFile,
             })),
             packageMarkers: {},
             importedDefinitions: {},

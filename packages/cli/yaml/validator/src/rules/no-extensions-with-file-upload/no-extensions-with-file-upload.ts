@@ -5,7 +5,7 @@ export const NoExtensionsWithFileUploadRule: Rule = {
     name: "no-extensions-with-file-upload",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 httpEndpoint: ({ endpoint }) => {
                     if (endpoint.request == null) {
                         return [];

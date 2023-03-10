@@ -21,6 +21,68 @@ describe("migrateFromV8ToV7", () => {
                     fernFilepath: [
                         {
                             camelCase: {
+                                safeName: "folder",
+                                unsafeName: "folder",
+                            },
+                            originalName: "folder",
+                            pascalCase: {
+                                safeName: "Folder",
+                                unsafeName: "Folder",
+                            },
+                            screamingSnakeCase: {
+                                safeName: "FOLDER",
+                                unsafeName: "FOLDER",
+                            },
+                            snakeCase: {
+                                safeName: "folder",
+                                unsafeName: "folder",
+                            },
+                        },
+                    ],
+                    name: {
+                        camelCase: {
+                            safeName: "folderType",
+                            unsafeName: "folderType",
+                        },
+                        originalName: "FolderType",
+                        pascalCase: {
+                            safeName: "FolderType",
+                            unsafeName: "FolderType",
+                        },
+                        screamingSnakeCase: {
+                            safeName: "FOLDER_TYPE",
+                            unsafeName: "FOLDER_TYPE",
+                        },
+                        snakeCase: {
+                            safeName: "folder_type",
+                            unsafeName: "folder_type",
+                        },
+                    },
+                },
+                referencedTypes: [],
+                shape: {
+                    _type: "alias",
+                    aliasOf: {
+                        _type: "primitive",
+                        primitive: "STRING",
+                    },
+                    resolvedType: {
+                        _type: "primitive",
+                        primitive: "STRING",
+                    },
+                },
+            },
+            {
+                availability: {
+                    message: undefined,
+                    status: "GENERAL_AVAILABILITY",
+                },
+                docs: undefined,
+                examples: [],
+                name: {
+                    fernFilepath: [
+                        {
+                            camelCase: {
                                 safeName: "file",
                                 unsafeName: "file",
                             },
@@ -137,68 +199,6 @@ describe("migrateFromV8ToV7", () => {
                         snakeCase: {
                             safeName: "nested_file_type",
                             unsafeName: "nested_file_type",
-                        },
-                    },
-                },
-                referencedTypes: [],
-                shape: {
-                    _type: "alias",
-                    aliasOf: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                    resolvedType: {
-                        _type: "primitive",
-                        primitive: "STRING",
-                    },
-                },
-            },
-            {
-                availability: {
-                    message: undefined,
-                    status: "GENERAL_AVAILABILITY",
-                },
-                docs: undefined,
-                examples: [],
-                name: {
-                    fernFilepath: [
-                        {
-                            camelCase: {
-                                safeName: "folder",
-                                unsafeName: "folder",
-                            },
-                            originalName: "folder",
-                            pascalCase: {
-                                safeName: "Folder",
-                                unsafeName: "Folder",
-                            },
-                            screamingSnakeCase: {
-                                safeName: "FOLDER",
-                                unsafeName: "FOLDER",
-                            },
-                            snakeCase: {
-                                safeName: "folder",
-                                unsafeName: "folder",
-                            },
-                        },
-                    ],
-                    name: {
-                        camelCase: {
-                            safeName: "folderType",
-                            unsafeName: "folderType",
-                        },
-                        originalName: "FolderType",
-                        pascalCase: {
-                            safeName: "FolderType",
-                            unsafeName: "FolderType",
-                        },
-                        screamingSnakeCase: {
-                            safeName: "FOLDER_TYPE",
-                            unsafeName: "FOLDER_TYPE",
-                        },
-                        snakeCase: {
-                            safeName: "folder_type",
-                            unsafeName: "folder_type",
                         },
                     },
                 },

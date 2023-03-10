@@ -1,15 +1,15 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import {
+    DefinitionFileSchema,
     RootApiFileSchema,
-    ServiceFileSchema,
+    visitFernDefinitionFileYamlAst,
     visitFernRootApiFileYamlAst,
-    visitFernServiceFileYamlAst,
 } from "@fern-api/yaml-schema";
+import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules";
-import { createServiceFileAstVisitorForRules } from "./createServiceFileAstVisitorForRules";
 import { getAllEnabledRules } from "./getAllRules";
 import { Rule, RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
@@ -38,8 +38,8 @@ export async function runRulesOnWorkspace({
     });
     violations.push(...violationsForRoot);
 
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
-        const violationsForFile = await validateServiceFile({
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+        const violationsForFile = await validateDefinitionFile({
             relativeFilepath,
             contents: file,
             allRuleVisitors,
@@ -50,18 +50,18 @@ export async function runRulesOnWorkspace({
     return violations;
 }
 
-async function validateServiceFile({
+async function validateDefinitionFile({
     relativeFilepath,
     contents,
     allRuleVisitors,
 }: {
     relativeFilepath: RelativeFilePath;
-    contents: ServiceFileSchema;
+    contents: DefinitionFileSchema;
     allRuleVisitors: RuleVisitors[];
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
-    const astVisitor = createServiceFileAstVisitorForRules({
+    const astVisitor = createDefinitionFileAstVisitorForRules({
         relativeFilepath,
         contents,
         allRuleVisitors,
@@ -69,7 +69,7 @@ async function validateServiceFile({
             violations.push(...newViolations);
         },
     });
-    await visitFernServiceFileYamlAst(contents, astVisitor);
+    await visitFernDefinitionFileYamlAst(contents, astVisitor);
 
     return violations;
 }

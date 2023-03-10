@@ -1,14 +1,14 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { FernServiceFileFormatter } from "./FernServiceFileFormatter";
+import { FernDefinitionFileFormatter } from "./FernDefinitionFileFormatter";
 
-export function formatServiceFile({
+export function formatDefinitionFile({
     absoluteFilepath,
     fileContents,
 }: {
     absoluteFilepath: AbsoluteFilePath;
     fileContents: string;
 }): string {
-    const formatter = new FernServiceFileFormatter({
+    const formatter = new FernDefinitionFileFormatter({
         fileContents,
         absoluteFilepath,
     });

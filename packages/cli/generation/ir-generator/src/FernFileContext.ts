@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { mapValues } from "lodash-es";
@@ -14,25 +14,25 @@ export interface FernFileContext {
     relativeFilepath: RelativeFilePath;
     fernFilepath: FernFilepath;
     imports: Record<string, RelativeFilePath>;
-    serviceFile: ServiceFileSchema;
+    definitionFile: DefinitionFileSchema;
     parseTypeReference: (type: string | { type: string }) => TypeReference;
     casingsGenerator: CasingsGenerator;
 }
 
 export function constructFernFileContext({
     relativeFilepath,
-    serviceFile,
+    definitionFile,
     casingsGenerator,
 }: {
     relativeFilepath: RelativeFilePath;
-    serviceFile: ServiceFileSchema;
+    definitionFile: DefinitionFileSchema;
     casingsGenerator: CasingsGenerator;
 }): FernFileContext {
     const file: FernFileContext = {
         relativeFilepath,
         fernFilepath: convertToFernFilepath({ relativeFilepath, casingsGenerator }),
-        imports: mapValues(serviceFile.imports ?? {}, RelativeFilePath.of),
-        serviceFile,
+        imports: mapValues(definitionFile.imports ?? {}, RelativeFilePath.of),
+        definitionFile,
         parseTypeReference: (type) => {
             const typeAsString = typeof type === "string" ? type : type.type;
             return parseInlineType({ type: typeAsString, file });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`formatServiceFile headers/file-header-with-newline.yml 1`] = `
+exports[`formatDefinitionFile headers/file-header-with-newline.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 # i'm a file header
@@ -10,7 +10,7 @@ types:
 "
 `;
 
-exports[`formatServiceFile headers/file-header-without-newline.yml 1`] = `
+exports[`formatDefinitionFile headers/file-header-without-newline.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 # i'm a file header
@@ -20,7 +20,7 @@ types:
 "
 `;
 
-exports[`formatServiceFile lang-server/with-lang-server.yml 1`] = `
+exports[`formatDefinitionFile lang-server/with-lang-server.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
@@ -28,7 +28,7 @@ types:
 "
 `;
 
-exports[`formatServiceFile lang-server/without-lang-server.yml 1`] = `
+exports[`formatDefinitionFile lang-server/without-lang-server.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
@@ -36,7 +36,7 @@ types:
 "
 `;
 
-exports[`formatServiceFile lots-of-newlines.yml 1`] = `
+exports[`formatDefinitionFile lots-of-newlines.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
@@ -93,7 +93,7 @@ errors:
 "
 `;
 
-exports[`formatServiceFile no-newlines.yml 1`] = `
+exports[`formatDefinitionFile no-newlines.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:

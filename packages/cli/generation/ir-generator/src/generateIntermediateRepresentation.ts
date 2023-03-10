@@ -1,6 +1,6 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import { HttpEndpoint, ResponseErrors } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
@@ -38,7 +38,7 @@ export async function generateIntermediateRepresentation({
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",
-        serviceFile: {
+        definitionFile: {
             imports: workspace.definition.rootApiFile.contents.imports,
         },
         casingsGenerator,
@@ -87,13 +87,13 @@ export async function generateIntermediateRepresentation({
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
-    const visitServiceFile = async (file: FernFileContext) => {
-        const docs = file.serviceFile.docs ?? file.serviceFile.service?.docs;
+    const visitDefinitionFile = async (file: FernFileContext) => {
+        const docs = file.definitionFile.docs ?? file.definitionFile.service?.docs;
         if (docs != null) {
             packageTreeGenerator.addDocs(file.fernFilepath, docs);
         }
 
-        await visitObject(file.serviceFile, {
+        await visitObject(file.definitionFile, {
             imports: noop,
             docs: noop,
 
@@ -187,11 +187,11 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
-        await visitServiceFile(
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+        await visitDefinitionFile(
             constructFernFileContext({
                 relativeFilepath,
-                serviceFile: file,
+                definitionFile: file,
                 casingsGenerator,
             })
         );

@@ -9,7 +9,7 @@ export const ValidServiceUrlsRule: Rule = {
         const urlIds = getAllEnvironmentUrlIds(workspace);
 
         return {
-            serviceFile: {
+            definitionFile: {
                 httpService: (service) => {
                     if (service.url == null) {
                         if (urlIds.length === 0) {

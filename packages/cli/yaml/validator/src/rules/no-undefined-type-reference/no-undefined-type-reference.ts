@@ -1,11 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import {
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
-    visitFernServiceFileYamlAst,
+    visitFernDefinitionFileYamlAst,
 } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
@@ -30,7 +30,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         }
 
         return {
-            serviceFile: {
+            definitionFile: {
                 typeReference: ({ typeReference, location }, { relativeFilepath, contents }) => {
                     if (
                         location === TypeReferenceLocation.InlinedRequestProperty &&
@@ -70,11 +70,11 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
 async function getTypesByFilepath(workspace: FernWorkspace) {
     const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitFernServiceFileYamlAst(file, {
+        await visitFernDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
                     typesForFile.add(typeName.name);

@@ -1,4 +1,4 @@
-import { FernWorkspace, getAllServiceFiles } from "@fern-api/workspace-loader";
+import { FernWorkspace, getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
 import { isEmpty } from "lodash-es";
 import { Rule } from "../../Rule";
 
@@ -29,7 +29,7 @@ export const NoMissingErrorDiscriminantRule: Rule = {
 };
 
 function doesApiDeclareErrors(workspace: FernWorkspace): boolean {
-    for (const file of Object.values(getAllServiceFiles(workspace.definition))) {
+    for (const file of Object.values(getAllNamedDefinitionFiles(workspace.definition))) {
         if (file.contents.errors != null && !isEmpty(file.contents.errors)) {
             return true;
         }

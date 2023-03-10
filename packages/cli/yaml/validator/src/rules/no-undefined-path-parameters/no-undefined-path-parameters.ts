@@ -8,7 +8,7 @@ export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 httpService: (service) => {
                     return getPathParameterRuleViolations({
                         path: service["base-path"],

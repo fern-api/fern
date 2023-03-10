@@ -85,7 +85,7 @@ export async function loadWorkspace({
             dependenciesConfiguration,
             definition: {
                 rootApiFile: structuralValidationResult.rootApiFile,
-                serviceFiles: structuralValidationResult.serviceFiles,
+                namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
                 packageMarkers: processPackageMarkersResult.packageMarkers,
                 importedDefinitions: processPackageMarkersResult.importedDefinitions,
             },

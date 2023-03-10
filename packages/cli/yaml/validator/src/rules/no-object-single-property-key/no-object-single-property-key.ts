@@ -9,7 +9,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
 
         return {
-            serviceFile: {
+            definitionFile: {
                 typeDeclaration: ({ declaration }, { relativeFilepath, contents }) => {
                     const violations: RuleViolation[] = [];
                     if (!isRawDiscriminatedUnionDefinition(declaration)) {
@@ -24,7 +24,7 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                                           type: singleUnionType.type,
                                           file: constructFernFileContext({
                                               relativeFilepath,
-                                              serviceFile: contents,
+                                              definitionFile: contents,
                                               casingsGenerator: CASINGS_GENERATOR,
                                           }),
                                       })

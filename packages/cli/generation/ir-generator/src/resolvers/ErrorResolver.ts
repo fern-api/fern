@@ -1,4 +1,4 @@
-import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -42,12 +42,12 @@ export class ErrorResolverImpl implements ErrorResolver {
             return undefined;
         }
 
-        const serviceFile = getServiceFile(this.workspace, parsedReference.relativeFilepath);
-        if (serviceFile == null) {
+        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        if (definitionFile == null) {
             return undefined;
         }
 
-        const declaration = serviceFile.errors?.[parsedReference.typeName];
+        const declaration = definitionFile.errors?.[parsedReference.typeName];
         if (declaration == null) {
             return undefined;
         }
@@ -55,7 +55,7 @@ export class ErrorResolverImpl implements ErrorResolver {
         return {
             declaration,
             file: constructFernFileContext({
-                serviceFile,
+                definitionFile,
                 relativeFilepath: parsedReference.relativeFilepath,
                 casingsGenerator: file.casingsGenerator,
             }),

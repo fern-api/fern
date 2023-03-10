@@ -11,12 +11,12 @@ import {
 export function getAllPropertiesForRequest({
     endpoint,
     filepath,
-    serviceFile,
+    definitionFile,
     workspace,
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     filepath: RelativeFilePath;
-    serviceFile: RawSchemas.ServiceFileSchema;
+    definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
 }): ObjectPropertyWithPath[] | undefined {
     if (endpoint.request == null) {
@@ -29,7 +29,7 @@ export function getAllPropertiesForRequest({
         return getAllPropertiesForType({
             typeName: endpoint.request,
             filepathOfDeclaration: filepath,
-            serviceFile,
+            definitionFile,
             workspace,
             typeResolver,
         });
@@ -43,7 +43,7 @@ export function getAllPropertiesForRequest({
         return getAllPropertiesForType({
             typeName: typeof endpoint.request.body === "string" ? endpoint.request.body : endpoint.request.body.type,
             filepathOfDeclaration: filepath,
-            serviceFile,
+            definitionFile,
             workspace,
             typeResolver,
         });
@@ -56,7 +56,7 @@ export function getAllPropertiesForRequest({
             properties: endpoint.request.body.properties ?? {},
         },
         filepathOfDeclaration: filepath,
-        serviceFile,
+        definitionFile,
         workspace,
         typeResolver,
     });
