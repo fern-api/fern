@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
@@ -91,6 +91,8 @@ export async function generateIntermediateRepresentation({
     const packageTreeGenerator = new PackageTreeGenerator();
 
     const visitDefinitionFile = async (file: FernFileContext) => {
+        packageTreeGenerator.addSubpackage(file.fernFilepath);
+
         const docs = file.definitionFile.docs ?? file.definitionFile.service?.docs;
         if (docs != null) {
             packageTreeGenerator.addDocs(file.fernFilepath, docs);
@@ -208,7 +210,7 @@ export async function generateIntermediateRepresentation({
         const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
             return IdGenerator.generateSubpackageId(
                 convertToFernFilepath({
-                    relativeFilepath: join(relativeFilepath, RelativeFilePath.of(childFilepath)),
+                    relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(childFilepath)),
                     casingsGenerator,
                 })
             );

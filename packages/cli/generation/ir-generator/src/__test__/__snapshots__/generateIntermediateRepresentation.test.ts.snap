@@ -2577,8 +2577,8 @@ exports[`generateIntermediateRepresentation packages 1`] = `
     "hasEndpointsInTree": false,
     "service": undefined,
     "subpackages": [
-      "subpackage_commons",
       "subpackage_importer",
+      "subpackage_commons",
     ],
     "types": [
       "type_:MyAlias",
