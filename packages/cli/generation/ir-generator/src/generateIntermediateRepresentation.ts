@@ -1,6 +1,8 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
-import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { HttpEndpoint, ResponseErrors } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
@@ -21,6 +23,7 @@ import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
+import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
@@ -195,6 +198,35 @@ export async function generateIntermediateRepresentation({
                 casingsGenerator,
             })
         );
+    });
+
+    await visitAllPackageMarkers(workspace, async (relativeFilepath, packageMarker) => {
+        if (packageMarker.navigation == null) {
+            return;
+        }
+
+        const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
+            return IdGenerator.generateSubpackageId(
+                convertToFernFilepath({
+                    relativeFilepath: join(relativeFilepath, RelativeFilePath.of(childFilepath)),
+                    casingsGenerator,
+                })
+            );
+        });
+
+        if (relativeFilepath === FERN_PACKAGE_MARKER_FILENAME) {
+            packageTreeGenerator.sortRootPackage(childrenInOrder);
+        } else {
+            packageTreeGenerator.sortSubpackage(
+                IdGenerator.generateSubpackageId(
+                    convertToFernFilepath({
+                        relativeFilepath,
+                        casingsGenerator,
+                    })
+                ),
+                childrenInOrder
+            );
+        }
     });
 
     const filteredIr = audienceIrGraph != null ? audienceIrGraph.build() : undefined;

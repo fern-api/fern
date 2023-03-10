@@ -36,5 +36,6 @@ export type NON_SLASH_CHARACTERS = [
     "X",
     "Y",
     "Z",
-    "."
+    ".",
+    "_"
 ];

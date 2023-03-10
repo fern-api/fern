@@ -1,5 +1,5 @@
 import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { visitFernDefinitionFileYamlAst } from "@fern-api/yaml-schema";
+import { visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule } from "../../Rule";
 import { EndpointPathRegistry } from "./EndpointPathRegistry";
@@ -11,7 +11,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
         const endpointPathRegistry = new EndpointPathRegistry();
 
         await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
-            await visitFernDefinitionFileYamlAst(file, {
+            await visitDefinitionFileYamlAst(file, {
                 httpEndpoint: ({ service, endpointId, endpoint }) => {
                     endpointPathRegistry.registerEndpoint({
                         service,

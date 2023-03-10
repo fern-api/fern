@@ -1,10 +1,10 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { RootApiFileSchema } from "../schemas";
-import { FernRootApiFileAstVisitor } from "./FernRootApiFileAstVisitor";
+import { RootApiFileAstVisitor } from "./RootApiFileAstVisitor";
 
-export async function visitFernRootApiFileYamlAst(
+export async function visitRootApiFileYamlAst(
     contents: RootApiFileSchema,
-    visitor: Partial<FernRootApiFileAstVisitor>
+    visitor: Partial<RootApiFileAstVisitor>
 ): Promise<void> {
     await visitObject(contents, {
         name: noop,

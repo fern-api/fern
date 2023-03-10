@@ -1,9 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    DefinitionFileAstNodeTypes,
+    DefinitionFileAstNodeVisitor,
+    DefinitionFileAstVisitor,
     DefinitionFileSchema,
-    FernDefinitionFileAstNodeTypes,
-    FernDefinitionFileAstNodeVisitor,
-    FernDefinitionFileAstVisitor,
     NodePath,
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
@@ -19,12 +19,12 @@ export function createDefinitionFileAstVisitorForRules({
     contents: DefinitionFileSchema;
     allRuleVisitors: RuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): FernDefinitionFileAstVisitor {
-    function createAstNodeVisitor<K extends keyof FernDefinitionFileAstNodeTypes>(
+}): DefinitionFileAstVisitor {
+    function createAstNodeVisitor<K extends keyof DefinitionFileAstNodeTypes>(
         nodeType: K
-    ): Record<K, FernDefinitionFileAstNodeVisitor<K>> {
-        const visit: FernDefinitionFileAstNodeVisitor<K> = async (
-            node: FernDefinitionFileAstNodeTypes[K],
+    ): Record<K, DefinitionFileAstNodeVisitor<K>> {
+        const visit: DefinitionFileAstNodeVisitor<K> = async (
+            node: DefinitionFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
             for (const ruleVisitors of allRuleVisitors) {
@@ -43,7 +43,7 @@ export function createDefinitionFileAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, FernDefinitionFileAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, DefinitionFileAstNodeVisitor<K>>;
     }
 
     return {

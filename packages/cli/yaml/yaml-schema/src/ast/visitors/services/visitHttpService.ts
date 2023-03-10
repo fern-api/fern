@@ -2,7 +2,7 @@ import { noop, visitObject } from "@fern-api/core-utils";
 import { RawSchemas } from "../../..";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
-import { FernDefinitionFileAstVisitor, TypeReferenceLocation } from "../../FernDefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "../utils/visitAllReferencesInExample";
@@ -14,7 +14,7 @@ export async function visitHttpService({
     nodePath,
 }: {
     service: HttpServiceSchema;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     await visitor.httpService?.(service, nodePath);
@@ -60,7 +60,7 @@ async function visitEndpoint({
     endpointId: string;
     endpoint: HttpEndpointSchema;
     service: HttpServiceSchema;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForEndpoint: NodePath;
 }) {
     const visitTypeReference = createTypeReferenceVisitor(visitor);
@@ -262,7 +262,7 @@ async function visitExampleEndpointCall({
     example,
 }: {
     nodePathForExample: NodePath;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
@@ -379,7 +379,7 @@ async function visitPathParameters({
     nodePath,
 }: {
     pathParameters: Record<string, HttpPathParameterSchema> | undefined;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }) {
     if (pathParameters == null) {
@@ -412,7 +412,7 @@ async function visitHeaders({
     nodePath,
 }: {
     headers: Record<string, HttpHeaderSchema> | undefined;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }) {
     if (headers == null) {

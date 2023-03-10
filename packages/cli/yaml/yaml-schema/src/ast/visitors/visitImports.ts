@@ -1,4 +1,4 @@
-import { FernDefinitionFileAstVisitor } from "../FernDefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { NodePath } from "../NodePath";
 
 export async function visitImports({
@@ -7,7 +7,7 @@ export async function visitImports({
     nodePath,
 }: {
     imports: Record<string, string> | undefined;
-    visitor: Partial<FernDefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (imports == null) {

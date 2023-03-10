@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
-import { visitFernDefinitionFileYamlAst } from "@fern-api/yaml-schema";
+import { visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -79,7 +79,7 @@ async function getDeclarations(workspace: FernWorkspace): Promise<Declarations> 
             (declarationsForDirectory[declaredName] ??= []).push(relativeFilepath);
         };
 
-        await visitFernDefinitionFileYamlAst(file, {
+        await visitDefinitionFileYamlAst(file, {
             typeName: (typeName) => {
                 addDeclaration(typeName);
             },
