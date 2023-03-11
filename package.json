@@ -6,7 +6,6 @@
   "author": "Deep Singhvi <deep@buildwithfern.com>",
   "license": "MIT",
   "scripts": {
-    "clean": "tsc",
     "compile": "tsc",
     "test": "jest --passWithNoTests",
     "depcheck": "depcheck",
@@ -18,6 +17,14 @@
     "prepare": "husky install",
     "dockerTagLocal": "./docker/create_docker.sh local",
     "dockerTagVersion": "./docker/create_docker.sh"
+  },
+  "dependencies": {
+    "@fern-fern/generator-exec-client": "^0.0.6",
+    "@fern-fern/ir-model": "^0.0.1195",
+    "js-yaml": "^4.1.0",
+    "lodash-es": "^4.17.21",
+    "openapi-types": "^12.0.0",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
@@ -43,14 +50,6 @@
     "typescript": "^4.6.4",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2"
-  },
-  "dependencies": {
-    "@fern-fern/generator-exec-client": "^0.0.6",
-    "@fern-fern/ir-model": "^0.0.914",
-    "js-yaml": "^4.1.0",
-    "lodash-es": "^4.17.21",
-    "openapi-types": "^12.0.0",
-    "url-join": "^5.0.0"
   },
   "packageManager": "yarn@3.2.0"
 }

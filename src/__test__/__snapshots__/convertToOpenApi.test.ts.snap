@@ -23,7 +23,7 @@ paths:
       security:
         - BearerAuth: []
         - BasicAuth: []
-        - MyHeaderAuth: []
+        - HeaderAuthAuth: []
       requestBody:
         required: true
         content:
@@ -95,10 +95,85 @@ components:
     BasicAuth:
       type: http
       scheme: basic
-    MyHeaderAuth:
+    HeaderAuthAuth:
       type: apiKey
       in: header
       name: My-Header
+"
+`;
+
+exports[`convertToOpenApi base-properties 1`] = `
+"openapi: 3.0.1
+info:
+  title: fern
+  version: ''
+paths: {}
+components:
+  schemas:
+    MyObject:
+      type: object
+      properties:
+        foo:
+          type: string
+      required:
+        - foo
+    MyUnion:
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - a
+            value:
+              type: string
+        - type: object
+          allOf:
+            - $ref: '#/components/schemas/MyObject'
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - b
+      properties:
+        base:
+          type: integer
+  securitySchemes: {}
+"
+`;
+
+exports[`convertToOpenApi file-upload 1`] = `
+"openapi: 3.0.1
+info:
+  title: fern
+  version: ''
+paths:
+  /create:
+    post:
+      description: Creates a blog post
+      operationId: blog_createPost
+      tags:
+        - Blog
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                heroImage:
+                  type: string
+                  format: binary
+components:
+  schemas: {}
+  securitySchemes: {}
 "
 `;
 
@@ -250,6 +325,8 @@ paths:
               $ref: '#/components/schemas/CreatePostRequest'
 components:
   schemas:
+    FolderNestedType:
+      type: string
     OptionalString:
       type: string
     AliasOfNestedType:
@@ -333,8 +410,6 @@ components:
         - author
         - content
         - postType
-    FolderNestedType:
-      type: string
   securitySchemes: {}
 servers:
   - url: https://buildwithfern.com

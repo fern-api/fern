@@ -12,6 +12,7 @@ import {
     Type,
     TypeDeclaration,
     TypeReference,
+    UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import isEqual from "lodash-es/isEqual";
@@ -28,7 +29,7 @@ export type OpenApiComponentSchema = OpenAPIV3.SchemaObject | OpenAPIV3.Referenc
 export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRepresentation): ConvertedType {
     const shape = typeDeclaration.shape;
     const docs = typeDeclaration.docs ?? undefined;
-    const openApiSchema = Type._visit(shape, {
+    const openApiSchema = Type._visit<OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>(shape, {
         alias: (aliasTypeDeclaration) => {
             return convertAlias({ aliasTypeDeclaration, docs });
         },
@@ -86,6 +87,9 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
         },
         union: (unionTypeDeclaration) => {
             return convertUnion({ unionTypeDeclaration, docs });
+        },
+        undiscriminatedUnion: (undiscriminatedUnionDeclaration) => {
+            return convertUndiscriminatedUnion({ undiscriminatedUnionDeclaration, docs });
         },
         _unknown: () => {
             throw new Error("Encountered unknown type: " + shape._type);
@@ -170,8 +174,39 @@ export function convertUnion({
             },
         });
     });
-    return {
+
+    const schema: OpenAPIV3.SchemaObject = {
         oneOf: oneOfTypes,
+        description: docs,
+    };
+
+    if (unionTypeDeclaration.baseProperties.length > 0) {
+        schema.properties = unionTypeDeclaration.baseProperties.reduce<
+            Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
+        >((acc, property) => {
+            acc[property.name.wireValue] = {
+                description: property.docs ?? undefined,
+                ...convertTypeReference(property.valueType),
+            };
+            return acc;
+        }, {});
+    }
+
+    return schema;
+}
+
+export function convertUndiscriminatedUnion({
+    undiscriminatedUnionDeclaration,
+    docs,
+}: {
+    undiscriminatedUnionDeclaration: UndiscriminatedUnionTypeDeclaration;
+    docs: string | undefined;
+}): OpenAPIV3.SchemaObject {
+    return {
+        oneOf: undiscriminatedUnionDeclaration.members.map((member) => ({
+            description: member.docs ?? undefined,
+            ...convertTypeReference(member.type),
+        })),
         description: docs,
     };
 }
@@ -288,7 +323,7 @@ function getExampleFromEndpointRequest(
     ir: IntermediateRepresentation,
     declaredTypeName: DeclaredTypeName
 ): ExampleRequestBody | undefined {
-    for (const service of ir.services) {
+    for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
             if (endpoint.examples.length <= 0) {
                 continue;
@@ -309,14 +344,14 @@ function getExampleFromEndpointResponse(
     ir: IntermediateRepresentation,
     declaredTypeName: DeclaredTypeName
 ): ExampleEndpointSuccessResponse | undefined {
-    for (const service of ir.services) {
+    for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
             if (endpoint.examples.length <= 0) {
                 continue;
             }
             if (
-                endpoint.response.type?._type === "named" &&
-                areDeclaredTypeNamesEqual(endpoint.response.type, declaredTypeName)
+                endpoint.response?.responseBodyType._type === "named" &&
+                areDeclaredTypeNamesEqual(endpoint.response.responseBodyType, declaredTypeName)
             ) {
                 const okResponseExample = endpoint.examples.find((exampleEndpoint) => {
                     return exampleEndpoint.response.type === "ok";

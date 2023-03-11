@@ -1,4 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { DeclaredTypeName, TypeDeclaration } from "@fern-fern/ir-model/types";
 import { OpenAPIV3 } from "openapi-types";
@@ -16,7 +16,7 @@ export function convertToOpenApi({
     const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
 
     const typesByName: Record<string, TypeDeclaration> = {};
-    ir.types.forEach((typeDeclaration) => {
+    Object.values(ir.types).forEach((typeDeclaration) => {
         // convert type to open api schema
         const convertedType = convertType(typeDeclaration, ir);
         schemas[convertedType.schemaName] = convertedType.openApiSchema;
@@ -25,14 +25,14 @@ export function convertToOpenApi({
     });
 
     const errorsByName: Record<string, ErrorDeclaration> = {};
-    ir.errors.forEach((errorDeclaration) => {
-        errorsByName[getDeclaredTypeNameKey(errorDeclaration.name)] = errorDeclaration;
+    Object.values(ir.errors).forEach((errorDeclaration) => {
+        errorsByName[getErrorTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
 
     const security = constructEndpointSecurity(ir.auth);
 
     const paths = convertServices({
-        httpServices: ir.services,
+        httpServices: Object.values(ir.services),
         typesByName,
         errorsByName,
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
@@ -77,5 +77,12 @@ export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): stri
     return [
         ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
         declaredTypeName.name.originalName,
+    ].join("-");
+}
+
+export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
+    return [
+        ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
+        declaredErrorName.name.originalName,
     ].join("-");
 }

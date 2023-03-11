@@ -3,13 +3,14 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import {
     ExampleEndpointCall,
     ExampleInlinedRequestBodyProperty,
+    FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
     HttpPath,
     HttpRequestBody,
-    HttpResponse,
     HttpService,
+    NonStreamingResponse,
     PathParameter,
     QueryParameter,
     ResponseError,
@@ -20,7 +21,7 @@ import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types"
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
-import { getDeclaredTypeNameKey } from "../convertToOpenApi";
+import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
 import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
@@ -251,6 +252,42 @@ function convertRequestBody({
                 },
             };
         },
+        fileUpload: (fileUploadRequest) => {
+            return {
+                required: true,
+                content: {
+                    "multipart/form-data": {
+                        schema: {
+                            type: "object",
+                            properties: fileUploadRequest.properties.reduce<
+                                Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>
+                            >((acc, property) => {
+                                FileUploadRequestProperty._visit(property, {
+                                    file: (fileProperty) => {
+                                        acc[fileProperty.key.wireValue] = {
+                                            type: "string",
+                                            format: "binary",
+                                        };
+                                    },
+                                    bodyProperty: (bodyProperty) => {
+                                        acc[bodyProperty.name.wireValue] = {
+                                            description: bodyProperty.docs ?? undefined,
+                                            ...convertTypeReference(bodyProperty.valueType),
+                                        };
+                                    },
+                                    _unknown: () => {
+                                        throw new Error("Unkonwn FileUploadRequestProperty: " + property.type);
+                                    },
+                                });
+                                return {
+                                    ...acc,
+                                };
+                            }, {}),
+                        },
+                    },
+                },
+            };
+        },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
         },
@@ -264,20 +301,20 @@ function convertResponse({
     errorDiscriminationStrategy,
     examples,
 }: {
-    httpResponse: HttpResponse;
+    httpResponse: NonStreamingResponse | null | undefined;
     responseErrors: ResponseErrors;
     errorsByName: Record<string, ErrorDeclaration>;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     examples: ExampleEndpointCall[];
 }): Record<string, OpenAPIV3.ResponseObject> {
     const responseByStatusCode: Record<string, OpenAPIV3.ResponseObject> = {};
-    if (httpResponse.type == null) {
+    if (httpResponse == null) {
         responseByStatusCode["204"] = {
-            description: httpResponse.docs ?? "",
+            description: "",
         };
     } else {
         const convertedResponse: OpenAPIV3.MediaTypeObject = {
-            schema: convertTypeReference(httpResponse.type),
+            schema: convertTypeReference(httpResponse.responseBodyType),
         };
 
         const openapiExamples: OpenAPIV3.MediaTypeObject["examples"] = {};
@@ -303,7 +340,7 @@ function convertResponse({
     ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         statusCode: () => {
             for (const responseError of responseErrors) {
-                const errorDeclaration = errorsByName[getDeclaredTypeNameKey(responseError.error)];
+                const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
                 if (errorDeclaration == null) {
                     throw new Error(
                         "Encountered undefined error declaration: " + responseError.error.name.originalName
@@ -455,7 +492,7 @@ function getErrorInfoByStatusCode({
 }): Record<string, ErrorInfo[]> {
     const errorInfoByStatusCode: Record<string, ErrorInfo[]> = {};
     for (const responseError of responseErrors) {
-        const errorDeclaration = errorsByName[getDeclaredTypeNameKey(responseError.error)];
+        const errorDeclaration = errorsByName[getErrorTypeNameKey(responseError.error)];
         if (errorDeclaration == null) {
             throw new Error("Encountered undefined error declaration: " + responseError.error.name.originalName);
         }
