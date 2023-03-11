@@ -15,36 +15,36 @@ export async function getSetupDemoArgs(): Promise<SetupDemoArgs> {
             type: "input",
             name: "githubAccessToken",
             message: "Github access token",
-            initial: process.env.GITHUB_TOKEN,
+            default: process.env.GITHUB_TOKEN,
         },
         {
             type: "input",
             name: "postmanApiKey",
             message: "Postman API key",
-            initial: process.env.FERN_POSTMAN_API_KEY,
+            default: process.env.FERN_POSTMAN_API_KEY,
         },
         {
             type: "input",
             name: "npmToken",
             message: "NPM token",
-            initial: process.env.FERN_NPM_TOKEN,
+            default: process.env.FERN_NPM_TOKEN,
         },
         {
             type: "input",
             name: "orgId",
-            message: "Company name (lowercase + dashes)",
+            default: "Company name (lowercase + dashes)",
         },
         {
             type: "input",
             name: "githubOrgId",
             message: "Github organization name",
-            initial: (answers: Partial<SetupDemoArgs>) => (answers.orgId != null ? `fern-${answers.orgId}` : undefined),
+            default: (answers: Partial<SetupDemoArgs>) => (answers.orgId != null ? `fern-${answers.orgId}` : undefined),
         },
         {
             type: "input",
             name: "orgDisplayName",
             message: "Github organization name",
-            initial: (answers: Partial<SetupDemoArgs>) =>
+            default: (answers: Partial<SetupDemoArgs>) =>
                 answers.orgId != null ? startCase(answers.orgId) : undefined,
         },
         {
