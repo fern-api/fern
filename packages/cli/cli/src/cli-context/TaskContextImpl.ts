@@ -148,7 +148,6 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             await run(subtask);
         } catch (error) {
             subtask.failWithoutThrowing(undefined, error);
-            throw new FernCliError();
         } finally {
             subtask.finish();
         }
