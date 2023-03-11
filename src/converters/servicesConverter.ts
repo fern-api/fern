@@ -17,7 +17,7 @@ import {
     ResponseErrors,
 } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
@@ -554,7 +554,9 @@ function convertQueryParameter({
         in: "query",
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
-        schema: convertTypeReference(queryParameter.valueType),
+        schema: queryParameter.allowMultiple
+            ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
+            : convertTypeReference(queryParameter.valueType),
     };
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
