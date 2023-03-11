@@ -314,8 +314,8 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.pascalCase.unsafeName),
-        declaredTypeName.name.pascalCase.unsafeName,
+        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
+        declaredTypeName.name.originalName,
     ].join("");
 }
 

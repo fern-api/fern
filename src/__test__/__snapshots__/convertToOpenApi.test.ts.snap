@@ -62,8 +62,10 @@ paths:
 components:
   schemas:
     PostId:
+      title: PostId
       type: string
     Author:
+      title: Author
       type: object
       properties:
         name:
@@ -71,6 +73,7 @@ components:
       required:
         - name
     BlogPost:
+      title: BlogPost
       type: object
       properties:
         id:
@@ -111,6 +114,7 @@ paths: {}
 components:
   schemas:
     MyObject:
+      title: MyObject
       type: object
       properties:
         foo:
@@ -118,6 +122,7 @@ components:
       required:
         - foo
     MyUnion:
+      title: MyUnion
       oneOf:
         - type: object
           properties:
@@ -325,15 +330,20 @@ paths:
               $ref: '#/components/schemas/CreatePostRequest'
 components:
   schemas:
-    FolderNestedType:
+    folderNestedType:
+      title: folderNestedType
       type: string
     OptionalString:
+      title: OptionalString
       type: string
     AliasOfNestedType:
-      $ref: '#/components/schemas/FolderNestedType'
+      title: AliasOfNestedType
+      $ref: '#/components/schemas/folderNestedType'
     PostId:
+      title: PostId
       type: string
     BlogPost:
+      title: BlogPost
       type: object
       description: A blog post
       properties:
@@ -356,11 +366,13 @@ components:
         - author
         - content
     PostType:
+      title: PostType
       type: string
       enum:
         - LONG
         - SHORT
     Author:
+      title: Author
       oneOf:
         - type: object
           properties:
@@ -385,6 +397,7 @@ components:
             value:
               $ref: '#/components/schemas/PostType'
     PostNotFoundErrorBody:
+      title: PostNotFoundErrorBody
       type: object
       properties:
         id:
@@ -392,6 +405,7 @@ components:
       required:
         - id
     CreatePostRequest:
+      title: CreatePostRequest
       type: object
       properties:
         title:
