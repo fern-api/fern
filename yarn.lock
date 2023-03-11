@@ -4210,12 +4210,16 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.1
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
+    "@types/qs": ^6.9.7
     axios: ^0.27.2
+    boxen: ^7.0.0
     chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -4223,6 +4227,7 @@ __metadata:
     jest: ^29.0.3
     open: ^8.4.0
     prettier: ^2.7.1
+    qs: ^6.11.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -7147,7 +7152,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*":
+"@types/qs@npm:*, @types/qs@npm:^6.9.7":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
@@ -18223,6 +18228,15 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     side-channel: ^1.0.4
   checksum: 0fac5e6c7191d0295a96d0e83c851aeb015df7e990e4d3b093897d3ac6c94e555dbd0a599739c84d7fa46d7fee282d94ba76943983935cf33bba6769539b8019
+  languageName: node
+  linkType: hard
+
+"qs@npm:^6.11.1":
+  version: 6.11.1
+  resolution: "qs@npm:6.11.1"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 82ee78ef12a16f3372fae5b64f76f8aedecb000feea882bbff1af146c147f6eb66b08f9c3f34d7e076f28563586956318b9b2ca41141846cdd6d5ad6f241d52f
   languageName: node
   linkType: hard
 
