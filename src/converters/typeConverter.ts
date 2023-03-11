@@ -291,6 +291,16 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             };
         },
         map: (mapType) => {
+            if (
+                mapType.keyType._type === "primitive" &&
+                mapType.keyType.primitive === "STRING" &&
+                mapType.valueType._type === "unknown"
+            ) {
+                return {
+                    type: "object",
+                    additionalProperties: true,
+                };
+            }
             return {
                 type: "object",
                 additionalProperties: convertTypeReference(mapType.valueType),
