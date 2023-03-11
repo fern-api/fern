@@ -62,8 +62,10 @@ function convertSchemeReference({
             header: (rawHeader) =>
                 AuthScheme.header({
                     docs,
-                    name: file.casingsGenerator.generateName(declaration.name ?? reference),
-                    header: declaration.header,
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: declaration.name ?? reference,
+                        wireValue: declaration.header,
+                    }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
                 }),
