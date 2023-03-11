@@ -161,11 +161,11 @@ export function convertUnion({
                 type: "object",
                 allOf: [
                     {
-                        $ref: getReferenceFromDeclaredTypeName(typeName),
-                    },
-                    {
                         type: "object",
                         properties: discriminantProperty,
+                    },
+                    {
+                        $ref: getReferenceFromDeclaredTypeName(typeName),
                     },
                 ],
             }),
