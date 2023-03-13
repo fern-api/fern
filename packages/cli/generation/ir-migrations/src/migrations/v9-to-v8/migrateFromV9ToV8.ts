@@ -21,6 +21,7 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.51-1-g977dd1f",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
+        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
     },
     migrateBackwards: (v9, { taskContext, targetGenerator }): IrVersions.V8.ir.IntermediateRepresentation => {
