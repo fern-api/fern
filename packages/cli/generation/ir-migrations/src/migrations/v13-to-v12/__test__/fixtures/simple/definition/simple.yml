@@ -1,0 +1,6 @@
+types:
+  UndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - list<string>

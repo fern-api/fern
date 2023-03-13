@@ -10,7 +10,6 @@ export function convertUndiscriminatedUnionTypeDeclaration({
     file: FernFileContext;
 }): Type {
     return Type.undiscriminatedUnion({
-        docs: union.docs,
         members: union.union.map((unionMember) => {
             if (typeof unionMember === "string") {
                 return {

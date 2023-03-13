@@ -1,4 +1,3 @@
-import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { initialize } from "@fern-api/init";
@@ -433,14 +432,24 @@ function addUpgradeCommand({
 }
 
 function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("login", "Log in to Fern via GitHub", noop, async () => {
-        await cliContext.runTask(async (context) => {
-            cliContext.instrumentPostHogEvent({
-                command: "fern login",
+    cli.command(
+        "login",
+        "Log in to Fern via GitHub",
+        (yargs) =>
+            yargs.option("device-code", {
+                boolean: true,
+                default: false,
+                description: "Use device code authorization",
+            }),
+        async (argv) => {
+            await cliContext.runTask(async (context) => {
+                cliContext.instrumentPostHogEvent({
+                    command: "fern login",
+                });
+                await login(context, { useDeviceCodeFlow: argv.deviceCode });
             });
-            await login(context);
-        });
-    });
+        }
+    );
 }
 
 function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
