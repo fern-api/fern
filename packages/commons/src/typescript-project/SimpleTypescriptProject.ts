@@ -6,6 +6,8 @@ import { DependencyType, PackageDependencies } from "../dependency-manager/Depen
 import { NpmPackage } from "../NpmPackage";
 import { TypescriptProject } from "./TypescriptProject";
 
+const FERN_IGNORE_FILENAME = ".fernignore";
+
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
         npmPackage: NpmPackage;
@@ -17,6 +19,7 @@ export declare namespace SimpleTypescriptProject {
 export class SimpleTypescriptProject extends TypescriptProject {
     private static FORMAT_SCRIPT_NAME = "format";
     private static BUILD_SCRIPT_NAME = "build";
+    private static PRETTIER_RC_FILENAME = ".prettierrc.yml" as const;
 
     private npmPackage: NpmPackage;
     private dependencies: PackageDependencies;
@@ -31,6 +34,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     protected async addFilesToVolume(): Promise<void> {
         await this.generateGitIgnore();
+        await this.generateNpmIgnore();
         await this.generatePrettierRc();
         await this.generateTsConfig();
         await this.generatePackageJson();
@@ -52,22 +56,29 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ".DS_Store",
                 `/${SimpleTypescriptProject.DIST_DIRECTORY}`,
                 ...this.getDistFiles().map((distFile) => `/${distFile}`),
-                "",
-                "# yarn berry",
-                ".pnp.*",
-                ".yarn/*",
-                "!.yarn/patches",
-                "!.yarn/plugins",
-                "!.yarn/releases",
-                "!.yarn/sdks",
-                "!.yarn/versions",
+            ].join("\n")
+        );
+    }
+
+    private async generateNpmIgnore(): Promise<void> {
+        await this.writeFileToVolume(
+            ".npmignore",
+            [
+                "node_modules",
+                SimpleTypescriptProject.SRC_DIRECTORY,
+                ".gitignore",
+                ".github",
+                FERN_IGNORE_FILENAME,
+                SimpleTypescriptProject.PRETTIER_RC_FILENAME,
+                "tsconfig.json",
+                "yarn.lock",
             ].join("\n")
         );
     }
 
     private async generatePrettierRc(): Promise<void> {
         await this.writeFileToVolume(
-            ".prettierrc.yml",
+            SimpleTypescriptProject.PRETTIER_RC_FILENAME,
             yaml.dump({
                 tabWidth: 4,
                 printWidth: 120,
@@ -118,7 +129,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
             ...packageJson,
             private: this.npmPackage.private,
             repository: this.npmPackage.repoUrl,
-            files: this.getDistFiles(),
             main: "./index.js",
             types: "./index.d.ts",
             scripts: {
