@@ -19,6 +19,7 @@ export const V6_TO_V5_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: "0.0.35-1-g071a04a",
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.35-1-g071a04a",
         [GeneratorName.OPENAPI]: "0.0.16-1-ga2c0ada",
+        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },

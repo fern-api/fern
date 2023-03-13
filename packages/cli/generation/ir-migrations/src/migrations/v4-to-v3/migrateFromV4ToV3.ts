@@ -20,6 +20,7 @@ export const V4_TO_V3_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: "0.0.11-4-g1c29f6c",
         [GeneratorName.POSTMAN]: "0.0.32-rc0",
+        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },
     migrateBackwards: (v4): IrVersions.V3.ir.IntermediateRepresentation => {
