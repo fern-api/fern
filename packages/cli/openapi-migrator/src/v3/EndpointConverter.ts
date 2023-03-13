@@ -10,6 +10,7 @@ import {
     APPLICATION_JSON_CONTENT,
     diff,
     getFernReferenceForSchema,
+    isListOfPrimitive,
     isPrimitive,
     isReferenceObject,
     maybeGetAliasReference,
@@ -165,7 +166,7 @@ export class EndpointConverter {
                     continue;
                 }
 
-                const parameterType = this.convertParameterSchema(parameter);
+                const parameterType = this.convertHeaderOrPathParameter(parameter);
                 if (parameterType == null) {
                     continue;
                 }
@@ -191,7 +192,7 @@ export class EndpointConverter {
         const queryParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "query") {
-                const parameterType = this.convertParameterSchema(parameter);
+                const parameterType = this.convertQueryParameter(parameter);
                 if (parameterType == null) {
                     continue;
                 }
@@ -199,7 +200,7 @@ export class EndpointConverter {
                     parameter.description != null
                         ? {
                               docs: parameter.description,
-                              type: parameterType,
+                              ...(typeof parameterType === "string" ? { type: parameterType } : parameterType),
                           }
                         : parameterType;
                 queryParameters[parameter.name] = schema;
@@ -218,7 +219,7 @@ export class EndpointConverter {
                     // Authorization header will already be configured based on security schemes
                     continue;
                 }
-                const parameterType = this.convertParameterSchema(parameter);
+                const parameterType = this.convertHeaderOrPathParameter(parameter);
                 if (parameterType == null) {
                     continue;
                 }
@@ -235,7 +236,79 @@ export class EndpointConverter {
         return headerParameters;
     }
 
-    private convertParameterSchema(parameter: OpenAPIV3.ParameterObject): string | undefined {
+    private convertQueryParameter(
+        parameter: OpenAPIV3.ParameterObject
+    ): RawSchemas.HttpQueryParameterSchema | undefined {
+        const required = parameter.required ?? false;
+        if (parameter.schema == null) {
+            return required ? "string" : "optional<string>";
+        }
+
+        const resolvedParameterSchema = isReferenceObject(parameter.schema)
+            ? this.context.maybeResolveReference(parameter.schema)?.schemaObject
+            : parameter.schema;
+
+        if (resolvedParameterSchema == null) {
+            return required ? "string" : "optional<string>";
+        }
+
+        const schemaConverter = new SchemaConverter({
+            schema: resolvedParameterSchema,
+            taskContext: this.taskContext,
+            inlinedTypeNamer: this.inlinedTypeNamer,
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            tag: this.tag,
+        });
+        const convertedSchema = schemaConverter.convert();
+
+        if (convertedSchema != null && isRawEnumDefinition(convertedSchema.typeDeclaration)) {
+            if (isReferenceObject(parameter.schema)) {
+                const ref = getFernReferenceForSchema(parameter.schema, this.context, this.tag, this.imports);
+                return required ? ref : `optional<${ref}>`;
+            }
+            const inlinedName = this.inlinedTypeNamer.getName();
+            this.additionalTypeDeclarations = {
+                ...this.additionalTypeDeclarations,
+                [this.inlinedTypeNamer.getName()]: convertedSchema.typeDeclaration,
+            };
+            return required ? inlinedName : `optional<${inlinedName}>`;
+        } else if (
+            convertedSchema != null &&
+            isRawAliasDefinition(convertedSchema.typeDeclaration) &&
+            isPrimitive(convertedSchema.typeDeclaration)
+        ) {
+            const boxedType =
+                typeof convertedSchema.typeDeclaration === "string"
+                    ? convertedSchema.typeDeclaration
+                    : convertedSchema.typeDeclaration.type;
+            return required ? boxedType : `optional<${boxedType}>`;
+        } else if (
+            parameter.in === "query" &&
+            convertedSchema != null &&
+            isRawAliasDefinition(convertedSchema.typeDeclaration) &&
+            isListOfPrimitive(convertedSchema.typeDeclaration) != null
+        ) {
+            const boxedType = isListOfPrimitive(convertedSchema.typeDeclaration);
+            if (boxedType == null) {
+                return undefined;
+            }
+            const stringifiedBoxedType = typeof boxedType === "string" ? boxedType : boxedType.type;
+            return {
+                type: required ? stringifiedBoxedType : `optional<${stringifiedBoxedType}>`,
+                "allow-multiple": true,
+            };
+        } else if (convertedSchema != null) {
+            this.taskContext.logger.warn(
+                `${this.breadcrumbs.join(" -> ")} -> ${
+                    parameter.in
+                }: skipping parameter with non-primitive schema ${JSON.stringify(resolvedParameterSchema)}`
+            );
+        }
+        return undefined;
+    }
+
+    private convertHeaderOrPathParameter(parameter: OpenAPIV3.ParameterObject): string | undefined {
         const required = parameter.required ?? false;
         if (parameter.schema == null) {
             return required ? "string" : "optional<string>";
@@ -282,7 +355,9 @@ export class EndpointConverter {
             return required ? boxedType : `optional<${boxedType}>`;
         } else if (convertedSchema != null) {
             this.taskContext.logger.warn(
-                `Path parameter had non-primitive schema: ${JSON.stringify(resolvedParameterSchema)}`
+                `${this.breadcrumbs.join(" -> ")} -> ${
+                    parameter.in
+                }: parameter had non-primitive schema: ${JSON.stringify(resolvedParameterSchema)}`
             );
         }
         return undefined;

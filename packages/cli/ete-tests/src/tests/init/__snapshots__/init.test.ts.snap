@@ -3150,6 +3150,10 @@ service:
       display-name: List all device models
       request:
         query-parameters:
+          brand:
+            docs: A comma-separated list of brands to be filtered by.
+            type: optional<string>
+            allow-multiple: true
           after:
             docs: >-
               A cursor for use in pagination. The \`after\` parameter takes an
@@ -3668,6 +3672,10 @@ service:
       display-name: List all plans
       request:
         query-parameters:
+          provider:
+            docs: The network provider ID to filter the plans by.
+            type: optional<string>
+            allow-multiple: true
           after:
             docs: >-
               A cursor for use in pagination. The \`after\` parameter takes an
@@ -4502,6 +4510,10 @@ service:
       display-name: List all SIMs
       request:
         query-parameters:
+          provider:
+            docs: The network provider ID for the sim to be filtered by.
+            type: optional<string>
+            allow-multiple: true
           type:
             docs: The type for the sim to be filtered by.
             type: optional<_InlinedType32>

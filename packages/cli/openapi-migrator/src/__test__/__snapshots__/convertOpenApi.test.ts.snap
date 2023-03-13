@@ -5176,8 +5176,16 @@ exports[`open api converter novu simple 1`] = `
             "request": {
               "name": "ActivityController_getActivityFeedRequest",
               "query-parameters": {
+                "emails": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "page": "optional<double>",
                 "search": "string",
+                "templates": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "transactionId": "optional<string>",
               },
             },
@@ -6466,8 +6474,16 @@ exports[`open api converter novu simple 1`] = `
             "request": {
               "name": "NotificationsController_getNotificationsRequest",
               "query-parameters": {
+                "emails": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "page": "optional<double>",
                 "search": "string",
+                "templates": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "transactionId": "optional<string>",
               },
             },

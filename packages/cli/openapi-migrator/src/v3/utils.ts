@@ -47,6 +47,22 @@ export function isPrimitive(typeReference: RawSchemas.TypeReferenceSchema): bool
     });
 }
 
+export function isListOfPrimitive(
+    typeReference: RawSchemas.TypeReferenceSchema
+): RawSchemas.TypeReferenceSchema | undefined {
+    const rawTypeReference = typeof typeReference === "string" ? typeReference : typeReference.type;
+    return visitRawTypeReference(rawTypeReference, {
+        primitive: () => undefined,
+        map: () => undefined,
+        list: (valueType) => (isPrimitive(valueType) ? valueType : undefined),
+        set: () => undefined,
+        optional: () => undefined,
+        literal: () => undefined,
+        named: () => undefined,
+        unknown: () => undefined,
+    });
+}
+
 export const UNTAGGED_FILE_NAME = "__package__";
 export const COMMONS_SERVICE_FILE_NAME = "commons";
 
