@@ -35,7 +35,7 @@ describe("convertToOpenApi", () => {
                     cwd: fixtureDir,
                 });
 
-                await writeOpenApi(configPath);
+                await writeOpenApi("openapi", configPath);
                 console.log(`Wrote ${openapiPath}`);
 
                 const openApi = (await readFile(openapiPath)).toString();

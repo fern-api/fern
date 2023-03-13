@@ -15,8 +15,10 @@
     "format:all": "yarn format \"**\"",
     "format:check": "yarn format:all --check",
     "prepare": "husky install",
-    "dockerTagLocal": "./docker/create_docker.sh local",
-    "dockerTagVersion": "./docker/create_docker.sh"
+    "openapi:dockerTagLocal": "./openapi-docker/create_docker.sh local",
+    "openapi:dockerTagVersion": "./openapi-docker/create_docker.sh",
+    "stoplight:dockerTagLocal": "./openapi-docker/create_docker.sh local",
+    "stoplight:dockerTagVersion": "./openapi-docker/create_docker.sh"
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",

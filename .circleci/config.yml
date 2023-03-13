@@ -44,10 +44,18 @@ jobs:
           name: Publish fern-openapi docker
           command: |
             projectVersion="$(./scripts/git-version.sh)"
-            yarn dockerTagVersion "$projectVersion"
+            yarn openapi:dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fern-openapi:"$projectVersion" fernapi/fern-openapi:"$projectVersion"
             docker push fernapi/fern-openapi:"$projectVersion"
+      - run:
+          name: Publish fern-stoplight docker
+          command: |
+            projectVersion="$(./scripts/git-version.sh)"
+            yarn stoplight:dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag fern-stoplight:"$projectVersion" fernapi/fern-stoplight:"$projectVersion"
+            docker push fernapi/fern-stoplight:"$projectVersion"
 
 workflows:
   version: 2

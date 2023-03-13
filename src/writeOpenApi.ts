@@ -11,7 +11,9 @@ import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
 
-export async function writeOpenApi(pathToConfig: string): Promise<void> {
+export type Mode = "stoplight" | "openapi";
+
+export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<void> {
     try {
         const configStr = await readFile(pathToConfig);
         const config = JSON.parse(configStr.toString()) as GeneratorConfig;
@@ -30,6 +32,7 @@ export async function writeOpenApi(pathToConfig: string): Promise<void> {
             const openApiDefinition = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
+                mode,
             });
             if (customConfig.format === "json") {
                 await writeFile(

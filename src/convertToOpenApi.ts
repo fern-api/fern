@@ -5,13 +5,16 @@ import { OpenAPIV3 } from "openapi-types";
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
+import { Mode } from "./writeOpenApi";
 
 export function convertToOpenApi({
     apiName,
     ir,
+    mode,
 }: {
     apiName: string;
     ir: IntermediateRepresentation;
+    mode: Mode;
 }): OpenAPIV3.Document | undefined {
     const schemas: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
 
@@ -41,6 +44,7 @@ export function convertToOpenApi({
         errorDiscriminationStrategy: ir.errorDiscriminationStrategy,
         security,
         environments: ir.environments ?? undefined,
+        mode,
     });
 
     const info: OpenAPIV3.InfoObject = {

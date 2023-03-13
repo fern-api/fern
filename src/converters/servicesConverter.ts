@@ -22,6 +22,7 @@ import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi";
+import { Mode } from "../writeOpenApi";
 import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
@@ -32,6 +33,7 @@ export function convertServices({
     errorDiscriminationStrategy,
     security,
     environments,
+    mode,
 }: {
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
@@ -39,6 +41,7 @@ export function convertServices({
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
     environments: EnvironmentsConfig | undefined;
+    mode: Mode;
 }): OpenAPIV3.PathsObject {
     const paths: OpenAPIV3.PathsObject = {};
     httpServices.forEach((httpService) => {
@@ -51,6 +54,7 @@ export function convertServices({
                 errorDiscriminationStrategy,
                 security,
                 environments,
+                mode,
             });
             const pathsObject = (paths[fullPath] ??= {});
             if (pathsObject[convertedHttpMethod] != null) {
@@ -76,6 +80,7 @@ function convertHttpEndpoint({
     errorDiscriminationStrategy,
     security,
     environments,
+    mode,
 }: {
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
@@ -84,6 +89,7 @@ function convertHttpEndpoint({
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     security: OpenAPIV3.SecurityRequirementObject[];
     environments: EnvironmentsConfig | undefined;
+    mode: Mode;
 }): ConvertedHttpEndpoint {
     let fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
     fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
@@ -106,13 +112,19 @@ function convertHttpEndpoint({
         ...convertedQueryParameters,
         ...convertedHeaders,
     ];
+
+    const tag =
+        mode === "stoplight"
+            ? httpService.displayName ??
+              httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" ")
+            : httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
         operationId: [
             ...httpService.name.fernFilepath.allParts.map((name) => name.camelCase.unsafeName),
             httpEndpoint.name.originalName,
         ].join("_"),
-        tags: [httpService.name.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("")],
+        tags: [tag],
         parameters,
         responses: {
             ...convertResponse({
