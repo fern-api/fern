@@ -6,7 +6,7 @@ TAG="$1"
 DOCKER_NAME=fern-openapi:"$TAG"
 
 PACKAGE_DIR="$(pwd)"
-DOCKER_DIR="$PACKAGE_DIR/docker"
+DOCKER_DIR="$PACKAGE_DIR/openapi-docker"
 WEBPACK_CONFIG="$DOCKER_DIR/webpack.config.js"
 
 webpack_mode="production"
