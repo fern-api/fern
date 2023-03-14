@@ -1,0 +1,27 @@
+---
+title: "OpenAPI"
+---
+
+To use your OpenAPI, all you have to do is add it to your API Definition folder.
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml #
+  └─ definition/
+    └─ openapi.json # <---
+```
+
+If you run `fern check` then fern will validate the OpenAPI. If no errors are surfaced, you can use Fern's generators.
+
+## Convert to a Fern Definition
+
+If you'd rather write a Fern Definition instead of OpenAPI, then you can run.
+
+```bash
+npm install -g fern-api
+fern init --openapi <path to openapi>
+```
+
+Think of this as a one-time import from OpenAPI into Fern.

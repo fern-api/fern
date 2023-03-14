@@ -58,8 +58,8 @@
       ]
     },
     {
-      "group": "Bring your OpenAPI",
-      "pages": ["openapi"]
+      "group": "Bring your spec",
+      "pages": ["spec/openapi"]
     },
     {
       "group": "Compiler",
