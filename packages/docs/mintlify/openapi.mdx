@@ -7,18 +7,19 @@ To start using your OpenAPI description, all you have to do is add it to your AP
 
 ```yaml
 fern/
-├─ fern.config.json 
+├─ fern.config.json
 └─ api/
-  ├─ generators.yml
+  ├─ generators.yml #
   └─ definition/
-    ├─ openapi.json # <---
+    └─ openapi.json # <---
 ```
 
-If you run `fern check` then fern will lint the OpenAPI. As long as `fern check` does not surface any errors, you can use all of Fern's generators. 
+If you run `fern check` then fern will lint the OpenAPI. As long as `fern check` does not surface any errors, you can use all of Fern's generators.
 
-## Convert OpenAPI to a Fern definition
+## Conversion to a Fern definition
 
-If you'd rather start writing a Fern Definition, then you can import your OpenAPI by running 
+If you'd rather start writing a Fern Definition, then you can import your OpenAPI by doing:
+
 ```bash
 npm install -g fern-api
 fern init --openapi <path to openapi>
