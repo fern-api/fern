@@ -58,7 +58,7 @@
       ]
     },
     {
-      "group": "Bring your spec",
+      "group": "Import an existing API",
       "pages": ["spec/openapi"]
     },
     {

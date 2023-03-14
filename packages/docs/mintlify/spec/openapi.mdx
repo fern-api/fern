@@ -1,8 +1,9 @@
 ---
 title: "OpenAPI"
+description: "Already have an OpenAPI? No problem."
 ---
 
-To use your OpenAPI, all you have to do is add it to your API Definition folder.
+To use an OpenAPI description with Fern, all you have to do is add it to your API Definition folder.
 
 ```yaml
 fern/
@@ -17,11 +18,9 @@ If you run `fern check` then fern will validate the OpenAPI. If no errors are su
 
 ## Convert to a Fern Definition
 
-If you'd rather write a Fern Definition instead of OpenAPI, then you can run.
+If you'd rather write a Fern Definition instead of OpenAPI, then you can run a one-time conversion.
 
 ```bash
 npm install -g fern-api
 fern init --openapi <path to openapi>
 ```
-
-Think of this as a one-time import from OpenAPI into Fern.
