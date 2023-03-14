@@ -58,6 +58,10 @@
       ]
     },
     {
+      "group": "Bring your OpenAPI",
+      "pages": ["openapi"]
+    },
+    {
       "group": "Compiler",
       "pages": ["compiler/generate", "compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
     },
