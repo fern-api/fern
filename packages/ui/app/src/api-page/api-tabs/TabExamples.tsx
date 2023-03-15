@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { EndpointExamples } from "../definition/endpoints/endpoint-examples/EndpointExamples";
 import { DefinitionItemExamplesLayout } from "../definition/examples/DefinitionItemExamplesLayout";
+import { TypeExamples } from "../definition/types/examples/TypeExamples";
 import { useParsedDefinitionPath } from "../routes/useParsedDefinitionPath";
 import { Tab } from "./context/ApiTabsContext";
 
@@ -19,7 +20,7 @@ export const TabExamples: React.FC<TabExamples.Props> = ({ tab }) => {
 
     switch (parsedPath.value.type) {
         case "type":
-            return <div>type example</div>;
+            return <TypeExamples type={parsedPath.value.typeDefinition} />;
         case "endpoint":
             return <EndpointExamples endpoint={parsedPath.value.endpoint} />;
         default:
