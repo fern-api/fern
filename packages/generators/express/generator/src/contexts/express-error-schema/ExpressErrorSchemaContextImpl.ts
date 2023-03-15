@@ -1,22 +1,22 @@
-import { GenericAPISdkErrorContextMixin, SdkErrorSchemaContext } from "@fern-typescript/contexts";
-import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
+import { ExpressErrorSchemaContext, GenericAPIExpressErrorContextMixin } from "@fern-typescript/contexts";
+import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
+import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator";
+import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators";
 import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
-import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
-import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
+import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
+import { GenericAPIExpressErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
-import { GenericAPISdkErrorContextMixinImpl } from "../generic-api-sdk-error/GenericAPISdkErrorContextMixinImpl";
-import { SdkErrorContextMixinImpl } from "../sdk-error/SdkErrorContextMixinImpl";
+import { ExpressErrorContextMixinImpl } from "../express-error/ExpressErrorContextMixinImpl";
+import { GenericAPIExpressErrorContextMixinImpl } from "../generic-api-express-error/GenericAPIExpressErrorContextMixinImpl";
 import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { SdkErrorSchemaContextMixinImpl } from "./SdkErrorSchemaContextMixinImpl";
+import { ExpressErrorSchemaContextMixinImpl } from "./ExpressErrorSchemaContextMixinImpl";
 
-export declare namespace SdkErrorSchemaContextImpl {
+export declare namespace ExpressErrorSchemaContextImpl {
     export interface Init extends BaseContextImpl.Init {
         typeGenerator: TypeGenerator;
         typeResolver: TypeResolver;
@@ -24,22 +24,22 @@ export declare namespace SdkErrorSchemaContextImpl {
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        errorDeclarationReferencer: SdkErrorDeclarationReferencer;
-        sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
-        sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
-        sdkErrorGenerator: SdkErrorGenerator;
+        errorDeclarationReferencer: ExpressErrorDeclarationReferencer;
+        expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
+        expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
+        expressErrorGenerator: ExpressErrorGenerator;
         errorResolver: ErrorResolver;
-        genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
-        genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
+        genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
+        genericAPIExpressErrorGenerator: GenericAPIExpressErrorGenerator;
     }
 }
 
-export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErrorSchemaContext {
+export class ExpressErrorSchemaContextImpl extends BaseContextImpl implements ExpressErrorSchemaContext {
     public readonly type: TypeContextMixinImpl;
     public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly sdkError: SdkErrorContextMixinImpl;
-    public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
-    public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
+    public readonly expressError: ExpressErrorContextMixinImpl;
+    public readonly expressErrorSchema: ExpressErrorSchemaContextMixinImpl;
+    public readonly genericAPIExpressError: GenericAPIExpressErrorContextMixin;
 
     constructor({
         typeGenerator,
@@ -49,14 +49,14 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
         typeSchemaGenerator,
         typeReferenceExampleGenerator,
         errorDeclarationReferencer,
-        sdkErrorSchemaDeclarationReferencer,
-        sdkErrorSchemaGenerator,
-        sdkErrorGenerator,
+        expressErrorSchemaDeclarationReferencer,
+        expressErrorSchemaGenerator,
+        expressErrorGenerator,
         errorResolver,
-        genericAPISdkErrorDeclarationReferencer,
-        genericAPISdkErrorGenerator,
+        genericAPIExpressErrorDeclarationReferencer,
+        genericAPIExpressErrorGenerator,
         ...superInit
-    }: SdkErrorSchemaContextImpl.Init) {
+    }: ExpressErrorSchemaContextImpl.Init) {
         super(superInit);
         this.type = new TypeContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -76,24 +76,24 @@ export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErr
             typeGenerator,
             typeSchemaGenerator,
         });
-        this.sdkError = new SdkErrorContextMixinImpl({
+        this.expressError = new ExpressErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             errorDeclarationReferencer,
-            sdkErrorGenerator,
+            expressErrorGenerator,
             errorResolver,
         });
-        this.sdkErrorSchema = new SdkErrorSchemaContextMixinImpl({
+        this.expressErrorSchema = new ExpressErrorSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
             importsManager: this.importsManager,
             coreUtilities: this.base.coreUtilities,
-            sdkErrorSchemaDeclarationReferencer,
-            sdkErrorSchemaGenerator,
+            expressErrorSchemaDeclarationReferencer,
+            expressErrorSchemaGenerator,
             errorResolver,
         });
-        this.genericAPISdkError = new GenericAPISdkErrorContextMixinImpl({
-            genericAPISdkErrorDeclarationReferencer,
-            genericAPISdkErrorGenerator,
+        this.genericAPIExpressError = new GenericAPIExpressErrorContextMixinImpl({
+            genericAPIExpressErrorDeclarationReferencer,
+            genericAPIExpressErrorGenerator,
             importsManager: this.importsManager,
             sourceFile: this.sourceFile,
         });

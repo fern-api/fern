@@ -1,10 +1,10 @@
 {
-  "name": "@fern-typescript/error-schema-generator",
+  "name": "@fern-typescript/sdk-error-schema-generator",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-typescript.git",
-    "directory": "packages/generators/sdk/error-schema-generator"
+    "directory": "packages/generators/sdk/sdk-error-schema-generator"
   },
   "files": [
     "lib"

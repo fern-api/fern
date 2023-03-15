@@ -191,7 +191,7 @@ class ServiceService {
                     console.warn(\`Endpoint 'endpoint' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 next(error);
             }
@@ -242,7 +242,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import express from \\"express\\";
 export declare abstract class FernApiError extends Error {
     constructor();
-    abstract send(res: express.Response): void;
+    abstract send(res: express.Response): Promise<void>;
 }
 ",
         "name": "FernApiError.d.ts",
@@ -575,7 +575,7 @@ class AdminService {
                         console.warn(\`Endpoint 'updateTestSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -610,7 +610,7 @@ class AdminService {
                         console.warn(\`Endpoint 'sendTestSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -645,7 +645,7 @@ class AdminService {
                         console.warn(\`Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -680,7 +680,7 @@ class AdminService {
                         console.warn(\`Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -715,7 +715,7 @@ class AdminService {
                         console.warn(\`Endpoint 'storeTracedTestCase' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -750,7 +750,7 @@ class AdminService {
                         console.warn(\`Endpoint 'storeTracedTestCaseV2' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -785,7 +785,7 @@ class AdminService {
                         console.warn(\`Endpoint 'storeTracedWorkspace' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -820,7 +820,7 @@ class AdminService {
                         console.warn(\`Endpoint 'storeTracedWorkspaceV2' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -2495,7 +2495,7 @@ class HomepageService {
                     console.warn(\`Endpoint 'getHomepageProblems' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -2523,7 +2523,7 @@ class HomepageService {
                         console.warn(\`Endpoint 'setHomepageProblems' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -2881,7 +2881,7 @@ class MigrationService {
                     console.warn(\`Endpoint 'getAttemptedMigrations' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -3016,10 +3016,12 @@ __exportStar(require(\\"./Migration\\"), exports);
  * This file was auto-generated by Fern from our API Definition.
  */
 import * as errors from \\"../../../../errors\\";
+import { TraceApi } from \\"../../../..\\";
 import express from \\"express\\";
 export declare class PlaylistIdNotFoundError extends errors.TraceApiError {
-    constructor();
-    send(res: express.Response): void;
+    private readonly body;
+    constructor(body: TraceApi.PlaylistIdNotFoundErrorBody);
+    send(res: express.Response): Promise<void>;
 }
 ",
                     "name": "PlaylistIdNotFoundError.d.ts",
@@ -3056,13 +3058,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.PlaylistIdNotFoundError = void 0;
 const errors = __importStar(require(\\"../../../../errors\\"));
+const serializers = __importStar(require(\\"../../../../serialization\\"));
 class PlaylistIdNotFoundError extends errors.TraceApiError {
-    constructor() {
+    body;
+    constructor(body) {
         super();
+        this.body = body;
         Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
     }
-    send(res) {
-        res.sendStatus(404);
+    async send(res) {
+        res.status(404).json(await serializers.PlaylistIdNotFoundErrorBody.jsonOrThrow(this.body, { unrecognizedObjectKeys: \\"strip\\" }));
     }
 }
 exports.PlaylistIdNotFoundError = PlaylistIdNotFoundError;
@@ -3078,7 +3083,7 @@ import * as errors from \\"../../../../errors\\";
 import express from \\"express\\";
 export declare class UnauthorizedError extends errors.TraceApiError {
     constructor();
-    send(res: express.Response): void;
+    send(res: express.Response): Promise<void>;
 }
 ",
                     "name": "UnauthorizedError.d.ts",
@@ -3120,7 +3125,7 @@ class UnauthorizedError extends errors.TraceApiError {
         super();
         Object.setPrototypeOf(this, UnauthorizedError.prototype);
     }
-    send(res) {
+    async send(res) {
         res.sendStatus(401);
     }
 }
@@ -3331,7 +3336,7 @@ class PlaylistService {
                         console.warn(\`Endpoint 'createPlaylist' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -3365,7 +3370,7 @@ class PlaylistService {
                     console.warn(\`Endpoint 'getPlaylists' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -3396,7 +3401,7 @@ class PlaylistService {
                                 \` If this was intentional, please add \${error.constructor.name} to\` +
                                 \\" the endpoint's errors list in your Fern Definition.\\");
                     }
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -3431,7 +3436,7 @@ class PlaylistService {
                                     \` If this was intentional, please add \${error.constructor.name} to\` +
                                     \\" the endpoint's errors list in your Fern Definition.\\");
                         }
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -3463,7 +3468,7 @@ class PlaylistService {
                     console.warn(\`Endpoint 'deletePlaylist' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -4063,7 +4068,7 @@ class ProblemService {
                         console.warn(\`Endpoint 'createProblem' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -4100,7 +4105,7 @@ class ProblemService {
                         console.warn(\`Endpoint 'updateProblem' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -4132,7 +4137,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'deleteProblem' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -4162,7 +4167,7 @@ class ProblemService {
                         console.warn(\`Endpoint 'getDefaultStarterFiles' unexpectedly threw \${error.constructor.name}.\` +
                             \` If this was intentional, please add \${error.constructor.name} to\` +
                             \\" the endpoint's errors list in your Fern Definition.\\");
-                        error.send(res);
+                        await error.send(res);
                     }
                     else {
                         res.status(500).json(\\"Internal Server Error\\");
@@ -4977,7 +4982,7 @@ class SubmissionService {
                     console.warn(\`Endpoint 'createExecutionSession' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -5004,7 +5009,7 @@ class SubmissionService {
                     console.warn(\`Endpoint 'getExecutionSession' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -5029,7 +5034,7 @@ class SubmissionService {
                     console.warn(\`Endpoint 'stopExecutionSession' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -5056,7 +5061,7 @@ class SubmissionService {
                     console.warn(\`Endpoint 'getExecutionSessionsState' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -8881,7 +8886,7 @@ class SyspropService {
                     console.warn(\`Endpoint 'setNumWarmInstances' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -8908,7 +8913,7 @@ class SyspropService {
                     console.warn(\`Endpoint 'getNumWarmInstances' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -9168,7 +9173,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getLightweightProblems' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -9195,7 +9200,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getProblems' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -9222,7 +9227,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getLatestProblem' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -9249,7 +9254,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getProblemVersion' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -10988,7 +10993,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getLightweightProblems' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -11015,7 +11020,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getProblems' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -11042,7 +11047,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getLatestProblem' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -11069,7 +11074,7 @@ class ProblemService {
                     console.warn(\`Endpoint 'getProblemVersion' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
-                    error.send(res);
+                    await error.send(res);
                 }
                 else {
                     res.status(500).json(\\"Internal Server Error\\");
@@ -14823,7 +14828,7 @@ exports.partition = partition;
 import express from \\"express\\";
 export declare abstract class TraceApiError extends Error {
     constructor();
-    abstract send(res: express.Response): void;
+    abstract send(res: express.Response): Promise<void>;
 }
 ",
         "name": "TraceApiError.d.ts",

@@ -1,5 +1,5 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
-import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedGenericAPIExpressError, GenericAPIExpressErrorContext } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
@@ -53,7 +53,11 @@ export class GeneratedGenericAPIExpressErrorImpl
                     type: getTextOfTsNode(context.base.externalDependencies.express.Response._getReferenceToType()),
                 },
             ],
-            returnType: getTextOfTsKeyword(ts.SyntaxKind.VoidKeyword),
+            returnType: getTextOfTsNode(
+                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+                ])
+            ),
         };
     }
 
@@ -68,6 +72,7 @@ export class GeneratedGenericAPIExpressErrorImpl
         return {
             ...this.getSendMethod(context),
             isAbstract: false,
+            isAsync: true,
             statements: generateBody({
                 expressResponse: ts.factory.createIdentifier(
                     GeneratedGenericAPIExpressErrorImpl.SEND_RESPONSE_PARAMETER_NAME
@@ -77,10 +82,12 @@ export class GeneratedGenericAPIExpressErrorImpl
     }
 
     public send({ error, expressResponse }: { error: ts.Expression; expressResponse: ts.Expression }): ts.Expression {
-        return ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(error, GeneratedGenericAPIExpressErrorImpl.SEND_METHOD_NAME),
-            undefined,
-            [expressResponse]
+        return ts.factory.createAwaitExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(error, GeneratedGenericAPIExpressErrorImpl.SEND_METHOD_NAME),
+                undefined,
+                [expressResponse]
+            )
         );
     }
 }

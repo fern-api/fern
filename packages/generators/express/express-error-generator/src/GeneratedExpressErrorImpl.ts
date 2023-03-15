@@ -11,12 +11,6 @@ import {
     ts,
 } from "ts-morph";
 
-/**
- * this is disabled because we don't currently generate the zurg schemas,
- * which are necessary to serialize the error body
- */
-const ENABLE_ERROR_BODIES: boolean = false;
-
 export declare namespace GeneratedExpressErrorImpl {
     export interface Init {
         errorClassName: string;
@@ -48,11 +42,37 @@ export class GeneratedExpressErrorImpl
             context.genericAPIExpressError
                 .getGeneratedGenericAPIExpressError()
                 .implementSend(context, ({ expressResponse }) => {
+                    if (this.errorDeclaration.type == null) {
+                        return [
+                            ts.factory.createExpressionStatement(
+                                context.base.externalDependencies.express.Response.sendStatus({
+                                    referenceToExpressResponse: expressResponse,
+                                    status: this.errorDeclaration.statusCode,
+                                })
+                            ),
+                        ];
+                    }
+
+                    const errorSchema = context.expressErrorSchema.getGeneratedExpressErrorSchema(
+                        this.errorDeclaration.name
+                    );
+                    if (errorSchema == null) {
+                        throw new Error("Error schema was not generated.");
+                    }
+
                     return [
                         ts.factory.createExpressionStatement(
-                            context.base.externalDependencies.express.Response.sendStatus({
-                                referenceToExpressResponse: expressResponse,
-                                status: this.errorDeclaration.statusCode,
+                            context.base.externalDependencies.express.Response.json({
+                                referenceToExpressResponse: context.base.externalDependencies.express.Response.status({
+                                    referenceToExpressResponse: expressResponse,
+                                    status: this.errorDeclaration.statusCode,
+                                }),
+                                valueToSend: errorSchema.serializeBody(context, {
+                                    referenceToBody: ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createThis(),
+                                        GeneratedExpressErrorImpl.BODY_CONSTRUCTOR_PARAMETER_NAME
+                                    ),
+                                }),
                             })
                         ),
                     ];
@@ -65,7 +85,7 @@ export class GeneratedExpressErrorImpl
     }
 
     protected getConstructorParameters(context: ExpressErrorContext): OptionalKind<ParameterDeclarationStructure>[] {
-        if (this.errorDeclaration.type == null || !ENABLE_ERROR_BODIES) {
+        if (this.errorDeclaration.type == null) {
             return [];
         }
         const referenceToType = context.type.getReferenceToType(this.errorDeclaration.type);

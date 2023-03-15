@@ -1,3 +1,4 @@
+import { TypeId } from "@fern-fern/ir-model/commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     DeclaredTypeName,
@@ -7,29 +8,24 @@ import {
     TypeDeclaration,
     TypeReference,
 } from "@fern-fern/ir-model/types";
-import { stringifyFernFilepath } from "@fern-typescript/commons";
-
-type Filepath = string;
-type SimpleTypeName = string;
 
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all
  * aliases and unwrapping all containers.
  */
 export class TypeResolver {
-    private allTypes: Record<Filepath, Record<SimpleTypeName, TypeDeclaration>> = {};
+    private allTypes: Record<TypeId, TypeDeclaration> = {};
 
     constructor(intermediateRepresentation: IntermediateRepresentation) {
         for (const type of Object.values(intermediateRepresentation.types)) {
-            const typesAtFilepath = (this.allTypes[stringifyFernFilepath(type.name.fernFilepath)] ??= {});
-            typesAtFilepath[getSimpleTypeName(type.name)] = type;
+            this.allTypes[type.name.typeId] = type;
         }
     }
 
     public getTypeDeclarationFromName(typeName: DeclaredTypeName): TypeDeclaration {
-        const type = this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[getSimpleTypeName(typeName)];
+        const type = this.allTypes[typeName.typeId];
         if (type == null) {
-            throw new Error("Type not found: " + typeNameToString(typeName));
+            throw new Error("Type not found: " + typeName.typeId);
         }
         return type;
     }
@@ -81,14 +77,6 @@ export class TypeResolver {
     }
 
     public doesTypeExist(typeName: DeclaredTypeName): boolean {
-        return this.allTypes[stringifyFernFilepath(typeName.fernFilepath)]?.[getSimpleTypeName(typeName)] != null;
+        return this.allTypes[typeName.typeId] != null;
     }
-}
-
-function typeNameToString(typeName: DeclaredTypeName) {
-    return stringifyFernFilepath(typeName.fernFilepath) + ":" + typeName.name.originalName;
-}
-
-function getSimpleTypeName(typeName: DeclaredTypeName): SimpleTypeName {
-    return typeName.name.originalName;
 }

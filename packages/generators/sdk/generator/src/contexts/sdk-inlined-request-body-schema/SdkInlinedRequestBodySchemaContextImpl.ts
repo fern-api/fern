@@ -10,8 +10,8 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-re
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
 import { RequestWrapperContextMixinImpl } from "../request-wrapper/RequestWrapperContextMixinImpl";
+import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type/TypeSchemaContextMixinImpl";
 import { SdkInlinedRequestBodySchemaContextMixinImpl } from "./SdkInlinedRequestBodySchemaContextMixinImpl";
 
 export declare namespace SdkInlinedRequestBodySchemaContextImpl {

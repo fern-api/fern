@@ -15,8 +15,8 @@ import { BaseContextImpl } from "../base/BaseContextImpl";
 import { EndpointErrorUnionContextMixinImpl } from "../endpoint-error-union/EndpointErrorUnionContextMixinImpl";
 import { RequestWrapperContextMixinImpl } from "../request-wrapper/RequestWrapperContextMixinImpl";
 import { SdkErrorContextMixinImpl } from "../sdk-error/SdkErrorContextMixinImpl";
+import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type/TypeSchemaContextMixinImpl";
 import { SdkEndpointTypeSchemasContextMixinImpl } from "./SdkEndpointTypeSchemasContextMixinImpl";
 
 export declare namespace SdkEndpointTypeSchemasContextImpl {

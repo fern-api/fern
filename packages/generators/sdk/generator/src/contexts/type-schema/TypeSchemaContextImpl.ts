@@ -6,7 +6,7 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
 import { BaseContextImpl } from "../base/BaseContextImpl";
 import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type/TypeSchemaContextMixinImpl";
+import { TypeSchemaContextMixinImpl } from "./TypeSchemaContextMixinImpl";
 
 export declare namespace TypeSchemaContextImpl {
     export interface Init extends BaseContextImpl.Init {

@@ -13,11 +13,11 @@
     { "path": "../client-class-generator" },
     { "path": "../endpoint-error-union-generator" },
     { "path": "../environments-generator" },
-    { "path": "../error-schema-generator" },
     { "path": "../generic-sdk-error-generators" },
     { "path": "../request-wrapper-generator" },
     { "path": "../sdk-endpoint-type-schemas-generator" },
     { "path": "../sdk-error-generator" },
+    { "path": "../sdk-error-schema-generator" },
     { "path": "../sdk-inlined-request-body-schema-generator" }
   ]
 }

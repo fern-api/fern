@@ -4,6 +4,7 @@ export * from "./endpoint-error-union";
 export * from "./environments";
 export * from "./express-endpoint-type-schemas";
 export * from "./express-error";
+export * from "./express-error-schema";
 export * from "./express-inlined-request-body";
 export * from "./express-inlined-request-body-schema";
 export * from "./express-register";

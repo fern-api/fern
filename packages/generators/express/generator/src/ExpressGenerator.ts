@@ -17,6 +17,7 @@ import {
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
 import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
+import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { ExpressRegisterGenerator } from "@fern-typescript/express-register-generator";
@@ -90,6 +91,7 @@ export class ExpressGenerator {
     private expressRegisterDeclarationReferencer: ExpressRegisterDeclarationReferencer;
     private genericApiExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
     private expressErrorDeclarationReferencer: ExpressErrorDeclarationReferencer;
+    private expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
 
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
@@ -101,6 +103,7 @@ export class ExpressGenerator {
     private expressRegisterGenerator: ExpressRegisterGenerator;
     private genericApiExpressErrorGenerator: GenericAPIExpressErrorGenerator;
     private expressErrorGenerator: ExpressErrorGenerator;
+    private expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
 
     constructor({ namespaceExport, intermediateRepresentation, context, npmPackage, config }: ExpressGenerator.Init) {
         this.context = context;
@@ -171,6 +174,10 @@ export class ExpressGenerator {
             containingDirectory: apiDirectory,
             namespaceExport,
         });
+        this.expressErrorSchemaDeclarationReferencer = new ExpressErrorDeclarationReferencer({
+            containingDirectory: schemaDirectory,
+            namespaceExport,
+        });
 
         this.typeGenerator = new TypeGenerator({
             useBrandedStringAliases: config.shouldUseBrandedStringAliases,
@@ -196,6 +203,7 @@ export class ExpressGenerator {
         });
         this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
         this.expressErrorGenerator = new ExpressErrorGenerator();
+        this.expressErrorSchemaGenerator = new ExpressErrorSchemaGenerator();
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -292,6 +300,10 @@ export class ExpressGenerator {
                         errorResolver: this.errorResolver,
                         genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
                         genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
+                        expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
+                        expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
+                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                        typeSchemaGenerator: this.typeSchemaGenerator,
                     });
                     errorContext.expressError.getGeneratedExpressError(errorDeclaration.name).writeToFile(errorContext);
                 },
