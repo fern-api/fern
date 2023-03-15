@@ -9,7 +9,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
         const exampleResolver = new ExampleResolverImpl(new TypeResolverImpl(workspace));
 
         return {
-            serviceFile: {
+            definitionFile: {
                 exampleTypeReference: (exampleReference, { relativeFilepath, contents }) => {
                     if (exampleResolver.parseExampleReference(exampleReference) == null) {
                         return [
@@ -29,7 +29,7 @@ export const NoUndefinedExampleReferenceRule: Rule = {
                             example: exampleReference,
                             file: constructFernFileContext({
                                 relativeFilepath,
-                                serviceFile: contents,
+                                definitionFile: contents,
                                 casingsGenerator: CASINGS_GENERATOR,
                             }),
                         }) != null;

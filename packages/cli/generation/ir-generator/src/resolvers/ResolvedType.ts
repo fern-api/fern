@@ -20,7 +20,11 @@ export declare namespace ResolvedType {
         _type: "named";
         rawName: string;
         name: DeclaredTypeName;
-        declaration: RawSchemas.ObjectSchema | RawSchemas.UnionSchema | RawSchemas.EnumSchema;
+        declaration:
+            | RawSchemas.ObjectSchema
+            | RawSchemas.DiscriminatedUnionSchema
+            | RawSchemas.UndiscriminatedUnionSchema
+            | RawSchemas.EnumSchema;
         filepath: RelativeFilePath;
         file: FernFileContext;
         // this is the breadcrumbs path to the final declaration, including intermediate aliases

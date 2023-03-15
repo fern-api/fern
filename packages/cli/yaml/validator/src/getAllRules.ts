@@ -11,6 +11,7 @@ import { NoDuplicateEnumValuesRule } from "./rules/no-duplicate-enum-values";
 import { NoDuplicateExampleNamesRule } from "./rules/no-duplicate-example-names";
 import { NoDuplicateFieldNamesRule } from "./rules/no-duplicate-field-names";
 import { NoErrorStatusCodeConflictRule } from "./rules/no-error-status-code-conflict";
+import { NoExtensionsWithFileUploadRule } from "./rules/no-extensions-with-file-upload";
 import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
 import { NoMissingAuthRule } from "./rules/no-missing-auth";
 import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
@@ -26,7 +27,9 @@ import { ValidEndpointPathRule } from "./rules/valid-endpoint-path";
 import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-call";
 import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
+import { ValidNavigationRule } from "./rules/valid-navigation";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
+import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 
 export function getAllRules(): Rule[] {
@@ -60,6 +63,9 @@ export function getAllRules(): Rule[] {
         ValidEndpointPathRule,
         NoConflictingEndpointPathsRule,
         ValidTypeNameRule,
+        ValidStreamConditionRule,
+        NoExtensionsWithFileUploadRule,
+        ValidNavigationRule,
     ];
 }
 

@@ -1,8 +1,9 @@
 import { noop, visitObject } from "@fern-api/core-utils";
 import { ErrorDeclarationSchema } from "../../schemas";
-import { FernServiceFileAstVisitor } from "../FernServiceFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
+import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";
 
 export async function visitErrorDeclarations({
@@ -11,7 +12,7 @@ export async function visitErrorDeclarations({
     nodePath,
 }: {
     errorDeclarations: Record<string, ErrorDeclarationSchema> | undefined;
-    visitor: Partial<FernServiceFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (errorDeclarations == null) {
@@ -32,11 +33,13 @@ async function visitErrorDeclaration({
 }: {
     errorName: string;
     declaration: ErrorDeclarationSchema;
-    visitor: Partial<FernServiceFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor>;
     nodePathForError: NodePath;
 }) {
+    const visitTypeReference = createTypeReferenceVisitor(visitor);
+
     if (typeof declaration === "string") {
-        await visitor.typeReference?.(declaration, nodePathForError);
+        await visitTypeReference(declaration, nodePathForError);
     } else {
         await visitObject(declaration, {
             docs: createDocsVisitor(visitor, nodePathForError),
@@ -47,7 +50,7 @@ async function visitErrorDeclaration({
                 }
                 const nodePathForErrorType = [...nodePathForError, "type"];
                 if (typeof type === "string") {
-                    await visitor.typeReference?.(type, nodePathForErrorType);
+                    await visitTypeReference(type, nodePathForErrorType);
                 } else {
                     await visitTypeDeclaration({
                         typeName: errorName,

@@ -58,6 +58,10 @@
       ]
     },
     {
+      "group": "Import an existing API",
+      "pages": ["spec/openapi"]
+    },
+    {
       "group": "Compiler",
       "pages": ["compiler/generate", "compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
     },

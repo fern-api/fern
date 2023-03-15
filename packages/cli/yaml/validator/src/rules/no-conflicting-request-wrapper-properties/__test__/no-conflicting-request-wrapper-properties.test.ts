@@ -11,14 +11,6 @@ describe("no-conflicting-request-wrapper-properties", () => {
 
         expect(violations).toEqual([
             {
-                message: `Multiple request properties have the name body. This is not suitable for code generation. Use the "name" property to deconflict.
-  - Body property "body"
-  - Query Parameter "body"`,
-                nodePath: ["service", "endpoints", "c"],
-                relativeFilepath: "a.yml",
-                severity: "error",
-            },
-            {
                 message: `Multiple request properties have the name foo. This is not suitable for code generation. Use the "name" property to deconflict.
   - Service header "foo"
   - Query Parameter "foo"`,
@@ -48,6 +40,14 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Endpoint header "baz"`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: "a.yml",
+                severity: "error",
+            },
+            {
+                message: `Multiple request properties have the name body. This is not suitable for code generation. Use the "name" property to deconflict.
+  - Body property "body"
+  - Query Parameter "body"`,
+                nodePath: ["service", "endpoints", "c"],
+                relativeFilepath: "body-property-key.yml",
                 severity: "error",
             },
         ]);

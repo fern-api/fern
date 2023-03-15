@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { AvailabilityStatus, Declaration } from "@fern-fern/ir-model/declaration";
+import { Availability, AvailabilityStatus, Declaration } from "@fern-fern/ir-model/commons";
 
 const DEFAULT_DECLARATION = {
     docs: undefined,
@@ -10,18 +10,22 @@ const DEFAULT_DECLARATION = {
     },
 };
 
-export function convertDeclaration(schema: string | RawSchemas.DeclarationSchema): Declaration {
-    if (typeof schema === "string") {
+export function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Declaration {
+    if (typeof declaration === "string") {
         return DEFAULT_DECLARATION;
     }
     return {
-        docs: schema.docs,
-        availability: {
-            status: convertAvailabilityStatus(
-                typeof schema.availability === "string" ? schema.availability : schema.availability?.status
-            ),
-            message: typeof schema.availability !== "string" ? schema.availability?.message : undefined,
-        },
+        docs: declaration.docs,
+        availability: convertAvailability(declaration.availability),
+    };
+}
+
+export function convertAvailability(
+    availability: RawSchemas.AvailabilitySchema | RawSchemas.AvailabilityStatusSchema | undefined
+): Availability {
+    return {
+        status: convertAvailabilityStatus(typeof availability === "string" ? availability : availability?.status),
+        message: typeof availability !== "string" ? availability?.message : undefined,
     };
 }
 

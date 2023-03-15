@@ -1,6 +1,8 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
+import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { HttpEndpoint, ResponseErrors } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
@@ -15,11 +17,13 @@ import { convertHttpHeader, convertHttpService } from "./converters/services/con
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
-import { generateRootPackage } from "./generateRootPackage";
+import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
+import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
+import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export async function generateIntermediateRepresentation({
@@ -37,7 +41,7 @@ export async function generateIntermediateRepresentation({
 
     const rootApiFileContext = constructFernFileContext({
         relativeFilepath: ".",
-        serviceFile: {
+        definitionFile: {
             imports: workspace.definition.rootApiFile.contents.imports,
         },
         casingsGenerator,
@@ -84,9 +88,19 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
 
-    const visitServiceFile = async (file: FernFileContext) => {
-        await visitObject(file.serviceFile, {
+    const packageTreeGenerator = new PackageTreeGenerator();
+
+    const visitDefinitionFile = async (file: FernFileContext) => {
+        packageTreeGenerator.addSubpackage(file.fernFilepath);
+
+        const docs = file.definitionFile.docs ?? file.definitionFile.service?.docs;
+        if (docs != null) {
+            packageTreeGenerator.addDocs(file.fernFilepath, docs);
+        }
+
+        await visitObject(file.definitionFile, {
             imports: noop,
+            docs: noop,
 
             types: (types) => {
                 if (types == null) {
@@ -101,8 +115,10 @@ export async function generateIntermediateRepresentation({
                         typeResolver,
                         exampleResolver,
                     });
-                    intermediateRepresentation.types[IdGenerator.generateTypeId(convertedTypeDeclaration.name)] =
-                        convertedTypeDeclaration;
+
+                    const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
+                    intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
+                    packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
                     audienceIrGraph?.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
                     audienceIrGraph?.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
@@ -123,8 +139,10 @@ export async function generateIntermediateRepresentation({
                         errorDeclaration,
                         file,
                     });
-                    intermediateRepresentation.errors[IdGenerator.generateErrorId(convertedErrorDeclaration.name)] =
-                        convertedErrorDeclaration;
+
+                    const errorId = IdGenerator.generateErrorId(convertedErrorDeclaration.name);
+                    intermediateRepresentation.errors[errorId] = convertedErrorDeclaration;
+                    packageTreeGenerator.addError(errorId, convertedErrorDeclaration);
 
                     audienceIrGraph?.addError(convertedErrorDeclaration);
                 }
@@ -144,8 +162,9 @@ export async function generateIntermediateRepresentation({
                     globalErrors,
                 });
 
-                intermediateRepresentation.services[IdGenerator.generateServiceId(convertedHttpService.name)] =
-                    convertedHttpService;
+                const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);
+                intermediateRepresentation.services[serviceId] = convertedHttpService;
+                packageTreeGenerator.addService(serviceId, convertedHttpService);
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
@@ -173,20 +192,50 @@ export async function generateIntermediateRepresentation({
         });
     };
 
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
-        await visitServiceFile(
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+        await visitDefinitionFile(
             constructFernFileContext({
                 relativeFilepath,
-                serviceFile: file,
+                definitionFile: file,
                 casingsGenerator,
             })
         );
     });
 
-    const intermediateRepresentationForAudiences =
-        audienceIrGraph != null
-            ? filterIntermediateRepresentationForAudiences(intermediateRepresentation, audienceIrGraph)
-            : intermediateRepresentation;
+    await visitAllPackageMarkers(workspace, async (relativeFilepath, packageMarker) => {
+        if (packageMarker.navigation == null) {
+            return;
+        }
+
+        const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
+            return IdGenerator.generateSubpackageId(
+                convertToFernFilepath({
+                    relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(childFilepath)),
+                    casingsGenerator,
+                })
+            );
+        });
+
+        if (relativeFilepath === FERN_PACKAGE_MARKER_FILENAME) {
+            packageTreeGenerator.sortRootPackage(childrenInOrder);
+        } else {
+            packageTreeGenerator.sortSubpackage(
+                IdGenerator.generateSubpackageId(
+                    convertToFernFilepath({
+                        relativeFilepath,
+                        casingsGenerator,
+                    })
+                ),
+                childrenInOrder
+            );
+        }
+    });
+
+    const filteredIr = audienceIrGraph != null ? audienceIrGraph.build() : undefined;
+    const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
+        intermediateRepresentation,
+        filteredIr
+    );
 
     const isAuthMandatory =
         workspace.definition.rootApiFile.contents.auth != null &&
@@ -196,7 +245,7 @@ export async function generateIntermediateRepresentation({
 
     return {
         ...intermediateRepresentationForAudiences,
-        ...generateRootPackage(intermediateRepresentationForAudiences),
+        ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
             isAuthMandatory,
         },
@@ -205,9 +254,11 @@ export async function generateIntermediateRepresentation({
 
 function filterIntermediateRepresentationForAudiences(
     intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage">,
-    audienceIrGraph: AudienceIrGraph
+    filteredIr: FilteredIr | undefined
 ): Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> {
-    const filteredIr = audienceIrGraph.build();
+    if (filteredIr == null) {
+        return intermediateRepresentation;
+    }
     return {
         ...intermediateRepresentation,
         types: pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type)),

@@ -1,7 +1,12 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { recursivelyVisitRawTypeReference, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import {
+    parseRawFileType,
+    recursivelyVisitRawTypeReference,
+    TypeReferenceLocation,
+    visitDefinitionFileYamlAst,
+} from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -25,16 +30,28 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         }
 
         return {
-            serviceFile: {
-                typeReference: (type, { relativeFilepath, contents }) => {
+            definitionFile: {
+                typeReference: ({ typeReference, location }, { relativeFilepath, contents }) => {
+                    if (
+                        location === TypeReferenceLocation.InlinedRequestProperty &&
+                        parseRawFileType(typeReference) != null
+                    ) {
+                        return [];
+                    }
+
                     const namedTypes = getAllNamedTypes({
-                        type,
+                        type: typeReference,
                         relativeFilepath,
                         imports: mapValues(contents.imports ?? {}, RelativeFilePath.of),
                     });
 
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
-                        if (!doesTypeExist(namedType)) {
+                        if (namedType.parsed?.typeName != null && parseRawFileType(namedType.parsed.typeName) != null) {
+                            violations.push({
+                                severity: "error",
+                                message: "The file type can only be used as properties in inlined requests.",
+                            });
+                        } else if (!doesTypeExist(namedType)) {
                             violations.push({
                                 severity: "error",
                                 message: `Type ${chalk.bold(
@@ -53,11 +70,11 @@ export const NoUndefinedTypeReferenceRule: Rule = {
 
 async function getTypesByFilepath(workspace: FernWorkspace) {
     const typesByFilepath: Record<RelativeFilePath, Set<TypeName>> = {};
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const typesForFile = new Set<TypeName>();
         typesByFilepath[relativeFilepath] = typesForFile;
 
-        await visitFernServiceFileYamlAst(file, {
+        await visitDefinitionFileYamlAst(file, {
             typeDeclaration: ({ typeName }) => {
                 if (!typeName.isInlined) {
                     typesForFile.add(typeName.name);

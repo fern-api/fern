@@ -32,7 +32,7 @@ export async function getSetupDemoArgs(): Promise<SetupDemoArgs> {
         {
             type: "input",
             name: "orgId",
-            message: "Company name (lowercase + dashes)",
+            default: "Company name (lowercase + dashes)",
         },
         {
             type: "input",
@@ -54,7 +54,7 @@ export async function getSetupDemoArgs(): Promise<SetupDemoArgs> {
                 `Did you make the ${answers.orgId} repo in Github? ${chalk.dim(
                     "https://github.com/account/organizations/new?plan=free"
                 )}`,
-            default: true,
+            initial: true,
             validate: (answer) => answer === true,
         },
     ]);

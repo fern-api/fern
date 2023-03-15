@@ -5,7 +5,7 @@ import {
     getUnionDiscriminantName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
-import { getServiceFile } from "@fern-api/workspace-loader";
+import { getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
@@ -22,7 +22,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
 
         return {
-            serviceFile: {
+            definitionFile: {
                 typeDeclaration: ({ typeName, declaration }, { relativeFilepath, contents }) => {
                     const violations: RuleViolation[] = [];
 
@@ -48,7 +48,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 typeName: typeNameString,
                                 objectDeclaration,
                                 filepathOfDeclaration: relativeFilepath,
-                                serviceFile: contents,
+                                definitionFile: contents,
                                 workspace,
                                 typeResolver,
                             });
@@ -73,7 +73,9 @@ export const NoDuplicateFieldNamesRule: Rule = {
                             }
                         },
 
-                        union: (unionDeclaration) => {
+                        undiscriminatedUnion: () => [],
+
+                        discriminatedUnion: (unionDeclaration) => {
                             const duplicateNames = getDuplicateNames(
                                 Object.entries(unionDeclaration.union),
                                 ([unionKey, rawSingleUnionType]) =>
@@ -99,7 +101,7 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         type: specifiedType,
                                         file: constructFernFileContext({
                                             relativeFilepath,
-                                            serviceFile: contents,
+                                            definitionFile: contents,
                                             casingsGenerator: CASINGS_GENERATOR,
                                         }),
                                     });
@@ -114,15 +116,15 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                         isRawObjectDefinition(resolvedType.declaration)
                                     ) {
                                         const discriminantName = getUnionDiscriminantName(unionDeclaration).name;
-                                        const serviceFile = getServiceFile(workspace, resolvedType.filepath);
-                                        if (serviceFile == null) {
+                                        const definitionFile = getDefinitionFile(workspace, resolvedType.filepath);
+                                        if (definitionFile == null) {
                                             continue;
                                         }
                                         const propertiesOnObject = getAllPropertiesForObject({
                                             typeName: resolvedType.rawName,
                                             objectDeclaration: resolvedType.declaration,
                                             filepathOfDeclaration: resolvedType.filepath,
-                                            serviceFile,
+                                            definitionFile,
                                             workspace,
                                             typeResolver,
                                         });

@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase, size, upperFirst } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenApiConvertedFernDefinition } from "../convertOpenApi";
@@ -61,42 +61,48 @@ export class OpenAPIConverter {
         const hasAuth = maybeAuthScheme != null;
         const globalHeaderScanner = new GlobalHeaderScanner(this.context, this.taskContext);
         const globalHeaders = globalHeaderScanner.getGlobalHeaders();
-        const serviceFiles: Record<RelativeFilePath, ServiceFileSchema> = {};
+        const definitionFiles: Record<RelativeFilePath, DefinitionFileSchema> = {};
         const tags = this.context.getTags();
 
         for (const tag of tags) {
             const endpoints = this.context.getEndpointsForTag(tag);
             const schemas = this.context.getSchemasForTag(tag);
-            const convertedServiceFile = this.convertToServiceFile(tag, endpoints, schemas, hasAuth);
-            serviceFiles[RelativeFilePath.of(convertedServiceFile.filename)] = convertedServiceFile.serviceFile;
+            const convertedDefinitionFile = this.convertToDefinitionFile(tag, endpoints, schemas, hasAuth);
+            definitionFiles[RelativeFilePath.of(convertedDefinitionFile.filename)] =
+                convertedDefinitionFile.definitionFile;
         }
 
         const untaggedEndpoints = this.context.getUntaggedEndpoints();
         const untaggedSchemas = this.context.getUntaggedSchemas();
 
-        const untaggedServiceFile = this.convertToServiceFile(
+        const untaggedDefinitionFile = this.convertToDefinitionFile(
             UNTAGGED_FILE_NAME,
             untaggedEndpoints,
             untaggedSchemas,
             hasAuth
         );
-        serviceFiles[RelativeFilePath.of(untaggedServiceFile.filename)] = untaggedServiceFile.serviceFile;
+        definitionFiles[RelativeFilePath.of(untaggedDefinitionFile.filename)] = untaggedDefinitionFile.definitionFile;
 
         const multiTaggedSchemas = this.context.getMultitaggedSchemas();
-        const commonsServiceFile = this.convertToServiceFile(
+        const commonsDefinitionFile = this.convertToDefinitionFile(
             COMMONS_SERVICE_FILE_NAME,
             [],
             multiTaggedSchemas,
             hasAuth
         );
-        serviceFiles[RelativeFilePath.of(commonsServiceFile.filename)] = commonsServiceFile.serviceFile;
+        definitionFiles[RelativeFilePath.of(commonsDefinitionFile.filename)] = commonsDefinitionFile.definitionFile;
 
         const rootApiFile: RawSchemas.RootApiFileSchema = {
             name: "api",
             "display-name": this.document.info.title,
             headers: globalHeaders,
-            auth: maybeAuthScheme != null ? Object.keys(maybeAuthScheme)[0] : undefined,
-            "auth-schemes": maybeAuthScheme,
+            auth:
+                maybeAuthScheme != null
+                    ? typeof maybeAuthScheme === "string"
+                        ? maybeAuthScheme
+                        : Object.keys(maybeAuthScheme)[0]
+                    : undefined,
+            "auth-schemes": typeof maybeAuthScheme === "string" ? undefined : maybeAuthScheme,
         };
 
         const environments = this.maybeGetEnvironments(this.document);
@@ -107,16 +113,16 @@ export class OpenAPIConverter {
 
         return {
             rootApiFile,
-            serviceFiles,
+            definitionFiles,
         };
     }
 
-    private convertToServiceFile(
+    private convertToDefinitionFile(
         tag: string,
         endpoints: OpenAPIV3Endpoint[],
         schemas: OpenAPIV3Schema[],
         hasAuth: boolean
-    ): { serviceFile: ServiceFileSchema; filename: string } {
+    ): { definitionFile: DefinitionFileSchema; filename: string } {
         const camelCasedTag = tag === UNTAGGED_FILE_NAME ? tag : camelCase(tag);
         const pascalCasedTag = upperFirst(camelCasedTag);
         let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
@@ -173,10 +179,10 @@ export class OpenAPIConverter {
             }
         });
 
-        const serviceFile: ServiceFileSchema = {};
+        const definitionFile: DefinitionFileSchema = {};
 
         if (size(imports) > 0) {
-            serviceFile.imports = imports;
+            definitionFile.imports = imports;
         }
 
         const serviceName = `${pascalCasedTag}Service`;
@@ -205,16 +211,16 @@ export class OpenAPIConverter {
                 endpoints: convertedEndpoints,
             };
 
-            serviceFile.service = service;
+            definitionFile.service = service;
         }
 
         if (size(types) > 0) {
-            serviceFile.types = types;
+            definitionFile.types = types;
         }
 
         return {
             filename,
-            serviceFile,
+            definitionFile,
         };
     }
 
@@ -260,7 +266,7 @@ export class OpenAPIConverter {
 
     private maybeGetAuthScheme(
         document: OpenAPIV3.Document
-    ): Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined {
+    ): Record<string, RawSchemas.AuthSchemeDeclarationSchema> | string | undefined {
         if (document.components?.securitySchemes != null) {
             for (const [name, securityScheme] of Object.entries(document.components.securitySchemes)) {
                 if (isReferenceObject(securityScheme)) {
@@ -271,8 +277,13 @@ export class OpenAPIConverter {
                         [name]: {
                             header: securityScheme.name,
                             name: "apiKey",
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            prefix: (securityScheme as any)["x-header-prefix"] as string | undefined,
                         },
                     };
+                }
+                if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
+                    return "bearer";
                 }
             }
         }

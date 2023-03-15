@@ -1,8 +1,8 @@
-import { FernServiceFileAstVisitor } from "../../FernServiceFileAstVisitor";
+import { DefinitionFileAstVisitor } from "../../DefinitionFileAstVisitor";
 import { NodePath } from "../../NodePath";
 
 export function createDocsVisitor(
-    visitor: Partial<FernServiceFileAstVisitor>,
+    visitor: Partial<DefinitionFileAstVisitor>,
     nodePath: NodePath
 ): (docs: string | undefined) => Promise<void> {
     return async (docs: string | undefined) => {

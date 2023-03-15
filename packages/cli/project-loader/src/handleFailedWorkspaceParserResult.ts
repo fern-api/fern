@@ -63,6 +63,9 @@ function handleWorkspaceParserFailureForFile({
         case WorkspaceLoaderFailureType.EXPORT_PACKAGE_HAS_DEFINITIONS:
             logger.error("Exported package contains API definitions: " + failure.pathToPackage);
             break;
+        case WorkspaceLoaderFailureType.EXPORTING_PACKAGE_MARKER_OTHER_KEYS:
+            logger.error(`${failure.pathOfPackageMarker} has an export so it cannot define other keys.`);
+            break;
         default:
             assertNever(failure);
     }

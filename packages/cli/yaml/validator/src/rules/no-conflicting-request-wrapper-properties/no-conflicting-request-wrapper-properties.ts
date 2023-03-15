@@ -2,12 +2,13 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+    doesRequestHaveNonBodyProperties,
     getHeaderName,
     getQueryParameterName,
     TypeResolverImpl,
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isInlineRequestBody, RawSchemas, ServiceFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
 import {
@@ -20,13 +21,13 @@ export const NoConflictingRequestWrapperPropertiesRule: Rule = {
     name: "no-conflicting-request-wrapper-properties",
     create: ({ workspace }) => {
         return {
-            serviceFile: {
-                httpEndpoint: ({ endpoint, service }, { contents: serviceFile, relativeFilepath }) => {
+            definitionFile: {
+                httpEndpoint: ({ endpoint, service }, { contents: definitionFile, relativeFilepath }) => {
                     const nameToProperties = getRequestWrapperPropertiesByName({
                         endpoint,
                         service,
                         relativeFilepath,
-                        serviceFile,
+                        definitionFile,
                         workspace,
                     });
 
@@ -93,13 +94,13 @@ function getRequestWrapperPropertiesByName({
     endpoint,
     service,
     relativeFilepath,
-    serviceFile,
+    definitionFile,
     workspace,
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
     service: RawSchemas.HttpServiceSchema;
     relativeFilepath: RelativeFilePath;
-    serviceFile: ServiceFileSchema;
+    definitionFile: DefinitionFileSchema;
     workspace: FernWorkspace;
 }): Record<string, RequestWrapperProperty[]> {
     const nameToProperties: Record<string, RequestWrapperProperty[]> = {};
@@ -108,10 +109,15 @@ function getRequestWrapperPropertiesByName({
         propertiesForName.push(property);
     };
 
-    addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
-        type: "referenced-body",
-        propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
-    });
+    if (endpoint.request != null && typeof endpoint.request !== "string") {
+        const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body);
+        if (isBodyReferenced && doesRequestHaveNonBodyProperties(endpoint.request)) {
+            addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
+                type: "referenced-body",
+                propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
+            });
+        }
+    }
 
     if (service.headers != null) {
         for (const [headerKey, header] of Object.entries(service.headers)) {
@@ -152,7 +158,7 @@ function getRequestWrapperPropertiesByName({
                     properties: endpoint.request.body.properties ?? {},
                 },
                 filepathOfDeclaration: relativeFilepath,
-                serviceFile,
+                definitionFile,
                 workspace,
                 typeResolver: new TypeResolverImpl(workspace),
             });

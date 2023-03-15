@@ -1,0 +1,15 @@
+service:
+  auth: false
+  base-path: /movies
+  endpoints:
+    fileUpload:
+      path: ""
+      method: POST
+      request:
+        name: FileUploadRequest
+        body:
+          properties:
+            foo: string
+            file: file
+            optionalFile: optional<file>
+            bar: integer

@@ -6,7 +6,7 @@ export const NoMissingRequestNameRule: Rule = {
     name: "no-missing-request-name",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 httpEndpoint: ({ endpoint, service }) => {
                     if (typeof endpoint.request !== "string" && endpoint.request?.name != null) {
                         return [];

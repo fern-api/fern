@@ -1,5 +1,5 @@
-import { visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import { visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule } from "../../Rule";
 import { EndpointPathRegistry } from "./EndpointPathRegistry";
@@ -10,8 +10,8 @@ export const NoConflictingEndpointPathsRule: Rule = {
     create: async ({ workspace }) => {
         const endpointPathRegistry = new EndpointPathRegistry();
 
-        await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
-            await visitFernServiceFileYamlAst(file, {
+        await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
+            await visitDefinitionFileYamlAst(file, {
                 httpEndpoint: ({ service, endpointId, endpoint }) => {
                     endpointPathRegistry.registerEndpoint({
                         service,
@@ -24,7 +24,7 @@ export const NoConflictingEndpointPathsRule: Rule = {
         });
 
         return {
-            serviceFile: {
+            definitionFile: {
                 httpEndpoint: ({ service, endpoint, endpointId }, { relativeFilepath }) => {
                     const conflictingEndpoints = endpointPathRegistry.getConflictingEndpoints({
                         service,

@@ -59,19 +59,18 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
   "errors": {},
   "headers": [],
   "rootPackage": {
+    "docs": undefined,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
       "file": undefined,
       "packagePath": [],
     },
-    "service": undefined,
+    "hasEndpointsInTree": true,
+    "service": null,
     "subpackages": [
-      "commons:subpackage",
-      "folder-a:subpackage",
-      "folder-b:subpackage",
-      "folder-c:subpackage",
-      "foo:subpackage",
+      "subpackage_folder-a",
+      "subpackage_foo",
     ],
     "types": [],
   },
@@ -79,7 +78,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
     "isAuthMandatory": false,
   },
   "services": {
-    "folder-a/service:service": {
+    "service_folder-a/service": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -90,7 +89,6 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "baseUrl": undefined,
       "displayName": undefined,
-      "docs": undefined,
       "endpoints": [
         {
           "auth": false,
@@ -132,7 +130,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "requestBody": undefined,
           "response": {
             "docs": undefined,
-            "type": {
+            "responseBodyType": {
               "_type": "named",
               "fernFilepath": {
                 "allParts": [
@@ -235,10 +233,120 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                   "unsafeName": "response",
                 },
               },
-              "typeId": "folder-a/service:types/Response",
+              "typeId": "type_folder-a/service:Response",
             },
           },
           "sdkRequest": undefined,
+          "sdkResponse": {
+            "docs": undefined,
+            "responseBodyType": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "folderA",
+                      "unsafeName": "folderA",
+                    },
+                    "originalName": "folder-a",
+                    "pascalCase": {
+                      "safeName": "FolderA",
+                      "unsafeName": "FolderA",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOLDER_A",
+                      "unsafeName": "FOLDER_A",
+                    },
+                    "snakeCase": {
+                      "safeName": "folder_a",
+                      "unsafeName": "folder_a",
+                    },
+                  },
+                  {
+                    "camelCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                    "originalName": "service",
+                    "pascalCase": {
+                      "safeName": "Service",
+                      "unsafeName": "Service",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SERVICE",
+                      "unsafeName": "SERVICE",
+                    },
+                    "snakeCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
+                "packagePath": [
+                  {
+                    "camelCase": {
+                      "safeName": "folderA",
+                      "unsafeName": "folderA",
+                    },
+                    "originalName": "folder-a",
+                    "pascalCase": {
+                      "safeName": "FolderA",
+                      "unsafeName": "FolderA",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOLDER_A",
+                      "unsafeName": "FOLDER_A",
+                    },
+                    "snakeCase": {
+                      "safeName": "folder_a",
+                      "unsafeName": "folder_a",
+                    },
+                  },
+                ],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "response",
+                  "unsafeName": "response",
+                },
+                "originalName": "Response",
+                "pascalCase": {
+                  "safeName": "Response",
+                  "unsafeName": "Response",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESPONSE",
+                  "unsafeName": "RESPONSE",
+                },
+                "snakeCase": {
+                  "safeName": "response",
+                  "unsafeName": "response",
+                },
+              },
+              "typeId": "type_folder-a/service:Response",
+            },
+            "type": "nonStreaming",
+          },
+          "streamingResponse": undefined,
         },
       ],
       "headers": [],
@@ -328,7 +436,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "pathParameters": [],
     },
-    "foo:service": {
+    "service_foo": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -339,7 +447,6 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       },
       "baseUrl": undefined,
       "displayName": undefined,
-      "docs": undefined,
       "endpoints": [
         {
           "auth": false,
@@ -471,14 +578,14 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                     "unsafeName": "optional_string",
                   },
                 },
-                "typeId": "foo:types/OptionalString",
+                "typeId": "type_foo:OptionalString",
               },
             },
           ],
           "requestBody": undefined,
           "response": {
             "docs": undefined,
-            "type": {
+            "responseBodyType": {
               "_type": "named",
               "fernFilepath": {
                 "allParts": [
@@ -542,7 +649,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                   "unsafeName": "importing_type",
                 },
               },
-              "typeId": "foo:types/ImportingType",
+              "typeId": "type_foo:ImportingType",
             },
           },
           "sdkRequest": {
@@ -607,6 +714,77 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               },
             },
           },
+          "sdkResponse": {
+            "docs": undefined,
+            "responseBodyType": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                    "originalName": "foo",
+                    "pascalCase": {
+                      "safeName": "Foo",
+                      "unsafeName": "Foo",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "FOO",
+                      "unsafeName": "FOO",
+                    },
+                    "snakeCase": {
+                      "safeName": "foo",
+                      "unsafeName": "foo",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "foo",
+                    "unsafeName": "foo",
+                  },
+                  "originalName": "foo",
+                  "pascalCase": {
+                    "safeName": "Foo",
+                    "unsafeName": "Foo",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FOO",
+                    "unsafeName": "FOO",
+                  },
+                  "snakeCase": {
+                    "safeName": "foo",
+                    "unsafeName": "foo",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "importingType",
+                  "unsafeName": "importingType",
+                },
+                "originalName": "ImportingType",
+                "pascalCase": {
+                  "safeName": "ImportingType",
+                  "unsafeName": "ImportingType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "IMPORTING_TYPE",
+                  "unsafeName": "IMPORTING_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "importing_type",
+                  "unsafeName": "importing_type",
+                },
+              },
+              "typeId": "type_foo:ImportingType",
+            },
+            "type": "nonStreaming",
+          },
+          "streamingResponse": undefined,
         },
       ],
       "headers": [],
@@ -659,77 +837,82 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
     },
   },
   "subpackages": {
-    "commons:subpackage": {
+    "subpackage_folder-a": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
           {
             "camelCase": {
-              "safeName": "commons",
-              "unsafeName": "commons",
+              "safeName": "folderA",
+              "unsafeName": "folderA",
             },
-            "originalName": "commons",
+            "originalName": "folder-a",
             "pascalCase": {
-              "safeName": "Commons",
-              "unsafeName": "Commons",
+              "safeName": "FolderA",
+              "unsafeName": "FolderA",
             },
             "screamingSnakeCase": {
-              "safeName": "COMMONS",
-              "unsafeName": "COMMONS",
+              "safeName": "FOLDER_A",
+              "unsafeName": "FOLDER_A",
             },
             "snakeCase": {
-              "safeName": "commons",
-              "unsafeName": "commons",
+              "safeName": "folder_a",
+              "unsafeName": "folder_a",
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "commons",
-            "unsafeName": "commons",
+        "file": undefined,
+        "packagePath": [
+          {
+            "camelCase": {
+              "safeName": "folderA",
+              "unsafeName": "folderA",
+            },
+            "originalName": "folder-a",
+            "pascalCase": {
+              "safeName": "FolderA",
+              "unsafeName": "FolderA",
+            },
+            "screamingSnakeCase": {
+              "safeName": "FOLDER_A",
+              "unsafeName": "FOLDER_A",
+            },
+            "snakeCase": {
+              "safeName": "folder_a",
+              "unsafeName": "folder_a",
+            },
           },
-          "originalName": "commons",
-          "pascalCase": {
-            "safeName": "Commons",
-            "unsafeName": "Commons",
-          },
-          "screamingSnakeCase": {
-            "safeName": "COMMONS",
-            "unsafeName": "COMMONS",
-          },
-          "snakeCase": {
-            "safeName": "commons",
-            "unsafeName": "commons",
-          },
-        },
-        "packagePath": [],
+        ],
       },
+      "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
-          "safeName": "commons",
-          "unsafeName": "commons",
+          "safeName": "folderA",
+          "unsafeName": "folderA",
         },
-        "originalName": "commons",
+        "originalName": "folder-a",
         "pascalCase": {
-          "safeName": "Commons",
-          "unsafeName": "Commons",
+          "safeName": "FolderA",
+          "unsafeName": "FolderA",
         },
         "screamingSnakeCase": {
-          "safeName": "COMMONS",
-          "unsafeName": "COMMONS",
+          "safeName": "FOLDER_A",
+          "unsafeName": "FOLDER_A",
         },
         "snakeCase": {
-          "safeName": "commons",
-          "unsafeName": "commons",
+          "safeName": "folder_a",
+          "unsafeName": "folder_a",
         },
       },
-      "service": undefined,
-      "subpackages": [],
-      "types": [
-        "commons:types/Imported",
+      "service": null,
+      "subpackages": [
+        "subpackage_folder-a/service",
       ],
+      "types": [],
     },
-    "folder-a/service:subpackage": {
+    "subpackage_folder-a/service": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -813,6 +996,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           },
         ],
       },
+      "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
           "safeName": "service",
@@ -832,447 +1016,14 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "unsafeName": "service",
         },
       },
-      "service": "folder-a/service:service",
+      "service": "service_folder-a/service",
       "subpackages": [],
       "types": [
-        "folder-a/service:types/Response",
+        "type_folder-a/service:Response",
       ],
     },
-    "folder-a:subpackage": {
-      "errors": [],
-      "fernFilepath": {
-        "allParts": [
-          {
-            "camelCase": {
-              "safeName": "folderA",
-              "unsafeName": "folderA",
-            },
-            "originalName": "folder-a",
-            "pascalCase": {
-              "safeName": "FolderA",
-              "unsafeName": "FolderA",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_A",
-              "unsafeName": "FOLDER_A",
-            },
-            "snakeCase": {
-              "safeName": "folder_a",
-              "unsafeName": "folder_a",
-            },
-          },
-        ],
-        "file": undefined,
-        "packagePath": [
-          {
-            "camelCase": {
-              "safeName": "folderA",
-              "unsafeName": "folderA",
-            },
-            "originalName": "folder-a",
-            "pascalCase": {
-              "safeName": "FolderA",
-              "unsafeName": "FolderA",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_A",
-              "unsafeName": "FOLDER_A",
-            },
-            "snakeCase": {
-              "safeName": "folder_a",
-              "unsafeName": "folder_a",
-            },
-          },
-        ],
-      },
-      "name": {
-        "camelCase": {
-          "safeName": "folderA",
-          "unsafeName": "folderA",
-        },
-        "originalName": "folder-a",
-        "pascalCase": {
-          "safeName": "FolderA",
-          "unsafeName": "FolderA",
-        },
-        "screamingSnakeCase": {
-          "safeName": "FOLDER_A",
-          "unsafeName": "FOLDER_A",
-        },
-        "snakeCase": {
-          "safeName": "folder_a",
-          "unsafeName": "folder_a",
-        },
-      },
-      "service": undefined,
-      "subpackages": [
-        "folder-a/service:subpackage",
-      ],
-      "types": [],
-    },
-    "folder-b/common:subpackage": {
-      "errors": [],
-      "fernFilepath": {
-        "allParts": [
-          {
-            "camelCase": {
-              "safeName": "folderB",
-              "unsafeName": "folderB",
-            },
-            "originalName": "folder-b",
-            "pascalCase": {
-              "safeName": "FolderB",
-              "unsafeName": "FolderB",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_B",
-              "unsafeName": "FOLDER_B",
-            },
-            "snakeCase": {
-              "safeName": "folder_b",
-              "unsafeName": "folder_b",
-            },
-          },
-          {
-            "camelCase": {
-              "safeName": "common",
-              "unsafeName": "common",
-            },
-            "originalName": "common",
-            "pascalCase": {
-              "safeName": "Common",
-              "unsafeName": "Common",
-            },
-            "screamingSnakeCase": {
-              "safeName": "COMMON",
-              "unsafeName": "COMMON",
-            },
-            "snakeCase": {
-              "safeName": "common",
-              "unsafeName": "common",
-            },
-          },
-        ],
-        "file": {
-          "camelCase": {
-            "safeName": "common",
-            "unsafeName": "common",
-          },
-          "originalName": "common",
-          "pascalCase": {
-            "safeName": "Common",
-            "unsafeName": "Common",
-          },
-          "screamingSnakeCase": {
-            "safeName": "COMMON",
-            "unsafeName": "COMMON",
-          },
-          "snakeCase": {
-            "safeName": "common",
-            "unsafeName": "common",
-          },
-        },
-        "packagePath": [
-          {
-            "camelCase": {
-              "safeName": "folderB",
-              "unsafeName": "folderB",
-            },
-            "originalName": "folder-b",
-            "pascalCase": {
-              "safeName": "FolderB",
-              "unsafeName": "FolderB",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_B",
-              "unsafeName": "FOLDER_B",
-            },
-            "snakeCase": {
-              "safeName": "folder_b",
-              "unsafeName": "folder_b",
-            },
-          },
-        ],
-      },
-      "name": {
-        "camelCase": {
-          "safeName": "common",
-          "unsafeName": "common",
-        },
-        "originalName": "common",
-        "pascalCase": {
-          "safeName": "Common",
-          "unsafeName": "Common",
-        },
-        "screamingSnakeCase": {
-          "safeName": "COMMON",
-          "unsafeName": "COMMON",
-        },
-        "snakeCase": {
-          "safeName": "common",
-          "unsafeName": "common",
-        },
-      },
-      "service": undefined,
-      "subpackages": [],
-      "types": [
-        "folder-b/common:types/Foo",
-      ],
-    },
-    "folder-b:subpackage": {
-      "errors": [],
-      "fernFilepath": {
-        "allParts": [
-          {
-            "camelCase": {
-              "safeName": "folderB",
-              "unsafeName": "folderB",
-            },
-            "originalName": "folder-b",
-            "pascalCase": {
-              "safeName": "FolderB",
-              "unsafeName": "FolderB",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_B",
-              "unsafeName": "FOLDER_B",
-            },
-            "snakeCase": {
-              "safeName": "folder_b",
-              "unsafeName": "folder_b",
-            },
-          },
-        ],
-        "file": undefined,
-        "packagePath": [
-          {
-            "camelCase": {
-              "safeName": "folderB",
-              "unsafeName": "folderB",
-            },
-            "originalName": "folder-b",
-            "pascalCase": {
-              "safeName": "FolderB",
-              "unsafeName": "FolderB",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_B",
-              "unsafeName": "FOLDER_B",
-            },
-            "snakeCase": {
-              "safeName": "folder_b",
-              "unsafeName": "folder_b",
-            },
-          },
-        ],
-      },
-      "name": {
-        "camelCase": {
-          "safeName": "folderB",
-          "unsafeName": "folderB",
-        },
-        "originalName": "folder-b",
-        "pascalCase": {
-          "safeName": "FolderB",
-          "unsafeName": "FolderB",
-        },
-        "screamingSnakeCase": {
-          "safeName": "FOLDER_B",
-          "unsafeName": "FOLDER_B",
-        },
-        "snakeCase": {
-          "safeName": "folder_b",
-          "unsafeName": "folder_b",
-        },
-      },
-      "service": undefined,
-      "subpackages": [
-        "folder-b/common:subpackage",
-      ],
-      "types": [],
-    },
-    "folder-c/common:subpackage": {
-      "errors": [],
-      "fernFilepath": {
-        "allParts": [
-          {
-            "camelCase": {
-              "safeName": "folderC",
-              "unsafeName": "folderC",
-            },
-            "originalName": "folder-c",
-            "pascalCase": {
-              "safeName": "FolderC",
-              "unsafeName": "FolderC",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_C",
-              "unsafeName": "FOLDER_C",
-            },
-            "snakeCase": {
-              "safeName": "folder_c",
-              "unsafeName": "folder_c",
-            },
-          },
-          {
-            "camelCase": {
-              "safeName": "common",
-              "unsafeName": "common",
-            },
-            "originalName": "common",
-            "pascalCase": {
-              "safeName": "Common",
-              "unsafeName": "Common",
-            },
-            "screamingSnakeCase": {
-              "safeName": "COMMON",
-              "unsafeName": "COMMON",
-            },
-            "snakeCase": {
-              "safeName": "common",
-              "unsafeName": "common",
-            },
-          },
-        ],
-        "file": {
-          "camelCase": {
-            "safeName": "common",
-            "unsafeName": "common",
-          },
-          "originalName": "common",
-          "pascalCase": {
-            "safeName": "Common",
-            "unsafeName": "Common",
-          },
-          "screamingSnakeCase": {
-            "safeName": "COMMON",
-            "unsafeName": "COMMON",
-          },
-          "snakeCase": {
-            "safeName": "common",
-            "unsafeName": "common",
-          },
-        },
-        "packagePath": [
-          {
-            "camelCase": {
-              "safeName": "folderC",
-              "unsafeName": "folderC",
-            },
-            "originalName": "folder-c",
-            "pascalCase": {
-              "safeName": "FolderC",
-              "unsafeName": "FolderC",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_C",
-              "unsafeName": "FOLDER_C",
-            },
-            "snakeCase": {
-              "safeName": "folder_c",
-              "unsafeName": "folder_c",
-            },
-          },
-        ],
-      },
-      "name": {
-        "camelCase": {
-          "safeName": "common",
-          "unsafeName": "common",
-        },
-        "originalName": "common",
-        "pascalCase": {
-          "safeName": "Common",
-          "unsafeName": "Common",
-        },
-        "screamingSnakeCase": {
-          "safeName": "COMMON",
-          "unsafeName": "COMMON",
-        },
-        "snakeCase": {
-          "safeName": "common",
-          "unsafeName": "common",
-        },
-      },
-      "service": undefined,
-      "subpackages": [],
-      "types": [
-        "folder-c/common:types/Foo",
-      ],
-    },
-    "folder-c:subpackage": {
-      "errors": [],
-      "fernFilepath": {
-        "allParts": [
-          {
-            "camelCase": {
-              "safeName": "folderC",
-              "unsafeName": "folderC",
-            },
-            "originalName": "folder-c",
-            "pascalCase": {
-              "safeName": "FolderC",
-              "unsafeName": "FolderC",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_C",
-              "unsafeName": "FOLDER_C",
-            },
-            "snakeCase": {
-              "safeName": "folder_c",
-              "unsafeName": "folder_c",
-            },
-          },
-        ],
-        "file": undefined,
-        "packagePath": [
-          {
-            "camelCase": {
-              "safeName": "folderC",
-              "unsafeName": "folderC",
-            },
-            "originalName": "folder-c",
-            "pascalCase": {
-              "safeName": "FolderC",
-              "unsafeName": "FolderC",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FOLDER_C",
-              "unsafeName": "FOLDER_C",
-            },
-            "snakeCase": {
-              "safeName": "folder_c",
-              "unsafeName": "folder_c",
-            },
-          },
-        ],
-      },
-      "name": {
-        "camelCase": {
-          "safeName": "folderC",
-          "unsafeName": "folderC",
-        },
-        "originalName": "folder-c",
-        "pascalCase": {
-          "safeName": "FolderC",
-          "unsafeName": "FolderC",
-        },
-        "screamingSnakeCase": {
-          "safeName": "FOLDER_C",
-          "unsafeName": "FOLDER_C",
-        },
-        "snakeCase": {
-          "safeName": "folder_c",
-          "unsafeName": "folder_c",
-        },
-      },
-      "service": undefined,
-      "subpackages": [
-        "folder-c/common:subpackage",
-      ],
-      "types": [],
-    },
-    "foo:subpackage": {
+    "subpackage_foo": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -1317,6 +1068,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
           "safeName": "foo",
@@ -1336,16 +1088,16 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "unsafeName": "foo",
         },
       },
-      "service": "foo:service",
+      "service": "service_foo",
       "subpackages": [],
       "types": [
-        "foo:types/ImportingType",
-        "foo:types/OptionalString",
+        "type_foo:ImportingType",
+        "type_foo:OptionalString",
       ],
     },
   },
   "types": {
-    "commons:types/Imported": {
+    "type_commons:Imported": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1415,7 +1167,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "imported",
           },
         },
-        "typeId": "commons:types/Imported",
+        "typeId": "type_commons:Imported",
       },
       "referencedTypes": [],
       "shape": {
@@ -1430,7 +1182,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         },
       },
     },
-    "folder-a/service:types/Response": {
+    "type_folder-a/service:Response": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -1539,7 +1291,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "response",
           },
         },
-        "typeId": "folder-a/service:types/Response",
+        "typeId": "type_folder-a/service:Response",
       },
       "referencedTypes": [
         {
@@ -1644,7 +1396,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "foo",
             },
           },
-          "typeId": "folder-b/common:types/Foo",
+          "typeId": "type_folder-b/common:Foo",
         },
         {
           "fernFilepath": {
@@ -1748,7 +1500,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "foo",
             },
           },
-          "typeId": "folder-c/common:types/Foo",
+          "typeId": "type_folder-c/common:Foo",
         },
       ],
       "shape": {
@@ -1890,7 +1642,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                       "unsafeName": "foo",
                     },
                   },
-                  "typeId": "folder-b/common:types/Foo",
+                  "typeId": "type_folder-b/common:Foo",
                 },
               },
             },
@@ -1898,7 +1650,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    "folder-b/common:types/Foo": {
+    "type_folder-b/common:Foo": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2007,7 +1759,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "foo",
           },
         },
-        "typeId": "folder-b/common:types/Foo",
+        "typeId": "type_folder-b/common:Foo",
       },
       "referencedTypes": [
         {
@@ -2112,7 +1864,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "foo",
             },
           },
-          "typeId": "folder-c/common:types/Foo",
+          "typeId": "type_folder-c/common:Foo",
         },
       ],
       "shape": {
@@ -2254,7 +2006,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                       "unsafeName": "foo",
                     },
                   },
-                  "typeId": "folder-c/common:types/Foo",
+                  "typeId": "type_folder-c/common:Foo",
                 },
               },
             },
@@ -2262,7 +2014,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    "folder-c/common:types/Foo": {
+    "type_folder-c/common:Foo": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2371,7 +2123,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "foo",
           },
         },
-        "typeId": "folder-c/common:types/Foo",
+        "typeId": "type_folder-c/common:Foo",
       },
       "referencedTypes": [],
       "shape": {
@@ -2414,7 +2166,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
         ],
       },
     },
-    "foo:types/ImportingType": {
+    "type_foo:ImportingType": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2484,7 +2236,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "importing_type",
           },
         },
-        "typeId": "foo:types/ImportingType",
+        "typeId": "type_foo:ImportingType",
       },
       "referencedTypes": [
         {
@@ -2550,7 +2302,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
               "unsafeName": "imported",
             },
           },
-          "typeId": "commons:types/Imported",
+          "typeId": "type_commons:Imported",
         },
       ],
       "shape": {
@@ -2649,13 +2401,13 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
                   "unsafeName": "imported",
                 },
               },
-              "typeId": "commons:types/Imported",
+              "typeId": "type_commons:Imported",
             },
           },
         ],
       },
     },
-    "foo:types/OptionalString": {
+    "type_foo:OptionalString": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -2725,7 +2477,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
             "unsafeName": "optional_string",
           },
         },
-        "typeId": "foo:types/OptionalString",
+        "typeId": "type_foo:OptionalString",
       },
       "referencedTypes": [],
       "shape": {
@@ -2815,19 +2567,21 @@ exports[`generateIntermediateRepresentation packages 1`] = `
   "errors": {},
   "headers": [],
   "rootPackage": {
+    "docs": undefined,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
       "file": undefined,
       "packagePath": [],
     },
+    "hasEndpointsInTree": false,
     "service": undefined,
     "subpackages": [
-      "commons:subpackage",
-      "importer:subpackage",
+      "subpackage_importer",
+      "subpackage_commons",
     ],
     "types": [
-      ":types/MyAlias",
+      "type_:MyAlias",
     ],
   },
   "sdkConfig": {
@@ -2835,7 +2589,8 @@ exports[`generateIntermediateRepresentation packages 1`] = `
   },
   "services": {},
   "subpackages": {
-    "commons:subpackage": {
+    "subpackage_commons": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -2880,6 +2635,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "commons",
@@ -2902,10 +2658,11 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "service": undefined,
       "subpackages": [],
       "types": [
-        "commons:types/CommonType",
+        "type_commons:CommonType",
       ],
     },
-    "importer:subpackage": {
+    "subpackage_importer": {
+      "docs": undefined,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -2950,6 +2707,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
         "packagePath": [],
       },
+      "hasEndpointsInTree": false,
       "name": {
         "camelCase": {
           "safeName": "importer",
@@ -2972,12 +2730,12 @@ exports[`generateIntermediateRepresentation packages 1`] = `
       "service": undefined,
       "subpackages": [],
       "types": [
-        "importer:types/MyOtherAlias",
+        "type_importer:MyOtherAlias",
       ],
     },
   },
   "types": {
-    ":types/MyAlias": {
+    "type_:MyAlias": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -3009,7 +2767,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
             "unsafeName": "my_alias",
           },
         },
-        "typeId": ":types/MyAlias",
+        "typeId": "type_:MyAlias",
       },
       "referencedTypes": [
         {
@@ -3075,7 +2833,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "common_type",
             },
           },
-          "typeId": "commons:types/CommonType",
+          "typeId": "type_commons:CommonType",
         },
       ],
       "shape": {
@@ -3144,7 +2902,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "common_type",
             },
           },
-          "typeId": "commons:types/CommonType",
+          "typeId": "type_commons:CommonType",
         },
         "resolvedType": {
           "_type": "primitive",
@@ -3152,7 +2910,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
       },
     },
-    "commons:types/CommonType": {
+    "type_commons:CommonType": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -3222,7 +2980,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
             "unsafeName": "common_type",
           },
         },
-        "typeId": "commons:types/CommonType",
+        "typeId": "type_commons:CommonType",
       },
       "referencedTypes": [],
       "shape": {
@@ -3237,7 +2995,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
         },
       },
     },
-    "importer:types/MyOtherAlias": {
+    "type_importer:MyOtherAlias": {
       "availability": {
         "message": undefined,
         "status": "GENERAL_AVAILABILITY",
@@ -3307,7 +3065,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
             "unsafeName": "my_other_alias",
           },
         },
-        "typeId": "importer:types/MyOtherAlias",
+        "typeId": "type_importer:MyOtherAlias",
       },
       "referencedTypes": [
         {
@@ -3335,7 +3093,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "my_alias",
             },
           },
-          "typeId": ":types/MyAlias",
+          "typeId": "type_:MyAlias",
         },
         {
           "fernFilepath": {
@@ -3400,7 +3158,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "common_type",
             },
           },
-          "typeId": "commons:types/CommonType",
+          "typeId": "type_commons:CommonType",
         },
       ],
       "shape": {
@@ -3431,7 +3189,7 @@ exports[`generateIntermediateRepresentation packages 1`] = `
               "unsafeName": "my_alias",
             },
           },
-          "typeId": ":types/MyAlias",
+          "typeId": "type_:MyAlias",
         },
         "resolvedType": {
           "_type": "primitive",

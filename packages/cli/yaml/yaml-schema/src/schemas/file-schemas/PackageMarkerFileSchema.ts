@@ -1,8 +1,9 @@
 import { z } from "zod";
-import { ServiceFileSchema } from "./ServiceFileSchema";
+import { DefinitionFileSchema } from "./DefinitionFileSchema";
 
-export const PackageMarkerFileSchema = ServiceFileSchema.extend({
+export const PackageMarkerFileSchema = DefinitionFileSchema.extend({
     export: z.optional(z.string()),
+    navigation: z.optional(z.array(z.string())),
 });
 
 export type PackageMarkerFileSchema = z.infer<typeof PackageMarkerFileSchema>;

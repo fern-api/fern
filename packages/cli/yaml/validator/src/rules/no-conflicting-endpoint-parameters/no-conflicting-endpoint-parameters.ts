@@ -6,7 +6,7 @@ export const NoConflictingEndpointParametersRule: Rule = {
     name: "no-conflicting-endpoint-parameters",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 pathParameter: ({ pathParameterKey }) => {
                     if (pathParameterKey === DEFAULT_REQUEST_PARAMETER_NAME) {
                         return [

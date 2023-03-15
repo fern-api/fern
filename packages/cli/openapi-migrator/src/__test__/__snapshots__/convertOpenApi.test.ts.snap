@@ -2,14 +2,7 @@
 
 exports[`open api converter covie simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "Policy API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "account.yml": {
       "service": {
@@ -2985,24 +2978,19 @@ Occasionally, a response of "unknown" may be returned. This value indicates that
       },
     },
   },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "display-name": "Policy API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter flagright simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": "x-api-key",
-    "auth-schemes": {
-      "x-api-key": {
-        "header": "x-api-key",
-        "name": "apiKey",
-      },
-    },
-    "display-name": "Flagright API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {
       "service": {
         "auth": true,
@@ -4995,26 +4983,189 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     },
     "commons.yml": {},
   },
+  "rootApiFile": {
+    "auth": "x-api-key",
+    "auth-schemes": {
+      "x-api-key": {
+        "header": "x-api-key",
+        "name": "apiKey",
+        "prefix": undefined,
+      },
+    },
+    "display-name": "Flagright API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter novu simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "Novu API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
-    "__package__.yml": {},
+  "definitionFiles": {
+    "__package__.yml": {
+      "service": {
+        "auth": true,
+        "base-path": "/v1/events/trigger",
+        "endpoints": {
+          "eventsControllerTrackEvent": {
+            "display-name": "Trigger event",
+            "docs": "
+    Trigger event is the main (and the only) way to send notification to subscribers. 
+    The trigger identifier is used to match the particular template associated with it. 
+    Additional information can be passed according the body interface below.
+    ",
+            "method": "POST",
+            "path": "",
+            "request": {
+              "body": "TriggerEventRequestDto",
+              "name": "EventsController_trackEventRequest",
+            },
+          },
+          "eventsControllerTrackEventToAll": {
+            "display-name": "Broadcast event to all",
+            "docs": "Trigger a broadcast event to all existing subscribers, could be used to send announcements, etc.
+      In the future could be used to trigger events to a subset of subscribers based on defined filters.",
+            "method": "POST",
+            "path": "/broadcast",
+            "request": {
+              "body": "TriggerEventToAllRequestDto",
+              "name": "EventsController_trackEventToAllRequest",
+            },
+          },
+          "eventsControllerTriggerBulkEvents": {
+            "display-name": "Bulk trigger event",
+            "docs": "
+      Using this endpoint you can trigger multiple events at once, to avoid multiple calls to the API.
+      The bulk API is limited to 100 events per request.
+    ",
+            "method": "POST",
+            "path": "/bulk",
+            "request": {
+              "body": "BulkTriggerEventDto",
+              "name": "EventsController_triggerBulkEventsRequest",
+            },
+          },
+        },
+        "path-parameters": undefined,
+      },
+      "types": {
+        "BulkTriggerEventDto": {
+          "extends": undefined,
+          "properties": {
+            "events": "list<TriggerEventRequestDto>",
+          },
+        },
+        "SubscriberPayloadDto": {
+          "extends": undefined,
+          "properties": {
+            "avatar": "optional<string>",
+            "email": "optional<string>",
+            "firstName": "optional<string>",
+            "lastName": "optional<string>",
+            "locale": "optional<string>",
+            "phone": "optional<string>",
+          },
+        },
+        "TopicPayloadDto": {
+          "extends": undefined,
+          "properties": {
+            "topicKey": "string",
+            "type": "TopicPayloadDtoType",
+          },
+        },
+        "TopicPayloadDtoType": {
+          "enum": [],
+        },
+        "TriggerEventRequestDto": {
+          "extends": undefined,
+          "properties": {
+            "actor": "optional<TriggerEventRequestDtoActor>",
+            "name": {
+              "docs": "The trigger identifier of the template you wish to send. This identifier can be found on the template page.",
+              "type": "string",
+            },
+            "overrides": {
+              "docs": "This could be used to override provider specific configurations",
+              "type": "optional<map<string, unknown>>",
+            },
+            "payload": {
+              "docs": "The payload object is used to pass additional custom information that could be used to render the template, or perform routing rules based on it. 
+      This data will also be available when fetching the notifications feed from the API to display certain parts of the UI.",
+              "type": "map<string, unknown>",
+            },
+            "to": "TriggerEventRequestDtoTo",
+            "transactionId": {
+              "docs": "A unique identifier for this transaction, we will generated a UUID if not provided.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "TriggerEventRequestDtoActor": "unknown",
+        "TriggerEventRequestDtoTo": "unknown",
+        "TriggerEventResponseDto": {
+          "extends": undefined,
+          "properties": {
+            "acknowledged": {
+              "docs": "If trigger was acknowledged or not",
+              "type": "boolean",
+            },
+            "error": {
+              "docs": "In case of an error, this field will contain the error message",
+              "type": "optional<list<string>>",
+            },
+            "status": "TriggerEventResponseDtoStatus",
+            "transactionId": {
+              "docs": "Transaction id for trigger",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "TriggerEventResponseDtoStatus": {
+          "docs": "Status for trigger",
+          "enum": [
+            "processed",
+            "trigger_not_active",
+            "subscriber_id_missing",
+            "error",
+          ],
+        },
+        "TriggerEventToAllRequestDto": {
+          "extends": undefined,
+          "properties": {
+            "actor": "optional<TriggerEventToAllRequestDtoActor>",
+            "name": {
+              "docs": "The trigger identifier associated for the template you wish to send. This identifier can be found on the template page.",
+              "type": "string",
+            },
+            "overrides": {
+              "docs": "This could be used to override provider specific configurations",
+              "type": "optional<map<string, unknown>>",
+            },
+            "payload": {
+              "docs": "The payload object is used to pass additional custom information that could be used to render the template, or perform routing rules based on it. 
+      This data will also be available when fetching the notifications feed from the API to display certain parts of the UI.",
+              "type": "map<string, unknown>",
+            },
+            "transactionId": {
+              "docs": "A unique identifier for this transaction, we will generated a UUID if not provided.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "TriggerEventToAllRequestDtoActor": {
+          "docs": "It is used to display the Avatar of the provided actor's subscriber id or actor object.
+    If a new actor object is provided, we will create a new subscriber in our system
+    ",
+          "type": "unknown",
+        },
+      },
+    },
     "activity.yml": {
       "imports": {
         "commons": "commons.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/activity",
         "endpoints": {
           "activityControllerGetActivityFeed": {
@@ -5025,8 +5176,16 @@ exports[`open api converter novu simple 1`] = `
             "request": {
               "name": "ActivityController_getActivityFeedRequest",
               "query-parameters": {
+                "emails": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "page": "optional<double>",
                 "search": "string",
+                "templates": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "transactionId": "optional<string>",
               },
             },
@@ -5061,7 +5220,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "changes.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/changes",
         "endpoints": {
           "changesControllerApplyDiff": {
@@ -5466,7 +5625,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "environments.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/environments",
         "endpoints": {
           "environmentsControllerCreateEnvironment": {
@@ -5604,8 +5763,8 @@ exports[`open api converter novu simple 1`] = `
     },
     "events.yml": {
       "service": {
-        "auth": false,
-        "base-path": "/v1/events/trigger",
+        "auth": true,
+        "base-path": "/v1/events/trigger/{transactionId}",
         "endpoints": {
           "eventsControllerCancelDelayed": {
             "display-name": "Cancel triggered event",
@@ -5614,171 +5773,21 @@ exports[`open api converter novu simple 1`] = `
      will cancel any active or pending workflows. This is useful to cancel active digests, delays etc...
     ",
             "method": "DELETE",
-            "path": "/{transactionId}",
-            "path-parameters": {
-              "transactionId": "string",
-            },
+            "path": "",
             "request": {
               "name": "EventsController_cancelDelayedRequest",
             },
             "response": "boolean",
           },
-          "eventsControllerTrackEvent": {
-            "display-name": "Trigger event",
-            "docs": "
-    Trigger event is the main (and the only) way to send notification to subscribers. 
-    The trigger identifier is used to match the particular template associated with it. 
-    Additional information can be passed according the body interface below.
-    ",
-            "method": "POST",
-            "path": "",
-            "request": {
-              "body": "TriggerEventRequestDto",
-              "name": "EventsController_trackEventRequest",
-            },
-          },
-          "eventsControllerTrackEventToAll": {
-            "display-name": "Broadcast event to all",
-            "docs": "Trigger a broadcast event to all existing subscribers, could be used to send announcements, etc.
-      In the future could be used to trigger events to a subset of subscribers based on defined filters.",
-            "method": "POST",
-            "path": "/broadcast",
-            "request": {
-              "body": "TriggerEventToAllRequestDto",
-              "name": "EventsController_trackEventToAllRequest",
-            },
-          },
-          "eventsControllerTriggerBulkEvents": {
-            "display-name": "Bulk trigger event",
-            "docs": "
-      Using this endpoint you can trigger multiple events at once, to avoid multiple calls to the API.
-      The bulk API is limited to 100 events per request.
-    ",
-            "method": "POST",
-            "path": "/bulk",
-            "request": {
-              "body": "BulkTriggerEventDto",
-              "name": "EventsController_triggerBulkEventsRequest",
-            },
-          },
         },
-        "path-parameters": undefined,
-      },
-      "types": {
-        "BulkTriggerEventDto": {
-          "extends": undefined,
-          "properties": {
-            "events": "list<TriggerEventRequestDto>",
-          },
-        },
-        "SubscriberPayloadDto": {
-          "extends": undefined,
-          "properties": {
-            "avatar": "optional<string>",
-            "email": "optional<string>",
-            "firstName": "optional<string>",
-            "lastName": "optional<string>",
-            "locale": "optional<string>",
-            "phone": "optional<string>",
-          },
-        },
-        "TopicPayloadDto": {
-          "extends": undefined,
-          "properties": {
-            "topicKey": "string",
-            "type": "TopicPayloadDtoType",
-          },
-        },
-        "TopicPayloadDtoType": {
-          "enum": [],
-        },
-        "TriggerEventRequestDto": {
-          "extends": undefined,
-          "properties": {
-            "actor": "optional<TriggerEventRequestDtoActor>",
-            "name": {
-              "docs": "The trigger identifier of the template you wish to send. This identifier can be found on the template page.",
-              "type": "string",
-            },
-            "overrides": {
-              "docs": "This could be used to override provider specific configurations",
-              "type": "optional<map<string, unknown>>",
-            },
-            "payload": {
-              "docs": "The payload object is used to pass additional custom information that could be used to render the template, or perform routing rules based on it. 
-      This data will also be available when fetching the notifications feed from the API to display certain parts of the UI.",
-              "type": "map<string, unknown>",
-            },
-            "to": "TriggerEventRequestDtoTo",
-            "transactionId": {
-              "docs": "A unique identifier for this transaction, we will generated a UUID if not provided.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "TriggerEventRequestDtoActor": "unknown",
-        "TriggerEventRequestDtoTo": "unknown",
-        "TriggerEventResponseDto": {
-          "extends": undefined,
-          "properties": {
-            "acknowledged": {
-              "docs": "If trigger was acknowledged or not",
-              "type": "boolean",
-            },
-            "error": {
-              "docs": "In case of an error, this field will contain the error message",
-              "type": "optional<list<string>>",
-            },
-            "status": "TriggerEventResponseDtoStatus",
-            "transactionId": {
-              "docs": "Transaction id for trigger",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "TriggerEventResponseDtoStatus": {
-          "docs": "Status for trigger",
-          "enum": [
-            "processed",
-            "trigger_not_active",
-            "subscriber_id_missing",
-            "error",
-          ],
-        },
-        "TriggerEventToAllRequestDto": {
-          "extends": undefined,
-          "properties": {
-            "actor": "optional<TriggerEventToAllRequestDtoActor>",
-            "name": {
-              "docs": "The trigger identifier associated for the template you wish to send. This identifier can be found on the template page.",
-              "type": "string",
-            },
-            "overrides": {
-              "docs": "This could be used to override provider specific configurations",
-              "type": "optional<map<string, unknown>>",
-            },
-            "payload": {
-              "docs": "The payload object is used to pass additional custom information that could be used to render the template, or perform routing rules based on it. 
-      This data will also be available when fetching the notifications feed from the API to display certain parts of the UI.",
-              "type": "map<string, unknown>",
-            },
-            "transactionId": {
-              "docs": "A unique identifier for this transaction, we will generated a UUID if not provided.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "TriggerEventToAllRequestDtoActor": {
-          "docs": "It is used to display the Avatar of the provided actor's subscriber id or actor object.
-    If a new actor object is provided, we will create a new subscriber in our system
-    ",
-          "type": "unknown",
+        "path-parameters": {
+          "transactionId": "string",
         },
       },
     },
     "executionDetails.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/execution-details",
         "endpoints": {
           "executionDetailsControllerGetExecutionDetailsForNotification": {
@@ -5855,7 +5864,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "feeds.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/feeds",
         "endpoints": {
           "feedsControllerCreateFeed": {
@@ -5915,7 +5924,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "inboundParse.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/inbound-parse/mx/status",
         "endpoints": {
           "inboundParseControllerGetMxRecordStatus": {
@@ -5942,7 +5951,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "integrations.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/integrations",
         "endpoints": {
           "integrationsControllerCreateIntegration": {
@@ -6116,7 +6125,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "layouts.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/layouts",
         "endpoints": {
           "layoutsControllerCreateLayout": {
@@ -6338,7 +6347,7 @@ exports[`open api converter novu simple 1`] = `
         "commons": "commons.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/messages",
         "endpoints": {
           "messagesControllerDeleteMessage": {
@@ -6418,7 +6427,7 @@ exports[`open api converter novu simple 1`] = `
         "commons": "commons.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/notifications",
         "endpoints": {
           "notificationsControllerGetActivity": {
@@ -6465,8 +6474,16 @@ exports[`open api converter novu simple 1`] = `
             "request": {
               "name": "NotificationsController_getNotificationsRequest",
               "query-parameters": {
+                "emails": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "page": "optional<double>",
                 "search": "string",
+                "templates": {
+                  "allow-multiple": true,
+                  "type": "string",
+                },
                 "transactionId": "optional<string>",
               },
             },
@@ -6478,7 +6495,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "notificationGroups.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/notification-groups",
         "endpoints": {
           "notificationGroupsControllerCreateNotificationGroup": {
@@ -6528,7 +6545,7 @@ exports[`open api converter novu simple 1`] = `
         "commons": "commons.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/notification-templates",
         "endpoints": {
           "notificationTemplateControllerChangeActiveStatus": {
@@ -6686,7 +6703,7 @@ exports[`open api converter novu simple 1`] = `
         "commons": "commons.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/subscribers",
         "endpoints": {
           "subscribersControllerCreateSubscriber": {
@@ -7332,7 +7349,7 @@ exports[`open api converter novu simple 1`] = `
     },
     "topics.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "/v1/topics",
         "endpoints": {
           "topicsControllerAddSubscribers": {
@@ -7504,19 +7521,24 @@ exports[`open api converter novu simple 1`] = `
       },
     },
   },
+  "rootApiFile": {
+    "auth": "bearer",
+    "auth-schemes": undefined,
+    "default-environment": null,
+    "display-name": "Novu API",
+    "environments": {
+      "Cloud": "https://api.novu.co",
+      "Local": "http://localhost:3000",
+    },
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter partnerstack simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "PartnerStack API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "actions.yml": {
       "service": {
@@ -11741,19 +11763,19 @@ These customer reference fields are required, but mutually exclusive
       },
     },
   },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "display-name": "PartnerStack API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter suger simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "display-name": "Suger API",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "apiAuth.yml": {
       "service": {
@@ -15164,24 +15186,19 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
   },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "display-name": "Suger API",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter telematica simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": "bearerAuth",
-    "auth-schemes": {
-      "bearerAuth": {
-        "header": "Authorization",
-        "name": "apiKey",
-      },
-    },
-    "display-name": "Telematica EV APIs",
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "commons.yml": {
       "types": {
@@ -15515,23 +15532,25 @@ Please share the POST callback endpoint created in your app's backend with Telem
       },
     },
   },
+  "rootApiFile": {
+    "auth": "bearerAuth",
+    "auth-schemes": {
+      "bearerAuth": {
+        "header": "Authorization",
+        "name": "apiKey",
+        "prefix": undefined,
+      },
+    },
+    "display-name": "Telematica EV APIs",
+    "headers": {},
+    "name": "api",
+  },
 }
 `;
 
 exports[`open api converter venice simple 1`] = `
 {
-  "rootApiFile": {
-    "auth": undefined,
-    "auth-schemes": undefined,
-    "default-environment": null,
-    "display-name": "Venice REST API",
-    "environments": {
-      "dev": "http://development.venice.local:3000/api/rest",
-    },
-    "headers": {},
-    "name": "api",
-  },
-  "serviceFiles": {
+  "definitionFiles": {
     "__package__.yml": {},
     "account.yml": {
       "imports": {
@@ -17220,6 +17239,17 @@ This is a Primary Key.<pk/>",
         },
       },
     },
+  },
+  "rootApiFile": {
+    "auth": undefined,
+    "auth-schemes": undefined,
+    "default-environment": null,
+    "display-name": "Venice REST API",
+    "environments": {
+      "dev": "http://development.venice.local:3000/api/rest",
+    },
+    "headers": {},
+    "name": "api",
   },
 }
 `;

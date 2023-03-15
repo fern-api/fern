@@ -1,9 +1,9 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
-    FernRootApiFileAstNodeTypes,
-    FernRootApiFileAstNodeVisitor,
-    FernRootApiFileAstVisitor,
     NodePath,
+    RootApiFileAstNodeTypes,
+    RootApiFileAstNodeVisitor,
+    RootApiFileAstVisitor,
     RootApiFileSchema,
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
@@ -19,14 +19,11 @@ export function createRootApiFileAstVisitorForRules({
     contents: RootApiFileSchema;
     allRuleVisitors: RuleVisitors[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): FernRootApiFileAstVisitor {
-    function createAstNodeVisitor<K extends keyof FernRootApiFileAstNodeTypes>(
+}): RootApiFileAstVisitor {
+    function createAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes>(
         nodeType: K
-    ): Record<K, FernRootApiFileAstNodeVisitor<K>> {
-        const visit: FernRootApiFileAstNodeVisitor<K> = async (
-            node: FernRootApiFileAstNodeTypes[K],
-            nodePath: NodePath
-        ) => {
+    ): Record<K, RootApiFileAstNodeVisitor<K>> {
+        const visit: RootApiFileAstNodeVisitor<K> = async (node: RootApiFileAstNodeTypes[K], nodePath: NodePath) => {
             for (const ruleVisitors of allRuleVisitors) {
                 const visitFromRule = ruleVisitors.rootApiFile?.[nodeType];
                 if (visitFromRule != null) {
@@ -43,7 +40,7 @@ export function createRootApiFileAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, FernRootApiFileAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, RootApiFileAstNodeVisitor<K>>;
     }
 
     return {

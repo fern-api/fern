@@ -1,4 +1,4 @@
-import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
@@ -62,12 +62,12 @@ export class TypeResolverImpl implements TypeResolver {
         if (parsedReference == null) {
             return undefined;
         }
-        const serviceFile = getServiceFile(this.workspace, parsedReference.relativeFilepath);
-        if (serviceFile == null) {
+        const definitionFile = getDefinitionFile(this.workspace, parsedReference.relativeFilepath);
+        if (definitionFile == null) {
             return undefined;
         }
 
-        const declaration = serviceFile.types?.[parsedReference.typeName];
+        const declaration = definitionFile.types?.[parsedReference.typeName];
         if (declaration == null) {
             return undefined;
         }
@@ -77,7 +77,7 @@ export class TypeResolverImpl implements TypeResolver {
             declaration,
             file: constructFernFileContext({
                 relativeFilepath: parsedReference.relativeFilepath,
-                serviceFile,
+                definitionFile,
                 casingsGenerator: file.casingsGenerator,
             }),
         };
@@ -217,8 +217,8 @@ export class TypeResolverImpl implements TypeResolver {
             return undefined;
         }
 
-        const serviceFile = getServiceFile(this.workspace, fileOfResolvedDeclaration.relativeFilepath);
-        if (serviceFile == null) {
+        const definitionFile = getDefinitionFile(this.workspace, fileOfResolvedDeclaration.relativeFilepath);
+        if (definitionFile == null) {
             return undefined;
         }
 
@@ -232,7 +232,7 @@ export class TypeResolverImpl implements TypeResolver {
             originalTypeReference: parsedTypeReference,
             file: constructFernFileContext({
                 relativeFilepath: fileOfResolvedDeclaration.relativeFilepath,
-                serviceFile,
+                definitionFile,
                 casingsGenerator: file.casingsGenerator,
             }),
         };

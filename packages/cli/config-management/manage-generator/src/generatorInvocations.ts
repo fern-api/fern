@@ -38,6 +38,12 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             format: "yaml",
         },
     },
+    [GeneratorName.STOPLIGHT]: {
+        version: "0.0.24",
+        config: {
+            format: "yaml",
+        },
+    },
     [GeneratorName.POSTMAN]: {
         version: "0.0.25",
     },

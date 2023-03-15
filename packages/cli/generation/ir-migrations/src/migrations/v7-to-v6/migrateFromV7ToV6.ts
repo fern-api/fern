@@ -20,17 +20,13 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
+        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
         return {
-            apiName: v7.apiName,
-            apiDisplayName: v7.apiDisplayName,
-            apiDocs: v7.apiDocs,
-            auth: v7.auth,
-            headers: v7.headers,
-            types: v7.types,
+            ...v7,
             services: v7.services.map((service) => {
                 const lastFernFilepathPart = service.name.fernFilepath[service.name.fernFilepath.length - 1];
 
@@ -69,11 +65,6 @@ export const V7_TO_V6_MIGRATION: IrMigration<
                     },
                 };
             }),
-            errors: v7.errors,
-            constants: v7.constants,
-            environments: v7.environments,
-            errorDiscriminationStrategy: v7.errorDiscriminationStrategy,
-            sdkConfig: v7.sdkConfig,
         };
     },
 };

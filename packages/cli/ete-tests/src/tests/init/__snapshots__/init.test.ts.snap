@@ -2832,6 +2832,7 @@ exports[`fern init gigs openapi 1`] = `
                 "contents": "name: api
 display-name: Gigs Core API
 headers: {}
+auth: bearer
 ",
                 "name": "api.yml",
                 "type": "file",
@@ -3111,7 +3112,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: false
+  auth: true
   base-path: ""
   endpoints:
     deviceModelsRetrieve:
@@ -3149,6 +3150,10 @@ service:
       display-name: List all device models
       request:
         query-parameters:
+          brand:
+            docs: A comma-separated list of brands to be filtered by.
+            type: optional<string>
+            allow-multiple: true
           after:
             docs: >-
               A cursor for use in pagination. The \`after\` parameter takes an
@@ -3549,7 +3554,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: false
+  auth: true
   base-path: /projects/{project}/plans
   path-parameters:
     project:
@@ -3667,6 +3672,10 @@ service:
       display-name: List all plans
       request:
         query-parameters:
+          provider:
+            docs: The network provider ID to filter the plans by.
+            type: optional<string>
+            allow-multiple: true
           after:
             docs: >-
               A cursor for use in pagination. The \`after\` parameter takes an
@@ -3754,7 +3763,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: false
+  auth: true
   base-path: ""
   endpoints:
     portingCancel:
@@ -4175,7 +4184,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: false
+  auth: true
   base-path: /projects
   endpoints:
     projectsRetrieve:
@@ -4441,7 +4450,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: false
+  auth: true
   base-path: /projects/{project}/sims
   path-parameters:
     project:
@@ -4501,6 +4510,10 @@ service:
       display-name: List all SIMs
       request:
         query-parameters:
+          provider:
+            docs: The network provider ID for the sim to be filtered by.
+            type: optional<string>
+            allow-multiple: true
           type:
             docs: The type for the sim to be filtered by.
             type: optional<_InlinedType32>
@@ -4605,7 +4618,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: false
+  auth: true
   base-path: /projects/{project}/subscriptions
   path-parameters:
     project:
@@ -4891,7 +4904,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: false
+  auth: true
   base-path: /projects/{project}/subscriptions/{id}/usage
   path-parameters:
     project:
@@ -4996,7 +5009,7 @@ types:
                 "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
-  auth: false
+  auth: true
   base-path: /projects/{project}/users/{user}/addresses
   path-parameters:
     project:
@@ -5144,7 +5157,7 @@ imports:
   commons: commons.yml
 
 service:
-  auth: false
+  auth: true
   base-path: /projects/{project}/users
   path-parameters:
     project:

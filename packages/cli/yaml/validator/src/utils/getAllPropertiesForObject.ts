@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { constructFernFileContext, getPropertyName, TypeResolver } from "@fern-api/ir-generator";
-import { FernWorkspace, getServiceFile } from "@fern-api/workspace-loader";
+import { constructFernFileContext, getPropertyName, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { CASINGS_GENERATOR } from "./casingsGenerator";
 
@@ -9,10 +9,9 @@ export interface ObjectPropertyWithPath {
     name: string;
     filepathOfDeclaration: RelativeFilePath;
     path: ObjectPropertyPath;
-    finalPropertyKey: string;
     propertyType: string;
-    // undefined if we can't locate the property type
-    isOptional: boolean | undefined;
+    resolvedPropertyType: ResolvedType;
+    isOptional: boolean;
 }
 
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
@@ -28,7 +27,7 @@ export function getAllPropertiesForObject({
     typeName,
     objectDeclaration,
     filepathOfDeclaration,
-    serviceFile,
+    definitionFile,
     workspace,
     typeResolver,
     // used only for recursive calls
@@ -39,7 +38,7 @@ export function getAllPropertiesForObject({
     typeName: TypeName | undefined;
     objectDeclaration: RawSchemas.ObjectSchema;
     filepathOfDeclaration: RelativeFilePath;
-    serviceFile: RawSchemas.ServiceFileSchema;
+    definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
     // these are for recursive calls only
@@ -59,7 +58,7 @@ export function getAllPropertiesForObject({
 
     const file = constructFernFileContext({
         relativeFilepath: filepathOfDeclaration,
-        serviceFile,
+        definitionFile,
         casingsGenerator: CASINGS_GENERATOR,
     });
 
@@ -68,20 +67,19 @@ export function getAllPropertiesForObject({
             const propertyType =
                 typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
             const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
-
-            properties.push({
-                wireKey: propertyKey,
-                name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
-                filepathOfDeclaration,
-                path,
-                finalPropertyKey: propertyKey,
-                propertyType,
-                isOptional:
-                    resolvedPropertyType != null
-                        ? resolvedPropertyType._type === "container" &&
-                          resolvedPropertyType.container._type === "optional"
-                        : undefined,
-            });
+            if (resolvedPropertyType != null) {
+                properties.push({
+                    wireKey: propertyKey,
+                    name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
+                    filepathOfDeclaration,
+                    path,
+                    propertyType,
+                    resolvedPropertyType,
+                    isOptional:
+                        resolvedPropertyType._type === "container" &&
+                        resolvedPropertyType.container._type === "optional",
+                });
+            }
         }
     }
 
@@ -98,14 +96,14 @@ export function getAllPropertiesForObject({
                 resolvedTypeOfExtension?._type === "named" &&
                 isRawObjectDefinition(resolvedTypeOfExtension.declaration)
             ) {
-                const serviceFile = getServiceFile(workspace, resolvedTypeOfExtension.filepath);
-                if (serviceFile != null) {
+                const definitionFile = getDefinitionFile(workspace, resolvedTypeOfExtension.filepath);
+                if (definitionFile != null) {
                     properties.push(
                         ...getAllPropertiesForObject({
                             typeName: resolvedTypeOfExtension.rawName,
                             objectDeclaration: resolvedTypeOfExtension.declaration,
                             filepathOfDeclaration: resolvedTypeOfExtension.filepath,
-                            serviceFile,
+                            definitionFile,
                             workspace,
                             typeResolver,
                             path: [
@@ -132,6 +130,40 @@ export function getAllPropertiesForObject({
     return properties;
 }
 
+export function getAllPropertiesForType({
+    typeName,
+    filepathOfDeclaration,
+    definitionFile,
+    workspace,
+    typeResolver,
+}: {
+    typeName: TypeName;
+    filepathOfDeclaration: RelativeFilePath;
+    definitionFile: RawSchemas.DefinitionFileSchema;
+    workspace: FernWorkspace;
+    typeResolver: TypeResolver;
+}): ObjectPropertyWithPath[] {
+    const resolvedType = typeResolver.resolveNamedType({
+        referenceToNamedType: typeName,
+        file: constructFernFileContext({
+            relativeFilepath: filepathOfDeclaration,
+            definitionFile,
+            casingsGenerator: CASINGS_GENERATOR,
+        }),
+    });
+    if (resolvedType == null || resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
+        return [];
+    }
+    return getAllPropertiesForObject({
+        typeName,
+        objectDeclaration: resolvedType.declaration,
+        filepathOfDeclaration,
+        definitionFile,
+        workspace,
+        typeResolver,
+    });
+}
+
 export function convertObjectPropertyWithPathToString({
     property,
     prefixBreadcrumbs = [],
@@ -139,11 +171,7 @@ export function convertObjectPropertyWithPathToString({
     property: ObjectPropertyWithPath;
     prefixBreadcrumbs?: string[];
 }): string {
-    const parts = [
-        ...prefixBreadcrumbs,
-        ...convertObjectPropertyPathToStrings(property.path),
-        property.finalPropertyKey,
-    ];
+    const parts = [...prefixBreadcrumbs, ...convertObjectPropertyPathToStrings(property.path), property.wireKey];
     return parts.join(" -> ");
 }
 

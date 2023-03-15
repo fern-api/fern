@@ -5,6 +5,7 @@ import { RuleViolation } from "../../Rule";
 import { validateAliasExample } from "./validateAliasExample";
 import { validateEnumExample } from "./validateEnumExample";
 import { validateObjectExample } from "./validateObjectExample";
+import { validateUndiscriminatedUnionExample } from "./validateUndiscriminatedUnionExample";
 import { validateUnionExample } from "./validateUnionExample";
 
 export function validateTypeExample({
@@ -53,9 +54,19 @@ export function validateTypeExample({
                 workspace,
             });
         },
-        union: (rawUnion) => {
+        discriminatedUnion: (rawUnion) => {
             return validateUnionExample({
                 typeName,
+                rawUnion,
+                example,
+                file,
+                typeResolver,
+                exampleResolver,
+                workspace,
+            });
+        },
+        undiscriminatedUnion: (rawUnion) => {
+            return validateUndiscriminatedUnionExample({
                 rawUnion,
                 example,
                 file,

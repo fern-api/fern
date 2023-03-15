@@ -4,7 +4,7 @@ import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
 import { VALID_NAME_REGEX } from "./regex";
 
-export function validateUnionNames(declaration: RawSchemas.UnionSchema): RuleViolation[] {
+export function validateUnionNames(declaration: RawSchemas.DiscriminatedUnionSchema): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
     const discriminantName = getUnionDiscriminantName(declaration);

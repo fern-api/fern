@@ -7,7 +7,7 @@ export const NoDuplicateEnumValuesRule: Rule = {
     name: "no-duplicate-enum-values",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 typeDeclaration: ({ declaration }) => {
                     if (!isRawEnumDefinition(declaration)) {
                         return [];

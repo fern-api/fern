@@ -37,7 +37,14 @@ describe("dependencies", () => {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("other-definitions-specified")),
             reject: false,
         });
-        expect(stripAnsi(stdout).trim()).toEqual(`Exported package contains API definitions: package1
-Exported package contains API definitions: package2`);
+        expect(stripAnsi(stdout).trim()).toEqual("Exported package contains API definitions: package1");
+    }, 90_000);
+
+    it("fails when exporting package marker has non-export keys", async () => {
+        const { stdout } = await runFernCli(["check"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("invalid-package-marker")),
+            reject: false,
+        });
+        expect(stdout).toContain("imported/__package__.yml has an export so it cannot define other keys.");
     }, 90_000);
 });

@@ -1,10 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AliasSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema, UnionSchema } from "../schemas";
+import { AliasSchema, DiscriminatedUnionSchema, EnumSchema, ObjectSchema, TypeDeclarationSchema } from "../schemas";
+import { UndiscriminatedUnionSchema } from "../schemas/UndiscriminatedUnionSchema";
 
 export interface RawTypeDeclarationVisitor<R> {
     alias: (schema: string | AliasSchema) => R;
     object: (schema: ObjectSchema) => R;
-    union: (schema: UnionSchema) => R;
+    discriminatedUnion: (schema: DiscriminatedUnionSchema) => R;
+    undiscriminatedUnion: (schema: UndiscriminatedUnionSchema) => R;
     enum: (schema: EnumSchema) => R;
 }
 
@@ -18,8 +20,11 @@ export function visitRawTypeDeclaration<R>(
     if (isRawObjectDefinition(declaration)) {
         return visitor.object(declaration);
     }
-    if (isRawUnionDefinition(declaration)) {
-        return visitor.union(declaration);
+    if (isRawUndiscriminatedUnionDefinition(declaration)) {
+        return visitor.undiscriminatedUnion(declaration);
+    }
+    if (isRawDiscriminatedUnionDefinition(declaration)) {
+        return visitor.discriminatedUnion(declaration);
     }
     if (isRawEnumDefinition(declaration)) {
         return visitor.enum(declaration);
@@ -40,9 +45,23 @@ export function isRawObjectDefinition(rawTypeDeclaration: TypeDeclarationSchema)
     );
 }
 
-export function isRawUnionDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is UnionSchema {
+export function isRawDiscriminatedUnionDefinition(
+    rawTypeDeclaration: TypeDeclarationSchema
+): rawTypeDeclaration is DiscriminatedUnionSchema {
+    return (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (rawTypeDeclaration as DiscriminatedUnionSchema).union != null &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (rawTypeDeclaration as any).discriminated == null
+    );
+}
+
+export function isRawUndiscriminatedUnionDefinition(
+    rawTypeDeclaration: TypeDeclarationSchema
+): rawTypeDeclaration is UndiscriminatedUnionSchema {
+    const undiscriminatedUnionSchema = rawTypeDeclaration as UndiscriminatedUnionSchema;
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (rawTypeDeclaration as UnionSchema).union != null;
+    return undiscriminatedUnionSchema.union != null && undiscriminatedUnionSchema.discriminated != null;
 }
 
 export function isRawEnumDefinition(rawTypeDeclaration: TypeDeclarationSchema): rawTypeDeclaration is EnumSchema {

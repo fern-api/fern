@@ -14,7 +14,7 @@ describe("parse inline types", () => {
             type: "optional<list<" + dummyTypeName + ">>",
             file: constructFernFileContext({
                 relativeFilepath: dummyFilepath,
-                serviceFile: {},
+                definitionFile: {},
                 casingsGenerator,
             }),
         });
@@ -23,7 +23,7 @@ describe("parse inline types", () => {
                 TypeReference.container(
                     ContainerType.list(
                         TypeReference.named({
-                            typeId: "a/b/c:types/Dummy",
+                            typeId: "type_a/b/c:Dummy",
                             fernFilepath: convertToFernFilepath({
                                 relativeFilepath: dummyFilepath,
                                 casingsGenerator,

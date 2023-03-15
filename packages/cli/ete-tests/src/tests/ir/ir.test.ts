@@ -6,7 +6,16 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
 
 const FIXTURES: Fixture[] = [
     {
+        name: "file-upload",
+    },
+    {
+        name: "streaming",
+    },
+    {
         name: "nested-example-reference",
+    },
+    {
+        name: "auth-header-prefix",
     },
     {
         name: "simple",

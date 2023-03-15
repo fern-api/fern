@@ -60,6 +60,9 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.Type {
                 }),
             });
         },
+        undiscriminatedUnion: () => {
+            throw new Error("Unsupported union: " + irType._type);
+        },
         _unknown: () => {
             throw new Error("Unknown Type shape: " + irType._type);
         },

@@ -18,8 +18,8 @@ export const ValidExampleEndpointCallRule: Rule = {
         const exampleResolver = new ExampleResolverImpl(typeResolver);
 
         return {
-            serviceFile: {
-                exampleHeaders: ({ service, endpoint, examples }, { relativeFilepath, contents: serviceFile }) => {
+            definitionFile: {
+                exampleHeaders: ({ service, endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
                     return validateExampleEndpointCallParameters({
                         allDeclarations: {
                             ...workspace.definition.rootApiFile.contents.headers,
@@ -33,14 +33,14 @@ export const ValidExampleEndpointCallRule: Rule = {
                         workspace,
                         file: constructFernFileContext({
                             relativeFilepath,
-                            serviceFile,
+                            definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                     });
                 },
                 examplePathParameters: (
                     { service, endpoint, examples },
-                    { relativeFilepath, contents: serviceFile }
+                    { relativeFilepath, contents: definitionFile }
                 ) => {
                     return validateExampleEndpointCallParameters({
                         allDeclarations: {
@@ -54,12 +54,12 @@ export const ValidExampleEndpointCallRule: Rule = {
                         workspace,
                         file: constructFernFileContext({
                             relativeFilepath,
-                            serviceFile,
+                            definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                     });
                 },
-                exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: serviceFile }) => {
+                exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
                     return validateExampleEndpointCallParameters({
                         allDeclarations:
                             typeof endpoint.request !== "string" ? endpoint.request?.["query-parameters"] : undefined,
@@ -70,12 +70,12 @@ export const ValidExampleEndpointCallRule: Rule = {
                         workspace,
                         file: constructFernFileContext({
                             relativeFilepath,
-                            serviceFile,
+                            definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                     });
                 },
-                exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: serviceFile }) => {
+                exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
                     return validateRequest({
                         example,
                         endpoint,
@@ -83,13 +83,13 @@ export const ValidExampleEndpointCallRule: Rule = {
                         exampleResolver,
                         file: constructFernFileContext({
                             relativeFilepath,
-                            serviceFile,
+                            definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                         workspace,
                     });
                 },
-                exampleResponse: ({ endpoint, example }, { relativeFilepath, contents: serviceFile }) => {
+                exampleResponse: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
                     return validateResponse({
                         example,
                         endpoint,
@@ -97,7 +97,7 @@ export const ValidExampleEndpointCallRule: Rule = {
                         exampleResolver,
                         file: constructFernFileContext({
                             relativeFilepath,
-                            serviceFile,
+                            definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
                         }),
                         workspace,

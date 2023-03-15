@@ -43,7 +43,8 @@ function convertService(
                 type: convertTypeReference(header.valueType),
             })),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
-            response: irEndpoint.response.type != null ? convertTypeReference(irEndpoint.response.type) : undefined,
+            response:
+                irEndpoint.response != null ? convertTypeReference(irEndpoint.response.responseBodyType) : undefined,
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -77,6 +78,9 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.Ty
         },
         reference: (reference) => {
             return convertTypeReference(reference.requestBodyType);
+        },
+        fileUpload: () => {
+            throw new Error("File upload is not supported: " + irRequest.type);
         },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody: " + irRequest.type);

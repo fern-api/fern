@@ -17,7 +17,7 @@ export function validateUnionExample({
     workspace,
 }: {
     typeName: string;
-    rawUnion: RawSchemas.UnionSchema;
+    rawUnion: RawSchemas.DiscriminatedUnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;

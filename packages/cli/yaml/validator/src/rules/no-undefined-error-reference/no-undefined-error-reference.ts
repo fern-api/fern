@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
-import { FernWorkspace, visitAllServiceFiles } from "@fern-api/workspace-loader";
-import { RootApiFileSchema, ServiceFileSchema, visitFernServiceFileYamlAst } from "@fern-api/yaml-schema";
+import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
+import { DefinitionFileSchema, RootApiFileSchema, visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import { mapValues } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 
@@ -23,7 +23,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
         const validateErrorReference = (
             errorReference: string,
             relativeFilepath: RelativeFilePath,
-            contents: ServiceFileSchema | RootApiFileSchema
+            contents: DefinitionFileSchema | RootApiFileSchema
         ): RuleViolation[] => {
             const parsedReference = parseReferenceToTypeName({
                 reference: errorReference,
@@ -49,7 +49,7 @@ export const NoUndefinedErrorReferenceRule: Rule = {
                     return validateErrorReference(errorReference, relativeFilepath, contents);
                 },
             },
-            serviceFile: {
+            definitionFile: {
                 errorReference: (errorReference, { relativeFilepath, contents }) => {
                     return validateErrorReference(errorReference, relativeFilepath, contents);
                 },
@@ -61,11 +61,11 @@ export const NoUndefinedErrorReferenceRule: Rule = {
 async function getErrorsByFilepath(workspace: FernWorkspace) {
     const erorrsByFilepath: Record<RelativeFilePath, Set<ErrorName>> = {};
 
-    await visitAllServiceFiles(workspace, async (relativeFilepath, file) => {
+    await visitAllDefinitionFiles(workspace, async (relativeFilepath, file) => {
         const errorsForFile = new Set<ErrorName>();
         erorrsByFilepath[relativeFilepath] = errorsForFile;
 
-        await visitFernServiceFileYamlAst(file, {
+        await visitDefinitionFileYamlAst(file, {
             errorDeclaration: ({ errorName }) => {
                 errorsForFile.add(errorName);
             },

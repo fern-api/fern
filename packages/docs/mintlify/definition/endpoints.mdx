@@ -112,6 +112,23 @@ query-parameters:
   allow-multiple: true # <---
 ```
 
+## Auth
+
+Each endpoint can override the auth behavior specified in the service.
+
+```yaml user.yml
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getMe:
+      path: ""
+      method: GET
+      # This endpoint will be authed
+      auth: true
+      docs: Return the current user based on Authorization header.
+```
+
 ## Headers
 
 Each endpoint can specify request headers:

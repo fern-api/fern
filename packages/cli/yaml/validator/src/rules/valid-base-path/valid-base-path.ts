@@ -4,7 +4,7 @@ export const ValidBasePathRule: Rule = {
     name: "valid-base-path",
     create: () => {
         return {
-            serviceFile: {
+            definitionFile: {
                 httpService: (service) => {
                     if (service["base-path"] === "/" || service["base-path"].length === 0) {
                         return [];

@@ -1,0 +1,39 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    valid:
+      method: POST
+      path: /
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            foo: string
+            file: file
+    optionalFile:
+      method: POST
+      path: /
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            foo: string
+            file: optional<file>
+    noProperties:
+      method: POST
+      path: /
+      request:
+        name: UploadFileRequest
+        body: file
+    listOfFiles:
+      method: POST
+      path: /
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            file: list<file>
+
+types:
+  FileAlias: file
