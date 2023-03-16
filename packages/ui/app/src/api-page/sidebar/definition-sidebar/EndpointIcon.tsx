@@ -8,7 +8,7 @@ export declare namespace EndpointIcon {
 
 const VIEW_BOX_SIZE = 100;
 const LINE_HEIGHT = 14;
-const LINE_COLOR = Colors.BLUE3;
+const LINE_COLOR = Colors.GREEN4;
 
 export const EndpointIcon: React.FC<EndpointIcon.Props> = ({ size = IconSize.STANDARD }) => {
     return (

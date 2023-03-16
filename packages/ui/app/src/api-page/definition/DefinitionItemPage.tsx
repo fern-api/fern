@@ -1,29 +1,18 @@
-import { Divider, H2 } from "@blueprintjs/core";
-import styles from "./DefinitionItemPage.module.scss";
-
 export declare namespace DefinitionItemPage {
-    export interface Props {
+    export type Props = React.PropsWithChildren<{
         title: JSX.Element | string;
         subtitle?: JSX.Element | string;
         docs?: string;
-        leftContent?: JSX.Element;
-    }
+    }>;
 }
 
-export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({ title, subtitle, docs, leftContent }) => {
+export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({ title, subtitle, docs, children }) => {
     return (
-        <div className={styles.container}>
-            <div className={styles.titleSection}>
-                <H2 className={styles.title}>{title}</H2>
-                {subtitle != null && <div className={styles.subtitle}>{subtitle}</div>}
-            </div>
-            <Divider className="my-3" />
-            <div className={styles.body}>
-                <div className={styles.leftContent}>
-                    {docs != null && <div>{docs}</div>}
-                    {leftContent}
-                </div>
-            </div>
+        <div className="flex-1 flex flex-col px-[10%] min-h-0 overflow-y-auto">
+            <div className="pt-10 text-3xl font-bold">{title}</div>
+            {subtitle != null && <div className="mt-2">{subtitle}</div>}
+            {docs != null && <div className="mt-4 text-gray-600">{docs}</div>}
+            <div className="flex mt-8">{children}</div>
         </div>
     );
 };
