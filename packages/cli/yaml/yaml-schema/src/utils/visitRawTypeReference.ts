@@ -34,6 +34,8 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
             return visitor.primitive(PrimitiveType.Boolean);
         case RawPrimitiveType.datetime:
             return visitor.primitive(PrimitiveType.DateTime);
+        case RawPrimitiveType.date:
+            return visitor.primitive(PrimitiveType.Date);
         case RawPrimitiveType.uuid:
             return visitor.primitive(PrimitiveType.Uuid);
         case RawPrimitiveType.unknown:
