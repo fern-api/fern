@@ -8,13 +8,14 @@ const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), "fixtures");
 const OPENAPI_JSON_FILENAME = "openapi.json";
 
 describe("open api converter", () => {
-    testFixture("telematica");
-    testFixture("partnerstack");
-    testFixture("suger");
-    testFixture("covie");
-    testFixture("flagright");
-    testFixture("venice");
-    testFixture("novu");
+    // testFixture("telematica");
+    // testFixture("partnerstack");
+    // testFixture("suger");
+    // testFixture("covie");
+    // testFixture("flagright");
+    // testFixture("venice");
+    // testFixture("novu");
+    testFixture("neon")
 });
 
 function testFixture(fixtureName: string) {

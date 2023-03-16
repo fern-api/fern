@@ -1,0 +1,3972 @@
+{
+  "openapi": "3.0.3",
+  "servers": [
+      { "description": "Prod",
+        "url": "https://console.neon.tech/api/v2",
+        "x-server-name": "Production"
+      }
+  ],
+  "info": {
+      "title": "Neon API",
+      "description": "The Neon API allows you to access and manage Neon programmatically. You can use the Neon API to manage API keys, projects, branches, endpoints, databases, roles, and operations. For information about these features, refer to the [Neon documentation](https://neon.tech/docs/manage/overview/).\n\nYou can run Neon API requests from this API reference using the **Try it out** feature that is provided for each method. If you are logged in to Neon, your requests are authenticated automatically. If you are not logged in, click **Authorize** to enter an API key.\n\nYou can create and manage API keys in the Neon Console. See [Manage API keys](https://neon.tech/docs/manage/api-keys/) for instructions.",
+      "version": "v2",
+      "contact": {
+          "email": "support@neon.tech"
+      },
+      "license": {
+          "name": "Proprietary"
+      }
+  },
+  "security": [
+      {
+          "BearerAuth": []
+      }
+  ],
+  "tags": [
+      {
+          "name": "API Key",
+          "description": "These methods allow you to create and manage API keys for your Neon account. For related information, see [Manage API keys](https://neon.tech/docs/manage/api-keys/)."
+      },
+      {
+          "name": "Operation",
+          "description": "These methods allow you to view operation details for your Neon project. For related information, see [Operations](https://neon.tech/docs/manage/operations/)."
+      },
+      {
+          "name": "Project",
+          "description": "These methods allow you to create and manage Neon projects. For related information, see [Manage projects](https://neon.tech/docs/manage/projects/)."
+      },
+      {
+          "name": "Branch",
+          "description": "These methods allow you to create and manage branches in your Neon project. For related information, see [Manage branches](https://neon.tech/docs/manage/branches/)."
+      },
+      {
+          "name": "Endpoint",
+          "description": "These methods allow you to create and manage endpoints in your Neon project. For related information, see [Manage endpoints](https://neon.tech/docs/manage/projects/)."
+      }
+  ],
+  "paths": {
+      "/projects/{project_id}/applications/vercel": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "description": "Neon project ID",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/applications/oauth/{client_id}": {
+          "parameters": [
+              {
+                  "name": "client_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/api_keys": {
+          "get": {
+              "summary": "Get a list of API keys",
+              "description": "Retrieves the API keys for your Neon account.\nThe response does not include API key tokens. A token is only provided when creating an API key.\nAPI keys can also be managed in the Neon Console.\nFor more information, see [Manage API keys](https://neon.tech/docs/manage/api-keys/).\n",
+              "tags": [
+                  "API Key"
+              ],
+              "operationId": "listApiKeys",
+              "responses": {
+                  "200": {
+                      "description": "Returned the API keys for the Neon account",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "$ref": "#/components/schemas/ApiKeysListResponseItem"
+                                  },
+                                  "example": [
+                                      {
+                                          "created_at": "2022-11-15T20:13:35Z",
+                                          "id": 165432,
+                                          "last_used_at": "2022-11-15T20:22:51Z",
+                                          "last_used_from_addr": "192.0.2.255",
+                                          "name": "mykey_1"
+                                      },
+                                      {
+                                          "created_at": "2022-11-15T20:12:36Z",
+                                          "id": 165433,
+                                          "last_used_at": "2022-11-15T20:15:04Z",
+                                          "last_used_from_addr": "192.0.2.255",
+                                          "name": "mykey_2"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "post": {
+              "summary": "Create an API key",
+              "description": "Creates an API key.\nThe `key_name` is a user-specified name for the key.\nThis method returns an `id` and `key`. The `key` is a randomly generated, 64-bit token required to access the Neon API.\nAPI keys can also be managed in the Neon Console.\nSee [Manage API keys](https://neon.tech/docs/manage/api-keys/).\n",
+              "tags": [
+                  "API Key"
+              ],
+              "operationId": "createApiKey",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/ApiKeyCreateRequest"
+                          },
+                          "example": {
+                              "key_name": "mykey"
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "Created an API key",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiKeyCreateResponse"
+                              },
+                              "example": {
+                                  "id": 165434,
+                                  "key": "9v1faketcjbl4sn1013keyd43n2a8qlfakeog8yvp40hx16keyjo1bpds4y2dfms3"
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/api_keys/{key_id}": {
+          "delete": {
+              "summary": "Revoke an API key",
+              "description": "Revokes the specified API key.\nAn API key that is no longer needed can be revoked.\nThis action cannot be reversed.\nYou can obtain `key_id` values by listing the API keys for your Neon account.\nAPI keys can also be managed in the Neon Console.\nSee [Manage API keys](https://neon.tech/docs/manage/api-keys/).\n",
+              "tags": [
+                  "API Key"
+              ],
+              "operationId": "revokeApiKey",
+              "parameters": [
+                  {
+                      "name": "key_id",
+                      "in": "path",
+                      "description": "The API key ID",
+                      "required": true,
+                      "schema": {
+                          "type": "integer",
+                          "format": "int64"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Revoked the specified API key",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ApiKeyRevokeResponse"
+                              },
+                              "example": {
+                                  "id": 165435,
+                                  "name": "mykey",
+                                  "revoked": true,
+                                  "last_used_at": "2022-11-15T20:15:04Z",
+                                  "last_used_from_addr": "192.0.2.255"
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/operations/{operation_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "operation_id",
+                  "in": "path",
+                  "description": "The operation ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string",
+                      "format": "uuid"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get operation details",
+              "description": "Retrieves details for the specified operation.\nAn operation is an action performed on a Neon project resource.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `operation_id` by listing operations for the project.\n",
+              "tags": [
+                  "Operation"
+              ],
+              "operationId": "getProjectOperation",
+              "responses": {
+                  "200": {
+                      "description": "Returned details for the specified operation",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/OperationResponse"
+                              },
+                              "example": {
+                                  "operation": {
+                                      "id": "a07f8772-1877-4da9-a939-3a3ae62d1d8d",
+                                      "project_id": "floral-king-961888",
+                                      "branch_id": "br-bitter-sound-247814",
+                                      "endpoint_id": "ep-dark-snowflake-942567",
+                                      "action": "create_timeline",
+                                      "status": "finished",
+                                      "failures_count": 0,
+                                      "created_at": "2022-10-04T18:20:17Z",
+                                      "updated_at": "2022-10-04T18:20:18Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects": {
+          "get": {
+              "summary": "Get a list of projects",
+              "description": "Retrieves a list of projects for the Neon account.\nA project is the top-level object in the Neon object hierarchy.\nFor more information, see [Manage projects](https://neon.tech/docs/manage/projects/).\n",
+              "tags": [
+                  "Project"
+              ],
+              "operationId": "listProjects",
+              "x-request-name": "ListProjectsRequest",
+              "parameters": [
+                  {
+                      "name": "cursor",
+                      "description": "Specify the cursor value from the previous response to get the next batch of projects.",
+                      "in": "query",
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "limit",
+                      "description": "Specify a value from 1 to 100 to limit number of projects in the response.",
+                      "in": "query",
+                      "schema": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "default": 10,
+                          "maximum": 100
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                    "$ref": "#/components/responses/ListProjects"
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "post": {
+              "summary": "Create a project",
+              "description": "Creates a Neon project.\nA project is the top-level object in the Neon object hierarchy.\nTier limits define how many projects you can create.\nNeon's Free Tier permits one project per Neon account.\nFor more information, see [Manage projects](https://neon.tech/docs/manage/projects/).\n\nYou can specify a region and PostgreSQL version in the request body.\nNeon currently supports PostgreSQL 14 and 15.\nFor supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).\n",
+              "tags": [
+                  "Project"
+              ],
+              "operationId": "create",
+              "requestBody": {
+                  "required": true,
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/ProjectCreateRequest"
+                          },
+                          "examples": {
+                              "Required attributes only": {
+                                  "value": {
+                                      "project": {
+                                          "name": "myproject"
+                                      }
+                                  }
+                              },
+                              "Commonly-specified attributes": {
+                                  "value": {
+                                      "project": {
+                                          "name": "myproject",
+                                          "region_id": "aws-us-east-2",
+                                          "pg_version": 15
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "201": {
+                      "$ref": "#/components/responses/CreatedProject"
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get project details",
+              "description": "Retrieves information about the specified project.\nA project is the top-level object in the Neon object hierarchy.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n",
+              "tags": [
+                  "Project"
+              ],
+              "operationId": "get",
+              "responses": {
+                  "200": {
+                      "description": "Returned information about the specified project",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ProjectResponse"
+                              },
+                              "example": {
+                                  "project": {
+                                      "id": "shiny-wind-028834",
+                                      "platform_id": "aws",
+                                      "region_id": "aws-us-east-2",
+                                      "name": "shiny-wind-028834",
+                                      "provisioner": "k8s-pod",
+                                      "pg_version": 15,
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-23T17:42:25Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech",
+                                      "branch_logical_size_limit": 0,
+                                      "cpu_used_sec": 10
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "patch": {
+              "summary": "Update a project",
+              "description": "Updates the specified project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nNeon permits updating the project name only.\n",
+              "tags": [
+                  "Project"
+              ],
+              "operationId": "update",
+              "requestBody": {
+                  "required": true,
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/ProjectUpdateRequest"
+                          },
+                          "example": {
+                              "project": {
+                                  "name": "myproject"
+                              }
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "Updated the specified project",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ProjectOperations"
+                              },
+                              "example": {
+                                  "operations": [],
+                                  "project": {
+                                      "id": "shiny-wind-028834",
+                                      "platform_id": "aws",
+                                      "region_id": "aws-us-east-2",
+                                      "name": "myproject",
+                                      "provisioner": "k8s-pod",
+                                      "pg_version": 15,
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-12-04T02:39:25Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech",
+                                      "branch_logical_size_limit": 0,
+                                      "cpu_used_sec": 213230
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "delete": {
+              "summary": "Delete a project",
+              "description": "Deletes the specified project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nDeleting a project is a permanent action.\nDeleting a project also deletes endpoints, branches, databases, and users that belong to the project.\n",
+              "tags": [
+                  "Project"
+              ],
+              "operationId": "delete",
+              "responses": {
+                  "200": {
+                      "description": "Deleted the specified project",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/ProjectResponse"
+                              },
+                              "example": {
+                                  "project": {
+                                      "id": "bold-cloud-468218",
+                                      "platform_id": "aws",
+                                      "region_id": "aws-us-east-2",
+                                      "name": "bold-cloud-468218",
+                                      "provisioner": "k8s-pod",
+                                      "pg_version": 15,
+                                      "created_at": "2022-11-30T18:41:29Z",
+                                      "updated_at": "2022-11-30T18:41:29Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech",
+                                      "cpu_used_sec": 23004200,
+                                      "branch_logical_size_limit": 0
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/operations": {
+          "get": {
+              "summary": "Get a list of operations",
+              "description": "Retrieves a list of operations for the specified Neon project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nThe number of operations returned can be large.\nTo paginate the response, issue an initial request with a `limit` value.\nThen, add the `cursor` value that was returned in the response to the next request.\n",
+              "tags": [
+                  "Project",
+                  "Operation"
+              ],
+              "operationId": "listProjectOperations",
+              "x-request-name": "ListProjectOperationsRequest",
+              "parameters": [
+                  {
+                      "name": "cursor",
+                      "description": "Specify the cursor value from the previous response to get the next batch of operations",
+                      "in": "query",
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "limit",
+                      "description": "Specify a value from 1 to 1000 to limit number of operations in the response",
+                      "in": "query",
+                      "schema": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 1000
+                      }
+                  },
+                  {
+                      "name": "project_id",
+                      "in": "path",
+                      "description": "The Neon project ID",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "$ref": "#/components/responses/ListOperations"
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/saved_queries": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/projects/{project_id}/permissions": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/projects/{project_id}/permissions/{permission_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "permission_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      },
+      "/saved_queries/{saved_query_id}": {
+          "parameters": [
+              {
+                  "name": "saved_query_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              }
+          ]
+      },
+      "/projects/{project_id}/branches": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "post": {
+              "summary": "Create a branch",
+              "description": "Creates a branch in the specified project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n\nThis method does not require a request body, but you can specify one to create an endpoint for the branch or to select a non-default parent branch.\nThe default behavior is to create a branch from the project's root branch (`main`) with no endpoint, and the branch name is auto-generated.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
+              "tags": [
+                  "Project",
+                  "Branch"
+              ],
+              "operationId": "createProjectBranch",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/BranchCreateRequest"
+                          },
+                          "examples": {
+                              "Branch only": {
+                                  "value": {
+                                      "branch": {
+                                          "parent_id": "br-aged-salad-637688",
+                                          "name": "mybranch"
+                                      }
+                                  }
+                              },
+                              "Branch with endpoint": {
+                                  "value": {
+                                      "endpoints": [
+                                          {
+                                              "type": "read_write"
+                                          }
+                                      ],
+                                      "branch": {
+                                          "parent_id": "br-aged-salad-637688",
+                                          "name": "mybranch"
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "required": false
+              },
+              "responses": {
+                  "201": {
+                      "$ref": "#/components/responses/CreatedBranch"
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "get": {
+              "summary": "Get a list of branches",
+              "description": "Retrieves a list of branches for the specified project.\nYou can obtain a `project_id` by listing the projects for your Neon account.\n\nEach Neon project has a root branch named `main`.\nA `branch_id` value has a `br-` prefix.\nA project may contain child branches that were branched from `main` or from another branch.\nA parent branch is identified by the `parent_id` value, which is the `id` of the parent branch.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
+              "tags": [
+                  "Project",
+                  "Branch"
+              ],
+              "operationId": "listProjectBranches",
+              "responses": {
+                  "200": {
+                      "description": "Returned a list of branches for the specified project",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/BranchesResponse"
+                              },
+                              "example": {
+                                  "branches": [
+                                      {
+                                          "id": "br-aged-salad-637688",
+                                          "project_id": "shiny-wind-028834",
+                                          "name": "main",
+                                          "current_state": "ready",
+                                          "logical_size": 28,
+                                          "logical_size_limit": 3072,
+                                          "physical_size": 38,
+                                          "created_at": "2022-11-23T17:42:25Z",
+                                          "updated_at": "2022-11-23T17:42:26Z"
+                                      },
+                                      {
+                                          "id": "br-sweet-breeze-497520",
+                                          "project_id": "shiny-wind-028834",
+                                          "parent_id": "br-aged-salad-637688",
+                                          "parent_lsn": "0/1DE2850",
+                                          "name": "dev2",
+                                          "current_state": "ready",
+                                          "logical_size": 28,
+                                          "logical_size_limit": 3072,
+                                          "created_at": "2022-11-30T19:09:48Z",
+                                          "updated_at": "2022-11-30T19:09:49Z"
+                                      },
+                                      {
+                                          "id": "br-raspy-hill-832856",
+                                          "project_id": "shiny-wind-028834",
+                                          "parent_id": "br-aged-salad-637688",
+                                          "parent_lsn": "0/19623D8",
+                                          "name": "dev1",
+                                          "current_state": "ready",
+                                          "logical_size": 21,
+                                          "logical_size_limit": 3072,
+                                          "created_at": "2022-11-30T17:36:57Z",
+                                          "updated_at": "2022-11-30T17:36:57Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get branch details",
+              "description": "Retrieves information about the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `branch_id` by listing the project's branches.\nA `branch_id` value has a `br-` prefix.\n\nEach Neon project has a root branch named `main`.\nA project may contain child branches that were branched from `main` or from another branch.\nA parent branch is identified by a `parent_id` value, which is the `id` of the parent branch.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "get",
+              "responses": {
+                  "200": {
+                      "description": "Returned information about the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/BranchResponse"
+                              },
+                              "example": {
+                                  "branch": {
+                                      "id": "br-aged-salad-637688",
+                                      "project_id": "shiny-wind-028834",
+                                      "name": "main",
+                                      "current_state": "ready",
+                                      "logical_size": 28,
+                                      "logical_size_limit": 3072,
+                                      "physical_size": 38,
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-23T17:42:26Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "delete": {
+              "summary": "Delete a branch",
+              "description": "Deletes the specified branch from a project, and places\nall endpoints into an idle state, breaking existing client connections.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain a `branch_id` by listing the project's branches.\nFor related information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n\nWhen a successful response status is received, the endpoints are still active,\nand the branch is not yet deleted from storage.\nThe deletion occurs after all operations finish.\nYou cannot delete a branch if it is the only remaining branch in the project.\nA project must have at least one branch.\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "delete",
+              "responses": {
+                  "200": {
+                      "description": "Deleted the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/BranchOperations"
+                              },
+                              "example": {
+                                  "branch": {
+                                      "id": "br-aged-salad-637688",
+                                      "project_id": "shiny-wind-028834",
+                                      "name": "main",
+                                      "current_state": "ready",
+                                      "logical_size": 28,
+                                      "logical_size_limit": 3072,
+                                      "physical_size": 38,
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-23T17:42:26Z"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "b6afbc21-2990-4a76-980b-b57d8c2948f2",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-sweet-breeze-497520",
+                                          "endpoint_id": "ep-soft-violet-752733",
+                                          "action": "suspend_compute",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-01T19:53:05Z",
+                                          "updated_at": "2022-12-01T19:53:05Z"
+                                      },
+                                      {
+                                          "id": "b6afbc21-2990-4a76-980b-b57d8c2948f2",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-sweet-breeze-497520",
+                                          "action": "delete_timeline",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-01T19:53:05Z",
+                                          "updated_at": "2022-12-01T19:53:05Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "patch": {
+              "tags": [
+                  "Branch"
+              ],
+              "summary": "Update a branch",
+              "description": "Updates the specified branch. Only changing the branch name is supported.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor more information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
+              "operationId": "update",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/BranchUpdateRequest"
+                          },
+                          "example": {
+                              "branch": {
+                                  "name": "mybranch"
+                              }
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "Updated the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/BranchOperations"
+                              },
+                              "example": {
+                                  "branch": {
+                                      "id": "br-icy-dream-250089",
+                                      "project_id": "shiny-wind-028834",
+                                      "parent_id": "br-aged-salad-637688",
+                                      "parent_lsn": "0/1E19478",
+                                      "name": "mybranch",
+                                      "current_state": "ready",
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-23T17:42:26Z"
+                                  },
+                                  "operations": []
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/set_as_primary": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "post": {
+              "tags": [
+                  "Branch"
+              ],
+              "summary": "Set the branch as the primary branch of a project",
+              "description": "The primary mark is automatically removed from the previous primary branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor more information, see [Manage branches](https://neon.tech/docs/manage/branches/).\n",
+              "operationId": "setPrimaryProjectBranch",
+              "responses": {
+                  "200": {
+                      "description": "Updated the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/BranchOperations"
+                              },
+                              "example": {
+                                  "branch": {
+                                      "id": "br-icy-dream-250089",
+                                      "project_id": "shiny-wind-028834",
+                                      "parent_id": "br-aged-salad-637688",
+                                      "parent_lsn": "0/1E19478",
+                                      "name": "mybranch",
+                                      "current_state": "ready",
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-23T17:42:26Z",
+                                      "primary": true
+                                  },
+                                  "operations": []
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/endpoints": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get a list of branch endpoints",
+              "description": "Retrieves a list of endpoints for the specified branch.\nCurrently, Neon permits only one endpoint per branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "listEndpoints",
+              "responses": {
+                  "200": {
+                      "description": "Returned a list of endpoints for the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointsResponse"
+                              },
+                              "example": {
+                                  "endpoints": {
+                                      "host": "ep-little-smoke-851426.us-east-2.aws.neon.tech",
+                                      "id": "ep-little-smoke-851426",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-aged-salad-637688",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "idle",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "last_active": "2022-11-23T17:00:00Z",
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-30T18:25:21Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/databases": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get a list of databases",
+              "description": "Retrieves a list of databases for the specified branch.\nA branch can have multiple databases.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "listDatabases",
+              "responses": {
+                  "200": {
+                      "description": "Returned a list of databases of the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/DatabasesResponse"
+                              },
+                              "example": {
+                                  "databases": [
+                                      {
+                                          "id": "834686,",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "name": "main",
+                                          "owner_name": "casey",
+                                          "created_at": "2022-11-30T18:25:15Z",
+                                          "updated_at": "2022-11-30T18:25:15Z"
+                                      },
+                                      {
+                                          "id": "834686,",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "name": "mydb",
+                                          "owner_name": "casey",
+                                          "created_at": "2022-10-30T17:14:13Z",
+                                          "updated_at": "2022-10-30T17:14:13Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "post": {
+              "tags": [
+                  "Branch"
+              ],
+              "summary": "Create a database",
+              "description": "Creates a database in the specified branch.\nA branch can have multiple databases.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
+              "operationId": "createDatabase",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/DatabaseCreateRequest"
+                          },
+                          "example": {
+                              "database": {
+                                  "name": "mydb",
+                                  "owner_name": "casey"
+                              }
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "201": {
+                      "description": "Created a database in the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/DatabaseOperations"
+                              },
+                              "example": {
+                                  "database": {
+                                      "id": 876692,
+                                      "branch_id": "br-aged-salad-637688",
+                                      "name": "mydb",
+                                      "owner_name": "casey",
+                                      "created_at": "2022-12-04T00:15:04Z",
+                                      "updated_at": "2022-12-04T00:15:04Z"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "39426015-db00-40fa-85c5-1c7072df46d0",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "endpoint_id": "ep-little-smoke-851426",
+                                          "action": "apply_config",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-04T00:15:04Z",
+                                          "updated_at": "2022-12-04T00:15:04Z"
+                                      },
+                                      {
+                                          "id": "b7483d4e-33da-4d40-b319-ac858d4d3e69",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "endpoint_id": "ep-little-smoke-851426",
+                                          "action": "suspend_compute",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-04T00:15:04Z",
+                                          "updated_at": "2022-12-04T00:15:04Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/databases/{database_name}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "database_name",
+                  "in": "path",
+                  "description": "The database name",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get database details",
+              "description": "Retrieves information about the specified database.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "getDatabase",
+              "responses": {
+                  "200": {
+                      "description": "Returned the database details",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/DatabaseResponse"
+                              },
+                              "example": {
+                                  "database": {
+                                      "id": 834686,
+                                      "branch_id": "br-aged-salad-637688",
+                                      "name": "main",
+                                      "owner_name": "casey",
+                                      "created_at": "2022-11-30T18:25:15Z",
+                                      "updated_at": "2022-11-30T18:25:15Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "patch": {
+              "tags": [
+                  "Branch"
+              ],
+              "summary": "Update a database",
+              "description": "Updates the specified database in the branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing the branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
+              "operationId": "updateDatabase",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/DatabaseUpdateRequest"
+                          },
+                          "example": {
+                              "database": {
+                                  "name": "mydb",
+                                  "owner_name": "sally"
+                              }
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "200": {
+                      "description": "Updated the database",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/DatabaseOperations"
+                              },
+                              "example": {
+                                  "database": {
+                                      "id": 876692,
+                                      "branch_id": "br-aged-salad-637688",
+                                      "name": "mydb",
+                                      "owner_name": "sally",
+                                      "created_at": "2022-12-04T00:15:04Z",
+                                      "updated_at": "2022-12-04T00:15:04Z"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "9ef1c2ed-dce4-43aa-bae8-78aea636bf8a",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "endpoint_id": "ep-little-smoke-851426",
+                                          "action": "apply_config",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-04T00:21:01Z",
+                                          "updated_at": "2022-12-04T00:21:01Z"
+                                      },
+                                      {
+                                          "id": "42dafb46-f861-497b-ae89-f2bec54f4966",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "endpoint_id": "ep-little-smoke-851426",
+                                          "action": "suspend_compute",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-04T00:21:01Z",
+                                          "updated_at": "2022-12-04T00:21:01Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "delete": {
+              "summary": "Delete a database",
+              "description": "Deletes the specified database from the branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` and `database_name` by listing branch's databases.\nFor related information, see [Manage databases](https://neon.tech/docs/manage/databases/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "deleteDatabase",
+              "responses": {
+                  "200": {
+                      "description": "Deleted the specified database",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/DatabaseOperations"
+                              },
+                              "example": {
+                                  "database": {
+                                      "id": 851537,
+                                      "branch_id": "br-raspy-hill-832856",
+                                      "name": "mydb",
+                                      "owner_name": "casey",
+                                      "created_at": "2022-12-01T19:41:46Z",
+                                      "updated_at": "2022-12-01T19:41:46Z"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "9ef1c2ed-dce4-43aa-bae8-78aea636bf8a",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-raspy-hill-832856",
+                                          "endpoint_id": "ep-steep-bush-777093",
+                                          "action": "apply_config",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-01T19:51:41Z",
+                                          "updated_at": "2022-12-01T19:51:41Z"
+                                      },
+                                      {
+                                          "id": "42dafb46-f861-497b-ae89-f2bec54f4966",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-raspy-hill-832856",
+                                          "endpoint_id": "ep-steep-bush-777093",
+                                          "action": "suspend_compute",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-01T19:51:41Z",
+                                          "updated_at": "2022-12-01T19:51:41Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/roles": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get a list of roles",
+              "description": "Retrieves a list of roles from the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Manage users](https://neon.tech/docs/manage/users/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "listRoles",
+              "responses": {
+                  "200": {
+                      "description": "Returned a list of roles from the specified branch.",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/RolesResponse"
+                              },
+                              "example": {
+                                  "roles": [
+                                      {
+                                          "branch_id": null,
+                                          "name": "casey",
+                                          "protected": false,
+                                          "created_at": "2022-11-23T17:42:25Z",
+                                          "updated_at": "2022-11-23T17:42:25Z"
+                                      },
+                                      {
+                                          "branch_id": null,
+                                          "name": "thomas",
+                                          "protected": false,
+                                          "created_at": "2022-10-22T17:38:21Z",
+                                          "updated_at": "2022-10-22T17:38:21Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "post": {
+              "summary": "Create a role",
+              "description": "Creates a role in the specified branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Manage users](https://neon.tech/docs/manage/users/).\n\nConnections established to the active read-write endpoint will be dropped.\nIf the read-write endpoint is idle, the endpoint becomes active for a short period of time and is suspended afterward.\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "createRole",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/RoleCreateRequest"
+                          },
+                          "example": {
+                              "role": {
+                                  "name": "sally"
+                              }
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "201": {
+                      "description": "Created a role in the specified branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/RoleOperations"
+                              },
+                              "example": {
+                                  "role": {
+                                      "branch_id": "br-noisy-sunset-458773",
+                                      "name": "sally",
+                                      "password": "Onf1AjayKwe0",
+                                      "protected": false,
+                                      "created_at": "2022-12-03T11:58:29Z",
+                                      "updated_at": "2022-12-03T11:58:29Z"
+                                  },
+                                  "operations": {
+                                      "id": "2c2be371-d5ac-4db5-8b68-79f05e8bc287",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-noisy-sunset-458773",
+                                      "endpoint_id": "ep-small-pine-767857",
+                                      "action": "apply_config",
+                                      "status": "running",
+                                      "failures_count": 0,
+                                      "created_at": "2022-12-03T11:58:29Z",
+                                      "updated_at": "2022-12-03T11:58:29Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/roles/{role_name}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "role_name",
+                  "in": "path",
+                  "description": "The role name",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get role details",
+              "description": "Retrieves details about the specified role.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "getRole",
+              "responses": {
+                  "200": {
+                      "description": "Successfully returned details for the specified role",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/RoleResponse"
+                              },
+                              "example": {
+                                  "role": {
+                                      "branch_id": "br-noisy-sunset-458773",
+                                      "name": "casey",
+                                      "protected": false,
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-23T17:42:25Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "delete": {
+              "summary": "Delete a role",
+              "description": "Deletes the specified role from the branch.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "deleteRole",
+              "responses": {
+                  "200": {
+                      "description": "Deleted the specified role from the branch",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/RoleOperations"
+                              },
+                              "example": {
+                                  "role": {
+                                      "branch_id": "br-raspy-hill-832856",
+                                      "name": "thomas",
+                                      "protected": false,
+                                      "created_at": "2022-12-01T14:36:23Z",
+                                      "updated_at": "2022-12-01T14:36:23Z"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "db646be3-eace-4910-9f60-8150823c5cb8",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-raspy-hill-832856",
+                                          "endpoint_id": "ep-steep-bush-777093",
+                                          "action": "apply_config",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-01T19:48:11Z",
+                                          "updated_at": "2022-12-01T19:48:11Z"
+                                      },
+                                      {
+                                          "id": "ab94cdad-7630-4943-a55e-5a0952d2e598",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-raspy-hill-832856",
+                                          "endpoint_id": "ep-steep-bush-777093",
+                                          "action": "suspend_compute",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-01T19:48:11Z",
+                                          "updated_at": "2022-12-01T19:48:11Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reveal_password": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "role_name",
+                  "in": "path",
+                  "description": "The role name",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get role password",
+              "description": "Retrieves password of the specified role if possible.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "getRolePassword",
+              "responses": {
+                  "200": {
+                      "description": "Successfully returned password for the specified role",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/RolePasswordResponse"
+                              },
+                              "example": {
+                                  "password": "mypass"
+                              }
+                          }
+                      }
+                  },
+                  "404": {
+                      "description": "Role not found",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/GeneralError"
+                              }
+                          }
+                      }
+                  },
+                  "412": {
+                      "description": "Storing passwords is disabled",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/GeneralError"
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/branches/{branch_id}/roles/{role_name}/reset_password": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "branch_id",
+                  "in": "path",
+                  "description": "The branch ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "role_name",
+                  "in": "path",
+                  "description": "The role nam",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "post": {
+              "summary": "Reset the role password",
+              "description": "Resets the password for the specified role.\nReturns a new password and operations. The new password is ready to use when the last operation finishes.\nThe old password remains valid until last operation finishes.\nConnections to the read-write endpoint are dropped. If idle,\nthe read-write endpoint becomes active for a short period of time.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain the `branch_id` by listing the project's branches.\nYou can obtain the `role_name` by listing the roles for a branch.\nIn Neon, the terms \"role\" and \"user\" are synonymous.\nFor related information, see [Managing users](https://neon.tech/docs/manage/users/).\n",
+              "tags": [
+                  "Branch"
+              ],
+              "operationId": "resetRolePassword",
+              "responses": {
+                  "200": {
+                      "description": "Reset the passsword for the specified role",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/RoleOperations"
+                              },
+                              "example": {
+                                  "role": {
+                                      "branch_id": "br-noisy-sunset-458773",
+                                      "name": "sally",
+                                      "password": "ClfD0aVuK3eK",
+                                      "protected": false,
+                                      "created_at": "2022-12-03T12:39:39Z",
+                                      "updated_at": "2022-12-03T12:58:18Z"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "6bef07a0-ebca-40cd-9100-7324036cfff2",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-noisy-sunset-458773",
+                                          "endpoint_id": "ep-small-pine-767857",
+                                          "action": "apply_config",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-03T12:58:18Z",
+                                          "updated_at": "2022-12-03T12:58:18Z"
+                                      },
+                                      {
+                                          "id": "16b5bfca-4697-4194-a338-d2cdc9aca2af",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-noisy-sunset-458773",
+                                          "endpoint_id": "ep-small-pine-767857",
+                                          "action": "suspend_compute",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-03T12:58:18Z",
+                                          "updated_at": "2022-12-03T12:58:18Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/endpoints": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "post": {
+              "summary": "Create an endpoint",
+              "description": "Creates an endpoint for the specified branch.\nAn endpoint is a Neon compute instance.\nThere is a maximum of one endpoint per branch.\nIf the specified branch already has an endpoint, the operation fails.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain `branch_id` by listing the project's branches.\nA `branch_id` has a `br-` prefix.\nCurrently, only the `read_write` endpoint type is supported.\nFor supported regions and `region_id` values, see [Regions](https://neon.tech/docs/introduction/regions/).\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
+              "tags": [
+                  "Endpoint"
+              ],
+              "operationId": "createProjectEndpoint",
+              "requestBody": {
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/EndpointCreateRequest"
+                          },
+                          "examples": {
+                              "Required attributes only": {
+                                  "value": {
+                                      "endpoint": {
+                                          "branch_id": "br-floral-mountain-251143",
+                                          "type": "read_write"
+                                      }
+                                  }
+                              },
+                              "With region attribute": {
+                                  "value": {
+                                      "endpoint": {
+                                          "branch_id": "br-floral-mountain-251143",
+                                          "type": "read_write",
+                                          "region_id": "aws-us-east-2"
+                                      }
+                                  }
+                              },
+                              "With pooler attribute": {
+                                  "value": {
+                                      "endpoint": {
+                                          "branch_id": "br-floral-mountain-251143",
+                                          "type": "read_write",
+                                          "pooler_enabled": true
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "required": true
+              },
+              "responses": {
+                  "201": {
+                      "description": "Created an endpoint",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointOperations"
+                              },
+                              "example": {
+                                  "endpoint": {
+                                      "host": "ep-shrill-thunder-454069.us-east-2.aws.neon.tech",
+                                      "id": "ep-shrill-thunder-454069",
+                                      "project_id": "bitter-meadow-966132",
+                                      "branch_id": "br-proud-paper-090813",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "init",
+                                      "pending_state": "active",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "created_at": "2022-12-03T15:37:07Z",
+                                      "updated_at": "2022-12-03T15:37:07Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  },
+                                  "operations": {
+                                      "id": "874f8bfe-f51d-4c61-85af-a29bea73e0e2",
+                                      "project_id": "bitter-meadow-966132",
+                                      "branch_id": "br-proud-paper-090813",
+                                      "endpoint_id": "ep-shrill-thunder-454069",
+                                      "action": "start_compute",
+                                      "status": "running",
+                                      "failures_count": 0,
+                                      "created_at": "2022-12-03T15:37:07Z",
+                                      "updated_at": "2022-12-03T15:37:07Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "get": {
+              "summary": "Get a list of endpoints",
+              "description": "Retrieves a list of endpoints for the specified project.\nAn endpoint is a Neon compute instance.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
+              "tags": [
+                  "Project",
+                  "Endpoint"
+              ],
+              "operationId": "listProjectEndpoints",
+              "responses": {
+                  "200": {
+                      "description": "Returned a list of endpoints for the specified project",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointsResponse"
+                              },
+                              "example": {
+                                  "endpoints": [
+                                      {
+                                          "host": "ep-little-smoke-851426.us-east-2.aws.neon.tech",
+                                          "id": "ep-little-smoke-851426",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-aged-salad-637688",
+                                          "autoscaling_limit_min_cu": 1,
+                                          "autoscaling_limit_max_cu": 1,
+                                          "region_id": "aws-us-east-2",
+                                          "type": "read_write",
+                                          "current_state": "idle",
+                                          "settings": {
+                                              "pg_settings": {}
+                                          },
+                                          "pooler_enabled": false,
+                                          "pooler_mode": "transaction",
+                                          "disabled": false,
+                                          "passwordless_access": true,
+                                          "last_active": "2022-11-23T17:00:00Z",
+                                          "created_at": "2022-11-23T17:42:25Z",
+                                          "updated_at": "2022-11-30T18:25:21Z",
+                                          "proxy_host": "us-east-2.aws.neon.tech"
+                                      },
+                                      {
+                                          "host": "ep-steep-bush-777093.us-east-2.aws.neon.tech",
+                                          "id": "ep-steep-bush-777093",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-raspy-hill-832856",
+                                          "autoscaling_limit_min_cu": 1,
+                                          "autoscaling_limit_max_cu": 1,
+                                          "region_id": "aws-us-east-2",
+                                          "type": "read_write",
+                                          "current_state": "idle",
+                                          "settings": {
+                                              "pg_settings": {}
+                                          },
+                                          "pooler_enabled": false,
+                                          "pooler_mode": "transaction",
+                                          "disabled": false,
+                                          "passwordless_access": true,
+                                          "last_active": "2022-11-30T17:00:00Z",
+                                          "created_at": "2022-11-30T17:36:57Z",
+                                          "updated_at": "2022-11-30T18:42:58Z",
+                                          "proxy_host": "us-east-2.aws.neon.tech"
+                                      },
+                                      {
+                                          "host": "ep-soft-violet-752733.us-east-2.aws.neon.tech",
+                                          "id": "ep-soft-violet-752733",
+                                          "project_id": "shiny-wind-028834",
+                                          "branch_id": "br-sweet-breeze-497520",
+                                          "autoscaling_limit_min_cu": 1,
+                                          "autoscaling_limit_max_cu": 1,
+                                          "region_id": "aws-us-east-2",
+                                          "type": "read_write",
+                                          "current_state": "idle",
+                                          "settings": {
+                                              "pg_settings": {}
+                                          },
+                                          "pooler_enabled": false,
+                                          "pooler_mode": "transaction",
+                                          "disabled": false,
+                                          "passwordless_access": true,
+                                          "last_active": "2022-11-30T19:00:00Z",
+                                          "created_at": "2022-11-30T19:09:48Z",
+                                          "updated_at": "2022-11-30T19:14:51Z",
+                                          "proxy_host": "us-east-2.aws.neon.tech"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/endpoints/{endpoint_id}": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "endpoint_id",
+                  "in": "path",
+                  "description": "The endpoint ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "get": {
+              "summary": "Get an endpoint",
+              "description": "Retrieves information about the specified endpoint.\nAn endpoint is a Neon compute instance.\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
+              "tags": [
+                  "Endpoint"
+              ],
+              "operationId": "getProjectEndpoint",
+              "responses": {
+                  "200": {
+                      "description": "Returned information about the specified endpoint",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointResponse"
+                              },
+                              "example": {
+                                  "endpoint": {
+                                      "host": "ep-little-smoke-851426.us-east-2.aws.neon.tech",
+                                      "id": "ep-little-smoke-851426",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-aged-salad-637688",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "idle",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "last_active": "2022-11-23T17:00:00Z",
+                                      "created_at": "2022-11-23T17:42:25Z",
+                                      "updated_at": "2022-11-30T18:25:21Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "delete": {
+              "summary": "Delete an endpoint",
+              "description": "Delete the specified endpoint.\nAn endpoint is a Neon compute instance.\nDeleting an endpoint drops existing network connections to the endpoint.\nThe deletion is completed when last operation in the chain finishes successfully.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
+              "tags": [
+                  "Endpoint"
+              ],
+              "operationId": "deleteProjectEndpoint",
+              "responses": {
+                  "200": {
+                      "description": "Deleted the specified endpoint",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointOperations"
+                              },
+                              "example": {
+                                  "endpoint": {
+                                      "host": "ep-steep-bush-777093.us-east-2.aws.neon.tech",
+                                      "id": "ep-steep-bush-777093",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-raspy-hill-832856",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "idle",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "last_active": "2022-12-03T15:00:00Z",
+                                      "created_at": "2022-12-03T15:37:07Z",
+                                      "updated_at": "2022-12-03T15:49:10Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  },
+                                  "operations": {
+                                      "id": "fd11748e-3c68-458f-b9e3-66d409e3eef0",
+                                      "project_id": "bitter-meadow-966132",
+                                      "branch_id": "br-proud-paper-090813",
+                                      "endpoint_id": "ep-shrill-thunder-454069",
+                                      "action": "suspend_compute",
+                                      "status": "running",
+                                      "failures_count": 0,
+                                      "created_at": "2022-12-03T15:51:06Z",
+                                      "updated_at": "2022-12-03T15:51:06Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          },
+          "patch": {
+              "tags": [
+                  "Endpoint"
+              ],
+              "summary": "Update an endpoint",
+              "description": "Updates the specified endpoint. Currently, only changing the associated branch is supported.\nThe branch that you specify cannot have an existing endpoint.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` and `branch_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix. A `branch_id` has a `br-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n\nIf the returned list of operations is not empty, the endpoint is not ready to use.\nThe client must wait for the last operation to finish before using the endpoint.\nIf the endpoint was idle before the update, the endpoint becomes active for a short period of time,\nand the control plane suspends it again after the update.\n",
+              "operationId": "updateProjectEndpoint",
+              "requestBody": {
+                  "required": true,
+                  "content": {
+                      "application/json": {
+                          "schema": {
+                              "$ref": "#/components/schemas/EndpointUpdateRequest"
+                          },
+                          "example": {
+                              "endpoint": {
+                                  "branch_id": "br-tiny-grass-283160"
+                              }
+                          }
+                      }
+                  }
+              },
+              "responses": {
+                  "200": {
+                      "description": "Updated the specified endpoint",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointOperations"
+                              },
+                              "example": {
+                                  "endpoint": {
+                                      "host": "ep-steep-bush-777093.us-east-2.aws.neon.tech",
+                                      "id": "ep-steep-bush-777093",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-raspy-hill-832856",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "idle",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "last_active": "2022-12-03T15:00:00Z",
+                                      "created_at": "2022-12-03T15:37:07Z",
+                                      "updated_at": "2022-12-03T15:49:10Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  },
+                                  "operations": [
+                                      {
+                                          "id": "3fc98ab8-f191-47b8-a427-5eb668ccc5b9",
+                                          "project_id": "bitter-meadow-966132",
+                                          "branch_id": "br-proud-paper-090813",
+                                          "endpoint_id": "ep-shrill-thunder-454069",
+                                          "action": "apply_config",
+                                          "status": "running",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-03T15:51:06Z",
+                                          "updated_at": "2022-12-03T15:51:06Z"
+                                      },
+                                      {
+                                          "id": "9ffda74b-a582-4cff-b0f0-aaa8d14b8e6a",
+                                          "project_id": "bitter-meadow-966132",
+                                          "branch_id": "br-proud-paper-090813",
+                                          "endpoint_id": "ep-shrill-thunder-454069",
+                                          "action": "suspend_compute",
+                                          "status": "scheduling",
+                                          "failures_count": 0,
+                                          "created_at": "2022-12-03T15:51:06Z",
+                                          "updated_at": "2022-12-03T15:51:06Z"
+                                      }
+                                  ]
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/endpoints/{endpoint_id}/start": {
+          "post": {
+              "summary": "Start an endpoint",
+              "description": "Starts an endpoint. The endpoint is ready to use\nafter the last operation in chain finishes successfully.\n\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
+              "tags": [
+                  "Endpoint"
+              ],
+              "operationId": "startProjectEndpoint",
+              "parameters": [
+                  {
+                      "name": "project_id",
+                      "in": "path",
+                      "description": "The Neon project ID",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  },
+                  {
+                      "name": "endpoint_id",
+                      "in": "path",
+                      "description": "The endpoint ID",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Started the specified endpoint",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointOperations"
+                              },
+                              "example": {
+                                  "endpoint": {
+                                      "host": "ep-steep-bush-777093.us-east-2.aws.neon.tech",
+                                      "id": "ep-steep-bush-777093",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-raspy-hill-832856",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "idle",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "last_active": "2022-12-03T15:00:00Z",
+                                      "created_at": "2022-12-03T15:37:07Z",
+                                      "updated_at": "2022-12-03T15:49:10Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  },
+                                  "operations": {
+                                      "id": "e061087e-3c99-4856-b9c8-6b7751a253af",
+                                      "project_id": "bitter-meadow-966132",
+                                      "branch_id": "br-proud-paper-090813",
+                                      "endpoint_id": "ep-shrill-thunder-454069",
+                                      "action": "start_compute",
+                                      "status": "running",
+                                      "failures_count": 0,
+                                      "created_at": "2022-12-03T15:51:06Z",
+                                      "updated_at": "2022-12-03T15:51:06Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/endpoints/{endpoint_id}/suspend": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "description": "The Neon project ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "endpoint_id",
+                  "in": "path",
+                  "description": "The endpoint ID",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ],
+          "post": {
+              "summary": "Suspend an endpoint",
+              "description": "Suspend the specified endpoint\nYou can obtain a `project_id` by listing the projects for your Neon account.\nYou can obtain an `endpoint_id` by listing your project's endpoints.\nAn `endpoint_id` has an `ep-` prefix.\nFor more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).\n",
+              "tags": [
+                  "Endpoint"
+              ],
+              "operationId": "suspendProjectEndpoint",
+              "responses": {
+                  "200": {
+                      "description": "Suspended the specified endpoint",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "$ref": "#/components/schemas/EndpointOperations"
+                              },
+                              "example": {
+                                  "endpoint": {
+                                      "host": "ep-steep-bush-777093.us-east-2.aws.neon.tech",
+                                      "id": "ep-steep-bush-777093",
+                                      "project_id": "shiny-wind-028834",
+                                      "branch_id": "br-raspy-hill-832856",
+                                      "autoscaling_limit_min_cu": 1,
+                                      "autoscaling_limit_max_cu": 1,
+                                      "region_id": "aws-us-east-2",
+                                      "type": "read_write",
+                                      "current_state": "idle",
+                                      "settings": {
+                                          "pg_settings": {}
+                                      },
+                                      "pooler_enabled": false,
+                                      "pooler_mode": "transaction",
+                                      "disabled": false,
+                                      "passwordless_access": true,
+                                      "last_active": "2022-12-03T15:00:00Z",
+                                      "created_at": "2022-12-03T15:37:07Z",
+                                      "updated_at": "2022-12-03T15:49:10Z",
+                                      "proxy_host": "us-east-2.aws.neon.tech"
+                                  },
+                                  "operations": {
+                                      "id": "e061087e-3c99-4856-b9c8-6b7751a253af",
+                                      "project_id": "bitter-meadow-966132",
+                                      "branch_id": "br-proud-paper-090813",
+                                      "endpoint_id": "ep-shrill-thunder-454069",
+                                      "action": "suspend_compute",
+                                      "status": "running",
+                                      "failures_count": 0,
+                                      "created_at": "2022-12-03T15:51:06Z",
+                                      "updated_at": "2022-12-03T15:51:06Z"
+                                  }
+                              }
+                          }
+                      }
+                  },
+                  "default": {
+                      "$ref": "#/components/responses/GeneralError"
+                  }
+              }
+          }
+      },
+      "/projects/{project_id}/endpoints/{endpoint_id}/passwordless_auth": {
+          "parameters": [
+              {
+                  "name": "project_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              },
+              {
+                  "name": "endpoint_id",
+                  "in": "path",
+                  "required": true,
+                  "schema": {
+                      "type": "string"
+                  }
+              }
+          ]
+      }
+  },
+  "components": {
+      "responses": {
+          "ListOperations": {
+              "description": "Returned a list of operations\n",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "allOf": [
+                              {
+                                  "$ref": "#/components/schemas/OperationsResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/PaginationResponse"
+                              }
+                          ]
+                      }
+                  }
+              }
+          },
+          "CreatedProject": {
+              "description": "Created a project.\nThe project includes a connection URI with a database, password, and role.\nAt least one non-protected role is created with a password.\nWait until the operations are finished before attempting to connect to a project database.\n",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "allOf": [
+                              {
+                                  "$ref": "#/components/schemas/ProjectResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/ConnectionURIsResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/RolesResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/DatabasesResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/OperationsResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/BranchResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/EndpointsResponse"
+                              }
+                          ]
+                      }
+                  }
+              }
+          },
+          "CreatedBranch": {
+              "description": "Created a branch. An endpoint is only created if it was specified in the request.",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "allOf": [
+                              {
+                                  "$ref": "#/components/schemas/BranchResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/EndpointsResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/OperationsResponse"
+                              },
+                              {
+                                  "$ref": "#/components/schemas/ConnectionURIsResponse"
+                              }
+                          ]
+                      }
+                  }
+              }
+          },
+          "ListProjects": {
+            "description": "Returned a list of projects for the Neon account",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/ProjectsResponse"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PaginationResponse"
+                            }
+                        ]
+                    },
+                    "example": {
+                        "projects": [
+                            {
+                                "id": "shiny-wind-028834",
+                                "platform_id": "aws",
+                                "region_id": "aws-us-east-2",
+                                "name": "shiny-wind-028834",
+                                "provisioner": "k8s-pod",
+                                "pg_version": 15,
+                                "created_at": "2022-11-23T17:42:25Z",
+                                "updated_at": "2022-11-23T17:42:25Z",
+                                "proxy_host": "us-east-2.aws.neon.tech",
+                                "cpu_used_sec": 0,
+                                "branch_logical_size_limit": 0
+                            },
+                            {
+                                "id": "winter-boat-259881",
+                                "platform_id": "aws",
+                                "region_id": "aws-us-east-2",
+                                "name": "winter-boat-259881",
+                                "provisioner": "k8s-pod",
+                                "pg_version": 15,
+                                "created_at": "2022-11-23T17:52:25Z",
+                                "updated_at": "2022-11-23T17:52:25Z",
+                                "proxy_host": "us-east-2.aws.neon.tech",
+                                "cpu_used_sec": 0,
+                                "branch_logical_size_limit": 0
+                            }
+                        ]
+                    }
+                }
+              }
+          },
+          "GeneralError": {
+              "description": "General Error",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/GeneralError"
+                      }
+                  }
+              }
+          },
+          "HealthCheck": {
+              "description": "Service is running",
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/components/schemas/HealthCheck"
+                      }
+                  }
+              }
+          }
+      },
+      "securitySchemes": {
+          "BearerAuth": {
+              "type": "http",
+              "scheme": "bearer",
+              "description": "The Neon API requires an API key to authorize your requests. If you are currently logged in to Neon, your requests are authenticated automatically. If you would like to use an API key instead, generate an API key and paste it below. Refer to our documentation to find out how to generate and use [API keys](https://neon.tech/docs/get-started-with-neon/using-api-keys/)."
+          }
+      },
+      "schemas": {
+          "PaginationResponse": {
+              "type": "object",
+              "properties": {
+                  "pagination": {
+                      "$ref": "#/components/schemas/Pagination"
+                  }
+              }
+          },
+          "Pagination": {
+              "description": "Cursor based pagination is used. The user must pass the cursor as is to the backend.\nFor more information about cursor based pagination, see\nhttps://learn.microsoft.com/en-us/ef/core/querying/pagination#keyset-pagination\n",
+              "type": "object",
+              "required": [
+                  "cursor",
+                  "limit"
+              ],
+              "properties": {
+                  "cursor": {
+                      "type": "string",
+                      "minLength": 1
+                  }
+              },
+              "example": {
+                  "cursor": "2022-12-07T00:45:05.262011Z"
+              }
+          },
+          "EmptyResponse": {
+              "type": "object",
+              "description": "Empty response.",
+              "properties": {}
+          },
+          "ApiKeyCreateRequest": {
+              "type": "object",
+              "required": [
+                  "key_name"
+              ],
+              "properties": {
+                  "key_name": {
+                      "type": "string",
+                      "description": "A user-specified API key name. This value is required when creating an API key."
+                  }
+              }
+          },
+          "ApiKeyCreateResponse": {
+              "type": "object",
+              "required": [
+                  "key",
+                  "id"
+              ],
+              "properties": {
+                  "id": {
+                      "description": "The API key ID",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "key": {
+                      "description": "The generated 64-bit token required to access the Neon API",
+                      "type": "string"
+                  }
+              }
+          },
+          "ApiKeyRevokeResponse": {
+              "type": "object",
+              "required": [
+                  "id",
+                  "name",
+                  "revoked",
+                  "last_used_from_addr"
+              ],
+              "properties": {
+                  "id": {
+                      "description": "The API key ID",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "name": {
+                      "description": "The user-specified API key name",
+                      "type": "string"
+                  },
+                  "revoked": {
+                      "description": "A `true` or `false` value indicating whether the API key is revoked",
+                      "type": "boolean"
+                  },
+                  "last_used_at": {
+                      "description": "A timestamp indicating when the API was last used",
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                  },
+                  "last_used_from_addr": {
+                      "description": "The IP address from which the API key was last used",
+                      "type": "string"
+                  }
+              }
+          },
+          "ApiKeysListResponseItem": {
+              "type": "object",
+              "required": [
+                  "last_used_from_addr",
+                  "id",
+                  "name",
+                  "created_at"
+              ],
+              "properties": {
+                  "id": {
+                      "description": "The API key ID",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "name": {
+                      "description": "The user-specified API key name",
+                      "type": "string"
+                  },
+                  "created_at": {
+                      "description": "A timestamp indicating when the API key was created",
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "last_used_at": {
+                      "description": "A timestamp indicating when the API was last used",
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                  },
+                  "last_used_from_addr": {
+                      "description": "The IP address from which the API key was last used",
+                      "type": "string"
+                  }
+              }
+          },
+          "Operation": {
+              "type": "object",
+              "required": [
+                  "id",
+                  "project_id",
+                  "action",
+                  "status",
+                  "failures_count",
+                  "created_at",
+                  "updated_at"
+              ],
+              "properties": {
+                  "id": {
+                      "type": "string",
+                      "format": "uuid"
+                  },
+                  "project_id": {
+                      "type": "string"
+                  },
+                  "branch_id": {
+                      "type": "string"
+                  },
+                  "endpoint_id": {
+                      "type": "string"
+                  },
+                  "action": {
+                      "$ref": "#/components/schemas/OperationAction"
+                  },
+                  "status": {
+                      "$ref": "#/components/schemas/OperationStatus"
+                  },
+                  "error": {
+                      "type": "string"
+                  },
+                  "failures_count": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "retry_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              },
+              "example": [
+                  {
+                      "id": "a07f8772-1877-4da9-a939-3a3ae62d1d8d",
+                      "project_id": "spring-example-302709",
+                      "branch_id": "br-wispy-meadow-118737",
+                      "endpoint_id": "ep-silent-smoke-806639",
+                      "action": "create_branch",
+                      "status": "running",
+                      "failures_count": 0,
+                      "created_at": "2022-11-08T23:33:16Z",
+                      "updated_at": "2022-11-08T23:33:20Z"
+                  },
+                  {
+                      "id": "d8ac46eb-a757-42b1-9907-f78322ee394e",
+                      "project_id": "spring-example-302709",
+                      "branch_id": "br-wispy-meadow-118737",
+                      "endpoint_id": "ep-silent-smoke-806639",
+                      "action": "start_compute",
+                      "status": "finished",
+                      "failures_count": 0,
+                      "created_at": "2022-11-15T20:02:00Z",
+                      "updated_at": "2022-11-15T20:02:02Z"
+                  }
+              ]
+          },
+          "OperationResponse": {
+              "type": "object",
+              "required": [
+                  "operation"
+              ],
+              "properties": {
+                  "operation": {
+                      "$ref": "#/components/schemas/Operation"
+                  }
+              }
+          },
+          "OperationsResponse": {
+              "type": "object",
+              "required": [
+                  "operations"
+              ],
+              "properties": {
+                  "operations": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Operation"
+                      }
+                  }
+              }
+          },
+          "OperationAction": {
+              "type": "string",
+              "enum": [
+                  "create_compute",
+                  "create_timeline",
+                  "start_compute",
+                  "suspend_compute",
+                  "apply_config",
+                  "check_availability",
+                  "delete_timeline",
+                  "create_branch",
+                  "tenant_migrate",
+                  "tenant_detach",
+                  "tenant_reattach",
+                  "replace_safekeeper"
+              ]
+          },
+          "OperationStatus": {
+              "type": "string",
+              "enum": [
+                  "running",
+                  "finished",
+                  "failed",
+                  "scheduling"
+              ]
+          },
+          "ProjectProvisioner": {
+            "x-enum-names": [
+              {
+                "name": "k8s-pod",
+                "value": "k8s_pod"
+              },
+              {
+                "name": "k8s-neonvm",
+                "value": "k8s_neonvm"
+              },
+              {
+                "name": "docker",
+                "value": "docker"
+              }
+            ]
+          },
+          "Project": {
+              "type": "object",
+              "required": [
+                  "id",
+                  "platform_id",
+                  "region_id",
+                  "name",
+                  "pg_version",
+                  "proxy_host",
+                  "branch_logical_size_limit",
+                  "store_passwords",
+                  "cpu_used_sec",
+                  "creation_source",
+                  "created_at",
+                  "updated_at"
+              ],
+              "properties": {
+                  "id": {
+                      "type": "string"
+                  },
+                  "platform_id": {
+                      "type": "string"
+                  },
+                  "region_id": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "provisioner": {
+                      "type": "string",
+                      "$ref": "#/components/schemas/ProjectProvisioner"
+                  },
+                  "default_endpoint_settings": {
+                      "$ref": "#/components/schemas/ProjectSettingsData"
+                  },
+                  "settings": {
+                      "$ref": "#/components/schemas/ProjectSettings"
+                  },
+                  "pg_version": {
+                      "$ref": "#/components/schemas/PgVersion"
+                  },
+                  "proxy_host": {
+                      "type": "string"
+                  },
+                  "branch_logical_size_limit": {
+                      "description": "Value is in MiB.\n",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "store_passwords": {
+                      "type": "boolean"
+                  },
+                  "cpu_used_sec": {
+                      "description": "CPU seconds used by all the endpoints of the project, including deleted ones.\nThis value is reset at the beginning of each billing period.\nExamples:\n1. An endpoint that uses 1 CPU for 1 second is equal to `cpu_used_sec=1`.\n2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to `cpu_used_sec=2`.\n",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "maintenance_starts_at": {
+                      "description": "If set, the project will be in maintenance mode from that time.\n",
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "creation_source": {
+                      "type": "string"
+                  },
+                  "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "synthetic_storage_size": {
+                      "description": "Experimental. Do not use this field yet!\nData storage size in bytes.\n",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "quota_reset_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              },
+              "example": {
+                  "id": "spring-example-302709",
+                  "platform_id": "aws",
+                  "region_id": "aws-us-east-2",
+                  "name": "spring-example-302709",
+                  "provisioner": "k8s-pod",
+                  "pg_version": 15,
+                  "proxy_host": "us-east-2.aws.neon.tech",
+                  "store_passwords": true,
+                  "creation_source": "console",
+                  "created_at": "2022-12-13T01:30:55Z",
+                  "updated_at": "2022-12-13T01:30:55Z"
+              }
+          },
+          "ProjectCreateRequestProperties": {
+            "properties": {
+              "settings": {
+                "$ref": "#/components/schemas/ProjectSettings"
+              },
+              "name": {
+                "type": "string"
+              },
+              "autoscaling_limit_min_cu": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "provisioner": {
+                "type": "string",
+                "$ref": "#/components/schemas/ProjectProvisioner"
+              },
+              "region_id": {
+                  "type": "string"
+              },
+              "default_endpoint_settings": {
+                  "$ref": "#/components/schemas/PgSettingsData"
+              },
+              "pg_version": {
+                  "$ref": "#/components/schemas/PgVersion"
+              },
+              "store_passwords": {
+                  "type": "boolean"
+              }
+            }
+          },
+          "ProjectCreateRequest": {
+              "type": "object",
+              "required": [
+                  "project"
+              ],
+              "properties": {
+                  "project": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/ProjectCreateRequestProperties"
+                  }
+              }
+          },
+          "ProjectUpdateRequestProperties": {
+            "properties": {
+              "settings": {
+                "$ref": "#/components/schemas/ProjectSettings"
+              },
+              "name": {
+                "type": "string"
+              },
+              "default_endpoint_settings": {
+                "$ref": "#/components/schemas/PgSettingsData"
+              }
+            }
+          },
+          "ProjectUpdateRequest": {
+              "type": "object",
+              "required": [
+                  "project"
+              ],
+              "properties": {
+                  "project": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/ProjectUpdateRequestProperties"
+                  }
+              }
+          },
+          "ProjectSettings": {
+              "type": "object",
+              "properties": {
+                  "quota": {
+                      "$ref": "#/components/schemas/ProjectSettingsQuota"
+                  }
+              }
+          },
+          "ProjectResponse": {
+              "type": "object",
+              "required": [
+                  "project"
+              ],
+              "properties": {
+                  "project": {
+                      "$ref": "#/components/schemas/Project"
+                  }
+              }
+          },
+          "ProjectsResponse": {
+              "type": "object",
+              "required": [
+                  "projects"
+              ],
+              "properties": {
+                  "projects": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Project"
+                      }
+                  }
+              }
+          },
+          "Branch": {
+              "type": "object",
+              "required": [
+                  "id",
+                  "project_id",
+                  "name",
+                  "current_state",
+                  "creation_source",
+                  "created_at",
+                  "updated_at",
+                  "primary"
+              ],
+              "properties": {
+                  "id": {
+                      "type": "string"
+                  },
+                  "project_id": {
+                      "type": "string"
+                  },
+                  "parent_id": {
+                      "type": "string"
+                  },
+                  "parent_lsn": {
+                      "type": "string"
+                  },
+                  "parent_timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "current_state": {
+                      "$ref": "#/components/schemas/BranchState"
+                  },
+                  "pending_state": {
+                      "$ref": "#/components/schemas/BranchState"
+                  },
+                  "logical_size": {
+                      "description": "Branch logical size in bytes",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "physical_size": {
+                      "description": "Branch physical size in bytes",
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "creation_source": {
+                      "type": "string"
+                  },
+                  "primary": {
+                      "type": "boolean"
+                  },
+                  "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              },
+              "example": {
+                  "id": "br-wispy-meadow-118737",
+                  "project_id": "spring-example-302709",
+                  "parent_id": "br-aged-salad-637688",
+                  "parent_lsn": "0/1DE2850",
+                  "name": "dev2",
+                  "current_state": "ready",
+                  "creation_source": "console",
+                  "created_at": "2022-11-30T19:09:48Z",
+                  "updated_at": "2022-12-01T19:53:05Z",
+                  "primary": true
+              }
+          },
+          "BranchState": {
+              "type": "string",
+              "enum": [
+                  "init",
+                  "ready"
+              ]
+          },
+          "BranchCreateRequestEndpointOptions": {
+              "type": "object",
+              "required": [
+                  "type"
+              ],
+              "properties": {
+                  "type": {
+                      "$ref": "#/components/schemas/EndpointType"
+                  },
+                  "autoscaling_limit_min_cu": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "autoscaling_limit_max_cu": {
+                      "type": "integer",
+                      "format": "int32"
+                  }
+              }
+          },
+          "BranchProperties": {
+            "properties": {
+              "parent_id": {
+                  "type": "string"
+              },
+              "name": {
+                  "type": "string"
+              },
+              "parent_lsn": {
+                  "type": "string"
+              },
+              "parent_timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+              }
+            }
+          },
+          "BranchCreateRequest": {
+              "type": "object",
+              "properties": {
+                  "endpoints": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/BranchCreateRequestEndpointOptions"
+                      }
+                  },
+                  "branch": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/BranchProperties"
+                  }
+              }
+          },
+          "BranchUpdateRequestProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              }
+            }
+          },
+          "BranchUpdateRequest": {
+              "type": "object",
+              "required": [
+                  "branch"
+              ],
+              "properties": {
+                  "branch": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/BranchUpdateRequestProperties"
+                  }
+              }
+          },
+          "BranchResponse": {
+              "type": "object",
+              "required": [
+                  "branch"
+              ],
+              "properties": {
+                  "branch": {
+                      "$ref": "#/components/schemas/Branch"
+                  }
+              }
+          },
+          "BranchesResponse": {
+              "type": "object",
+              "required": [
+                  "branches"
+              ],
+              "properties": {
+                  "branches": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Branch"
+                      }
+                  }
+              }
+          },
+          "ConnectionURI": {
+              "type": "object",
+              "required": [
+                  "connection_uri"
+              ],
+              "properties": {
+                  "connection_uri": {
+                      "description": "Connection URI is same as specified in https://www.postgresql.org/docs/current/libpq-connect.html#id-1.7.3.8.3.6\nIt is a ready to use string for psql or for DATABASE_URL environment variable.\n",
+                      "type": "string"
+                  }
+              }
+          },
+          "Endpoint": {
+              "type": "object",
+              "required": [
+                  "host",
+                  "id",
+                  "project_id",
+                  "branch_id",
+                  "region_id",
+                  "autoscaling_limit_max_cu",
+                  "autoscaling_limit_min_cu",
+                  "type",
+                  "current_state",
+                  "pooler_enabled",
+                  "pooler_mode",
+                  "disabled",
+                  "passwordless_access",
+                  "creation_source",
+                  "created_at",
+                  "updated_at",
+                  "settings",
+                  "proxy_host"
+              ],
+              "properties": {
+                  "host": {
+                      "description": "Hostname to connect to.\n",
+                      "type": "string"
+                  },
+                  "id": {
+                      "type": "string"
+                  },
+                  "project_id": {
+                      "type": "string"
+                  },
+                  "branch_id": {
+                      "type": "string"
+                  },
+                  "autoscaling_limit_min_cu": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "autoscaling_limit_max_cu": {
+                      "type": "integer",
+                      "format": "int32"
+                  },
+                  "region_id": {
+                      "type": "string"
+                  },
+                  "type": {
+                      "$ref": "#/components/schemas/EndpointType"
+                  },
+                  "current_state": {
+                      "$ref": "#/components/schemas/EndpointState"
+                  },
+                  "pending_state": {
+                      "$ref": "#/components/schemas/EndpointState"
+                  },
+                  "settings": {
+                      "$ref": "#/components/schemas/EndpointSettingsData"
+                  },
+                  "pooler_enabled": {
+                      "description": "Enable or disable connection pooling for this endpoint.",
+                      "type": "boolean"
+                  },
+                  "pooler_mode": {
+                      "$ref": "#/components/schemas/EndpointPoolerMode"
+                  },
+                  "disabled": {
+                      "description": "Restrict any connections to this endpoint.",
+                      "type": "boolean"
+                  },
+                  "passwordless_access": {
+                      "description": "Allow or restrict passwordless access to this endpoint.",
+                      "type": "boolean"
+                  },
+                  "last_active": {
+                      "description": "Timestamp of the last detected activity of the endpoint.",
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "creation_source": {
+                      "type": "string"
+                  },
+                  "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "proxy_host": {
+                      "description": "DEPRECATED. Use the \"host\" property instead.\n",
+                      "type": "string"
+                  }
+              },
+              "example": {
+                  "host": "ep-silent-smoke-806639.us-east-2.aws.neon.tech",
+                  "id": "ep-silent-smoke-806639",
+                  "project_id": "spring-example-302709",
+                  "branch_id": "br-wispy-meadow-118737",
+                  "autoscaling_limit_min_cu": 1,
+                  "autoscaling_limit_max_cu": 1,
+                  "region_id": "aws-us-east-2",
+                  "type": "read_write",
+                  "current_state": "init",
+                  "pending_state": "active",
+                  "settings": {
+                      "pg_settings": {}
+                  },
+                  "pooler_enabled": false,
+                  "pooler_mode": "transaction",
+                  "disabled": false,
+                  "passwordless_access": true,
+                  "creation_source": "console",
+                  "created_at": "2022-12-03T15:37:07Z",
+                  "updated_at": "2022-12-03T15:37:07Z",
+                  "proxy_host": "us-east-2.aws.neon.tech"
+              }
+          },
+          "EndpointState": {
+              "type": "string",
+              "enum": [
+                  "init",
+                  "active",
+                  "idle"
+              ]
+          },
+          "EndpointType": {
+              "description": "Endpoint type. Either \"read_write\" for read-write primary or \"read_only\" for read-only secondary.\n\"read_only\" endpoints are not yet implemented.\n",
+              "type": "string",
+              "enum": [
+                  "read_only",
+                  "read_write"
+              ]
+          },
+          "EndpointPoolerMode": {
+              "type": "string",
+              "enum": [
+                  "transaction"
+              ]
+          },
+          "EndpointProperties": {
+            "properties": {
+              "branch_id": {
+                  "type": "string"
+              },
+              "region_id": {
+                  "type": "string",
+                  "description": "Only the project region_id is allowed for now\n"
+              },
+              "type": {
+                  "$ref": "#/components/schemas/EndpointType"
+              },
+              "settings": {
+                  "$ref": "#/components/schemas/EndpointSettingsData"
+              },
+              "autoscaling_limit_min_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "pooler_enabled": {
+                  "type": "boolean"
+              },
+              "pooler_mode": {
+                  "$ref": "#/components/schemas/EndpointPoolerMode"
+              },
+              "disabled": {
+                  "type": "boolean",
+                  "description": "Restrict any connections to this endpoint."
+              },
+              "passwordless_access": {
+                  "type": "boolean",
+                  "description": "NOT IMPLEMENTED YET\n"
+              }
+          }
+          },
+          "EndpointCreateRequest": {
+              "type": "object",
+              "required": [
+                  "endpoint"
+              ],
+              "properties": {
+                  "endpoint": {
+                      "type": "object",
+                      "required": [
+                          "branch_id",
+                          "type",
+                          "name"
+                      ],
+                      "$ref": "#/components/schemas/EndpointProperties"
+                  }
+              }
+          },
+          "EndpointUpdateProperties": {
+            "properties": {
+              "branch_id": {
+                  "description": "Destination branch identifier. The destination branch must not have an exsiting read-write endpoint.\n",
+                  "type": "string"
+              },
+              "autoscaling_limit_min_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "autoscaling_limit_max_cu": {
+                  "type": "integer",
+                  "format": "int32"
+              },
+              "settings": {
+                  "$ref": "#/components/schemas/EndpointSettingsData"
+              },
+              "pooler_enabled": {
+                  "type": "boolean"
+              },
+              "pooler_mode": {
+                  "$ref": "#/components/schemas/EndpointPoolerMode"
+              },
+              "disabled": {
+                  "description": "Restrict any connections to this endpoint.",
+                  "type": "boolean"
+              },
+              "passwordless_access": {
+                  "description": "NOT IMPLEMENTED YET\n",
+                  "type": "boolean"
+              }
+          }
+          },
+          "EndpointUpdateRequest": {
+              "type": "object",
+              "required": [
+                  "endpoint"
+              ],
+              "properties": {
+                  "endpoint": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/EndpointUpdateProperties"
+                  }
+              }
+          },
+          "EndpointResponse": {
+              "type": "object",
+              "required": [
+                  "endpoint"
+              ],
+              "properties": {
+                  "endpoint": {
+                      "$ref": "#/components/schemas/Endpoint"
+                  }
+              }
+          },
+          "ConnectionURIsResponse": {
+              "type": "object",
+              "required": [
+                  "connection_uris"
+              ],
+              "properties": {
+                  "connection_uris": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/ConnectionURI"
+                      }
+                  }
+              }
+          },
+          "ConnectionURIResponse": {
+              "type": "object",
+              "required": [
+                  "connection_uri"
+              ],
+              "properties": {
+                  "connection_uri": {
+                      "$ref": "#/components/schemas/ConnectionURI"
+                  }
+              }
+          },
+          "EndpointsResponse": {
+              "type": "object",
+              "required": [
+                  "endpoints"
+              ],
+              "properties": {
+                  "endpoints": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Endpoint"
+                      }
+                  }
+              }
+          },
+          "EndpointPasswordlessSessionAuthRequest": {
+              "type": "object",
+              "required": [
+                  "session_id"
+              ],
+              "properties": {
+                  "session_id": {
+                      "type": "string"
+                  }
+              }
+          },
+          "Duration": {
+              "description": "A Duration represents the elapsed time between two instants\nas an int64 nanosecond count. The representation limits the\nlargest representable duration to approximately 290 years.",
+              "type": "integer",
+              "format": "int64"
+          },
+          "StatementResult": {
+              "type": "object",
+              "required": [
+                  "query"
+              ],
+              "properties": {
+                  "data": {
+                      "$ref": "#/components/schemas/StatementData"
+                  },
+                  "error": {
+                      "type": "string"
+                  },
+                  "explain_data": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/ExplainData"
+                      }
+                  },
+                  "query": {
+                      "type": "string"
+                  }
+              }
+          },
+          "StatementData": {
+              "type": "object",
+              "required": [
+                  "truncated"
+              ],
+              "properties": {
+                  "fields": {
+                      "type": "array",
+                      "items": {
+                          "type": "string"
+                      }
+                  },
+                  "rows": {
+                      "type": "array",
+                      "items": {
+                          "type": "array",
+                          "items": {
+                              "type": "string"
+                          }
+                      }
+                  },
+                  "truncated": {
+                      "type": "boolean"
+                  }
+              }
+          },
+          "ExplainData": {
+              "type": "object",
+              "required": [
+                  "QUERY PLAN"
+              ],
+              "properties": {
+                  "QUERY PLAN": {
+                      "type": "string"
+                  }
+              }
+          },
+          "Role": {
+              "type": "object",
+              "required": [
+                  "branch_id",
+                  "name",
+                  "created_at",
+                  "updated_at"
+              ],
+              "properties": {
+                  "branch_id": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "password": {
+                      "type": "string"
+                  },
+                  "protected": {
+                      "type": "boolean"
+                  },
+                  "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              },
+              "example": {
+                  "branch_id": "br-wispy-meadow-118737",
+                  "name": "casey",
+                  "protected": false,
+                  "created_at": "2022-11-23T17:42:25Z",
+                  "updated_at": "2022-11-23T17:42:25Z"
+              }
+          },
+          "RoleCreateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              }
+          }
+          },
+          "RoleCreateRequest": {
+              "type": "object",
+              "required": [
+                  "role"
+              ],
+              "properties": {
+                  "role": {
+                      "type": "object",
+                      "required": [
+                          "name"
+                      ],
+                      "$ref": "#/components/schemas/RoleCreateProperties"
+                  }
+              }
+          },
+          "RoleResponse": {
+              "type": "object",
+              "required": [
+                  "role"
+              ],
+              "properties": {
+                  "role": {
+                      "$ref": "#/components/schemas/Role"
+                  }
+              }
+          },
+          "RolesResponse": {
+              "type": "object",
+              "required": [
+                  "roles"
+              ],
+              "properties": {
+                  "roles": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Role"
+                      }
+                  }
+              }
+          },
+          "RolePasswordResponse": {
+              "type": "object",
+              "required": [
+                  "password"
+              ],
+              "properties": {
+                  "password": {
+                      "type": "string"
+                  }
+              }
+          },
+          "Database": {
+              "type": "object",
+              "required": [
+                  "id",
+                  "branch_id",
+                  "name",
+                  "owner_name",
+                  "created_at",
+                  "updated_at"
+              ],
+              "properties": {
+                  "id": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "branch_id": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "owner_name": {
+                      "type": "string"
+                  },
+                  "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  },
+                  "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                  }
+              },
+              "example": {
+                  "id": 834686,
+                  "branch_id": "br-wispy-meadow-118737",
+                  "name": "neondb",
+                  "owner_name": "casey",
+                  "created_at": "2022-11-30T18:25:15Z",
+                  "updated_at": "2022-11-30T18:25:15Z"
+              }
+          },
+          "DatabaseCreateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              },
+              "owner_name": {
+                  "type": "string"
+              }
+          }
+          },
+          "DatabaseCreateRequest": {
+              "type": "object",
+              "required": [
+                  "database"
+              ],
+              "properties": {
+                  "database": {
+                      "type": "object",
+                      "required": [
+                          "name",
+                          "owner_name"
+                      ],
+                      "$ref": "#/components/schemas/DatabaseCreateProperties"
+                  }
+              }
+          },
+          "DatabaseUpdateProperties": {
+            "properties": {
+              "name": {
+                  "type": "string"
+              },
+              "owner_name": {
+                  "type": "string"
+              }
+            }
+          },
+          "DatabaseUpdateRequest": {
+              "type": "object",
+              "required": [
+                  "database"
+              ],
+              "properties": {
+                  "database": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/DatabaseUpdateProperties"
+                  }
+              }
+          },
+          "DatabaseResponse": {
+              "type": "object",
+              "required": [
+                  "database"
+              ],
+              "properties": {
+                  "database": {
+                      "$ref": "#/components/schemas/Database"
+                  }
+              }
+          },
+          "DatabasesResponse": {
+              "type": "object",
+              "required": [
+                  "databases"
+              ],
+              "properties": {
+                  "databases": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/Database"
+                      }
+                  }
+              }
+          },
+          "ConsoleSettingsRaw": {
+              "type": "object",
+              "properties": {
+                  "project_creation_forbidden": {
+                      "description": "management",
+                      "type": "boolean"
+                  },
+                  "proxy_host": {
+                      "type": "string"
+                  }
+              }
+          },
+          "CurrentUserAuthAccount": {
+              "type": "object",
+              "required": [
+                  "provider",
+                  "email",
+                  "name",
+                  "login",
+                  "image"
+              ],
+              "properties": {
+                  "email": {
+                      "type": "string"
+                  },
+                  "image": {
+                      "type": "string"
+                  },
+                  "login": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "provider": {
+                      "type": "string"
+                  }
+              }
+          },
+          "CurrentUserInfoResponse": {
+              "type": "object",
+              "required": [
+                  "id",
+                  "email",
+                  "login",
+                  "name",
+                  "image",
+                  "projects_limit",
+                  "endpoints_limit",
+                  "branches_limit",
+                  "max_autoscaling_limit",
+                  "auth_accounts",
+                  "compute_seconds_limit"
+              ],
+              "properties": {
+                  "auth_accounts": {
+                      "type": "array",
+                      "items": {
+                          "$ref": "#/components/schemas/CurrentUserAuthAccount"
+                      }
+                  },
+                  "email": {
+                      "type": "string"
+                  },
+                  "id": {
+                      "type": "string"
+                  },
+                  "image": {
+                      "type": "string"
+                  },
+                  "login": {
+                      "type": "string"
+                  },
+                  "name": {
+                      "type": "string"
+                  },
+                  "projects_limit": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "endpoints_limit": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "branches_limit": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "max_autoscaling_limit": {
+                      "type": "integer",
+                      "format": "int64"
+                  },
+                  "compute_seconds_limit": {
+                      "type": "integer",
+                      "format": "int64"
+                  }
+              }
+          },
+          "EndpointSettingsData": {
+              "type": "object",
+              "description": "Endpoint settings is a collection of settings for an Endpoint",
+              "properties": {
+                  "pg_settings": {
+                      "$ref": "#/components/schemas/PgSettingsData"
+                  }
+              }
+          },
+          "ProjectSettingsQuota": {
+              "type": "object",
+              "description": "The consumption quota of a project.\nAfter the quota has been exceeded, it is impossible to use the project until either:\n* Neon cloud resets the calculated consumption,\n* or the user increases quota for the project.\nThe Neon cloud resets the quota in the beginning of the billing period.\n\nIf the quota is not set, the project can use as many resources as needed.\n",
+              "properties": {
+                  "cpu_quota_sec": {
+                      "description": "The total amount of CPU seconds allowed to be spent by the endpoints of the project.\n",
+                      "type": "integer",
+                      "format": "int64",
+                      "minimum": 1
+                  }
+              }
+          },
+          "ProjectSettingsData": {
+              "type": "object",
+              "description": "ProjectSettingsData is a collection of settings for a Project",
+              "properties": {
+                  "pg_settings": {
+                      "$ref": "#/components/schemas/PgSettingsData"
+                  }
+              }
+          },
+          "InlineString": {
+            "type": "string"
+          },
+          "PgSettingsData": {
+              "description": "PgSettingsData is a raw representation of Postgres settings",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/components/schemas/InlineString"
+              }
+          },
+          "PgVersion": {
+              "description": "Major version of the Postgres",
+              "type": "integer"
+          },
+          "HealthCheck": {
+              "type": "object",
+              "required": [
+                  "status"
+              ],
+              "properties": {
+                  "status": {
+                      "description": "Service status",
+                      "type": "string"
+                  }
+              },
+              "example": {
+                  "status": "ok"
+              }
+          },
+          "GeneralError": {
+              "type": "object",
+              "description": "General Error",
+              "required": [
+                  "message",
+                  "code"
+              ],
+              "properties": {
+                  "code": {
+                      "$ref": "#/components/schemas/ErrorCode"
+                  },
+                  "message": {
+                      "description": "Description of error that happened",
+                      "type": "string"
+                  }
+              }
+          },
+          "ErrorCode": {
+              "type": "string"
+          },
+          "ProjectOperations": {
+              "allOf": [
+                  {
+                      "$ref": "#/components/schemas/ProjectResponse"
+                  },
+                  {
+                      "$ref": "#/components/schemas/OperationsResponse"
+                  }
+              ]
+          },
+          "BranchOperations": {
+              "allOf": [
+                  {
+                      "$ref": "#/components/schemas/BranchResponse"
+                  },
+                  {
+                      "$ref": "#/components/schemas/OperationsResponse"
+                  }
+              ]
+          },
+          "EndpointOperations": {
+              "allOf": [
+                  {
+                      "$ref": "#/components/schemas/EndpointResponse"
+                  },
+                  {
+                      "$ref": "#/components/schemas/OperationsResponse"
+                  }
+              ]
+          },
+          "DatabaseOperations": {
+              "allOf": [
+                  {
+                      "$ref": "#/components/schemas/DatabaseResponse"
+                  },
+                  {
+                      "$ref": "#/components/schemas/OperationsResponse"
+                  }
+              ]
+          },
+          "RoleOperations": {
+              "allOf": [
+                  {
+                      "$ref": "#/components/schemas/RoleResponse"
+                  },
+                  {
+                      "$ref": "#/components/schemas/OperationsResponse"
+                  }
+              ]
+          }
+      }
+  }
+}
