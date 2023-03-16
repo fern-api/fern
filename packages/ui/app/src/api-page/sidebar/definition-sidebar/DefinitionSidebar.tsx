@@ -14,7 +14,7 @@ export const DefinitionSidebar: React.FC = () => {
     return (
         <ApiDefinitionContextProvider environmentId={selectedEnvironmentId}>
             <ApiDefinitionSidebarContextProvider environmentId={selectedEnvironmentId}>
-                <div className="flex-1 flex flex-col min-w-0 bg-stone-100">
+                <div className="flex-1 flex flex-col min-w-0 bg-white">
                     <div className="flex flex-col m-3 gap-3">
                         <InputGroup leftIcon={IconNames.SEARCH} placeholder="Search..." />
                         <EnvironmentSelect
