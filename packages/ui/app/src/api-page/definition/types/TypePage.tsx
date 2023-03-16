@@ -10,14 +10,10 @@ export declare namespace TypePage {
 
 export const TypePage: React.FC<TypePage.Props> = ({ type }) => {
     return (
-        <DefinitionItemPage
-            title={type.name}
-            docs={type.docs}
-            leftContent={
-                <div className="flex mt-4">
-                    <TypeDefinition typeDefinition={type.shape} defaultIsCollapsed={false} />
-                </div>
-            }
-        />
+        <DefinitionItemPage title={type.name} docs={type.docs}>
+            <div className="flex mt-4">
+                <TypeDefinition typeDefinition={type.shape} defaultIsCollapsed={false} />
+            </div>
+        </DefinitionItemPage>
     );
 };

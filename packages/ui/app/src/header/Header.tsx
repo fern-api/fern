@@ -19,7 +19,7 @@ export const Header: React.FC<Header.Props> = ({ centerContent }) => {
     const goHome = useNavigateTo(FernRoutes.HOME.absolutePath);
 
     return (
-        <div className={classNames("flex text-white bg-zinc-900 p-2", Classes.DARK)}>
+        <div className={classNames("flex text-white bg-[#131615] p-2", Classes.DARK)}>
             <div className="flex flex-1 items-center gap-2">
                 <div className="cursor-pointer" onClick={goHome}>
                     <FernLogo size={30} />

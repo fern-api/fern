@@ -40,7 +40,7 @@ export const OrganizationTabBarItem: React.FC<OrganizationTabBarItem.Props> = ({
         >
             <div
                 className={classNames("flex px-2 py-1 gap-2 items-center rounded", {
-                    "hover:bg-neutral-100": !isSelected,
+                    "hover:bg-[#eaeaea]": !isSelected,
                 })}
             >
                 <Icon

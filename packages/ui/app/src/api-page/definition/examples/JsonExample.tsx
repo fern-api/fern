@@ -1,38 +1,46 @@
-import { Collapse } from "@blueprintjs/core";
-import { useBooleanState } from "@fern-api/react-commons";
-import { useMemo } from "react";
+import { Icon } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
+import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
+import classNames from "classnames";
+import { useCallback, useMemo } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { a11yDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { irBlack } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 export declare namespace JsonExample {
     export interface Props {
-        title: string;
-        rightLabel?: JSX.Element | string;
         json: unknown;
     }
 }
 
-export const JsonExample: React.FC<JsonExample.Props> = ({ title, rightLabel, json }) => {
+export const JsonExample: React.FC<JsonExample.Props> = ({ json }) => {
     const jsonString = useMemo(() => JSON.stringify(json, undefined, 4), [json]);
 
-    const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(false);
+    const { isHovering, ...containerCallbacks } = useIsHovering();
+
+    const { value: isCopied, setTrue: setIsCopied, setFalse: setIsNotCopied } = useBooleanState(false);
+
+    const onClickCopy = useCallback(async () => {
+        setIsCopied();
+        await navigator.clipboard.writeText(jsonString);
+    }, [jsonString, setIsCopied]);
 
     return (
-        <div className="flex flex-col min-h-[25px] rounded overflow-hidden bg-gray-700">
-            <div
-                className="flex justify-between text-slate-200 px-1.5 py-0.5 cursor-pointer"
-                onClick={toggleIsCollapsed}
-            >
-                <div>{title}</div>
-                {rightLabel != null && <div>{rightLabel}</div>}
-            </div>
-            <div className="overflow-y-auto overscroll-contain text-xs">
-                <Collapse isOpen={!isCollapsed}>
-                    <SyntaxHighlighter language="json" style={a11yDark}>
-                        {jsonString}
-                    </SyntaxHighlighter>
-                </Collapse>
-            </div>
+        <div {...containerCallbacks} className="relative rounded overflow-hidden">
+            <SyntaxHighlighter language="json" style={irBlack}>
+                {jsonString}
+            </SyntaxHighlighter>
+            {isHovering && (
+                <div
+                    className={classNames(
+                        "absolute top-2 right-2 cursor-pointer",
+                        isCopied ? "text-green-500" : "text-gray-500 hover:text-gray-300"
+                    )}
+                    onClick={onClickCopy}
+                    onMouseLeave={setIsNotCopied}
+                >
+                    <Icon icon={isCopied ? IconNames.TICK : IconNames.CLIPBOARD} />
+                </div>
+            )}
         </div>
     );
 };

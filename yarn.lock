@@ -4750,7 +4750,7 @@ __metadata:
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/registry": 0.0.217
     "@fontsource/ibm-plex-mono": ^4.5.8
-    "@fontsource/noto-sans": ^4.5.9
+    "@fontsource/source-sans-pro": ^4.5.11
     "@tanstack/react-query": ^4.24.10
     "@tanstack/react-query-devtools": ^4.24.12
     "@types/jest": ^29.0.3
@@ -5110,17 +5110,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/noto-sans@npm:^4.5.9":
-  version: 4.5.11
-  resolution: "@fontsource/noto-sans@npm:4.5.11"
-  checksum: d11ec102ac9b22e3584ad77e9d0069ef8b18cf2f4dfc12f9968456be0f7da5aa95585e853988289c29746e7e04bbaaadf253646d1c9449130ac9f37211b8af15
-  languageName: node
-  linkType: hard
-
 "@fontsource/roboto-mono@npm:^4.5.8":
   version: 4.5.8
   resolution: "@fontsource/roboto-mono@npm:4.5.8"
   checksum: 0912b468ae5285d992f81f27c1b59dabf7a7a0a6ab050b5af38947985ba7fe776de8050b89361aa7c3c4730def2567cb305e83bd631d1a4c12791dda7faab21e
+  languageName: node
+  linkType: hard
+
+"@fontsource/source-sans-pro@npm:^4.5.11":
+  version: 4.5.11
+  resolution: "@fontsource/source-sans-pro@npm:4.5.11"
+  checksum: 550d5bdc43d3656cb215da841212a4126365f068fd6a242a2a61639e6e7bcd18878f91784ec51cba0ce406d0bda5ac5569ad458a383ce056fbdcb92be4370e74
   languageName: node
   linkType: hard
 

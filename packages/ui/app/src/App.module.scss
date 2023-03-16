@@ -1,8 +1,15 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 body {
-    overscroll-behavior-y: none;
-    font-family: "Noto Sans";
+    overscroll-behavior: none;
+    font-family: "Source Sans Pro";
+
+    :global {
+        code,
+        pre {
+            font-family: "IBM Plex Mono";
+        }
+    }
 }
 
 .app {

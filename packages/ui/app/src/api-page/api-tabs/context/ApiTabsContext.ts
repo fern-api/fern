@@ -6,6 +6,7 @@ export const ApiTabsContext = React.createContext<() => ApiTabsContextValue>(() 
 
 export interface ApiTabsContextValue {
     tabs: Tab[];
+    selectedTab: Tab | undefined;
     openTab: (path: string, opts?: OpenTabOpts) => void;
     closeTab: (path: string) => void;
     makeTabLongLived: (path: string) => void;

@@ -5,6 +5,7 @@ import React, { useCallback, useMemo } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { Tab } from "./context/ApiTabsContext";
 import { useApiTabsContext } from "./context/useApiTabsContext";
+import { TabBarBottomLine } from "./TabBarBottomLine";
 import { TabBarItemWrapper } from "./TabBarItemWrapper";
 import { usePathTitle } from "./usePathTitle";
 
@@ -40,25 +41,21 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
     const { isHovering, ...hoveringCallbacks } = useIsHovering();
 
     return (
-        <TabBarItemWrapper className="flex min-w-[125px] max-w-[200px] bg-zinc-900">
+        <TabBarItemWrapper className="min-w-[125px] max-w-[200px] border-r border-gray-300">
+            {tab.isSelected ? <div className="absolute top-0 left-0 right-0 h-1 bg-green-500" /> : <TabBarBottomLine />}
             <div
                 key={tab.path}
                 className={classNames(
-                    "relative flex flex-1 items-center justify-between px-3 select-none cursor-pointer min-w-0 gap-3",
+                    "flex flex-1 items-center justify-between px-3 select-none cursor-pointer min-w-0 gap-3 pt-1",
                     {
                         italic: tab.isEphemeral,
+                        "bg-gray-200": !tab.isSelected,
                     }
                 )}
                 onClick={onClick}
                 onDoubleClick={onDoubleClick}
                 {...hoveringCallbacks}
             >
-                <div
-                    className={classNames(
-                        "absolute top-0 left-0 right-0",
-                        tab.isSelected ? "h-1 bg-green-500" : "h-px bg-gray-600"
-                    )}
-                />
                 <Text
                     ellipsize
                     className={classNames("whitespace-nowrap", {
@@ -70,7 +67,7 @@ export const ApiTabBarItem: React.FC<ApiTabBarItem.Props> = ({ tab }) => {
                         : "SKELETON_TEXT"}
                 </Text>
                 <div
-                    className={classNames("text-slate-300 hover:text-white", {
+                    className={classNames("text-gray-400 hover:text-black", {
                         invisible: !tab.isSelected && !isHovering,
                     })}
                     onClick={onClickCross}

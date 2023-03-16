@@ -35,7 +35,6 @@ export const ApiEnvironmentsSummary: React.FC<ApiEnvironmentsSummary.Props> = ({
                     return (
                         <ApiEnvironmentRow
                             key={environment.id}
-                            apiMetadata={apiMetadata}
                             environment={environment}
                             deploymentInfo={deploymentInfo}
                         />

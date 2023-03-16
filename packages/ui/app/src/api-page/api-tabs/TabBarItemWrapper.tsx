@@ -7,5 +7,5 @@ export declare namespace TabBarItemWrapper {
 }
 
 export const TabBarItemWrapper: React.FC<TabBarItemWrapper.Props> = ({ className, children }) => {
-    return <div className={classNames("flex", className)}>{children}</div>;
+    return <div className={classNames("flex relative", className)}>{children}</div>;
 };

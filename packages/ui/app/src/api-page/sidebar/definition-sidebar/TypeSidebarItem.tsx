@@ -1,4 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { useCallback } from "react";
+import { IoMdCube } from "react-icons/io";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { useTypePath } from "../../routes/useTypePath";
 import { useApiDefinitionSidebarContext } from "./context/useApiDefinitionSidebarContext";
@@ -17,5 +19,9 @@ export const TypeSidebarItem: React.FC<TypeSidebarItem.Props> = ({ typeId }) => 
     const { environmentId } = useApiDefinitionSidebarContext();
     const path = useTypePath({ environmentId, typeId });
 
-    return <SidebarItem path={path} title={type.name} />;
+    const renderIcon = useCallback(({ isSelected }: { isSelected: boolean }) => {
+        return <IoMdCube color={isSelected ? "green" : "#666"} size={16} />;
+    }, []);
+
+    return <SidebarItem path={path} title={type.name} icon={renderIcon} />;
 };
