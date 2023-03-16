@@ -1,0 +1,5 @@
+types:
+  MyObject:
+    properties:
+      a: date
+      b: string

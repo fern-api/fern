@@ -288,6 +288,12 @@ function convertPrimitiveExample({
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example));
         },
+        date: () => {
+            if (typeof example !== "string") {
+                throw new Error("Example is not a string");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example));
+        },
         integer: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
