@@ -28,7 +28,7 @@ export const ApiPageContents: React.FC = () => {
                 <Pane
                     defaultSize="275px"
                     minimumSize="200px"
-                    maximumSize="50%"
+                    maximumSize="30%"
                     resizeHandlePosition={ResizeHandlePosition.RIGHT}
                     resizeHandleLineColor="lightgray"
                 >

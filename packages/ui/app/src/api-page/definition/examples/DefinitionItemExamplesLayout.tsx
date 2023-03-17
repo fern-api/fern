@@ -13,7 +13,7 @@ export const DefinitionItemExamplesLayout: React.FC<DefinitionItemExamplesLayout
     children,
 }) => {
     return (
-        <div className={classNames(Classes.DARK, "flex-1 flex flex-col bg-[#272A2A]")}>
+        <div className={classNames(Classes.DARK, "flex-1 flex flex-col bg-[#272A2A] min-w-0")}>
             <div className="relative h-9 flex-shrink-0 mr-3">
                 <div
                     className={classNames(
