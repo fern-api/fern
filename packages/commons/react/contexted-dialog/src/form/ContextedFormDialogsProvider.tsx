@@ -1,6 +1,6 @@
 import { keys } from "@fern-api/core-utils";
 import { useBooleanState } from "@fern-api/react-commons";
-import { useCallback, useMemo } from "react";
+import { PropsWithChildren, useCallback, useMemo } from "react";
 import { createContextedDialogsProvider } from "../createContextedDialogsProvider";
 import { SingleContextedDialogProviderProps, SingleContextedDialogProviderRenderer } from "../types";
 import { typedCapitalize } from "../utils";
@@ -15,7 +15,7 @@ import {
 export function createContextedFormDialogsProvider<T>(formDialogs: {
     [K in keyof T]: SingleContextedFormDialogSetup<T[K]>;
 }): {
-    ContextedFormDialogsProvider: React.ComponentType;
+    ContextedFormDialogsProvider: React.ComponentType<PropsWithChildren>;
 } & OpenFormDialogHooks<keyof T & string> {
     const dialogs = {} as { [k in keyof T]: SingleContextedDialogProviderRenderer };
 

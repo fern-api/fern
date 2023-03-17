@@ -2,7 +2,7 @@ import { RenderFormDialogArgs, SingleContextedFormDialogProviderRenderer } from 
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback, useMemo, useState } from "react";
 import { useAddEnvironmentToQueryCache } from "../../../../queries/useAllEnvironments";
-import { useCurrentOrganizationIdOrThrow } from "../../../../routes/useCurrentOrganization";
+import { useCurrentOrganizationId } from "../../../../routes/useCurrentOrganization";
 import { useRegistryService } from "../../../../services/useRegistryService";
 import { CreateEnvironmentForm } from "./form/CreateEnvironmentForm";
 import { CreateEnvironmentFormState } from "./types";
@@ -12,32 +12,38 @@ export const INITIAL_ENVIRONMENT_FORM_STATE: CreateEnvironmentFormState = {
     description: "",
 };
 
+interface CreatePayload extends FernRegistry.CreateEnvironmentRequest {
+    organizationId: FernRegistry.OrgId;
+}
+
 export const CreateEnvironmentFormDialogProviderRenderer: SingleContextedFormDialogProviderRenderer<
     CreateEnvironmentFormState
 > = ({ Provider, children }) => {
     const [state, setState] = useState<CreateEnvironmentFormState>();
 
-    const createPayload = useMemo((): Required<FernRegistry.CreateEnvironmentRequest> | undefined => {
-        if (state == null || state.environmentId.length === 0) {
+    const organizationId = useCurrentOrganizationId();
+
+    const createPayload = useMemo((): Required<CreatePayload> | undefined => {
+        if (organizationId == null || state == null || state.environmentId.length === 0) {
             return undefined;
         }
         return {
             id: FernRegistry.EnvironmentId(state.environmentId),
             description: state.description,
+            organizationId,
         };
-    }, [state]);
+    }, [organizationId, state]);
 
-    const organizationId = useCurrentOrganizationIdOrThrow();
     const registryService = useRegistryService();
     const onClickCreate = useCallback(
-        async (createPayload: FernRegistry.CreateEnvironmentRequest) => {
+        async ({ organizationId, ...createPayload }: CreatePayload) => {
             const response = await registryService.environment.create(organizationId, createPayload);
             if (!response.ok) {
                 // eslint-disable-next-line @typescript-eslint/no-throw-literal
                 throw response.error;
             }
         },
-        [organizationId, registryService.environment]
+        [registryService.environment]
     );
 
     const renderForm = useCallback((definedState: CreateEnvironmentFormState, args: RenderFormDialogArgs) => {
