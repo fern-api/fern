@@ -11,7 +11,7 @@ export declare namespace TypePreview {
 
 export const TypePreview: React.FC<TypePreview.Props> = ({ type, includeContainerItems = false }) => {
     return (
-        <span className="text-xs text-green-700">
+        <span className="text-green-700">
             <TypePreviewPart type={type} includeContainerItems={includeContainerItems} />
         </span>
     );

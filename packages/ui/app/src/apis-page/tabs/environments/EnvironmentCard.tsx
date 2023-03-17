@@ -72,7 +72,7 @@ export const EnvironmentCard: React.FC<EnvironmentCard.Props> = ({ environment }
                                 <span className="text-green-300">fern</span>
                                 &nbsp;
                                 <span className="text-gray-100">
-                                    {"register --environment "}
+                                    {"register-v2 --environment "}
                                     {environment.type === "loaded" &&
                                         (environment.value.id.includes(" ")
                                             ? `"${environment.value.id}"`

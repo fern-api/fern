@@ -20,22 +20,24 @@ export const ContainerTypePreviewPart: React.FC<ContainerTypePreviewPart.Props> 
     }
 
     return (
-        <span>
-            <span>
+        <div className="flex">
+            <div>
                 {containerName}
                 {"<"}
-            </span>
+            </div>
             {itemTypes.map((type, index) => (
                 <React.Fragment key={index}>
                     {index > 0 && (
                         <>
-                            ,<span className="inline-block w-1" />
+                            ,<div className="w-1" />
                         </>
                     )}
-                    <TypePreviewPart type={type} includeContainerItems={includeContainerItems} />
+                    <div className="mx-1">
+                        <TypePreviewPart type={type} includeContainerItems={includeContainerItems} />
+                    </div>
                 </React.Fragment>
             ))}
-            <span>{">"}</span>
-        </span>
+            <div>{">"}</div>
+        </div>
     );
 };
