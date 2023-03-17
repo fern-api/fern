@@ -18,12 +18,9 @@ export function initializePosthog(apiKey: string): void {
     }
 }
 
-export function identifyUser(userId: string, details?: Record<string, unknown>): void {
+export function identifyUser(userId: string): void {
     safeAccessPosthog(() => {
         posthog.identify(userId);
-        if (details != null) {
-            posthog.people.set(details);
-        }
     });
 }
 
