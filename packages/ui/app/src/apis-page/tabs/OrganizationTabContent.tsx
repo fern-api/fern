@@ -1,3 +1,4 @@
+import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
 import { useMemo } from "react";
 import { ApisTab } from "./apis/ApisTab";
@@ -16,7 +17,7 @@ export const OrganizationTabContent: React.FC = () => {
                 return <EnvironmentsTab />;
             case OrganizationTabId.MEMBERS:
             case OrganizationTabId.ACCESS_TOKENS:
-                return null;
+                return <NonIdealState title="This page is a work in progress" />;
             default:
                 assertNever(selectedTabId);
         }

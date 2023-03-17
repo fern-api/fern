@@ -24,7 +24,7 @@ export const OrganizationTabBar: React.FC = () => {
                 case OrganizationTabId.MEMBERS:
                     return mapLoadable(organization, (loadedOrganization) => loadedOrganization.users.length);
                 case OrganizationTabId.ACCESS_TOKENS:
-                    return loaded(17);
+                    return loaded(0);
                 default:
                     assertNever(tabId);
             }

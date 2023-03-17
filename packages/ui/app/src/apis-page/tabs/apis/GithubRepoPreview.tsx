@@ -24,7 +24,7 @@ export const GithubRepoPreview: React.FC<GithubRepoPreview.Props> = ({ className
         >
             <FaGithub className="mr-1 flex-shrink-0" size={16} />
             <Text ellipsize className="font-bold text-xs">
-                fern-api/fern-definition-registry
+                {"<placeholder github repo link>"}
             </Text>
             {isHovering && <Icon className="ml-1" size={12} icon={IconNames.ARROW_TOP_RIGHT} />}
         </div>
