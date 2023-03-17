@@ -1,4 +1,5 @@
 import { NonIdealState, Spinner } from "@blueprintjs/core";
+import { Pane, ResizeHandlePosition, SplitView } from "@fern-api/split-view";
 import classNames from "classnames";
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -34,7 +35,7 @@ export const ApiTabs: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-1 min-w-0">
+        <SplitView orientation="horizontal">
             <div className="flex flex-col flex-1 min-w-0">
                 <ApiTabBar />
                 <div className="flex flex-col flex-1 min-h-0 relative">
@@ -53,11 +54,16 @@ export const ApiTabs: React.FC = () => {
                     })}
                 </div>
             </div>
-            <div className="flex w-1/3">
+            <Pane
+                defaultSize="33%"
+                minimumSize="20%"
+                maximumSize="60%"
+                resizeHandlePosition={ResizeHandlePosition.LEFT}
+            >
                 <ApiDefinitionContextProviderForTab tab={selectedTab}>
                     <TabExamples tab={selectedTab} />
                 </ApiDefinitionContextProviderForTab>
-            </div>
-        </div>
+            </Pane>
+        </SplitView>
     );
 };

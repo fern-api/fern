@@ -6,7 +6,7 @@ $handle-size: 6px;
 .resizeHandle {
     position: absolute;
     display: flex;
-    z-index: 1;
+    z-index: 9999;
 
     &.top,
     &.bottom {
@@ -94,7 +94,7 @@ $handle-size: 6px;
     &.isDragging,
     &.isHovering {
         .resizeHandleInner {
-            background-color: rgba(#1389fd, 0.75);
+            background-color: $blue4;
 
             .resizeHandleLine {
                 // use !important to override css-in-html
