@@ -28,7 +28,7 @@ export const CustomAuthContextProvider: React.FC<CustomAuthContextProvider.Props
 
     useEffect(() => {
         if (isLoaded(currentUser) && currentUser.value?.sub != null) {
-            identifyPosthogUser(currentUser.value.sub, currentUser.value);
+            identifyPosthogUser(currentUser.value.sub);
         }
     }, [currentUser]);
 
