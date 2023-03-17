@@ -1,8 +1,8 @@
 import { Button, Intent, NonIdealState } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { mapLoadableArray } from "@fern-api/loadable";
-import { useOpenCreateEnvironmentForm } from "../../../contexts";
 import { useAllEnvironments } from "../../../queries/useAllEnvironments";
+import { useOpenCreateEnvironmentForm } from "../../forms-context/context";
 import { EnvironmentCard } from "./EnvironmentCard";
 
 export const EnvironmentsTab: React.FC = () => {

@@ -1,24 +1,11 @@
 import { HotkeysProvider } from "@blueprintjs/core";
-import { createContextedFormDialogsProvider } from "@fern-api/contexted-dialog";
 import { SplitViewProvider } from "@fern-api/split-view";
 import { ThemeProvider } from "@fern-api/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PropsWithChildren } from "react";
 import { BrowserRouter } from "react-router-dom";
-import {
-    CreateEnvironmentFormDialogProviderRenderer,
-    INITIAL_ENVIRONMENT_FORM_STATE,
-} from "./apis-page/tabs/environments/create-environments-form/CreateEnvironmentFormProviderRenderer";
 import { Auth0ProviderWithHistory } from "./auth/Auth0ProviderWithHistory";
-
-const { ContextedFormDialogsProvider, useOpenCreateEnvironmentForm } = createContextedFormDialogsProvider({
-    createEnvironment: {
-        initialFormState: INITIAL_ENVIRONMENT_FORM_STATE,
-        Renderer: CreateEnvironmentFormDialogProviderRenderer,
-    },
-});
-export { useOpenCreateEnvironmentForm };
 
 const queryClient = new QueryClient();
 
@@ -42,5 +29,4 @@ export const CONTEXTS = [
     ),
     HotkeysProvider,
     SplitViewProvider,
-    ContextedFormDialogsProvider,
 ];
