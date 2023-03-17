@@ -4,6 +4,9 @@
   "rules": {
     "depcheck": {
       "ignores": ["autoprefixer", "postcss", "tailwindcss"]
+    },
+    "vite": {
+      "sourceMapsInProduction": true
     }
   }
 }

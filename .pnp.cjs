@@ -331,7 +331,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonc-parser", "npm:2.2.1"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.111"],\
+            ["mrlint", "npm:0.0.112"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -19261,7 +19261,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonc-parser", "npm:2.2.1"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.111"],\
+            ["mrlint", "npm:0.0.112"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -23714,10 +23714,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.111", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.111-f56417ec7c-ce959b7d32.zip/node_modules/mrlint/",\
+        ["npm:0.0.112", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.112-50985f1a17-3464941f79.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.111"]\
+            ["mrlint", "npm:0.0.112"]\
           ],\
           "linkType": "HARD"\
         }]\
