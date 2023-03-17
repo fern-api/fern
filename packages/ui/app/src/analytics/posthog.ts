@@ -7,9 +7,9 @@ function safeAccessPosthog(run: () => void): void {
     }
 }
 
-export function initializePosthog(token: string): void {
+export function initializePosthog(apiKey: string): void {
     if (import.meta.env.PROD) {
-        posthog.init(token, {
+        posthog.init(apiKey, {
             api_host: "https://app.posthog.com",
             loaded: () => {
                 IS_POSTHOG_INITIALIZED = true;
