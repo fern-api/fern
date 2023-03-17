@@ -27,7 +27,6 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
 {
     public readonly type = "union";
 
-    private includeUtilsOnUnionMembers: boolean;
     private generatedUnion: GeneratedUnionImpl<Context>;
 
     constructor({
@@ -36,8 +35,6 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
         ...superInit
     }: GeneratedUnionTypeImpl.Init<Context>) {
         super(superInit);
-
-        this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
 
         const parsedSingleUnionTypes = this.shape.types.map(
             (singleUnionType) =>
@@ -82,9 +79,6 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
         if (example.type !== "union") {
             throw new Error("Example is not for an union");
         }
-        if (!this.includeUtilsOnUnionMembers) {
-            throw new Error("Cannot build example union because includeUtilsOnUnionMembers is disabled");
-        }
 
         return this.generatedUnion.build({
             discriminantValueToBuild: example.wireDiscriminantValue,
@@ -99,6 +93,40 @@ export class GeneratedUnionTypeImpl<Context extends TypeContext>
                     throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.properties.type);
                 },
             }),
+            nonDiscriminantProperties: ExampleSingleUnionTypeProperties._visit<ts.ObjectLiteralElementLike[]>(
+                example.properties,
+                {
+                    singleProperty: (property) => {
+                        const unionMember = this.shape.types.find(
+                            (member) => member.discriminantValue.wireValue === example.wireDiscriminantValue
+                        );
+                        if (unionMember == null || unionMember.shape._type !== "singleProperty") {
+                            throw new Error(
+                                "Cannot generate union example because union member is not singleProperty."
+                            );
+                        }
+                        return [
+                            ts.factory.createPropertyAssignment(
+                                ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape),
+                                context.type.getGeneratedExample(property).build(context, opts)
+                            ),
+                        ];
+                    },
+                    samePropertiesAsObject: (exampleNamedType) => {
+                        const generatedType = context.type.getGeneratedType(exampleNamedType.typeName);
+                        if (generatedType.type !== "object") {
+                            throw new Error(
+                                `Cannot generate union example because ${exampleNamedType.typeName.typeId} is not an object`
+                            );
+                        }
+                        return generatedType.buildExampleProperties(exampleNamedType.shape, context, opts);
+                    },
+                    noProperties: () => [],
+                    _unknown: () => {
+                        throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.properties.type);
+                    },
+                }
+            ),
             context,
         });
     }

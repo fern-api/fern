@@ -567,7 +567,7 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
                                 context.endpointErrorUnion
                                     .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                                     .getErrorUnion()
-                                    .build({
+                                    .buildWithBuilder({
                                         discriminantValueToBuild: errorDeclaration.statusCode,
                                         builderArgument:
                                             generatedSdkErrorSchema != null

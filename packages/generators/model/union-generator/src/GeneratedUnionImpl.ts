@@ -93,18 +93,45 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
     public build({
         discriminantValueToBuild,
         builderArgument,
+        nonDiscriminantProperties,
+        context,
+    }: {
+        discriminantValueToBuild: string | number;
+        builderArgument: ts.Expression | undefined;
+        nonDiscriminantProperties: ts.ObjectLiteralElementLike[];
+        context: Context;
+    }): ts.Expression {
+        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild);
+        if (this.includeUtilsOnUnionMembers) {
+            return this.buildWithBuilder({
+                discriminantValueToBuild,
+                builderArgument,
+                context,
+            });
+        } else {
+            return ts.factory.createObjectLiteralExpression(
+                [
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier(this.discriminant),
+                        singleUnionType.getDiscriminantValueAsExpression()
+                    ),
+                    ...nonDiscriminantProperties,
+                ],
+                true
+            );
+        }
+    }
+
+    public buildWithBuilder({
+        discriminantValueToBuild,
+        builderArgument,
         context,
     }: {
         discriminantValueToBuild: string | number;
         builderArgument: ts.Expression | undefined;
         context: Context;
     }): ts.Expression {
-        const singleUnionType = this.parsedSingleUnionTypes.find(
-            (singleUnionType) => singleUnionType.getDiscriminantValue() === discriminantValueToBuild
-        );
-        if (singleUnionType == null) {
-            throw new Error(`No single union type exists for discriminant value "${discriminantValueToBuild}"`);
-        }
+        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild);
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToUnion(context).getExpression(),
@@ -124,12 +151,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
         existingValue: ts.Expression;
         context: Context;
     }): ts.Expression {
-        const singleUnionType = this.parsedSingleUnionTypes.find(
-            (singleUnionType) => singleUnionType.getDiscriminantValue() === discriminantValueToBuild
-        );
-        if (singleUnionType == null) {
-            throw new Error(`No single union type exists for discriminant value "${discriminantValueToBuild}"`);
-        }
+        const singleUnionType = this.getSingleUnionType(discriminantValueToBuild);
         return this.buildSingleUnionTypeFromExistingValue({
             existingValue,
             context,
@@ -485,5 +507,15 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
 
     private hasBaseInterface(): boolean {
         return this.baseProperties.length > 0;
+    }
+
+    private getSingleUnionType(discriminantValue: string | number): KnownSingleUnionType<Context> {
+        const singleUnionType = this.parsedSingleUnionTypes.find(
+            (singleUnionType) => singleUnionType.getDiscriminantValue() === discriminantValue
+        );
+        if (singleUnionType == null) {
+            throw new Error(`No single union type exists for discriminant value "${discriminantValue}"`);
+        }
+        return singleUnionType;
     }
 }

@@ -53,20 +53,29 @@ export class GeneratedObjectTypeImpl<Context extends TypeContext>
             throw new Error("Example is not for an object");
         }
 
-        return ts.factory.createObjectLiteralExpression(
-            example.properties.map((property) => {
-                const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
-                if (originalTypeForProperty.type !== "object") {
-                    throw new Error("Property does not come from an object");
-                }
-                const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.wireKey });
-                return ts.factory.createPropertyAssignment(
-                    key,
-                    context.type.getGeneratedExample(property.value).build(context, opts)
-                );
-            }),
-            true
-        );
+        return ts.factory.createObjectLiteralExpression(this.buildExampleProperties(example, context, opts), true);
+    }
+
+    public buildExampleProperties(
+        example: ExampleTypeShape,
+        context: Context,
+        opts: GetReferenceOpts
+    ): ts.ObjectLiteralElementLike[] {
+        if (example.type !== "object") {
+            throw new Error("Example is not for an object");
+        }
+
+        return example.properties.map((property) => {
+            const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
+            if (originalTypeForProperty.type !== "object") {
+                throw new Error("Property does not come from an object");
+            }
+            const key = originalTypeForProperty.getPropertyKey({ propertyWireKey: property.wireKey });
+            return ts.factory.createPropertyAssignment(
+                key,
+                context.type.getGeneratedExample(property.value).build(context, opts)
+            );
+        });
     }
 
     public getAllPropertiesIncludingExtensions(

@@ -31,6 +31,21 @@ types:
       string: string
       extension: SomeObject
 
+  ExamplesTestUnion:
+    union:
+      noProperties: {}
+      string: string
+      extension: SomeObject
+    examples:
+      - value:
+          type: noProperties
+      - value:
+          type: string
+          value: hello world
+      - value:
+          type: extension
+          foo: hello world
+
   SomeObject:
     properties:
       foo: string

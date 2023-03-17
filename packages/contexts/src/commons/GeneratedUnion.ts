@@ -8,6 +8,12 @@ export interface GeneratedUnion<Context> extends GeneratedFile<Context> {
     build: (args: {
         discriminantValueToBuild: string | number;
         builderArgument: ts.Expression | undefined;
+        nonDiscriminantProperties: ts.ObjectLiteralElementLike[];
+        context: Context;
+    }) => ts.Expression;
+    buildWithBuilder: (args: {
+        discriminantValueToBuild: string | number;
+        builderArgument: ts.Expression | undefined;
         context: Context;
     }) => ts.Expression;
     buildFromExistingValue: (args: {
