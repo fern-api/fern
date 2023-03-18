@@ -11,14 +11,14 @@ export declare namespace OptionalPreviewPart {
 
 export const OptionalPreviewPart: React.FC<OptionalPreviewPart.Props> = ({ optional, includeContainerItems }) => {
     if (!includeContainerItems) {
-        return <span>optional</span>;
+        return <div>optional</div>;
     }
 
     return (
-        <span>
+        <div className="flex">
             optional
-            <span className="inline-block w-[3px]" />
+            <div className="w-[3px]" />
             <TypePreviewPart type={optional.itemType} includeContainerItems={includeContainerItems} />
-        </span>
+        </div>
     );
 };

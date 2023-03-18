@@ -16,7 +16,7 @@ export declare namespace TypePreviewPart {
 export const TypePreviewPart: React.FC<TypePreviewPart.Props> = ({ type, includeContainerItems }) => {
     return type._visit({
         primitive: (primitive) => (
-            <span>
+            <div>
                 {primitive._visit({
                     string: () => "string",
                     integer: () => "integer",
@@ -27,20 +27,20 @@ export const TypePreviewPart: React.FC<TypePreviewPart.Props> = ({ type, include
                     uuid: () => "uuid",
                     _other: () => "unknown",
                 })}
-            </span>
+            </div>
         ),
         list: (list) => <ListPreviewPart list={list} includeContainerItems={includeContainerItems} />,
         reference: (typeId) => <ReferencedTypePreviewPart typeId={typeId} />,
-        enum: () => <span>enum</span>,
-        union: () => <span>union</span>,
-        discriminatedUnion: () => <span>union</span>,
-        object: () => <span>object</span>,
+        enum: () => <div>enum</div>,
+        union: () => <div>union</div>,
+        discriminatedUnion: () => <div>union</div>,
+        object: () => <div>object</div>,
         optional: (optional) => (
             <OptionalPreviewPart optional={optional} includeContainerItems={includeContainerItems} />
         ),
         set: (set) => <SetPreviewPart set={set} includeContainerItems={includeContainerItems} />,
         map: (map) => <MapPreviewPart map={map} includeContainerItems={includeContainerItems} />,
-        unknown: () => <span>any</span>,
-        _other: () => <span>unknown</span>,
+        unknown: () => <div>any</div>,
+        _other: () => <div>unknown</div>,
     });
 };
