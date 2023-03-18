@@ -44,7 +44,7 @@
     },
     {
       "group": "Showcase",
-      "pages": ["showcase/typescript-sdk", "showcase/fastapi"]
+      "pages": ["showcase/typescript-sdk", "showcase/fastapi", "showcase/express"]
     },
     {
       "group": "Defining your API",
