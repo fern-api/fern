@@ -59,11 +59,11 @@ errors:
 
 ### Step 2: Run `fern generate`
 
-This generates all the boilerplate code into [src/fern_fastapi_starter/generated](https://github.com/fern-api/fastapi-starter/blob/main/src/fern_fastapi_starter/generated/).
+This generates all the boilerplate code into [generated/](https://github.com/fern-api/fastapi-starter/tree/main/backend/src/fern_fastapi_starter/api/generated).
 
 ```
 $ fern generate
-[api]: fernapi/fern-fastapi-server Downloaded to src/fern_fastapi_starter/generated/fern
+[api]: fernapi/fern-fastapi-starter Downloaded to backend/src/fern_fastapi_starter/api/generated
 ┌─
 │ ✓  fernapi/fern-fastapi-server
 └─
@@ -73,7 +73,7 @@ $ fern generate
 
 Notice you only need to provide the business logic. Just implement the function, and Fern takes care of the rest.
 
-```python src/fern_fastapi_starter/movies_service.py
+```python backend/src/fern_fastapi_starter/movies_service.py
 from .generated.fern import AbstractMoviesService, Movie, MovieDoesNotExistError, MovieId
 
 class MoviesService(AbstractMoviesService):
@@ -89,7 +89,7 @@ class MoviesService(AbstractMoviesService):
 
 And register your endpoints with Fern, which registers them with FastAPI under the hood:
 
-```python src/fern_fastapi_starter/server.py
+```python backend/src/fern_fastapi_starter/server.py
 from fastapi import FastAPI
 
 from .generated.fern.register import register
