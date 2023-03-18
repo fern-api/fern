@@ -16,7 +16,7 @@ export const ContainerTypePreviewPart: React.FC<ContainerTypePreviewPart.Props> 
     includeContainerItems,
 }) => {
     if (!includeContainerItems) {
-        return <span>{containerName}</span>;
+        return <div>{containerName}</div>;
     }
 
     return (
