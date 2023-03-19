@@ -31,11 +31,11 @@ export const V7_TO_V6_MIGRATION: IrMigration<
                 const lastFernFilepathPart = service.name.fernFilepath[service.name.fernFilepath.length - 1];
 
                 const originalName =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.originalName}Service` : "Service";
+                    lastFernFilepathPart != null ? `${lastFernFilepathPart.pascalCase.safeName}Service` : "Service";
                 const camelCase =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.originalName}Service` : "Service";
+                    lastFernFilepathPart != null ? `${lastFernFilepathPart.camelCase.unsafeName}Service` : "Service";
                 const snakeCase =
-                    lastFernFilepathPart != null ? `${lastFernFilepathPart.originalName}_service` : "service";
+                    lastFernFilepathPart != null ? `${lastFernFilepathPart.snakeCase.unsafeName}_service` : "service";
                 const screamingSnakeCase = snakeCase.toUpperCase();
                 const pascalCase = upperFirst(camelCase);
 

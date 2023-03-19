@@ -36,7 +36,7 @@ function convertDeclaredServiceName(
     serviceName: IrVersions.V5.http.DeclaredServiceName
 ): IrVersions.V4.services.commons.DeclaredServiceName {
     return {
-        name: serviceName.name.originalName,
+        name: serviceName.name.pascalCase.unsafeName,
         fernFilepath: convertFernFilepathV1(serviceName.fernFilepath),
         fernFilepathV2: convertFernFilepathV2(serviceName.fernFilepath),
     };

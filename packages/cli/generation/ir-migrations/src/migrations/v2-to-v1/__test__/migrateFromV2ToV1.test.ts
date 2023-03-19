@@ -17,5 +17,6 @@ describe("migrateFromV2ToV1", () => {
             snakeCase: "blog_not_found_error",
             wireValue: "BlogNotFoundError",
         });
+        expect(migrated.services.http[0]?.name.name).toBe("BlogService");
     });
 });
