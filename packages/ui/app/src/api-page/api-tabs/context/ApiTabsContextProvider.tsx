@@ -30,6 +30,14 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
     });
 
     const navigate = useNavigate();
+    const navigateWithoutHistory = useCallback(
+        (url: string) => {
+            navigate(url, {
+                replace: true,
+            });
+        },
+        [navigate]
+    );
 
     const openTab = useCallback(
         (path: string, { doNotCloseExistingTab = false, makeNewTabEphemeral = false }: OpenTabOpts = {}) => {
@@ -59,10 +67,10 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
             // setTimeout is needed to avoid incorrect react-router warning
             // https://github.com/remix-run/react-router/issues/7460#issuecomment-1108818335
             setTimeout(() => {
-                navigate(path);
+                navigateWithoutHistory(path);
             }, 0);
         },
-        [navigate, setState, state.tabs]
+        [navigateWithoutHistory, setState, state.tabs]
     );
 
     const closeTab = useCallback(
@@ -97,9 +105,9 @@ export const ApiTabsContextProvider: React.FC<ApiTabsContextProvider.Props> = ({
                 }
             });
 
-            navigate(newTab != null ? newTab.path : noTabsRedirectPath);
+            navigateWithoutHistory(newTab != null ? newTab.path : noTabsRedirectPath);
         },
-        [noTabsRedirectPath, navigate, state.selectedTabIndex, setState, state.tabs]
+        [noTabsRedirectPath, navigateWithoutHistory, state.selectedTabIndex, setState, state.tabs]
     );
 
     const makeTabLongLived = useCallback(
