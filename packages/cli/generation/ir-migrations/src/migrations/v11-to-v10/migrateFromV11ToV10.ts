@@ -49,10 +49,12 @@ function convertAuthScheme(
         header: (header) => {
             if (header.prefix != null) {
                 return taskContext.failAndThrow(
-                    `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                        " does not support specifying an auth header prefix." +
-                        ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                        " to a compatible version."
+                    targetGenerator != null
+                        ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                              " does not support specifying an auth header prefix." +
+                              ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                              " to a compatible version."
+                        : "Cannot backwards-migrate IR because this IR contains an auth header prefix."
                 );
             }
             return IrVersions.V10.auth.AuthScheme.header({

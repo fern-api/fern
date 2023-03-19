@@ -1,0 +1,15 @@
+imports:
+  commons: commons.yml
+name: my-api
+docs: foo bar baz
+headers:
+  X-API-VERSION:
+    name: apiVersion
+    type: optional<string>
+error-discrimination:
+  strategy: property
+  property-name: error
+audiences:
+  - test
+errors:
+  - commons.BadRequestError

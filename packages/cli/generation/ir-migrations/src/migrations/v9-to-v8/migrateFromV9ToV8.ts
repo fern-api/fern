@@ -28,9 +28,11 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         for (const [_, type] of Object.entries(v9.types)) {
             if (type.shape._type === "union" && type.shape.baseProperties.length > 0) {
                 taskContext.failWithoutThrowing(
-                    `Type ${type.name.name.originalName} uses base-properties.` +
-                        ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                        " to a compatible version."
+                    targetGenerator != null
+                        ? `Type ${type.name.name.originalName} uses base-properties.` +
+                              ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                              " to a compatible version."
+                        : "Cannot backwards-migrate IR because this IR contains a union with base-properties."
                 );
             }
         }

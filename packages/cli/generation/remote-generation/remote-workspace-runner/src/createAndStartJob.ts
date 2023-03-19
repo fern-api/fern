@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
-import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
+import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
@@ -126,14 +126,12 @@ async function startJob({
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<void> {
-    const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
+    const migratedIntermediateRepresentation = migrateIntermediateRepresentationForGenerator({
         intermediateRepresentation,
-        context: {
-            taskContext: context,
-            targetGenerator: {
-                name: generatorInvocation.name,
-                version: generatorInvocation.version,
-            },
+        context,
+        targetGenerator: {
+            name: generatorInvocation.name,
+            version: generatorInvocation.version,
         },
     });
 

@@ -36,10 +36,12 @@ export const V6_TO_V5_MIGRATION: IrMigration<
                                   singleBaseUrlEnvironments.environments,
                               multipleBaseUrls: () => {
                                   return taskContext.failAndThrow(
-                                      `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                                          " does not support specifying multiple URLs for a single environment." +
-                                          ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                                          " to a compatible version."
+                                      targetGenerator != null
+                                          ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                                                " does not support specifying multiple URLs for a single environment." +
+                                                ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                                                " to a compatible version."
+                                          : "Cannot backwards-migrate IR because this IR contains a multiple URls for a single environment."
                                   );
                               },
                               _unknown: () => {

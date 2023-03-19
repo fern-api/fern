@@ -1,15 +1,18 @@
+import { TaskContext } from "@fern-api/task-context";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentationMigrator";
-import { IrMigrationContext } from "./IrMigrationContext";
 
-export function migrateIntermediateRepresentation({
+export function migrateIntermediateRepresentationThroughVersion({
     intermediateRepresentation,
     context,
+    version,
 }: {
     intermediateRepresentation: IntermediateRepresentation;
-    context: IrMigrationContext;
+    context: TaskContext;
+    version: string;
 }): unknown {
-    return getIntermediateRepresentationMigrator().migrateBackwards({
+    return getIntermediateRepresentationMigrator().migrateThroughVersion({
+        version,
         intermediateRepresentation,
         context,
     });
