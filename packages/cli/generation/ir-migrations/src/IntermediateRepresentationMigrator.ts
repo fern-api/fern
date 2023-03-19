@@ -1,7 +1,8 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { IrMigrationContext } from "./IrMigrationContext";
+import { GeneratorNameAndVersion } from "./IrMigrationContext";
 import { V10_TO_V9_MIGRATION } from "./migrations/v10-to-v9/migrateFromV10ToV9";
 import { V11_TO_V10_MIGRATION } from "./migrations/v11-to-v10/migrateFromV11ToV10";
 import { V12_TO_V11_MIGRATION } from "./migrations/v12-to-v11/migrateFromV12ToV11";
@@ -23,22 +24,23 @@ export function getIntermediateRepresentationMigrator(): IntermediateRepresentat
 
 export interface IntermediateRepresentationMigrator {
     readonly migrations: IrMigration<unknown, unknown>[];
-    migrateBackwards: ({
-        intermediateRepresentation,
-        context,
-    }: {
+    migrateForGenerator: (args: {
         intermediateRepresentation: IntermediateRepresentation;
-        context: IrMigrationContext;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
     }) => unknown;
-    migrateThroughMigration<LaterVersion, EarlierVersion>({
-        migration,
-        intermediateRepresentation,
-        context,
-    }: {
+    migrateThroughMigration<LaterVersion, EarlierVersion>(args: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
-        context: IrMigrationContext;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
     }): EarlierVersion;
+    migrateThroughVersion<Migrated>(args: {
+        version: string;
+        intermediateRepresentation: IntermediateRepresentation;
+        context: TaskContext;
+        targetGenerator?: GeneratorNameAndVersion;
+    }): Migrated;
 }
 
 interface IntermediateRepresentationMigratorBuilder<LaterVersion> {
@@ -81,17 +83,20 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(public readonly migrations: IrMigration<any, any>[]) {}
 
-    public migrateBackwards({
+    public migrateForGenerator({
         intermediateRepresentation,
         context,
+        targetGenerator,
     }: {
         intermediateRepresentation: IntermediateRepresentation;
-        context: IrMigrationContext;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
     }): unknown {
         return this.migrate({
             intermediateRepresentation,
-            shouldMigrate: (migration) => this.shouldRunMigration({ migration, context }),
+            shouldMigrate: (migration) => this.shouldRunMigration({ migration, targetGenerator }),
             context,
+            targetGenerator,
         });
     }
 
@@ -99,31 +104,63 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         migration,
         intermediateRepresentation,
         context,
+        targetGenerator,
     }: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
-        context: IrMigrationContext;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
     }): EarlierVersion {
+        return this.migrateThroughVersion({
+            version: migration.earlierVersion,
+            intermediateRepresentation,
+            context,
+            targetGenerator,
+        });
+    }
+
+    public migrateThroughVersion<Migrated>({
+        version,
+        intermediateRepresentation,
+        context,
+        targetGenerator,
+    }: {
+        version: string;
+        intermediateRepresentation: IntermediateRepresentation;
+        context: TaskContext;
+        targetGenerator?: GeneratorNameAndVersion;
+    }): Migrated {
         let hasEncouneredMigrationYet = false;
-        return this.migrate({
+
+        const migrated = this.migrate({
             intermediateRepresentation,
             shouldMigrate: (nextMigration) => {
-                const isEncounteringMigration = nextMigration.earlierVersion === migration.earlierVersion;
+                const isEncounteringMigration = nextMigration.earlierVersion === version;
                 hasEncouneredMigrationYet ||= isEncounteringMigration;
                 return isEncounteringMigration || !hasEncouneredMigrationYet;
             },
             context,
-        }) as EarlierVersion;
+            targetGenerator,
+        });
+
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (!hasEncouneredMigrationYet) {
+            context.failAndThrow(`IR ${version} does not exist`);
+        }
+
+        return migrated as Migrated;
     }
 
     private migrate({
         intermediateRepresentation,
         shouldMigrate,
         context,
+        targetGenerator,
     }: {
         intermediateRepresentation: IntermediateRepresentation;
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
-        context: IrMigrationContext;
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion | undefined;
     }): unknown {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let migrated: any = intermediateRepresentation;
@@ -131,33 +168,34 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             if (!shouldMigrate(migration)) {
                 break;
             }
-            migrated = migration.migrateBackwards(migrated, context);
+            migrated = migration.migrateBackwards(migrated, {
+                taskContext: context,
+                targetGenerator,
+            });
         }
         return migrated;
     }
 
     private shouldRunMigration({
         migration,
-        context,
+        targetGenerator,
     }: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         migration: IrMigration<any, any>;
-        context: IrMigrationContext;
+        targetGenerator: GeneratorNameAndVersion;
     }): boolean {
-        if (!(context.targetGenerator.name in migration.minGeneratorVersionsToExclude)) {
+        if (!(targetGenerator.name in migration.minGeneratorVersionsToExclude)) {
             throw new Error(
-                `Cannot migrate intermediate representation. Unrecognized generator: ${context.targetGenerator.name}.`
+                `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}.`
             );
         }
-        const minVersionToExclude =
-            migration.minGeneratorVersionsToExclude[context.targetGenerator.name as GeneratorName];
+        const minVersionToExclude = migration.minGeneratorVersionsToExclude[targetGenerator.name as GeneratorName];
         if (!minVersionToExclude) {
             return false;
         }
 
         return (
-            minVersionToExclude === AlwaysRunMigration ||
-            isVersionAhead(minVersionToExclude, context.targetGenerator.version)
+            minVersionToExclude === AlwaysRunMigration || isVersionAhead(minVersionToExclude, targetGenerator.version)
         );
     }
 }

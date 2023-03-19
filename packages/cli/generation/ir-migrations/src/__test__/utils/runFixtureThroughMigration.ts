@@ -23,12 +23,10 @@ export async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
     return getIntermediateRepresentationMigrator().migrateThroughMigration({
         migration,
         intermediateRepresentation: await getIrForApi(pathToFixture),
-        context: {
-            taskContext: context?.taskContext ?? createMockTaskContext(),
-            targetGenerator: context?.targetGenerator ?? {
-                name: "",
-                version: "",
-            },
+        context: context?.taskContext ?? createMockTaskContext(),
+        targetGenerator: context?.targetGenerator ?? {
+            name: "",
+            version: "",
         },
     });
 }

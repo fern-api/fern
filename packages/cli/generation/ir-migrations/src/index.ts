@@ -1,2 +1,3 @@
 export { getMinimumVersionForGenerator } from "./getMinimumVersionForGenerator";
-export { migrateIntermediateRepresentation } from "./migrateIntermediateRepresentation";
+export { migrateIntermediateRepresentationForGenerator } from "./migrateIntermediateRepresentationForGenerator";
+export { migrateIntermediateRepresentationThroughVersion } from "./migrateIntermediateRepresentationThroughVersion";

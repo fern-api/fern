@@ -8,11 +8,13 @@ export async function generateIrAsString({
     language,
     audiences,
     apiName,
+    version,
 }: {
     fixturePath: AbsoluteFilePath;
     language?: GenerationLanguage;
     audiences?: string[];
     apiName?: string;
+    version?: string;
 }): Promise<string> {
     const irOutputPath = join(fixturePath, "ir.json");
     await rm(irOutputPath, { force: true, recursive: true });
@@ -29,6 +31,9 @@ export async function generateIrAsString({
     }
     if (apiName != null) {
         command.push("--api", apiName);
+    }
+    if (version != null) {
+        command.push("--version", version);
     }
 
     await runFernCli(command, {

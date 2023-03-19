@@ -89,12 +89,16 @@ export const V12_TO_V11_MIGRATION: IrMigration<
 };
 
 function getUndiscriminatedUnionsErrorMessage(context: IrMigrationContext): string {
-    return (
-        `Generator ${context.targetGenerator.name}@${context.targetGenerator.version}` +
-        " does not support undiscriminated unions" +
-        ` If you'd like to use this feature, please upgrade ${context.targetGenerator.name}` +
-        " to a compatible version."
-    );
+    if (context.targetGenerator != null) {
+        return (
+            `Generator ${context.targetGenerator.name}@${context.targetGenerator.version}` +
+            " does not support undiscriminated unions" +
+            ` If you'd like to use this feature, please upgrade ${context.targetGenerator.name}` +
+            " to a compatible version."
+        );
+    } else {
+        return "Cannot backwards-migrate IR because this IR contains an undiscriminated union.";
+    }
 }
 
 function convertService(
@@ -113,10 +117,12 @@ function convertEndpoint(
 ): IrVersions.V11.http.HttpEndpoint {
     if (endpoint.streamingResponse != null) {
         return taskContext.failAndThrow(
-            `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                " does not support streaming responses." +
-                ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                " to a compatible version."
+            targetGenerator != null
+                ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                      " does not support streaming responses." +
+                      ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                      " to a compatible version."
+                : "Cannot backwards-migrate IR because this IR contains a streaming response."
         );
     }
 
@@ -131,10 +137,12 @@ function convertEndpoint(
                           reference: IrVersions.V11.http.HttpRequestBody.reference,
                           fileUpload: () => {
                               return taskContext.failAndThrow(
-                                  `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                                      " does not support file upload requests." +
-                                      ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
-                                      " to a compatible version."
+                                  targetGenerator != null
+                                      ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                                            " does not support file upload requests." +
+                                            ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
+                                            " to a compatible version."
+                                      : "Cannot backwards-migrate IR because this IR contains a file upload request."
                               );
                           },
                           _unknown: () => {

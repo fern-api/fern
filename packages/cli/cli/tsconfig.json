@@ -11,6 +11,7 @@
     { "path": "../config-management/manage-generator" },
     { "path": "../config-management/project-configuration" },
     { "path": "../generation/ir-generator" },
+    { "path": "../generation/ir-migrations" },
     { "path": "../generation/local-generation/local-workspace-runner" },
     { "path": "../generation/remote-generation/remote-workspace-runner" },
     { "path": "../init" },

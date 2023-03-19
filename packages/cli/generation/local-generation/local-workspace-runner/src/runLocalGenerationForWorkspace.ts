@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { GeneratorAudiences, GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { migrateIntermediateRepresentation } from "@fern-api/ir-migrations";
+import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -147,14 +147,12 @@ async function writeIrToFile({
         audiences,
         generationLanguage: generatorInvocation.language,
     });
-    const migratedIntermediateRepresentation = migrateIntermediateRepresentation({
+    const migratedIntermediateRepresentation = migrateIntermediateRepresentationForGenerator({
         intermediateRepresentation,
-        context: {
-            taskContext: context,
-            targetGenerator: {
-                name: generatorInvocation.name,
-                version: generatorInvocation.version,
-            },
+        context,
+        targetGenerator: {
+            name: generatorInvocation.name,
+            version: generatorInvocation.version,
         },
     });
 
