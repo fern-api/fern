@@ -57,11 +57,14 @@
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
     "posthog-js": "^1.50.0",
+    "r": "^0.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-syntax-highlighter": "^15.5.0",
+    "remark-gfm": "^3.0.1",
     "use-immer": "^0.8.1"
   },
   "devDependencies": {
