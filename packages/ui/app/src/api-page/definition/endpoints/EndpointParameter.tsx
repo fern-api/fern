@@ -1,4 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { Docs } from "../docs/Docs";
 import { PropertyTitle } from "../types/object/PropertyTitle";
 import styles from "./EndpointParameter.module.scss";
 
@@ -14,7 +15,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, doc
     return (
         <div className={styles.container}>
             <PropertyTitle name={name} type={type} />
-            {docs != null && <div className={styles.docs}>{docs}</div>}
+            {docs != null && <Docs docs={docs} />}
         </div>
     );
 };

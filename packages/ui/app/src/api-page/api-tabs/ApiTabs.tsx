@@ -55,7 +55,7 @@ export const ApiTabs: React.FC = () => {
                 </div>
             </div>
             <Pane
-                defaultSize="33%"
+                defaultSize="40%"
                 minimumSize="20%"
                 maximumSize="60%"
                 resizeHandlePosition={ResizeHandlePosition.LEFT}
