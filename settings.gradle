@@ -1,11 +1,5 @@
 rootProject.name = 'fern-java-plugins'
 
-include 'cli'
-include 'model-codegen'
-include 'jersey-codegen'
-include 'spring-codegen'
-include 'codegen-utils'
-include 'runtime-utils'
 include 'testing-utils'
 include 'runtime-utils:immutables-utils'
 include 'runtime-utils:jersey-utils'

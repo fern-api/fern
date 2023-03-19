@@ -9,7 +9,7 @@ org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
 com.fern.fern:ir-model = 0.0.312
-com.fern-fern.fern:generator-logging-api-client = 0.0.25
+com.fern.fern:generator-exec-client = 0.0.37
 
 # testing
 org.junit.jupiter:* = 5.5.0
@@ -31,23 +31,16 @@ io.github.openfeign:* = 11.8
 
 # jersey
 org.glassfish.jersey.core:jersey-common = 2.35
-org.glassfish.jersey.ext:jersey-spring5 = 2.35
 
 # spring
 org.springframework:spring-web = 5.3.19
-org.springframework:spring-webmvc = 5.3.19
 
 # slf4j
 org.slf4j:slf4j-api = 1.7.36
 
-# apache commons text
-org.apache.commons:commons-text = 1.9
-
 # misc
 com.google.code.findbugs:annotations = 3.0.1
 com.palantir.common:streams = 2.0.0
-net.sourceforge.argparse4j:argparse4j = 0.9.0
 jakarta.ws.rs:jakarta.ws.rs-api = 2.1.6
 ch.qos.logback:logback-classic = 1.2.6
-com.fern.fern:generator-exec-client = 0.0.37
 com.atlassian.commonmark:* = 0.12.1
