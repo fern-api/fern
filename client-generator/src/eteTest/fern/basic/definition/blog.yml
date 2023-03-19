@@ -19,6 +19,7 @@ types:
       postType: PostType
       switch: integer
       ratings: map<string, integer>
+      list: list<list<string>>
   PostType:
     enum:
       - LONG

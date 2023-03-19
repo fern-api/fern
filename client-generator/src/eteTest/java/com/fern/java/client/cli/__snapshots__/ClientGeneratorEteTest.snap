@@ -2142,7 +2142,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -2160,6 +2162,8 @@ public final class CreatePostRequest {
 
   private final Map<String, Integer> ratings;
 
+  private final List<List<String>> list;
+
   private int _cachedHashCode;
 
   CreatePostRequest(
@@ -2168,13 +2172,15 @@ public final class CreatePostRequest {
       String content,
       PostType postType,
       int _switch,
-      Map<String, Integer> ratings) {
+      Map<String, Integer> ratings,
+      List<List<String>> list) {
     this.title = title;
     this.author = author;
     this.content = content;
     this.postType = postType;
     this._switch = _switch;
     this.ratings = ratings;
+    this.list = list;
   }
 
   @JsonProperty("title")
@@ -2207,6 +2213,11 @@ public final class CreatePostRequest {
     return ratings;
   }
 
+  @JsonProperty("list")
+  public List<List<String>> getList() {
+    return list;
+  }
+
   @Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -2219,7 +2230,8 @@ public final class CreatePostRequest {
         && content.equals(other.content)
         && postType.equals(other.postType)
         && _switch == other._switch
-        && ratings.equals(other.ratings);
+        && ratings.equals(other.ratings)
+        && list.equals(other.list);
   }
 
   @Override
@@ -2227,7 +2239,13 @@ public final class CreatePostRequest {
     if (_cachedHashCode == 0) {
       _cachedHashCode =
           Objects.hash(
-              this.title, this.author, this.content, this.postType, this._switch, this.ratings);
+              this.title,
+              this.author,
+              this.content,
+              this.postType,
+              this._switch,
+              this.ratings,
+              this.list);
     }
     return _cachedHashCode;
   }
@@ -2247,6 +2265,8 @@ public final class CreatePostRequest {
         + _switch
         + ", ratings: "
         + ratings
+        + ", list: "
+        + list
         + "}";
   }
 
@@ -2284,6 +2304,12 @@ public final class CreatePostRequest {
     _FinalStage putAllRatings(Map<String, Integer> ratings);
 
     _FinalStage ratings(String key, Integer value);
+
+    _FinalStage list(List<List<String>> list);
+
+    _FinalStage addList(List<String> list);
+
+    _FinalStage addAllList(List<List<String>> list);
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
@@ -2299,6 +2325,8 @@ public final class CreatePostRequest {
 
     private int _switch;
 
+    private List<List<String>> list = new ArrayList<>();
+
     private Map<String, Integer> ratings = new LinkedHashMap<>();
 
     private Builder() {}
@@ -2311,6 +2339,7 @@ public final class CreatePostRequest {
       postType(other.getPostType());
       _switch(other.getSwitch());
       ratings(other.getRatings());
+      list(other.getList());
       return this;
     }
 
@@ -2350,6 +2379,26 @@ public final class CreatePostRequest {
     }
 
     @Override
+    public _FinalStage addAllList(List<List<String>> list) {
+      this.list.addAll(list);
+      return this;
+    }
+
+    @Override
+    public _FinalStage addList(List<String> list) {
+      this.list.add(list);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "list", nulls = Nulls.SKIP)
+    public _FinalStage list(List<List<String>> list) {
+      this.list.clear();
+      this.list.addAll(list);
+      return this;
+    }
+
+    @Override
     public _FinalStage ratings(String key, Integer value) {
       this.ratings.put(key, value);
       return this;
@@ -2371,7 +2420,7 @@ public final class CreatePostRequest {
 
     @Override
     public CreatePostRequest build() {
-      return new CreatePostRequest(title, author, content, postType, _switch, ratings);
+      return new CreatePostRequest(title, author, content, postType, _switch, ratings, list);
     }
   }
 }
@@ -6369,7 +6418,7 @@ public final class BulkSendEventRequest {
 
     _FinalStage batch(List<BatchEvent> batch);
 
-    _FinalStage batch(BatchEvent batch);
+    _FinalStage addBatch(BatchEvent batch);
 
     _FinalStage addAllBatch(List<BatchEvent> batch);
   }
@@ -6413,7 +6462,7 @@ public final class BulkSendEventRequest {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage batch(BatchEvent batch) {
+    public _FinalStage addBatch(BatchEvent batch) {
       this.batch.add(batch);
       return this;
     }
@@ -6810,19 +6859,19 @@ public final class EmailOverride implements IChannelOverride {
 
     _FinalStage cc(List<EmailRecipient> cc);
 
-    _FinalStage cc(EmailRecipient cc);
+    _FinalStage addCc(EmailRecipient cc);
 
     _FinalStage addAllCc(List<EmailRecipient> cc);
 
     _FinalStage bcc(List<EmailRecipient> bcc);
 
-    _FinalStage bcc(EmailRecipient bcc);
+    _FinalStage addBcc(EmailRecipient bcc);
 
     _FinalStage addAllBcc(List<EmailRecipient> bcc);
 
     _FinalStage attachments(List<Attachment> attachments);
 
-    _FinalStage attachments(Attachment attachments);
+    _FinalStage addAttachments(Attachment attachments);
 
     _FinalStage addAllAttachments(List<Attachment> attachments);
   }
@@ -6883,7 +6932,7 @@ public final class EmailOverride implements IChannelOverride {
     }
 
     @Override
-    public _FinalStage attachments(Attachment attachments) {
+    public _FinalStage addAttachments(Attachment attachments) {
       this.attachments.add(attachments);
       return this;
     }
@@ -6903,7 +6952,7 @@ public final class EmailOverride implements IChannelOverride {
     }
 
     @Override
-    public _FinalStage bcc(EmailRecipient bcc) {
+    public _FinalStage addBcc(EmailRecipient bcc) {
       this.bcc.add(bcc);
       return this;
     }
@@ -6923,7 +6972,7 @@ public final class EmailOverride implements IChannelOverride {
     }
 
     @Override
-    public _FinalStage cc(EmailRecipient cc) {
+    public _FinalStage addCc(EmailRecipient cc) {
       this.cc.add(cc);
       return this;
     }
@@ -7771,7 +7820,7 @@ public final class ProviderOverride {
       return this;
     }
 
-    public Builder formParams(Param formParams) {
+    public Builder addFormParams(Param formParams) {
       this.formParams.add(formParams);
       return this;
     }
@@ -7788,7 +7837,7 @@ public final class ProviderOverride {
       return this;
     }
 
-    public Builder queryParams(Param queryParams) {
+    public Builder addQueryParams(Param queryParams) {
       this.queryParams.add(queryParams);
       return this;
     }
@@ -7805,7 +7854,7 @@ public final class ProviderOverride {
       return this;
     }
 
-    public Builder pathParams(Param pathParams) {
+    public Builder addPathParams(Param pathParams) {
       this.pathParams.add(pathParams);
       return this;
     }
@@ -7822,7 +7871,7 @@ public final class ProviderOverride {
       return this;
     }
 
-    public Builder headers(Param headers) {
+    public Builder addHeaders(Param headers) {
       this.headers.add(headers);
       return this;
     }

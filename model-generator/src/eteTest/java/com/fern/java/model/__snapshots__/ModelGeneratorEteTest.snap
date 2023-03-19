@@ -726,7 +726,10 @@ package com.fern.basic.model.blog;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @JsonDeserialize(builder = CreatePostRequest.Builder.class)
@@ -741,14 +744,23 @@ public final class CreatePostRequest {
 
   private final int _switch;
 
+  private final List<List<String>> example;
+
   private int _cachedHashCode;
 
-  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch) {
+  CreatePostRequest(
+      String title,
+      Author author,
+      String content,
+      PostType postType,
+      int _switch,
+      List<List<String>> example) {
     this.title = title;
     this.author = author;
     this.content = content;
     this.postType = postType;
     this._switch = _switch;
+    this.example = example;
   }
 
   @JsonProperty("title")
@@ -776,6 +788,11 @@ public final class CreatePostRequest {
     return _switch;
   }
 
+  @JsonProperty("example")
+  public List<List<String>> getExample() {
+    return example;
+  }
+
   @Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -787,14 +804,16 @@ public final class CreatePostRequest {
         && author.equals(other.author)
         && content.equals(other.content)
         && postType.equals(other.postType)
-        && _switch == other._switch;
+        && _switch == other._switch
+        && example.equals(other.example);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
       _cachedHashCode =
-          Objects.hash(this.title, this.author, this.content, this.postType, this._switch);
+          Objects.hash(
+              this.title, this.author, this.content, this.postType, this._switch, this.example);
     }
     return _cachedHashCode;
   }
@@ -812,6 +831,8 @@ public final class CreatePostRequest {
         + postType
         + ", _switch: "
         + _switch
+        + ", example: "
+        + example
         + "}";
   }
 
@@ -843,6 +864,12 @@ public final class CreatePostRequest {
 
   public interface _FinalStage {
     CreatePostRequest build();
+
+    _FinalStage example(List<List<String>> example);
+
+    _FinalStage addExample(List<String> example);
+
+    _FinalStage addAllExample(List<List<String>> example);
   }
 
   @JsonIgnoreProperties(ignoreUnknown = true)
@@ -858,6 +885,8 @@ public final class CreatePostRequest {
 
     private int _switch;
 
+    private List<List<String>> example = new ArrayList<>();
+
     private Builder() {}
 
     @Override
@@ -867,6 +896,7 @@ public final class CreatePostRequest {
       content(other.getContent());
       postType(other.getPostType());
       _switch(other.getSwitch());
+      example(other.getExample());
       return this;
     }
 
@@ -906,8 +936,28 @@ public final class CreatePostRequest {
     }
 
     @Override
+    public _FinalStage addAllExample(List<List<String>> example) {
+      this.example.addAll(example);
+      return this;
+    }
+
+    @Override
+    public _FinalStage addExample(List<String> example) {
+      this.example.add(example);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "example", nulls = Nulls.SKIP)
+    public _FinalStage example(List<List<String>> example) {
+      this.example.clear();
+      this.example.addAll(example);
+      return this;
+    }
+
+    @Override
     public CreatePostRequest build() {
-      return new CreatePostRequest(title, author, content, postType, _switch);
+      return new CreatePostRequest(title, author, content, postType, _switch, example);
     }
   }
 }

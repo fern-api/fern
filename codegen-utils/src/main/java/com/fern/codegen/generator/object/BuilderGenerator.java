@@ -516,7 +516,10 @@ public final class BuilderGenerator {
             boolean isOverridden) {
         String fieldName = enrichedObjectProperty.fieldSpec().name;
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(collectionTypeName);
-        MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
+        MethodSpec.Builder setter = defaultSetter(
+                        StageBuilderConstants.APPEND_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
+                        returnClass)
+                .addParameter(itemTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
@@ -662,6 +665,7 @@ public final class BuilderGenerator {
 
     private static final class StageBuilderConstants {
         private static final String FINAL_STAGE_CLASS_NAME = "_FinalStage";
+        private static final String APPEND_METHOD_PREFIX = "add";
         private static final String ADD_ALL_METHOD_PREFIX = "addAll";
         private static final String PUT_ALL_METHOD_PREFIX = "putAll";
         private static final String MAP_ITEM_APPENDER_KEY_PARAMETER_NAME = "key";
