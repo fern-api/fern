@@ -4770,7 +4770,6 @@ __metadata:
     normalize.css: ^8.0.1
     posthog-js: ^1.50.0
     prettier: ^2.7.1
-    r: ^0.0.5
     react: ^18.2.0
     react-dom: ^18.2.0
     react-icons: ^4.7.1
@@ -18927,13 +18926,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 5.1.1
   resolution: "quick-lru@npm:5.1.1"
   checksum: a516faa25574be7947969883e6068dbe4aa19e8ef8e8e0fd96cddd6d36485e9106d85c0041a27153286b0770b381328f4072aa40d3b18a19f5f7d2b78b94b5ed
-  languageName: node
-  linkType: hard
-
-"r@npm:^0.0.5":
-  version: 0.0.5
-  resolution: "r@npm:0.0.5"
-  checksum: 52d659822e9cc6f11f63e3530a3e9026c0b068011d8b5eadbb7225e9c90276e2f29033d99108b7ee1ad313ff7232308f9f0f21b6b76c1500ea94e47577445a3d
   languageName: node
   linkType: hard
 

@@ -9,7 +9,8 @@
     "@types/react",
     "autoprefixer",
     "postcss",
-    "tailwindcss"
+    "tailwindcss",
+    "@tailwindcss/typography"
   ],
   "ignore-patterns": ["lib"]
 }

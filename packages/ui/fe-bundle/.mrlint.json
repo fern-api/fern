@@ -3,7 +3,7 @@
   "private": true,
   "rules": {
     "depcheck": {
-      "ignores": ["autoprefixer", "postcss", "tailwindcss"]
+      "ignores": ["autoprefixer", "postcss", "tailwindcss", "@tailwindcss/typography"]
     },
     "vite": {
       "sourceMapsInProduction": true
