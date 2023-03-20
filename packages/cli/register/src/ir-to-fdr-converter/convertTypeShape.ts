@@ -8,28 +8,32 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.TypeShape 
         },
         enum: (enum_) => {
             return FernRegistry.TypeShape.enum({
-                values: enum_.values.map((value) => ({
-                    docs: value.docs ?? undefined,
-                    value: value.name.wireValue,
-                })),
+                values: enum_.values.map(
+                    (value): FernRegistry.EnumValue => ({
+                        description: value.docs ?? undefined,
+                        value: value.name.wireValue,
+                    })
+                ),
             });
         },
         object: (object) => {
             return FernRegistry.TypeShape.object({
                 extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
-                properties: object.properties.map((property) => ({
-                    docs: property.docs ?? undefined,
-                    key: property.name.wireValue,
-                    valueType: convertTypeReference(property.valueType),
-                })),
+                properties: object.properties.map(
+                    (property): FernRegistry.ObjectProperty => ({
+                        description: property.docs ?? undefined,
+                        key: property.name.wireValue,
+                        valueType: convertTypeReference(property.valueType),
+                    })
+                ),
             });
         },
         union: (union) => {
             return FernRegistry.TypeShape.discriminatedUnion({
                 discriminant: union.discriminant.wireValue,
-                members: union.types.map((member) => {
+                members: union.types.map((member): FernRegistry.DiscriminatedUnionMember => {
                     return {
-                        docs: member.docs ?? undefined,
+                        description: member.docs ?? undefined,
                         discriminantValue: member.discriminantValue.wireValue,
                         additionalProperties: Ir.types.SingleUnionTypeProperties._visit<FernRegistry.ObjectType>(
                             member.shape,

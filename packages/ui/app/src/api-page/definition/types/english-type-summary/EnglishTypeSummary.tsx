@@ -29,12 +29,13 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                     const resolvedType = resolveTypeById(typeId);
                     return (
                         <>
-                            {indefinite(resolvedType.name, { articleOnly: true })}
-                            &nbsp;
+                            {plural || (
+                                <span className="mr-1">{indefinite(resolvedType.name, { articleOnly: true })}</span>
+                            )}
                             <ReferencedTypePreviewPart typeId={typeId} />
                             {includeReferencedTypeSummary && (
                                 <>
-                                    , which is an&nbsp;
+                                    <span className="mr-1">, which is an</span>
                                     {/* TODO figure out resolved type */}
                                     <TypeString>object</TypeString>
                                 </>
@@ -49,8 +50,10 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                 list: ({ itemType }) => {
                     return (
                         <>
-                            <TypeString article="a">list</TypeString>
-                            &nbsp;of&nbsp;
+                            <TypeString article="a" className="mr-1">
+                                list
+                            </TypeString>
+                            <span className="mr-1">of</span>
                             <EnglishTypeSummary type={itemType} plural />
                         </>
                     );
@@ -58,8 +61,10 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                 set: ({ itemType }) => {
                     return (
                         <>
-                            <TypeString article="a">set</TypeString>
-                            &nbsp;of&nbsp;
+                            <TypeString article="a" className="mr-1">
+                                set
+                            </TypeString>
+                            <span className="mr-1">of</span>
                             <EnglishTypeSummary type={itemType} plural />
                         </>
                     );
@@ -67,35 +72,15 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                 map: ({ keyType, valueType }) => {
                     return (
                         <>
-                            <TypeString article="a">map of key-value pairs</TypeString>, where&nbsp;
-                            {
-                                // references can't be pluralized
-                                keyType.type === "id" ? (
-                                    <>
-                                        each&nbsp;<TypeString>key</TypeString>&nbsp;is
-                                    </>
-                                ) : (
-                                    <>
-                                        the&nbsp;<TypeString>keys</TypeString>&nbsp;are
-                                    </>
-                                )
-                            }
-                            &nbsp;
+                            <TypeString article="a">map of key-value pairs</TypeString>
+                            <span className="mr-1">. The</span>
+                            <TypeString className="mr-1">keys</TypeString>
+                            <span className="mr-1">are</span>
                             <EnglishTypeSummary type={keyType} plural />
-                            &nbsp;and&nbsp;
-                            {
-                                // references can't be pluralized
-                                valueType.type === "id" ? (
-                                    <>
-                                        each&nbsp;<TypeString>value</TypeString>&nbsp;is
-                                    </>
-                                ) : (
-                                    <>
-                                        the&nbsp;<TypeString>values</TypeString>&nbsp;are
-                                    </>
-                                )
-                            }
-                            &nbsp;
+                            <span className="mx-1">and</span>
+                            <span className="mr-1">the</span>
+                            <TypeString className="mr-1">values</TypeString>
+                            <span className="mr-1">are</span>
                             <EnglishTypeSummary type={valueType} plural />
                         </>
                     );

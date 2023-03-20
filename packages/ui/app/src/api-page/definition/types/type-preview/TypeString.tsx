@@ -12,8 +12,8 @@ export declare namespace TypeString {
 export const TypeString: React.FC<TypeString.Props> = ({ className, article, children }) => {
     return (
         <div className={classNames("flex", className)}>
-            {article != null && <>{article}&nbsp;</>}
-            <div className="text-green-700">{children}</div>
+            {article != null && <span className="mr-1">{article}</span>}
+            {children}
         </div>
     );
 };

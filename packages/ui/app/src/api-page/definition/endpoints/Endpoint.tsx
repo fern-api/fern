@@ -47,10 +47,18 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     <QueryParametersSection queryParameters={endpoint.queryParameters} />
                 )}
                 {endpoint.request != null && (
-                    <EndpointTypeSection title="Request" httpBody={endpoint.request} typeSummaryLabel="request" />
+                    <EndpointTypeSection
+                        title="Request"
+                        httpBody={endpoint.request}
+                        preamble="The request for this endpoint is"
+                    />
                 )}
                 {endpoint.response != null && (
-                    <EndpointTypeSection title="Response" httpBody={endpoint.response} typeSummaryLabel="response" />
+                    <EndpointTypeSection
+                        title="Response"
+                        httpBody={endpoint.response}
+                        preamble="This endpoint returns"
+                    />
                 )}
             </div>
         </DefinitionItemPage>
