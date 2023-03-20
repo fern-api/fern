@@ -5,6 +5,7 @@ import { useApiTab } from "../../../api-tabs/context/useApiTab";
 import { useTypePath } from "../../../routes/useTypePath";
 import { useApiDefinitionItemContext } from "../../context/useApiDefinitionItemContext";
 import { TypeIcon } from "../TypeIcon";
+import { TypeString } from "./TypeString";
 
 export declare namespace ReferencedTypePreviewPart {
     export interface Props {
@@ -24,11 +25,13 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
     }, [openTab]);
 
     return (
-        <div className="flex rounded overflow-hidden cursor-pointer" onClick={onClick}>
-            <div className="flex items-center bg-[#5ec069] px-1">
+        <div className="flex rounded overflow-hidden cursor-pointer leading-none" onClick={onClick}>
+            <div className="flex items-center bg-[#5ec069] p-1">
                 <TypeIcon color="white" />
             </div>
-            <div className="flex items-center bg-[#deede4] px-1">{resolveTypeById(typeId).name}</div>
+            <div className="flex items-center bg-[#deede4] px-1">
+                <TypeString>{resolveTypeById(typeId).name}</TypeString>
+            </div>
         </div>
     );
 };

@@ -3,6 +3,7 @@ import React from "react";
 import { ListPreviewPart } from "./ListPreviewPart";
 import { MapPreviewPart } from "./MapPreviewPart";
 import { OptionalPreviewPart } from "./OptionalPreviewPart";
+import { PrimitivePreviewPart } from "./PrimitivePreviewPart";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 import { SetPreviewPart } from "./SetPreviewPart";
 
@@ -15,20 +16,7 @@ export declare namespace TypePreviewPart {
 
 export const TypePreviewPart: React.FC<TypePreviewPart.Props> = ({ type, includeContainerItems }) => {
     return type._visit({
-        primitive: (primitive) => (
-            <div>
-                {primitive._visit({
-                    string: () => "string",
-                    integer: () => "integer",
-                    double: () => "double",
-                    long: () => "long",
-                    boolean: () => "boolean",
-                    datetime: () => "ISO 8601 datetime",
-                    uuid: () => "uuid",
-                    _other: () => "unknown",
-                })}
-            </div>
-        ),
+        primitive: (primitive) => <PrimitivePreviewPart primitive={primitive} />,
         list: (list) => <ListPreviewPart list={list} includeContainerItems={includeContainerItems} />,
         reference: (typeId) => <ReferencedTypePreviewPart typeId={typeId} />,
         enum: () => <div>enum</div>,

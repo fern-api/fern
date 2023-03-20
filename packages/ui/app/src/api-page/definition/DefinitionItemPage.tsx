@@ -1,4 +1,4 @@
-import { Docs } from "./docs/Docs";
+import { Markdown } from "./markdown/Markdown";
 
 export declare namespace DefinitionItemPage {
     export type Props = React.PropsWithChildren<{
@@ -15,7 +15,7 @@ export const DefinitionItemPage: React.FC<DefinitionItemPage.Props> = ({ title, 
             {subtitle != null && <div className="mt-2">{subtitle}</div>}
             {docs != null && (
                 <div className="mt-4">
-                    <Docs docs={docs} />
+                    <Markdown docs={docs} />
                 </div>
             )}
             <div className="flex mt-8">{children}</div>

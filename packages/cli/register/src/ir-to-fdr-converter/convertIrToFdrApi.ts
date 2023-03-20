@@ -13,7 +13,7 @@ export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.
 
     for (const [typeId, type] of entries(ir.types)) {
         fdrApi.types[convertTypeId(typeId)] = {
-            docs: type.docs ?? undefined,
+            description: type.docs ?? undefined,
             name: type.name.name.originalName,
             shape: convertTypeShape(type.shape),
             examples: type.examples.map((example) => ({

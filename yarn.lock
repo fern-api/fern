@@ -4439,7 +4439,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.1268
-    "@fern-fern/registry": 0.0.217
+    "@fern-fern/registry": 0.0.300
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -4577,7 +4577,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry": 0.0.217
+    "@fern-fern/registry": 0.0.300
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4750,11 +4750,12 @@ __metadata:
     "@fern-api/split-view": "workspace:*"
     "@fern-api/theme": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
-    "@fern-fern/registry": 0.0.217
+    "@fern-fern/registry": 0.0.300
     "@fontsource/ibm-plex-mono": ^4.5.8
     "@fontsource/source-sans-pro": ^4.5.11
     "@tanstack/react-query": ^4.24.10
     "@tanstack/react-query-devtools": ^4.24.12
+    "@types/indefinite": ^2.3.1
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -4766,6 +4767,7 @@ __metadata:
     depcheck: ^1.4.3
     emoji-picker-react: ^4.4.7
     eslint: ^8.26.0
+    indefinite: ^2.4.2
     jest: ^29.0.3
     lodash-es: ^4.17.21
     normalize.css: ^8.0.1
@@ -5088,15 +5090,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry@npm:0.0.217":
-  version: 0.0.217
-  resolution: "@fern-fern/registry@npm:0.0.217"
+"@fern-fern/registry@npm:0.0.300":
+  version: 0.0.300
+  resolution: "@fern-fern/registry@npm:0.0.300"
   dependencies:
     "@types/url-join": 4.0.1
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 58e27bc1fa0a1ea4523fd5554f00143e150ec0ceedab00b4b34430e261cae42c3d7401a36b8f46fd40047f7c9c35ab537d27f67b8730421f6a67ef0e0e34160e
+  checksum: 8e0a3ee0afb288e5d1015d49c3e8c46ce54b4d052fa95d38c792edbac3727f68ea73e14abc84ab2b66e3842d4d6be12ca8d57eb64a31fbd45425f2bef2b0ffe5
   languageName: node
   linkType: hard
 
@@ -6943,6 +6945,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 7a6746d00729b2a9fe9f9dd3453430b099931df879ec8f7a7b5f07b1795f6d99b0512640c45a67390b1e4bacb9401e36824952aeeaf089feba8627a063cf8e00
+  languageName: node
+  linkType: hard
+
+"@types/indefinite@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@types/indefinite@npm:2.3.1"
+  checksum: 12394d59e02135edb925d6c45cca555f97ce3a6dc2589ca4393919c479f390760c67f2afe0a34baf00995e4e243c2a287599f9a9db5e69c2a45b59e0167a25a9
   languageName: node
   linkType: hard
 
@@ -13957,6 +13966,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.1.4
   resolution: "imurmurhash@npm:0.1.4"
   checksum: 7cae75c8cd9a50f57dadd77482359f659eaebac0319dd9368bcd1714f55e65badd6929ca58569da2b6494ef13fdd5598cd700b1eba23f8b79c5f19d195a3ecf7
+  languageName: node
+  linkType: hard
+
+"indefinite@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "indefinite@npm:2.4.2"
+  checksum: f157de6007277af014ecb4ae8190fd8c945c321ca987acb5ac449197a6b16cfb656376079c6be70a3c3d879c2b5b875ff5f051187d4961b5488fb21251063a77
   languageName: node
   linkType: hard
 

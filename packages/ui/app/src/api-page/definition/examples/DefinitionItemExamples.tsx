@@ -1,6 +1,6 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { useNumericState } from "@fern-api/react-commons";
-import { Docs } from "../docs/Docs";
+import { Markdown } from "../markdown/Markdown";
 import { DefinitionItemExamplesLayout } from "./DefinitionItemExamplesLayout";
 import { ExampleChevron } from "./ExampleChevron";
 import { ExampleDot } from "./ExampleDot";
@@ -56,7 +56,7 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
                     <div className="text-lg font-bold">{example.name ?? "Example"}</div>
                     {example.docs != null && (
                         <div className="mt-1">
-                            <Docs docs={example.docs} />
+                            <Markdown docs={example.docs} />
                         </div>
                     )}
                     <div className="flex flex-col mt-5">{example.render()}</div>

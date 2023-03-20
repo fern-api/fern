@@ -1,6 +1,5 @@
 import { H4 } from "@blueprintjs/core";
-import { Docs } from "../docs/Docs";
-import styles from "./EndpointSection.module.scss";
+import { Markdown } from "../markdown/Markdown";
 
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
@@ -11,14 +10,14 @@ export declare namespace EndpointSection {
 
 export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, docs, children }) => {
     return (
-        <div className={styles.container}>
+        <div className="flex flex-col">
             <H4>{title}</H4>
             {docs != null && (
                 <div className="mb-2">
-                    <Docs docs={docs} />
+                    <Markdown docs={docs} />
                 </div>
             )}
-            <div className={styles.body}>{children}</div>
+            <div className="flex flex-col">{children}</div>
         </div>
     );
 };

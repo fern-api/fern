@@ -9284,7 +9284,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.1268"],\
-            ["@fern-fern/registry", "npm:0.0.217"],\
+            ["@fern-fern/registry", "npm:0.0.300"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9430,7 +9430,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
-            ["@fern-fern/registry", "npm:0.0.217"],\
+            ["@fern-fern/registry", "npm:0.0.300"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -9617,11 +9617,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/split-view", "workspace:packages/commons/react/split-view"],\
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
-            ["@fern-fern/registry", "npm:0.0.217"],\
+            ["@fern-fern/registry", "npm:0.0.300"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fontsource/source-sans-pro", "npm:4.5.11"],\
             ["@tanstack/react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.24.10"],\
             ["@tanstack/react-query-devtools", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.24.12"],\
+            ["@types/indefinite", "npm:2.3.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9633,6 +9634,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["emoji-picker-react", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.4.7"],\
             ["eslint", "npm:8.26.0"],\
+            ["indefinite", "npm:2.4.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
             ["normalize.css", "npm:8.0.1"],\
@@ -10000,10 +10002,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry", [\
-        ["npm:0.0.217", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.217-62e50bf406-58e27bc1fa.zip/node_modules/@fern-fern/registry/",\
+        ["npm:0.0.300", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.300-c513ee42db-8e0a3ee0af.zip/node_modules/@fern-fern/registry/",\
           "packageDependencies": [\
-            ["@fern-fern/registry", "npm:0.0.217"],\
+            ["@fern-fern/registry", "npm:0.0.300"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
@@ -12389,6 +12391,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/http-proxy", "npm:1.17.9"],\
             ["@types/node", "npm:18.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/indefinite", [\
+        ["npm:2.3.1", {\
+          "packageLocation": "./.yarn/cache/@types-indefinite-npm-2.3.1-49d5e321ec-12394d59e0.zip/node_modules/@types/indefinite/",\
+          "packageDependencies": [\
+            ["@types/indefinite", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21021,6 +21032,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/imurmurhash-npm-0.1.4-610c5068a0-7cae75c8cd.zip/node_modules/imurmurhash/",\
           "packageDependencies": [\
             ["imurmurhash", "npm:0.1.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["indefinite", [\
+        ["npm:2.4.2", {\
+          "packageLocation": "./.yarn/cache/indefinite-npm-2.4.2-e443c1b84e-f157de6007.zip/node_modules/indefinite/",\
+          "packageDependencies": [\
+            ["indefinite", "npm:2.4.2"]\
           ],\
           "linkType": "HARD"\
         }]\

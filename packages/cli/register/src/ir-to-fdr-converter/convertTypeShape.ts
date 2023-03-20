@@ -1,13 +1,13 @@
 import * as Ir from "@fern-fern/ir-model";
 import { FernRegistry } from "@fern-fern/registry";
 
-export function convertTypeShape(irType: Ir.types.Type): FernRegistry.Type {
-    return Ir.types.Type._visit<FernRegistry.Type>(irType, {
+export function convertTypeShape(irType: Ir.types.Type): FernRegistry.TypeShape {
+    return Ir.types.Type._visit<FernRegistry.TypeShape>(irType, {
         alias: (alias) => {
-            return convertTypeReference(alias.aliasOf);
+            return FernRegistry.TypeShape.alias(convertTypeReference(alias.aliasOf));
         },
         enum: (enum_) => {
-            return FernRegistry.Type.enum({
+            return FernRegistry.TypeShape.enum({
                 values: enum_.values.map((value) => ({
                     docs: value.docs ?? undefined,
                     value: value.name.wireValue,
@@ -15,7 +15,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.Type {
             });
         },
         object: (object) => {
-            return FernRegistry.Type.object({
+            return FernRegistry.TypeShape.object({
                 extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
                 properties: object.properties.map((property) => ({
                     docs: property.docs ?? undefined,
@@ -25,7 +25,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.Type {
             });
         },
         union: (union) => {
-            return FernRegistry.Type.discriminatedUnion({
+            return FernRegistry.TypeShape.discriminatedUnion({
                 discriminant: union.discriminant.wireValue,
                 members: union.types.map((member) => {
                     return {
@@ -60,8 +60,13 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.Type {
                 }),
             });
         },
-        undiscriminatedUnion: () => {
-            throw new Error("Unsupported union: " + irType._type);
+        undiscriminatedUnion: (union) => {
+            return FernRegistry.TypeShape.undiscriminatedUnion({
+                members: union.members.map((member) => ({
+                    description: member.docs ?? undefined,
+                    type: convertTypeReference(member.type),
+                })),
+            });
         },
         _unknown: () => {
             throw new Error("Unknown Type shape: " + irType._type);
@@ -69,28 +74,28 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.Type {
     });
 }
 
-export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FernRegistry.Type {
-    return Ir.types.TypeReference._visit<FernRegistry.Type>(irTypeReference, {
+export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FernRegistry.TypeReference {
+    return Ir.types.TypeReference._visit<FernRegistry.TypeReference>(irTypeReference, {
         container: (container) => {
-            return Ir.types.ContainerType._visit<FernRegistry.Type>(container, {
+            return Ir.types.ContainerType._visit<FernRegistry.TypeReference>(container, {
                 list: (itemType) => {
-                    return FernRegistry.Type.list({
+                    return FernRegistry.TypeReference.list({
                         itemType: convertTypeReference(itemType),
                     });
                 },
                 map: ({ keyType, valueType }) => {
-                    return FernRegistry.Type.map({
+                    return FernRegistry.TypeReference.map({
                         keyType: convertTypeReference(keyType),
                         valueType: convertTypeReference(valueType),
                     });
                 },
                 optional: (itemType) => {
-                    return FernRegistry.Type.optional({
+                    return FernRegistry.TypeReference.optional({
                         itemType: convertTypeReference(itemType),
                     });
                 },
                 set: (itemType) => {
-                    return FernRegistry.Type.set({
+                    return FernRegistry.TypeReference.set({
                         itemType: convertTypeReference(itemType),
                     });
                 },
@@ -103,10 +108,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             });
         },
         named: (name) => {
-            return FernRegistry.Type.reference(convertTypeId(name.typeId));
+            return FernRegistry.TypeReference.id(convertTypeId(name.typeId));
         },
         primitive: (primitive) => {
-            return FernRegistry.Type.primitive(
+            return FernRegistry.TypeReference.primitive(
                 Ir.types.PrimitiveType._visit<FernRegistry.PrimitiveType>(primitive, {
                     integer: FernRegistry.PrimitiveType.integer,
                     double: FernRegistry.PrimitiveType.double,
@@ -123,7 +128,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             );
         },
         unknown: () => {
-            return FernRegistry.Type.unknown();
+            return FernRegistry.TypeReference.unknown();
         },
         _unknown: () => {
             throw new Error("Unknown Type reference: " + irTypeReference._type);

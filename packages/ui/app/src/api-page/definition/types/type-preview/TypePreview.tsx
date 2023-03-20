@@ -10,9 +10,5 @@ export declare namespace TypePreview {
 }
 
 export const TypePreview: React.FC<TypePreview.Props> = ({ type, includeContainerItems = false }) => {
-    return (
-        <div className="flex text-green-700">
-            <TypePreviewPart type={type} includeContainerItems={includeContainerItems} />
-        </div>
-    );
+    return <TypePreviewPart type={type} includeContainerItems={includeContainerItems} />;
 };

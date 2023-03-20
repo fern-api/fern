@@ -46,8 +46,12 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                 {endpoint.queryParameters.length > 0 && (
                     <QueryParametersSection queryParameters={endpoint.queryParameters} />
                 )}
-                {endpoint.request != null && <EndpointTypeSection title="Request" type={endpoint.request} />}
-                {endpoint.response != null && <EndpointTypeSection title="Response" type={endpoint.response} />}
+                {endpoint.request != null && (
+                    <EndpointTypeSection title="Request" type={endpoint.request} typeSummaryLabel="request" />
+                )}
+                {endpoint.response != null && (
+                    <EndpointTypeSection title="Response" type={endpoint.response} typeSummaryLabel="response" />
+                )}
             </div>
         </DefinitionItemPage>
     );
