@@ -168,6 +168,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             if (!shouldMigrate(migration)) {
                 break;
             }
+            context.logger.debug(`Migrating IR from ${migration.laterVersion} to ${migration.earlierVersion}`);
             migrated = migration.migrateBackwards(migrated, {
                 taskContext: context,
                 targetGenerator,
