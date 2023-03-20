@@ -137,14 +137,12 @@ async function startJob({
 
     const formData = new FormData();
 
-    formData.append(
-        "file",
-        await stringifyLargeObject(migratedIntermediateRepresentation, {
-            onWrite: (irFilepath) => {
-                context.logger.debug("Wrote IR to disk: " + irFilepath);
-            },
-        })
-    );
+    const irAsString = await stringifyLargeObject(migratedIntermediateRepresentation, {
+        onWrite: (irFilepath) => {
+            context.logger.debug("Wrote IR to disk: " + irFilepath);
+        },
+    });
+    formData.append("file", irAsString);
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
