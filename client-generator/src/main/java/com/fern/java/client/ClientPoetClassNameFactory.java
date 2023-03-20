@@ -16,11 +16,12 @@
 
 package com.fern.java.client;
 
-import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.ir.model.services.commons.DeclaredServiceName;
-import com.fern.ir.model.services.http.HttpEndpoint;
-import com.fern.ir.model.services.http.HttpService;
+import com.fern.ir.v3.model.errors.ErrorDeclaration;
+import com.fern.ir.v3.model.ir.IntermediateRepresentation;
+import com.fern.ir.v3.model.services.commons.DeclaredServiceName;
+import com.fern.ir.v3.model.services.http.HttpEndpoint;
+import com.fern.ir.v3.model.services.http.HttpService;
+import com.fern.ir.v3.model.services.http.SdkRequestWrapper;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
@@ -63,5 +64,12 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         String packageName =
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, httpService.getName().getName() + "Client");
+    }
+
+    public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        return ClassName.get(
+                packageName, sdkRequestWrapper.getWrapperName().getSafeName().getPascalCase());
     }
 }

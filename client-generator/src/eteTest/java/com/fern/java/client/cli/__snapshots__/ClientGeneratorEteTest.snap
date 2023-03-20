@@ -386,8 +386,8 @@ package com.fern.basic;
 import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.Environment;
 import com.fern.basic.resources.auth.AuthServiceClient;
-import com.fern.basic.resources.blog.PostsServiceClient;
-import com.fern.basic.resources.dummy.service.DummyServiceClient;
+import com.fern.basic.resources.blog.BlogServiceClient;
+import com.fern.basic.resources.dummy.service.DummyServiceServiceClient;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -395,9 +395,9 @@ import java.util.function.Supplier;
 public final class FernFernClient {
   private final Supplier<AuthServiceClient> authServiceClient;
 
-  private final Supplier<PostsServiceClient> postsServiceClient;
+  private final Supplier<BlogServiceClient> blogServiceClient;
 
-  private final Supplier<DummyServiceClient> dummyServiceClient;
+  private final Supplier<DummyServiceServiceClient> dummyServiceServiceClient;
 
   private final EventClient event;
 
@@ -414,23 +414,21 @@ public final class FernFernClient {
   }
 
   public FernFernClient(Environment environment, String apiVersion) {
-    this.postsServiceClient =
-        memoize(() -> new PostsServiceClient(environment.getUrl(), apiVersion));
-    this.dummyServiceClient =
-        memoize(() -> new DummyServiceClient(environment.getUrl(), apiVersion));
+    this.blogServiceClient = memoize(() -> new BlogServiceClient(environment.getUrl(), apiVersion));
     this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl(), apiVersion));
+    this.dummyServiceServiceClient =
+        memoize(() -> new DummyServiceServiceClient(environment.getUrl(), apiVersion));
     this.event = new EventClient(environment, apiVersion);
     this.device = new DeviceClient(environment, apiVersion);
     this.user = new UserClient(environment, apiVersion);
   }
 
   public FernFernClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.postsServiceClient =
-        memoize(() -> new PostsServiceClient(environment.getUrl(), apiVersion));
-    this.dummyServiceClient =
-        memoize(() -> new DummyServiceClient(environment.getUrl(), apiVersion));
+    this.blogServiceClient = memoize(() -> new BlogServiceClient(environment.getUrl(), apiVersion));
     this.authServiceClient =
         memoize(() -> new AuthServiceClient(environment.getUrl(), auth, apiVersion));
+    this.dummyServiceServiceClient =
+        memoize(() -> new DummyServiceServiceClient(environment.getUrl(), apiVersion));
     this.event = new EventClient(environment, auth, apiVersion);
     this.device = new DeviceClient(environment, auth, apiVersion);
     this.user = new UserClient(environment, auth, apiVersion);
@@ -440,12 +438,12 @@ public final class FernFernClient {
     return this.authServiceClient.get();
   }
 
-  public final PostsServiceClient blog() {
-    return this.postsServiceClient.get();
+  public final BlogServiceClient blog() {
+    return this.blogServiceClient.get();
   }
 
-  public final DummyServiceClient dummyService() {
-    return this.dummyServiceClient.get();
+  public final DummyServiceServiceClient dummyService() {
+    return this.dummyServiceServiceClient.get();
   }
 
   public final EventClient event() {
@@ -624,7 +622,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/auth")
 interface AuthService {
   @GET
-  @Path("/")
+  @Path("")
   void getAuth(
       @HeaderParam("Authorization") BearerAuth auth, @HeaderParam("API-VERSION") String apiVersion)
       throws GetAuthException;
@@ -646,7 +644,6 @@ basic[src/main/java/com/fern/basic/resources/auth/AuthServiceClient.java]=[
 package com.fern.basic.resources.auth;
 
 import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.auth.endpoints.GetAuth;
 import com.fern.basic.resources.auth.exceptions.GetAuthException;
 import java.util.Optional;
 
@@ -669,11 +666,11 @@ public final class AuthServiceClient {
     this.apiVersion = apiVersion;
   }
 
-  public void getAuth(GetAuth.Request request) throws GetAuthException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+  /**
+   * @throws GetAuthException Exception that wraps all possible endpoint errors
+   */
+  public void getAuth() throws GetAuthException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
     this.service.getAuth(authValue, apiVersion);
   }
 }
@@ -712,86 +709,6 @@ final class AuthServiceErrorDecoder implements ErrorDecoder {
         .reader()
         .withAttribute("statusCode", response.status())
         .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/auth/endpoints/GetAuth.java]=[
-package com.fern.basic.resources.auth.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class GetAuth {
-  private GetAuth() {}
-
-  public static final class Request {
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(Optional<BearerAuth> authOverride) {
-      this.authOverride = authOverride;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "GetAuth.Request{" + "authOverride: " + authOverride + "}";
-    }
-
-    public static Builder builder() {
-      return new Builder();
-    }
-
-    public static final class Builder {
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      public Builder from(Request other) {
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      public Builder authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      public Builder authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      public Request build() {
-        return new Request(authOverride);
-      }
-    }
   }
 }
 
@@ -909,14 +826,13 @@ public final class GetAuthException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/blog/PostsService.java]=[
+basic[src/main/java/com/fern/basic/resources/blog/BlogService.java]=[
 package com.fern.basic.resources.blog;
 
 import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.blog.exceptions.CreatePostException;
 import com.fern.basic.resources.blog.exceptions.GetPostException;
 import com.fern.basic.resources.blog.types.BlogPost;
-import com.fern.basic.resources.blog.types.CreatePostRequest;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -935,10 +851,10 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/posts")
-interface PostsService {
+interface BlogService {
   @POST
   @Path("/create")
-  void createPost(@HeaderParam("API-VERSION") String apiVersion, CreatePostRequest body)
+  void createPost(@HeaderParam("API-VERSION") String apiVersion, Object body)
       throws CreatePostException;
 
   @GET
@@ -949,58 +865,73 @@ interface PostsService {
       @QueryParam("dummy") String dummy)
       throws GetPostException;
 
-  static PostsService getClient(String url) {
+  static BlogService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new PostsServiceErrorDecoder())
-        .target(PostsService.class, url);
+        .errorDecoder(new BlogServiceErrorDecoder())
+        .target(BlogService.class, url);
   }
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/blog/PostsServiceClient.java]=[
+basic[src/main/java/com/fern/basic/resources/blog/BlogServiceClient.java]=[
 package com.fern.basic.resources.blog;
 
-import com.fern.basic.resources.blog.endpoints.CreatePost;
-import com.fern.basic.resources.blog.endpoints.GetPost;
 import com.fern.basic.resources.blog.exceptions.CreatePostException;
 import com.fern.basic.resources.blog.exceptions.GetPostException;
+import com.fern.basic.resources.blog.requests.CreatePostRequest;
+import com.fern.basic.resources.blog.requests.GetPostRequest;
 import com.fern.basic.resources.blog.types.BlogPost;
+import java.util.HashMap;
+import java.util.Map;
 
-public final class PostsServiceClient {
-  private final PostsService service;
+public final class BlogServiceClient {
+  private final BlogService service;
 
   private final String apiVersion;
 
-  public PostsServiceClient(String url, String apiVersion) {
-    this.service = PostsService.getClient(url);
+  public BlogServiceClient(String url, String apiVersion) {
+    this.service = BlogService.getClient(url);
     this.apiVersion = apiVersion;
   }
 
   /**
    * Create a new blog post
    *
-   * @param request Wrapper object for the request body that includes any path parameters, query
-   *     parameters, and headers
+   * @param request
    * @throws CreatePostException Exception that wraps all possible endpoint errors
    */
-  public void createPost(CreatePost.Request request) throws CreatePostException {
-    this.service.createPost(apiVersion, request.getBody());
+  public void createPost(CreatePostRequest request) throws CreatePostException {
+    Map<String, Object> _body = new HashMap<>();
+    _body.put("title", request.getTitle());
+    _body.put("author", request.getAuthor());
+    _body.put("content", request.getContent());
+    _body.put("postType", request.getPostType());
+    _body.put("switch", request.getSwitch());
+    _body.put("ratings", request.getRatings());
+    _body.put("list", request.getList());
+    this.service.createPost(apiVersion, _body);
   }
 
-  public BlogPost getPost(GetPost.Request request) throws GetPostException {
-    return this.service.getPost(apiVersion, request.getPostId(), request.getDummy());
+  /**
+   * @param postId The post id for the blog post
+   * @param request
+   * @throws GetPostException Exception that wraps all possible endpoint errors
+   * @return BlogPost
+   */
+  public BlogPost getPost(String postId, GetPostRequest request) throws GetPostException {
+    return this.service.getPost(apiVersion, postId, request.getDummy());
   }
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/blog/PostsServiceErrorDecoder.java]=[
+basic[src/main/java/com/fern/basic/resources/blog/BlogServiceErrorDecoder.java]=[
 package com.fern.basic.resources.blog;
 
 import com.fern.basic.core.ObjectMappers;
@@ -1010,7 +941,7 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
 
-final class PostsServiceErrorDecoder implements ErrorDecoder {
+final class BlogServiceErrorDecoder implements ErrorDecoder {
   @Override
   public Exception decode(String methodKey, Response response) {
     try {
@@ -1035,288 +966,6 @@ final class PostsServiceErrorDecoder implements ErrorDecoder {
         .reader()
         .withAttribute("statusCode", response.status())
         .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/endpoints/CreatePost.java]=[
-package com.fern.basic.resources.blog.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.blog.types.CreatePostRequest;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class CreatePost {
-  private CreatePost() {}
-
-  public static final class Request {
-    private final CreatePostRequest body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(CreatePostRequest body, Optional<BearerAuth> authOverride) {
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return This will create a Post.
-     */
-    public CreatePostRequest getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return body.equals(other.body) && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "CreatePost.Request{" + "body: " + body + ", authOverride: " + authOverride + "}";
-    }
-
-    public static BodyStage builder() {
-      return new Builder();
-    }
-
-    public interface BodyStage {
-      _FinalStage body(CreatePostRequest body);
-
-      Builder from(Request other);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements BodyStage, _FinalStage {
-      private CreatePostRequest body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * This will create a Post.
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage body(CreatePostRequest body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(body, authOverride);
-      }
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/endpoints/GetPost.java]=[
-package com.fern.basic.resources.blog.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class GetPost {
-  private GetPost() {}
-
-  public static final class Request {
-    private final String postId;
-
-    private final String dummy;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String postId, String dummy, Optional<BearerAuth> authOverride) {
-      this.postId = postId;
-      this.dummy = dummy;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return The post id for the blog post
-     */
-    public String getPostId() {
-      return postId;
-    }
-
-    /**
-     * @return Dummy query param
-     */
-    public String getDummy() {
-      return dummy;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return postId.equals(other.postId)
-          && dummy.equals(other.dummy)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.postId, this.dummy, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "GetPost.Request{"
-          + "postId: "
-          + postId
-          + ", dummy: "
-          + dummy
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static PostIdStage builder() {
-      return new Builder();
-    }
-
-    public interface PostIdStage {
-      DummyStage postId(String postId);
-
-      Builder from(Request other);
-    }
-
-    public interface DummyStage {
-      _FinalStage dummy(String dummy);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements PostIdStage, DummyStage, _FinalStage {
-      private String postId;
-
-      private String dummy;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        postId(other.getPostId());
-        dummy(other.getDummy());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * The post id for the blog post
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public DummyStage postId(String postId) {
-        this.postId = postId;
-        return this;
-      }
-
-      /**
-       * Dummy query param
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage dummy(String dummy) {
-        this.dummy = dummy;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(postId, dummy, authOverride);
-      }
-    }
   }
 }
 
@@ -1753,6 +1402,400 @@ public final class GetPostException extends Exception {
 ]
 
 
+basic[src/main/java/com/fern/basic/resources/blog/requests/CreatePostRequest.java]=[
+package com.fern.basic.resources.blog.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.basic.resources.blog.types.Author;
+import com.fern.basic.resources.blog.types.PostType;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+@JsonDeserialize(builder = CreatePostRequest.Builder.class)
+public final class CreatePostRequest {
+  private final String title;
+
+  private final Author author;
+
+  private final String content;
+
+  private final PostType postType;
+
+  private final int switch_;
+
+  private final Map<String, Integer> ratings;
+
+  private final List<List<String>> list;
+
+  private int _cachedHashCode;
+
+  CreatePostRequest(
+      String title,
+      Author author,
+      String content,
+      PostType postType,
+      int switch_,
+      Map<String, Integer> ratings,
+      List<List<String>> list) {
+    this.title = title;
+    this.author = author;
+    this.content = content;
+    this.postType = postType;
+    this.switch_ = switch_;
+    this.ratings = ratings;
+    this.list = list;
+  }
+
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
+  }
+
+  @JsonProperty("author")
+  public Author getAuthor() {
+    return author;
+  }
+
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  @JsonProperty("postType")
+  public PostType getPostType() {
+    return postType;
+  }
+
+  @JsonProperty("switch")
+  public int getSwitch() {
+    return switch_;
+  }
+
+  @JsonProperty("ratings")
+  public Map<String, Integer> getRatings() {
+    return ratings;
+  }
+
+  @JsonProperty("list")
+  public List<List<String>> getList() {
+    return list;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
+  }
+
+  private boolean equalTo(CreatePostRequest other) {
+    return title.equals(other.title)
+        && author.equals(other.author)
+        && content.equals(other.content)
+        && postType.equals(other.postType)
+        && switch_ == other.switch_
+        && ratings.equals(other.ratings)
+        && list.equals(other.list);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode =
+          Objects.hash(
+              this.title,
+              this.author,
+              this.content,
+              this.postType,
+              this.switch_,
+              this.ratings,
+              this.list);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "CreatePostRequest{"
+        + "title: "
+        + title
+        + ", author: "
+        + author
+        + ", content: "
+        + content
+        + ", postType: "
+        + postType
+        + ", switch_: "
+        + switch_
+        + ", ratings: "
+        + ratings
+        + ", list: "
+        + list
+        + "}";
+  }
+
+  public static TitleStage builder() {
+    return new Builder();
+  }
+
+  public interface TitleStage {
+    AuthorStage title(String title);
+
+    Builder from(CreatePostRequest other);
+  }
+
+  public interface AuthorStage {
+    ContentStage author(Author author);
+  }
+
+  public interface ContentStage {
+    PostTypeStage content(String content);
+  }
+
+  public interface PostTypeStage {
+    SwitchStage postType(PostType postType);
+  }
+
+  public interface SwitchStage {
+    _FinalStage switch_(int switch_);
+  }
+
+  public interface _FinalStage {
+    CreatePostRequest build();
+
+    _FinalStage ratings(Map<String, Integer> ratings);
+
+    _FinalStage putAllRatings(Map<String, Integer> ratings);
+
+    _FinalStage ratings(String key, Integer value);
+
+    _FinalStage list(List<List<String>> list);
+
+    _FinalStage addList(List<String> list);
+
+    _FinalStage addAllList(List<List<String>> list);
+  }
+
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static final class Builder
+      implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+    private String title;
+
+    private Author author;
+
+    private String content;
+
+    private PostType postType;
+
+    private int switch_;
+
+    private List<List<String>> list = new ArrayList<>();
+
+    private Map<String, Integer> ratings = new LinkedHashMap<>();
+
+    private Builder() {}
+
+    @Override
+    public Builder from(CreatePostRequest other) {
+      title(other.getTitle());
+      author(other.getAuthor());
+      content(other.getContent());
+      postType(other.getPostType());
+      switch_(other.getSwitch());
+      ratings(other.getRatings());
+      list(other.getList());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("title")
+    public AuthorStage title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("author")
+    public ContentStage author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("content")
+    public PostTypeStage content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("postType")
+    public SwitchStage postType(PostType postType) {
+      this.postType = postType;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("switch")
+    public _FinalStage switch_(int switch_) {
+      this.switch_ = switch_;
+      return this;
+    }
+
+    @Override
+    public _FinalStage addAllList(List<List<String>> list) {
+      this.list.addAll(list);
+      return this;
+    }
+
+    @Override
+    public _FinalStage addList(List<String> list) {
+      this.list.add(list);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "list", nulls = Nulls.SKIP)
+    public _FinalStage list(List<List<String>> list) {
+      this.list.clear();
+      this.list.addAll(list);
+      return this;
+    }
+
+    @Override
+    public _FinalStage ratings(String key, Integer value) {
+      this.ratings.put(key, value);
+      return this;
+    }
+
+    @Override
+    public _FinalStage putAllRatings(Map<String, Integer> ratings) {
+      this.ratings.putAll(ratings);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "ratings", nulls = Nulls.SKIP)
+    public _FinalStage ratings(Map<String, Integer> ratings) {
+      this.ratings.clear();
+      this.ratings.putAll(ratings);
+      return this;
+    }
+
+    @Override
+    public CreatePostRequest build() {
+      return new CreatePostRequest(title, author, content, postType, switch_, ratings, list);
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/blog/requests/GetPostRequest.java]=[
+package com.fern.basic.resources.blog.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.Objects;
+
+@JsonDeserialize(builder = GetPostRequest.Builder.class)
+public final class GetPostRequest {
+  private final String dummy;
+
+  private int _cachedHashCode;
+
+  GetPostRequest(String dummy) {
+    this.dummy = dummy;
+  }
+
+  /**
+   * @return Dummy query param
+   */
+  @JsonProperty("dummy")
+  public String getDummy() {
+    return dummy;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof GetPostRequest && equalTo((GetPostRequest) other);
+  }
+
+  private boolean equalTo(GetPostRequest other) {
+    return dummy.equals(other.dummy);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.dummy);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "GetPostRequest{" + "dummy: " + dummy + "}";
+  }
+
+  public static DummyStage builder() {
+    return new Builder();
+  }
+
+  public interface DummyStage {
+    _FinalStage dummy(String dummy);
+
+    Builder from(GetPostRequest other);
+  }
+
+  public interface _FinalStage {
+    GetPostRequest build();
+  }
+
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static final class Builder implements DummyStage, _FinalStage {
+    private String dummy;
+
+    private Builder() {}
+
+    @Override
+    public Builder from(GetPostRequest other) {
+      dummy(other.getDummy());
+      return this;
+    }
+
+    /**
+     * Dummy query param
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    @JsonSetter("dummy")
+    public _FinalStage dummy(String dummy) {
+      this.dummy = dummy;
+      return this;
+    }
+
+    @Override
+    public GetPostRequest build() {
+      return new GetPostRequest(dummy);
+    }
+  }
+}
+
+]
+
+
 basic[src/main/java/com/fern/basic/resources/blog/types/Author.java]=[
 package com.fern.basic.resources.blog.types;
 
@@ -2134,300 +2177,6 @@ public final class BlogPost {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/blog/types/CreatePostRequest.java]=[
-package com.fern.basic.resources.blog.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-@JsonDeserialize(builder = CreatePostRequest.Builder.class)
-public final class CreatePostRequest {
-  private final String title;
-
-  private final Author author;
-
-  private final String content;
-
-  private final PostType postType;
-
-  private final int _switch;
-
-  private final Map<String, Integer> ratings;
-
-  private final List<List<String>> list;
-
-  private int _cachedHashCode;
-
-  CreatePostRequest(
-      String title,
-      Author author,
-      String content,
-      PostType postType,
-      int _switch,
-      Map<String, Integer> ratings,
-      List<List<String>> list) {
-    this.title = title;
-    this.author = author;
-    this.content = content;
-    this.postType = postType;
-    this._switch = _switch;
-    this.ratings = ratings;
-    this.list = list;
-  }
-
-  @JsonProperty("title")
-  public String getTitle() {
-    return title;
-  }
-
-  @JsonProperty("author")
-  public Author getAuthor() {
-    return author;
-  }
-
-  @JsonProperty("content")
-  public String getContent() {
-    return content;
-  }
-
-  @JsonProperty("postType")
-  public PostType getPostType() {
-    return postType;
-  }
-
-  @JsonProperty("switch")
-  public int getSwitch() {
-    return _switch;
-  }
-
-  @JsonProperty("ratings")
-  public Map<String, Integer> getRatings() {
-    return ratings;
-  }
-
-  @JsonProperty("list")
-  public List<List<String>> getList() {
-    return list;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
-  }
-
-  private boolean equalTo(CreatePostRequest other) {
-    return title.equals(other.title)
-        && author.equals(other.author)
-        && content.equals(other.content)
-        && postType.equals(other.postType)
-        && _switch == other._switch
-        && ratings.equals(other.ratings)
-        && list.equals(other.list);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode =
-          Objects.hash(
-              this.title,
-              this.author,
-              this.content,
-              this.postType,
-              this._switch,
-              this.ratings,
-              this.list);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "CreatePostRequest{"
-        + "title: "
-        + title
-        + ", author: "
-        + author
-        + ", content: "
-        + content
-        + ", postType: "
-        + postType
-        + ", _switch: "
-        + _switch
-        + ", ratings: "
-        + ratings
-        + ", list: "
-        + list
-        + "}";
-  }
-
-  public static TitleStage builder() {
-    return new Builder();
-  }
-
-  public interface TitleStage {
-    AuthorStage title(String title);
-
-    Builder from(CreatePostRequest other);
-  }
-
-  public interface AuthorStage {
-    ContentStage author(Author author);
-  }
-
-  public interface ContentStage {
-    PostTypeStage content(String content);
-  }
-
-  public interface PostTypeStage {
-    SwitchStage postType(PostType postType);
-  }
-
-  public interface SwitchStage {
-    _FinalStage _switch(int _switch);
-  }
-
-  public interface _FinalStage {
-    CreatePostRequest build();
-
-    _FinalStage ratings(Map<String, Integer> ratings);
-
-    _FinalStage putAllRatings(Map<String, Integer> ratings);
-
-    _FinalStage ratings(String key, Integer value);
-
-    _FinalStage list(List<List<String>> list);
-
-    _FinalStage addList(List<String> list);
-
-    _FinalStage addAllList(List<List<String>> list);
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder
-      implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
-    private String title;
-
-    private Author author;
-
-    private String content;
-
-    private PostType postType;
-
-    private int _switch;
-
-    private List<List<String>> list = new ArrayList<>();
-
-    private Map<String, Integer> ratings = new LinkedHashMap<>();
-
-    private Builder() {}
-
-    @Override
-    public Builder from(CreatePostRequest other) {
-      title(other.getTitle());
-      author(other.getAuthor());
-      content(other.getContent());
-      postType(other.getPostType());
-      _switch(other.getSwitch());
-      ratings(other.getRatings());
-      list(other.getList());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("title")
-    public AuthorStage title(String title) {
-      this.title = title;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("author")
-    public ContentStage author(Author author) {
-      this.author = author;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("content")
-    public PostTypeStage content(String content) {
-      this.content = content;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("postType")
-    public SwitchStage postType(PostType postType) {
-      this.postType = postType;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("switch")
-    public _FinalStage _switch(int _switch) {
-      this._switch = _switch;
-      return this;
-    }
-
-    @Override
-    public _FinalStage addAllList(List<List<String>> list) {
-      this.list.addAll(list);
-      return this;
-    }
-
-    @Override
-    public _FinalStage addList(List<String> list) {
-      this.list.add(list);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "list", nulls = Nulls.SKIP)
-    public _FinalStage list(List<List<String>> list) {
-      this.list.clear();
-      this.list.addAll(list);
-      return this;
-    }
-
-    @Override
-    public _FinalStage ratings(String key, Integer value) {
-      this.ratings.put(key, value);
-      return this;
-    }
-
-    @Override
-    public _FinalStage putAllRatings(Map<String, Integer> ratings) {
-      this.ratings.putAll(ratings);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "ratings", nulls = Nulls.SKIP)
-    public _FinalStage ratings(Map<String, Integer> ratings) {
-      this.ratings.clear();
-      this.ratings.putAll(ratings);
-      return this;
-    }
-
-    @Override
-    public CreatePostRequest build() {
-      return new CreatePostRequest(title, author, content, postType, _switch, ratings, list);
-    }
-  }
-}
-
-]
-
-
 basic[src/main/java/com/fern/basic/resources/blog/types/GeneratorIdAndVersion.java]=[
 package com.fern.basic.resources.blog.types;
 
@@ -2638,9 +2387,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public final class PostType {
-  public static final PostType LONG = new PostType(Value.LONG, "LONG");
-
   public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType LONG = new PostType(Value.LONG, "LONG");
 
   public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
 
@@ -2676,10 +2425,10 @@ public final class PostType {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case LONG:
-        return visitor.visitLong();
       case SHORT:
         return visitor.visitShort();
+      case LONG:
+        return visitor.visitLong();
       case MEDIUM:
         return visitor.visitMedium();
       case UNKNOWN:
@@ -2692,10 +2441,10 @@ public final class PostType {
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "LONG":
-        return LONG;
       case "SHORT":
         return SHORT;
+      case "LONG":
+        return LONG;
       case "med.med":
         return MEDIUM;
       default:
@@ -2817,7 +2566,7 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyService.java]=[
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceService.java]=[
 package com.fern.basic.resources.dummy.service;
 
 import com.fern.basic.core.ObjectMappers;
@@ -2839,50 +2588,56 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/dummy")
-interface DummyService {
+interface DummyServiceService {
   @POST
-  @Path("/")
-  void getDummy(@HeaderParam("API-VERSION") String apiVersion, String body)
+  @Path("")
+  void getDummy(@HeaderParam("API-VERSION") String apiVersion, Object body)
       throws GetDummyException;
 
   @GET
   @Path("/health")
   void health(@HeaderParam("API-VERSION") String apiVersion) throws HealthException;
 
-  static DummyService getClient(String url) {
+  static DummyServiceService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new DummyServiceErrorDecoder())
-        .target(DummyService.class, url);
+        .errorDecoder(new DummyServiceServiceErrorDecoder())
+        .target(DummyServiceService.class, url);
   }
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceClient.java]=[
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceServiceClient.java]=[
 package com.fern.basic.resources.dummy.service;
 
-import com.fern.basic.resources.dummy.service.endpoints.GetDummy;
 import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
 import com.fern.basic.resources.dummy.service.exceptions.HealthException;
 
-public final class DummyServiceClient {
-  private final DummyService service;
+public final class DummyServiceServiceClient {
+  private final DummyServiceService service;
 
   private final String apiVersion;
 
-  public DummyServiceClient(String url, String apiVersion) {
-    this.service = DummyService.getClient(url);
+  public DummyServiceServiceClient(String url, String apiVersion) {
+    this.service = DummyServiceService.getClient(url);
     this.apiVersion = apiVersion;
   }
 
-  public void getDummy(GetDummy.Request request) throws GetDummyException {
-    this.service.getDummy(apiVersion, request.getBody());
+  /**
+   * @param request
+   * @throws GetDummyException Exception that wraps all possible endpoint errors
+   */
+  public void getDummy(String request) throws GetDummyException {
+    this.service.getDummy(apiVersion, request);
   }
 
+  /**
+   * @throws HealthException Exception that wraps all possible endpoint errors
+   */
   public void health() throws HealthException {
     this.service.health(apiVersion);
   }
@@ -2891,7 +2646,7 @@ public final class DummyServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceErrorDecoder.java]=[
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceServiceErrorDecoder.java]=[
 package com.fern.basic.resources.dummy.service;
 
 import com.fern.basic.core.ObjectMappers;
@@ -2901,7 +2656,7 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
 
-final class DummyServiceErrorDecoder implements ErrorDecoder {
+final class DummyServiceServiceErrorDecoder implements ErrorDecoder {
   @Override
   public Exception decode(String methodKey, Response response) {
     try {
@@ -2926,120 +2681,6 @@ final class DummyServiceErrorDecoder implements ErrorDecoder {
         .reader()
         .withAttribute("statusCode", response.status())
         .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/dummy/service/endpoints/GetDummy.java]=[
-package com.fern.basic.resources.dummy.service.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class GetDummy {
-  private GetDummy() {}
-
-  public static final class Request {
-    private final String body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String body, Optional<BearerAuth> authOverride) {
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    public String getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return body.equals(other.body) && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "GetDummy.Request{" + "body: " + body + ", authOverride: " + authOverride + "}";
-    }
-
-    public static BodyStage builder() {
-      return new Builder();
-    }
-
-    public interface BodyStage {
-      _FinalStage body(String body);
-
-      Builder from(Request other);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements BodyStage, _FinalStage {
-      private String body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      @Override
-      public _FinalStage body(String body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(body, authOverride);
-      }
-    }
   }
 }
 
@@ -3305,7 +2946,7 @@ interface DeviceService {
       @HeaderParam("API-VERSION") String apiVersion,
       @PathParam("app_id") String appId,
       @PathParam("user_id") String userId,
-      Device body)
+      Object body)
       throws AddException;
 
   @PUT
@@ -3316,7 +2957,7 @@ interface DeviceService {
       @PathParam("app_id") String appId,
       @PathParam("user_id") String userId,
       @PathParam("device_id") String deviceId,
-      Device body)
+      Object body)
       throws UpdateException;
 
   @DELETE
@@ -3356,10 +2997,6 @@ basic[src/main/java/com/fern/basic/resources/raven/device/DeviceServiceClient.ja
 package com.fern.basic.resources.raven.device;
 
 import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.device.endpoints.Add;
-import com.fern.basic.resources.raven.device.endpoints.Delete;
-import com.fern.basic.resources.raven.device.endpoints.GetDevice;
-import com.fern.basic.resources.raven.device.endpoints.Update;
 import com.fern.basic.resources.raven.device.exceptions.AddException;
 import com.fern.basic.resources.raven.device.exceptions.DeleteException;
 import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
@@ -3390,73 +3027,60 @@ public final class DeviceServiceClient {
    * Add Device for a User. If a device_sid is specified, then devices will be merged if one is
    * found. If no device_sid is specified, then a new device will be created.
    *
-   * @param request Wrapper object for the request body that includes any path parameters, query
-   *     parameters, and headers
+   * @param appId your app identifier
+   * @param userId your user identifier
+   * @param request
    * @throws AddException Exception that wraps all possible endpoint errors
    * @return
    *     <p>the updated Device
    */
-  public Device add(Add.Request request) throws AddException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.add(
-        authValue, apiVersion, request.getAppId(), request.getUserId(), request.getBody());
+  public Device add(String appId, String userId, Device request) throws AddException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    return this.service.add(authValue, apiVersion, appId, userId, request);
   }
 
   /**
    * Update a Device for a User.
    *
-   * @param request Wrapper object for the request body that includes any path parameters, query
-   *     parameters, and headers
+   * @param appId your app identifier
+   * @param userId your user identifier
+   * @param deviceId your device identifier; the same as device_sid
+   * @param request
    * @throws UpdateException Exception that wraps all possible endpoint errors
    * @return
    *     <p>the updated Device
    */
-  public Device update(Update.Request request) throws UpdateException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.update(
-        authValue,
-        apiVersion,
-        request.getAppId(),
-        request.getUserId(),
-        request.getDeviceId(),
-        request.getBody());
+  public Device update(String appId, String userId, String deviceId, Device request)
+      throws UpdateException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    return this.service.update(authValue, apiVersion, appId, userId, deviceId, request);
   }
 
   /**
    * Delete a Device for a User
    *
-   * @param request Wrapper object that includes any path parameters, query parameters, and headers
+   * @param appId your app identifier
+   * @param userId your user identifier
+   * @param deviceId your device identifier
    * @throws DeleteException Exception that wraps all possible endpoint errors
    */
-  public void delete(Delete.Request request) throws DeleteException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    this.service.delete(
-        authValue, apiVersion, request.getAppId(), request.getUserId(), request.getDeviceId());
+  public void delete(String appId, String userId, String deviceId) throws DeleteException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    this.service.delete(authValue, apiVersion, appId, userId, deviceId);
   }
 
   /**
    * Get a Device for a User
    *
-   * @param request Wrapper object that includes any path parameters, query parameters, and headers
+   * @param appId your app identifier
+   * @param userId your user identifier
+   * @param deviceId your device identifier
    * @throws GetDeviceException Exception that wraps all possible endpoint errors
    * @return Device
    */
-  public Device getDevice(GetDevice.Request request) throws GetDeviceException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.getDevice(
-        authValue, apiVersion, request.getAppId(), request.getUserId(), request.getDeviceId());
+  public Device getDevice(String appId, String userId, String deviceId) throws GetDeviceException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    return this.service.getDevice(authValue, apiVersion, appId, userId, deviceId);
   }
 }
 
@@ -3506,792 +3130,6 @@ final class DeviceServiceErrorDecoder implements ErrorDecoder {
         .reader()
         .withAttribute("statusCode", response.status())
         .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/Add.java]=[
-package com.fern.basic.resources.raven.device.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.device.types.Device;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class Add {
-  private Add() {}
-
-  public static final class Request {
-    private final String appId;
-
-    private final String userId;
-
-    private final Device body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String appId, String userId, Device body, Optional<BearerAuth> authOverride) {
-      this.appId = appId;
-      this.userId = userId;
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return your app identifier
-     */
-    public String getAppId() {
-      return appId;
-    }
-
-    /**
-     * @return your user identifier
-     */
-    public String getUserId() {
-      return userId;
-    }
-
-    public Device getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return appId.equals(other.appId)
-          && userId.equals(other.userId)
-          && body.equals(other.body)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.appId, this.userId, this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "Add.Request{"
-          + "appId: "
-          + appId
-          + ", userId: "
-          + userId
-          + ", body: "
-          + body
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      UserIdStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface UserIdStage {
-      BodyStage userId(String userId);
-    }
-
-    public interface BodyStage {
-      _FinalStage body(Device body);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements AppIdStage, UserIdStage, BodyStage, _FinalStage {
-      private String appId;
-
-      private String userId;
-
-      private Device body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        appId(other.getAppId());
-        userId(other.getUserId());
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * your app identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public UserIdStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      /**
-       * your user identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public BodyStage userId(String userId) {
-        this.userId = userId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage body(Device body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(appId, userId, body, authOverride);
-      }
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/Delete.java]=[
-package com.fern.basic.resources.raven.device.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class Delete {
-  private Delete() {}
-
-  public static final class Request {
-    private final String appId;
-
-    private final String userId;
-
-    private final String deviceId;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String appId, String userId, String deviceId, Optional<BearerAuth> authOverride) {
-      this.appId = appId;
-      this.userId = userId;
-      this.deviceId = deviceId;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return your app identifier
-     */
-    public String getAppId() {
-      return appId;
-    }
-
-    /**
-     * @return your user identifier
-     */
-    public String getUserId() {
-      return userId;
-    }
-
-    /**
-     * @return your device identifier
-     */
-    public String getDeviceId() {
-      return deviceId;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return appId.equals(other.appId)
-          && userId.equals(other.userId)
-          && deviceId.equals(other.deviceId)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.appId, this.userId, this.deviceId, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "Delete.Request{"
-          + "appId: "
-          + appId
-          + ", userId: "
-          + userId
-          + ", deviceId: "
-          + deviceId
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      UserIdStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface UserIdStage {
-      DeviceIdStage userId(String userId);
-    }
-
-    public interface DeviceIdStage {
-      _FinalStage deviceId(String deviceId);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder
-        implements AppIdStage, UserIdStage, DeviceIdStage, _FinalStage {
-      private String appId;
-
-      private String userId;
-
-      private String deviceId;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        appId(other.getAppId());
-        userId(other.getUserId());
-        deviceId(other.getDeviceId());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * your app identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public UserIdStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      /**
-       * your user identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public DeviceIdStage userId(String userId) {
-        this.userId = userId;
-        return this;
-      }
-
-      /**
-       * your device identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage deviceId(String deviceId) {
-        this.deviceId = deviceId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(appId, userId, deviceId, authOverride);
-      }
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/GetDevice.java]=[
-package com.fern.basic.resources.raven.device.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class GetDevice {
-  private GetDevice() {}
-
-  public static final class Request {
-    private final String appId;
-
-    private final String userId;
-
-    private final String deviceId;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String appId, String userId, String deviceId, Optional<BearerAuth> authOverride) {
-      this.appId = appId;
-      this.userId = userId;
-      this.deviceId = deviceId;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return your app identifier
-     */
-    public String getAppId() {
-      return appId;
-    }
-
-    /**
-     * @return your user identifier
-     */
-    public String getUserId() {
-      return userId;
-    }
-
-    /**
-     * @return your device identifier
-     */
-    public String getDeviceId() {
-      return deviceId;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return appId.equals(other.appId)
-          && userId.equals(other.userId)
-          && deviceId.equals(other.deviceId)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.appId, this.userId, this.deviceId, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "GetDevice.Request{"
-          + "appId: "
-          + appId
-          + ", userId: "
-          + userId
-          + ", deviceId: "
-          + deviceId
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      UserIdStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface UserIdStage {
-      DeviceIdStage userId(String userId);
-    }
-
-    public interface DeviceIdStage {
-      _FinalStage deviceId(String deviceId);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder
-        implements AppIdStage, UserIdStage, DeviceIdStage, _FinalStage {
-      private String appId;
-
-      private String userId;
-
-      private String deviceId;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        appId(other.getAppId());
-        userId(other.getUserId());
-        deviceId(other.getDeviceId());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * your app identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public UserIdStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      /**
-       * your user identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public DeviceIdStage userId(String userId) {
-        this.userId = userId;
-        return this;
-      }
-
-      /**
-       * your device identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage deviceId(String deviceId) {
-        this.deviceId = deviceId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(appId, userId, deviceId, authOverride);
-      }
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/endpoints/Update.java]=[
-package com.fern.basic.resources.raven.device.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.device.types.Device;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class Update {
-  private Update() {}
-
-  public static final class Request {
-    private final String appId;
-
-    private final String userId;
-
-    private final String deviceId;
-
-    private final Device body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(
-        String appId,
-        String userId,
-        String deviceId,
-        Device body,
-        Optional<BearerAuth> authOverride) {
-      this.appId = appId;
-      this.userId = userId;
-      this.deviceId = deviceId;
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return your app identifier
-     */
-    public String getAppId() {
-      return appId;
-    }
-
-    /**
-     * @return your user identifier
-     */
-    public String getUserId() {
-      return userId;
-    }
-
-    /**
-     * @return your device identifier; the same as device_sid
-     */
-    public String getDeviceId() {
-      return deviceId;
-    }
-
-    public Device getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return appId.equals(other.appId)
-          && userId.equals(other.userId)
-          && deviceId.equals(other.deviceId)
-          && body.equals(other.body)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode =
-            Objects.hash(this.appId, this.userId, this.deviceId, this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "Update.Request{"
-          + "appId: "
-          + appId
-          + ", userId: "
-          + userId
-          + ", deviceId: "
-          + deviceId
-          + ", body: "
-          + body
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      UserIdStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface UserIdStage {
-      DeviceIdStage userId(String userId);
-    }
-
-    public interface DeviceIdStage {
-      BodyStage deviceId(String deviceId);
-    }
-
-    public interface BodyStage {
-      _FinalStage body(Device body);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder
-        implements AppIdStage, UserIdStage, DeviceIdStage, BodyStage, _FinalStage {
-      private String appId;
-
-      private String userId;
-
-      private String deviceId;
-
-      private Device body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        appId(other.getAppId());
-        userId(other.getUserId());
-        deviceId(other.getDeviceId());
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * your app identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public UserIdStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      /**
-       * your user identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public DeviceIdStage userId(String userId) {
-        this.userId = userId;
-        return this;
-      }
-
-      /**
-       * your device identifier; the same as device_sid
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public BodyStage deviceId(String deviceId) {
-        this.deviceId = deviceId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage body(Device body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(appId, userId, deviceId, body, authOverride);
-      }
-    }
   }
 }
 
@@ -5278,8 +4116,6 @@ import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
 import com.fern.basic.resources.raven.event.exceptions.SendException;
-import com.fern.basic.resources.raven.event.types.BulkSendEventRequest;
-import com.fern.basic.resources.raven.event.types.SendEventRequest;
 import com.fern.basic.resources.raven.event.types.SendEventResponse;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -5306,7 +4142,7 @@ interface EventService {
       @HeaderParam("API-VERSION") String apiVersion,
       @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
       @PathParam("app_id") String appId,
-      SendEventRequest body)
+      Object body)
       throws SendException;
 
   @POST
@@ -5316,7 +4152,7 @@ interface EventService {
       @HeaderParam("API-VERSION") String apiVersion,
       @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
       @PathParam("app_id") String appId,
-      BulkSendEventRequest body)
+      Object body)
       throws SendBulkException;
 
   static EventService getClient(String url) {
@@ -5336,11 +4172,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/EventServiceClient.java
 package com.fern.basic.resources.raven.event;
 
 import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.event.endpoints.Send;
-import com.fern.basic.resources.raven.event.endpoints.SendBulk;
 import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
 import com.fern.basic.resources.raven.event.exceptions.SendException;
+import com.fern.basic.resources.raven.event.requests.BulkSendEventRequest;
+import com.fern.basic.resources.raven.event.requests.SendEventRequest;
 import com.fern.basic.resources.raven.event.types.SendEventResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public final class EventServiceClient {
@@ -5365,27 +4203,35 @@ public final class EventServiceClient {
   /**
    * This endpoint allows you to send messages
    *
-   * @param request Wrapper object for the request body that includes any path parameters, query
-   *     parameters, and headers
+   * @param appId
+   * @param request
    * @throws SendException Exception that wraps all possible endpoint errors
    * @return SendEventResponse
    */
-  public SendEventResponse send(Send.Request request) throws SendException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.send(
-        authValue, apiVersion, request.getIdempotencyKey(), request.getAppId(), request.getBody());
+  public SendEventResponse send(String appId, SendEventRequest request) throws SendException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    Map<String, Object> _body = new HashMap<>();
+    _body.put("event", request.getEvent());
+    _body.put("data", request.getData());
+    _body.put("user", request.getUser());
+    _body.put("scheduleAt", request.getScheduleAt());
+    _body.put("override", request.getOverride());
+    return this.service.send(authValue, apiVersion, request.getIdempotencyKey(), appId, _body);
   }
 
-  public SendEventResponse sendBulk(SendBulk.Request request) throws SendBulkException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.sendBulk(
-        authValue, apiVersion, request.getIdempotencyKey(), request.getAppId(), request.getBody());
+  /**
+   * @param appId
+   * @param request
+   * @throws SendBulkException Exception that wraps all possible endpoint errors
+   * @return SendEventResponse
+   */
+  public SendEventResponse sendBulk(String appId, BulkSendEventRequest request)
+      throws SendBulkException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    Map<String, Object> _body = new HashMap<>();
+    _body.put("event", request.getEvent());
+    _body.put("batch", request.getBatch());
+    return this.service.sendBulk(authValue, apiVersion, request.getIdempotencyKey(), appId, _body);
   }
 }
 
@@ -5427,410 +4273,6 @@ final class EventServiceErrorDecoder implements ErrorDecoder {
         .reader()
         .withAttribute("statusCode", response.status())
         .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/endpoints/Send.java]=[
-package com.fern.basic.resources.raven.event.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.event.types.SendEventRequest;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class Send {
-  private Send() {}
-
-  public static final class Request {
-    private final Optional<String> idempotencyKey;
-
-    private final String appId;
-
-    private final SendEventRequest body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(
-        Optional<String> idempotencyKey,
-        String appId,
-        SendEventRequest body,
-        Optional<BearerAuth> authOverride) {
-      this.idempotencyKey = idempotencyKey;
-      this.appId = appId;
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return The API supports idempotency for safely retrying requests without accidentally
-     *     performing the same operation twice. This is useful when an API call is disrupted in
-     *     transit and you do not receive a response. For example, if a request to send event does
-     *     not respond due to a network connection error, you can retry the request with the same
-     *     idempotency key to guarantee that no more than one event is sent. An idempotency key is a
-     *     unique value generated by the client which the server uses to recognize subsequent
-     *     retries of the same request. How you create unique keys is up to you, but we suggest
-     *     using V4 UUIDs, or another random string with enough entropy to avoid collisions.
-     *     Idempotency keys can be up to 255 characters long.
-     */
-    public Optional<String> getIdempotencyKey() {
-      return idempotencyKey;
-    }
-
-    public String getAppId() {
-      return appId;
-    }
-
-    public SendEventRequest getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return idempotencyKey.equals(other.idempotencyKey)
-          && appId.equals(other.appId)
-          && body.equals(other.body)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode =
-            Objects.hash(this.idempotencyKey, this.appId, this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "Send.Request{"
-          + "idempotencyKey: "
-          + idempotencyKey
-          + ", appId: "
-          + appId
-          + ", body: "
-          + body
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      BodyStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface BodyStage {
-      _FinalStage body(SendEventRequest body);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage idempotencyKey(Optional<String> idempotencyKey);
-
-      _FinalStage idempotencyKey(String idempotencyKey);
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements AppIdStage, BodyStage, _FinalStage {
-      private String appId;
-
-      private SendEventRequest body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Optional<String> idempotencyKey = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        idempotencyKey(other.getIdempotencyKey());
-        appId(other.getAppId());
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      @Override
-      public BodyStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage body(SendEventRequest body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      /**
-       * The API supports idempotency for safely retrying requests without accidentally performing
-       * the same operation twice. This is useful when an API call is disrupted in transit and you
-       * do not receive a response. For example, if a request to send event does not respond due to
-       * a network connection error, you can retry the request with the same idempotency key to
-       * guarantee that no more than one event is sent. An idempotency key is a unique value
-       * generated by the client which the server uses to recognize subsequent retries of the same
-       * request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another
-       * random string with enough entropy to avoid collisions. Idempotency keys can be up to 255
-       * characters long.
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage idempotencyKey(String idempotencyKey) {
-        this.idempotencyKey = Optional.of(idempotencyKey);
-        return this;
-      }
-
-      @Override
-      public _FinalStage idempotencyKey(Optional<String> idempotencyKey) {
-        this.idempotencyKey = idempotencyKey;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(idempotencyKey, appId, body, authOverride);
-      }
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/endpoints/SendBulk.java]=[
-package com.fern.basic.resources.raven.event.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.event.types.BulkSendEventRequest;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class SendBulk {
-  private SendBulk() {}
-
-  public static final class Request {
-    private final Optional<String> idempotencyKey;
-
-    private final String appId;
-
-    private final BulkSendEventRequest body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(
-        Optional<String> idempotencyKey,
-        String appId,
-        BulkSendEventRequest body,
-        Optional<BearerAuth> authOverride) {
-      this.idempotencyKey = idempotencyKey;
-      this.appId = appId;
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return The API supports idempotency for safely retrying requests without accidentally
-     *     performing the same operation twice. This is useful when an API call is disrupted in
-     *     transit and you do not receive a response. For example, if a request to send event does
-     *     not respond due to a network connection error, you can retry the request with the same
-     *     idempotency key to guarantee that no more than one event is sent. An idempotency key is a
-     *     unique value generated by the client which the server uses to recognize subsequent
-     *     retries of the same request. How you create unique keys is up to you, but we suggest
-     *     using V4 UUIDs, or another random string with enough entropy to avoid collisions.
-     *     Idempotency keys can be up to 255 characters long.
-     */
-    public Optional<String> getIdempotencyKey() {
-      return idempotencyKey;
-    }
-
-    public String getAppId() {
-      return appId;
-    }
-
-    public BulkSendEventRequest getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return idempotencyKey.equals(other.idempotencyKey)
-          && appId.equals(other.appId)
-          && body.equals(other.body)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode =
-            Objects.hash(this.idempotencyKey, this.appId, this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "SendBulk.Request{"
-          + "idempotencyKey: "
-          + idempotencyKey
-          + ", appId: "
-          + appId
-          + ", body: "
-          + body
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      BodyStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface BodyStage {
-      _FinalStage body(BulkSendEventRequest body);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage idempotencyKey(Optional<String> idempotencyKey);
-
-      _FinalStage idempotencyKey(String idempotencyKey);
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements AppIdStage, BodyStage, _FinalStage {
-      private String appId;
-
-      private BulkSendEventRequest body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Optional<String> idempotencyKey = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        idempotencyKey(other.getIdempotencyKey());
-        appId(other.getAppId());
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      @Override
-      public BodyStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage body(BulkSendEventRequest body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      /**
-       * The API supports idempotency for safely retrying requests without accidentally performing
-       * the same operation twice. This is useful when an API call is disrupted in transit and you
-       * do not receive a response. For example, if a request to send event does not respond due to
-       * a network connection error, you can retry the request with the same idempotency key to
-       * guarantee that no more than one event is sent. An idempotency key is a unique value
-       * generated by the client which the server uses to recognize subsequent retries of the same
-       * request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another
-       * random string with enough entropy to avoid collisions. Idempotency keys can be up to 255
-       * characters long.
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage idempotencyKey(String idempotencyKey) {
-        this.idempotencyKey = Optional.of(idempotencyKey);
-        return this;
-      }
-
-      @Override
-      public _FinalStage idempotencyKey(Optional<String> idempotencyKey) {
-        this.idempotencyKey = idempotencyKey;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(idempotencyKey, appId, body, authOverride);
-      }
-    }
   }
 }
 
@@ -6051,6 +4493,544 @@ public final class SendException extends Exception {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new SendException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/raven/event/requests/BulkSendEventRequest.java]=[
+package com.fern.basic.resources.raven.event.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.basic.resources.raven.event.types.BatchEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(builder = BulkSendEventRequest.Builder.class)
+public final class BulkSendEventRequest {
+  private final Optional<String> idempotencyKey;
+
+  private final String event;
+
+  private final List<BatchEvent> batch;
+
+  private int _cachedHashCode;
+
+  BulkSendEventRequest(Optional<String> idempotencyKey, String event, List<BatchEvent> batch) {
+    this.idempotencyKey = idempotencyKey;
+    this.event = event;
+    this.batch = batch;
+  }
+
+  /**
+   * @return The API supports idempotency for safely retrying requests without accidentally
+   *     performing the same operation twice. This is useful when an API call is disrupted in
+   *     transit and you do not receive a response. For example, if a request to send event does not
+   *     respond due to a network connection error, you can retry the request with the same
+   *     idempotency key to guarantee that no more than one event is sent. An idempotency key is a
+   *     unique value generated by the client which the server uses to recognize subsequent retries
+   *     of the same request. How you create unique keys is up to you, but we suggest using V4
+   *     UUIDs, or another random string with enough entropy to avoid collisions. Idempotency keys
+   *     can be up to 255 characters long.
+   */
+  @JsonProperty("Idempotency-Key")
+  public Optional<String> getIdempotencyKey() {
+    return idempotencyKey;
+  }
+
+  @JsonProperty("event")
+  public String getEvent() {
+    return event;
+  }
+
+  /**
+   * @return List of events
+   */
+  @JsonProperty("batch")
+  public List<BatchEvent> getBatch() {
+    return batch;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof BulkSendEventRequest && equalTo((BulkSendEventRequest) other);
+  }
+
+  private boolean equalTo(BulkSendEventRequest other) {
+    return idempotencyKey.equals(other.idempotencyKey)
+        && event.equals(other.event)
+        && batch.equals(other.batch);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.idempotencyKey, this.event, this.batch);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "BulkSendEventRequest{"
+        + "idempotencyKey: "
+        + idempotencyKey
+        + ", event: "
+        + event
+        + ", batch: "
+        + batch
+        + "}";
+  }
+
+  public static EventStage builder() {
+    return new Builder();
+  }
+
+  public interface EventStage {
+    _FinalStage event(String event);
+
+    Builder from(BulkSendEventRequest other);
+  }
+
+  public interface _FinalStage {
+    BulkSendEventRequest build();
+
+    _FinalStage idempotencyKey(Optional<String> idempotencyKey);
+
+    _FinalStage idempotencyKey(String idempotencyKey);
+
+    _FinalStage batch(List<BatchEvent> batch);
+
+    _FinalStage addBatch(BatchEvent batch);
+
+    _FinalStage addAllBatch(List<BatchEvent> batch);
+  }
+
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static final class Builder implements EventStage, _FinalStage {
+    private String event;
+
+    private List<BatchEvent> batch = new ArrayList<>();
+
+    private Optional<String> idempotencyKey = Optional.empty();
+
+    private Builder() {}
+
+    @Override
+    public Builder from(BulkSendEventRequest other) {
+      idempotencyKey(other.getIdempotencyKey());
+      event(other.getEvent());
+      batch(other.getBatch());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("event")
+    public _FinalStage event(String event) {
+      this.event = event;
+      return this;
+    }
+
+    /**
+     * List of events
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage addAllBatch(List<BatchEvent> batch) {
+      this.batch.addAll(batch);
+      return this;
+    }
+
+    /**
+     * List of events
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage addBatch(BatchEvent batch) {
+      this.batch.add(batch);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "batch", nulls = Nulls.SKIP)
+    public _FinalStage batch(List<BatchEvent> batch) {
+      this.batch.clear();
+      this.batch.addAll(batch);
+      return this;
+    }
+
+    /**
+     * The API supports idempotency for safely retrying requests without accidentally performing the
+     * same operation twice. This is useful when an API call is disrupted in transit and you do not
+     * receive a response. For example, if a request to send event does not respond due to a network
+     * connection error, you can retry the request with the same idempotency key to guarantee that
+     * no more than one event is sent. An idempotency key is a unique value generated by the client
+     * which the server uses to recognize subsequent retries of the same request. How you create
+     * unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough
+     * entropy to avoid collisions. Idempotency keys can be up to 255 characters long.
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage idempotencyKey(String idempotencyKey) {
+      this.idempotencyKey = Optional.of(idempotencyKey);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "Idempotency-Key", nulls = Nulls.SKIP)
+    public _FinalStage idempotencyKey(Optional<String> idempotencyKey) {
+      this.idempotencyKey = idempotencyKey;
+      return this;
+    }
+
+    @Override
+    public BulkSendEventRequest build() {
+      return new BulkSendEventRequest(idempotencyKey, event, batch);
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/raven/event/requests/SendEventRequest.java]=[
+package com.fern.basic.resources.raven.event.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.basic.resources.raven.event.types.EventOverride;
+import com.fern.basic.resources.raven.event.types.User;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(builder = SendEventRequest.Builder.class)
+public final class SendEventRequest {
+  private final Optional<String> idempotencyKey;
+
+  private final String event;
+
+  private final Map<String, Optional<Object>> data;
+
+  private final Optional<User> user;
+
+  private final Optional<Long> scheduleAt;
+
+  private final Optional<EventOverride> override;
+
+  private int _cachedHashCode;
+
+  SendEventRequest(
+      Optional<String> idempotencyKey,
+      String event,
+      Map<String, Optional<Object>> data,
+      Optional<User> user,
+      Optional<Long> scheduleAt,
+      Optional<EventOverride> override) {
+    this.idempotencyKey = idempotencyKey;
+    this.event = event;
+    this.data = data;
+    this.user = user;
+    this.scheduleAt = scheduleAt;
+    this.override = override;
+  }
+
+  /**
+   * @return The API supports idempotency for safely retrying requests without accidentally
+   *     performing the same operation twice. This is useful when an API call is disrupted in
+   *     transit and you do not receive a response. For example, if a request to send event does not
+   *     respond due to a network connection error, you can retry the request with the same
+   *     idempotency key to guarantee that no more than one event is sent. An idempotency key is a
+   *     unique value generated by the client which the server uses to recognize subsequent retries
+   *     of the same request. How you create unique keys is up to you, but we suggest using V4
+   *     UUIDs, or another random string with enough entropy to avoid collisions. Idempotency keys
+   *     can be up to 255 characters long.
+   */
+  @JsonProperty("Idempotency-Key")
+  public Optional<String> getIdempotencyKey() {
+    return idempotencyKey;
+  }
+
+  /**
+   * @return event name
+   */
+  @JsonProperty("event")
+  public String getEvent() {
+    return event;
+  }
+
+  /**
+   * @return { &quot;param1&quot; : &quot;&lt;value1&gt;&quot;, &quot;param2&quot; :
+   *     &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
+   */
+  @JsonProperty("data")
+  public Map<String, Optional<Object>> getData() {
+    return data;
+  }
+
+  @JsonProperty("user")
+  public Optional<User> getUser() {
+    return user;
+  }
+
+  /**
+   * @return Time to send message expressed as UTC milliseconds. If not present, message will be
+   *     sent immediately.
+   */
+  @JsonProperty("scheduleAt")
+  public Optional<Long> getScheduleAt() {
+    return scheduleAt;
+  }
+
+  @JsonProperty("override")
+  public Optional<EventOverride> getOverride() {
+    return override;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof SendEventRequest && equalTo((SendEventRequest) other);
+  }
+
+  private boolean equalTo(SendEventRequest other) {
+    return idempotencyKey.equals(other.idempotencyKey)
+        && event.equals(other.event)
+        && data.equals(other.data)
+        && user.equals(other.user)
+        && scheduleAt.equals(other.scheduleAt)
+        && override.equals(other.override);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode =
+          Objects.hash(
+              this.idempotencyKey,
+              this.event,
+              this.data,
+              this.user,
+              this.scheduleAt,
+              this.override);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "SendEventRequest{"
+        + "idempotencyKey: "
+        + idempotencyKey
+        + ", event: "
+        + event
+        + ", data: "
+        + data
+        + ", user: "
+        + user
+        + ", scheduleAt: "
+        + scheduleAt
+        + ", override: "
+        + override
+        + "}";
+  }
+
+  public static EventStage builder() {
+    return new Builder();
+  }
+
+  public interface EventStage {
+    _FinalStage event(String event);
+
+    Builder from(SendEventRequest other);
+  }
+
+  public interface _FinalStage {
+    SendEventRequest build();
+
+    _FinalStage idempotencyKey(Optional<String> idempotencyKey);
+
+    _FinalStage idempotencyKey(String idempotencyKey);
+
+    _FinalStage data(Map<String, Optional<Object>> data);
+
+    _FinalStage putAllData(Map<String, Optional<Object>> data);
+
+    _FinalStage data(String key, Optional<Object> value);
+
+    _FinalStage user(Optional<User> user);
+
+    _FinalStage user(User user);
+
+    _FinalStage scheduleAt(Optional<Long> scheduleAt);
+
+    _FinalStage scheduleAt(Long scheduleAt);
+
+    _FinalStage override(Optional<EventOverride> override);
+
+    _FinalStage override(EventOverride override);
+  }
+
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static final class Builder implements EventStage, _FinalStage {
+    private String event;
+
+    private Optional<EventOverride> override = Optional.empty();
+
+    private Optional<Long> scheduleAt = Optional.empty();
+
+    private Optional<User> user = Optional.empty();
+
+    private Map<String, Optional<Object>> data = new LinkedHashMap<>();
+
+    private Optional<String> idempotencyKey = Optional.empty();
+
+    private Builder() {}
+
+    @Override
+    public Builder from(SendEventRequest other) {
+      idempotencyKey(other.getIdempotencyKey());
+      event(other.getEvent());
+      data(other.getData());
+      user(other.getUser());
+      scheduleAt(other.getScheduleAt());
+      override(other.getOverride());
+      return this;
+    }
+
+    /**
+     * event name
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    @JsonSetter("event")
+    public _FinalStage event(String event) {
+      this.event = event;
+      return this;
+    }
+
+    @Override
+    public _FinalStage override(EventOverride override) {
+      this.override = Optional.of(override);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "override", nulls = Nulls.SKIP)
+    public _FinalStage override(Optional<EventOverride> override) {
+      this.override = override;
+      return this;
+    }
+
+    /**
+     * Time to send message expressed as UTC milliseconds. If not present, message will be sent
+     * immediately.
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage scheduleAt(Long scheduleAt) {
+      this.scheduleAt = Optional.of(scheduleAt);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "scheduleAt", nulls = Nulls.SKIP)
+    public _FinalStage scheduleAt(Optional<Long> scheduleAt) {
+      this.scheduleAt = scheduleAt;
+      return this;
+    }
+
+    @Override
+    public _FinalStage user(User user) {
+      this.user = Optional.of(user);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "user", nulls = Nulls.SKIP)
+    public _FinalStage user(Optional<User> user) {
+      this.user = user;
+      return this;
+    }
+
+    /**
+     * { &quot;param1&quot; : &quot;&lt;value1&gt;&quot;, &quot;param2&quot; :
+     * &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage data(String key, Optional<Object> value) {
+      this.data.put(key, value);
+      return this;
+    }
+
+    /**
+     * { &quot;param1&quot; : &quot;&lt;value1&gt;&quot;, &quot;param2&quot; :
+     * &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage putAllData(Map<String, Optional<Object>> data) {
+      this.data.putAll(data);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "data", nulls = Nulls.SKIP)
+    public _FinalStage data(Map<String, Optional<Object>> data) {
+      this.data.clear();
+      this.data.putAll(data);
+      return this;
+    }
+
+    /**
+     * The API supports idempotency for safely retrying requests without accidentally performing the
+     * same operation twice. This is useful when an API call is disrupted in transit and you do not
+     * receive a response. For example, if a request to send event does not respond due to a network
+     * connection error, you can retry the request with the same idempotency key to guarantee that
+     * no more than one event is sent. An idempotency key is a unique value generated by the client
+     * which the server uses to recognize subsequent retries of the same request. How you create
+     * unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough
+     * entropy to avoid collisions. Idempotency keys can be up to 255 characters long.
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage idempotencyKey(String idempotencyKey) {
+      this.idempotencyKey = Optional.of(idempotencyKey);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "Idempotency-Key", nulls = Nulls.SKIP)
+    public _FinalStage idempotencyKey(Optional<String> idempotencyKey) {
+      this.idempotencyKey = idempotencyKey;
+      return this;
+    }
+
+    @Override
+    public SendEventRequest build() {
+      return new SendEventRequest(idempotencyKey, event, data, user, scheduleAt, override);
     }
   }
 }
@@ -6335,149 +5315,6 @@ public final class BatchEvent {
 
     public BatchEvent build() {
       return new BatchEvent(data, user, override);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/types/BulkSendEventRequest.java]=[
-package com.fern.basic.resources.raven.event.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-@JsonDeserialize(builder = BulkSendEventRequest.Builder.class)
-public final class BulkSendEventRequest {
-  private final String event;
-
-  private final List<BatchEvent> batch;
-
-  private int _cachedHashCode;
-
-  BulkSendEventRequest(String event, List<BatchEvent> batch) {
-    this.event = event;
-    this.batch = batch;
-  }
-
-  @JsonProperty("event")
-  public String getEvent() {
-    return event;
-  }
-
-  /**
-   * @return List of events
-   */
-  @JsonProperty("batch")
-  public List<BatchEvent> getBatch() {
-    return batch;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof BulkSendEventRequest && equalTo((BulkSendEventRequest) other);
-  }
-
-  private boolean equalTo(BulkSendEventRequest other) {
-    return event.equals(other.event) && batch.equals(other.batch);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.event, this.batch);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "BulkSendEventRequest{" + "event: " + event + ", batch: " + batch + "}";
-  }
-
-  public static EventStage builder() {
-    return new Builder();
-  }
-
-  public interface EventStage {
-    _FinalStage event(String event);
-
-    Builder from(BulkSendEventRequest other);
-  }
-
-  public interface _FinalStage {
-    BulkSendEventRequest build();
-
-    _FinalStage batch(List<BatchEvent> batch);
-
-    _FinalStage addBatch(BatchEvent batch);
-
-    _FinalStage addAllBatch(List<BatchEvent> batch);
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements EventStage, _FinalStage {
-    private String event;
-
-    private List<BatchEvent> batch = new ArrayList<>();
-
-    private Builder() {}
-
-    @Override
-    public Builder from(BulkSendEventRequest other) {
-      event(other.getEvent());
-      batch(other.getBatch());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("event")
-    public _FinalStage event(String event) {
-      this.event = event;
-      return this;
-    }
-
-    /**
-     * List of events
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage addAllBatch(List<BatchEvent> batch) {
-      this.batch.addAll(batch);
-      return this;
-    }
-
-    /**
-     * List of events
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage addBatch(BatchEvent batch) {
-      this.batch.add(batch);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "batch", nulls = Nulls.SKIP)
-    public _FinalStage batch(List<BatchEvent> batch) {
-      this.batch.clear();
-      this.batch.addAll(batch);
-      return this;
-    }
-
-    @Override
-    public BulkSendEventRequest build() {
-      return new BulkSendEventRequest(event, batch);
     }
   }
 }
@@ -7981,276 +6818,6 @@ public final class PushOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/event/types/SendEventRequest.java]=[
-package com.fern.basic.resources.raven.event.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(builder = SendEventRequest.Builder.class)
-public final class SendEventRequest {
-  private final String event;
-
-  private final Map<String, Optional<Object>> data;
-
-  private final Optional<User> user;
-
-  private final Optional<Long> scheduleAt;
-
-  private final Optional<EventOverride> override;
-
-  private int _cachedHashCode;
-
-  SendEventRequest(
-      String event,
-      Map<String, Optional<Object>> data,
-      Optional<User> user,
-      Optional<Long> scheduleAt,
-      Optional<EventOverride> override) {
-    this.event = event;
-    this.data = data;
-    this.user = user;
-    this.scheduleAt = scheduleAt;
-    this.override = override;
-  }
-
-  /**
-   * @return event name
-   */
-  @JsonProperty("event")
-  public String getEvent() {
-    return event;
-  }
-
-  /**
-   * @return { &quot;param1&quot; : &quot;&lt;value1&gt;&quot;, &quot;param2&quot; :
-   *     &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
-   */
-  @JsonProperty("data")
-  public Map<String, Optional<Object>> getData() {
-    return data;
-  }
-
-  @JsonProperty("user")
-  public Optional<User> getUser() {
-    return user;
-  }
-
-  /**
-   * @return Time to send message expressed as UTC milliseconds. If not present, message will be
-   *     sent immediately.
-   */
-  @JsonProperty("scheduleAt")
-  public Optional<Long> getScheduleAt() {
-    return scheduleAt;
-  }
-
-  @JsonProperty("override")
-  public Optional<EventOverride> getOverride() {
-    return override;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof SendEventRequest && equalTo((SendEventRequest) other);
-  }
-
-  private boolean equalTo(SendEventRequest other) {
-    return event.equals(other.event)
-        && data.equals(other.data)
-        && user.equals(other.user)
-        && scheduleAt.equals(other.scheduleAt)
-        && override.equals(other.override);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode =
-          Objects.hash(this.event, this.data, this.user, this.scheduleAt, this.override);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "SendEventRequest{"
-        + "event: "
-        + event
-        + ", data: "
-        + data
-        + ", user: "
-        + user
-        + ", scheduleAt: "
-        + scheduleAt
-        + ", override: "
-        + override
-        + "}";
-  }
-
-  public static EventStage builder() {
-    return new Builder();
-  }
-
-  public interface EventStage {
-    _FinalStage event(String event);
-
-    Builder from(SendEventRequest other);
-  }
-
-  public interface _FinalStage {
-    SendEventRequest build();
-
-    _FinalStage data(Map<String, Optional<Object>> data);
-
-    _FinalStage putAllData(Map<String, Optional<Object>> data);
-
-    _FinalStage data(String key, Optional<Object> value);
-
-    _FinalStage user(Optional<User> user);
-
-    _FinalStage user(User user);
-
-    _FinalStage scheduleAt(Optional<Long> scheduleAt);
-
-    _FinalStage scheduleAt(Long scheduleAt);
-
-    _FinalStage override(Optional<EventOverride> override);
-
-    _FinalStage override(EventOverride override);
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements EventStage, _FinalStage {
-    private String event;
-
-    private Optional<EventOverride> override = Optional.empty();
-
-    private Optional<Long> scheduleAt = Optional.empty();
-
-    private Optional<User> user = Optional.empty();
-
-    private Map<String, Optional<Object>> data = new LinkedHashMap<>();
-
-    private Builder() {}
-
-    @Override
-    public Builder from(SendEventRequest other) {
-      event(other.getEvent());
-      data(other.getData());
-      user(other.getUser());
-      scheduleAt(other.getScheduleAt());
-      override(other.getOverride());
-      return this;
-    }
-
-    /**
-     * event name
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    @JsonSetter("event")
-    public _FinalStage event(String event) {
-      this.event = event;
-      return this;
-    }
-
-    @Override
-    public _FinalStage override(EventOverride override) {
-      this.override = Optional.of(override);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "override", nulls = Nulls.SKIP)
-    public _FinalStage override(Optional<EventOverride> override) {
-      this.override = override;
-      return this;
-    }
-
-    /**
-     * Time to send message expressed as UTC milliseconds. If not present, message will be sent
-     * immediately.
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage scheduleAt(Long scheduleAt) {
-      this.scheduleAt = Optional.of(scheduleAt);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "scheduleAt", nulls = Nulls.SKIP)
-    public _FinalStage scheduleAt(Optional<Long> scheduleAt) {
-      this.scheduleAt = scheduleAt;
-      return this;
-    }
-
-    @Override
-    public _FinalStage user(User user) {
-      this.user = Optional.of(user);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "user", nulls = Nulls.SKIP)
-    public _FinalStage user(Optional<User> user) {
-      this.user = user;
-      return this;
-    }
-
-    /**
-     * { &quot;param1&quot; : &quot;&lt;value1&gt;&quot;, &quot;param2&quot; :
-     * &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage data(String key, Optional<Object> value) {
-      this.data.put(key, value);
-      return this;
-    }
-
-    /**
-     * { &quot;param1&quot; : &quot;&lt;value1&gt;&quot;, &quot;param2&quot; :
-     * &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage putAllData(Map<String, Optional<Object>> data) {
-      this.data.putAll(data);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "data", nulls = Nulls.SKIP)
-    public _FinalStage data(Map<String, Optional<Object>> data) {
-      this.data.clear();
-      this.data.putAll(data);
-      return this;
-    }
-
-    @Override
-    public SendEventRequest build() {
-      return new SendEventRequest(event, data, user, scheduleAt, override);
-    }
-  }
-}
-
-]
-
-
 basic[src/main/java/com/fern/basic/resources/raven/event/types/SendEventResponse.java]=[
 package com.fern.basic.resources.raven.event.types;
 
@@ -9644,7 +8211,6 @@ import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
 import com.fern.basic.resources.raven.user.exceptions.GetException;
-import com.fern.basic.resources.raven.user.types.CreateUserRequest;
 import com.fern.basic.resources.raven.user.types.RavenUser;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import feign.Feign;
@@ -9670,7 +8236,7 @@ interface UserService {
       @HeaderParam("Authorization") BearerAuth auth,
       @HeaderParam("API-VERSION") String apiVersion,
       @PathParam("app_id") String appId,
-      CreateUserRequest body)
+      Object body)
       throws CreateOrUpdateException;
 
   @GET
@@ -9699,11 +8265,12 @@ basic[src/main/java/com/fern/basic/resources/raven/user/UserServiceClient.java]=
 package com.fern.basic.resources.raven.user;
 
 import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.user.endpoints.CreateOrUpdate;
-import com.fern.basic.resources.raven.user.endpoints.Get;
 import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
 import com.fern.basic.resources.raven.user.exceptions.GetException;
+import com.fern.basic.resources.raven.user.requests.CreateUserRequest;
 import com.fern.basic.resources.raven.user.types.RavenUser;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public final class UserServiceClient {
@@ -9728,34 +8295,34 @@ public final class UserServiceClient {
   /**
    * Creates an AppUser if doesn't exist already, or updates user properties
    *
-   * @param request Wrapper object for the request body that includes any path parameters, query
-   *     parameters, and headers
+   * @param appId
+   * @param request
    * @throws CreateOrUpdateException Exception that wraps all possible endpoint errors
    * @return
    *     <p>updated or newly created user.
    */
-  public RavenUser createOrUpdate(CreateOrUpdate.Request request) throws CreateOrUpdateException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.createOrUpdate(
-        authValue, apiVersion, request.getAppId(), request.getBody());
+  public RavenUser createOrUpdate(String appId, CreateUserRequest request)
+      throws CreateOrUpdateException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    Map<String, Object> _body = new HashMap<>();
+    _body.put("user_id", request.getUserId());
+    _body.put("mobile", request.getMobile());
+    _body.put("email", request.getEmail());
+    _body.put("whats_app", request.getWhatsApp());
+    return this.service.createOrUpdate(authValue, apiVersion, appId, _body);
   }
 
   /**
    * Gets the requested user
    *
-   * @param request Wrapper object that includes any path parameters, query parameters, and headers
+   * @param appId your app identifier
+   * @param userId your user identifier
    * @throws GetException Exception that wraps all possible endpoint errors
    * @return RavenUser
    */
-  public RavenUser get(Get.Request request) throws GetException {
-    BearerAuth authValue =
-        request
-            .getAuthOverride()
-            .orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
-    return this.service.get(authValue, apiVersion, request.getAppId(), request.getUserId());
+  public RavenUser get(String appId, String userId) throws GetException {
+    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
+    return this.service.get(authValue, apiVersion, appId, userId);
   }
 }
 
@@ -9797,309 +8364,6 @@ final class UserServiceErrorDecoder implements ErrorDecoder {
         .reader()
         .withAttribute("statusCode", response.status())
         .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/endpoints/CreateOrUpdate.java]=[
-package com.fern.basic.resources.raven.user.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.user.types.CreateUserRequest;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class CreateOrUpdate {
-  private CreateOrUpdate() {}
-
-  public static final class Request {
-    private final String appId;
-
-    private final CreateUserRequest body;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String appId, CreateUserRequest body, Optional<BearerAuth> authOverride) {
-      this.appId = appId;
-      this.body = body;
-      this.authOverride = authOverride;
-    }
-
-    public String getAppId() {
-      return appId;
-    }
-
-    public CreateUserRequest getBody() {
-      return body;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return appId.equals(other.appId)
-          && body.equals(other.body)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.appId, this.body, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "CreateOrUpdate.Request{"
-          + "appId: "
-          + appId
-          + ", body: "
-          + body
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      BodyStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface BodyStage {
-      _FinalStage body(CreateUserRequest body);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements AppIdStage, BodyStage, _FinalStage {
-      private String appId;
-
-      private CreateUserRequest body;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        appId(other.getAppId());
-        body(other.getBody());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      @Override
-      public BodyStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage body(CreateUserRequest body) {
-        this.body = body;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(appId, body, authOverride);
-      }
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/endpoints/Get.java]=[
-package com.fern.basic.resources.raven.user.endpoints;
-
-import com.fern.basic.core.BearerAuth;
-import java.util.Objects;
-import java.util.Optional;
-
-public final class Get {
-  private Get() {}
-
-  public static final class Request {
-    private final String appId;
-
-    private final String userId;
-
-    private final Optional<BearerAuth> authOverride;
-
-    private int _cachedHashCode;
-
-    Request(String appId, String userId, Optional<BearerAuth> authOverride) {
-      this.appId = appId;
-      this.userId = userId;
-      this.authOverride = authOverride;
-    }
-
-    /**
-     * @return your app identifier
-     */
-    public String getAppId() {
-      return appId;
-    }
-
-    /**
-     * @return your user identifier
-     */
-    public String getUserId() {
-      return userId;
-    }
-
-    public Optional<BearerAuth> getAuthOverride() {
-      return authOverride;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof Request && equalTo((Request) other);
-    }
-
-    private boolean equalTo(Request other) {
-      return appId.equals(other.appId)
-          && userId.equals(other.userId)
-          && authOverride.equals(other.authOverride);
-    }
-
-    @Override
-    public int hashCode() {
-      if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.appId, this.userId, this.authOverride);
-      }
-      return _cachedHashCode;
-    }
-
-    @Override
-    public String toString() {
-      return "Get.Request{"
-          + "appId: "
-          + appId
-          + ", userId: "
-          + userId
-          + ", authOverride: "
-          + authOverride
-          + "}";
-    }
-
-    public static AppIdStage builder() {
-      return new Builder();
-    }
-
-    public interface AppIdStage {
-      UserIdStage appId(String appId);
-
-      Builder from(Request other);
-    }
-
-    public interface UserIdStage {
-      _FinalStage userId(String userId);
-    }
-
-    public interface _FinalStage {
-      Request build();
-
-      _FinalStage authOverride(Optional<BearerAuth> authOverride);
-
-      _FinalStage authOverride(BearerAuth authOverride);
-    }
-
-    public static final class Builder implements AppIdStage, UserIdStage, _FinalStage {
-      private String appId;
-
-      private String userId;
-
-      private Optional<BearerAuth> authOverride = Optional.empty();
-
-      private Builder() {}
-
-      @Override
-      public Builder from(Request other) {
-        appId(other.getAppId());
-        userId(other.getUserId());
-        authOverride(other.getAuthOverride());
-        return this;
-      }
-
-      /**
-       * your app identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public UserIdStage appId(String appId) {
-        this.appId = appId;
-        return this;
-      }
-
-      /**
-       * your user identifier
-       *
-       * @return Reference to {@code this} so that method calls can be chained together.
-       */
-      @Override
-      public _FinalStage userId(String userId) {
-        this.userId = userId;
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(BearerAuth authOverride) {
-        this.authOverride = Optional.of(authOverride);
-        return this;
-      }
-
-      @Override
-      public _FinalStage authOverride(Optional<BearerAuth> authOverride) {
-        this.authOverride = authOverride;
-        return this;
-      }
-
-      @Override
-      public Request build() {
-        return new Request(appId, userId, authOverride);
-      }
-    }
   }
 }
 
@@ -10320,6 +8584,213 @@ public final class GetException extends Exception {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
       return new GetException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/raven/user/requests/CreateUserRequest.java]=[
+package com.fern.basic.resources.raven.user.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(builder = CreateUserRequest.Builder.class)
+public final class CreateUserRequest {
+  private final String userId;
+
+  private final Optional<String> mobile;
+
+  private final Optional<String> email;
+
+  private final Optional<String> whatsApp;
+
+  private int _cachedHashCode;
+
+  CreateUserRequest(
+      String userId, Optional<String> mobile, Optional<String> email, Optional<String> whatsApp) {
+    this.userId = userId;
+    this.mobile = mobile;
+    this.email = email;
+    this.whatsApp = whatsApp;
+  }
+
+  /**
+   * @return Your user identifier. if user_id already exists, user properties will be updated else a
+   *     new user will be created
+   */
+  @JsonProperty("user_id")
+  public String getUserId() {
+    return userId;
+  }
+
+  @JsonProperty("mobile")
+  public Optional<String> getMobile() {
+    return mobile;
+  }
+
+  @JsonProperty("email")
+  public Optional<String> getEmail() {
+    return email;
+  }
+
+  /**
+   * @return include this only when user's whatsapp mobile is different than primary mobile
+   */
+  @JsonProperty("whats_app")
+  public Optional<String> getWhatsApp() {
+    return whatsApp;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CreateUserRequest && equalTo((CreateUserRequest) other);
+  }
+
+  private boolean equalTo(CreateUserRequest other) {
+    return userId.equals(other.userId)
+        && mobile.equals(other.mobile)
+        && email.equals(other.email)
+        && whatsApp.equals(other.whatsApp);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.userId, this.mobile, this.email, this.whatsApp);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "CreateUserRequest{"
+        + "userId: "
+        + userId
+        + ", mobile: "
+        + mobile
+        + ", email: "
+        + email
+        + ", whatsApp: "
+        + whatsApp
+        + "}";
+  }
+
+  public static UserIdStage builder() {
+    return new Builder();
+  }
+
+  public interface UserIdStage {
+    _FinalStage userId(String userId);
+
+    Builder from(CreateUserRequest other);
+  }
+
+  public interface _FinalStage {
+    CreateUserRequest build();
+
+    _FinalStage mobile(Optional<String> mobile);
+
+    _FinalStage mobile(String mobile);
+
+    _FinalStage email(Optional<String> email);
+
+    _FinalStage email(String email);
+
+    _FinalStage whatsApp(Optional<String> whatsApp);
+
+    _FinalStage whatsApp(String whatsApp);
+  }
+
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public static final class Builder implements UserIdStage, _FinalStage {
+    private String userId;
+
+    private Optional<String> whatsApp = Optional.empty();
+
+    private Optional<String> email = Optional.empty();
+
+    private Optional<String> mobile = Optional.empty();
+
+    private Builder() {}
+
+    @Override
+    public Builder from(CreateUserRequest other) {
+      userId(other.getUserId());
+      mobile(other.getMobile());
+      email(other.getEmail());
+      whatsApp(other.getWhatsApp());
+      return this;
+    }
+
+    /**
+     * Your user identifier. if user_id already exists, user properties will be updated else a new
+     * user will be created
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    @JsonSetter("user_id")
+    public _FinalStage userId(String userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    /**
+     * include this only when user's whatsapp mobile is different than primary mobile
+     *
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
+    @Override
+    public _FinalStage whatsApp(String whatsApp) {
+      this.whatsApp = Optional.of(whatsApp);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "whats_app", nulls = Nulls.SKIP)
+    public _FinalStage whatsApp(Optional<String> whatsApp) {
+      this.whatsApp = whatsApp;
+      return this;
+    }
+
+    @Override
+    public _FinalStage email(String email) {
+      this.email = Optional.of(email);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "email", nulls = Nulls.SKIP)
+    public _FinalStage email(Optional<String> email) {
+      this.email = email;
+      return this;
+    }
+
+    @Override
+    public _FinalStage mobile(String mobile) {
+      this.mobile = Optional.of(mobile);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(value = "mobile", nulls = Nulls.SKIP)
+    public _FinalStage mobile(Optional<String> mobile) {
+      this.mobile = mobile;
+      return this;
+    }
+
+    @Override
+    public CreateUserRequest build() {
+      return new CreateUserRequest(userId, mobile, email, whatsApp);
     }
   }
 }
@@ -10813,213 +9284,6 @@ public final class ChannelPreferences {
 
     public ChannelPreferences build() {
       return new ChannelPreferences(sms, push, whatsapp, email, slack, voice, teams);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/types/CreateUserRequest.java]=[
-package com.fern.basic.resources.raven.user.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(builder = CreateUserRequest.Builder.class)
-public final class CreateUserRequest {
-  private final String userId;
-
-  private final Optional<String> mobile;
-
-  private final Optional<String> email;
-
-  private final Optional<String> whatsApp;
-
-  private int _cachedHashCode;
-
-  CreateUserRequest(
-      String userId, Optional<String> mobile, Optional<String> email, Optional<String> whatsApp) {
-    this.userId = userId;
-    this.mobile = mobile;
-    this.email = email;
-    this.whatsApp = whatsApp;
-  }
-
-  /**
-   * @return Your user identifier. if user_id already exists, user properties will be updated else a
-   *     new user will be created
-   */
-  @JsonProperty("user_id")
-  public String getUserId() {
-    return userId;
-  }
-
-  @JsonProperty("mobile")
-  public Optional<String> getMobile() {
-    return mobile;
-  }
-
-  @JsonProperty("email")
-  public Optional<String> getEmail() {
-    return email;
-  }
-
-  /**
-   * @return include this only when user's whatsapp mobile is different than primary mobile
-   */
-  @JsonProperty("whats_app")
-  public Optional<String> getWhatsApp() {
-    return whatsApp;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof CreateUserRequest && equalTo((CreateUserRequest) other);
-  }
-
-  private boolean equalTo(CreateUserRequest other) {
-    return userId.equals(other.userId)
-        && mobile.equals(other.mobile)
-        && email.equals(other.email)
-        && whatsApp.equals(other.whatsApp);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.userId, this.mobile, this.email, this.whatsApp);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "CreateUserRequest{"
-        + "userId: "
-        + userId
-        + ", mobile: "
-        + mobile
-        + ", email: "
-        + email
-        + ", whatsApp: "
-        + whatsApp
-        + "}";
-  }
-
-  public static UserIdStage builder() {
-    return new Builder();
-  }
-
-  public interface UserIdStage {
-    _FinalStage userId(String userId);
-
-    Builder from(CreateUserRequest other);
-  }
-
-  public interface _FinalStage {
-    CreateUserRequest build();
-
-    _FinalStage mobile(Optional<String> mobile);
-
-    _FinalStage mobile(String mobile);
-
-    _FinalStage email(Optional<String> email);
-
-    _FinalStage email(String email);
-
-    _FinalStage whatsApp(Optional<String> whatsApp);
-
-    _FinalStage whatsApp(String whatsApp);
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements UserIdStage, _FinalStage {
-    private String userId;
-
-    private Optional<String> whatsApp = Optional.empty();
-
-    private Optional<String> email = Optional.empty();
-
-    private Optional<String> mobile = Optional.empty();
-
-    private Builder() {}
-
-    @Override
-    public Builder from(CreateUserRequest other) {
-      userId(other.getUserId());
-      mobile(other.getMobile());
-      email(other.getEmail());
-      whatsApp(other.getWhatsApp());
-      return this;
-    }
-
-    /**
-     * Your user identifier. if user_id already exists, user properties will be updated else a new
-     * user will be created
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    @JsonSetter("user_id")
-    public _FinalStage userId(String userId) {
-      this.userId = userId;
-      return this;
-    }
-
-    /**
-     * include this only when user's whatsapp mobile is different than primary mobile
-     *
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
-    @Override
-    public _FinalStage whatsApp(String whatsApp) {
-      this.whatsApp = Optional.of(whatsApp);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "whats_app", nulls = Nulls.SKIP)
-    public _FinalStage whatsApp(Optional<String> whatsApp) {
-      this.whatsApp = whatsApp;
-      return this;
-    }
-
-    @Override
-    public _FinalStage email(String email) {
-      this.email = Optional.of(email);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "email", nulls = Nulls.SKIP)
-    public _FinalStage email(Optional<String> email) {
-      this.email = email;
-      return this;
-    }
-
-    @Override
-    public _FinalStage mobile(String mobile) {
-      this.mobile = Optional.of(mobile);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "mobile", nulls = Nulls.SKIP)
-    public _FinalStage mobile(Optional<String> mobile) {
-      this.mobile = mobile;
-      return this;
-    }
-
-    @Override
-    public CreateUserRequest build() {
-      return new CreateUserRequest(userId, mobile, email, whatsApp);
     }
   }
 }

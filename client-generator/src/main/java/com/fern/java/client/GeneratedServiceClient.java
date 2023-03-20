@@ -16,7 +16,7 @@
 
 package com.fern.java.client;
 
-import com.fern.ir.model.services.http.HttpService;
+import com.fern.ir.v3.model.services.http.HttpService;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import java.util.List;
@@ -30,7 +30,7 @@ public abstract class GeneratedServiceClient extends AbstractGeneratedJavaFile {
 
     public abstract GeneratedJerseyServiceInterface jerseyServiceInterfaceOutput();
 
-    public abstract List<GeneratedEndpointRequest> generatedEndpointRequestOutputs();
+    public abstract List<GeneratedWrappedRequest> generatedEndpointRequestOutputs();
 
     public static ImmutableGeneratedServiceClient.ClassNameBuildStage builder() {
         return ImmutableGeneratedServiceClient.builder();

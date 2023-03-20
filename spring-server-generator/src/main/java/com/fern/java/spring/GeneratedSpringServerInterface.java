@@ -1,5 +1,5 @@
 /*
- * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ * (c) Copyright 2023 Birch Solutions Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package com.fern.java.output;
+package com.fern.java.spring;
 
-import com.fern.ir.v3.model.auth.AuthScheme;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import java.util.Map;
-import java.util.Optional;
+import com.fern.java.output.AbstractGeneratedJavaFile;
+import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedAuthFiles extends AbstractGeneratedJavaFile {
+public abstract class GeneratedSpringServerInterface extends AbstractGeneratedJavaFile {
 
-    public abstract Optional<Map<AuthScheme, GeneratedJavaFile>> authSchemeFileOutputs();
+    public abstract List<AbstractGeneratedJavaFile> geenratedRequestBodyFiles();
 
-    public static ImmutableGeneratedAuthFiles.ClassNameBuildStage builder() {
-        return ImmutableGeneratedAuthFiles.builder();
+    public static ImmutableGeneratedSpringServerInterface.ClassNameBuildStage builder() {
+        return ImmutableGeneratedSpringServerInterface.builder();
     }
 }

@@ -1,15 +1,15 @@
 types:
   DummyId: string
-services:
-  http:
-    DummyService:
-      auth: false
-      base-path: /dummy
-      endpoints:
-        getDummy:
-          method: POST
-          path: /
-          request: DummyId
-        health:
-          method: GET
-          path: /health
+service:
+  auth: false
+  base-path: /dummy
+  endpoints:
+    getDummy:
+      method: POST
+      path: ""
+      request:
+        body:
+          type: DummyId
+    health:
+      method: GET
+      path: /health

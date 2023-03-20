@@ -16,10 +16,10 @@
 
 package com.fern.java;
 
-import com.fern.ir.model.commons.FernFilepath;
-import com.fern.ir.model.commons.StringWithAllCasings;
-import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.v3.model.commons.FernFilepath;
+import com.fern.ir.v3.model.commons.StringWithAllCasings;
+import com.fern.ir.v3.model.ir.IntermediateRepresentation;
+import com.fern.ir.v3.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;

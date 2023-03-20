@@ -16,11 +16,11 @@
 
 package com.fern.java.client.generators.jersey;
 
-import com.fern.ir.model.auth.ApiAuth;
-import com.fern.ir.model.auth.AuthScheme;
-import com.fern.ir.model.commons.WithDocs;
-import com.fern.ir.model.services.http.HttpEndpoint;
-import com.fern.ir.model.services.http.HttpHeader;
+import com.fern.ir.v3.model.auth.ApiAuth;
+import com.fern.ir.v3.model.auth.AuthScheme;
+import com.fern.ir.v3.model.commons.WithDocs;
+import com.fern.ir.v3.model.services.http.HttpEndpoint;
+import com.fern.ir.v3.model.services.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;

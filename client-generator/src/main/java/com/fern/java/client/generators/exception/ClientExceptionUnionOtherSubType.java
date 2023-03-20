@@ -19,7 +19,7 @@ package com.fern.java.client.generators.exception;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.v3.model.commons.NameAndWireValue;
 import com.fern.java.generators.union.UnionSubType;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;

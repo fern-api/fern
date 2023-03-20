@@ -66,18 +66,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
     produces = "application/json"
 )
 public interface AuthService {
-  @GetMapping("/")
+  @GetMapping("")
   void getAuth(@RequestHeader("Authorization") BearerAuth auth, Principal principal);
 }
 
 ]
 
 
-basic[resources/blog/PostsService.java]=[
+basic[resources/blog/BlogService.java]=[
 package com.fern.resources.blog;
 
+import com.fern.resources.blog.requests.CreatePostRequest;
 import com.fern.resources.blog.types.BlogPost;
-import com.fern.resources.blog.types.CreatePostRequest;
 import com.fern.resources.blog.types.PostId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -90,12 +90,200 @@ import org.springframework.web.bind.annotation.RequestMapping;
     consumes = "application/json",
     produces = "application/json"
 )
-public interface PostsService {
+public interface BlogService {
   @PostMapping("/create")
   void createPost(@RequestBody CreatePostRequest body);
 
   @GetMapping("/{postId}")
   BlogPost getPost(@PathVariable("postId") PostId postId);
+}
+
+]
+
+
+basic[resources/blog/requests/CreatePostRequest.java]=[
+package com.fern.resources.blog.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.resources.blog.types.Author;
+import com.fern.resources.blog.types.PostType;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = CreatePostRequest.Builder.class
+)
+public final class CreatePostRequest {
+  private final String title;
+
+  private final Author author;
+
+  private final String content;
+
+  private final PostType postType;
+
+  private final int switch_;
+
+  private int _cachedHashCode;
+
+  CreatePostRequest(String title, Author author, String content, PostType postType, int switch_) {
+    this.title = title;
+    this.author = author;
+    this.content = content;
+    this.postType = postType;
+    this.switch_ = switch_;
+  }
+
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
+  }
+
+  @JsonProperty("author")
+  public Author getAuthor() {
+    return author;
+  }
+
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  @JsonProperty("postType")
+  public PostType getPostType() {
+    return postType;
+  }
+
+  @JsonProperty("switch")
+  public int getSwitch() {
+    return switch_;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
+  }
+
+  private boolean equalTo(CreatePostRequest other) {
+    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && switch_ == other.switch_;
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this.switch_);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", switch_: " + switch_ + "}";
+  }
+
+  public static TitleStage builder() {
+    return new Builder();
+  }
+
+  public interface TitleStage {
+    AuthorStage title(String title);
+
+    Builder from(CreatePostRequest other);
+  }
+
+  public interface AuthorStage {
+    ContentStage author(Author author);
+  }
+
+  public interface ContentStage {
+    PostTypeStage content(String content);
+  }
+
+  public interface PostTypeStage {
+    SwitchStage postType(PostType postType);
+  }
+
+  public interface SwitchStage {
+    _FinalStage switch_(int switch_);
+  }
+
+  public interface _FinalStage {
+    CreatePostRequest build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  public static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+    private String title;
+
+    private Author author;
+
+    private String content;
+
+    private PostType postType;
+
+    private int switch_;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(CreatePostRequest other) {
+      title(other.getTitle());
+      author(other.getAuthor());
+      content(other.getContent());
+      postType(other.getPostType());
+      switch_(other.getSwitch());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("title")
+    public AuthorStage title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("author")
+    public ContentStage author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("content")
+    public PostTypeStage content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("postType")
+    public SwitchStage postType(PostType postType) {
+      this.postType = postType;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("switch")
+    public _FinalStage switch_(int switch_) {
+      this.switch_ = switch_;
+      return this;
+    }
+
+    @Override
+    public CreatePostRequest build() {
+      return new CreatePostRequest(title, author, content, postType, switch_);
+    }
+  }
 }
 
 ]
@@ -538,192 +726,6 @@ public final class BlogPost {
 ]
 
 
-basic[resources/blog/types/CreatePostRequest.java]=[
-package com.fern.resources.blog.types;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.lang.Object;
-import java.lang.Override;
-import java.lang.String;
-import java.util.Objects;
-
-@JsonDeserialize(
-    builder = CreatePostRequest.Builder.class
-)
-public final class CreatePostRequest {
-  private final String title;
-
-  private final Author author;
-
-  private final String content;
-
-  private final PostType postType;
-
-  private final int _switch;
-
-  private int _cachedHashCode;
-
-  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch) {
-    this.title = title;
-    this.author = author;
-    this.content = content;
-    this.postType = postType;
-    this._switch = _switch;
-  }
-
-  @JsonProperty("title")
-  public String getTitle() {
-    return title;
-  }
-
-  @JsonProperty("author")
-  public Author getAuthor() {
-    return author;
-  }
-
-  @JsonProperty("content")
-  public String getContent() {
-    return content;
-  }
-
-  @JsonProperty("postType")
-  public PostType getPostType() {
-    return postType;
-  }
-
-  @JsonProperty("switch")
-  public int getSwitch() {
-    return _switch;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
-  }
-
-  private boolean equalTo(CreatePostRequest other) {
-    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch;
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + "}";
-  }
-
-  public static TitleStage builder() {
-    return new Builder();
-  }
-
-  public interface TitleStage {
-    AuthorStage title(String title);
-
-    Builder from(CreatePostRequest other);
-  }
-
-  public interface AuthorStage {
-    ContentStage author(Author author);
-  }
-
-  public interface ContentStage {
-    PostTypeStage content(String content);
-  }
-
-  public interface PostTypeStage {
-    SwitchStage postType(PostType postType);
-  }
-
-  public interface SwitchStage {
-    _FinalStage _switch(int _switch);
-  }
-
-  public interface _FinalStage {
-    CreatePostRequest build();
-  }
-
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  public static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
-    private String title;
-
-    private Author author;
-
-    private String content;
-
-    private PostType postType;
-
-    private int _switch;
-
-    private Builder() {
-    }
-
-    @Override
-    public Builder from(CreatePostRequest other) {
-      title(other.getTitle());
-      author(other.getAuthor());
-      content(other.getContent());
-      postType(other.getPostType());
-      _switch(other.getSwitch());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("title")
-    public AuthorStage title(String title) {
-      this.title = title;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("author")
-    public ContentStage author(Author author) {
-      this.author = author;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("content")
-    public PostTypeStage content(String content) {
-      this.content = content;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("postType")
-    public SwitchStage postType(PostType postType) {
-      this.postType = postType;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("switch")
-    public _FinalStage _switch(int _switch) {
-      this._switch = _switch;
-      return this;
-    }
-
-    @Override
-    public CreatePostRequest build() {
-      return new CreatePostRequest(title, author, content, postType, _switch);
-    }
-  }
-}
-
-]
-
-
 basic[resources/blog/types/GeneratorIdAndVersion.java]=[
 package com.fern.resources.blog.types;
 
@@ -1004,9 +1006,9 @@ import java.lang.String;
 import java.util.Locale;
 
 public final class PostType {
-  public static final PostType LONG = new PostType(Value.LONG, "LONG");
-
   public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType LONG = new PostType(Value.LONG, "LONG");
 
   public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
 
@@ -1042,10 +1044,10 @@ public final class PostType {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case LONG:
-        return visitor.visitLong();
       case SHORT:
         return visitor.visitShort();
+      case LONG:
+        return visitor.visitLong();
       case MEDIUM:
         return visitor.visitMedium();
       case UNKNOWN:
@@ -1060,10 +1062,10 @@ public final class PostType {
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "LONG":
-        return LONG;
       case "SHORT":
         return SHORT;
+      case "LONG":
+        return LONG;
       case "med.med":
         return MEDIUM;
       default:
@@ -1193,7 +1195,7 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[resources/dummy/service/DummyService.java]=[
+basic[resources/dummy/service/DummyServiceService.java]=[
 package com.fern.resources.dummy.service;
 
 import com.fern.resources.dummy.service.types.DummyId;
@@ -1207,8 +1209,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
     consumes = "application/json",
     produces = "application/json"
 )
-public interface DummyService {
-  @PostMapping("/")
+public interface DummyServiceService {
+  @PostMapping("")
   void getDummy(@RequestBody DummyId body);
 
   @GetMapping("/health")

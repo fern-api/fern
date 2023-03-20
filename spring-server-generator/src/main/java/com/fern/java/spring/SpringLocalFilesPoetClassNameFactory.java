@@ -16,7 +16,8 @@
 
 package com.fern.java.spring;
 
-import com.fern.ir.model.services.http.HttpService;
+import com.fern.ir.v3.model.services.http.HttpService;
+import com.fern.ir.v3.model.services.http.InlinedRequestBody;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
@@ -35,5 +36,12 @@ public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModel
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
         return ClassName.get(
                 packageName, StringUtils.capitalize(httpService.getName().getName()));
+    }
+
+    public ClassName getInlinedRequestBodyClassName(HttpService httpService, InlinedRequestBody inlinedRequestBody) {
+        String packageName =
+                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
+        return ClassName.get(
+                packageName, inlinedRequestBody.getName().getSafeName().getPascalCase());
     }
 }

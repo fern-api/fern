@@ -15,19 +15,21 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v3.model.types.DeclaredTypeName;
+import com.fern.ir.v3.model.types.ObjectProperty;
+import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
+import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,15 +61,20 @@ public final class ObjectGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public GeneratedObject generateFile() {
         PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
         List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
+        Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
         if (selfInterface.isEmpty()) {
             enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
-                    .map(objectProperty -> EnrichedObjectProperty.of(
-                            objectProperty,
-                            false,
-                            poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType())))
+                    .map(objectProperty -> {
+                        EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
+                                objectProperty,
+                                false,
+                                poetTypeNameMapper.convertToTypeName(true, objectProperty.getValueType()));
+                        objectPropertyGetters.put(objectProperty, enrichedObjectProperty);
+                        return enrichedObjectProperty;
+                    })
                     .collect(Collectors.toList());
         }
         List<ImplementsInterface> implementsInterfaces = new ArrayList<>();
@@ -85,7 +92,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                         interfaceQueue.addAll(generatedJavaInterface.extendedInterfaces().stream()
                                 .map(allGeneratedInterfaces::get)
                                 .collect(Collectors.toList()));
-                        enrichedProperties.addAll(getEnrichedObjectProperties(generatedJavaInterface));
+                        enrichedProperties.addAll(
+                                getEnrichedObjectProperties(generatedJavaInterface, objectPropertyGetters));
                         visited.add(generatedJavaInterface);
                     }
                     return ImplementsInterface.builder()
@@ -99,17 +107,23 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();
-        return GeneratedJavaFile.builder()
+        return GeneratedObject.builder()
                 .className(className)
                 .javaFile(javaFile)
+                .putAllObjectPropertyGetters(objectPropertyGetters)
                 .build();
     }
 
     private static List<EnrichedObjectProperty> getEnrichedObjectProperties(
-            GeneratedJavaInterface generatedJavaInterface) {
+            GeneratedJavaInterface generatedJavaInterface,
+            Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters) {
         return generatedJavaInterface.propertyMethodSpecs().stream()
-                .map(propertyMethodSpec -> EnrichedObjectProperty.of(
-                        propertyMethodSpec.objectProperty(), true, propertyMethodSpec.methodSpec().returnType))
+                .map(propertyMethodSpec -> {
+                    EnrichedObjectProperty enrichedObjectProperty = EnrichedObjectProperty.of(
+                            propertyMethodSpec.objectProperty(), true, propertyMethodSpec.methodSpec().returnType);
+                    objectPropertyGetters.put(propertyMethodSpec.objectProperty(), enrichedObjectProperty);
+                    return enrichedObjectProperty;
+                })
                 .collect(Collectors.toList());
     }
 }

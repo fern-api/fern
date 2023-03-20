@@ -90,9 +90,9 @@ jobs:
       - run:
           name: Install Fern
           command: |
-            npm install -g fern-api@0.0.229
+            npm install -g fern-api
       - run: docker network prune -f
-      - run: ./gradlew --parallel --stacktrace build -x test -x check
+      - run: ./gradlew --stacktrace build -x test -x check
       - run:
           command: mkdir -p ~/junit && find . -type f -regex ".*/build/.*TEST.*xml" -exec cp --parents {} ~/junit/ \; || true
           when: always

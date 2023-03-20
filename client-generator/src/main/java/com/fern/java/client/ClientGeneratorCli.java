@@ -20,10 +20,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
-import com.fern.ir.core.ObjectMappers;
-import com.fern.ir.model.errors.DeclaredErrorName;
-import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.v3.core.ObjectMappers;
+import com.fern.ir.v3.model.errors.DeclaredErrorName;
+import com.fern.ir.v3.model.errors.ErrorDeclaration;
+import com.fern.ir.v3.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -129,7 +129,13 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         List<GeneratedServiceClient> generatedServiceClients = ir.getServices().getHttp().stream()
                 .map(httpService -> {
                     HttpServiceClientGenerator httpServiceClientGenerator = new HttpServiceClientGenerator(
-                            context, httpService, errors, maybeAuth, generatedClientOptionsClass, objectMapper);
+                            context,
+                            httpService,
+                            errors,
+                            maybeAuth,
+                            generatedClientOptionsClass,
+                            generatedTypes.getInterfaces(),
+                            objectMapper);
                     return httpServiceClientGenerator.generateFile();
                 })
                 .collect(Collectors.toList());

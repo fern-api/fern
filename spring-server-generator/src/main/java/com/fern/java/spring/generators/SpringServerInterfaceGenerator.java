@@ -15,15 +15,19 @@
  */
 package com.fern.java.spring.generators;
 
-import com.fern.ir.model.services.http.HttpEndpoint;
-import com.fern.ir.model.services.http.HttpEndpointId;
-import com.fern.ir.model.services.http.HttpRequest;
-import com.fern.ir.model.services.http.HttpResponse;
-import com.fern.ir.model.services.http.HttpService;
+import com.fern.ir.v3.model.services.http.HttpEndpoint;
+import com.fern.ir.v3.model.services.http.HttpEndpointId;
+import com.fern.ir.v3.model.services.http.HttpRequestBody;
+import com.fern.ir.v3.model.services.http.HttpRequestBodyReference;
+import com.fern.ir.v3.model.services.http.HttpResponse;
+import com.fern.ir.v3.model.services.http.HttpService;
+import com.fern.ir.v3.model.services.http.InlinedRequestBody;
+import com.fern.ir.v3.model.types.DeclaredTypeName;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
-import com.fern.java.output.GeneratedFile;
-import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedJavaInterface;
+import com.fern.java.spring.GeneratedSpringServerInterface;
 import com.fern.java.spring.SpringGeneratorContext;
 import com.fern.java.spring.generators.spring.AuthToSpringParameterSpecConverter;
 import com.fern.java.spring.generators.spring.SpringHttpMethodToAnnotationSpec;
@@ -50,21 +54,28 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
     private final HttpService httpService;
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final SpringParameterSpecFactory springParameterSpecFactory;
+    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
+
+    private final List<AbstractGeneratedJavaFile> generatedRequestBodyFiles = new ArrayList<>();
+    private final SpringGeneratorContext springGeneratorContext;
 
     public SpringServerInterfaceGenerator(
             SpringGeneratorContext springGeneratorContext,
             Optional<GeneratedAuthFiles> maybeAuth,
+            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
             HttpService httpService) {
         super(
                 springGeneratorContext.getPoetClassNameFactory().getServiceInterfaceClassName(httpService),
                 springGeneratorContext);
+        this.springGeneratorContext = springGeneratorContext;
         this.httpService = httpService;
         this.maybeAuth = maybeAuth;
         this.springParameterSpecFactory = new SpringParameterSpecFactory(springGeneratorContext);
+        this.allGeneratedInterfaces = allGeneratedInterfaces;
     }
 
     @Override
-    public GeneratedFile generateFile() {
+    public GeneratedSpringServerInterface generateFile() {
         TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(RequestMapping.class)
@@ -80,9 +91,10 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 jerseyServiceBuilder.addMethods(endpointToMethodSpec.values()).build();
         JavaFile springServiceJavaFile =
                 JavaFile.builder(className.packageName(), springServiceTypeSpec).build();
-        return GeneratedJavaFile.builder()
+        return GeneratedSpringServerInterface.builder()
                 .className(className)
                 .javaFile(springServiceJavaFile)
+                .addAllGeenratedRequestBodyFiles(generatedRequestBodyFiles)
                 .build();
     }
 
@@ -154,11 +166,31 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         });
 
         // request body
-        HttpRequest httpRequest = httpEndpoint.getRequest();
-        if (!httpRequest.getType().isVoid()) {
-            TypeName requestTypeName =
-                    generatorContext.getPoetTypeNameMapper().convertToTypeName(true, httpRequest.getType());
-            parameters.add(ParameterSpec.builder(requestTypeName, "body")
+        if (httpEndpoint.getRequestBody().isPresent()) {
+            HttpRequestBody httpRequestBody = httpEndpoint.getRequestBody().get();
+            TypeName requestBodyTypeName = httpRequestBody.visit(new HttpRequestBody.Visitor<TypeName>() {
+                @Override
+                public TypeName visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+                    InlinedRequestBodyGenerator inlinedRequestBodyGenerator = new InlinedRequestBodyGenerator(
+                            httpService, inlinedRequestBody, allGeneratedInterfaces, springGeneratorContext);
+                    AbstractGeneratedJavaFile generatedFile = inlinedRequestBodyGenerator.generateFile();
+                    generatedRequestBodyFiles.add(generatedFile);
+                    return generatedFile.getClassName();
+                }
+
+                @Override
+                public TypeName visitReference(HttpRequestBodyReference reference) {
+                    return generatorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(true, reference.getRequestBodyType());
+                }
+
+                @Override
+                public TypeName _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Encountered unknown request body type: " + unknownType);
+                }
+            });
+            parameters.add(ParameterSpec.builder(requestBodyTypeName, "body")
                     .addAnnotation(RequestBody.class)
                     .build());
         }

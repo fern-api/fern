@@ -15,8 +15,8 @@
  */
 package com.fern.java.utils;
 
-import com.fern.ir.model.services.http.HttpPath;
-import com.fern.ir.model.services.http.HttpPathPart;
+import com.fern.ir.v3.model.services.http.HttpPath;
+import com.fern.ir.v3.model.services.http.HttpPathPart;
 
 public class HttpPathUtils {
 

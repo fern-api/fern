@@ -16,8 +16,8 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.commons.FernFilepath;
-import com.fern.ir.model.commons.StringWithAllCasings;
+import com.fern.ir.v3.model.commons.FernFilepath;
+import com.fern.ir.v3.model.commons.StringWithAllCasings;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.GlobalHeaders;
 import com.fern.java.client.GeneratedClientOptions;

@@ -17,11 +17,11 @@
 package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.ir.model.errors.DeclaredErrorName;
-import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.ir.IntermediateRepresentation;
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.v3.model.errors.DeclaredErrorName;
+import com.fern.ir.v3.model.errors.ErrorDeclaration;
+import com.fern.ir.v3.model.ir.IntermediateRepresentation;
+import com.fern.ir.v3.model.types.DeclaredTypeName;
+import com.fern.ir.v3.model.types.TypeDeclaration;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;

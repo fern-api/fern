@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
-import com.fern.ir.core.ObjectMappers;
-import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.v3.core.ObjectMappers;
+import com.fern.ir.v3.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.generators.AuthGenerator;
@@ -29,7 +29,6 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
-import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
@@ -103,14 +102,17 @@ public final class SpringGeneratorCli
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
         // services
-        List<GeneratedFile> generatedServiceClients = ir.getServices().getHttp().stream()
+        List<GeneratedSpringServerInterface> generatedSpringServerInterfaces = ir.getServices().getHttp().stream()
                 .map(httpService -> {
-                    SpringServerInterfaceGenerator httpServiceClientGenerator =
-                            new SpringServerInterfaceGenerator(context, maybeAuth, httpService);
+                    SpringServerInterfaceGenerator httpServiceClientGenerator = new SpringServerInterfaceGenerator(
+                            context, maybeAuth, generatedTypes.getInterfaces(), httpService);
                     return httpServiceClientGenerator.generateFile();
                 })
                 .collect(Collectors.toList());
-        generatedServiceClients.forEach(this::addGeneratedFile);
+        generatedSpringServerInterfaces.forEach(generatedSpringServerInterface -> {
+            addGeneratedFile(generatedSpringServerInterface);
+            generatedSpringServerInterface.geenratedRequestBodyFiles().forEach(this::addGeneratedFile);
+        });
     }
 
     @Override

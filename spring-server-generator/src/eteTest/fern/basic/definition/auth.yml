@@ -1,9 +1,7 @@
-services:
-  http:
-    AuthService:
-      auth: true
-      base-path: /auth
-      endpoints:
-        getAuth:
-          method: GET
-          path: /
+service:
+  auth: true
+  base-path: /auth
+  endpoints:
+    getAuth:
+      method: GET
+      path: ""

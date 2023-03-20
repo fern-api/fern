@@ -15,8 +15,8 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.model.types.DeclaredTypeName;
-import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v3.model.types.DeclaredTypeName;
+import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedJavaInterface.PropertyMethodSpec;

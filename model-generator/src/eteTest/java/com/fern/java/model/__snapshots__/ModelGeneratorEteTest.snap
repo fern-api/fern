@@ -720,251 +720,6 @@ public final class BlogPost {
 ]
 
 
-basic[src/main/java/com/fern/basic/model/blog/CreatePostRequest.java]=[
-package com.fern.basic.model.blog;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-@JsonDeserialize(builder = CreatePostRequest.Builder.class)
-public final class CreatePostRequest {
-  private final String title;
-
-  private final Author author;
-
-  private final String content;
-
-  private final PostType postType;
-
-  private final int _switch;
-
-  private final List<List<String>> example;
-
-  private int _cachedHashCode;
-
-  CreatePostRequest(
-      String title,
-      Author author,
-      String content,
-      PostType postType,
-      int _switch,
-      List<List<String>> example) {
-    this.title = title;
-    this.author = author;
-    this.content = content;
-    this.postType = postType;
-    this._switch = _switch;
-    this.example = example;
-  }
-
-  @JsonProperty("title")
-  public String getTitle() {
-    return title;
-  }
-
-  @JsonProperty("author")
-  public Author getAuthor() {
-    return author;
-  }
-
-  @JsonProperty("content")
-  public String getContent() {
-    return content;
-  }
-
-  @JsonProperty("postType")
-  public PostType getPostType() {
-    return postType;
-  }
-
-  @JsonProperty("switch")
-  public int getSwitch() {
-    return _switch;
-  }
-
-  @JsonProperty("example")
-  public List<List<String>> getExample() {
-    return example;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
-  }
-
-  private boolean equalTo(CreatePostRequest other) {
-    return title.equals(other.title)
-        && author.equals(other.author)
-        && content.equals(other.content)
-        && postType.equals(other.postType)
-        && _switch == other._switch
-        && example.equals(other.example);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode =
-          Objects.hash(
-              this.title, this.author, this.content, this.postType, this._switch, this.example);
-    }
-    return _cachedHashCode;
-  }
-
-  @Override
-  public String toString() {
-    return "CreatePostRequest{"
-        + "title: "
-        + title
-        + ", author: "
-        + author
-        + ", content: "
-        + content
-        + ", postType: "
-        + postType
-        + ", _switch: "
-        + _switch
-        + ", example: "
-        + example
-        + "}";
-  }
-
-  public static TitleStage builder() {
-    return new Builder();
-  }
-
-  public interface TitleStage {
-    AuthorStage title(String title);
-
-    Builder from(CreatePostRequest other);
-  }
-
-  public interface AuthorStage {
-    ContentStage author(Author author);
-  }
-
-  public interface ContentStage {
-    PostTypeStage content(String content);
-  }
-
-  public interface PostTypeStage {
-    SwitchStage postType(PostType postType);
-  }
-
-  public interface SwitchStage {
-    _FinalStage _switch(int _switch);
-  }
-
-  public interface _FinalStage {
-    CreatePostRequest build();
-
-    _FinalStage example(List<List<String>> example);
-
-    _FinalStage addExample(List<String> example);
-
-    _FinalStage addAllExample(List<List<String>> example);
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder
-      implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
-    private String title;
-
-    private Author author;
-
-    private String content;
-
-    private PostType postType;
-
-    private int _switch;
-
-    private List<List<String>> example = new ArrayList<>();
-
-    private Builder() {}
-
-    @Override
-    public Builder from(CreatePostRequest other) {
-      title(other.getTitle());
-      author(other.getAuthor());
-      content(other.getContent());
-      postType(other.getPostType());
-      _switch(other.getSwitch());
-      example(other.getExample());
-      return this;
-    }
-
-    @Override
-    @JsonSetter("title")
-    public AuthorStage title(String title) {
-      this.title = title;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("author")
-    public ContentStage author(Author author) {
-      this.author = author;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("content")
-    public PostTypeStage content(String content) {
-      this.content = content;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("postType")
-    public SwitchStage postType(PostType postType) {
-      this.postType = postType;
-      return this;
-    }
-
-    @Override
-    @JsonSetter("switch")
-    public _FinalStage _switch(int _switch) {
-      this._switch = _switch;
-      return this;
-    }
-
-    @Override
-    public _FinalStage addAllExample(List<List<String>> example) {
-      this.example.addAll(example);
-      return this;
-    }
-
-    @Override
-    public _FinalStage addExample(List<String> example) {
-      this.example.add(example);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "example", nulls = Nulls.SKIP)
-    public _FinalStage example(List<List<String>> example) {
-      this.example.clear();
-      this.example.addAll(example);
-      return this;
-    }
-
-    @Override
-    public CreatePostRequest build() {
-      return new CreatePostRequest(title, author, content, postType, _switch, example);
-    }
-  }
-}
-
-]
-
-
 basic[src/main/java/com/fern/basic/model/blog/GeneratorIdAndVersion.java]=[
 package com.fern.basic.model.blog;
 
@@ -1221,9 +976,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public final class PostType {
-  public static final PostType LONG = new PostType(Value.LONG, "LONG");
-
   public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType LONG = new PostType(Value.LONG, "LONG");
 
   public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
 
@@ -1259,10 +1014,10 @@ public final class PostType {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case LONG:
-        return visitor.visitLong();
       case SHORT:
         return visitor.visitShort();
+      case LONG:
+        return visitor.visitLong();
       case MEDIUM:
         return visitor.visitMedium();
       case UNKNOWN:
@@ -1275,10 +1030,10 @@ public final class PostType {
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "LONG":
-        return LONG;
       case "SHORT":
         return SHORT;
+      case "LONG":
+        return LONG;
       case "med.med":
         return MEDIUM;
       default:

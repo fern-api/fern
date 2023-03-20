@@ -16,7 +16,7 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.services.http.HttpHeader;
+import com.fern.ir.v3.model.services.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.generators.AbstractOptionalFileGenerator;

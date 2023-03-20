@@ -11,15 +11,6 @@ types:
         docs: The title of the blog post.
       author: Author
       content: string
-  CreatePostRequest:
-    properties:
-      title: string
-      author: Author
-      content: string
-      postType: PostType
-      switch: integer
-      ratings: map<string, integer>
-      list: list<list<string>>
   PostType:
     enum:
       - LONG
@@ -53,30 +44,38 @@ errors:
     status-code: 400
     type: list<GeneratorIdAndVersion>
 
-services:
-  http:
-    PostsService:
-      base-path: /posts
-      auth: false
-      endpoints:
-        createPost:
-          docs: Create a new blog post
-          method: POST
-          path: /create
-          request:
-            type: CreatePostRequest
-            docs: This will create a Post.
-        getPost:
-          method: GET
-          path: /{postId}
-          path-parameters:
-            postId:
-              type: PostId
-              docs: The post id for the blog post
-          query-parameters:
-            dummy:
-              type: string
-              docs: Dummy query param
-          response: BlogPost
-          errors:
-            - PostNotFoundError
+service:
+  base-path: /posts
+  auth: false
+  endpoints:
+    createPost:
+      docs: Create a new blog post
+      method: POST
+      path: /create
+      request:
+        name: CreatePostRequest
+        body:
+          properties:
+            title: string
+            author: Author
+            content: string
+            postType: PostType
+            switch: integer
+            ratings: map<string, integer>
+            list: list<list<string>>
+    getPost:
+      method: GET
+      path: /{postId}
+      path-parameters:
+        postId:
+          type: PostId
+          docs: The post id for the blog post
+      response: BlogPost
+      errors:
+        - PostNotFoundError
+      request:
+        name: GetPostRequest
+        query-parameters:
+          dummy:
+            type: string
+            docs: Dummy query param

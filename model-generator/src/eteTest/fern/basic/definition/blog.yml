@@ -9,14 +9,6 @@ types:
       title: string
       author: Author
       content: string
-  CreatePostRequest:
-    properties:
-      title: string
-      author: Author
-      content: string
-      postType: PostType
-      switch: integer
-      example: list<list<string>>
   PostType:
     enum:
       - LONG
@@ -50,22 +42,29 @@ errors:
     status-code: 400
     type: list<GeneratorIdAndVersion>
 
-services:
-  http:
-    PostsService:
-      base-path: /posts
-      auth: false
-      endpoints:
-        createPost:
-          docs: Create a new blog post
-          method: POST
-          path: /create
-          request: CreatePostRequest
-        getPost:
-          method: GET
-          path: /{postId}
-          path-parameters:
-            postId: PostId
-          response: BlogPost
-          errors:
-            - PostNotFoundError
+service:
+  base-path: /posts
+  auth: false
+  endpoints:
+    createPost:
+      docs: Create a new blog post
+      method: POST
+      path: /create
+      request:
+        name: CreatePostRequest
+        body:
+          properties:
+            title: string
+            author: Author
+            content: string
+            postType: PostType
+            switch: integer
+            example: list<list<string>>
+    getPost:
+      method: GET
+      path: /{postId}
+      path-parameters:
+        postId: PostId
+      response: BlogPost
+      errors:
+        - PostNotFoundError

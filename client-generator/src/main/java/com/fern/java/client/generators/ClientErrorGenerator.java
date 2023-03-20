@@ -16,8 +16,8 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.v3.model.errors.ErrorDeclaration;
+import com.fern.ir.v3.model.types.DeclaredTypeName;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.SingleTypeGenerator;
