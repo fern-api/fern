@@ -7,7 +7,7 @@ import { TypeString } from "../type-preview/TypeString";
 
 export declare namespace EnglishTypeSummary {
     export interface Props {
-        type: FernRegistry.Type;
+        type: FernRegistry.TypeReference;
         isEndOfSentence?: boolean;
         plural?: boolean;
         includeReferencedTypeSummary?: boolean;
@@ -25,7 +25,7 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
     const summary = (
         <>
             {type._visit<JSX.Element | string>({
-                reference: (typeId) => {
+                id: (typeId) => {
                     const resolvedType = resolveTypeById(typeId);
                     return (
                         <>
@@ -42,10 +42,6 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                         </>
                     );
                 },
-                enum: () => <TypeString article="an">enum</TypeString>,
-                union: () => <TypeString article="a">union</TypeString>,
-                discriminatedUnion: () => <TypeString article="a">discriminated union</TypeString>,
-                object: () => <TypeString article="an">object</TypeString>,
                 primitive: (primitive) => {
                     return <PrimitivePreviewPart primitive={primitive} shouldIncludeArticle plural={plural} />;
                 },
@@ -74,7 +70,7 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                             <TypeString article="a">map of key-value pairs</TypeString>, where&nbsp;
                             {
                                 // references can't be pluralized
-                                keyType.type === "reference" ? (
+                                keyType.type === "id" ? (
                                     <>
                                         each&nbsp;<TypeString>key</TypeString>&nbsp;is
                                     </>
@@ -89,7 +85,7 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                             &nbsp;and&nbsp;
                             {
                                 // references can't be pluralized
-                                valueType.type === "reference" ? (
+                                valueType.type === "id" ? (
                                     <>
                                         each&nbsp;<TypeString>value</TypeString>&nbsp;is
                                     </>

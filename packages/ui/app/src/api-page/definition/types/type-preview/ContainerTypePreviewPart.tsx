@@ -5,7 +5,7 @@ import { TypePreviewPart } from "./TypePreviewPart";
 export declare namespace ContainerTypePreviewPart {
     export interface Props {
         containerName: string;
-        itemTypes: FernRegistry.Type[];
+        itemTypes: FernRegistry.TypeReference[];
         includeContainerItems: boolean;
     }
 }

@@ -7,7 +7,7 @@ import { ExampleDot } from "./ExampleDot";
 
 export interface Example {
     name: string | undefined;
-    docs: string | undefined;
+    description: string | undefined;
     render: () => JSX.Element;
 }
 
@@ -54,9 +54,9 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
             {example != null ? (
                 <div className="flex flex-col p-5 overflow-y-auto">
                     <div className="text-lg font-bold">{example.name ?? "Example"}</div>
-                    {example.docs != null && (
+                    {example.description != null && (
                         <div className="mt-1">
-                            <Markdown docs={example.docs} />
+                            <Markdown>{example.description}</Markdown>
                         </div>
                     )}
                     <div className="flex flex-col mt-5">{example.render()}</div>

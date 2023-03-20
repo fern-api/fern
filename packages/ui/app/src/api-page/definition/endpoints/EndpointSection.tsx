@@ -4,17 +4,17 @@ import { Markdown } from "../markdown/Markdown";
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         title: string;
-        docs?: string;
+        description?: string;
     }>;
 }
 
-export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, docs, children }) => {
+export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, description, children }) => {
     return (
         <div className="flex flex-col">
             <H4>{title}</H4>
-            {docs != null && (
+            {description != null && (
                 <div className="mb-2">
-                    <Markdown docs={docs} />
+                    <Markdown>{description}</Markdown>
                 </div>
             )}
             <div className="flex flex-col">{children}</div>

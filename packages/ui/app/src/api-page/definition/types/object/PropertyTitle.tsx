@@ -6,7 +6,7 @@ import styles from "./PropertyTitle.module.scss";
 export declare namespace PropertyTitle {
     export interface Props {
         name: string;
-        type: FernRegistry.Type;
+        type: FernRegistry.TypeReference;
     }
 }
 

@@ -9,7 +9,7 @@ import { SetPreviewPart } from "./SetPreviewPart";
 
 export declare namespace TypePreviewPart {
     export interface Props {
-        type: FernRegistry.Type;
+        type: FernRegistry.TypeReference;
         includeContainerItems: boolean;
     }
 }
@@ -18,11 +18,7 @@ export const TypePreviewPart: React.FC<TypePreviewPart.Props> = ({ type, include
     return type._visit({
         primitive: (primitive) => <PrimitivePreviewPart primitive={primitive} />,
         list: (list) => <ListPreviewPart list={list} includeContainerItems={includeContainerItems} />,
-        reference: (typeId) => <ReferencedTypePreviewPart typeId={typeId} />,
-        enum: () => <div>enum</div>,
-        union: () => <div>union</div>,
-        discriminatedUnion: () => <div>union</div>,
-        object: () => <div>object</div>,
+        id: (typeId) => <ReferencedTypePreviewPart typeId={typeId} />,
         optional: (optional) => (
             <OptionalPreviewPart optional={optional} includeContainerItems={includeContainerItems} />
         ),

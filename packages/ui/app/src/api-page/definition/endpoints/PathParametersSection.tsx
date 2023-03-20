@@ -14,7 +14,7 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({ p
         return pathParameters.map((pathParameter) => ({
             name: pathParameter.key,
             type: pathParameter.type,
-            docs: pathParameter.docs,
+            description: pathParameter.description,
         }));
     }, [pathParameters]);
 

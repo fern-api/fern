@@ -3,23 +3,20 @@ import { useMemo } from "react";
 import { TreeNode } from "../tree/TreeNode";
 import { TreeNodes } from "../tree/TreeNodes";
 import { TypePreview } from "../type-preview/TypePreview";
-import { TypeDefinitionDetails } from "../TypeDefinitionDetails";
 
-export declare namespace UnionDefinition {
+export declare namespace UndiscriminatedUnionDefinition {
     export interface Props {
-        union: FernRegistry.UnionType;
+        union: FernRegistry.UndiscriminatedUnionType;
     }
 }
 
-export const UnionDefinition: React.FC<UnionDefinition.Props> = ({ union }) => {
+export const UndiscriminatedUnionDefinition: React.FC<UndiscriminatedUnionDefinition.Props> = ({ union }) => {
     const nodes = useMemo(
         (): TreeNode.Props[] =>
             union.members.map((member) => ({
                 title: <TypePreview type={member.type} />,
-                body: member.docs,
-                children: ({ className }) => (
-                    <TypeDefinitionDetails className={className} typeDefinition={member.type} defaultIsCollapsed />
-                ),
+                body: member.description,
+                children: ({ className }) => <div className={className}>TODO</div>,
             })),
         [union.members]
     );

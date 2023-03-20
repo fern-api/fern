@@ -37,7 +37,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     </div>
                 </div>
             }
-            docs={endpoint.docs}
+            description={endpoint.description}
         >
             <div className="flex flex-col gap-12">
                 {endpoint.path.pathParameters.length > 0 && (
@@ -47,10 +47,10 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     <QueryParametersSection queryParameters={endpoint.queryParameters} />
                 )}
                 {endpoint.request != null && (
-                    <EndpointTypeSection title="Request" type={endpoint.request} typeSummaryLabel="request" />
+                    <EndpointTypeSection title="Request" httpBody={endpoint.request} typeSummaryLabel="request" />
                 )}
                 {endpoint.response != null && (
-                    <EndpointTypeSection title="Response" type={endpoint.response} typeSummaryLabel="response" />
+                    <EndpointTypeSection title="Response" httpBody={endpoint.response} typeSummaryLabel="response" />
                 )}
             </div>
         </DefinitionItemPage>

@@ -13,7 +13,7 @@ export const TypeExamples: React.FC<TypeExamples.Props> = ({ type }) => {
     const examples = useMemo(() => {
         return type.examples.map((example) => ({
             name: undefined,
-            docs: undefined,
+            description: undefined,
             render: () => <JsonExample json={example.json} />,
         }));
     }, [type]);

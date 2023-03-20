@@ -6,30 +6,27 @@ export declare namespace EndpointTypeSection {
     export interface Props {
         title: string;
         typeSummaryLabel: string;
-        type: FernRegistry.Type;
+        httpBody: FernRegistry.HttpBody;
     }
 }
 
-export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ title, type, typeSummaryLabel }) => {
+export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ title, httpBody, typeSummaryLabel }) => {
     return (
         <EndpointSection title={title}>
-            <div className="text-gray-500 mb-2">Here are some docs about this request. Lorem ipsum here we go!</div>
-            <div className="flex flex-wrap items-center leading-7">
-                The {typeSummaryLabel} for this endpoint is&nbsp;
-                <EnglishTypeSummary type={type} includeReferencedTypeSummary isEndOfSentence />
-            </div>
-            {type._visit({
-                object: () => <div>object</div>,
+            {httpBody.description != null && <div className="text-gray-500 mb-2">{httpBody.description}</div>}
+            {httpBody.type._visit({
+                object: () => null,
+                reference: (type) => (
+                    <div className="flex flex-wrap items-center leading-7">
+                        The {typeSummaryLabel} for this endpoint is&nbsp;
+                        <EnglishTypeSummary type={type} includeReferencedTypeSummary isEndOfSentence />
+                    </div>
+                ),
+                _other: () => null,
+            })}
+            {httpBody.type._visit({
+                object: () => <div>properties</div>,
                 reference: () => null,
-                enum: () => null,
-                union: () => null,
-                discriminatedUnion: () => null,
-                primitive: () => null,
-                optional: () => null,
-                list: () => null,
-                set: () => null,
-                map: () => null,
-                unknown: () => null,
                 _other: () => null,
             })}
         </EndpointSection>

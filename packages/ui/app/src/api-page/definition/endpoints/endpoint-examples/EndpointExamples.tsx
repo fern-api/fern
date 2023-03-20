@@ -13,7 +13,7 @@ export const EndpointExamples: React.FC<EndpointExamples.Props> = ({ endpoint })
     const examples = useMemo(() => {
         return endpoint.examples.map((example) => ({
             name: undefined,
-            docs: example.docs,
+            description: example.description,
             render: () => <EndpointExample endpoint={endpoint} example={example} />,
         }));
     }, [endpoint]);

@@ -16,19 +16,19 @@ export const DiscriminatedUnionDefinition: React.FC<DiscriminatedUnionDefinition
     const nodes = useMemo(
         (): TreeNode.Props[] =>
             union.members.map((member) => {
-                const propertiesType = FernRegistry.Type.object({
+                const propertiesType = FernRegistry.TypeShape.object({
                     ...member.additionalProperties,
                     properties: [
                         {
                             key: union.discriminant,
-                            valueType: FernRegistry.Type.primitive(FernRegistry.PrimitiveType.string()),
+                            valueType: FernRegistry.TypeReference.primitive(FernRegistry.PrimitiveType.string()),
                         },
                         ...member.additionalProperties.properties,
                     ],
                 });
                 return {
                     title: <SmallMutedText>{member.discriminantValue}</SmallMutedText>,
-                    body: member.docs,
+                    body: member.description,
                     children: ({ className }) => (
                         <CollapsibleTree className={className} title="properties" defaultIsCollapsed>
                             <ObjectDefinition object={propertiesType} />

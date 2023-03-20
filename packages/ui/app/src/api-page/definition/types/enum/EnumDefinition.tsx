@@ -15,7 +15,7 @@ export const EnumDefinition: React.FC<EnumDefinition.Props> = ({ enum: enum_ }) 
         (): TreeNode.Props[] =>
             enum_.values.map((value) => ({
                 title: <SmallMutedText>{`"${value.value}"`}</SmallMutedText>,
-                body: value.docs,
+                body: value.description,
             })),
         [enum_.values]
     );

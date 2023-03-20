@@ -3,16 +3,16 @@ import remarkGfm from "remark-gfm";
 
 export declare namespace Markdown {
     export interface Props {
-        docs: string;
+        children: string;
     }
 }
 
 const REMARK_PLUGINS = [remarkGfm];
 
-export const Markdown: React.FC<Markdown.Props> = ({ docs }) => {
+export const Markdown: React.FC<Markdown.Props> = ({ children }) => {
     return (
         <ReactMarkdown className="prose" remarkPlugins={REMARK_PLUGINS}>
-            {docs}
+            {children}
         </ReactMarkdown>
     );
 };
