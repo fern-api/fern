@@ -3,9 +3,14 @@ import tmp from "tmp-promise";
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
 import { streamObjectToFile } from "./streamObjectToFile";
 
-export async function stringifyLargeObject(obj: unknown, { pretty }: { pretty?: boolean } = {}): Promise<string> {
+export async function stringifyLargeObject(
+    obj: unknown,
+    { pretty, onWrite }: { pretty?: boolean; onWrite?: (filepath: AbsoluteFilePath) => void } = {}
+): Promise<string> {
     const tmpFile = await tmp.file();
-    await streamObjectToFile(AbsoluteFilePath.of(tmpFile.path), obj, { pretty });
+    const filepath = AbsoluteFilePath.of(tmpFile.path);
+    await streamObjectToFile(filepath, obj, { pretty });
+    onWrite?.(filepath);
     const fileContents = await readFile(tmpFile.path);
     return fileContents.toString();
 }
