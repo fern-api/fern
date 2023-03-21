@@ -54,7 +54,8 @@
         "definition/endpoints",
         "definition/errors",
         "definition/imports",
-        "definition/api-yml"
+        "definition/api-yml",
+        "definition/package-yml"
       ]
     },
     {
