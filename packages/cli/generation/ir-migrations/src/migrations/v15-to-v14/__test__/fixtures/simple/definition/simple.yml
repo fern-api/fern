@@ -1,0 +1,5 @@
+types:
+  MyObject:
+    properties:
+      a: binary
+      b: string

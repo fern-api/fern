@@ -33,7 +33,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-model": "0.0.1268",
+    "@fern-fern/ir-model": "0.0.1269",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

@@ -38,6 +38,8 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
             return visitor.primitive(PrimitiveType.Date);
         case RawPrimitiveType.uuid:
             return visitor.primitive(PrimitiveType.Uuid);
+        case RawPrimitiveType.binary:
+            return visitor.primitive(PrimitiveType.Binary);
         case RawPrimitiveType.unknown:
             return visitor.unknown();
     }
