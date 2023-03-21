@@ -1,0 +1,99 @@
+---
+title: "__package__.yml"
+---
+
+## What is a package?
+
+Every folder in your API Definition is a package.
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml
+  └─ definition/ # <------ root package
+    ├─ api.yml
+    ├─ imdb.yml
+    └─ persons/ # <-------- nested package
+      ├─ director.yml
+```
+
+The generated SDK will match the hierarchy of your API definition.
+
+```ts
+const client = new Client();
+
+// calling endpoint defined in imdb.yml
+client.imdb.getRating("goodwill-hunting");
+
+// calling endpoint defined in persons/director.yml
+client.persons.director.get("christopher-nolan");
+```
+
+## Package Configuration
+
+Each package can have a special file called `__package__.yml`. The structure of
+`__package__.yml` is just like any other definition file in Fern. It can have [imports](imports),
+[types](types), [endpoints](endpoints), and [errors](errors).
+
+When you define endpoints in `__package__.yml` they will appear at the root
+in the generated SDK. For example, for the following SDK the `submitRating`
+function appears at the root.
+
+```ts
+const client = new Client();
+
+client.submitRating("goodwill-hunting", 9.5);
+```
+
+To generate this SDK, the Fern folder may look something like
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml
+  └─ definition/
+    ├─ __package__.yml # <---
+    └─ api.yml
+```
+
+and `__package__.yml` would read
+
+```yaml
+service:
+  base-path: ""
+  auth: true
+  endpoints:
+    submitRating:
+      method: POST
+      path: "/submit-rating/{movieId}"
+      path-parameters:
+        movieId: string
+      request:
+        type: double
+        docs: Rating of the movie
+```
+
+## Namespacing
+
+Each package has its own namespace. This allows you to reuse names of
+types and errors across different packages.
+
+This is useful when versioning APIs, because you want to increment your
+API version you can just copy the existing API to a new package and start
+making changes.
+
+```yaml
+fern/
+├─ fern.config.json
+└─ api/
+  ├─ generators.yml
+  └─ definition/
+    ├─ api.yml
+    └─ imdb/
+        └─ v1/
+          └─ movie.yml # type names can overlap with v2/movie.yml
+        └─ v2/
+          └─ movie.yml
+```
