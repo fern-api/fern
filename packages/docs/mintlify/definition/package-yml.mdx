@@ -11,10 +11,10 @@ fern/
 ├─ fern.config.json
 └─ api/
   ├─ generators.yml
-  └─ definition/ <------ root package
+  └─ definition/ # <------ root package
     ├─ api.yml
     ├─ imdb.yml
-    └─ persons/ <-------- nested package
+    └─ persons/ # <-------- nested package
       ├─ director.yml
 ```
 
@@ -46,15 +46,15 @@ const client = new Client();
 client.submitRating("goodwill-hunting", 9.5);
 ```
 
-To generate this SDK, the Fern folder may look something like 
+To generate this SDK, the Fern folder may look something like
 
 ```yaml
 fern/
 ├─ fern.config.json
 └─ api/
-  ├─ generators.yml   
+  ├─ generators.yml
   └─ definition/
-    ├─ __package__.yml
+    ├─ __package__.yml # <--- 
     └─ api.yml
 ```
 
@@ -80,20 +80,20 @@ service:
 Each package has its own namespace. This allows you to reuse names of
 types and errors across different packages.
 
-This is useful when versioning APIs, because you want to increment your 
-API version you can just copy the existing API to a new package and start 
+This is useful when versioning APIs, because you want to increment your
+API version you can just copy the existing API to a new package and start
 making changes.
 
 ```yaml
 fern/
 ├─ fern.config.json
 └─ api/
-  ├─ generators.yml   
+  ├─ generators.yml
   └─ definition/
-    ├─ api.yml   
+    ├─ api.yml
     └─ imdb/
         └─ v1/
-          └─ movie.yml
+          └─ movie.yml # type names can overlap with v2/movie.yml
         └─ v2/
           └─ movie.yml
 ```
