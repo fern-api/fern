@@ -1,5 +1,5 @@
 types:
   MyObject:
     properties:
-      a: binary
+      a: base64
       b: string

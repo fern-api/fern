@@ -34,7 +34,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.1269",
+    "@fern-fern/ir-model": "0.0.1270",
     "@fern-fern/ir-v1-model": "0.0.1",
     "@fern-fern/ir-v10-model": "0.0.1",
     "@fern-fern/ir-v11-model": "0.0.2",
