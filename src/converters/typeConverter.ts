@@ -13,7 +13,7 @@ import {
     TypeDeclaration,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-model/types";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
@@ -188,6 +188,9 @@ export function convertUnion({
                 description: property.docs ?? undefined,
                 ...convertTypeReference(property.valueType),
             };
+            if (property.valueType._type === "container" && property.valueType.container._type !== "optional") {
+                schema.required = [property.name.wireValue, ...schema.required ?? []];
+            }
             return acc;
         }, {});
     }
