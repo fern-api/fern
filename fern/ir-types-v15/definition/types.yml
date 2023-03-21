@@ -154,7 +154,7 @@ types:
       - DATE_TIME
       - DATE
       - UUID
-      - BINARY
+      - BASE_64
   Literal:
     union:
       string: string

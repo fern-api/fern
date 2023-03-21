@@ -119,7 +119,7 @@ function convertTypeReference(typeReference: IrVersions.V15.types.TypeReference)
     return IrVersions.V15.types.TypeReference._visit<IrVersions.V14.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V14.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
-            if (primitiveType === "BINARY") {
+            if (primitiveType === "BASE_64") {
                 return IrVersions.V14.types.TypeReference.primitive(IrVersions.V14.types.PrimitiveType.String);
             }
             return IrVersions.V14.types.TypeReference.primitive(primitiveType);
@@ -187,7 +187,7 @@ function convertResolvedType(
         container: (container) => IrVersions.V14.types.ResolvedTypeReference.container(convertContainerType(container)),
         named: IrVersions.V14.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
-            if (primitiveType === "BINARY") {
+            if (primitiveType === "BASE_64") {
                 return IrVersions.V14.types.ResolvedTypeReference.primitive(IrVersions.V14.types.PrimitiveType.String);
             }
             return IrVersions.V14.types.ResolvedTypeReference.primitive(primitiveType);

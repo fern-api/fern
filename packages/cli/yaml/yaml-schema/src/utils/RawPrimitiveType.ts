@@ -5,7 +5,7 @@ export const RawPrimitiveType = {
     string: "string",
     boolean: "boolean",
     datetime: "datetime",
-    binary: "binary",
+    base64: "base64",
     uuid: "uuid",
     date: "date",
     unknown: "unknown",

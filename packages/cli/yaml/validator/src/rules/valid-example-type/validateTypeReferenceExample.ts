@@ -196,7 +196,7 @@ function validatePrimitiveExample({
         uuid: () => validateUuid(example),
         dateTime: () => validateDateTime(example),
         date: () => validateString(example),
-        binary: () => validateString(example),
+        base64: () => validateString(example),
         _unknown: () => {
             throw new Error("Unknown primitive type: " + primitiveType);
         },
