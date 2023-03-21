@@ -5,20 +5,18 @@ import { PrimitivePreviewPart } from "../type-preview/PrimitivePreviewPart";
 import { ReferencedTypePreviewPart } from "../type-preview/ReferencedTypePreviewPart";
 import { TypeString } from "../type-preview/TypeString";
 
-export declare namespace EnglishTypeSummary {
+export declare namespace EnglishTypeReferenceSummary {
     export interface Props {
         type: FernRegistry.TypeReference;
         isEndOfSentence?: boolean;
         plural?: boolean;
-        includeReferencedTypeSummary?: boolean;
     }
 }
 
-export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
+export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.Props> = ({
     type,
     isEndOfSentence = false,
     plural = false,
-    includeReferencedTypeSummary = false,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -33,55 +31,50 @@ export const EnglishTypeSummary: React.FC<EnglishTypeSummary.Props> = ({
                                 <span className="mr-1">{indefinite(resolvedType.name, { articleOnly: true })}</span>
                             )}
                             <ReferencedTypePreviewPart typeId={typeId} />
-                            {includeReferencedTypeSummary && (
-                                <>
-                                    <span className="mr-1">, which is an</span>
-                                    {/* TODO figure out resolved type */}
-                                    <TypeString>object</TypeString>
-                                </>
-                            )}
                         </>
                     );
                 },
                 primitive: (primitive) => {
                     return <PrimitivePreviewPart primitive={primitive} shouldIncludeArticle plural={plural} />;
                 },
-                optional: ({ itemType }) => <EnglishTypeSummary type={itemType} />,
+                optional: ({ itemType }) => <EnglishTypeReferenceSummary type={itemType} />,
                 list: ({ itemType }) => {
                     return (
                         <>
-                            <TypeString article="a" className="mr-1">
-                                list
+                            <TypeString article={plural ? undefined : "a"} className="mr-1">
+                                {plural ? "lists" : "list"}
                             </TypeString>
                             <span className="mr-1">of</span>
-                            <EnglishTypeSummary type={itemType} plural />
+                            <EnglishTypeReferenceSummary type={itemType} plural />
                         </>
                     );
                 },
                 set: ({ itemType }) => {
                     return (
                         <>
-                            <TypeString article="a" className="mr-1">
-                                set
+                            <TypeString article={plural ? undefined : "a"} className="mr-1">
+                                {plural ? "sets" : "set"}
                             </TypeString>
                             <span className="mr-1">of</span>
-                            <EnglishTypeSummary type={itemType} plural />
+                            <EnglishTypeReferenceSummary type={itemType} plural />
                         </>
                     );
                 },
                 map: ({ keyType, valueType }) => {
                     return (
                         <>
-                            <TypeString article="a">map of key-value pairs</TypeString>
+                            <TypeString article={plural ? undefined : "a"}>
+                                {plural ? "maps" : "map" + " of key-value pairs"}
+                            </TypeString>
                             <span className="mr-1">. The</span>
                             <TypeString className="mr-1">keys</TypeString>
                             <span className="mr-1">are</span>
-                            <EnglishTypeSummary type={keyType} plural />
+                            <EnglishTypeReferenceSummary type={keyType} plural />
                             <span className="mx-1">and</span>
                             <span className="mr-1">the</span>
                             <TypeString className="mr-1">values</TypeString>
                             <span className="mr-1">are</span>
-                            <EnglishTypeSummary type={valueType} plural />
+                            <EnglishTypeReferenceSummary type={valueType} plural />
                         </>
                     );
                 },

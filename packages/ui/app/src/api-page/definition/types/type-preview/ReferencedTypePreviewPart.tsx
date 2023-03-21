@@ -5,7 +5,6 @@ import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionCo
 import { useApiTab } from "../../../api-tabs/context/useApiTab";
 import { useTypePath } from "../../../routes/useTypePath";
 import { useApiDefinitionItemContext } from "../../context/useApiDefinitionItemContext";
-import { TypeIcon } from "../TypeIcon";
 import { TypeString } from "./TypeString";
 
 export declare namespace ReferencedTypePreviewPart {
@@ -28,15 +27,13 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
 
     return (
         <div
-            className={classNames(className, "flex rounded overflow-hidden cursor-pointer leading-none")}
+            className={classNames(
+                className,
+                "flex items-center rounded overflow-hidden cursor-pointer leading-none bg-[#deede4] p-1"
+            )}
             onClick={onClick}
         >
-            <div className="flex items-center bg-[#5ec069] p-1">
-                <TypeIcon color="white" />
-            </div>
-            <div className="flex items-center bg-[#deede4] px-1">
-                <TypeString className="text-green-700">{resolveTypeById(typeId).name}</TypeString>
-            </div>
+            <TypeString className="text-green-700">{resolveTypeById(typeId).name}</TypeString>
         </div>
     );
 };
