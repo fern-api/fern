@@ -77,7 +77,9 @@ class AliasGenerator(AbstractTypeGenerator):
                 boolean=lambda: "from_bool",
                 long=lambda: "from_int",
                 date_time=lambda: "from_datetime",
+                date=lambda: "from_date",
                 uuid=lambda: "from_uuid",
+                base_64=lambda: "from_bytes",
             ),
             unknown=lambda: "from_",
         )
@@ -99,7 +101,9 @@ class AliasGenerator(AbstractTypeGenerator):
                 boolean=lambda: "get_as_bool",
                 long=lambda: "get_as_int",
                 date_time=lambda: "get_as_datetime",
+                date=lambda: "get_as_date",
                 uuid=lambda: "get_as_uuid",
+                base_64=lambda: "get_as_bytes",
             ),
             unknown=lambda: "get_value",
         )

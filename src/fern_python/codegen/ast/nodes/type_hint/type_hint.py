@@ -45,12 +45,20 @@ class TypeHint(AstNode):
         return TypeHint(type=get_reference_to_datetime_import("datetime"))
 
     @staticmethod
+    def date() -> TypeHint:
+        return TypeHint(type=get_reference_to_datetime_import("date"))
+
+    @staticmethod
     def uuid() -> TypeHint:
         return TypeHint(type=get_reference_to_uuid_import("UUID"))
 
     @staticmethod
     def float_() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("float"))
+
+    @staticmethod
+    def bytes() -> TypeHint:
+        return TypeHint(type=get_reference_to_built_in_primitive("bytes"))
 
     @staticmethod
     def none() -> TypeHint:

@@ -90,5 +90,7 @@ class TypeReferenceToTypeHintConverter:
             long=AST.TypeHint.int_,
             date_time=AST.TypeHint.datetime,
             uuid=AST.TypeHint.uuid,
+            date=AST.TypeHint.date,
+            base_64=AST.TypeHint.bytes,
         )
         return to_return

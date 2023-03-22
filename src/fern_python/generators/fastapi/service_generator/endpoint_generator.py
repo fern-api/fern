@@ -1,6 +1,7 @@
 from typing import List
 
 import fern.ir.pydantic as ir_types
+from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
@@ -44,6 +45,7 @@ class EndpointGenerator:
                     reference=lambda request: ReferencedRequestEndpointParameter(
                         context=context, request_type=request.request_body_type
                     ),
+                    file_upload=lambda request: raise_file_upload_unsupported(),
                 )
             )
         for path_parameter in service.path_parameters:
@@ -70,10 +72,10 @@ class EndpointGenerator:
         )
 
     def _get_return_type(self) -> AST.TypeHint:
-        response_type = self._endpoint.response.type
-        if response_type is None:
+        response = self._endpoint.response
+        if response is None:
             return AST.TypeHint.none()
-        return self._context.pydantic_generator_context.get_type_hint_for_type_reference(response_type)
+        return self._context.pydantic_generator_context.get_type_hint_for_type_reference(response.response_body_type)
 
     def _get_endpoint_path(self) -> str:
         base_path = self._service.base_path
@@ -166,7 +168,7 @@ class EndpointGenerator:
             writer.write_line("(")
             with writer.indent():
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
-                if self._endpoint.response.type is not None:
+                if self._endpoint.response is not None:
                     writer.write("response_model=")
                     writer.write_node(self._get_return_type())
                     writer.write_line(",")
@@ -328,3 +330,7 @@ def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod)
         patch=lambda: "patch",
         delete=lambda: "delete",
     )
+
+
+def raise_file_upload_unsupported() -> Never:
+    raise RuntimeError("File upload is not supported")

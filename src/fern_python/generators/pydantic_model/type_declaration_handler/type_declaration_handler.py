@@ -11,6 +11,7 @@ from .discriminated_union_with_visit_generator import (
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectGenerator, ObjectProperty
 from .simple_discriminated_union_generator import SimpleDiscriminatedUnionGenerator
+from .undiscriminated_union_generator import UndiscriminatedUnionGenerator
 
 
 class TypeDeclarationHandler:
@@ -79,6 +80,14 @@ class TypeDeclarationHandler:
                     source_file=self._source_file,
                     docs=self._declaration.docs,
                 )
+            ),
+            undiscriminated_union=lambda union: UndiscriminatedUnionGenerator(
+                name=self._declaration.name,
+                union=union,
+                context=self._context,
+                custom_config=self._custom_config,
+                source_file=self._source_file,
+                docs=self._declaration.docs,
             ),
         )
         generator.generate()

@@ -8,7 +8,7 @@ from .abstract_auth_generator import AbstractAuthGenerator
 
 
 class HeaderAuthGenerator(AbstractAuthGenerator):
-    def __init__(self, context: FastApiGeneratorContext, http_header: ir_types.HttpHeader):
+    def __init__(self, context: FastApiGeneratorContext, http_header: ir_types.HeaderAuthScheme):
         super().__init__(context=context)
         self._http_header = http_header
         self._context = context

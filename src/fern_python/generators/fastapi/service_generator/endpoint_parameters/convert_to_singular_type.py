@@ -35,7 +35,9 @@ def convert_to_singular_type(context: FastApiGeneratorContext, type: ir_types.Ty
                 return convert_to_singular_type(context, ir_types.TypeReference.factory.unknown())
             elif resolved_type_union.type != "void":
                 assert_never(resolved_type_union)
-        elif shape_union.type != "object" and shape_union.type != "union":
+        elif (
+            shape_union.type != "object" and shape_union.type != "union" and shape_union.type != "undiscriminatedUnion"
+        ):
             assert_never(shape_union)
     elif union.type != "void":
         assert_never(union)

@@ -26,6 +26,7 @@ from .resources.v_2.service.service import AbstractV2Service
 def register(
     _app: fastapi.FastAPI,
     *,
+    v_2: AbstractV2Service,
     admin: AbstractAdminService,
     homepage: AbstractHomepageService,
     migration: AbstractMigrationService,
@@ -34,9 +35,9 @@ def register(
     submission: AbstractSubmissionService,
     sysprop: AbstractSyspropService,
     v_2_problem: AbstractV2ProblemService,
-    v_2_v_3_problem: AbstractV2V3ProblemService,
-    v_2: AbstractV2Service
+    v_2_v_3_problem: AbstractV2V3ProblemService
 ) -> None:
+    _app.include_router(__register_service(v_2))
     _app.include_router(__register_service(admin))
     _app.include_router(__register_service(homepage))
     _app.include_router(__register_service(migration))
@@ -46,7 +47,6 @@ def register(
     _app.include_router(__register_service(sysprop))
     _app.include_router(__register_service(v_2_problem))
     _app.include_router(__register_service(v_2_v_3_problem))
-    _app.include_router(__register_service(v_2))
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
     _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
