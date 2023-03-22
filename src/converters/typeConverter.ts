@@ -149,6 +149,7 @@ export function convertUnion({
             noProperties: () => ({
                 type: "object",
                 properties: discriminantProperty,
+                required: [unionTypeDeclaration.discriminant.wireValue],
             }),
             singleProperty: (singleProperty) => ({
                 type: "object",
@@ -156,6 +157,7 @@ export function convertUnion({
                     ...discriminantProperty,
                     [singleProperty.name.wireValue]: convertTypeReference(singleProperty.type),
                 },
+                required: [unionTypeDeclaration.discriminant.wireValue],
             }),
             samePropertiesAsObject: (typeName) => ({
                 type: "object",
@@ -168,6 +170,7 @@ export function convertUnion({
                         $ref: getReferenceFromDeclaredTypeName(typeName),
                     },
                 ],
+                required: [unionTypeDeclaration.discriminant.wireValue],
             }),
             _unknown: () => {
                 throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
@@ -189,7 +192,7 @@ export function convertUnion({
                 ...convertTypeReference(property.valueType),
             };
             if (!(property.valueType._type === "container" && property.valueType.container._type === "optional")) {
-                schema.required = [property.name.wireValue, ...(schema.required ?? [])];
+                schema.required = [...(schema.required ?? []), property.name.wireValue];
             }
             return acc;
         }, {});

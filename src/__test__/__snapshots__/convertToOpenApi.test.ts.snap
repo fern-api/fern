@@ -132,6 +132,8 @@ components:
                 - a
             value:
               type: string
+          required:
+            - type
         - type: object
           allOf:
             - type: object
@@ -141,6 +143,8 @@ components:
                   enum:
                     - b
             - $ref: '#/components/schemas/MyObject'
+          required:
+            - type
       required:
         - base
       properties:
@@ -382,6 +386,8 @@ components:
               type: string
               enum:
                 - anonymous
+          required:
+            - type
         - type: object
           properties:
             type:
@@ -390,6 +396,8 @@ components:
                 - name
             value:
               type: string
+          required:
+            - type
         - type: object
           properties:
             type:
@@ -398,6 +406,8 @@ components:
                 - type
             value:
               $ref: '#/components/schemas/PostType'
+          required:
+            - type
     PostNotFoundErrorBody:
       title: PostNotFoundErrorBody
       type: object
