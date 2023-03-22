@@ -5,9 +5,12 @@ from fern_python.codegen import SourceFile
 from ..context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from .alias_generator import AliasGenerator
+from .discriminated_union_with_visit_generator import (
+    DiscriminatedUnionWithVisitGenerator,
+)
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectGenerator, ObjectProperty
-from .union_generator import UnionGenerator
+from .simple_discriminated_union_generator import SimpleDiscriminatedUnionGenerator
 
 
 class TypeDeclarationHandler:
@@ -58,13 +61,24 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
             ),
-            union=lambda union: UnionGenerator(
-                name=self._declaration.name,
-                union=union,
-                context=self._context,
-                custom_config=self._custom_config,
-                source_file=self._source_file,
-                docs=self._declaration.docs,
+            union=lambda union: (
+                DiscriminatedUnionWithVisitGenerator(
+                    name=self._declaration.name,
+                    union=union,
+                    context=self._context,
+                    custom_config=self._custom_config,
+                    source_file=self._source_file,
+                    docs=self._declaration.docs,
+                )
+                if self._custom_config.include_union_visitors
+                else SimpleDiscriminatedUnionGenerator(
+                    name=self._declaration.name,
+                    union=union,
+                    context=self._context,
+                    custom_config=self._custom_config,
+                    source_file=self._source_file,
+                    docs=self._declaration.docs,
+                )
             ),
         )
         generator.generate()

@@ -17,7 +17,7 @@ VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
 BUILDER_ARGUMENT_NAME = "value"
 
 
-class UnionGenerator(AbstractTypeGenerator):
+class DiscriminatedUnionWithVisitGenerator(AbstractTypeGenerator):
     def __init__(
         self,
         name: ir_types.DeclaredTypeName,

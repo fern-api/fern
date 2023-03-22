@@ -16,3 +16,4 @@ class TypeAliasDeclaration(AstNode):
     def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name} = ")
         self.type_hint.write(writer=writer)
+        writer.write_newline_if_last_line_not()

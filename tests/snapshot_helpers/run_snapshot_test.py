@@ -3,7 +3,7 @@ import shutil
 import subprocess
 from glob import glob
 from pathlib import Path
-from typing import Callable, List, Set
+from typing import Any, Callable, List, Set
 
 from generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
@@ -19,6 +19,7 @@ def run_snapshot_test(
     snapshot: SnapshotTest,
     tmpdir: Path,
     cli: Callable[[str], None],
+    custom_config: Any = None,
 ) -> None:
     path_to_fixture = os.path.join(os.path.dirname(filename_of_test), f"fixtures/{fixture_name}")
 
@@ -31,7 +32,7 @@ def run_snapshot_test(
         output=config.GeneratorOutputConfig(path=path_to_output, mode=config.OutputMode.factory.download_files()),
         workspace_name="ir",
         organization="fern",
-        custom_config={"include_validators": True},
+        custom_config=custom_config,
         environment=config.GeneratorEnvironment.factory.local(),
     )
 
