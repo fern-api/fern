@@ -141,6 +141,8 @@ components:
                   enum:
                     - b
             - $ref: '#/components/schemas/MyObject'
+      required:
+        - base
       properties:
         base:
           type: integer
