@@ -1,20 +1,30 @@
 import { getAccessToken, getUserToken } from "@fern-api/auth";
-import { AbstractPosthogManager } from "./AbstractPosthogManager";
+import { AccessTokenPosthogManager } from "./AccessTokenPosthogManager";
 import { NoopPosthogManager } from "./NoopPosthogManager";
 import { PosthogManager } from "./PosthogManager";
+import { UserPosthogManager } from "./UserPosthogManager";
 
-export async function getPosthogManager(): Promise<AbstractPosthogManager> {
+let posthogManager: PosthogManager | undefined;
+
+export async function getPosthogManager(): Promise<PosthogManager> {
+    if (posthogManager == null) {
+        posthogManager = await createPosthogManager();
+    }
+    return posthogManager;
+}
+
+async function createPosthogManager(): Promise<PosthogManager> {
     const posthogApiKey = process.env.POSTHOG_API_KEY;
     if (posthogApiKey == null) {
         return new NoopPosthogManager();
     }
     const userToken = await getUserToken();
     if (userToken != null) {
-        return new PosthogManager(userToken, posthogApiKey);
+        return new UserPosthogManager({ token: userToken, posthogApiKey });
     }
     const accessToken = await getAccessToken();
     if (accessToken != null) {
-        return new NoopPosthogManager();
+        return new AccessTokenPosthogManager({ posthogApiKey });
     }
-    return new PosthogManager(undefined, posthogApiKey);
+    return new UserPosthogManager({ token: undefined, posthogApiKey });
 }
