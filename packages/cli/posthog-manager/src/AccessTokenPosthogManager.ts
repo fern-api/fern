@@ -19,9 +19,10 @@ export class AccessTokenPosthogManager implements PosthogManager {
                 distinctId: event.orgId,
                 event: "CLI",
                 properties: {
-                    version: process.env.CLI_VERSION,
                     ...event,
                     ...event.properties,
+                    version: process.env.CLI_VERSION,
+                    using_access_token: true,
                 },
             });
         }
