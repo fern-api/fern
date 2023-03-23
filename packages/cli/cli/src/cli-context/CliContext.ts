@@ -94,7 +94,7 @@ export class CliContext {
             await this.nudgeUpgradeIfAvaialable();
         }
         this.ttyAwareLogger.finish();
-        (await getPosthogManager())?.flush();
+        (await getPosthogManager()).flush();
         this.exitProgram();
     }
 
