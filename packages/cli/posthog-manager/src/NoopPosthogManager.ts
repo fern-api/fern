@@ -1,6 +1,6 @@
-import { AbstractPosthogManager } from "./AbstractPosthogManager";
+import { PosthogManager } from "./PosthogManager";
 
-export class NoopPosthogManager extends AbstractPosthogManager {
+export class NoopPosthogManager implements PosthogManager {
     async sendEvent(): Promise<void> {
         // no-op
     }
