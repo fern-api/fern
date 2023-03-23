@@ -1,5 +1,5 @@
 import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { AbstractPosthogManager, getPosthogManager } from "@fern-api/posthog-manager";
+import { getPosthogManager } from "@fern-api/posthog-manager";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
 import { Workspace } from "@fern-api/workspace-loader";
@@ -27,7 +27,6 @@ export class CliContext {
 
     private numTasks = 0;
     private ttyAwareLogger: TtyAwareLogger;
-    private posthogManager: AbstractPosthogManager | undefined;
 
     private logLevel: LogLevel = LogLevel.Info;
 
@@ -95,7 +94,7 @@ export class CliContext {
             await this.nudgeUpgradeIfAvaialable();
         }
         this.ttyAwareLogger.finish();
-        this.posthogManager?.flush();
+        (await getPosthogManager())?.flush();
         this.exitProgram();
     }
 
@@ -187,10 +186,7 @@ export class CliContext {
     }
 
     private async instrumentPostHogEventAsync(event: PosthogEvent): Promise<void> {
-        if (this.posthogManager == null) {
-            this.posthogManager = await getPosthogManager();
-        }
-        this.posthogManager.sendEvent(event);
+        (await getPosthogManager()).sendEvent(event);
     }
 
     public readonly logger = createLogger(this.log.bind(this));
