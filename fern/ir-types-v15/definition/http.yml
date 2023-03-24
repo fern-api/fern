@@ -28,6 +28,7 @@ types:
       method: HttpMethod
       headers: list<HttpHeader>
       path: HttpPath
+      fullPath: HttpPath
       pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       requestBody: optional<HttpRequestBody>

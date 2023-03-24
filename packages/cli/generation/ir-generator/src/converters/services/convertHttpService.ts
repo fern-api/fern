@@ -8,6 +8,7 @@ import {
     PathParameter,
     ResponseErrors,
 } from "@fern-fern/ir-model/http";
+import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -65,6 +66,7 @@ export function convertHttpService({
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
+                fullPath: constructHttpPath(urlJoin(serviceDefinition["base-path"], endpoint.path)),
                 pathParameters:
                     endpoint["path-parameters"] != null
                         ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) =>
