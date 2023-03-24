@@ -115,6 +115,11 @@ export interface ServiceServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }): void | Promise<void>;
+    unknownRequest(req: express.Request<never, never, unknown, never>, res: {
+        send: () => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }): void | Promise<void>;
 }
 export declare class ServiceService {
     private readonly methods;
@@ -189,6 +194,28 @@ class ServiceService {
                 console.error(error);
                 if (error instanceof errors.FernApiError) {
                     console.warn(\`Endpoint 'endpoint' unexpectedly threw \${error.constructor.name}.\` +
+                        \` If this was intentional, please add \${error.constructor.name} to\` +
+                        \\" the endpoint's errors list in your Fern Definition.\\");
+                    await error.send(res);
+                }
+                next(error);
+            }
+        });
+        this.router.post(\\"\\", async (req, res, next) => {
+            try {
+                await this.methods.unknownRequest(req, {
+                    send: async () => {
+                        res.sendStatus(204);
+                    },
+                    cookie: res.cookie.bind(res),
+                    locals: res.locals,
+                });
+                next();
+            }
+            catch (error) {
+                console.error(error);
+                if (error instanceof errors.FernApiError) {
+                    console.warn(\`Endpoint 'unknownRequest' unexpectedly threw \${error.constructor.name}.\` +
                         \` If this was intentional, please add \${error.constructor.name} to\` +
                         \\" the endpoint's errors list in your Fern Definition.\\");
                     await error.send(res);

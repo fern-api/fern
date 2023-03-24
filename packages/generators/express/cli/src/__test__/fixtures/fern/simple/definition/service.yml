@@ -5,3 +5,7 @@ service:
     endpoint:
       method: GET
       path: ""
+    unknownRequest:
+      method: POST
+      path: ""
+      request: unknown

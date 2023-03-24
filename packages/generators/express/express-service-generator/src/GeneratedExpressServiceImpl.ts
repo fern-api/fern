@@ -399,6 +399,22 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             context.base.externalDependencies.express.Request.body
         );
 
+        // no validation required for `unknown` requests
+        if (
+            requestBody.type === "reference" &&
+            context.type.resolveTypeReference(requestBody.requestBodyType)._type === "unknown"
+        ) {
+            return [
+                this.getTryCatch({
+                    expressRequest,
+                    expressResponse,
+                    next,
+                    endpoint,
+                    context,
+                }),
+            ];
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -419,6 +435,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     ts.NodeFlags.Const
                 )
             ),
+
             ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
                 ts.factory.createIdentifier(DESERIALIZED_REQUEST_VARIABLE_NAME),
                 {
