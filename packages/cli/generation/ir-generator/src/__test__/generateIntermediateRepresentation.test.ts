@@ -15,6 +15,11 @@ const FIXTURES: Fixture[] = [
         generationLanguage: undefined,
         audiences: { type: "all" },
     },
+    {
+        name: "undiscriminated-union-examples",
+        generationLanguage: undefined,
+        audiences: { type: "all" },
+    },
 ];
 
 interface Fixture {
