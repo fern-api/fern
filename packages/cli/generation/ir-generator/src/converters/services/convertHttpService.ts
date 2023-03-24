@@ -67,7 +67,7 @@ export function convertHttpService({
                 }),
                 allPathParameters: convertPathParameters({
                     pathParameters: {
-                        ...endpoint["path-parameters"],
+                        ...serviceDefinition["path-parameters"],
                         ...endpoint["path-parameters"],
                     },
                     file,
