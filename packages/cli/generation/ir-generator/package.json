@@ -33,8 +33,9 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/ir-model": "0.0.1270",
-    "lodash-es": "^4.17.21"
+    "@fern-fern/ir-model": "0.0.1276",
+    "lodash-es": "^4.17.21",
+    "url-join": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -43,6 +44,7 @@
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
+    "@types/url-join": "^4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.0.3",

@@ -8,6 +8,7 @@ import {
     PathParameter,
     ResponseErrors,
 } from "@fern-fern/ir-model/http";
+import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -47,16 +48,10 @@ export function convertHttpService({
                       convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
-        pathParameters:
-            serviceDefinition["path-parameters"] != null
-                ? Object.entries(serviceDefinition["path-parameters"]).map(([parameterName, parameter]) =>
-                      convertPathParameter({
-                          parameterName,
-                          parameter,
-                          file,
-                      })
-                  )
-                : [],
+        pathParameters: convertPathParameters({
+            pathParameters: serviceDefinition["path-parameters"],
+            file,
+        }),
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 ...convertDeclaration(endpoint),
@@ -65,16 +60,18 @@ export function convertHttpService({
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
-                pathParameters:
-                    endpoint["path-parameters"] != null
-                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) =>
-                              convertPathParameter({
-                                  parameterName,
-                                  parameter,
-                                  file,
-                              })
-                          )
-                        : [],
+                fullPath: constructHttpPath(urlJoin(serviceDefinition["base-path"], endpoint.path)),
+                pathParameters: convertPathParameters({
+                    pathParameters: endpoint["path-parameters"],
+                    file,
+                }),
+                allPathParameters: convertPathParameters({
+                    pathParameters: {
+                        ...endpoint["path-parameters"],
+                        ...endpoint["path-parameters"],
+                    },
+                    file,
+                }),
                 queryParameters:
                     typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
                         ? Object.entries(endpoint.request["query-parameters"]).map(
@@ -123,6 +120,25 @@ export function convertHttpService({
             })
         ),
     };
+}
+
+function convertPathParameters({
+    pathParameters,
+    file,
+}: {
+    pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
+    file: FernFileContext;
+}): PathParameter[] {
+    if (pathParameters == null) {
+        return [];
+    }
+    return Object.entries(pathParameters).map(([parameterName, parameter]) =>
+        convertPathParameter({
+            parameterName,
+            parameter,
+            file,
+        })
+    );
 }
 
 function convertPathParameter({
