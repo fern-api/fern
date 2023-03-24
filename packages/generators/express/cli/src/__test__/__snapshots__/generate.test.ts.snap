@@ -268,7 +268,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
  */
 import express from \\"express\\";
 export declare abstract class FernApiError extends Error {
-    constructor();
+    readonly errorName?: string | undefined;
+    constructor(errorName?: string | undefined);
     abstract send(res: express.Response): Promise<void>;
 }
 ",
@@ -283,8 +284,10 @@ export declare abstract class FernApiError extends Error {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.FernApiError = void 0;
 class FernApiError extends Error {
-    constructor() {
+    errorName;
+    constructor(errorName) {
         super();
+        this.errorName = errorName;
         Object.setPrototypeOf(this, FernApiError.prototype);
     }
 }
@@ -3089,7 +3092,7 @@ const serializers = __importStar(require(\\"../../../../serialization\\"));
 class PlaylistIdNotFoundError extends errors.TraceApiError {
     body;
     constructor(body) {
-        super();
+        super(\\"PlaylistIdNotFoundError\\");
         this.body = body;
         Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
     }
@@ -3149,7 +3152,7 @@ exports.UnauthorizedError = void 0;
 const errors = __importStar(require(\\"../../../../errors\\"));
 class UnauthorizedError extends errors.TraceApiError {
     constructor() {
-        super();
+        super(\\"UnauthorizedError\\");
         Object.setPrototypeOf(this, UnauthorizedError.prototype);
     }
     async send(res) {
@@ -3419,7 +3422,7 @@ class PlaylistService {
             catch (error) {
                 console.error(error);
                 if (error instanceof errors.TraceApiError) {
-                    switch (error.constructor.name) {
+                    switch (error.errorName) {
                         case \\"PlaylistIdNotFoundError\\":
                         case \\"UnauthorizedError\\":
                             break;
@@ -3455,7 +3458,7 @@ class PlaylistService {
                 catch (error) {
                     console.error(error);
                     if (error instanceof errors.TraceApiError) {
-                        switch (error.constructor.name) {
+                        switch (error.errorName) {
                             case \\"PlaylistIdNotFoundError\\":
                                 break;
                             default:
@@ -14854,7 +14857,8 @@ exports.partition = partition;
  */
 import express from \\"express\\";
 export declare abstract class TraceApiError extends Error {
-    constructor();
+    readonly errorName?: string | undefined;
+    constructor(errorName?: string | undefined);
     abstract send(res: express.Response): Promise<void>;
 }
 ",
@@ -14869,8 +14873,10 @@ export declare abstract class TraceApiError extends Error {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.TraceApiError = void 0;
 class TraceApiError extends Error {
-    constructor() {
+    errorName;
+    constructor(errorName) {
         super();
+        this.errorName = errorName;
         Object.setPrototypeOf(this, TraceApiError.prototype);
     }
 }

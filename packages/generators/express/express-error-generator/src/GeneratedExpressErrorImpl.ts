@@ -30,6 +30,7 @@ export class GeneratedExpressErrorImpl
 
     constructor({ errorClassName, errorDeclaration }: GeneratedExpressErrorImpl.Init) {
         super({ errorClassName });
+        this.errorClassName = errorClassName;
         this.errorDeclaration = errorDeclaration;
     }
 
@@ -100,8 +101,10 @@ export class GeneratedExpressErrorImpl
         ];
     }
 
-    protected getSuperArguments(): ts.Expression[] {
-        return [];
+    protected getSuperArguments(context: ExpressErrorContext): ts.Expression[] {
+        return context.genericAPIExpressError.getGeneratedGenericAPIExpressError().getConstructorArguments({
+            errorName: this.errorClassName,
+        });
     }
 
     protected getConstructorStatements(): ts.Statement[] {

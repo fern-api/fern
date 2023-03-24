@@ -8,4 +8,6 @@ export interface GeneratedGenericAPIExpressError extends GeneratedFile<GenericAP
         generateBody: (args: { expressResponse: ts.Expression }) => ts.Statement[]
     ) => OptionalKind<MethodDeclarationStructure>;
     send: (args: { error: ts.Expression; expressResponse: ts.Expression }) => ts.Expression;
+    getConstructorArguments: (args: { errorName: string }) => ts.Expression[];
+    getErrorClassName: (args: { referenceToError: ts.Expression }) => ts.Expression;
 }

@@ -807,13 +807,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         }
 
         return ts.factory.createSwitchStatement(
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createPropertyAccessExpression(
-                    ts.factory.createIdentifier(GeneratedExpressServiceImpl.CATCH_BLOCK_ERROR_VARIABLE_NAME),
-                    ts.factory.createIdentifier("constructor")
+            context.genericAPIExpressError.getGeneratedGenericAPIExpressError().getErrorClassName({
+                referenceToError: ts.factory.createIdentifier(
+                    GeneratedExpressServiceImpl.CATCH_BLOCK_ERROR_VARIABLE_NAME
                 ),
-                ts.factory.createIdentifier("name")
-            ),
+            }),
             ts.factory.createCaseBlock([
                 ...endpoint.errors.map((error, index) =>
                     ts.factory.createCaseClause(

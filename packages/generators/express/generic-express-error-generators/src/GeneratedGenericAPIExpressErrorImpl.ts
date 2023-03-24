@@ -17,6 +17,7 @@ export class GeneratedGenericAPIExpressErrorImpl
 {
     private static SEND_METHOD_NAME = "send";
     private static SEND_RESPONSE_PARAMETER_NAME = "res";
+    private static ERROR_NAME_PROPERTY_NAME = "errorName";
 
     public writeToFile(context: GenericAPIExpressErrorContext): void {
         super.writeToSourceFile(context);
@@ -27,7 +28,15 @@ export class GeneratedGenericAPIExpressErrorImpl
     }
 
     protected getConstructorParameters(): OptionalKind<ParameterDeclarationStructure>[] {
-        return [];
+        return [
+            {
+                name: GeneratedGenericAPIExpressErrorImpl.ERROR_NAME_PROPERTY_NAME,
+                type: "string",
+                hasQuestionToken: true,
+                isReadonly: true,
+                scope: Scope.Public,
+            },
+        ];
     }
 
     protected getSuperArguments(): ts.Expression[] {
@@ -88,6 +97,17 @@ export class GeneratedGenericAPIExpressErrorImpl
                 undefined,
                 [expressResponse]
             )
+        );
+    }
+
+    public getConstructorArguments({ errorName }: { errorName: string }): ts.Expression[] {
+        return [ts.factory.createStringLiteral(errorName)];
+    }
+
+    public getErrorClassName({ referenceToError }: { referenceToError: ts.Expression }): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            referenceToError,
+            GeneratedGenericAPIExpressErrorImpl.ERROR_NAME_PROPERTY_NAME
         );
     }
 }
