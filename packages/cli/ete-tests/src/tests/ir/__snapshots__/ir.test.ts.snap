@@ -1366,7 +1366,12 @@ exports[`ir {"name":"file-upload"} 1`] = `
                         "head": "",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "/movies",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -8662,7 +8667,12 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         "head": "",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "/nested",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "response": {
@@ -9972,7 +9982,12 @@ exports[`ir {"name":"packages"} 1`] = `
                         "head": "",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "errors": [],
@@ -11185,7 +11200,12 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "head": "",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "/movies",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -18367,7 +18387,12 @@ exports[`ir {"name":"simple"} 1`] = `
                         "head": "",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "/movies",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -19525,7 +19550,108 @@ exports[`ir {"name":"simple"} 1`] = `
                             }
                         ]
                     },
+                    "fullPath": {
+                        "head": "/movies/",
+                        "parts": [
+                            {
+                                "pathParameter": "movieId",
+                                "tail": ""
+                            }
+                        ]
+                    },
                     "pathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "movieId",
+                                "camelCase": {
+                                    "unsafeName": "movieId",
+                                    "safeName": "movieId"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "movie_id",
+                                    "safeName": "movie_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MOVIE_ID",
+                                    "safeName": "MOVIE_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MovieId",
+                                    "safeName": "MovieId"
+                                }
+                            },
+                            "valueType": {
+                                "name": {
+                                    "originalName": "MovieId",
+                                    "camelCase": {
+                                        "unsafeName": "movieId",
+                                        "safeName": "movieId"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "movie_id",
+                                        "safeName": "movie_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MOVIE_ID",
+                                        "safeName": "MOVIE_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "MovieId",
+                                        "safeName": "MovieId"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "imdb",
+                                        "camelCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "IMDB",
+                                            "safeName": "IMDB"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Imdb",
+                                            "safeName": "Imdb"
+                                        }
+                                    }
+                                },
+                                "typeId": "type_imdb:MovieId",
+                                "_type": "named"
+                            }
+                        }
+                    ],
+                    "allPathParameters": [
                         {
                             "availability": {
                                 "status": "GENERAL_AVAILABILITY"
@@ -20713,7 +20839,108 @@ exports[`ir {"name":"simple"} 1`] = `
                             }
                         ]
                     },
+                    "fullPath": {
+                        "head": "/movies/",
+                        "parts": [
+                            {
+                                "pathParameter": "movieId",
+                                "tail": ""
+                            }
+                        ]
+                    },
                     "pathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "movieId",
+                                "camelCase": {
+                                    "unsafeName": "movieId",
+                                    "safeName": "movieId"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "movie_id",
+                                    "safeName": "movie_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MOVIE_ID",
+                                    "safeName": "MOVIE_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "MovieId",
+                                    "safeName": "MovieId"
+                                }
+                            },
+                            "valueType": {
+                                "name": {
+                                    "originalName": "MovieId",
+                                    "camelCase": {
+                                        "unsafeName": "movieId",
+                                        "safeName": "movieId"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "movie_id",
+                                        "safeName": "movie_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MOVIE_ID",
+                                        "safeName": "MOVIE_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "MovieId",
+                                        "safeName": "MovieId"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "imdb",
+                                        "camelCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "IMDB",
+                                            "safeName": "IMDB"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Imdb",
+                                            "safeName": "Imdb"
+                                        }
+                                    }
+                                },
+                                "typeId": "type_imdb:MovieId",
+                                "_type": "named"
+                            }
+                        }
+                    ],
+                    "allPathParameters": [
                         {
                             "availability": {
                                 "status": "GENERAL_AVAILABILITY"
@@ -21312,7 +21539,12 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "head": "/streaming",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "/movies/streaming",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "streamingResponse": {
@@ -21360,7 +21592,12 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "head": "/maybe-streaming",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "/movies/maybe-streaming",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {

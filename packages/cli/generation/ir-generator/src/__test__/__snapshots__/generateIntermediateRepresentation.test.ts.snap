@@ -91,6 +91,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "displayName": undefined,
       "endpoints": [
         {
+          "allPathParameters": [],
           "auth": false,
           "availability": {
             "message": undefined,
@@ -100,6 +101,10 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "docs": undefined,
           "errors": [],
           "examples": [],
+          "fullPath": {
+            "head": "",
+            "parts": [],
+          },
           "headers": [],
           "method": "GET",
           "name": {
@@ -449,6 +454,7 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
       "displayName": undefined,
       "endpoints": [
         {
+          "allPathParameters": [],
           "auth": false,
           "availability": {
             "message": undefined,
@@ -458,6 +464,10 @@ exports[`generateIntermediateRepresentation audiences 1`] = `
           "docs": undefined,
           "errors": [],
           "examples": [],
+          "fullPath": {
+            "head": "",
+            "parts": [],
+          },
           "headers": [],
           "method": "POST",
           "name": {

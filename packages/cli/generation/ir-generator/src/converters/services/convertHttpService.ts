@@ -48,16 +48,10 @@ export function convertHttpService({
                       convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
-        pathParameters:
-            serviceDefinition["path-parameters"] != null
-                ? Object.entries(serviceDefinition["path-parameters"]).map(([parameterName, parameter]) =>
-                      convertPathParameter({
-                          parameterName,
-                          parameter,
-                          file,
-                      })
-                  )
-                : [],
+        pathParameters: convertPathParameters({
+            pathParameters: serviceDefinition["path-parameters"],
+            file,
+        }),
         endpoints: Object.entries(serviceDefinition.endpoints).map(
             ([endpointKey, endpoint]): HttpEndpoint => ({
                 ...convertDeclaration(endpoint),
@@ -67,16 +61,17 @@ export function convertHttpService({
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
                 fullPath: constructHttpPath(urlJoin(serviceDefinition["base-path"], endpoint.path)),
-                pathParameters:
-                    endpoint["path-parameters"] != null
-                        ? Object.entries(endpoint["path-parameters"]).map(([parameterName, parameter]) =>
-                              convertPathParameter({
-                                  parameterName,
-                                  parameter,
-                                  file,
-                              })
-                          )
-                        : [],
+                pathParameters: convertPathParameters({
+                    pathParameters: endpoint["path-parameters"],
+                    file,
+                }),
+                allPathParameters: convertPathParameters({
+                    pathParameters: {
+                        ...endpoint["path-parameters"],
+                        ...endpoint["path-parameters"],
+                    },
+                    file,
+                }),
                 queryParameters:
                     typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
                         ? Object.entries(endpoint.request["query-parameters"]).map(
@@ -125,6 +120,25 @@ export function convertHttpService({
             })
         ),
     };
+}
+
+function convertPathParameters({
+    pathParameters,
+    file,
+}: {
+    pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
+    file: FernFileContext;
+}): PathParameter[] {
+    if (pathParameters == null) {
+        return [];
+    }
+    return Object.entries(pathParameters).map(([parameterName, parameter]) =>
+        convertPathParameter({
+            parameterName,
+            parameter,
+            file,
+        })
+    );
 }
 
 function convertPathParameter({
