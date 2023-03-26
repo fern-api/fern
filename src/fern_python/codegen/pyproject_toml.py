@@ -78,7 +78,7 @@ class PyProjectToml:
         def to_string(self) -> str:
             deps = ""
             for dep in self.dependencies:
-                deps += f'{dep.name} = "{dep.version}"\n'
+                deps += f'{dep.name.replace(".", "-")} = "{dep.version}"\n'
             self.dependencies
             return f"""
             [tool.poetry.dependencies]
