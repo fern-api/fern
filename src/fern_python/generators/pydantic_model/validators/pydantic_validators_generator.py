@@ -81,7 +81,7 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                         )
                     ],
                     named_parameters=[
-                        AST.FunctionParameter(
+                        AST.NamedFunctionParameter(
                             name=FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT,
                             type_hint=AST.TypeHint.bool_(),
                             initializer=AST.Expression("False"),
