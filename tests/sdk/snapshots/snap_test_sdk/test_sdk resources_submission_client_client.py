@@ -14,12 +14,14 @@ from ..types.get_execution_session_state_response import GetExecutionSessionStat
 
 
 class SubmissionClient:
-    def __init__(self, *, environment: str, x_random_header: typing.Optional[str], token: typing.Optional[str]):
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
 
-    def create_execution_session(self, *, language: Language) -> ExecutionSessionResponse:
+    def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"sessions/create-session/{language}"),
@@ -35,7 +37,7 @@ class SubmissionClient:
             return pydantic.parse_obj_as(ExecutionSessionResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_execution_session(self, *, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
+    def get_execution_session(self, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"sessions/{session_id}"),
@@ -51,7 +53,7 @@ class SubmissionClient:
             return pydantic.parse_obj_as(typing.Optional[ExecutionSessionResponse], _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def stop_execution_session(self, *, session_id: str) -> None:
+    def stop_execution_session(self, session_id: str) -> None:
         _response = httpx.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"sessions/stop/{session_id}"),

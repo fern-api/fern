@@ -12,12 +12,14 @@ from ...commons.types.language import Language
 
 
 class SyspropClient:
-    def __init__(self, *, environment: str, x_random_header: typing.Optional[str], token: typing.Optional[str]):
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
 
-    def set_num_warm_instances(self, *, language: Language, num_warm_instances: int) -> None:
+    def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
         _response = httpx.request(
             "PUT",
             urllib.parse.urljoin(

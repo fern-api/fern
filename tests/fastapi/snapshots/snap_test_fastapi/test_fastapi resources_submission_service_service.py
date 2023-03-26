@@ -28,7 +28,7 @@ class AbstractSubmissionService(AbstractFernService):
 
     @abc.abstractmethod
     def create_execution_session(
-        self, *, language: Language, x_random_header: typing.Optional[str]
+        self, *, language: Language, x_random_header: typing.Optional[str] = None
     ) -> ExecutionSessionResponse:
         """
         Returns sessionId and execution server URL for session. Spins up server.
@@ -37,7 +37,7 @@ class AbstractSubmissionService(AbstractFernService):
 
     @abc.abstractmethod
     def get_execution_session(
-        self, *, session_id: str, x_random_header: typing.Optional[str]
+        self, *, session_id: str, x_random_header: typing.Optional[str] = None
     ) -> typing.Optional[ExecutionSessionResponse]:
         """
         Returns execution server URL for session. Returns empty if session isn't registered.
@@ -45,7 +45,7 @@ class AbstractSubmissionService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def stop_execution_session(self, *, session_id: str, x_random_header: typing.Optional[str]) -> None:
+    def stop_execution_session(self, *, session_id: str, x_random_header: typing.Optional[str] = None) -> None:
         """
         Stops execution session.
         """
@@ -53,7 +53,7 @@ class AbstractSubmissionService(AbstractFernService):
 
     @abc.abstractmethod
     def get_execution_sessions_state(
-        self, *, x_random_header: typing.Optional[str]
+        self, *, x_random_header: typing.Optional[str] = None
     ) -> GetExecutionSessionStateResponse:
         ...
 

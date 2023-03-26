@@ -23,6 +23,7 @@ from .nodes import (
     FunctionInvocation,
     FunctionParameter,
     FunctionSignature,
+    NamedFunctionParameter,
     ReferenceNode,
     TypeAliasDeclaration,
     TypeHint,
@@ -72,4 +73,5 @@ __all__ = [
     "Docstring",
     "AstNodeMetadata",
     "DictionaryInstantiation",
+    "NamedFunctionParameter",
 ]

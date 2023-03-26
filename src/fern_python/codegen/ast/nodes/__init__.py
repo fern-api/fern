@@ -7,6 +7,7 @@ from .declarations import (
     FunctionDeclaration,
     FunctionParameter,
     FunctionSignature,
+    NamedFunctionParameter,
     TypeAliasDeclaration,
     VariableDeclaration,
 )
@@ -42,4 +43,5 @@ __all__ = [
     "FunctionSignature",
     "Docstring",
     "DictionaryInstantiation",
+    "NamedFunctionParameter",
 ]

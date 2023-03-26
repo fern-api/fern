@@ -18,12 +18,14 @@ from ..types.update_playlist_request import UpdatePlaylistRequest
 
 
 class PlaylistClient:
-    def __init__(self, *, environment: str, x_random_header: typing.Optional[str], token: typing.Optional[str]):
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
 
-    def create_playlist(self, *, service_param: int, request: PlaylistCreateRequest) -> Playlist:
+    def create_playlist(self, service_param: int, *, request: PlaylistCreateRequest) -> Playlist:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/create"),
@@ -42,9 +44,9 @@ class PlaylistClient:
 
     def get_playlists(
         self,
-        *,
         service_param: int,
-        limit: typing.Optional[int],
+        *,
+        limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
         optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
@@ -72,7 +74,7 @@ class PlaylistClient:
             return pydantic.parse_obj_as(typing.List[Playlist], _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_playlist(self, *, service_param: int, playlist_id: PlaylistId) -> Playlist:
+    def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
@@ -95,7 +97,7 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_playlist(
-        self, *, service_param: int, playlist_id: PlaylistId, request: typing.Optional[UpdatePlaylistRequest]
+        self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
     ) -> typing.Optional[Playlist]:
         _response = httpx.request(
             "PUT",
@@ -117,7 +119,7 @@ class PlaylistClient:
             )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_playlist(self, *, service_param: int, playlist_id: PlaylistId) -> None:
+    def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
         _response = httpx.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),

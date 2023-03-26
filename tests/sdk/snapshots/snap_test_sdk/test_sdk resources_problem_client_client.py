@@ -18,7 +18,9 @@ from ..types.variable_type_and_name import VariableTypeAndName
 
 
 class ProblemClient:
-    def __init__(self, *, environment: str, x_random_header: typing.Optional[str], token: typing.Optional[str]):
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
@@ -40,7 +42,7 @@ class ProblemClient:
             return pydantic.parse_obj_as(CreateProblemResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update_problem(self, *, problem_id: ProblemId, request: CreateProblemRequest) -> UpdateProblemResponse:
+    def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"problem-crud/update/{problem_id}"),
@@ -57,7 +59,7 @@ class ProblemClient:
             return pydantic.parse_obj_as(UpdateProblemResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_problem(self, *, problem_id: ProblemId) -> None:
+    def delete_problem(self, problem_id: ProblemId) -> None:
         _response = httpx.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"problem-crud/delete/{problem_id}"),

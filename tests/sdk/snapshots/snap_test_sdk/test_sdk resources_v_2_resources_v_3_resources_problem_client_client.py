@@ -14,7 +14,9 @@ from ..types.problem_info_v_2 import ProblemInfoV2
 
 
 class ProblemClient:
-    def __init__(self, *, environment: str, x_random_header: typing.Optional[str], token: typing.Optional[str]):
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
@@ -51,7 +53,7 @@ class ProblemClient:
             return pydantic.parse_obj_as(typing.List[ProblemInfoV2], _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_latest_problem(self, *, problem_id: ProblemId) -> ProblemInfoV2:
+    def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"problems-v2/problem-info/{problem_id}"),
@@ -67,7 +69,7 @@ class ProblemClient:
             return pydantic.parse_obj_as(ProblemInfoV2, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_problem_version(self, *, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
+    def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(

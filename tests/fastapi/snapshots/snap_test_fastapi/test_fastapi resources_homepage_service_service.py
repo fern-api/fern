@@ -25,11 +25,13 @@ class AbstractHomepageService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def get_homepage_problems(self, *, x_random_header: typing.Optional[str]) -> typing.List[ProblemId]:
+    def get_homepage_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.List[ProblemId]:
         ...
 
     @abc.abstractmethod
-    def set_homepage_problems(self, *, body: typing.List[ProblemId], x_random_header: typing.Optional[str]) -> None:
+    def set_homepage_problems(
+        self, *, body: typing.List[ProblemId], x_random_header: typing.Optional[str] = None
+    ) -> None:
         ...
 
     """

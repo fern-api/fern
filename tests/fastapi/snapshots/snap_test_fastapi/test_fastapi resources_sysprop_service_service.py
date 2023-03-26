@@ -26,12 +26,12 @@ class AbstractSyspropService(AbstractFernService):
 
     @abc.abstractmethod
     def set_num_warm_instances(
-        self, *, language: Language, num_warm_instances: int, x_random_header: typing.Optional[str]
+        self, *, language: Language, num_warm_instances: int, x_random_header: typing.Optional[str] = None
     ) -> None:
         ...
 
     @abc.abstractmethod
-    def get_num_warm_instances(self, *, x_random_header: typing.Optional[str]) -> typing.Dict[Language, int]:
+    def get_num_warm_instances(self, *, x_random_header: typing.Optional[str] = None) -> typing.Dict[Language, int]:
         ...
 
     """

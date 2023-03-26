@@ -3,6 +3,7 @@ from typing import Sequence
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...type_hint import TypeHint
 from .function_parameter import FunctionParameter
+from .named_function_parameter import NamedFunctionParameter
 
 
 class FunctionSignature(AstNode):
@@ -11,7 +12,7 @@ class FunctionSignature(AstNode):
         *,
         parameters: Sequence[FunctionParameter] = None,
         include_args: bool = False,
-        named_parameters: Sequence[FunctionParameter] = None,
+        named_parameters: Sequence[NamedFunctionParameter] = None,
         include_kwargs: bool = False,
         return_type: TypeHint = None,
     ):

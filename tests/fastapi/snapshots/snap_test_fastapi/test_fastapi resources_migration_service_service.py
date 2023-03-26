@@ -25,7 +25,7 @@ class AbstractMigrationService(AbstractFernService):
 
     @abc.abstractmethod
     def get_attempted_migrations(
-        self, *, admin_key_header: str, x_random_header: typing.Optional[str]
+        self, *, admin_key_header: str, x_random_header: typing.Optional[str] = None
     ) -> typing.List[Migration]:
         ...
 

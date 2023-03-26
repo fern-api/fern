@@ -26,7 +26,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def get_lightweight_problems(
-        self, *, x_random_header: typing.Optional[str]
+        self, *, x_random_header: typing.Optional[str] = None
     ) -> typing.List[LightweightProblemInfoV2]:
         """
         Returns lightweight versions of all problems
@@ -34,14 +34,14 @@ class AbstractV2V3ProblemService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_problems(self, *, x_random_header: typing.Optional[str]) -> typing.List[ProblemInfoV2]:
+    def get_problems(self, *, x_random_header: typing.Optional[str] = None) -> typing.List[ProblemInfoV2]:
         """
         Returns latest versions of all problems
         """
         ...
 
     @abc.abstractmethod
-    def get_latest_problem(self, *, problem_id: str, x_random_header: typing.Optional[str]) -> ProblemInfoV2:
+    def get_latest_problem(self, *, problem_id: str, x_random_header: typing.Optional[str] = None) -> ProblemInfoV2:
         """
         Returns latest version of a problem
         """
@@ -49,7 +49,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def get_problem_version(
-        self, *, problem_id: str, problem_version: int, x_random_header: typing.Optional[str]
+        self, *, problem_id: str, problem_version: int, x_random_header: typing.Optional[str] = None
     ) -> ProblemInfoV2:
         """
         Returns requested version of a problem

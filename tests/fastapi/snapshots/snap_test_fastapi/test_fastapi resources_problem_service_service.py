@@ -30,7 +30,7 @@ class AbstractProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def create_problem(
-        self, *, body: CreateProblemRequest, x_random_header: typing.Optional[str]
+        self, *, body: CreateProblemRequest, x_random_header: typing.Optional[str] = None
     ) -> CreateProblemResponse:
         """
         Creates a problem
@@ -39,7 +39,7 @@ class AbstractProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def update_problem(
-        self, *, body: CreateProblemRequest, problem_id: str, x_random_header: typing.Optional[str]
+        self, *, body: CreateProblemRequest, problem_id: str, x_random_header: typing.Optional[str] = None
     ) -> UpdateProblemResponse:
         """
         Updates a problem
@@ -47,7 +47,7 @@ class AbstractProblemService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def delete_problem(self, *, problem_id: str, x_random_header: typing.Optional[str]) -> None:
+    def delete_problem(self, *, problem_id: str, x_random_header: typing.Optional[str] = None) -> None:
         """
         Soft deletes a problem
         """
@@ -55,7 +55,7 @@ class AbstractProblemService(AbstractFernService):
 
     @abc.abstractmethod
     def get_default_starter_files(
-        self, *, body: GetDefaultStarterFilesRequest, x_random_header: typing.Optional[str]
+        self, *, body: GetDefaultStarterFilesRequest, x_random_header: typing.Optional[str] = None
     ) -> GetDefaultStarterFilesResponse:
         """
         Returns default starter files for problem

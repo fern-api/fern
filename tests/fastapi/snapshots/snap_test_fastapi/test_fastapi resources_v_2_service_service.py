@@ -24,7 +24,7 @@ class AbstractV2Service(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def test(self, *, x_random_header: typing.Optional[str]) -> None:
+    def test(self, *, x_random_header: typing.Optional[str] = None) -> None:
         ...
 
     """

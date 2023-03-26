@@ -72,7 +72,7 @@ class RootValidatorGenerator(ValidatorGenerator):
                 name=RootValidatorGenerator._DECORATOR_FUNCTION_NAME,
                 signature=AST.FunctionSignature(
                     named_parameters=[
-                        AST.FunctionParameter(
+                        AST.NamedFunctionParameter(
                             name=RootValidatorGenerator._DECORATOR_PRE_ARGUMENT,
                             type_hint=AST.TypeHint.bool_(),
                             initializer=AST.Expression("False"),
@@ -93,7 +93,7 @@ class RootValidatorGenerator(ValidatorGenerator):
         pre_literal_value = "True" if pre else "False"
         return AST.FunctionSignature(
             named_parameters=[
-                AST.FunctionParameter(
+                AST.NamedFunctionParameter(
                     name=RootValidatorGenerator._DECORATOR_PRE_ARGUMENT,
                     type_hint=AST.TypeHint.literal(AST.Expression(pre_literal_value)),
                     initializer=AST.Expression("False") if not pre else None,

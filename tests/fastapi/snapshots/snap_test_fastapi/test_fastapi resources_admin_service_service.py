@@ -33,25 +33,25 @@ class AbstractAdminService(AbstractFernService):
 
     @abc.abstractmethod
     def update_test_submission_status(
-        self, *, body: TestSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+        self, *, body: TestSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None:
         ...
 
     @abc.abstractmethod
     def send_test_submission_update(
-        self, *, body: TestSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+        self, *, body: TestSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None:
         ...
 
     @abc.abstractmethod
     def update_workspace_submission_status(
-        self, *, body: WorkspaceSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+        self, *, body: WorkspaceSubmissionStatus, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None:
         ...
 
     @abc.abstractmethod
     def send_workspace_submission_update(
-        self, *, body: WorkspaceSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+        self, *, body: WorkspaceSubmissionUpdate, submission_id: uuid.UUID, x_random_header: typing.Optional[str] = None
     ) -> None:
         ...
 
@@ -62,7 +62,7 @@ class AbstractAdminService(AbstractFernService):
         body: StoreTracedTestCaseRequest,
         submission_id: uuid.UUID,
         test_case_id: str,
-        x_random_header: typing.Optional[str],
+        x_random_header: typing.Optional[str] = None,
     ) -> None:
         ...
 
@@ -73,19 +73,27 @@ class AbstractAdminService(AbstractFernService):
         body: typing.List[TraceResponseV2],
         submission_id: uuid.UUID,
         test_case_id: str,
-        x_random_header: typing.Optional[str],
+        x_random_header: typing.Optional[str] = None,
     ) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_workspace(
-        self, *, body: StoreTracedWorkspaceRequest, submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+        self,
+        *,
+        body: StoreTracedWorkspaceRequest,
+        submission_id: uuid.UUID,
+        x_random_header: typing.Optional[str] = None,
     ) -> None:
         ...
 
     @abc.abstractmethod
     def store_traced_workspace_v_2(
-        self, *, body: typing.List[TraceResponseV2], submission_id: uuid.UUID, x_random_header: typing.Optional[str]
+        self,
+        *,
+        body: typing.List[TraceResponseV2],
+        submission_id: uuid.UUID,
+        x_random_header: typing.Optional[str] = None,
     ) -> None:
         ...
 

@@ -31,7 +31,12 @@ class AbstractPlaylistService(AbstractFernService):
 
     @abc.abstractmethod
     def create_playlist(
-        self, *, body: PlaylistCreateRequest, service_param: int, x_random_header: typing.Optional[str], auth: ApiAuth
+        self,
+        *,
+        body: PlaylistCreateRequest,
+        service_param: int,
+        x_random_header: typing.Optional[str] = None,
+        auth: ApiAuth,
     ) -> Playlist:
         """
         Create a new playlist
@@ -43,12 +48,12 @@ class AbstractPlaylistService(AbstractFernService):
         self,
         *,
         service_param: int,
-        limit: typing.Optional[int],
+        limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Optional[typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.List[str]] = None,
         multiple_field: typing.List[str],
-        x_random_header: typing.Optional[str],
+        x_random_header: typing.Optional[str] = None,
         auth: ApiAuth,
     ) -> typing.List[Playlist]:
         """
@@ -57,7 +62,9 @@ class AbstractPlaylistService(AbstractFernService):
         ...
 
     @abc.abstractmethod
-    def get_playlist(self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str]) -> Playlist:
+    def get_playlist(
+        self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str] = None
+    ) -> Playlist:
         """
         Returns a playlist
         """
@@ -67,10 +74,10 @@ class AbstractPlaylistService(AbstractFernService):
     def update_playlist(
         self,
         *,
-        body: typing.Optional[UpdatePlaylistRequest],
+        body: typing.Optional[UpdatePlaylistRequest] = None,
         service_param: int,
         playlist_id: str,
-        x_random_header: typing.Optional[str],
+        x_random_header: typing.Optional[str] = None,
         auth: ApiAuth,
     ) -> typing.Optional[Playlist]:
         """
@@ -80,7 +87,7 @@ class AbstractPlaylistService(AbstractFernService):
 
     @abc.abstractmethod
     def delete_playlist(
-        self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str], auth: ApiAuth
+        self, *, service_param: int, playlist_id: str, x_random_header: typing.Optional[str] = None, auth: ApiAuth
     ) -> None:
         """
         Deletes a playlist

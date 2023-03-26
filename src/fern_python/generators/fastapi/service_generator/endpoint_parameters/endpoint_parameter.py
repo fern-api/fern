@@ -10,8 +10,8 @@ class EndpointParameter(ABC):
         super().__init__()
         self._context = context
 
-    def to_function_parameter(self) -> AST.FunctionParameter:
-        return AST.FunctionParameter(name=self.get_name(), type_hint=self.get_type())
+    def to_function_parameter(self) -> AST.NamedFunctionParameter:
+        return AST.NamedFunctionParameter(name=self.get_name(), type_hint=self.get_type())
 
     def get_name(self) -> str:
         unsafe_name = self._get_unsafe_name()

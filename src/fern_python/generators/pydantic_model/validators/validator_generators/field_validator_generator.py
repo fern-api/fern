@@ -92,7 +92,7 @@ class FieldValidatorGenerator(ValidatorGenerator):
                 )
             ],
             named_parameters=[
-                AST.FunctionParameter(
+                AST.NamedFunctionParameter(
                     name=FieldValidatorGenerator._DECORATOR_PRE_ARGUMENT,
                     type_hint=AST.TypeHint.literal(AST.Expression(pre_literal_value)),
                     initializer=AST.Expression("False") if not pre else None,

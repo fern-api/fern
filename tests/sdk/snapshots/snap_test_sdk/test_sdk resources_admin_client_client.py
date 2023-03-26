@@ -20,12 +20,14 @@ from ...v_2.resources.problem.types.test_case_id import TestCaseId
 
 
 class AdminClient:
-    def __init__(self, *, environment: str, x_random_header: typing.Optional[str], token: typing.Optional[str]):
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
 
-    def update_test_submission_status(self, *, submission_id: SubmissionId, request: TestSubmissionStatus) -> None:
+    def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status/{submission_id}"),
@@ -40,7 +42,7 @@ class AdminClient:
         _response_json = _response.json()
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def send_test_submission_update(self, *, submission_id: SubmissionId, request: TestSubmissionUpdate) -> None:
+    def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status-v2/{submission_id}"),
@@ -56,7 +58,7 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_workspace_submission_status(
-        self, *, submission_id: SubmissionId, request: WorkspaceSubmissionStatus
+        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
     ) -> None:
         _response = httpx.request(
             "POST",
@@ -73,7 +75,7 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_workspace_submission_update(
-        self, *, submission_id: SubmissionId, request: WorkspaceSubmissionUpdate
+        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
     ) -> None:
         _response = httpx.request(
             "POST",
@@ -93,9 +95,9 @@ class AdminClient:
 
     def store_traced_test_case(
         self,
-        *,
         submission_id: SubmissionId,
         test_case_id: str,
+        *,
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
@@ -116,7 +118,7 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_test_case_v_2(
-        self, *, submission_id: SubmissionId, test_case_id: TestCaseId, request: typing.List[TraceResponseV2]
+        self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
     ) -> None:
         _response = httpx.request(
             "POST",
@@ -136,8 +138,8 @@ class AdminClient:
 
     def store_traced_workspace(
         self,
-        *,
         submission_id: SubmissionId,
+        *,
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
@@ -155,7 +157,7 @@ class AdminClient:
         _response_json = _response.json()
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def store_traced_workspace_v_2(self, *, submission_id: SubmissionId, request: typing.List[TraceResponseV2]) -> None:
+    def store_traced_workspace_v_2(self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]) -> None:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"),
