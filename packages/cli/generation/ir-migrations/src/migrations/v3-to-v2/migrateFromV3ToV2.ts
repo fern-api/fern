@@ -21,7 +21,8 @@ export const V3_TO_V2_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
+        [GeneratorName.PYTHON_SDK]: undefined,
+        [GeneratorName.STOPLIGHT]: undefined,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },
     migrateBackwards: (v3): IrVersions.V2.ir.IntermediateRepresentation => {

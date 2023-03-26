@@ -20,8 +20,9 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
+        [GeneratorName.STOPLIGHT]: undefined,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
+        [GeneratorName.PYTHON_SDK]: undefined,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
     },
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
