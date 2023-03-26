@@ -80,7 +80,7 @@ class CreateProblemError(pydantic.BaseModel):
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
+        error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
 
         class Config:
             frozen = True

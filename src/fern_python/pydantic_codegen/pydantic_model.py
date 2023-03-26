@@ -320,14 +320,22 @@ def get_field_name_initializer(
         if alias is not None:
             arg_present = True
             writer.write(f'alias="{alias}"')
+        if default is not None:
+            if arg_present:
+                writer.write(", ")
+            arg_present = True
+            writer.write("default=")
+            writer.write_node(default)
         if default_factory is not None:
             if arg_present:
                 writer.write(", ")
+            arg_present = True
             writer.write("default_factory=")
             writer.write_node(default_factory)
         if description is not None:
             if arg_present:
                 writer.write(", ")
+            arg_present = True
             lines = description.split("\n")
             if len(lines) > 0:
                 writer.write_line("description=(")

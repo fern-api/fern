@@ -11,7 +11,7 @@ from .generic_create_problem_error import GenericCreateProblemError
 
 
 class CreateProblemError_Generic(GenericCreateProblemError):
-    error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
+    error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
 
     class Config:
         frozen = True
