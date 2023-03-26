@@ -38,7 +38,7 @@ jobs:
           name: Publish Pydantic Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
-            docker build -f ./docker/pydantic-model/Dockerfile -t pydantic-model:${projectVersion}  .
+            docker build -f ./docker/pydantic-model/Dockerfile -t pydantic-model:${projectVersion} .
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag pydantic-model:"$projectVersion" fernapi/fern-pydantic-model:"$projectVersion"
             docker push fernapi/fern-pydantic-model:"$projectVersion"
@@ -46,10 +46,18 @@ jobs:
           name: Publish FastAPI Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
-            docker build -f ./docker/fastapi/Dockerfile -t fastapi-server:${projectVersion}  .
+            docker build -f ./docker/fastapi/Dockerfile -t fastapi-server:${projectVersion} .
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker tag fastapi-server:"$projectVersion" fernapi/fern-fastapi-server:"$projectVersion"
             docker push fernapi/fern-fastapi-server:"$projectVersion"
+      - run:
+          name: Publish SDK Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            docker build -f ./docker/sdk/Dockerfile -t fern-python-sdk:${projectVersion} .
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker tag fern-python-sdk:"$projectVersion" fernapi/fern-python-sdk:"$projectVersion"
+            docker push fernapi/fern-python-sdk:"$projectVersion"
 
 workflows:
   build:

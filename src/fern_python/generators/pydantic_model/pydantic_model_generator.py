@@ -56,7 +56,7 @@ class PydanticModelGenerator(AbstractGenerator):
         project: Project,
         context: PydanticGeneratorContext,
     ) -> None:
-        for _, type_to_generate in ir.types.items():
+        for type_to_generate in ir.types.values():
             self._generate_type(
                 project,
                 ir=ir,

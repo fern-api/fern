@@ -37,3 +37,21 @@ class Pydantic:
             function_definition=_export("validator"),
             args=[AST.Expression(expression=f'"{field_name}", pre={"True" if pre else "False"}')],
         )
+
+    @staticmethod
+    def parse_obj_as(type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=_export("parse_obj_as"),
+                        args=[AST.Expression(type_of_obj), obj],
+                    )
+                )
+            )
+
+            # mypy gets confused when passing unions for the Type argument
+            # https://github.com/pydantic/pydantic/issues/1847
+            writer.write_line("# type: ignore")
+
+        return AST.Expression(AST.CodeWriter(write))

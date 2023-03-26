@@ -32,7 +32,7 @@ class EnumGenerator(AbstractTypeGenerator):
                     qualified_name_excluding_import=("str",),
                 ),
                 AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("enum")),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
                     qualified_name_excluding_import=("Enum",),
                 ),
             ],

@@ -208,7 +208,7 @@ class SourceFileImpl(SourceFile):
                     initializer=AST.Expression(
                         AST.FunctionInvocation(
                             function_definition=AST.Reference(
-                                import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
                                 qualified_name_excluding_import=("TypeVar",),
                             ),
                             args=[AST.Expression(f'"{generic.name}"')],

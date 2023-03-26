@@ -105,7 +105,7 @@ class FernHTTPExceptionGenerator:
                     name=self._get_error_instance_id_field_name(),
                     type_hint=AST.TypeHint(
                         type=AST.ClassReference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in("uuid")),
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("uuid",))),
                             qualified_name_excluding_import=("UUID",),
                         )
                     ),
@@ -115,7 +115,7 @@ class FernHTTPExceptionGenerator:
                     ),
                     default_factory=AST.Expression(
                         AST.Reference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in("uuid")),
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("uuid",))),
                             qualified_name_excluding_import=("uuid4",),
                         )
                     ),
@@ -210,7 +210,7 @@ class FernHTTPExceptionGenerator:
         writer.write_reference(
             reference=AST.Reference(
                 qualified_name_excluding_import=("HTTPStatus",),
-                import_=AST.ReferenceImport(module=AST.Module.built_in("http")),
+                import_=AST.ReferenceImport(module=AST.Module.built_in(("http",))),
             )
         )
         writer.write(f"(self.{self.FernHTTPException.STATUS_CODE_MEMBER}).phrase")

@@ -24,7 +24,7 @@ class RegisterFileGenerator:
                 service=service,
                 is_in_development=service.availability.status == ir_types.AvailabilityStatus.IN_DEVELOPMENT,
             )
-            for _, service in self._context.ir.services.items()
+            for service in self._context.ir.services.values()
         ]
 
     def generate_registry_file(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
@@ -142,7 +142,7 @@ class RegisterFileGenerator:
             writer.write_node(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
-                        import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                         qualified_name_excluding_import=("path", "dirname"),
                     ),
                     args=[AST.Expression(f"{MODULE_PARAMETER}.__file__")],
@@ -156,14 +156,14 @@ class RegisterFileGenerator:
             writer.write_node(
                 AST.FunctionInvocation(
                     function_definition=AST.Reference(
-                        import_=AST.ReferenceImport(module=AST.Module.built_in("glob")),
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("glob",))),
                         qualified_name_excluding_import=("glob",),
                     ),
                     args=[
                         AST.Expression(
                             AST.FunctionInvocation(
                                 function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("path", "join"),
                                 ),
                                 args=[AST.Expression(VALIDATORS_DIRECTORY_VARIABLE), AST.Expression('"**/*.py"')],
@@ -183,7 +183,7 @@ class RegisterFileGenerator:
                 writer.write_node(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
-                            import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                             qualified_name_excluding_import=("path", "isfile"),
                         ),
                         args=[AST.Expression(ABSOLUTE_PATH_VARIABLE)],
@@ -199,7 +199,7 @@ class RegisterFileGenerator:
                     writer.write_node(
                         AST.FunctionInvocation(
                             function_definition=AST.Reference(
-                                import_=AST.ReferenceImport(module=AST.Module.built_in("os")),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                 qualified_name_excluding_import=("path", "relpath"),
                             ),
                             args=[AST.Expression(ABSOLUTE_PATH_VARIABLE)],
@@ -215,7 +215,7 @@ class RegisterFileGenerator:
                     writer.write_node(
                         AST.FunctionInvocation(
                             function_definition=AST.Reference(
-                                import_=AST.ReferenceImport(module=AST.Module.built_in("importlib")),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("importlib",))),
                                 qualified_name_excluding_import=("import_module",),
                             ),
                             args=[AST.Expression(MODULE_PATH_VARIABLE)],
@@ -231,7 +231,7 @@ class RegisterFileGenerator:
                         name=MODULE_PARAMETER,
                         type_hint=AST.TypeHint(
                             type=AST.ClassReference(
-                                import_=AST.ReferenceImport(module=AST.Module.built_in("types")),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("types",))),
                                 qualified_name_excluding_import=("ModuleType",),
                             )
                         ),

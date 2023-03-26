@@ -29,7 +29,7 @@ class CustomRootTypeValidatorGenerator(ValidatorGenerator):
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=("cast",),
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing")),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing",))),
                 ),
                 args=[
                     AST.Expression(self._root_type),

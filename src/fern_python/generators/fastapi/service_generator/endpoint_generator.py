@@ -145,7 +145,7 @@ class EndpointGenerator:
                         AST.FunctionInvocation(
                             function_definition=AST.Reference(
                                 qualified_name_excluding_import=("wraps",),
-                                import_=AST.ReferenceImport(module=AST.Module.built_in("functools")),
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("functools",))),
                             ),
                             args=[AST.Expression(method_on_cls)],
                         )
@@ -202,7 +202,7 @@ class EndpointGenerator:
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=("signature",),
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("inspect")),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("inspect",))),
                 ),
                 args=[AST.Expression(method_on_cls)],
             )
@@ -216,7 +216,7 @@ class EndpointGenerator:
                 AST.TypeHint(
                     type=AST.ClassReference(
                         qualified_name_excluding_import=("Parameter",),
-                        import_=AST.ReferenceImport(module=AST.Module.built_in("inspect")),
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("inspect",))),
                     )
                 )
             )
@@ -305,7 +305,7 @@ class EndpointGenerator:
             writer.write_reference(
                 AST.Reference(
                     qualified_name_excluding_import=("getLogger",),
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("logging")),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("logging",))),
                 )
             )
             writer.write_line('(f"{cls.__module__}.{cls.__name__}").warn(')

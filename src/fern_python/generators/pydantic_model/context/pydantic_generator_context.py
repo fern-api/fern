@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Callable, Optional, Set, Tuple
+from typing import Callable, List, Optional, Set, Tuple
 
 import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
@@ -60,6 +60,12 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_filepath_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> Filepath:
+        ...
+
+    @abstractmethod
+    def get_all_properties_including_extensions(
+        self, type_name: ir_types.DeclaredTypeName
+    ) -> List[ir_types.ObjectProperty]:
         ...
 
 

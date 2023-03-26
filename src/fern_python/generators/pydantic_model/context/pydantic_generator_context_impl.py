@@ -1,4 +1,4 @@
-from typing import Callable, Optional, Set
+from typing import Callable, List, Optional, Set
 
 import fern.ir.pydantic as ir_types
 from generator_exec.resources import GeneratorConfig
@@ -26,7 +26,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         )
 
         self._type_name_to_declaration = {
-            HashableDeclaredTypeName.of(declaration.name): declaration for _, declaration in ir.types.items()
+            HashableDeclaredTypeName.of(declaration.name): declaration for declaration in ir.types.values()
         }
 
         self._type_declaration_referencer = type_declaration_referencer
@@ -69,3 +69,17 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
 
     def get_filepath_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> Filepath:
         return self._type_declaration_referencer.get_filepath(name=type_name)
+
+    def get_all_properties_including_extensions(
+        self, type_name: ir_types.DeclaredTypeName
+    ) -> List[ir_types.ObjectProperty]:
+        declaration = self.get_declaration_for_type_name(type_name)
+        shape = declaration.shape.get_as_union()
+        if shape.type != "object":
+            raise RuntimeError(f"Cannot get properties because {declaration.name.name.original_name} is not an object")
+
+        properties = shape.properties.copy()
+        for extension in shape.extends:
+            properties.extend(self.get_all_properties_including_extensions(extension))
+
+        return properties

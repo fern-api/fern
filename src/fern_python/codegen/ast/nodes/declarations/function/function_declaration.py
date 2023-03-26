@@ -9,7 +9,7 @@ from .function_signature import FunctionSignature
 OVERLOAD_DECORATOR = Reference(
     qualified_name_excluding_import=("overload",),
     import_=ReferenceImport(
-        module=Module.built_in("typing"),
+        module=Module.built_in(("typing",)),
     ),
 )
 

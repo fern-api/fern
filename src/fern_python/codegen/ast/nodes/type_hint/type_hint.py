@@ -13,15 +13,17 @@ class TypeHint(AstNode):
         self,
         type: Union[ClassReference, GenericTypeVar],
         type_parameters: Sequence[TypeParameter] = None,
+        arguments: Sequence[Expression] = None,
     ):
         self._type = type
         self._type_parameters = type_parameters or []
+        self._arguments = arguments or []
 
     def is_optional(self) -> bool:
         return (
             isinstance(self._type, ClassReference)
             and self._type.import_ is not None
-            and self._type.import_.module == Module.built_in("typing")
+            and self._type.import_.module == Module.built_in(("typing",))
             and (
                 self._type.qualified_name_excluding_import == ("Optional",)
                 or self._type.import_.named_import == "Optional"
@@ -115,6 +117,13 @@ class TypeHint(AstNode):
         return TypeHint(type=generic)
 
     @staticmethod
+    def cast(type_casted_to: TypeHint, value_being_casted: Expression) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("cast"),
+            arguments=[Expression(type_casted_to), value_being_casted],
+        )
+
+    @staticmethod
     def callable(parameters: Sequence[TypeHint], return_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Callable"),
@@ -129,9 +138,7 @@ class TypeHint(AstNode):
         return TypeHint(
             type=ClassReference(
                 import_=ReferenceImport(
-                    module=Module.built_in(
-                        "typing_extensions",
-                    ),
+                    module=Module.built_in(("typing_extensions",)),
                 ),
                 qualified_name_excluding_import=("Annotated",),
             ),
@@ -167,22 +174,31 @@ class TypeHint(AstNode):
             writer.write(self._type.name)
         else:
             writer.write_reference(self._type)
+
         if len(self._type_parameters) > 0:
             writer.write("[")
             just_wrote_parameter = False
-            for i, type_parameter in enumerate(self._type_parameters):
+            for type_parameter in self._type_parameters:
                 if just_wrote_parameter:
                     writer.write(", ")
                 type_parameter.write(writer=writer)
                 just_wrote_parameter = True
             writer.write("]")
 
+        if len(self._arguments) > 0:
+            writer.write("(")
+            just_wrote_argument = False
+            for argument in self._arguments:
+                if just_wrote_argument:
+                    writer.write(", ")
+                argument.write(writer=writer)
+                just_wrote_argument = True
+            writer.write(")")
+
 
 def get_reference_to_typing_extensions_import(name: str) -> ClassReference:
     return ClassReference(
-        import_=ReferenceImport(
-            module=Module.built_in("typing_extensions"),
-        ),
+        import_=ReferenceImport(module=Module.built_in(("typing_extensions",))),
         qualified_name_excluding_import=(name,),
     )
 
@@ -190,7 +206,7 @@ def get_reference_to_typing_extensions_import(name: str) -> ClassReference:
 def get_reference_to_typing_import(name: str) -> ClassReference:
     return ClassReference(
         import_=ReferenceImport(
-            module=Module.built_in("typing"),
+            module=Module.built_in(("typing",)),
         ),
         qualified_name_excluding_import=(name,),
     )
@@ -198,14 +214,14 @@ def get_reference_to_typing_import(name: str) -> ClassReference:
 
 def get_reference_to_uuid_import(name: str) -> ClassReference:
     return ClassReference(
-        import_=ReferenceImport(module=Module.built_in("uuid")),
+        import_=ReferenceImport(module=Module.built_in(("uuid",))),
         qualified_name_excluding_import=(name,),
     )
 
 
 def get_reference_to_datetime_import(name: str) -> ClassReference:
     return ClassReference(
-        import_=ReferenceImport(module=Module.built_in("datetime"), alias="dt"),
+        import_=ReferenceImport(module=Module.built_in(("datetime",)), alias="dt"),
         qualified_name_excluding_import=(name,),
     )
 

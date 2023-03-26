@@ -30,7 +30,7 @@ class ClassDeclaration(AstNode):
                 0,
                 ClassReference(
                     qualified_name_excluding_import=("ABC",),
-                    import_=ReferenceImport(module=Module.built_in("abc")),
+                    import_=ReferenceImport(module=Module.built_in(("abc",))),
                 ),
             )
         self.constructor = constructor
@@ -99,7 +99,7 @@ class ClassDeclaration(AstNode):
                     ReferenceNode(
                         Reference(
                             qualified_name_excluding_import=("abstractmethod",),
-                            import_=ReferenceImport(module=Module.built_in("abc")),
+                            import_=ReferenceImport(module=Module.built_in(("abc",))),
                         )
                     )
                 ],

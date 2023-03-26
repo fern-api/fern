@@ -211,7 +211,7 @@ class PydanticModel:
             if len(self._base_models) > 0
             else [
                 AST.ClassReference(
-                    import_=AST.ReferenceImport(module=AST.Module.built_in("typing_extensions")),
+                    import_=AST.ReferenceImport(module=AST.Module.built_in(("typing_extensions",))),
                     qualified_name_excluding_import=("TypedDict",),
                 )
             ],

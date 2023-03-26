@@ -67,7 +67,7 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def visit_literal(self, wrapped_type: ir_types.Literal) -> AST.TypeHint:
-        raise Exception("Literals are not supported!")
+        raise Exception("Literals are not supported")
 
     def _get_type_hint_for_named(
         self,
@@ -91,6 +91,6 @@ class TypeReferenceToTypeHintConverter:
             date_time=AST.TypeHint.datetime,
             uuid=AST.TypeHint.uuid,
             date=AST.TypeHint.date,
-            base_64=AST.TypeHint.bytes,
+            base_64=AST.TypeHint.str_,
         )
         return to_return
