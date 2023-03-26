@@ -180,8 +180,7 @@ class SourceFileImpl(SourceFile):
 
             # track dependency if this references relies on an external dep
             if reference.import_ is not None:
-                dependency = reference.import_.module.get_dependency()
-                if dependency is not None:
+                for dependency in reference.import_.module.get_dependencies():
                     self._dependency_manager.add_dependency(dependency)
 
         for declaration in ast_metadata.declarations:

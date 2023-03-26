@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 from ..dependency import Dependency
 from .module_path import ModulePath
@@ -9,7 +9,7 @@ from .module_path import ModulePath
 
 @dataclass(frozen=True)
 class BuiltInModule:
-    types_package: Optional[Dependency] = None
+    pass
 
 
 @dataclass(frozen=True)
@@ -21,24 +21,28 @@ class LocalModule:
 class Module:
     path: ModulePath
     source: Union[Dependency, BuiltInModule, LocalModule]
+    types_package: Optional[Dependency] = None
 
-    def get_dependency(self) -> Optional[Dependency]:
+    def get_dependencies(self) -> List[Dependency]:
+        dependencies: List[Dependency] = []
         if isinstance(self.source, Dependency):
-            return self.source
-        if isinstance(self.source, BuiltInModule):
-            return self.source.types_package
-        return None
+            dependencies.append(self.source)
+        if self.types_package is not None:
+            dependencies.append(self.types_package)
+        return dependencies
 
     def is_local(self) -> bool:
         return isinstance(self.source, LocalModule)
 
     @staticmethod
-    def external(module_path: ModulePath, dependency: Dependency) -> Module:
-        return Module(path=module_path, source=dependency)
+    def external(
+        module_path: ModulePath, *, dependency: Dependency, types_package: Optional[Dependency] = None
+    ) -> Module:
+        return Module(path=module_path, source=dependency, types_package=types_package)
 
     @staticmethod
-    def built_in(module_path: ModulePath, types_package: Optional[Dependency] = None) -> Module:
-        return Module(path=module_path, source=BuiltInModule(types_package=types_package))
+    def built_in(module_path: ModulePath, *, types_package: Optional[Dependency] = None) -> Module:
+        return Module(path=module_path, source=BuiltInModule(), types_package=types_package)
 
     @staticmethod
     def local(*module_path: str) -> Module:

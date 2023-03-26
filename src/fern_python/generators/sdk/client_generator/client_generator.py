@@ -5,7 +5,7 @@ import fern.ir.pydantic as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST, SourceFile
-from fern_python.external_dependencies import Functools, HttpX, Pydantic, UrlLib
+from fern_python.external_dependencies import Backports, HttpX, Pydantic, UrlLib
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .request_body_parameters import (
@@ -115,7 +115,7 @@ class ClientGenerator:
                             return_type=AST.TypeHint(self._context.get_reference_to_subpackage_service(subpackage_id))
                         ),
                         body=self._write_subpackage_getter(subpackage_id),
-                        decorators=[Functools.cached_property()],
+                        decorators=[Backports.cached_property()],
                     )
                 )
 

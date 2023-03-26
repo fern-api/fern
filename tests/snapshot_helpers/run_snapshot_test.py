@@ -90,6 +90,8 @@ def run_snapshot_test(
             "pydantic=1.10.5",
             "mypy=1.0.1",
             "httpx=0.23.3",
+            "backports.cached_property=1.0.2",
+            "types-backports=0.1.3",
         ]
     )
     run_command_in_output_directory(["poetry", "run", "mypy", "."])
