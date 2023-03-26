@@ -10,5 +10,6 @@ class PydanticField:
     pascal_case_field_name: str
     type_hint: AST.TypeHint
     json_field_name: str
+    default_value: Optional[AST.Expression] = None
     default_factory: Optional[AST.Expression] = None
     description: Optional[str] = None

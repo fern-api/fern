@@ -13,7 +13,7 @@ from .exception_v_2 import ExceptionV2
 
 
 class ActualResult_Value(pydantic.BaseModel):
-    type: typing_extensions.Literal["value"]
+    type: typing_extensions.Literal["value"] = "value"
     value: VariableValue
 
     class Config:
@@ -21,14 +21,14 @@ class ActualResult_Value(pydantic.BaseModel):
 
 
 class ActualResult_Exception(ExceptionInfo):
-    type: typing_extensions.Literal["exception"]
+    type: typing_extensions.Literal["exception"] = "exception"
 
     class Config:
         frozen = True
 
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):
-    type: typing_extensions.Literal["exceptionV2"]
+    type: typing_extensions.Literal["exceptionV2"] = "exceptionV2"
     value: ExceptionV2
 
     class Config:

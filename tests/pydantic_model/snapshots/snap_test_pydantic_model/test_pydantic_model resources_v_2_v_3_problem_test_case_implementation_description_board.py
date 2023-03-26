@@ -11,7 +11,7 @@ from .parameter_id import ParameterId
 
 
 class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing_extensions.Literal["html"]
+    type: typing_extensions.Literal["html"] = "html"
     value: str
 
     class Config:
@@ -19,7 +19,7 @@ class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
 
 
 class TestCaseImplementationDescriptionBoard_ParamId(pydantic.BaseModel):
-    type: typing_extensions.Literal["paramId"]
+    type: typing_extensions.Literal["paramId"] = "paramId"
     value: ParameterId
 
     class Config:

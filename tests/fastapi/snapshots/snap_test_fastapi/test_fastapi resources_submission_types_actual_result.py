@@ -18,13 +18,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def value(self, value: VariableValue) -> ActualResult:
-        return ActualResult(__root__=_ActualResult.Value(type="value", value=value))
+        return ActualResult(__root__=_ActualResult.Value(value=value))
 
     def exception(self, value: ExceptionInfo) -> ActualResult:
-        return ActualResult(__root__=_ActualResult.Exception(**dict(value), type="exception"))
+        return ActualResult(__root__=_ActualResult.Exception(**dict(value)))
 
     def exception_v_2(self, value: resources_submission_types_exception_v_2_ExceptionV2) -> ActualResult:
-        return ActualResult(__root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value))
+        return ActualResult(__root__=_ActualResult.ExceptionV2(value=value))
 
 
 class ActualResult(pydantic.BaseModel):
@@ -105,20 +105,20 @@ class ActualResult(pydantic.BaseModel):
 
 class _ActualResult:
     class Value(pydantic.BaseModel):
-        type: typing_extensions.Literal["value"]
+        type: typing_extensions.Literal["value"] = "value"
         value: VariableValue
 
         class Config:
             frozen = True
 
     class Exception(ExceptionInfo):
-        type: typing_extensions.Literal["exception"]
+        type: typing_extensions.Literal["exception"] = "exception"
 
         class Config:
             frozen = True
 
     class ExceptionV2(pydantic.BaseModel):
-        type: typing_extensions.Literal["exceptionV2"]
+        type: typing_extensions.Literal["exceptionV2"] = "exceptionV2"
         value: resources_submission_types_exception_v_2_ExceptionV2
 
         class Config:

@@ -15,7 +15,7 @@ from .test_case_template_id import TestCaseTemplateId
 
 
 class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
-    type: typing_extensions.Literal["templateId"]
+    type: typing_extensions.Literal["templateId"] = "templateId"
     value: TestCaseTemplateId
 
     class Config:
@@ -23,7 +23,7 @@ class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
 
 
 class TestCaseImplementationReference_Implementation(TestCaseImplementation):
-    type: typing_extensions.Literal["implementation"]
+    type: typing_extensions.Literal["implementation"] = "implementation"
 
     class Config:
         frozen = True

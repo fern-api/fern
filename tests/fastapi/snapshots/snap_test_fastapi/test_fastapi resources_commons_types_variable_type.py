@@ -15,34 +15,34 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.IntegerType(type="integerType"))
+        return VariableType(__root__=_VariableType.IntegerType())
 
     def double_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.DoubleType(type="doubleType"))
+        return VariableType(__root__=_VariableType.DoubleType())
 
     def boolean_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.BooleanType(type="booleanType"))
+        return VariableType(__root__=_VariableType.BooleanType())
 
     def string_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.StringType(type="stringType"))
+        return VariableType(__root__=_VariableType.StringType())
 
     def char_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.CharType(type="charType"))
+        return VariableType(__root__=_VariableType.CharType())
 
     def list_type(self, value: resources_commons_types_list_type_ListType) -> VariableType:
-        return VariableType(__root__=_VariableType.ListType(**dict(value), type="listType"))
+        return VariableType(__root__=_VariableType.ListType(**dict(value)))
 
     def map_type(self, value: resources_commons_types_map_type_MapType) -> VariableType:
-        return VariableType(__root__=_VariableType.MapType(**dict(value), type="mapType"))
+        return VariableType(__root__=_VariableType.MapType(**dict(value)))
 
     def binary_tree_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.BinaryTreeType(type="binaryTreeType"))
+        return VariableType(__root__=_VariableType.BinaryTreeType())
 
     def singly_linked_list_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.SinglyLinkedListType(type="singlyLinkedListType"))
+        return VariableType(__root__=_VariableType.SinglyLinkedListType())
 
     def doubly_linked_list_type(self) -> VariableType:
-        return VariableType(__root__=_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))
+        return VariableType(__root__=_VariableType.DoublyLinkedListType())
 
 
 class VariableType(pydantic.BaseModel):
@@ -231,61 +231,61 @@ from .map_type import MapType as resources_commons_types_map_type_MapType  # noq
 
 class _VariableType:
     class IntegerType(pydantic.BaseModel):
-        type: typing_extensions.Literal["integerType"]
+        type: typing_extensions.Literal["integerType"] = "integerType"
 
         class Config:
             frozen = True
 
     class DoubleType(pydantic.BaseModel):
-        type: typing_extensions.Literal["doubleType"]
+        type: typing_extensions.Literal["doubleType"] = "doubleType"
 
         class Config:
             frozen = True
 
     class BooleanType(pydantic.BaseModel):
-        type: typing_extensions.Literal["booleanType"]
+        type: typing_extensions.Literal["booleanType"] = "booleanType"
 
         class Config:
             frozen = True
 
     class StringType(pydantic.BaseModel):
-        type: typing_extensions.Literal["stringType"]
+        type: typing_extensions.Literal["stringType"] = "stringType"
 
         class Config:
             frozen = True
 
     class CharType(pydantic.BaseModel):
-        type: typing_extensions.Literal["charType"]
+        type: typing_extensions.Literal["charType"] = "charType"
 
         class Config:
             frozen = True
 
     class ListType(resources_commons_types_list_type_ListType):
-        type: typing_extensions.Literal["listType"]
+        type: typing_extensions.Literal["listType"] = "listType"
 
         class Config:
             frozen = True
 
     class MapType(resources_commons_types_map_type_MapType):
-        type: typing_extensions.Literal["mapType"]
+        type: typing_extensions.Literal["mapType"] = "mapType"
 
         class Config:
             frozen = True
 
     class BinaryTreeType(pydantic.BaseModel):
-        type: typing_extensions.Literal["binaryTreeType"]
+        type: typing_extensions.Literal["binaryTreeType"] = "binaryTreeType"
 
         class Config:
             frozen = True
 
     class SinglyLinkedListType(pydantic.BaseModel):
-        type: typing_extensions.Literal["singlyLinkedListType"]
+        type: typing_extensions.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
         class Config:
             frozen = True
 
     class DoublyLinkedListType(pydantic.BaseModel):
-        type: typing_extensions.Literal["doublyLinkedListType"]
+        type: typing_extensions.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
         class Config:
             frozen = True

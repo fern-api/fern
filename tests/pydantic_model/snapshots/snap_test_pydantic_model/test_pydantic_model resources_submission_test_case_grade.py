@@ -15,14 +15,14 @@ from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
 
 class TestCaseGrade_Hidden(TestCaseHiddenGrade):
-    type: typing_extensions.Literal["hidden"]
+    type: typing_extensions.Literal["hidden"] = "hidden"
 
     class Config:
         frozen = True
 
 
 class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
-    type: typing_extensions.Literal["nonHidden"]
+    type: typing_extensions.Literal["nonHidden"] = "nonHidden"
 
     class Config:
         frozen = True

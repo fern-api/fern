@@ -153,9 +153,9 @@ typer[all]==0.6.1 ; python_version >= "3.8" and python_version < "4.0" \
 types-requests==2.28.11.16 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:9d4002056df7ebc4ec1f28fd701fba82c5c22549c4477116cb2656aa30ace6db \
     --hash=sha256:a86921028335fdcc3aaf676c9d3463f867db6af2303fc65aa309b13ae1e6dd53
-types-urllib3==1.26.25.8 ; python_version >= "3.8" and python_version < "4.0" \
-    --hash=sha256:95ea847fbf0bf675f50c8ae19a665baedcf07e6b4641662c4c3c72e7b2edf1a9 \
-    --hash=sha256:ecf43c42d8ee439d732a1110b4901e9017a79a38daca26f08e42c8460069392c
+types-urllib3==1.26.25.9 ; python_version >= "3.8" and python_version < "4.0" \
+    --hash=sha256:160727879bdbe52f11f5feeca092a473f38d68ed3be88abb461b59cda40fb9bc \
+    --hash=sha256:b327d360ba4a9edd80ea82f5990ba19e76175a20b5b64be4b4813d9a1c424caa
 typing-extensions==4.5.0 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb \
     --hash=sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4

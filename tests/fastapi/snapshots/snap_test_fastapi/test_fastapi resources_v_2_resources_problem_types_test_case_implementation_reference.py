@@ -20,14 +20,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def template_id(self, value: TestCaseTemplateId) -> TestCaseImplementationReference:
-        return TestCaseImplementationReference(
-            __root__=_TestCaseImplementationReference.TemplateId(type="templateId", value=value)
-        )
+        return TestCaseImplementationReference(__root__=_TestCaseImplementationReference.TemplateId(value=value))
 
     def implementation(self, value: TestCaseImplementation) -> TestCaseImplementationReference:
-        return TestCaseImplementationReference(
-            __root__=_TestCaseImplementationReference.Implementation(**dict(value), type="implementation")
-        )
+        return TestCaseImplementationReference(__root__=_TestCaseImplementationReference.Implementation(**dict(value)))
 
 
 class TestCaseImplementationReference(pydantic.BaseModel):
@@ -119,14 +115,14 @@ class TestCaseImplementationReference(pydantic.BaseModel):
 
 class _TestCaseImplementationReference:
     class TemplateId(pydantic.BaseModel):
-        type: typing_extensions.Literal["templateId"]
+        type: typing_extensions.Literal["templateId"] = "templateId"
         value: TestCaseTemplateId
 
         class Config:
             frozen = True
 
     class Implementation(TestCaseImplementation):
-        type: typing_extensions.Literal["implementation"]
+        type: typing_extensions.Literal["implementation"] = "implementation"
 
         class Config:
             frozen = True

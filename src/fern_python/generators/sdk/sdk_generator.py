@@ -41,6 +41,7 @@ class SdkGenerator(AbstractGenerator):
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
             wrapped_aliases=custom_config.wrapped_aliases,
             skip_formatting=custom_config.skip_formatting,
+            include_union_utils=custom_config.include_union_utils,
         )
 
         context = SdkGeneratorContextImpl(

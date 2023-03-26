@@ -18,14 +18,14 @@ from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
 
 
 class SubmissionStatusV2_Test(TestSubmissionStatusV2):
-    type: typing_extensions.Literal["test"]
+    type: typing_extensions.Literal["test"] = "test"
 
     class Config:
         frozen = True
 
 
 class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
-    type: typing_extensions.Literal["workspace"]
+    type: typing_extensions.Literal["workspace"] = "workspace"
 
     class Config:
         frozen = True

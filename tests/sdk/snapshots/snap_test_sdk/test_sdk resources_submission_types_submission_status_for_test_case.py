@@ -16,14 +16,14 @@ from .traced_test_case import TracedTestCase
 
 
 class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
-    type: typing_extensions.Literal["graded"]
+    type: typing_extensions.Literal["graded"] = "graded"
 
     class Config:
         frozen = True
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
-    type: typing_extensions.Literal["gradedV2"]
+    type: typing_extensions.Literal["gradedV2"] = "gradedV2"
     value: TestCaseGrade
 
     class Config:
@@ -31,7 +31,7 @@ class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
 
 
 class SubmissionStatusForTestCase_Traced(TracedTestCase):
-    type: typing_extensions.Literal["traced"]
+    type: typing_extensions.Literal["traced"] = "traced"
 
     class Config:
         frozen = True

@@ -22,41 +22,41 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def integer_value(self, value: int) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.IntegerValue(type="integerValue", value=value))
+        return VariableValue(__root__=_VariableValue.IntegerValue(value=value))
 
     def boolean_value(self, value: bool) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.BooleanValue(type="booleanValue", value=value))
+        return VariableValue(__root__=_VariableValue.BooleanValue(value=value))
 
     def double_value(self, value: float) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.DoubleValue(type="doubleValue", value=value))
+        return VariableValue(__root__=_VariableValue.DoubleValue(value=value))
 
     def string_value(self, value: str) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.StringValue(type="stringValue", value=value))
+        return VariableValue(__root__=_VariableValue.StringValue(value=value))
 
     def char_value(self, value: str) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.CharValue(type="charValue", value=value))
+        return VariableValue(__root__=_VariableValue.CharValue(value=value))
 
     def map_value(self, value: resources_commons_types_map_value_MapValue) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.MapValue(**dict(value), type="mapValue"))
+        return VariableValue(__root__=_VariableValue.MapValue(**dict(value)))
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.ListValue(type="listValue", value=value))
+        return VariableValue(__root__=_VariableValue.ListValue(value=value))
 
     def binary_tree_value(self, value: resources_commons_types_binary_tree_value_BinaryTreeValue) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.BinaryTreeValue(**dict(value), type="binaryTreeValue"))
+        return VariableValue(__root__=_VariableValue.BinaryTreeValue(**dict(value)))
 
     def singly_linked_list_value(
         self, value: resources_commons_types_singly_linked_list_value_SinglyLinkedListValue
     ) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.SinglyLinkedListValue(**dict(value), type="singlyLinkedListValue"))
+        return VariableValue(__root__=_VariableValue.SinglyLinkedListValue(**dict(value)))
 
     def doubly_linked_list_value(
         self, value: resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue
     ) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.DoublyLinkedListValue(**dict(value), type="doublyLinkedListValue"))
+        return VariableValue(__root__=_VariableValue.DoublyLinkedListValue(**dict(value)))
 
     def null_value(self) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))
+        return VariableValue(__root__=_VariableValue.NullValue())
 
 
 class VariableValue(pydantic.BaseModel):
@@ -259,73 +259,73 @@ from .map_value import MapValue as resources_commons_types_map_value_MapValue  #
 
 class _VariableValue:
     class IntegerValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["integerValue"]
+        type: typing_extensions.Literal["integerValue"] = "integerValue"
         value: int
 
         class Config:
             frozen = True
 
     class BooleanValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["booleanValue"]
+        type: typing_extensions.Literal["booleanValue"] = "booleanValue"
         value: bool
 
         class Config:
             frozen = True
 
     class DoubleValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["doubleValue"]
+        type: typing_extensions.Literal["doubleValue"] = "doubleValue"
         value: float
 
         class Config:
             frozen = True
 
     class StringValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["stringValue"]
+        type: typing_extensions.Literal["stringValue"] = "stringValue"
         value: str
 
         class Config:
             frozen = True
 
     class CharValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["charValue"]
+        type: typing_extensions.Literal["charValue"] = "charValue"
         value: str
 
         class Config:
             frozen = True
 
     class MapValue(resources_commons_types_map_value_MapValue):
-        type: typing_extensions.Literal["mapValue"]
+        type: typing_extensions.Literal["mapValue"] = "mapValue"
 
         class Config:
             frozen = True
 
     class ListValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["listValue"]
+        type: typing_extensions.Literal["listValue"] = "listValue"
         value: typing.List[VariableValue]
 
         class Config:
             frozen = True
 
     class BinaryTreeValue(resources_commons_types_binary_tree_value_BinaryTreeValue):
-        type: typing_extensions.Literal["binaryTreeValue"]
+        type: typing_extensions.Literal["binaryTreeValue"] = "binaryTreeValue"
 
         class Config:
             frozen = True
 
     class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
-        type: typing_extensions.Literal["singlyLinkedListValue"]
+        type: typing_extensions.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
         class Config:
             frozen = True
 
     class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
-        type: typing_extensions.Literal["doublyLinkedListValue"]
+        type: typing_extensions.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
         class Config:
             frozen = True
 
     class NullValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["nullValue"]
+        type: typing_extensions.Literal["nullValue"] = "nullValue"
 
         class Config:
             frozen = True

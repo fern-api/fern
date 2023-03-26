@@ -16,9 +16,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def playlist_id(self, value: resources_playlist_types_playlist_id_PlaylistId) -> PlaylistIdNotFoundErrorBody:
-        return PlaylistIdNotFoundErrorBody(
-            __root__=_PlaylistIdNotFoundErrorBody.PlaylistId(type="playlistId", value=value)
-        )
+        return PlaylistIdNotFoundErrorBody(__root__=_PlaylistIdNotFoundErrorBody.PlaylistId(value=value))
 
 
 class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
@@ -88,7 +86,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
 
 class _PlaylistIdNotFoundErrorBody:
     class PlaylistId(pydantic.BaseModel):
-        type: typing_extensions.Literal["playlistId"]
+        type: typing_extensions.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
 
         class Config:

@@ -2,13 +2,12 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.declaration_referencer import FernFilepathCreator
 from fern_python.source_file_generator import SourceFileGenerator
-
-from ..pydantic_filepath_creator import PydanticFilepathCreator
 
 
 class CoreUtilities:
-    def __init__(self, filepath_creator: PydanticFilepathCreator):
+    def __init__(self, filepath_creator: FernFilepathCreator):
         self.filepath = filepath_creator.generate_filepath_prefix() + (
             Filepath.DirectoryFilepathPart(module_name="core"),
         )

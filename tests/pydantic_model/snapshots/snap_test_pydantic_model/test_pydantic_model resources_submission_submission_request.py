@@ -14,35 +14,35 @@ from .workspace_submit_request import WorkspaceSubmitRequest
 
 
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
-    type: typing_extensions.Literal["initializeProblemRequest"]
+    type: typing_extensions.Literal["initializeProblemRequest"] = "initializeProblemRequest"
 
     class Config:
         frozen = True
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
-    type: typing_extensions.Literal["initializeWorkspaceRequest"]
+    type: typing_extensions.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     class Config:
         frozen = True
 
 
 class SubmissionRequest_SubmitV2(SubmitRequestV2):
-    type: typing_extensions.Literal["submitV2"]
+    type: typing_extensions.Literal["submitV2"] = "submitV2"
 
     class Config:
         frozen = True
 
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
-    type: typing_extensions.Literal["workspaceSubmit"]
+    type: typing_extensions.Literal["workspaceSubmit"] = "workspaceSubmit"
 
     class Config:
         frozen = True
 
 
 class SubmissionRequest_Stop(StopRequest):
-    type: typing_extensions.Literal["stop"]
+    type: typing_extensions.Literal["stop"] = "stop"
 
     class Config:
         frozen = True

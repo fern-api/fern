@@ -111,11 +111,13 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
     def _get_discriminant_field_for_single_union_type(
         self, single_union_type: ir_types.SingleUnionType
     ) -> PydanticField:
+        discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
         return PydanticField(
             name=self._get_discriminant_attr_name(),
             pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
-            type_hint=AST.TypeHint.literal(self._get_discriminant_value_for_single_union_type(single_union_type)),
+            type_hint=AST.TypeHint.literal(discriminant_value),
             json_field_name=self._union.discriminant.wire_value,
+            default_value=discriminant_value,
         )
 
     def _get_discriminant_attr_name(self) -> str:

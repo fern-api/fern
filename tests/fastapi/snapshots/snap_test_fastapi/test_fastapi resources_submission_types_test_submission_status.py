@@ -18,18 +18,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def stopped(self) -> TestSubmissionStatus:
-        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Stopped(type="stopped"))
+        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Stopped())
 
     def errored(self, value: ErrorInfo) -> TestSubmissionStatus:
-        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Errored(type="errored", value=value))
+        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Errored(value=value))
 
     def running(self, value: RunningSubmissionState) -> TestSubmissionStatus:
-        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Running(type="running", value=value))
+        return TestSubmissionStatus(__root__=_TestSubmissionStatus.Running(value=value))
 
     def test_case_id_to_state(self, value: typing.Dict[str, SubmissionStatusForTestCase]) -> TestSubmissionStatus:
-        return TestSubmissionStatus(
-            __root__=_TestSubmissionStatus.TestCaseIdToState(type="testCaseIdToState", value=value)
-        )
+        return TestSubmissionStatus(__root__=_TestSubmissionStatus.TestCaseIdToState(value=value))
 
 
 class TestSubmissionStatus(pydantic.BaseModel):
@@ -154,27 +152,27 @@ class TestSubmissionStatus(pydantic.BaseModel):
 
 class _TestSubmissionStatus:
     class Stopped(pydantic.BaseModel):
-        type: typing_extensions.Literal["stopped"]
+        type: typing_extensions.Literal["stopped"] = "stopped"
 
         class Config:
             frozen = True
 
     class Errored(pydantic.BaseModel):
-        type: typing_extensions.Literal["errored"]
+        type: typing_extensions.Literal["errored"] = "errored"
         value: ErrorInfo
 
         class Config:
             frozen = True
 
     class Running(pydantic.BaseModel):
-        type: typing_extensions.Literal["running"]
+        type: typing_extensions.Literal["running"] = "running"
         value: RunningSubmissionState
 
         class Config:
             frozen = True
 
     class TestCaseIdToState(pydantic.BaseModel):
-        type: typing_extensions.Literal["testCaseIdToState"]
+        type: typing_extensions.Literal["testCaseIdToState"] = "testCaseIdToState"
         value: typing.Dict[str, SubmissionStatusForTestCase]
 
         class Config:

@@ -21,13 +21,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def graded(self, value: TestCaseResultWithStdout) -> SubmissionStatusForTestCase:
-        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.Graded(**dict(value), type="graded"))
+        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.Graded(**dict(value)))
 
     def graded_v_2(self, value: TestCaseGrade) -> SubmissionStatusForTestCase:
-        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value))
+        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.GradedV2(value=value))
 
     def traced(self, value: TracedTestCase) -> SubmissionStatusForTestCase:
-        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.Traced(**dict(value), type="traced"))
+        return SubmissionStatusForTestCase(__root__=_SubmissionStatusForTestCase.Traced(**dict(value)))
 
 
 class SubmissionStatusForTestCase(pydantic.BaseModel):
@@ -140,20 +140,20 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
 
 class _SubmissionStatusForTestCase:
     class Graded(TestCaseResultWithStdout):
-        type: typing_extensions.Literal["graded"]
+        type: typing_extensions.Literal["graded"] = "graded"
 
         class Config:
             frozen = True
 
     class GradedV2(pydantic.BaseModel):
-        type: typing_extensions.Literal["gradedV2"]
+        type: typing_extensions.Literal["gradedV2"] = "gradedV2"
         value: TestCaseGrade
 
         class Config:
             frozen = True
 
     class Traced(TracedTestCase):
-        type: typing_extensions.Literal["traced"]
+        type: typing_extensions.Literal["traced"] = "traced"
 
         class Config:
             frozen = True

@@ -11,14 +11,14 @@ from .exception_info import ExceptionInfo
 
 
 class ExceptionV2_Generic(ExceptionInfo):
-    type: typing_extensions.Literal["generic"]
+    type: typing_extensions.Literal["generic"] = "generic"
 
     class Config:
         frozen = True
 
 
 class ExceptionV2_Timeout(pydantic.BaseModel):
-    type: typing_extensions.Literal["timeout"]
+    type: typing_extensions.Literal["timeout"] = "timeout"
 
     class Config:
         frozen = True

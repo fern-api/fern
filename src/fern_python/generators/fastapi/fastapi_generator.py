@@ -43,7 +43,7 @@ class FastApiGenerator(AbstractGenerator):
             wrapped_aliases=True,
             include_validators=custom_config.include_validators,
             skip_formatting=custom_config.skip_formatting,
-            include_union_visitors=True,
+            include_union_utils=True,
         )
 
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)

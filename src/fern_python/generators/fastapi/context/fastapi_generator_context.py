@@ -24,6 +24,7 @@ class FastApiGeneratorContext(ABC):
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(filepath_creator=self.filepath_creator),
             generator_config=generator_config,
+            filepath_creator=self.filepath_creator,
         )
         self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
 

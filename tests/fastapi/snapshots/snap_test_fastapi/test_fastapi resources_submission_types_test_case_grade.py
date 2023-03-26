@@ -20,10 +20,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def hidden(self, value: TestCaseHiddenGrade) -> TestCaseGrade:
-        return TestCaseGrade(__root__=_TestCaseGrade.Hidden(**dict(value), type="hidden"))
+        return TestCaseGrade(__root__=_TestCaseGrade.Hidden(**dict(value)))
 
     def non_hidden(self, value: TestCaseNonHiddenGrade) -> TestCaseGrade:
-        return TestCaseGrade(__root__=_TestCaseGrade.NonHidden(**dict(value), type="nonHidden"))
+        return TestCaseGrade(__root__=_TestCaseGrade.NonHidden(**dict(value)))
 
 
 class TestCaseGrade(pydantic.BaseModel):
@@ -97,13 +97,13 @@ class TestCaseGrade(pydantic.BaseModel):
 
 class _TestCaseGrade:
     class Hidden(TestCaseHiddenGrade):
-        type: typing_extensions.Literal["hidden"]
+        type: typing_extensions.Literal["hidden"] = "hidden"
 
         class Config:
             frozen = True
 
     class NonHidden(TestCaseNonHiddenGrade):
-        type: typing_extensions.Literal["nonHidden"]
+        type: typing_extensions.Literal["nonHidden"] = "nonHidden"
 
         class Config:
             frozen = True

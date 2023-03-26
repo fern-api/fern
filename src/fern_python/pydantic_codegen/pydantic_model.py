@@ -48,18 +48,13 @@ class PydanticModel:
     def add_field(self, field: PydanticField) -> None:
 
         is_aliased = field.json_field_name != field.name
-        field_name_initializer = get_field_name_initializer(
+        self._has_aliases |= is_aliased
+        initializer = get_field_name_initializer(
             alias=field.json_field_name if is_aliased else None,
             default_factory=field.default_factory,
             description=field.description,
+            default=field.default_value,
         )
-
-        initializer = (
-            AST.Expression(AST.CodeWriter(field_name_initializer)) if field_name_initializer is not None else None
-        )
-
-        if initializer is not None:
-            self._has_aliases = True
 
         self._class_declaration.add_class_var(
             AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)
@@ -308,11 +303,15 @@ class PydanticModel:
 
 
 def get_field_name_initializer(
-    alias: Optional[str], default_factory: Optional[AST.Expression], description: Optional[str]
-) -> Union[AST.CodeWriterFunction, None]:
+    *,
+    alias: Optional[str],
+    default: Optional[AST.Expression],
+    default_factory: Optional[AST.Expression],
+    description: Optional[str],
+) -> Union[AST.Expression, None]:
 
     if alias is None and default_factory is None and description is None:
-        return None
+        return default
 
     def write(writer: AST.NodeWriter) -> None:
         writer.write_reference(Pydantic.Field)
@@ -345,7 +344,7 @@ def get_field_name_initializer(
                 writer.write(f'description="{description}"')
         writer.write(")")
 
-    return write
+    return AST.Expression(AST.CodeWriter(write))
 
 
 def get_named_import_or_throw(reference: AST.Reference) -> str:

@@ -8,6 +8,7 @@ from fern_python.source_file_generator import SourceFileGenerator
 
 from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
+from .pydantic_filepath_creator import PydanticFilepathCreator
 from .type_declaration_handler import TypeDeclarationHandler
 from .type_declaration_referencer import TypeDeclarationReferencer
 
@@ -37,6 +38,10 @@ class PydanticModelGenerator(AbstractGenerator):
                 ir=ir,
             ),
             generator_config=generator_config,
+            filepath_creator=PydanticFilepathCreator(
+                generator_config=generator_config,
+                ir=ir,
+            ),
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,

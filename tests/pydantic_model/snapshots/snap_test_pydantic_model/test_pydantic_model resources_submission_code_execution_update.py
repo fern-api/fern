@@ -24,77 +24,77 @@ from .workspace_ran_response import WorkspaceRanResponse
 
 
 class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
-    type: typing_extensions.Literal["buildingExecutor"]
+    type: typing_extensions.Literal["buildingExecutor"] = "buildingExecutor"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Running(RunningResponse):
-    type: typing_extensions.Literal["running"]
+    type: typing_extensions.Literal["running"] = "running"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Errored(ErroredResponse):
-    type: typing_extensions.Literal["errored"]
+    type: typing_extensions.Literal["errored"] = "errored"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Stopped(StoppedResponse):
-    type: typing_extensions.Literal["stopped"]
+    type: typing_extensions.Literal["stopped"] = "stopped"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Graded(GradedResponse):
-    type: typing_extensions.Literal["graded"]
+    type: typing_extensions.Literal["graded"] = "graded"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_GradedV2(GradedResponseV2):
-    type: typing_extensions.Literal["gradedV2"]
+    type: typing_extensions.Literal["gradedV2"] = "gradedV2"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
-    type: typing_extensions.Literal["workspaceRan"]
+    type: typing_extensions.Literal["workspaceRan"] = "workspaceRan"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Recording(RecordingResponseNotification):
-    type: typing_extensions.Literal["recording"]
+    type: typing_extensions.Literal["recording"] = "recording"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
-    type: typing_extensions.Literal["recorded"]
+    type: typing_extensions.Literal["recorded"] = "recorded"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
-    type: typing_extensions.Literal["invalidRequest"]
+    type: typing_extensions.Literal["invalidRequest"] = "invalidRequest"
 
     class Config:
         frozen = True
 
 
 class CodeExecutionUpdate_Finished(FinishedResponse):
-    type: typing_extensions.Literal["finished"]
+    type: typing_extensions.Literal["finished"] = "finished"
 
     class Config:
         frozen = True

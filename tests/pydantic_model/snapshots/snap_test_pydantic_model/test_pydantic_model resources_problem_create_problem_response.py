@@ -12,7 +12,7 @@ from .create_problem_error import CreateProblemError
 
 
 class CreateProblemResponse_Success(pydantic.BaseModel):
-    type: typing_extensions.Literal["success"]
+    type: typing_extensions.Literal["success"] = "success"
     value: ProblemId
 
     class Config:
@@ -20,7 +20,7 @@ class CreateProblemResponse_Success(pydantic.BaseModel):
 
 
 class CreateProblemResponse_Error(pydantic.BaseModel):
-    type: typing_extensions.Literal["error"]
+    type: typing_extensions.Literal["error"] = "error"
     value: CreateProblemError
 
     class Config:
