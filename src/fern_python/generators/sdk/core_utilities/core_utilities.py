@@ -124,3 +124,17 @@ class CoreUtilities:
                 args=[headers],
             )
         )
+
+    def jsonable_encoder(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "jsonable_encoder"),
+                        named_import="jsonable_encoder",
+                    ),
+                ),
+                args=[obj],
+            )
+        )

@@ -7,6 +7,7 @@ import httpx
 import pydantic
 
 from ....core.api_error import ApiError
+from ....core.jsonable_encoder import jsonable_encoder
 from ....core.remove_none_from_headers import remove_none_from_headers
 from ...commons.types.problem_id import ProblemId
 
@@ -39,7 +40,7 @@ class HomepageClient:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "homepage-problems"),
-            json=request,
+            json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,

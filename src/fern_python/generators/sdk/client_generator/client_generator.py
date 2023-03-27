@@ -293,9 +293,13 @@ class ClientGenerator:
                         )
                         for query_parameter in endpoint.query_parameters
                     ],
-                    request_body=request_body_parameters.get_reference_to_request_body()
-                    if request_body_parameters is not None
-                    else None,
+                    request_body=(
+                        self._context.core_utilities.jsonable_encoder(
+                            request_body_parameters.get_reference_to_request_body()
+                        )
+                        if request_body_parameters is not None
+                        else None
+                    ),
                     response_variable_name=ClientGenerator.RESPONSE_VARIABLE,
                     headers=self._get_headers_for_endpoint(service=service, endpoint=endpoint),
                     auth=self._get_httpx_auth_for_request(),
