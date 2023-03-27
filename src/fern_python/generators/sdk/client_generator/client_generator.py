@@ -318,17 +318,12 @@ class ClientGenerator:
                     )
                     writer.write_newline_if_last_line_not()
 
-            for error in endpoint.errors.get_as_list():
-                writer.write_line("if " + self._get_condition_for_error(error.error) + ":")
-                with writer.indent():
-                    writer.write("raise ")
-                    writer.write_node(
-                        AST.ClassInstantiation(
-                            class_=self._context.get_reference_to_error(error.error),
-                            args=self._get_reference_to_error_body(error.error),
-                        )
-                    )
-                    writer.write_newline_if_last_line_not()
+            self._context.ir.error_discrimination_strategy.visit(
+                status_code=lambda: self._write_error_handlers(endpoint=endpoint, writer=writer),
+                property=lambda strategy: self._write_property_discriminated_error_handlers(
+                    endpoint=endpoint, writer=writer, strategy=strategy
+                ),
+            )
 
             writer.write("raise ")
             writer.write_node(
@@ -339,6 +334,32 @@ class ClientGenerator:
             )
 
         return AST.CodeWriter(write)
+
+    def _write_error_handlers(self, *, endpoint: ir_types.HttpEndpoint, writer: AST.NodeWriter) -> None:
+        for error in endpoint.errors.get_as_list():
+            writer.write_line("if " + self._get_condition_for_error(error.error) + ":")
+            with writer.indent():
+                writer.write("raise ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=self._context.get_reference_to_error(error.error),
+                        args=self._get_reference_to_error_body(error.error),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+
+    def _write_property_discriminated_error_handlers(
+        self,
+        *,
+        endpoint: ir_types.HttpEndpoint,
+        writer: AST.NodeWriter,
+        strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
+    ) -> None:
+        if len(endpoint.errors.get_as_list()) == 0:
+            return
+        writer.write_line(f'if "{strategy.discriminant.wire_value}" in {ClientGenerator.RESPONSE_JSON_VARIABLE}:')
+        with writer.indent():
+            self._write_error_handlers(endpoint=endpoint, writer=writer)
 
     def _get_condition_for_error(self, error: ir_types.DeclaredErrorName) -> str:
         error_declaration = self._context.ir.errors[error.error_id]
