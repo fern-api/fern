@@ -5,7 +5,7 @@ from glob import glob
 from pathlib import Path
 from typing import Any, Callable, List, Set
 
-from generator_exec.resources import config
+from fern.generator_exec.sdk.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
 from snapshottest.module import SnapshotTest  # type: ignore
 
@@ -20,6 +20,7 @@ def run_snapshot_test(
     tmpdir: Path,
     cli: Callable[[str], None],
     custom_config: Any = None,
+    output_mode: config.OutputMode = config.OutputMode.factory.download_files(),
 ) -> None:
     path_to_fixture = os.path.join(os.path.dirname(filename_of_test), f"fixtures/{fixture_name}")
 
@@ -29,11 +30,12 @@ def run_snapshot_test(
 
     generator_config = config.GeneratorConfig(
         ir_filepath=path_to_ir,
-        output=config.GeneratorOutputConfig(path=path_to_output, mode=config.OutputMode.factory.download_files()),
+        output=config.GeneratorOutputConfig(path=path_to_output, mode=output_mode),
         workspace_name="ir",
         organization="fern",
         custom_config=custom_config,
         environment=config.GeneratorEnvironment.factory.local(),
+        dry_run=True,
     )
 
     with open(path_to_config_json, "w") as f:
