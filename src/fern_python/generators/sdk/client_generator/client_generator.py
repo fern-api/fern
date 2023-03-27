@@ -306,11 +306,11 @@ class ClientGenerator:
                 )
             )
 
-            self._try_deserialize_json_response(writer=writer)
-
-            if endpoint.response is not None:
-                writer.write_line(f"if 200 <= {ClientGenerator.RESPONSE_VARIABLE}.status_code < 300:")
-                with writer.indent():
+            writer.write_line(f"if 200 <= {ClientGenerator.RESPONSE_VARIABLE}.status_code < 300:")
+            with writer.indent():
+                if endpoint.response is None:
+                    writer.write_line("return")
+                else:
                     writer.write("return ")
                     writer.write_node(
                         Pydantic.parse_obj_as(
@@ -323,27 +323,24 @@ class ClientGenerator:
                     writer.write_newline_if_last_line_not()
 
             self._context.ir.error_discrimination_strategy.visit(
-                status_code=lambda: self._write_error_handlers(endpoint=endpoint, writer=writer),
+                status_code=lambda: self._write_status_code_discriminated_error_handlers(
+                    endpoint=endpoint,
+                    writer=writer,
+                ),
                 property=lambda strategy: self._write_property_discriminated_error_handlers(
                     endpoint=endpoint, writer=writer, strategy=strategy
                 ),
             )
 
-            writer.write("raise ")
-            writer.write_node(
-                self._context.core_utilities.instantiate_api_error(
-                    body=AST.Expression(f"{ClientGenerator.RESPONSE_JSON_VARIABLE}"),
-                    status_code=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.status_code"),
-                )
-            )
-            writer.write_newline_if_last_line_not()
-
         return AST.CodeWriter(write)
+
+    def _deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
+        writer.write_line(f"{ClientGenerator.RESPONSE_JSON_VARIABLE} = {ClientGenerator.RESPONSE_VARIABLE}.json()")
 
     def _try_deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
         writer.write_line("try:")
         with writer.indent():
-            writer.write_line(f"{ClientGenerator.RESPONSE_JSON_VARIABLE} = {ClientGenerator.RESPONSE_VARIABLE}.json()")
+            self._deserialize_json_response(writer=writer)
         writer.write("except ")
         writer.write_reference(Json.JSONDecodeError())
         writer.write_line(":")
@@ -357,18 +354,40 @@ class ClientGenerator:
             )
             writer.write_newline_if_last_line_not()
 
-    def _write_error_handlers(self, *, endpoint: ir_types.HttpEndpoint, writer: AST.NodeWriter) -> None:
+    def _write_status_code_discriminated_error_handlers(
+        self, *, endpoint: ir_types.HttpEndpoint, writer: AST.NodeWriter
+    ) -> None:
         for error in endpoint.errors.get_as_list():
-            writer.write_line("if " + self._get_condition_for_error(error.error) + ":")
+            error_declaration = self._context.ir.errors[error.error.error_id]
+
+            writer.write_line(f"if {ClientGenerator.RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
             with writer.indent():
                 writer.write("raise ")
                 writer.write_node(
                     AST.ClassInstantiation(
                         class_=self._context.get_reference_to_error(error.error),
-                        args=self._get_reference_to_error_body(error.error),
+                        args=[
+                            Pydantic.parse_obj_as(
+                                self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                    error_declaration.type
+                                ),
+                                AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.json()"),
+                            )
+                        ]
+                        if error_declaration.type is not None
+                        else None,
                     )
                 )
                 writer.write_newline_if_last_line_not()
+
+        writer.write("raise ")
+        writer.write_node(
+            self._context.core_utilities.instantiate_api_error(
+                body=AST.Expression(f"{ClientGenerator.RESPONSE_JSON_VARIABLE}.text"),
+                status_code=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.status_code"),
+            )
+        )
+        writer.write_newline_if_last_line_not()
 
     def _write_property_discriminated_error_handlers(
         self,
@@ -377,40 +396,46 @@ class ClientGenerator:
         writer: AST.NodeWriter,
         strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
     ) -> None:
-        if len(endpoint.errors.get_as_list()) == 0:
-            return
-        writer.write_line(f'if "{strategy.discriminant.wire_value}" in {ClientGenerator.RESPONSE_JSON_VARIABLE}:')
-        with writer.indent():
-            self._write_error_handlers(endpoint=endpoint, writer=writer)
+        self._try_deserialize_json_response(writer=writer)
 
-    def _get_condition_for_error(self, error: ir_types.DeclaredErrorName) -> str:
-        error_declaration = self._context.ir.errors[error.error_id]
+        if len(endpoint.errors.get_as_list()) > 0:
+            writer.write_line(f'if "{strategy.discriminant.wire_value}" in {ClientGenerator.RESPONSE_JSON_VARIABLE}:')
+            with writer.indent():
+                for error in endpoint.errors.get_as_list():
+                    error_declaration = self._context.ir.errors[error.error.error_id]
 
-        return self._context.ir.error_discrimination_strategy.visit(
-            status_code=lambda: f"{ClientGenerator.RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}",
-            property=lambda strategy: f'{ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.discriminant.wire_value}"] == "{error_declaration.discriminant_value.wire_value}"',  # noqa: E501
+                    writer.write_line(
+                        f'if {ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.discriminant.wire_value}"] == "{error_declaration.discriminant_value.wire_value}":'  # noqa: E501
+                    )
+                    with writer.indent():
+                        writer.write("raise ")
+                        writer.write_node(
+                            AST.ClassInstantiation(
+                                class_=self._context.get_reference_to_error(error.error),
+                                args=[
+                                    Pydantic.parse_obj_as(
+                                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                            error_declaration.type
+                                        ),
+                                        AST.Expression(
+                                            f'{ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.content_property.wire_value}"]'  # noqa: E501
+                                        ),
+                                    )
+                                ]
+                                if error_declaration.type is not None
+                                else None,
+                            )
+                        )
+                        writer.write_newline_if_last_line_not()
+
+        writer.write("raise ")
+        writer.write_node(
+            self._context.core_utilities.instantiate_api_error(
+                body=AST.Expression(ClientGenerator.RESPONSE_JSON_VARIABLE),
+                status_code=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.status_code"),
+            )
         )
-
-    def _get_reference_to_error_body(self, error: ir_types.DeclaredErrorName) -> List[AST.Expression]:
-        error_declaration = self._context.ir.errors[error.error_id]
-        if error_declaration.type is None:
-            return []
-        error_body_type = error_declaration.type
-
-        return self._context.ir.error_discrimination_strategy.visit(
-            status_code=lambda: [
-                Pydantic.parse_obj_as(
-                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(error_body_type),
-                    AST.Expression(ClientGenerator.RESPONSE_JSON_VARIABLE),
-                )
-            ],
-            property=lambda strategy: [
-                Pydantic.parse_obj_as(
-                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(error_body_type),
-                    AST.Expression(f"{ClientGenerator.RESPONSE_JSON_VARIABLE}[{strategy.content_property.wire_value}]"),
-                )
-            ],
-        )
+        writer.write_newline_if_last_line_not()
 
     def _get_parameters_for_inlined_request_body(
         self, inlined_request_body: ir_types.InlinedRequestBody

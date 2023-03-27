@@ -39,12 +39,12 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(CreateProblemResponse, _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(CreateProblemResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
@@ -59,12 +59,12 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(UpdateProblemResponse, _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(UpdateProblemResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_problem(self, problem_id: ProblemId) -> None:
@@ -78,6 +78,8 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -98,10 +100,10 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(GetDefaultStarterFilesResponse, _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(GetDefaultStarterFilesResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)

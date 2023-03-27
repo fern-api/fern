@@ -31,6 +31,8 @@ class V2Client:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:

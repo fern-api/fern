@@ -33,12 +33,12 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.List[LightweightProblemInfoV2], _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[LightweightProblemInfoV2], _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problems(self) -> typing.List[ProblemInfoV2]:
@@ -52,12 +52,12 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.List[ProblemInfoV2], _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[ProblemInfoV2], _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
@@ -71,12 +71,12 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(ProblemInfoV2, _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProblemInfoV2, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
@@ -92,10 +92,10 @@ class ProblemClient:
                 }
             ),
         )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(ProblemInfoV2, _response)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
-        if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(ProblemInfoV2, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
