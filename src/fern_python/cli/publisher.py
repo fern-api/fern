@@ -1,11 +1,8 @@
 import subprocess
 from typing import List
 
-from fern.generator_exec.sdk.resources import logging
-from fern.generator_exec.sdk.resources.config import (
-    GeneratorConfig,
-    GeneratorPublishConfig,
-)
+from generator_exec.resources import logging
+from generator_exec.resources.config import GeneratorConfig, GeneratorPublishConfig
 
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
@@ -16,7 +13,6 @@ class Publisher:
 
     def __init__(
         self,
-        *,
         generator_exec_wrapper: GeneratorExecWrapper,
         publish_config: GeneratorPublishConfig,
         generator_config: GeneratorConfig,
@@ -52,18 +48,14 @@ class Publisher:
             ],
             safe_command="poetry config http-basic.fern <creds>",
         )
-
-        publish_command = [
-            "poetry",
-            "publish",
-            "--build",
-            "--repository",
-            self._poetry_repo_name,
-        ]
-        if self._generator_config.dry_run:
-            publish_command.append("--dry-run")
         self._run_command(
-            command=publish_command,
+            command=[
+                "poetry",
+                "publish",
+                "--build",
+                "--repository",
+                self._poetry_repo_name,
+            ],
             safe_command="poetry publish",
         )
 

@@ -1,12 +1,11 @@
 import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources.config import GeneratorConfig
-from fern.generator_exec.sdk.resources.logging import (
+from generator_exec.resources.config import GeneratorConfig
+from generator_exec.resources.logging import (
     ErrorExitStatusUpdate,
     ExitStatusUpdate,
     GeneratorUpdate,
     InitUpdateV2,
     RegistryType,
-    SuccessfulStatusUpdate,
 )
 
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -30,7 +29,6 @@ class GeneratorCli:
                     InitUpdateV2(
                         publishing_to_registry=config.output.mode.visit(
                             publish=lambda x: RegistryType.PYPI,
-                            github=lambda x: None,
                             download_files=lambda: None,
                         )
                     )
@@ -41,9 +39,7 @@ class GeneratorCli:
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=config
             )
             generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.exit_status_update(
-                    ExitStatusUpdate.factory.successful(SuccessfulStatusUpdate())
-                )
+                GeneratorUpdate.factory.exit_status_update(ExitStatusUpdate.factory.successful())
             )
         except Exception as e:
             generator_exec_wrapper.send_update(
