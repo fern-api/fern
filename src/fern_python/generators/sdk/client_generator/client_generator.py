@@ -386,10 +386,12 @@ class ClientGenerator:
                 )
                 writer.write_newline_if_last_line_not()
 
+        self._try_deserialize_json_response(writer=writer)
+
         writer.write("raise ")
         writer.write_node(
             self._context.core_utilities.instantiate_api_error(
-                body=AST.Expression(f"{ClientGenerator.RESPONSE_JSON_VARIABLE}.text"),
+                body=AST.Expression(ClientGenerator.RESPONSE_JSON_VARIABLE),
                 status_code=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.status_code"),
             )
         )

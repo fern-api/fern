@@ -82,18 +82,19 @@ def run_snapshot_test(
         print(proc.stdout)
         proc.check_returncode()
 
-    run_command_in_output_directory(["poetry", "init", "--no-interaction", "--python", PYTHON_VERSION])
-    run_command_in_output_directory(["poetry", "env", "use", PYTHON_VERSION])
-    run_command_in_output_directory(
-        [
-            "poetry",
-            "add",
-            "fastapi=0.92.0",
-            "pydantic=1.10.5",
-            "mypy=1.0.1",
-            "httpx=0.23.3",
-            "backports.cached_property=1.0.2",
-            "types-backports=0.1.3",
-        ]
-    )
+    if output_mode.get_as_union().type == "downloadFiles":
+        run_command_in_output_directory(["poetry", "init", "--no-interaction", "--python", PYTHON_VERSION])
+        run_command_in_output_directory(["poetry", "env", "use", PYTHON_VERSION])
+        run_command_in_output_directory(
+            [
+                "poetry",
+                "add",
+                "fastapi=0.92.0",
+                "pydantic=1.10.5",
+                "mypy=1.0.1",
+                "httpx=0.23.3",
+                "backports.cached_property=1.0.2",
+                "types-backports=0.1.3",
+            ]
+        )
     run_command_in_output_directory(["poetry", "run", "mypy", "."])

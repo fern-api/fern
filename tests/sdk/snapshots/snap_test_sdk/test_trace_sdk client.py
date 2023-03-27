@@ -4,14 +4,14 @@ import typing
 
 from backports.cached_property import cached_property
 
-from ..resources.admin.client import AdminClient
-from ..resources.homepage.client import HomepageClient
-from ..resources.migration.client import MigrationClient
-from ..resources.playlist.client import PlaylistClient
-from ..resources.problem.client import ProblemClient
-from ..resources.submission.client import SubmissionClient
-from ..resources.sysprop.client import SyspropClient
-from ..resources.v_2.client import V2Client
+from .resources.admin.client import AdminClient
+from .resources.homepage.client import HomepageClient
+from .resources.migration.client import MigrationClient
+from .resources.playlist.client import PlaylistClient
+from .resources.problem.client import ProblemClient
+from .resources.submission.client import SubmissionClient
+from .resources.sysprop.client import SyspropClient
+from .resources.v_2.client import V2Client
 
 
 class FernIr:

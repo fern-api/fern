@@ -1,5 +1,5 @@
-from abc import ABC, abstractmethod
-from typing import List, Tuple
+from abc import ABC
+from typing import Tuple
 
 import fern.ir.pydantic as ir_types
 from fern.generator_exec.sdk.resources import GeneratorConfig
@@ -27,14 +27,4 @@ class FernFilepathCreator(ABC):
                 module_name=self._ir.api_name.snake_case.unsafe_name,
                 export_strategy=ExportStrategy(export_all=True),
             ),
-        ) + tuple(
-            Filepath.DirectoryFilepathPart(
-                module_name=folder_name,
-                export_strategy=ExportStrategy(export_all=True),
-            )
-            for folder_name in self._get_folders_inside_src()
         )
-
-    @abstractmethod
-    def _get_folders_inside_src(self) -> List[str]:
-        ...
