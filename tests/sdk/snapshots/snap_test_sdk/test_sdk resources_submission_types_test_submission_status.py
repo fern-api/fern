@@ -13,14 +13,14 @@ from .submission_status_for_test_case import SubmissionStatusForTestCase
 
 
 class TestSubmissionStatus_Stopped(pydantic.BaseModel):
-    type: typing_extensions.Literal["stopped"] = "stopped"
+    type: typing_extensions.Literal["stopped"]
 
     class Config:
         frozen = True
 
 
 class TestSubmissionStatus_Errored(pydantic.BaseModel):
-    type: typing_extensions.Literal["errored"] = "errored"
+    type: typing_extensions.Literal["errored"]
     value: ErrorInfo
 
     class Config:
@@ -28,7 +28,7 @@ class TestSubmissionStatus_Errored(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_Running(pydantic.BaseModel):
-    type: typing_extensions.Literal["running"] = "running"
+    type: typing_extensions.Literal["running"]
     value: RunningSubmissionState
 
     class Config:
@@ -36,7 +36,7 @@ class TestSubmissionStatus_Running(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_TestCaseIdToState(pydantic.BaseModel):
-    type: typing_extensions.Literal["testCaseIdToState"] = "testCaseIdToState"
+    type: typing_extensions.Literal["testCaseIdToState"]
     value: typing.Dict[str, SubmissionStatusForTestCase]
 
     class Config:

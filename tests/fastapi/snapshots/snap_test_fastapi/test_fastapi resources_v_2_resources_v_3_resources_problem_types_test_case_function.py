@@ -20,10 +20,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def with_actual_result(self, value: TestCaseWithActualResultImplementation) -> TestCaseFunction:
-        return TestCaseFunction(__root__=_TestCaseFunction.WithActualResult(**dict(value)))
+        return TestCaseFunction(__root__=_TestCaseFunction.WithActualResult(**dict(value), type="withActualResult"))
 
     def custom(self, value: VoidFunctionDefinition) -> TestCaseFunction:
-        return TestCaseFunction(__root__=_TestCaseFunction.Custom(**dict(value)))
+        return TestCaseFunction(__root__=_TestCaseFunction.Custom(**dict(value), type="custom"))
 
 
 class TestCaseFunction(pydantic.BaseModel):
@@ -99,13 +99,13 @@ class TestCaseFunction(pydantic.BaseModel):
 
 class _TestCaseFunction:
     class WithActualResult(TestCaseWithActualResultImplementation):
-        type: typing_extensions.Literal["withActualResult"] = "withActualResult"
+        type: typing_extensions.Literal["withActualResult"]
 
         class Config:
             frozen = True
 
     class Custom(VoidFunctionDefinition):
-        type: typing_extensions.Literal["custom"] = "custom"
+        type: typing_extensions.Literal["custom"]
 
         class Config:
             frozen = True

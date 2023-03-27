@@ -24,15 +24,21 @@ class _Factory:
     def submission_id_not_found(
         self, value: resources_submission_types_submission_id_not_found_SubmissionIdNotFound
     ) -> InvalidRequestCause:
-        return InvalidRequestCause(__root__=_InvalidRequestCause.SubmissionIdNotFound(**dict(value)))
+        return InvalidRequestCause(
+            __root__=_InvalidRequestCause.SubmissionIdNotFound(**dict(value), type="submissionIdNotFound")
+        )
 
     def custom_test_cases_unsupported(
         self, value: resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ) -> InvalidRequestCause:
-        return InvalidRequestCause(__root__=_InvalidRequestCause.CustomTestCasesUnsupported(**dict(value)))
+        return InvalidRequestCause(
+            __root__=_InvalidRequestCause.CustomTestCasesUnsupported(**dict(value), type="customTestCasesUnsupported")
+        )
 
     def unexpected_language(self, value: UnexpectedLanguageError) -> InvalidRequestCause:
-        return InvalidRequestCause(__root__=_InvalidRequestCause.UnexpectedLanguage(**dict(value)))
+        return InvalidRequestCause(
+            __root__=_InvalidRequestCause.UnexpectedLanguage(**dict(value), type="unexpectedLanguage")
+        )
 
 
 class InvalidRequestCause(pydantic.BaseModel):
@@ -151,7 +157,7 @@ class InvalidRequestCause(pydantic.BaseModel):
 
 class _InvalidRequestCause:
     class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
-        type: typing_extensions.Literal["submissionIdNotFound"] = "submissionIdNotFound"
+        type: typing_extensions.Literal["submissionIdNotFound"]
 
         class Config:
             frozen = True
@@ -159,13 +165,13 @@ class _InvalidRequestCause:
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
-        type: typing_extensions.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
+        type: typing_extensions.Literal["customTestCasesUnsupported"]
 
         class Config:
             frozen = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
-        type: typing_extensions.Literal["unexpectedLanguage"] = "unexpectedLanguage"
+        type: typing_extensions.Literal["unexpectedLanguage"]
 
         class Config:
             frozen = True

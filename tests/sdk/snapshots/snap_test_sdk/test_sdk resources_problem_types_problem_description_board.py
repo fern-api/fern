@@ -11,7 +11,7 @@ from ...commons.types.variable_value import VariableValue
 
 
 class ProblemDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing_extensions.Literal["html"] = "html"
+    type: typing_extensions.Literal["html"]
     value: str
 
     class Config:
@@ -19,7 +19,7 @@ class ProblemDescriptionBoard_Html(pydantic.BaseModel):
 
 
 class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
-    type: typing_extensions.Literal["variable"] = "variable"
+    type: typing_extensions.Literal["variable"]
     value: VariableValue
 
     class Config:
@@ -27,7 +27,7 @@ class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
 
 
 class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
-    type: typing_extensions.Literal["testCaseId"] = "testCaseId"
+    type: typing_extensions.Literal["testCaseId"]
     value: str
 
     class Config:

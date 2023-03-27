@@ -21,10 +21,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def basic(self, value: BasicCustomFiles) -> CustomFiles:
-        return CustomFiles(__root__=_CustomFiles.Basic(**dict(value)))
+        return CustomFiles(__root__=_CustomFiles.Basic(**dict(value), type="basic"))
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
-        return CustomFiles(__root__=_CustomFiles.Custom(value=value))
+        return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))
 
 
 class CustomFiles(pydantic.BaseModel):
@@ -98,13 +98,13 @@ class CustomFiles(pydantic.BaseModel):
 
 class _CustomFiles:
     class Basic(BasicCustomFiles):
-        type: typing_extensions.Literal["basic"] = "basic"
+        type: typing_extensions.Literal["basic"]
 
         class Config:
             frozen = True
 
     class Custom(pydantic.BaseModel):
-        type: typing_extensions.Literal["custom"] = "custom"
+        type: typing_extensions.Literal["custom"]
         value: typing.Dict[Language, Files]
 
         class Config:

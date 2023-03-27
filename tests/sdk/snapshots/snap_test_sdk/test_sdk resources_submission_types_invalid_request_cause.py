@@ -13,21 +13,21 @@ from .unexpected_language_error import UnexpectedLanguageError
 
 
 class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
-    type: typing_extensions.Literal["submissionIdNotFound"] = "submissionIdNotFound"
+    type: typing_extensions.Literal["submissionIdNotFound"]
 
     class Config:
         frozen = True
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
-    type: typing_extensions.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
+    type: typing_extensions.Literal["customTestCasesUnsupported"]
 
     class Config:
         frozen = True
 
 
 class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
-    type: typing_extensions.Literal["unexpectedLanguage"] = "unexpectedLanguage"
+    type: typing_extensions.Literal["unexpectedLanguage"]
 
     class Config:
         frozen = True

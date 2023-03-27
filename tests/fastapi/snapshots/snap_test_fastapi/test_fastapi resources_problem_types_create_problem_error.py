@@ -16,7 +16,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: GenericCreateProblemError) -> CreateProblemError:
-        return CreateProblemError(__root__=_CreateProblemError.Generic(**dict(value)))
+        return CreateProblemError(__root__=_CreateProblemError.Generic(**dict(value), error_type="generic"))
 
 
 class CreateProblemError(pydantic.BaseModel):
@@ -80,7 +80,7 @@ class CreateProblemError(pydantic.BaseModel):
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
+        error_type: typing_extensions.Literal["generic"] = pydantic.Field(alias="_type")
 
         class Config:
             frozen = True

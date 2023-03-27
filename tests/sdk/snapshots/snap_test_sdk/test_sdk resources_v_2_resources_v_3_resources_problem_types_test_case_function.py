@@ -15,14 +15,14 @@ from .void_function_definition import VoidFunctionDefinition
 
 
 class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
-    type: typing_extensions.Literal["withActualResult"] = "withActualResult"
+    type: typing_extensions.Literal["withActualResult"]
 
     class Config:
         frozen = True
 
 
 class TestCaseFunction_Custom(VoidFunctionDefinition):
-    type: typing_extensions.Literal["custom"] = "custom"
+    type: typing_extensions.Literal["custom"]
 
     class Config:
         frozen = True

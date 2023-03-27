@@ -21,24 +21,28 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def server_initialized(self) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.ServerInitialized())
+        return SubmissionResponse(__root__=_SubmissionResponse.ServerInitialized(type="serverInitialized"))
 
     def problem_initialized(self, value: ProblemId) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.ProblemInitialized(value=value))
+        return SubmissionResponse(
+            __root__=_SubmissionResponse.ProblemInitialized(type="problemInitialized", value=value)
+        )
 
     def workspace_initialized(self) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.WorkspaceInitialized())
+        return SubmissionResponse(__root__=_SubmissionResponse.WorkspaceInitialized(type="workspaceInitialized"))
 
     def server_errored(self, value: ExceptionInfo) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.ServerErrored(**dict(value)))
+        return SubmissionResponse(__root__=_SubmissionResponse.ServerErrored(**dict(value), type="serverErrored"))
 
     def code_execution_update(
         self, value: resources_submission_types_code_execution_update_CodeExecutionUpdate
     ) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.CodeExecutionUpdate(value=value))
+        return SubmissionResponse(
+            __root__=_SubmissionResponse.CodeExecutionUpdate(type="codeExecutionUpdate", value=value)
+        )
 
     def terminated(self, value: TerminatedResponse) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.Terminated(**dict(value)))
+        return SubmissionResponse(__root__=_SubmissionResponse.Terminated(**dict(value), type="terminated"))
 
 
 class SubmissionResponse(pydantic.BaseModel):
@@ -185,39 +189,39 @@ class SubmissionResponse(pydantic.BaseModel):
 
 class _SubmissionResponse:
     class ServerInitialized(pydantic.BaseModel):
-        type: typing_extensions.Literal["serverInitialized"] = "serverInitialized"
+        type: typing_extensions.Literal["serverInitialized"]
 
         class Config:
             frozen = True
 
     class ProblemInitialized(pydantic.BaseModel):
-        type: typing_extensions.Literal["problemInitialized"] = "problemInitialized"
+        type: typing_extensions.Literal["problemInitialized"]
         value: ProblemId
 
         class Config:
             frozen = True
 
     class WorkspaceInitialized(pydantic.BaseModel):
-        type: typing_extensions.Literal["workspaceInitialized"] = "workspaceInitialized"
+        type: typing_extensions.Literal["workspaceInitialized"]
 
         class Config:
             frozen = True
 
     class ServerErrored(ExceptionInfo):
-        type: typing_extensions.Literal["serverErrored"] = "serverErrored"
+        type: typing_extensions.Literal["serverErrored"]
 
         class Config:
             frozen = True
 
     class CodeExecutionUpdate(pydantic.BaseModel):
-        type: typing_extensions.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
+        type: typing_extensions.Literal["codeExecutionUpdate"]
         value: resources_submission_types_code_execution_update_CodeExecutionUpdate
 
         class Config:
             frozen = True
 
     class Terminated(TerminatedResponse):
-        type: typing_extensions.Literal["terminated"] = "terminated"
+        type: typing_extensions.Literal["terminated"]
 
         class Config:
             frozen = True

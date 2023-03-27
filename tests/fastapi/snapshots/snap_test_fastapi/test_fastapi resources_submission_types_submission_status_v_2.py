@@ -23,10 +23,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def test(self, value: TestSubmissionStatusV2) -> SubmissionStatusV2:
-        return SubmissionStatusV2(__root__=_SubmissionStatusV2.Test(**dict(value)))
+        return SubmissionStatusV2(__root__=_SubmissionStatusV2.Test(**dict(value), type="test"))
 
     def workspace(self, value: WorkspaceSubmissionStatusV2) -> SubmissionStatusV2:
-        return SubmissionStatusV2(__root__=_SubmissionStatusV2.Workspace(**dict(value)))
+        return SubmissionStatusV2(__root__=_SubmissionStatusV2.Workspace(**dict(value), type="workspace"))
 
 
 class SubmissionStatusV2(pydantic.BaseModel):
@@ -102,13 +102,13 @@ class SubmissionStatusV2(pydantic.BaseModel):
 
 class _SubmissionStatusV2:
     class Test(TestSubmissionStatusV2):
-        type: typing_extensions.Literal["test"] = "test"
+        type: typing_extensions.Literal["test"]
 
         class Config:
             frozen = True
 
     class Workspace(WorkspaceSubmissionStatusV2):
-        type: typing_extensions.Literal["workspace"] = "workspace"
+        type: typing_extensions.Literal["workspace"]
 
         class Config:
             frozen = True

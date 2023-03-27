@@ -11,7 +11,7 @@ from .playlist_id import PlaylistId
 
 
 class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic.BaseModel):
-    type: typing_extensions.Literal["playlistId"] = "playlistId"
+    type: typing_extensions.Literal["playlistId"]
     value: PlaylistId
 
     class Config:

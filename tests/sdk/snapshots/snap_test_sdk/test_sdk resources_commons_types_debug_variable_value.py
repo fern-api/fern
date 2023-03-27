@@ -16,7 +16,7 @@ from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListV
 
 
 class DebugVariableValue_IntegerValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["integerValue"] = "integerValue"
+    type: typing_extensions.Literal["integerValue"]
     value: int
 
     class Config:
@@ -24,7 +24,7 @@ class DebugVariableValue_IntegerValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_BooleanValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["booleanValue"] = "booleanValue"
+    type: typing_extensions.Literal["booleanValue"]
     value: bool
 
     class Config:
@@ -32,7 +32,7 @@ class DebugVariableValue_BooleanValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_DoubleValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["doubleValue"] = "doubleValue"
+    type: typing_extensions.Literal["doubleValue"]
     value: float
 
     class Config:
@@ -40,7 +40,7 @@ class DebugVariableValue_DoubleValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_StringValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["stringValue"] = "stringValue"
+    type: typing_extensions.Literal["stringValue"]
     value: str
 
     class Config:
@@ -48,7 +48,7 @@ class DebugVariableValue_StringValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_CharValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["charValue"] = "charValue"
+    type: typing_extensions.Literal["charValue"]
     value: str
 
     class Config:
@@ -56,14 +56,14 @@ class DebugVariableValue_CharValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_MapValue(DebugMapValue):
-    type: typing_extensions.Literal["mapValue"] = "mapValue"
+    type: typing_extensions.Literal["mapValue"]
 
     class Config:
         frozen = True
 
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["listValue"] = "listValue"
+    type: typing_extensions.Literal["listValue"]
     value: typing.List[DebugVariableValue]
 
     class Config:
@@ -71,42 +71,42 @@ class DebugVariableValue_ListValue(pydantic.BaseModel):
 
 
 class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
-    type: typing_extensions.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
+    type: typing_extensions.Literal["binaryTreeNodeValue"]
 
     class Config:
         frozen = True
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
-    type: typing_extensions.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
+    type: typing_extensions.Literal["singlyLinkedListNodeValue"]
 
     class Config:
         frozen = True
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
-    type: typing_extensions.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
+    type: typing_extensions.Literal["doublyLinkedListNodeValue"]
 
     class Config:
         frozen = True
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["undefinedValue"] = "undefinedValue"
+    type: typing_extensions.Literal["undefinedValue"]
 
     class Config:
         frozen = True
 
 
 class DebugVariableValue_NullValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["nullValue"] = "nullValue"
+    type: typing_extensions.Literal["nullValue"]
 
     class Config:
         frozen = True
 
 
 class DebugVariableValue_GenericValue(GenericValue):
-    type: typing_extensions.Literal["genericValue"] = "genericValue"
+    type: typing_extensions.Literal["genericValue"]
 
     class Config:
         frozen = True

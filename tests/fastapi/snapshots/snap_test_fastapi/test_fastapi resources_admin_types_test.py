@@ -15,10 +15,10 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def and_(self, value: bool) -> Test:
-        return Test(__root__=_Test.And(value=value))
+        return Test(__root__=_Test.And(type="and", value=value))
 
     def or_(self, value: bool) -> Test:
-        return Test(__root__=_Test.Or(value=value))
+        return Test(__root__=_Test.Or(type="or", value=value))
 
 
 class Test(pydantic.BaseModel):
@@ -77,14 +77,14 @@ class Test(pydantic.BaseModel):
 
 class _Test:
     class And(pydantic.BaseModel):
-        type: typing_extensions.Literal["and"] = "and"
+        type: typing_extensions.Literal["and"]
         value: bool
 
         class Config:
             frozen = True
 
     class Or(pydantic.BaseModel):
-        type: typing_extensions.Literal["or"] = "or"
+        type: typing_extensions.Literal["or"]
         value: bool
 
         class Config:

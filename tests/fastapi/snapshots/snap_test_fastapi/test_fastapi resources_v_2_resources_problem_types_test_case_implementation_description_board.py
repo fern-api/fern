@@ -17,12 +17,12 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def html(self, value: str) -> TestCaseImplementationDescriptionBoard:
         return TestCaseImplementationDescriptionBoard(
-            __root__=_TestCaseImplementationDescriptionBoard.Html(value=value)
+            __root__=_TestCaseImplementationDescriptionBoard.Html(type="html", value=value)
         )
 
     def param_id(self, value: ParameterId) -> TestCaseImplementationDescriptionBoard:
         return TestCaseImplementationDescriptionBoard(
-            __root__=_TestCaseImplementationDescriptionBoard.ParamId(value=value)
+            __root__=_TestCaseImplementationDescriptionBoard.ParamId(type="paramId", value=value)
         )
 
 
@@ -114,14 +114,14 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
 
 class _TestCaseImplementationDescriptionBoard:
     class Html(pydantic.BaseModel):
-        type: typing_extensions.Literal["html"] = "html"
+        type: typing_extensions.Literal["html"]
         value: str
 
         class Config:
             frozen = True
 
     class ParamId(pydantic.BaseModel):
-        type: typing_extensions.Literal["paramId"] = "paramId"
+        type: typing_extensions.Literal["paramId"]
         value: ParameterId
 
         class Config:

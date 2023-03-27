@@ -19,25 +19,31 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def running(self, value: RunningSubmissionState) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Running(value=value))
+        return WorkspaceSubmissionUpdateInfo(
+            __root__=_WorkspaceSubmissionUpdateInfo.Running(type="running", value=value)
+        )
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Ran(**dict(value)))
+        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Ran(**dict(value), type="ran"))
 
     def stopped(self) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Stopped())
+        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped"))
 
     def traced(self) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Traced())
+        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Traced(type="traced"))
 
     def traced_v_2(self, value: WorkspaceTracedUpdate) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.TracedV2(**dict(value)))
+        return WorkspaceSubmissionUpdateInfo(
+            __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(**dict(value), type="tracedV2")
+        )
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Errored(value=value))
+        return WorkspaceSubmissionUpdateInfo(
+            __root__=_WorkspaceSubmissionUpdateInfo.Errored(type="errored", value=value)
+        )
 
     def finished(self) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Finished())
+        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Finished(type="finished"))
 
 
 class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
@@ -192,45 +198,45 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
 
 class _WorkspaceSubmissionUpdateInfo:
     class Running(pydantic.BaseModel):
-        type: typing_extensions.Literal["running"] = "running"
+        type: typing_extensions.Literal["running"]
         value: RunningSubmissionState
 
         class Config:
             frozen = True
 
     class Ran(WorkspaceRunDetails):
-        type: typing_extensions.Literal["ran"] = "ran"
+        type: typing_extensions.Literal["ran"]
 
         class Config:
             frozen = True
 
     class Stopped(pydantic.BaseModel):
-        type: typing_extensions.Literal["stopped"] = "stopped"
+        type: typing_extensions.Literal["stopped"]
 
         class Config:
             frozen = True
 
     class Traced(pydantic.BaseModel):
-        type: typing_extensions.Literal["traced"] = "traced"
+        type: typing_extensions.Literal["traced"]
 
         class Config:
             frozen = True
 
     class TracedV2(WorkspaceTracedUpdate):
-        type: typing_extensions.Literal["tracedV2"] = "tracedV2"
+        type: typing_extensions.Literal["tracedV2"]
 
         class Config:
             frozen = True
 
     class Errored(pydantic.BaseModel):
-        type: typing_extensions.Literal["errored"] = "errored"
+        type: typing_extensions.Literal["errored"]
         value: ErrorInfo
 
         class Config:
             frozen = True
 
     class Finished(pydantic.BaseModel):
-        type: typing_extensions.Literal["finished"] = "finished"
+        type: typing_extensions.Literal["finished"]
 
         class Config:
             frozen = True

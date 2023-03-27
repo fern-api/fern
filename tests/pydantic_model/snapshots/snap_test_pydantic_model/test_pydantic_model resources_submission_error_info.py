@@ -13,21 +13,21 @@ from .runtime_error import RuntimeError
 
 
 class ErrorInfo_CompileError(CompileError):
-    type: typing_extensions.Literal["compileError"] = "compileError"
+    type: typing_extensions.Literal["compileError"]
 
     class Config:
         frozen = True
 
 
 class ErrorInfo_RuntimeError(RuntimeError):
-    type: typing_extensions.Literal["runtimeError"] = "runtimeError"
+    type: typing_extensions.Literal["runtimeError"]
 
     class Config:
         frozen = True
 
 
 class ErrorInfo_InternalError(InternalError):
-    type: typing_extensions.Literal["internalError"] = "internalError"
+    type: typing_extensions.Literal["internalError"]
 
     class Config:
         frozen = True

@@ -15,14 +15,14 @@ from .void_function_definition_that_takes_actual_result import VoidFunctionDefin
 
 
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
-    type: typing_extensions.Literal["deepEquality"] = "deepEquality"
+    type: typing_extensions.Literal["deepEquality"]
 
     class Config:
         frozen = True
 
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
-    type: typing_extensions.Literal["custom"] = "custom"
+    type: typing_extensions.Literal["custom"]
 
     class Config:
         frozen = True

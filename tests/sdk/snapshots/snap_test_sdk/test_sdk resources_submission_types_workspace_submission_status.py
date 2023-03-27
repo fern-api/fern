@@ -13,14 +13,14 @@ from .workspace_run_details import WorkspaceRunDetails
 
 
 class WorkspaceSubmissionStatus_Stopped(pydantic.BaseModel):
-    type: typing_extensions.Literal["stopped"] = "stopped"
+    type: typing_extensions.Literal["stopped"]
 
     class Config:
         frozen = True
 
 
 class WorkspaceSubmissionStatus_Errored(pydantic.BaseModel):
-    type: typing_extensions.Literal["errored"] = "errored"
+    type: typing_extensions.Literal["errored"]
     value: ErrorInfo
 
     class Config:
@@ -28,7 +28,7 @@ class WorkspaceSubmissionStatus_Errored(pydantic.BaseModel):
 
 
 class WorkspaceSubmissionStatus_Running(pydantic.BaseModel):
-    type: typing_extensions.Literal["running"] = "running"
+    type: typing_extensions.Literal["running"]
     value: RunningSubmissionState
 
     class Config:
@@ -36,14 +36,14 @@ class WorkspaceSubmissionStatus_Running(pydantic.BaseModel):
 
 
 class WorkspaceSubmissionStatus_Ran(WorkspaceRunDetails):
-    type: typing_extensions.Literal["ran"] = "ran"
+    type: typing_extensions.Literal["ran"]
 
     class Config:
         frozen = True
 
 
 class WorkspaceSubmissionStatus_Traced(WorkspaceRunDetails):
-    type: typing_extensions.Literal["traced"] = "traced"
+    type: typing_extensions.Literal["traced"]
 
     class Config:
         frozen = True

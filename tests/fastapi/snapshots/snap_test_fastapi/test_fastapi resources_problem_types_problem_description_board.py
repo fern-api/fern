@@ -16,13 +16,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def html(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(value=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Html(type="html", value=value))
 
     def variable(self, value: VariableValue) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(value=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.Variable(type="variable", value=value))
 
     def test_case_id(self, value: str) -> ProblemDescriptionBoard:
-        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.TestCaseId(value=value))
+        return ProblemDescriptionBoard(__root__=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value))
 
 
 class ProblemDescriptionBoard(pydantic.BaseModel):
@@ -131,21 +131,21 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
 
 class _ProblemDescriptionBoard:
     class Html(pydantic.BaseModel):
-        type: typing_extensions.Literal["html"] = "html"
+        type: typing_extensions.Literal["html"]
         value: str
 
         class Config:
             frozen = True
 
     class Variable(pydantic.BaseModel):
-        type: typing_extensions.Literal["variable"] = "variable"
+        type: typing_extensions.Literal["variable"]
         value: VariableValue
 
         class Config:
             frozen = True
 
     class TestCaseId(pydantic.BaseModel):
-        type: typing_extensions.Literal["testCaseId"] = "testCaseId"
+        type: typing_extensions.Literal["testCaseId"]
         value: str
 
         class Config:

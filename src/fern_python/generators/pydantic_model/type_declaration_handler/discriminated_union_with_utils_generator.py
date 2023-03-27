@@ -243,12 +243,20 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     single_property=lambda property: no_expressions,
                     no_properties=lambda: no_expressions,
                 ),
-                kwargs=single_union_type.shape.visit(
-                    same_properties_as_object=lambda type_name: None,
-                    single_property=lambda property: [
-                        (get_field_name_for_single_property(property), AST.Expression(BUILDER_ARGUMENT_NAME))
-                    ],
-                    no_properties=lambda: None,
+                kwargs=[
+                    (
+                        self._get_discriminant_attr_name(),
+                        self._get_discriminant_value_for_single_union_type(single_union_type),
+                    )
+                ]
+                + (
+                    single_union_type.shape.visit(
+                        same_properties_as_object=lambda type_name: [],
+                        single_property=lambda property: [
+                            (get_field_name_for_single_property(property), AST.Expression(BUILDER_ARGUMENT_NAME))
+                        ],
+                        no_properties=lambda: [],
+                    )
                 ),
             )
 
@@ -271,7 +279,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
             type_hint=AST.TypeHint.literal(discriminant_value),
             json_field_name=self._union.discriminant.wire_value,
-            default_value=discriminant_value,
         )
 
     def _get_discriminant_attr_name(self) -> str:

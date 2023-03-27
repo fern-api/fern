@@ -29,37 +29,39 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def building_executor(self, value: BuildingExecutorResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.BuildingExecutor(**dict(value)))
+        return CodeExecutionUpdate(
+            __root__=_CodeExecutionUpdate.BuildingExecutor(**dict(value), type="buildingExecutor")
+        )
 
     def running(self, value: RunningResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Running(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Running(**dict(value), type="running"))
 
     def errored(self, value: ErroredResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Errored(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Errored(**dict(value), type="errored"))
 
     def stopped(self, value: StoppedResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Stopped(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Stopped(**dict(value), type="stopped"))
 
     def graded(self, value: GradedResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Graded(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Graded(**dict(value), type="graded"))
 
     def graded_v_2(self, value: GradedResponseV2) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.GradedV2(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.GradedV2(**dict(value), type="gradedV2"))
 
     def workspace_ran(self, value: WorkspaceRanResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.WorkspaceRan(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.WorkspaceRan(**dict(value), type="workspaceRan"))
 
     def recording(self, value: RecordingResponseNotification) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Recording(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Recording(**dict(value), type="recording"))
 
     def recorded(self, value: RecordedResponseNotification) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Recorded(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Recorded(**dict(value), type="recorded"))
 
     def invalid_request(self, value: InvalidRequestResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.InvalidRequest(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.InvalidRequest(**dict(value), type="invalidRequest"))
 
     def finished(self, value: FinishedResponse) -> CodeExecutionUpdate:
-        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Finished(**dict(value)))
+        return CodeExecutionUpdate(__root__=_CodeExecutionUpdate.Finished(**dict(value), type="finished"))
 
 
 class CodeExecutionUpdate(pydantic.BaseModel):
@@ -254,67 +256,67 @@ class CodeExecutionUpdate(pydantic.BaseModel):
 
 class _CodeExecutionUpdate:
     class BuildingExecutor(BuildingExecutorResponse):
-        type: typing_extensions.Literal["buildingExecutor"] = "buildingExecutor"
+        type: typing_extensions.Literal["buildingExecutor"]
 
         class Config:
             frozen = True
 
     class Running(RunningResponse):
-        type: typing_extensions.Literal["running"] = "running"
+        type: typing_extensions.Literal["running"]
 
         class Config:
             frozen = True
 
     class Errored(ErroredResponse):
-        type: typing_extensions.Literal["errored"] = "errored"
+        type: typing_extensions.Literal["errored"]
 
         class Config:
             frozen = True
 
     class Stopped(StoppedResponse):
-        type: typing_extensions.Literal["stopped"] = "stopped"
+        type: typing_extensions.Literal["stopped"]
 
         class Config:
             frozen = True
 
     class Graded(GradedResponse):
-        type: typing_extensions.Literal["graded"] = "graded"
+        type: typing_extensions.Literal["graded"]
 
         class Config:
             frozen = True
 
     class GradedV2(GradedResponseV2):
-        type: typing_extensions.Literal["gradedV2"] = "gradedV2"
+        type: typing_extensions.Literal["gradedV2"]
 
         class Config:
             frozen = True
 
     class WorkspaceRan(WorkspaceRanResponse):
-        type: typing_extensions.Literal["workspaceRan"] = "workspaceRan"
+        type: typing_extensions.Literal["workspaceRan"]
 
         class Config:
             frozen = True
 
     class Recording(RecordingResponseNotification):
-        type: typing_extensions.Literal["recording"] = "recording"
+        type: typing_extensions.Literal["recording"]
 
         class Config:
             frozen = True
 
     class Recorded(RecordedResponseNotification):
-        type: typing_extensions.Literal["recorded"] = "recorded"
+        type: typing_extensions.Literal["recorded"]
 
         class Config:
             frozen = True
 
     class InvalidRequest(InvalidRequestResponse):
-        type: typing_extensions.Literal["invalidRequest"] = "invalidRequest"
+        type: typing_extensions.Literal["invalidRequest"]
 
         class Config:
             frozen = True
 
     class Finished(FinishedResponse):
-        type: typing_extensions.Literal["finished"] = "finished"
+        type: typing_extensions.Literal["finished"]
 
         class Config:
             frozen = True

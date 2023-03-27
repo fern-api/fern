@@ -12,70 +12,70 @@ from .map_type import MapType
 
 
 class VariableType_IntegerType(pydantic.BaseModel):
-    type: typing_extensions.Literal["integerType"] = "integerType"
+    type: typing_extensions.Literal["integerType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_DoubleType(pydantic.BaseModel):
-    type: typing_extensions.Literal["doubleType"] = "doubleType"
+    type: typing_extensions.Literal["doubleType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_BooleanType(pydantic.BaseModel):
-    type: typing_extensions.Literal["booleanType"] = "booleanType"
+    type: typing_extensions.Literal["booleanType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_StringType(pydantic.BaseModel):
-    type: typing_extensions.Literal["stringType"] = "stringType"
+    type: typing_extensions.Literal["stringType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_CharType(pydantic.BaseModel):
-    type: typing_extensions.Literal["charType"] = "charType"
+    type: typing_extensions.Literal["charType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_ListType(ListType):
-    type: typing_extensions.Literal["listType"] = "listType"
+    type: typing_extensions.Literal["listType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_MapType(MapType):
-    type: typing_extensions.Literal["mapType"] = "mapType"
+    type: typing_extensions.Literal["mapType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_BinaryTreeType(pydantic.BaseModel):
-    type: typing_extensions.Literal["binaryTreeType"] = "binaryTreeType"
+    type: typing_extensions.Literal["binaryTreeType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_SinglyLinkedListType(pydantic.BaseModel):
-    type: typing_extensions.Literal["singlyLinkedListType"] = "singlyLinkedListType"
+    type: typing_extensions.Literal["singlyLinkedListType"]
 
     class Config:
         frozen = True
 
 
 class VariableType_DoublyLinkedListType(pydantic.BaseModel):
-    type: typing_extensions.Literal["doublyLinkedListType"] = "doublyLinkedListType"
+    type: typing_extensions.Literal["doublyLinkedListType"]
 
     class Config:
         frozen = True

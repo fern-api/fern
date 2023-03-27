@@ -9,7 +9,7 @@ import typing_extensions
 
 
 class Test_And(pydantic.BaseModel):
-    type: typing_extensions.Literal["and"] = "and"
+    type: typing_extensions.Literal["and"]
     value: bool
 
     class Config:
@@ -17,7 +17,7 @@ class Test_And(pydantic.BaseModel):
 
 
 class Test_Or(pydantic.BaseModel):
-    type: typing_extensions.Literal["or"] = "or"
+    type: typing_extensions.Literal["or"]
     value: bool
 
     class Config:

@@ -18,13 +18,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def compile_error(self, value: resources_submission_types_compile_error_CompileError) -> ErrorInfo:
-        return ErrorInfo(__root__=_ErrorInfo.CompileError(**dict(value)))
+        return ErrorInfo(__root__=_ErrorInfo.CompileError(**dict(value), type="compileError"))
 
     def runtime_error(self, value: resources_submission_types_runtime_error_RuntimeError) -> ErrorInfo:
-        return ErrorInfo(__root__=_ErrorInfo.RuntimeError(**dict(value)))
+        return ErrorInfo(__root__=_ErrorInfo.RuntimeError(**dict(value), type="runtimeError"))
 
     def internal_error(self, value: resources_submission_types_internal_error_InternalError) -> ErrorInfo:
-        return ErrorInfo(__root__=_ErrorInfo.InternalError(**dict(value)))
+        return ErrorInfo(__root__=_ErrorInfo.InternalError(**dict(value), type="internalError"))
 
 
 class ErrorInfo(pydantic.BaseModel):
@@ -105,19 +105,19 @@ class ErrorInfo(pydantic.BaseModel):
 
 class _ErrorInfo:
     class CompileError(resources_submission_types_compile_error_CompileError):
-        type: typing_extensions.Literal["compileError"] = "compileError"
+        type: typing_extensions.Literal["compileError"]
 
         class Config:
             frozen = True
 
     class RuntimeError(resources_submission_types_runtime_error_RuntimeError):
-        type: typing_extensions.Literal["runtimeError"] = "runtimeError"
+        type: typing_extensions.Literal["runtimeError"]
 
         class Config:
             frozen = True
 
     class InternalError(resources_submission_types_internal_error_InternalError):
-        type: typing_extensions.Literal["internalError"] = "internalError"
+        type: typing_extensions.Literal["internalError"]
 
         class Config:
             frozen = True

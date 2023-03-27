@@ -21,13 +21,15 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def void(self, value: VoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(__root__=_FunctionSignature.Void(**dict(value)))
+        return FunctionSignature(__root__=_FunctionSignature.Void(**dict(value), type="void"))
 
     def non_void(self, value: NonVoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(__root__=_FunctionSignature.NonVoid(**dict(value)))
+        return FunctionSignature(__root__=_FunctionSignature.NonVoid(**dict(value), type="nonVoid"))
 
     def void_that_takes_actual_result(self, value: VoidFunctionSignatureThatTakesActualResult) -> FunctionSignature:
-        return FunctionSignature(__root__=_FunctionSignature.VoidThatTakesActualResult(**dict(value)))
+        return FunctionSignature(
+            __root__=_FunctionSignature.VoidThatTakesActualResult(**dict(value), type="voidThatTakesActualResult")
+        )
 
 
 class FunctionSignature(pydantic.BaseModel):
@@ -132,19 +134,19 @@ class FunctionSignature(pydantic.BaseModel):
 
 class _FunctionSignature:
     class Void(VoidFunctionSignature):
-        type: typing_extensions.Literal["void"] = "void"
+        type: typing_extensions.Literal["void"]
 
         class Config:
             frozen = True
 
     class NonVoid(NonVoidFunctionSignature):
-        type: typing_extensions.Literal["nonVoid"] = "nonVoid"
+        type: typing_extensions.Literal["nonVoid"]
 
         class Config:
             frozen = True
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
-        type: typing_extensions.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
+        type: typing_extensions.Literal["voidThatTakesActualResult"]
 
         class Config:
             frozen = True
