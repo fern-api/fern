@@ -1,4 +1,3 @@
-from inspect import cleandoc
 from pathlib import Path
 
 from fern_python.codegen import ast
@@ -23,24 +22,27 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
     with open(f"{tmpdir}/pyproject.toml") as f:
         pyproject_output = f.read()
 
-    assert pyproject_output == cleandoc(
-        """
-    [tool.poetry]
-    name = "fern-fern-ir-model"
-    version = "0.0.0"
-    description = ""
-    authors = []
-    packages = [
-        { include = "ir", from = "src"}
-    ]
+    assert (
+        pyproject_output
+        == """
+[tool.poetry]
+name = "fern-fern-ir-model"
+version = "0.0.0"
+description = ""
+authors = []
+packages = [
+    { include = "ir", from = "src"}
+]
 
-    [tool.poetry.dependencies]
-    python = "^3.7"
-    pydantic = "^1.10.2"
+[tool.poetry.dependencies]
+python = "^3.7"
+pydantic = "^1.10.2"
 
+[tool.poetry.dev-dependencies]
+mypy = "0.971"
 
-    [build-system]
-    requires = ["poetry-core"]
-    build-backend = "poetry.core.masonry.api"
-    """
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+"""
     )

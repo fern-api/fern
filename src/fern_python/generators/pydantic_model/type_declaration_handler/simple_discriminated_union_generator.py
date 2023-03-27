@@ -31,7 +31,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
 
         for single_union_type in self._union.types:
             with PydanticModel(
-                name=f"{self._name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",  # noqa: E501
+                name=f"{self._name.name.pascal_case.unsafe_name}_{single_union_type.discriminant_value.name.pascal_case.unsafe_name}",
                 source_file=self._source_file,
                 base_models=single_union_type.shape.visit(
                     same_properties_as_object=lambda type_name: [

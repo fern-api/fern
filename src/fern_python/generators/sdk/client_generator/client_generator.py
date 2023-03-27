@@ -433,7 +433,7 @@ class ClientGenerator:
                     error_declaration = self._context.ir.errors[error.error.error_id]
 
                     writer.write_line(
-                        f'if {ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.discriminant.wire_value}"] == "{error_declaration.discriminant_value.wire_value}":'  # noqa: E501
+                        f'if {ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.discriminant.wire_value}"] == "{error_declaration.discriminant_value.wire_value}":'
                     )
                     with writer.indent():
                         writer.write("raise ")
@@ -446,7 +446,7 @@ class ClientGenerator:
                                             error_declaration.type
                                         ),
                                         AST.Expression(
-                                            f'{ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.content_property.wire_value}"]'  # noqa: E501
+                                            f'{ClientGenerator.RESPONSE_JSON_VARIABLE}["{strategy.content_property.wire_value}"]'
                                         ),
                                     )
                                 ]
@@ -582,7 +582,7 @@ class ClientGenerator:
                 (
                     "Authorization",
                     AST.Expression(
-                        f'f"Bearer {{self.{ClientGenerator.TOKEN_MEMBER_NAME}}}" if self.{ClientGenerator.TOKEN_MEMBER_NAME} is not None else None'  # noqa: E501
+                        f'f"Bearer {{self.{ClientGenerator.TOKEN_MEMBER_NAME}}}" if self.{ClientGenerator.TOKEN_MEMBER_NAME} is not None else None'
                     ),
                 )
             )

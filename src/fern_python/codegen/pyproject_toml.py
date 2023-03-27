@@ -3,7 +3,6 @@ from __future__ import annotations
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from inspect import cleandoc
 from typing import List, Set
 
 from fern_python.codegen.ast.dependency.dependency import Dependency
@@ -45,7 +44,7 @@ class PyProjectToml:
         for block in blocks:
             content += block.to_string()
         with open(os.path.join(self._path, "pyproject.toml"), "w") as f:
-            f.write(cleandoc(content))
+            f.write(content)
 
     class Block(ABC):
         @abstractmethod
@@ -60,15 +59,15 @@ class PyProjectToml:
 
         def to_string(self) -> str:
             return f"""
-            [tool.poetry]
-            name = "{self.name}"
-            version = "{self.version}"
-            description = ""
-            authors = []
-            packages = [
-                {{ include = "{self.package.include}", from = "{self.package._from}"}}
-            ]
-            """
+[tool.poetry]
+name = "{self.name}"
+version = "{self.version}"
+description = ""
+authors = []
+packages = [
+    {{ include = "{self.package.include}", from = "{self.package._from}"}}
+]
+"""
 
     @dataclass(frozen=True)
     class DependenciesBlock(Block):
@@ -81,16 +80,18 @@ class PyProjectToml:
                 deps += f'{dep.name.replace(".", "-")} = "{dep.version}"\n'
             self.dependencies
             return f"""
-            [tool.poetry.dependencies]
-            python = "^{self.python_version}"
-            {deps}
-            """
+[tool.poetry.dependencies]
+python = "^{self.python_version}"
+{deps}
+[tool.poetry.dev-dependencies]
+mypy = "0.971"
+"""
 
     @dataclass(frozen=True)
     class BuildSystemBlock(Block):
         def to_string(self) -> str:
             return """
-            [build-system]
-            requires = ["poetry-core"]
-            build-backend = "poetry.core.masonry.api"
-            """
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+"""

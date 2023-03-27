@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
+from pathlib import Path
 from types import TracebackType
 from typing import Optional, Set, Type
 
@@ -86,6 +87,11 @@ class Project:
             filepath=filepath_in_project,
             exports=exports,
         )
+
+    def add_file(self, filepath: str, contents: str) -> None:
+        file = Path(os.path.join(self._root_filepath, filepath))
+        file.parent.mkdir(exist_ok=True, parents=True)
+        file.write_text(contents)
 
     def finish(self) -> None:
         self._module_manager.write_modules(filepath=self._project_filepath)

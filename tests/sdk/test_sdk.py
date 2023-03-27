@@ -12,10 +12,10 @@ def test_trace_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(snapshot=snapshot, fixture_name="trace", tmpdir=tmpdir, cli=cli, filename_of_test=__file__)
 
 
-def test_imdb_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
+def test_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(
         snapshot=snapshot,
-        fixture_name="imdb",
+        fixture_name="imdb-publish",
         tmpdir=tmpdir,
         cli=cli,
         filename_of_test=__file__,
@@ -63,5 +63,29 @@ def test_imdb_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
                 ),
                 version="1.0.0",
             )
+        ),
+    )
+
+
+def test_github_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="imdb-github",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        output_mode=config.OutputMode.factory.github(
+            config.GithubOutputMode(
+                repo_url="some-repo-url",
+                version="1.0.0",
+                publish_info=config.GithubPublishInfo.factory.pypi(
+                    config.PypiGithubPublishInfo(
+                        registry_url="https://pypi.org/",
+                        package_name="my-package-name",
+                        username_environment_variable="PYPI_USERNAME",
+                        password_environment_variable="PYPI_PASSWORD",
+                    )
+                ),
+            ),
         ),
     )

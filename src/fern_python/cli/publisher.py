@@ -12,7 +12,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 class Publisher:
 
-    _poetry_repo_name: str = "fern"
+    _REMOTE_PYPI_REPO_NAME: str = "remote"
 
     def __init__(
         self,
@@ -37,20 +37,20 @@ class Publisher:
             command=[
                 "poetry",
                 "config",
-                f"repositories.{self._poetry_repo_name}",
+                f"repositories.{Publisher._REMOTE_PYPI_REPO_NAME}",
                 pypi_registry_config.registry_url,
             ],
-            safe_command="poetry config repositories.fern <url>",
+            safe_command=f"poetry config repositories.{Publisher._REMOTE_PYPI_REPO_NAME} <url>",
         )
         self._run_command(
             command=[
                 "poetry",
                 "config",
-                f"http-basic.{self._poetry_repo_name}",
+                f"http-basic.{self._REMOTE_PYPI_REPO_NAME}",
                 pypi_registry_config.username,
                 pypi_registry_config.password,
             ],
-            safe_command="poetry config http-basic.fern <creds>",
+            safe_command=f"poetry config http-basic.{Publisher._REMOTE_PYPI_REPO_NAME} <creds>",
         )
 
         publish_command = [
@@ -58,13 +58,13 @@ class Publisher:
             "publish",
             "--build",
             "--repository",
-            self._poetry_repo_name,
+            Publisher._REMOTE_PYPI_REPO_NAME,
         ]
         if self._generator_config.dry_run:
             publish_command.append("--dry-run")
         self._run_command(
             command=publish_command,
-            safe_command="poetry publish",
+            safe_command=" ".join(publish_command),
         )
 
     def _run_command(
