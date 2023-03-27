@@ -15,6 +15,7 @@ class GeneratorExecWrapper:
         generator_config.environment.visit(local=lambda: (), remote=lambda env: self._init_remote(env))
 
     def _init_remote(self, env: RemoteGeneratorEnvironment) -> None:
+        print("Initializing generator exec client", env.coordinator_url_v_2)
         self.generator_exec_client = FernGeneratorExec(environment=env.coordinator_url_v_2)
         self.task_id = env.id
 
@@ -22,5 +23,7 @@ class GeneratorExecWrapper:
         self.send_updates(generator_updates=[generator_update])
 
     def send_updates(self, generator_updates: typing.List[GeneratorUpdate]) -> None:
+        print("Maybe sending updates", generator_updates)
         if self.generator_exec_client is not None and self.task_id is not None:
+            print("Sending updates indeed!")
             self.generator_exec_client.logging.send_update(task_id=self.task_id, request=generator_updates)
