@@ -110,6 +110,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.7
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y
       - name: Install dependencies
         run: poetry install
       - name: Compile
@@ -127,6 +130,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.7
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y
       - name: Install dependencies
         run: poetry install"""
 
