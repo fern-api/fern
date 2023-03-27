@@ -1,5 +1,5 @@
 import fern.ir.pydantic as ir_types
-from generator_exec.resources.config import GeneratorConfig
+from fern.generator_exec.sdk.resources.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project

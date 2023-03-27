@@ -14,9 +14,6 @@ class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
     def __init__(self, filepath_creator: SdkFilepathCreator):
         super().__init__(filepath_creator=filepath_creator)
 
-    def _get_generator_name_for_containing_folder(self) -> str:
-        return "sdk"
-
     def _get_directories_for_fern_filepath_part(
         self,
         *,

@@ -1,5 +1,5 @@
 import fern.ir.pydantic as ir_types
-from generator_exec.resources import GeneratorConfig
+from fern.generator_exec.sdk.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
 
