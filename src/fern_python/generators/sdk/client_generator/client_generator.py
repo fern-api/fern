@@ -306,28 +306,12 @@ class ClientGenerator:
                 )
             )
 
-            writer.write_line(f"if 200 <= {ClientGenerator.RESPONSE_VARIABLE}.status_code < 300:")
-            with writer.indent():
-                if endpoint.response is None:
-                    writer.write_line("return")
-                else:
-                    writer.write("return ")
-                    writer.write_node(
-                        Pydantic.parse_obj_as(
-                            self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                endpoint.response.response_body_type
-                            ),
-                            AST.Expression(ClientGenerator.RESPONSE_VARIABLE),
-                        )
-                    )
-                    writer.write_newline_if_last_line_not()
-
             self._context.ir.error_discrimination_strategy.visit(
-                status_code=lambda: self._write_status_code_discriminated_error_handlers(
+                status_code=lambda: self._write_status_code_discriminated_response_handler(
                     endpoint=endpoint,
                     writer=writer,
                 ),
-                property=lambda strategy: self._write_property_discriminated_error_handlers(
+                property=lambda strategy: self._write_property_discriminated_response_handler(
                     endpoint=endpoint, writer=writer, strategy=strategy
                 ),
             )
@@ -354,9 +338,25 @@ class ClientGenerator:
             )
             writer.write_newline_if_last_line_not()
 
-    def _write_status_code_discriminated_error_handlers(
+    def _write_status_code_discriminated_response_handler(
         self, *, endpoint: ir_types.HttpEndpoint, writer: AST.NodeWriter
     ) -> None:
+        writer.write_line(f"if 200 <= {ClientGenerator.RESPONSE_VARIABLE}.status_code < 300:")
+        with writer.indent():
+            if endpoint.response is None:
+                writer.write_line("return")
+            else:
+                writer.write("return ")
+                writer.write_node(
+                    Pydantic.parse_obj_as(
+                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            endpoint.response.response_body_type
+                        ),
+                        AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.json()"),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+
         for error in endpoint.errors.get_as_list():
             error_declaration = self._context.ir.errors[error.error.error_id]
 
@@ -389,14 +389,34 @@ class ClientGenerator:
         )
         writer.write_newline_if_last_line_not()
 
-    def _write_property_discriminated_error_handlers(
+    def _write_property_discriminated_response_handler(
         self,
         *,
         endpoint: ir_types.HttpEndpoint,
         writer: AST.NodeWriter,
         strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
     ) -> None:
-        self._try_deserialize_json_response(writer=writer)
+        if endpoint.response is not None:
+            self._try_deserialize_json_response(writer=writer)
+
+        writer.write_line(f"if 200 <= {ClientGenerator.RESPONSE_VARIABLE}.status_code < 300:")
+        with writer.indent():
+            if endpoint.response is None:
+                writer.write_line("return")
+            else:
+                writer.write("return ")
+                writer.write_node(
+                    Pydantic.parse_obj_as(
+                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            endpoint.response.response_body_type
+                        ),
+                        AST.Expression(ClientGenerator.RESPONSE_JSON_VARIABLE),
+                    )
+                )
+                writer.write_newline_if_last_line_not()
+
+        if endpoint.response is None:
+            self._try_deserialize_json_response(writer=writer)
 
         if len(endpoint.errors.get_as_list()) > 0:
             writer.write_line(f'if "{strategy.discriminant.wire_value}" in {ClientGenerator.RESPONSE_JSON_VARIABLE}:')
