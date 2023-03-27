@@ -2,6 +2,7 @@
 
 import typing
 import urllib
+from json.decoder import JSONDecodeError
 
 import httpx
 import pydantic
@@ -38,7 +39,10 @@ class ProblemClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(CreateProblemResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
@@ -55,7 +59,10 @@ class ProblemClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(UpdateProblemResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
@@ -71,7 +78,10 @@ class ProblemClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_default_starter_files(
@@ -88,7 +98,10 @@ class ProblemClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(GetDefaultStarterFilesResponse, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)

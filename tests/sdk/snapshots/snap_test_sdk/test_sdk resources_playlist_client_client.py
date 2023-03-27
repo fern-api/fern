@@ -2,6 +2,7 @@
 
 import typing
 import urllib
+from json.decoder import JSONDecodeError
 
 import httpx
 import pydantic
@@ -38,7 +39,10 @@ class PlaylistClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Playlist, _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
@@ -70,7 +74,10 @@ class PlaylistClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Playlist], _response)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
@@ -86,7 +93,10 @@ class PlaylistClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Playlist, _response)  # type: ignore
         if "errorName" in _response_json:
@@ -112,7 +122,10 @@ class PlaylistClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Optional[Playlist], _response)  # type: ignore
         if "errorName" in _response_json:
@@ -133,5 +146,8 @@ class PlaylistClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)

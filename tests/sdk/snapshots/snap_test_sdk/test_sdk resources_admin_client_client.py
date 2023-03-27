@@ -2,6 +2,7 @@
 
 import typing
 import urllib
+from json.decoder import JSONDecodeError
 
 import httpx
 
@@ -40,7 +41,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
@@ -55,7 +59,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_workspace_submission_status(
@@ -72,7 +79,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_workspace_submission_update(
@@ -91,7 +101,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_test_case(
@@ -115,7 +128,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_test_case_v_2(
@@ -134,7 +150,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_workspace(
@@ -155,7 +174,10 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_workspace_v_2(self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]) -> None:
@@ -170,5 +192,8 @@ class AdminClient:
                 }
             ),
         )
-        _response_json = _response.json()
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)

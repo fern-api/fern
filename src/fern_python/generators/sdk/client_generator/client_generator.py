@@ -5,7 +5,7 @@ import fern.ir.pydantic as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST, SourceFile
-from fern_python.external_dependencies import Backports, HttpX, Pydantic, UrlLib
+from fern_python.external_dependencies import Backports, HttpX, Json, Pydantic, UrlLib
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .request_body_parameters import (
@@ -306,7 +306,7 @@ class ClientGenerator:
                 )
             )
 
-            writer.write_line(f"{ClientGenerator.RESPONSE_JSON_VARIABLE} = {ClientGenerator.RESPONSE_VARIABLE}.json()")
+            self._try_deserialize_json_response(writer=writer)
 
             if endpoint.response is not None:
                 writer.write_line(f"if 200 <= {ClientGenerator.RESPONSE_VARIABLE}.status_code < 300:")
@@ -336,8 +336,26 @@ class ClientGenerator:
                     status_code=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.status_code"),
                 )
             )
+            writer.write_newline_if_last_line_not()
 
         return AST.CodeWriter(write)
+
+    def _try_deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
+        writer.write_line("try:")
+        with writer.indent():
+            writer.write_line(f"{ClientGenerator.RESPONSE_JSON_VARIABLE} = {ClientGenerator.RESPONSE_VARIABLE}.json()")
+        writer.write("except ")
+        writer.write_reference(Json.JSONDecodeError())
+        writer.write_line(":")
+        with writer.indent():
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_api_error(
+                    body=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.text"),
+                    status_code=AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.status_code"),
+                )
+            )
+            writer.write_newline_if_last_line_not()
 
     def _write_error_handlers(self, *, endpoint: ir_types.HttpEndpoint, writer: AST.NodeWriter) -> None:
         for error in endpoint.errors.get_as_list():
