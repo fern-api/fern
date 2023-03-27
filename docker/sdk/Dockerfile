@@ -2,6 +2,7 @@ FROM python:3.9.14
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 ENV _TYPER_STANDARD_TRACEBACK=1
+ENV HTTPX_LOG_LEVEL=trace
 
 COPY pyproject.toml ./pyproject.toml
 COPY poetry.lock ./poetry.lock
