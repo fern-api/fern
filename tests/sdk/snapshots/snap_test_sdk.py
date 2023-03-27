@@ -35,7 +35,8 @@ snapshots['test_sdk filepaths'] = [
     'core/remove_none_from_headers.py',
     'resources/__init__.py',
     'resources/admin/__init__.py',
-    'resources/admin/client.py',
+    'resources/admin/client/__init__.py',
+    'resources/admin/client/client.py',
     'resources/admin/types/__init__.py',
     'resources/admin/types/test.py',
     'resources/commons/__init__.py',
@@ -67,18 +68,21 @@ snapshots['test_sdk filepaths'] = [
     'resources/commons/types/variable_type.py',
     'resources/commons/types/variable_value.py',
     'resources/homepage/__init__.py',
-    'resources/homepage/client.py',
+    'resources/homepage/client/__init__.py',
+    'resources/homepage/client/client.py',
     'resources/lang_server/__init__.py',
     'resources/lang_server/types/__init__.py',
     'resources/lang_server/types/lang_server_request.py',
     'resources/lang_server/types/lang_server_response.py',
     'resources/migration/__init__.py',
-    'resources/migration/client.py',
+    'resources/migration/client/__init__.py',
+    'resources/migration/client/client.py',
     'resources/migration/types/__init__.py',
     'resources/migration/types/migration.py',
     'resources/migration/types/migration_status.py',
     'resources/playlist/__init__.py',
-    'resources/playlist/client.py',
+    'resources/playlist/client/__init__.py',
+    'resources/playlist/client/client.py',
     'resources/playlist/errors/__init__.py',
     'resources/playlist/errors/playlist_id_not_found_error.py',
     'resources/playlist/errors/unauthorized_error.py',
@@ -90,7 +94,8 @@ snapshots['test_sdk filepaths'] = [
     'resources/playlist/types/reserved_keyword_enum.py',
     'resources/playlist/types/update_playlist_request.py',
     'resources/problem/__init__.py',
-    'resources/problem/client.py',
+    'resources/problem/client/__init__.py',
+    'resources/problem/client/client.py',
     'resources/problem/types/__init__.py',
     'resources/problem/types/create_problem_error.py',
     'resources/problem/types/create_problem_request.py',
@@ -104,7 +109,8 @@ snapshots['test_sdk filepaths'] = [
     'resources/problem/types/update_problem_response.py',
     'resources/problem/types/variable_type_and_name.py',
     'resources/submission/__init__.py',
-    'resources/submission/client.py',
+    'resources/submission/client/__init__.py',
+    'resources/submission/client/client.py',
     'resources/submission/types/__init__.py',
     'resources/submission/types/actual_result.py',
     'resources/submission/types/building_executor_response.py',
@@ -187,12 +193,15 @@ snapshots['test_sdk filepaths'] = [
     'resources/submission/types/workspace_submit_request.py',
     'resources/submission/types/workspace_traced_update.py',
     'resources/sysprop/__init__.py',
-    'resources/sysprop/client.py',
+    'resources/sysprop/client/__init__.py',
+    'resources/sysprop/client/client.py',
     'resources/v_2/__init__.py',
-    'resources/v_2/client.py',
+    'resources/v_2/client/__init__.py',
+    'resources/v_2/client/client.py',
     'resources/v_2/resources/__init__.py',
     'resources/v_2/resources/problem/__init__.py',
-    'resources/v_2/resources/problem/client.py',
+    'resources/v_2/resources/problem/client/__init__.py',
+    'resources/v_2/resources/problem/client/client.py',
     'resources/v_2/resources/problem/types/__init__.py',
     'resources/v_2/resources/problem/types/assert_correctness_check.py',
     'resources/v_2/resources/problem/types/basic_custom_files.py',
@@ -236,10 +245,12 @@ snapshots['test_sdk filepaths'] = [
     'resources/v_2/resources/problem/types/void_function_signature.py',
     'resources/v_2/resources/problem/types/void_function_signature_that_takes_actual_result.py',
     'resources/v_2/resources/v_3/__init__.py',
-    'resources/v_2/resources/v_3/client.py',
+    'resources/v_2/resources/v_3/client/__init__.py',
+    'resources/v_2/resources/v_3/client/client.py',
     'resources/v_2/resources/v_3/resources/__init__.py',
     'resources/v_2/resources/v_3/resources/problem/__init__.py',
-    'resources/v_2/resources/v_3/resources/problem/client.py',
+    'resources/v_2/resources/v_3/resources/problem/client/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/client/client.py',
     'resources/v_2/resources/v_3/resources/problem/types/__init__.py',
     'resources/v_2/resources/v_3/resources/problem/types/assert_correctness_check.py',
     'resources/v_2/resources/v_3/resources/problem/types/basic_custom_files.py',
@@ -288,7 +299,9 @@ snapshots['test_sdk resources___init__'] = FileSnapshot('snap_test_sdk/test_sdk 
 
 snapshots['test_sdk resources_admin___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_admin___init__.py')
 
-snapshots['test_sdk resources_admin_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_admin_client.py')
+snapshots['test_sdk resources_admin_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_admin_client___init__.py')
+
+snapshots['test_sdk resources_admin_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_admin_client_client.py')
 
 snapshots['test_sdk resources_admin_types___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_admin_types___init__.py')
 
@@ -352,7 +365,9 @@ snapshots['test_sdk resources_commons_types_variable_value'] = FileSnapshot('sna
 
 snapshots['test_sdk resources_homepage___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_homepage___init__.py')
 
-snapshots['test_sdk resources_homepage_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_homepage_client.py')
+snapshots['test_sdk resources_homepage_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_homepage_client___init__.py')
+
+snapshots['test_sdk resources_homepage_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_homepage_client_client.py')
 
 snapshots['test_sdk resources_lang_server___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_lang_server___init__.py')
 
@@ -364,7 +379,9 @@ snapshots['test_sdk resources_lang_server_types_lang_server_response'] = FileSna
 
 snapshots['test_sdk resources_migration___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_migration___init__.py')
 
-snapshots['test_sdk resources_migration_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_migration_client.py')
+snapshots['test_sdk resources_migration_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_migration_client___init__.py')
+
+snapshots['test_sdk resources_migration_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_migration_client_client.py')
 
 snapshots['test_sdk resources_migration_types___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_migration_types___init__.py')
 
@@ -374,7 +391,9 @@ snapshots['test_sdk resources_migration_types_migration_status'] = FileSnapshot(
 
 snapshots['test_sdk resources_playlist___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_playlist___init__.py')
 
-snapshots['test_sdk resources_playlist_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_playlist_client.py')
+snapshots['test_sdk resources_playlist_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_playlist_client___init__.py')
+
+snapshots['test_sdk resources_playlist_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_playlist_client_client.py')
 
 snapshots['test_sdk resources_playlist_errors___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_playlist_errors___init__.py')
 
@@ -398,7 +417,9 @@ snapshots['test_sdk resources_playlist_types_update_playlist_request'] = FileSna
 
 snapshots['test_sdk resources_problem___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_problem___init__.py')
 
-snapshots['test_sdk resources_problem_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_problem_client.py')
+snapshots['test_sdk resources_problem_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_problem_client___init__.py')
+
+snapshots['test_sdk resources_problem_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_problem_client_client.py')
 
 snapshots['test_sdk resources_problem_types___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_problem_types___init__.py')
 
@@ -426,7 +447,9 @@ snapshots['test_sdk resources_problem_types_variable_type_and_name'] = FileSnaps
 
 snapshots['test_sdk resources_submission___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_submission___init__.py')
 
-snapshots['test_sdk resources_submission_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_submission_client.py')
+snapshots['test_sdk resources_submission_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_submission_client___init__.py')
+
+snapshots['test_sdk resources_submission_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_submission_client_client.py')
 
 snapshots['test_sdk resources_submission_types___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_submission_types___init__.py')
 
@@ -592,17 +615,23 @@ snapshots['test_sdk resources_submission_types_workspace_traced_update'] = FileS
 
 snapshots['test_sdk resources_sysprop___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_sysprop___init__.py')
 
-snapshots['test_sdk resources_sysprop_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_sysprop_client.py')
+snapshots['test_sdk resources_sysprop_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_sysprop_client___init__.py')
+
+snapshots['test_sdk resources_sysprop_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_sysprop_client_client.py')
 
 snapshots['test_sdk resources_v_2___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2___init__.py')
 
-snapshots['test_sdk resources_v_2_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_client.py')
+snapshots['test_sdk resources_v_2_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_client___init__.py')
+
+snapshots['test_sdk resources_v_2_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_client_client.py')
 
 snapshots['test_sdk resources_v_2_resources___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources___init__.py')
 
 snapshots['test_sdk resources_v_2_resources_problem___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_problem___init__.py')
 
-snapshots['test_sdk resources_v_2_resources_problem_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_problem_client.py')
+snapshots['test_sdk resources_v_2_resources_problem_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_problem_client___init__.py')
+
+snapshots['test_sdk resources_v_2_resources_problem_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_problem_client_client.py')
 
 snapshots['test_sdk resources_v_2_resources_problem_types___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_problem_types___init__.py')
 
@@ -690,13 +719,17 @@ snapshots['test_sdk resources_v_2_resources_problem_types_void_function_signatur
 
 snapshots['test_sdk resources_v_2_resources_v_3___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3___init__.py')
 
-snapshots['test_sdk resources_v_2_resources_v_3_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_client.py')
+snapshots['test_sdk resources_v_2_resources_v_3_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_client___init__.py')
+
+snapshots['test_sdk resources_v_2_resources_v_3_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_client_client.py')
 
 snapshots['test_sdk resources_v_2_resources_v_3_resources___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_resources___init__.py')
 
 snapshots['test_sdk resources_v_2_resources_v_3_resources_problem___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_resources_problem___init__.py')
 
-snapshots['test_sdk resources_v_2_resources_v_3_resources_problem_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_resources_problem_client.py')
+snapshots['test_sdk resources_v_2_resources_v_3_resources_problem_client___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_resources_problem_client___init__.py')
+
+snapshots['test_sdk resources_v_2_resources_v_3_resources_problem_client_client'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_resources_problem_client_client.py')
 
 snapshots['test_sdk resources_v_2_resources_v_3_resources_problem_types___init__'] = FileSnapshot('snap_test_sdk/test_sdk resources_v_2_resources_v_3_resources_problem_types___init__.py')
 

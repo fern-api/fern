@@ -1,5 +1,5 @@
 import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources.config import GeneratorConfig
+from generator_exec.resources.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
@@ -13,7 +13,7 @@ from fern_python.generators.sdk.context.sdk_generator_context_impl import (
     SdkGeneratorContextImpl,
 )
 from fern_python.source_file_generator import SourceFileGenerator
-from fern_python.utils import pascal_case, snake_case
+from fern_python.utils import pascal_case
 
 from .client_generator.client_generator import ClientGenerator
 from .custom_config import SDKCustomConfig
@@ -48,15 +48,8 @@ class SdkGenerator(AbstractGenerator):
         context = SdkGeneratorContextImpl(
             ir=ir,
             generator_config=generator_config,
-            client_class_name=(
-                custom_config.client_class_name
-                or (pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name))
-            ),
-            folders_inside_src=(
-                [snake_case(custom_config.client_class_name)]
-                if custom_config.client_class_name is not None
-                else [snake_case(generator_config.organization), snake_case(generator_config.workspace_name)]
-            ),
+            client_class_name=custom_config.client_class_name
+            or (pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)),
         )
 
         PydanticModelGenerator().generate_types(

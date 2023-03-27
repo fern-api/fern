@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import List
 
 import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources import GeneratorConfig
+from generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
@@ -18,16 +17,12 @@ from ..sdk_filepath_creator import SdkFilepathCreator
 class SdkGeneratorContext(ABC):
     def __init__(
         self,
-        *,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
-        folders_inside_src: List[str],
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.filepath_creator = SdkFilepathCreator(
-            ir=ir, generator_config=generator_config, folders_inside_src=folders_inside_src
-        )
+        self.filepath_creator = SdkFilepathCreator(ir=ir, generator_config=generator_config)
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(filepath_creator=self.filepath_creator),

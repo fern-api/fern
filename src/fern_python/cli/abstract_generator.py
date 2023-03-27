@@ -1,14 +1,10 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Optional
 
 import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources import GeneratorConfig
-from fern.generator_exec.sdk.resources.config import (
-    GeneratorPublishConfig,
-    GithubOutputMode,
-)
+from generator_exec.resources import GeneratorConfig
+from generator_exec.resources.config import GeneratorPublishConfig
 
 from fern_python.codegen.project import Project, PublishConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -29,7 +25,6 @@ class AbstractGenerator(ABC):
             publish=lambda publish: PublishConfig(
                 package_name=publish.registries_v_2.pypi.package_name, package_version=publish.version
             ),
-            github=self._get_github_publish_config,
         )
         with Project(
             filepath=generator_config.output.path,
@@ -42,23 +37,11 @@ class AbstractGenerator(ABC):
             )
         generator_config.output.mode.visit(
             download_files=lambda: None,
-            github=lambda x: None,
             publish=lambda publish_config: self._publish(
                 generator_exec_wrapper=generator_exec_wrapper,
                 publish_config=publish_config,
                 generator_config=generator_config,
             ),
-        )
-
-    def _get_github_publish_config(self, output_mode: GithubOutputMode) -> Optional[PublishConfig]:
-        if output_mode.publish_info is None:
-            return None
-        publish_info_union = output_mode.publish_info.get_as_union()
-        if publish_info_union.type != "pypi":
-            raise RuntimeError("Github publishi info is not pypi")
-        return PublishConfig(
-            package_name=publish_info_union.package_name,
-            package_version=output_mode.version,
         )
 
     def _publish(
