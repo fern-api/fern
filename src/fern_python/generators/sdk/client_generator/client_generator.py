@@ -5,7 +5,13 @@ import fern.ir.pydantic as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST, SourceFile
-from fern_python.external_dependencies import Backports, HttpX, Json, Pydantic, UrlLib
+from fern_python.external_dependencies import (
+    Backports,
+    HttpX,
+    Json,
+    Pydantic,
+    UrlLibParse,
+)
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from .request_body_parameters import (
@@ -275,7 +281,7 @@ class ClientGenerator:
                 HttpX.make_request(
                     url=AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}")
                     if is_endpoint_path_empty(endpoint)
-                    else UrlLib.urljoin(
+                    else UrlLibParse.urljoin(
                         AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}"),
                         self._get_path_for_endpoint(endpoint),
                     ),
