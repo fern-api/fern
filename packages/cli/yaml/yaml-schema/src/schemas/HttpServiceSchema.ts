@@ -1,10 +1,11 @@
 import { z } from "zod";
-import { BaseServiceSchema } from "./BaseServiceSchema";
+import { DeclarationSchema } from "./DeclarationSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 
-export const HttpServiceSchema = BaseServiceSchema.extend({
+export const HttpServiceSchema = DeclarationSchema.extend({
+    auth: z.boolean(),
     url: z.optional(z.string()),
     "display-name": z.optional(z.string()),
     "base-path": z.string(),
