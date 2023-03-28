@@ -11,6 +11,12 @@ describe("no-undefined-path-parameters", () => {
 
         expect(violations).toEqual([
             {
+                message: "File has missing path-parameter: bar.",
+                nodePath: [],
+                relativeFilepath: "api.yml",
+                severity: "error",
+            },
+            {
                 message: "Service has missing path-parameter: baseParameter.",
                 nodePath: ["service"],
                 relativeFilepath: "simple.yml",

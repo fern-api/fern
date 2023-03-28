@@ -122,7 +122,7 @@ export function convertHttpService({
     };
 }
 
-function convertPathParameters({
+export function convertPathParameters({
     pathParameters,
     file,
 }: {

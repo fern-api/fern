@@ -1,6 +1,7 @@
 import {
     ErrorDiscriminationSchema,
     MultipleBaseUrlsEnvironmentSchema,
+    RootApiFileSchema,
     SingleBaseUrlEnvironmentSchema,
 } from "../schemas";
 import { NodePath } from "./NodePath";
@@ -10,6 +11,7 @@ export type RootApiFileAstVisitor<R = void | Promise<void>> = {
 };
 
 export interface RootApiFileAstNodeTypes {
+    file: RootApiFileSchema;
     defaultEnvironment: string | null | undefined;
     environment: {
         environmentId: string;

@@ -446,6 +446,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_imported": {
             "fernFilepath": {

@@ -4,7 +4,7 @@ import { V15_TO_V14_MIGRATION } from "../migrateFromV15ToV14";
 
 const runMigration = createMigrationTester(V15_TO_V14_MIGRATION);
 
-describe("migrateFromV14ToV13", () => {
+describe("migrateFromV15ToV14", () => {
     it("migrates header", async () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),

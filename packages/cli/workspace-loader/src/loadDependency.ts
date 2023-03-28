@@ -206,6 +206,11 @@ async function validateDependencyAndGetDefinition({
         },
         audiences: noop,
         errors: noop,
+        "base-path": (basePath) => {
+            areRootApiFilesEquivalent &&=
+                basePath === workspaceOfDependency.definition.rootApiFile.contents["base-path"];
+        },
+        "path-parameters": noop,
     });
     if (!areRootApiFilesEquivalent) {
         context.failWithoutThrowing(
