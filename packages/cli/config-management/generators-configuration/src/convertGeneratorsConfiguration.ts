@@ -158,10 +158,16 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             return FernFiddle.GithubPublishInfo.pypi({
                 registryUrl: output.url ?? "",
                 packageName: output["package-name"],
-                credentials: {
-                    username: output.username ?? "",
-                    password: output.password ?? "",
-                },
+                credentials:
+                    output.token != null
+                        ? {
+                              username: "__token__",
+                              password: output.token,
+                          }
+                        : {
+                              username: output.username ?? "",
+                              password: output.password ?? "",
+                          },
             });
         default:
             assertNever(output);
