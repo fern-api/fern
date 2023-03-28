@@ -93,14 +93,13 @@ export async function generateIntermediateRepresentation({
     const visitDefinitionFile = async (file: FernFileContext) => {
         packageTreeGenerator.addSubpackage(file.fernFilepath);
 
-        const docs = file.definitionFile.docs ?? file.definitionFile.service?.docs;
-        if (docs != null) {
-            packageTreeGenerator.addDocs(file.fernFilepath, docs);
-        }
-
         await visitObject(file.definitionFile, {
             imports: noop,
-            docs: noop,
+            docs: (docs) => {
+                if (docs != null) {
+                    packageTreeGenerator.addDocs(file.fernFilepath, docs);
+                }
+            },
 
             types: (types) => {
                 if (types == null) {

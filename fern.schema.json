@@ -269,7 +269,6 @@
         "service": {
           "type": "object",
           "properties": {
-            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
             "availability": {
               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
             },
