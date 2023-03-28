@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { DeclarationSchema } from "./DeclarationSchema";
+import { DeclarationWithoutDocsSchema } from "./DeclarationSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 
-export const HttpServiceSchema = DeclarationSchema.extend({
+export const HttpServiceSchema = DeclarationWithoutDocsSchema.extend({
     auth: z.boolean(),
     url: z.optional(z.string()),
     "display-name": z.optional(z.string()),
