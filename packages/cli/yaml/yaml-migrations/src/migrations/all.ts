@@ -12,6 +12,7 @@ import migrations_0_0_248 from "./0.0.248";
 import migrations_0_1_3_rc3 from "./0.1.3-rc3";
 import migrations_0_3_0_rc12 from "./0.3.0-rc12";
 import migrations_0_3_23 from "./0.3.23";
+import migrations_0_5_4 from "./0.5.4";
 
 export const ALL_MIGRATIONS: VersionMigrations[] = [
     migrations_0_0_188,
@@ -27,4 +28,5 @@ export const ALL_MIGRATIONS: VersionMigrations[] = [
     migrations_0_1_3_rc3,
     migrations_0_3_0_rc12,
     migrations_0_3_23,
+    migrations_0_5_4,
 ];

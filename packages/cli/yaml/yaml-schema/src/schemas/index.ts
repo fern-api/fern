@@ -5,7 +5,6 @@ export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
 export { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 export { AvailabilitySchema } from "./AvailabilitySchema";
 export { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
-export { BaseServiceSchema } from "./BaseServiceSchema";
 export { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
 export { DeclarationSchema } from "./DeclarationSchema";
 export { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
