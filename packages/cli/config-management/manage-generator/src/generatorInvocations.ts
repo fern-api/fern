@@ -27,13 +27,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.2.2",
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
-        version: "0.0.33",
+        version: "0.1.0",
     },
     [GeneratorName.PYTHON_FASTAPI]: {
-        version: "0.0.33",
+        version: "0.1.0",
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.0.52-3-gd9df38df",
+        version: "0.1.0",
     },
     [GeneratorName.OPENAPI]: {
         version: "0.0.11",

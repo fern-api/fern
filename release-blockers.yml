@@ -1,3 +1,2 @@
 # if there are any release blockers in this list, releasing will fail on Circle
-release-blockers:
-  - fern-python version is a dev version
+release-blockers: []
