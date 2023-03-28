@@ -372,7 +372,7 @@ async function visitExampleEndpointCall({
     }
 }
 
-async function visitPathParameters({
+export async function visitPathParameters({
     pathParameters,
     visitor,
     nodePath,
@@ -380,7 +380,7 @@ async function visitPathParameters({
     pathParameters: Record<string, HttpPathParameterSchema> | undefined;
     visitor: Partial<DefinitionFileAstVisitor>;
     nodePath: NodePath;
-}) {
+}): Promise<void> {
     if (pathParameters == null) {
         return;
     }

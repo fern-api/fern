@@ -87,6 +87,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1090,6 +1091,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_app": {
             "fernFilepath": {
@@ -1603,6 +1605,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_file-upload": {
             "fernFilepath": {
@@ -7973,6 +7976,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_app": {
             "fernFilepath": {
@@ -9244,6 +9248,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_nested": {
             "fernFilepath": {
@@ -10081,6 +10086,7 @@ exports[`ir {"name":"packages"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_package": {
             "fernFilepath": {
@@ -12402,6 +12408,45 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         },
         "type": "property"
     },
+    "basePath": {
+        "head": "/test/",
+        "parts": [
+            {
+                "pathParameter": "pathParam",
+                "tail": ""
+            }
+        ]
+    },
+    "pathParameters": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "originalName": "pathParam",
+                "camelCase": {
+                    "unsafeName": "pathParam",
+                    "safeName": "pathParam"
+                },
+                "snakeCase": {
+                    "unsafeName": "path_param",
+                    "safeName": "path_param"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PATH_PARAM",
+                    "safeName": "PATH_PARAM"
+                },
+                "pascalCase": {
+                    "unsafeName": "PathParam",
+                    "safeName": "PathParam"
+                }
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        }
+    ],
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
@@ -21179,6 +21224,45 @@ exports[`ir {"name":"simple"} 1`] = `
         },
         "type": "property"
     },
+    "basePath": {
+        "head": "/test/",
+        "parts": [
+            {
+                "pathParameter": "pathParam",
+                "tail": ""
+            }
+        ]
+    },
+    "pathParameters": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "originalName": "pathParam",
+                "camelCase": {
+                    "unsafeName": "pathParam",
+                    "safeName": "pathParam"
+                },
+                "snakeCase": {
+                    "unsafeName": "path_param",
+                    "safeName": "path_param"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PATH_PARAM",
+                    "safeName": "PATH_PARAM"
+                },
+                "pascalCase": {
+                    "unsafeName": "PathParam",
+                    "safeName": "PathParam"
+                }
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        }
+    ],
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
@@ -21781,6 +21865,7 @@ exports[`ir {"name":"streaming"} 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
     "subpackages": {
         "subpackage_streaming": {
             "fernFilepath": {

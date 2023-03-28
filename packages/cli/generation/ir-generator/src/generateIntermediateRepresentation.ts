@@ -13,7 +13,8 @@ import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
-import { convertHttpHeader, convertHttpService } from "./converters/services/convertHttpService";
+import { constructHttpPath } from "./converters/services/constructHttpPath";
+import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
@@ -82,6 +83,14 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
         ),
+        basePath:
+            workspace.definition.rootApiFile.contents["base-path"] != null
+                ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
+                : undefined,
+        pathParameters: convertPathParameters({
+            pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
+            file: rootApiFileContext,
+        }),
     };
 
     const typeResolver = new TypeResolverImpl(workspace);
