@@ -4,31 +4,44 @@ export const ValidBasePathRule: Rule = {
     name: "valid-base-path",
     create: () => {
         return {
-            definitionFile: {
-                httpService: (service) => {
-                    if (service["base-path"] === "/" || service["base-path"].length === 0) {
+            rootApiFile: {
+                file: (rootApiFile) => {
+                    if (rootApiFile["base-path"] != null) {
+                        return validateBasePath(rootApiFile["base-path"]);
+                    } else {
                         return [];
                     }
-
-                    const violations: RuleViolation[] = [];
-
-                    if (!service["base-path"].startsWith("/")) {
-                        violations.push({
-                            severity: "error",
-                            message: "base-path must be empty or start with a slash.",
-                        });
-                    }
-
-                    if (service["base-path"].endsWith("/")) {
-                        violations.push({
-                            severity: "error",
-                            message: "base-path cannot end with a slash.",
-                        });
-                    }
-
-                    return violations;
+                },
+            },
+            definitionFile: {
+                httpService: (service) => {
+                    return validateBasePath(service["base-path"]);
                 },
             },
         };
     },
 };
+
+function validateBasePath(basePath: string): RuleViolation[] {
+    if (basePath === "/" || basePath.length === 0) {
+        return [];
+    }
+
+    const violations: RuleViolation[] = [];
+
+    if (!basePath.startsWith("/")) {
+        violations.push({
+            severity: "error",
+            message: "base-path must be empty or start with a slash.",
+        });
+    }
+
+    if (basePath.endsWith("/")) {
+        violations.push({
+            severity: "error",
+            message: "base-path cannot end with a slash.",
+        });
+    }
+
+    return violations;
+}
