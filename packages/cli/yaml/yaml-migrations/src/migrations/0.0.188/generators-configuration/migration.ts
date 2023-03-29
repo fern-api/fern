@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -24,7 +24,7 @@ export const migration: Migration = {
 };
 
 async function migrateWorkspace(pathToWorkspace: AbsoluteFilePath, context: TaskContext) {
-    const absolutePathToGeneratorsConfiguration = join(pathToWorkspace, "generators.yml");
+    const absolutePathToGeneratorsConfiguration = join(pathToWorkspace, RelativeFilePath.of("generators.yml"));
     const oldRawConfiguration = await oldConfigurationUtils.loadRawGeneratorsConfiguration({
         absolutePathToGeneratorsConfiguration,
         context,

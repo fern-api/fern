@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { PROJECT_CONFIG_FILENAME } from "./constants";
@@ -19,7 +19,7 @@ export async function loadProjectConfig({
     directory: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<ProjectConfig> {
-    const pathToConfig = join(directory, PROJECT_CONFIG_FILENAME);
+    const pathToConfig = join(directory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME));
 
     const projectConfigStr = await readFile(pathToConfig);
     const projectConfigParsed = JSON.parse(projectConfigStr.toString()) as unknown;

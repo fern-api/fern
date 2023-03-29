@@ -3,7 +3,7 @@ import stripAnsi from "strip-ansi";
 import { runFernCli } from "../../utils/runFernCli";
 import { generateIrAsString } from "../ir/generateIrAsString";
 
-const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), "fixtures");
+const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("dependencies", () => {
     it("correctly incorporates dependencies", async () => {

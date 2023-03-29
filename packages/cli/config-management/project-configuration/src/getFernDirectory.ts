@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { findUp } from "find-up";
 import { FERN_DIRECTORY, PROJECT_CONFIG_FILENAME } from "./constants";
 
@@ -9,7 +9,7 @@ export async function getFernDirectory(): Promise<AbsoluteFilePath | undefined> 
     }
     const absolutePathToFernDirectory = AbsoluteFilePath.of(fernDirectoryStr);
 
-    if (await doesPathExist(join(absolutePathToFernDirectory, PROJECT_CONFIG_FILENAME))) {
+    if (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME)))) {
         return absolutePathToFernDirectory;
     } else {
         return undefined;

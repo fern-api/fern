@@ -1,5 +1,5 @@
 import { validateSchema } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -45,5 +45,5 @@ function getPathToGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): AbsoluteFilePath {
-    return join(absolutePathToWorkspace, GENERATORS_CONFIGURATION_FILENAME);
+    return join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
 }

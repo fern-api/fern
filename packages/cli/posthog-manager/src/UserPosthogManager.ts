@@ -51,7 +51,7 @@ export class UserPosthogManager implements PosthogManager {
             const pathToFile = join(
                 AbsoluteFilePath.of(homedir()),
                 RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-                DISTINCT_ID_FILENAME
+                RelativeFilePath.of(DISTINCT_ID_FILENAME)
             );
             if (!(await doesPathExist(pathToFile))) {
                 await mkdir(dirname(pathToFile), { recursive: true });

@@ -1,9 +1,10 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", () => {
         const converted = convertGeneratorsConfiguration({
-            absolutePathToGeneratorsConfiguration: "/path/to/repo/fern/api/generators.yml",
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
                 groups: {
                     group1: {
@@ -27,7 +28,7 @@ describe("convertGeneratorsConfiguration", () => {
 
     it("local-file-system resolves relative download path", () => {
         const converted = convertGeneratorsConfiguration({
-            absolutePathToGeneratorsConfiguration: "/path/to/repo/fern/api/generators.yml",
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
                 groups: {
                     group1: {

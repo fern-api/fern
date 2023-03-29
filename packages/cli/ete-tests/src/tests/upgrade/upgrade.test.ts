@@ -1,4 +1,4 @@
-import { join } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
     DEFAULT_WORSPACE_FOLDER_NAME,
@@ -98,9 +98,9 @@ describe("fern upgrade", () => {
         const directory = await init();
         const generatorsConfigurationFilepath = join(
             directory,
-            FERN_DIRECTORY,
-            DEFAULT_WORSPACE_FOLDER_NAME,
-            GENERATORS_CONFIGURATION_FILENAME
+            RelativeFilePath.of(FERN_DIRECTORY),
+            RelativeFilePath.of(DEFAULT_WORSPACE_FOLDER_NAME),
+            RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
         );
         // make sure the file exists
         await readFile(generatorsConfigurationFilepath);

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { readFile, rm } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";
@@ -16,7 +16,7 @@ export async function generateIrAsString({
     apiName?: string;
     version?: string;
 }): Promise<string> {
-    const irOutputPath = join(fixturePath, "ir.json");
+    const irOutputPath = join(fixturePath, RelativeFilePath.of("ir.json"));
     await rm(irOutputPath, { force: true, recursive: true });
 
     const command = ["ir", irOutputPath];

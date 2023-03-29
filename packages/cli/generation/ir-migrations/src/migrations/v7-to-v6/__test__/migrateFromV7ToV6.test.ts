@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
 import { V7_TO_V6_MIGRATION } from "../migrateFromV7ToV6";
 
@@ -7,7 +7,7 @@ const runMigration = createMigrationTester(V7_TO_V6_MIGRATION);
 describe("migrateFromV7ToV6", () => {
     it("adds name to services", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
         });
         expect(migrated.services).toEqual([
             {

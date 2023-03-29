@@ -1,5 +1,5 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { convertOpenApi } from "@fern-api/openapi-migrator";
 import { Project } from "@fern-api/project-loader";
@@ -119,7 +119,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
             },
             namedDefinitionFiles: mapValues(definition.definitionFiles, (definitionFile) => ({
                 // these files doesn't live on disk, so there's no absolute filepath
-                absoluteFilepath: "/DUMMY_PATH",
+                absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
                 rawContents: yaml.dump(definitionFile),
                 contents: definitionFile,
             })),

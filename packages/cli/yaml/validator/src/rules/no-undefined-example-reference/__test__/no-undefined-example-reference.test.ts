@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoUndefinedExampleReferenceRule } from "../no-undefined-example-reference";
 
@@ -6,7 +6,11 @@ describe("no-undefined-example-reference", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoUndefinedExampleReferenceRule,
-            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            ),
         });
 
         expect(violations).toEqual([
@@ -21,7 +25,7 @@ describe("no-undefined-example-reference", () => {
                         key: "examples",
                     },
                 ],
-                relativeFilepath: "b.yml",
+                relativeFilepath: RelativeFilePath.of("b.yml"),
                 severity: "error",
             },
             {
@@ -34,7 +38,7 @@ describe("no-undefined-example-reference", () => {
                         key: "examples",
                     },
                 ],
-                relativeFilepath: "b.yml",
+                relativeFilepath: RelativeFilePath.of("b.yml"),
                 severity: "error",
             },
             {
@@ -47,7 +51,7 @@ describe("no-undefined-example-reference", () => {
                         key: "examples",
                     },
                 ],
-                relativeFilepath: "folder/nested.yml",
+                relativeFilepath: RelativeFilePath.of("folder/nested.yml"),
                 severity: "error",
             },
         ]);

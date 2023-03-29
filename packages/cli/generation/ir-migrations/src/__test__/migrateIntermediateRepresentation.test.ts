@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -125,5 +125,5 @@ describe("migrateIntermediateRepresentation", () => {
 });
 
 function getIrForSimpleApi(): Promise<IntermediateRepresentation> {
-    return getIrForApi(join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"));
+    return getIrForApi(join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")));
 }
