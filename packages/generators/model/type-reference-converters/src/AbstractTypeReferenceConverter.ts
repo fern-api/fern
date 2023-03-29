@@ -69,6 +69,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
             string: this.string.bind(this),
             uuid: this.string.bind(this),
             dateTime: this.dateTime.bind(this),
+            date: this.string.bind(this),
+            base64: this.string.bind(this),
             _unknown: () => {
                 throw new Error("Unexpected primitive type: " + primitive);
             },

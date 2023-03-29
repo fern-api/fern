@@ -1,0 +1,5 @@
+name: nursery-api
+
+base-path: /test/{pathParam}
+path-parameters:
+  pathParam: string

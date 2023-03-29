@@ -59,7 +59,6 @@ export class SdkClientClassGenerator {
             packageId,
             packageResolver: this.packageResolver,
             serviceClassName,
-            errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             errorResolver: this.errorResolver,
             neverThrowErrors: this.neverThrowErrors,
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,

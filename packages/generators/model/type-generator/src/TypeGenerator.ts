@@ -228,6 +228,8 @@ function isTypeStringLike(type: TypeReference): boolean {
         long: () => false,
         dateTime: () => false,
         uuid: () => true,
+        date: () => true,
+        base64: () => true,
         _unknown: () => false,
     });
 }

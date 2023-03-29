@@ -1,12 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    HttpEndpoint,
-    HttpPath,
-    HttpRequestBody,
-    HttpService,
-    PathParameter,
-    SdkRequestShape,
-} from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpRequestBody, HttpService, PathParameter, SdkRequestShape } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import {
@@ -16,13 +9,14 @@ import {
 } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import urlJoin from "url-join";
 import { GeneratedHeader } from "../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
 import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
+import { buildUrl } from "./utils/buildUrl";
+import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 
 export declare namespace GeneratedNonThrowingEndpointImplementation {
     export interface Init {
@@ -115,7 +109,7 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of this.getAllPathParameters()) {
             parameters.push({
-                name: this.getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter(pathParameter),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
             });
         }
@@ -132,10 +126,6 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
 
     private getAllPathParameters(): PathParameter[] {
         return [...this.service.pathParameters, ...this.endpoint.pathParameters];
-    }
-
-    private getParameterNameForPathParameter(pathParameter: PathParameter): string {
-        return pathParameter.name.camelCase.unsafeName;
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
@@ -209,85 +199,12 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
 
     private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
-        const url = this.buildUrl(context);
+        const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
         if (url != null) {
             return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {
             return referenceToEnvironment;
         }
-    }
-
-    private buildUrl(context: SdkClientClassContext): ts.Expression | undefined {
-        if (this.service.pathParameters.length === 0 && this.endpoint.pathParameters.length === 0) {
-            const joinedUrl = urlJoin(this.service.basePath.head, this.endpoint.path.head);
-            if (joinedUrl.length === 0) {
-                return undefined;
-            }
-            return ts.factory.createStringLiteral(joinedUrl);
-        }
-
-        const httpPath = this.getHttpPath();
-
-        return ts.factory.createTemplateExpression(
-            ts.factory.createTemplateHead(httpPath.head),
-            httpPath.parts.map((part, index) => {
-                const pathParameter = this.getAllPathParameters().find(
-                    (param) => param.name.originalName === part.pathParameter
-                );
-                if (pathParameter == null) {
-                    throw new Error("Could not locate path parameter: " + part.pathParameter);
-                }
-
-                let referenceToPathParameterValue: ts.Expression = ts.factory.createIdentifier(
-                    this.getParameterNameForPathParameter(pathParameter)
-                );
-                if (pathParameter.valueType._type === "named") {
-                    referenceToPathParameterValue = context.typeSchema
-                        .getSchemaOfNamedType(pathParameter.valueType, {
-                            isGeneratingSchema: false,
-                        })
-                        .jsonOrThrow(referenceToPathParameterValue, {
-                            unrecognizedObjectKeys: "fail",
-                            allowUnrecognizedEnumValues: false,
-                            allowUnrecognizedUnionMembers: false,
-                        });
-                }
-
-                return ts.factory.createTemplateSpan(
-                    referenceToPathParameterValue,
-                    index === httpPath.parts.length - 1
-                        ? ts.factory.createTemplateTail(part.tail)
-                        : ts.factory.createTemplateMiddle(part.tail)
-                );
-            })
-        );
-    }
-
-    private getHttpPath(): HttpPath {
-        const serviceBasePathPartsExceptLast = [...this.service.basePath.parts];
-        const lastServiceBasePathPart = serviceBasePathPartsExceptLast.pop();
-
-        if (lastServiceBasePathPart == null) {
-            return {
-                head: urlJoin(this.service.basePath.head, this.endpoint.path.head),
-                parts: this.endpoint.path.parts,
-            };
-        }
-
-        return {
-            head: this.service.basePath.head,
-            parts: [
-                ...serviceBasePathPartsExceptLast,
-                {
-                    pathParameter: lastServiceBasePathPart.pathParameter,
-                    tail:
-                        lastServiceBasePathPart.tail.length > 0
-                            ? urlJoin(lastServiceBasePathPart.tail, this.endpoint.path.head)
-                            : this.endpoint.path.head,
-                },
-                ...this.endpoint.path.parts,
-            ],
-        };
     }
 
     private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {

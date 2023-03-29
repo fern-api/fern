@@ -101,6 +101,12 @@ const FIXTURES: FixtureInfo[] = [
         outputMode: "github",
         apiName: "api",
     },
+    {
+        path: "root-base-path",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 

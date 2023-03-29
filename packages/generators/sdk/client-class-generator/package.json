@@ -26,13 +26,12 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-model": "0.0.1195",
+    "@fern-fern/ir-model": "0.0.1314",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
     "lodash-es": "^4.17.21",
-    "ts-morph": "^15.1.0",
-    "url-join": "4.0.1"
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -41,7 +40,6 @@
     "@types/jest": "^28.1.6",
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
-    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.3",
     "eslint": "^8.23.1",
     "jest": "^28.1.3",

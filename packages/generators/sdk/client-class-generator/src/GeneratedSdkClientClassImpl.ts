@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpHeader, HttpService, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationStrategy, IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
+import { HttpHeader, HttpService, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
+import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
@@ -13,6 +13,7 @@ import { GeneratedNonThrowingFileUploadEndpointImplementation } from "./endpoint
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { GeneratedThrowingEndpointImplementation } from "./endpoints/GeneratedThrowingEndpointImplementation";
 import { GeneratedThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedThrowingFileUploadEndpointImplementation";
+import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
@@ -23,7 +24,6 @@ export declare namespace GeneratedSdkClientClassImpl {
         serviceClassName: string;
         errorResolver: ErrorResolver;
         packageResolver: PackageResolver;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
@@ -59,7 +59,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         packageId,
         errorResolver,
         packageResolver,
-        errorDiscriminationStrategy,
         neverThrowErrors,
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
@@ -91,7 +90,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             service,
                             generatedSdkClientClass: this,
                             errorResolver,
-                            errorDiscriminationStrategy,
+                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
                         });
@@ -102,7 +101,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             service,
                             generatedSdkClientClass: this,
                             errorResolver,
-                            errorDiscriminationStrategy,
+                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
                         });
@@ -117,7 +116,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             service,
                             generatedSdkClientClass: this,
                             errorResolver,
-                            errorDiscriminationStrategy,
+                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
                         });
@@ -128,7 +127,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             service,
                             generatedSdkClientClass: this,
                             errorResolver,
-                            errorDiscriminationStrategy,
+                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
                         });
@@ -372,6 +371,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        for (const pathParameter of this.intermediateRepresentation.pathParameters) {
+            properties.push({
+                name: getParameterNameForPathParameter(pathParameter),
+                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+            });
+        }
+
         if (this.hasBearerAuth) {
             properties.push({
                 name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
@@ -476,7 +482,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     private getOptionKeyForAuthHeader(header: HeaderAuthScheme): string {
-        return header.name.camelCase.unsafeName;
+        return header.name.name.camelCase.unsafeName;
     }
 
     private getAuthorizationHeaderStatements(context: SdkClientClassContext): ts.Statement[] {
@@ -629,7 +635,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         for (const header of this.authHeaders) {
-            if (header.header.toLowerCase() === "authorization") {
+            if (header.name.wireValue.toLowerCase() === "authorization") {
                 headers.push({ type: "authScheme", header });
             }
         }
@@ -646,6 +652,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             default:
                 assertNever(header);
         }
+    }
+
+    public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
+        return this.getReferenceToOption(getParameterNameForPathParameter(pathParameter));
     }
 }
 

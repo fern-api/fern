@@ -2,7 +2,6 @@ import {
     FileProperty,
     FileUploadRequestProperty,
     HttpEndpoint,
-    HttpPath,
     HttpRequestBody,
     HttpService,
     PathParameter,
@@ -16,11 +15,12 @@ import {
 } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import urlJoin from "url-join";
 import { GeneratedHeader } from "../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { EndpointSignature } from "./GeneratedEndpointImplementation";
+import { buildUrl } from "./utils/buildUrl";
+import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 
 export declare namespace GeneratedNonThrowingFileUploadEndpointImplementation {
     export interface Init {
@@ -118,7 +118,7 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
         }
         for (const pathParameter of this.getAllPathParameters()) {
             parameters.push({
-                name: this.getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter(pathParameter),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
             });
         }
@@ -141,10 +141,6 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
 
     private getAllPathParameters(): PathParameter[] {
         return [...this.service.pathParameters, ...this.endpoint.pathParameters];
-    }
-
-    private getParameterNameForPathParameter(pathParameter: PathParameter): string {
-        return pathParameter.name.camelCase.unsafeName;
     }
 
     private getParameterNameForFile(file: FileProperty): string {
@@ -314,85 +310,12 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
 
     private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
-        const url = this.buildUrl(context);
+        const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
         if (url != null) {
             return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {
             return referenceToEnvironment;
         }
-    }
-
-    private buildUrl(context: SdkClientClassContext): ts.Expression | undefined {
-        if (this.service.pathParameters.length === 0 && this.endpoint.pathParameters.length === 0) {
-            const joinedUrl = urlJoin(this.service.basePath.head, this.endpoint.path.head);
-            if (joinedUrl.length === 0) {
-                return undefined;
-            }
-            return ts.factory.createStringLiteral(joinedUrl);
-        }
-
-        const httpPath = this.getHttpPath();
-
-        return ts.factory.createTemplateExpression(
-            ts.factory.createTemplateHead(httpPath.head),
-            httpPath.parts.map((part, index) => {
-                const pathParameter = this.getAllPathParameters().find(
-                    (param) => param.name.originalName === part.pathParameter
-                );
-                if (pathParameter == null) {
-                    throw new Error("Could not locate path parameter: " + part.pathParameter);
-                }
-
-                let referenceToPathParameterValue: ts.Expression = ts.factory.createIdentifier(
-                    this.getParameterNameForPathParameter(pathParameter)
-                );
-                if (pathParameter.valueType._type === "named") {
-                    referenceToPathParameterValue = context.typeSchema
-                        .getSchemaOfNamedType(pathParameter.valueType, {
-                            isGeneratingSchema: false,
-                        })
-                        .jsonOrThrow(referenceToPathParameterValue, {
-                            unrecognizedObjectKeys: "fail",
-                            allowUnrecognizedEnumValues: false,
-                            allowUnrecognizedUnionMembers: false,
-                        });
-                }
-
-                return ts.factory.createTemplateSpan(
-                    referenceToPathParameterValue,
-                    index === httpPath.parts.length - 1
-                        ? ts.factory.createTemplateTail(part.tail)
-                        : ts.factory.createTemplateMiddle(part.tail)
-                );
-            })
-        );
-    }
-
-    private getHttpPath(): HttpPath {
-        const serviceBasePathPartsExceptLast = [...this.service.basePath.parts];
-        const lastServiceBasePathPart = serviceBasePathPartsExceptLast.pop();
-
-        if (lastServiceBasePathPart == null) {
-            return {
-                head: urlJoin(this.service.basePath.head, this.endpoint.path.head),
-                parts: this.endpoint.path.parts,
-            };
-        }
-
-        return {
-            head: this.service.basePath.head,
-            parts: [
-                ...serviceBasePathPartsExceptLast,
-                {
-                    pathParameter: lastServiceBasePathPart.pathParameter,
-                    tail:
-                        lastServiceBasePathPart.tail.length > 0
-                            ? urlJoin(lastServiceBasePathPart.tail, this.endpoint.path.head)
-                            : this.endpoint.path.head,
-                },
-                ...this.endpoint.path.parts,
-            ],
-        };
     }
 
     private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
