@@ -5,7 +5,7 @@ import { ALL_MIGRATIONS } from "../migrations";
 import { Migration } from "../types/Migration";
 import { VersionMigrations } from "../types/VersionMigrations";
 
-const MIGRATIONS_DIRECTORY = join(AbsoluteFilePath.of(__dirname), "../migrations");
+const MIGRATIONS_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../migrations"));
 
 describe("migrations", () => {
     it("each version export all its migrations", async () => {

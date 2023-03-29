@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import { OpenApiConvertedFernDefinition } from "@fern-api/openapi-migrator";
 import {
@@ -22,16 +22,19 @@ export async function createWorkspace({
 }): Promise<void> {
     await mkdir(directoryOfWorkspace);
     await writeGeneratorsConfiguration({
-        filepath: join(directoryOfWorkspace, GENERATORS_CONFIGURATION_FILENAME),
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
     });
-    const directoryOfDefinition = join(directoryOfWorkspace, DEFINITION_DIRECTORY);
+    const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     if (fernDefinition == null) {
         await writeSampleApiDefinition({
             directoryOfDefinition,
         });
     } else {
         await mkdir(directoryOfDefinition);
-        await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(fernDefinition.rootApiFile));
+        await writeFile(
+            join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)),
+            yaml.dump(fernDefinition.rootApiFile)
+        );
         for (const [relativePath, definitionFile] of entries(fernDefinition.definitionFiles)) {
             const absoluteFilepath = join(directoryOfDefinition, relativePath);
             await writeFile(
@@ -88,9 +91,9 @@ async function writeSampleApiDefinition({
     directoryOfDefinition: AbsoluteFilePath;
 }): Promise<void> {
     await mkdir(directoryOfDefinition);
-    await writeFile(join(directoryOfDefinition, ROOT_API_FILENAME), yaml.dump(ROOT_API));
+    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API));
 
-    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, "imdb.yml");
+    const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"));
     await writeFile(
         absoluteFilepathToImdbYaml,
         formatDefinitionFile({

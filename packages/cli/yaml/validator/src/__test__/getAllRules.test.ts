@@ -4,7 +4,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { getAllRules } from "../getAllRules";
 import { Rule } from "../Rule";
 
-const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), "../rules");
+const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"));
 
 describe("getAllRules", () => {
     it("ensure all rules are registered", async () => {

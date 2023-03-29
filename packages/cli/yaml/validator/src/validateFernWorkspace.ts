@@ -96,7 +96,7 @@ async function validateRootApiFile({
     const violations: ValidationViolation[] = [];
 
     const astVisitor = createRootApiFileAstVisitorForRules({
-        relativeFilepath: ROOT_API_FILENAME,
+        relativeFilepath: RelativeFilePath.of(ROOT_API_FILENAME),
         contents,
         allRuleVisitors,
         addViolations: (newViolations: ValidationViolation[]) => {

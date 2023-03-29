@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { IrVersions } from "../../../ir-versions";
 import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
 import { V4_TO_V3_MIGRATION } from "../migrateFromV4ToV3";
@@ -8,7 +8,7 @@ const runMigration = createMigrationTester(V4_TO_V3_MIGRATION);
 describe("migrateFromV4ToV3", () => {
     it("adds discriminantValue to errors", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
         });
 
         expect(migrated.types[0]?.examples?.[0]).toEqual(

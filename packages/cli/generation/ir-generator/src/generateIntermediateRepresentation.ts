@@ -41,7 +41,7 @@ export async function generateIntermediateRepresentation({
     const audienceIrGraph = audiences.type !== "all" ? new AudienceIrGraph(audiences.audiences) : undefined;
 
     const rootApiFileContext = constructFernFileContext({
-        relativeFilepath: ".",
+        relativeFilepath: RelativeFilePath.of("."),
         definitionFile: {
             imports: workspace.definition.rootApiFile.contents.imports,
         },

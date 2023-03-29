@@ -19,7 +19,7 @@ export async function loadWorkspace({
     cliVersion: string;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-    const absolutePathToDefinition = join(absolutePathToWorkspace, DEFINITION_DIRECTORY);
+    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
 
     const definitionDirectoryContents = await getDirectoryContents(absolutePathToDefinition, {
         fileExtensions: ["yml", "yaml", "json"],

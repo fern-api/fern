@@ -35,7 +35,7 @@ describe("generateIntermediateRepresentation", () => {
             const workspace = await loadWorkspace({
                 absolutePathToWorkspace: join(
                     AbsoluteFilePath.of(__dirname),
-                    "fixtures/fern",
+                    RelativeFilePath.of("fixtures/fern"),
                     RelativeFilePath.of(fixture.name)
                 ),
                 context: createMockTaskContext(),

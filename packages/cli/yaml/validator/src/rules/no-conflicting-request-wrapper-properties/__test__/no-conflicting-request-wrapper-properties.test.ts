@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { NoConflictingRequestWrapperPropertiesRule } from "../no-conflicting-request-wrapper-properties";
 
@@ -6,7 +6,11 @@ describe("no-conflicting-request-wrapper-properties", () => {
     it("simple", async () => {
         const violations = await getViolationsForRule({
             rule: NoConflictingRequestWrapperPropertiesRule,
-            absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), "fixtures", "simple"),
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("simple")
+            ),
         });
 
         expect(violations).toEqual([
@@ -15,7 +19,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Service header "foo"
   - Query Parameter "foo"`,
                 nodePath: ["service", "endpoints", "c"],
-                relativeFilepath: "a.yml",
+                relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error",
             },
             {
@@ -23,7 +27,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Service header "foo"
   - Body property: <Request Body> -> (extends) ObjectWithFoo -> foo`,
                 nodePath: ["service", "endpoints", "d"],
-                relativeFilepath: "a.yml",
+                relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error",
             },
             {
@@ -31,7 +35,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Service header "bar"
   - Body property: <Request Body> -> bar`,
                 nodePath: ["service", "endpoints", "d"],
-                relativeFilepath: "a.yml",
+                relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error",
             },
             {
@@ -39,7 +43,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Service header "baz"
   - Endpoint header "baz"`,
                 nodePath: ["service", "endpoints", "d"],
-                relativeFilepath: "a.yml",
+                relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error",
             },
             {
@@ -47,7 +51,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Body property "body"
   - Query Parameter "body"`,
                 nodePath: ["service", "endpoints", "c"],
-                relativeFilepath: "body-property-key.yml",
+                relativeFilepath: RelativeFilePath.of("body-property-key.yml"),
                 severity: "error",
             },
         ]);
