@@ -6,6 +6,7 @@ import {
     HttpMethod,
     HttpService,
     PathParameter,
+    PathParameterLocation,
     ResponseErrors,
 } from "@fern-fern/ir-model/http";
 import urlJoin from "url-join";
@@ -22,6 +23,8 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertHttpService({
+    rawRootBasePath,
+    rootPathParameters,
     serviceDefinition,
     file,
     errorResolver,
@@ -29,6 +32,8 @@ export function convertHttpService({
     exampleResolver,
     globalErrors,
 }: {
+    rawRootBasePath: string | undefined;
+    rootPathParameters: PathParameter[];
     serviceDefinition: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
     errorResolver: ErrorResolver;
@@ -36,6 +41,12 @@ export function convertHttpService({
     exampleResolver: ExampleResolver;
     globalErrors: ResponseErrors;
 }): HttpService {
+    const servicePathParameters = convertPathParameters({
+        pathParameters: serviceDefinition["path-parameters"],
+        location: PathParameterLocation.Service,
+        file,
+    });
+
     return {
         availability: convertAvailability(serviceDefinition.availability),
         name: { fernFilepath: file.fernFilepath },
@@ -48,30 +59,28 @@ export function convertHttpService({
                       convertHttpHeader({ headerKey, header, file })
                   )
                 : [],
-        pathParameters: convertPathParameters({
-            pathParameters: serviceDefinition["path-parameters"],
-            file,
-        }),
-        endpoints: Object.entries(serviceDefinition.endpoints).map(
-            ([endpointKey, endpoint]): HttpEndpoint => ({
+        pathParameters: servicePathParameters,
+        endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
+            const endpointPathParameters = convertPathParameters({
+                pathParameters: endpoint["path-parameters"],
+                location: PathParameterLocation.Endpoint,
+                file,
+            });
+
+            return {
                 ...convertDeclaration(endpoint),
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
-                fullPath: constructHttpPath(urlJoin(serviceDefinition["base-path"], endpoint.path)),
-                pathParameters: convertPathParameters({
-                    pathParameters: endpoint["path-parameters"],
-                    file,
-                }),
-                allPathParameters: convertPathParameters({
-                    pathParameters: {
-                        ...serviceDefinition["path-parameters"],
-                        ...endpoint["path-parameters"],
-                    },
-                    file,
-                }),
+                fullPath: constructHttpPath(
+                    rawRootBasePath != null
+                        ? urlJoin(rawRootBasePath, serviceDefinition["base-path"], endpoint.path)
+                        : urlJoin(serviceDefinition["base-path"], endpoint.path)
+                ),
+                pathParameters: endpointPathParameters,
+                allPathParameters: [...rootPathParameters, ...servicePathParameters, ...endpointPathParameters],
                 queryParameters:
                     typeof endpoint.request !== "string" && endpoint.request?.["query-parameters"] != null
                         ? Object.entries(endpoint.request["query-parameters"]).map(
@@ -117,16 +126,18 @@ export function convertHttpService({
                               })
                           )
                         : [],
-            })
-        ),
+            };
+        }),
     };
 }
 
 export function convertPathParameters({
     pathParameters,
+    location,
     file,
 }: {
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
+    location: PathParameterLocation;
     file: FernFileContext;
 }): PathParameter[] {
     if (pathParameters == null) {
@@ -136,6 +147,7 @@ export function convertPathParameters({
         convertPathParameter({
             parameterName,
             parameter,
+            location,
             file,
         })
     );
@@ -144,16 +156,19 @@ export function convertPathParameters({
 function convertPathParameter({
     parameterName,
     parameter,
+    location,
     file,
 }: {
     parameterName: string;
     parameter: RawSchemas.HttpPathParameterSchema;
+    location: PathParameterLocation;
     file: FernFileContext;
 }): PathParameter {
     return {
         ...convertDeclaration(parameter),
         name: file.casingsGenerator.generateName(parameterName),
         valueType: file.parseTypeReference(parameter),
+        location,
     };
 }
 

@@ -3,7 +3,7 @@ import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
-import { HttpEndpoint, ResponseErrors } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, PathParameterLocation, ResponseErrors } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -90,6 +90,7 @@ export async function generateIntermediateRepresentation({
         pathParameters: convertPathParameters({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
+            location: PathParameterLocation.Root,
         }),
     };
 
@@ -162,6 +163,8 @@ export async function generateIntermediateRepresentation({
                 }
 
                 const convertedHttpService = convertHttpService({
+                    rootPathParameters: intermediateRepresentation.pathParameters,
+                    rawRootBasePath: workspace.definition.rootApiFile.contents["base-path"],
                     serviceDefinition: service,
                     file,
                     errorResolver,

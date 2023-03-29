@@ -11207,11 +11207,46 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/movies",
-                        "parts": []
+                        "head": "/test/",
+                        "parts": [
+                            {
+                                "pathParameter": "pathParam",
+                                "tail": "/movies"
+                            }
+                        ]
                     },
                     "pathParameters": [],
-                    "allPathParameters": [],
+                    "allPathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "pathParam",
+                                "camelCase": {
+                                    "unsafeName": "pathParam",
+                                    "safeName": "pathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "path_param",
+                                    "safeName": "path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PATH_PARAM",
+                                    "safeName": "PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PathParam",
+                                    "safeName": "PathParam"
+                                }
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "location": "ROOT"
+                        }
+                    ],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -12444,7 +12479,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "valueType": {
                 "primitive": "STRING",
                 "_type": "primitive"
-            }
+            },
+            "location": "ROOT"
         }
     ],
     "subpackages": {
@@ -18433,11 +18469,46 @@ exports[`ir {"name":"simple"} 1`] = `
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "/movies",
-                        "parts": []
+                        "head": "/test/",
+                        "parts": [
+                            {
+                                "pathParameter": "pathParam",
+                                "tail": "/movies"
+                            }
+                        ]
                     },
                     "pathParameters": [],
-                    "allPathParameters": [],
+                    "allPathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "pathParam",
+                                "camelCase": {
+                                    "unsafeName": "pathParam",
+                                    "safeName": "pathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "path_param",
+                                    "safeName": "path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PATH_PARAM",
+                                    "safeName": "PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PathParam",
+                                    "safeName": "PathParam"
+                                }
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "location": "ROOT"
+                        }
+                    ],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -19596,8 +19667,12 @@ exports[`ir {"name":"simple"} 1`] = `
                         ]
                     },
                     "fullPath": {
-                        "head": "/movies/",
+                        "head": "/test/",
                         "parts": [
+                            {
+                                "pathParameter": "pathParam",
+                                "tail": "/movies/"
+                            },
                             {
                                 "pathParameter": "movieId",
                                 "tail": ""
@@ -19693,10 +19768,40 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "typeId": "type_imdb:MovieId",
                                 "_type": "named"
-                            }
+                            },
+                            "location": "ENDPOINT"
                         }
                     ],
                     "allPathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "pathParam",
+                                "camelCase": {
+                                    "unsafeName": "pathParam",
+                                    "safeName": "pathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "path_param",
+                                    "safeName": "path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PATH_PARAM",
+                                    "safeName": "PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PathParam",
+                                    "safeName": "PathParam"
+                                }
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "location": "ROOT"
+                        },
                         {
                             "availability": {
                                 "status": "GENERAL_AVAILABILITY"
@@ -19785,7 +19890,8 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "typeId": "type_imdb:MovieId",
                                 "_type": "named"
-                            }
+                            },
+                            "location": "ENDPOINT"
                         }
                     ],
                     "queryParameters": [
@@ -20885,8 +20991,12 @@ exports[`ir {"name":"simple"} 1`] = `
                         ]
                     },
                     "fullPath": {
-                        "head": "/movies/",
+                        "head": "/test/",
                         "parts": [
+                            {
+                                "pathParameter": "pathParam",
+                                "tail": "/movies/"
+                            },
                             {
                                 "pathParameter": "movieId",
                                 "tail": ""
@@ -20982,10 +21092,40 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "typeId": "type_imdb:MovieId",
                                 "_type": "named"
-                            }
+                            },
+                            "location": "ENDPOINT"
                         }
                     ],
                     "allPathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "pathParam",
+                                "camelCase": {
+                                    "unsafeName": "pathParam",
+                                    "safeName": "pathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "path_param",
+                                    "safeName": "path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PATH_PARAM",
+                                    "safeName": "PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PathParam",
+                                    "safeName": "PathParam"
+                                }
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "location": "ROOT"
+                        },
                         {
                             "availability": {
                                 "status": "GENERAL_AVAILABILITY"
@@ -21074,7 +21214,8 @@ exports[`ir {"name":"simple"} 1`] = `
                                 },
                                 "typeId": "type_imdb:MovieId",
                                 "_type": "named"
-                            }
+                            },
+                            "location": "ENDPOINT"
                         }
                     ],
                     "queryParameters": [],
@@ -21260,7 +21401,8 @@ exports[`ir {"name":"simple"} 1`] = `
             "valueType": {
                 "primitive": "STRING",
                 "_type": "primitive"
-            }
+            },
+            "location": "ROOT"
         }
     ],
     "subpackages": {

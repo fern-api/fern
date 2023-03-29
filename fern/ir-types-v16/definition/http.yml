@@ -66,6 +66,12 @@ types:
     properties:
       name: commons.Name
       valueType: types.TypeReference
+      location: PathParameterLocation
+  PathParameterLocation:
+    enum:
+      - ROOT
+      - SERVICE
+      - ENDPOINT
   QueryParameter:
     extends: commons.Declaration
     properties:
