@@ -62,6 +62,9 @@ function getReferenceToPathParameter({
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
 }): ts.Expression {
+    if (pathParameter.variable != null) {
+        return generatedClientClass.getReferenceToVariable(pathParameter.variable);
+    }
     switch (pathParameter.location) {
         case PathParameterLocation.Service:
         case PathParameterLocation.Endpoint:

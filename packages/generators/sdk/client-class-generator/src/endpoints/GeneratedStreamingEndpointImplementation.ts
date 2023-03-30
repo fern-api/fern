@@ -3,7 +3,6 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
-    PathParameter,
     SdkRequestShape,
     StreamingResponse,
 } from "@fern-fern/ir-model/http";
@@ -18,6 +17,7 @@ import { RequestWrapperParameter } from "../request-parameter/RequestWrapperPara
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
+import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
     export interface Init {
@@ -123,7 +123,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
     ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
-        for (const pathParameter of this.getAllPathParameters()) {
+        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
                 name: getParameterNameForPathParameter(pathParameter),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
@@ -193,10 +193,6 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             }
         );
         return parameters;
-    }
-
-    private getAllPathParameters(): PathParameter[] {
-        return [...this.service.pathParameters, ...this.endpoint.pathParameters];
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {

@@ -1,12 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpService,
-    PathParameter,
-    ResponseError,
-    SdkRequestShape,
-} from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpRequestBody, HttpService, ResponseError, SdkRequestShape } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
@@ -20,6 +13,7 @@ import { RequestWrapperParameter } from "../request-parameter/RequestWrapperPara
 import { EndpointSignature } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
+import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
 export declare namespace GeneratedThrowingEndpointImplementation {
     export interface Init {
@@ -126,7 +120,7 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
         }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
     ): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
-        for (const pathParameter of this.getAllPathParameters()) {
+        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
                 name: getParameterNameForPathParameter(pathParameter),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
@@ -141,10 +135,6 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
             );
         }
         return parameters;
-    }
-
-    private getAllPathParameters(): PathParameter[] {
-        return [...this.service.pathParameters, ...this.endpoint.pathParameters];
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {

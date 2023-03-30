@@ -1,0 +1,4 @@
+name: nursery-api
+
+variables:
+  rootVariable: string

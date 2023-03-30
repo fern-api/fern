@@ -4,7 +4,6 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
-    PathParameter,
     ResponseError,
 } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
@@ -18,6 +17,7 @@ import { FileUploadRequestParameter } from "../request-parameter/FileUploadReque
 import { EndpointSignature } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
+import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
 export declare namespace GeneratedThrowingFileUploadEndpointImplementation {
     export interface Init {
@@ -129,7 +129,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
                 });
             }
         }
-        for (const pathParameter of this.getAllPathParameters()) {
+        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
                 name: getParameterNameForPathParameter(pathParameter),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
@@ -150,10 +150,6 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
         }
         return ts.factory.createUnionTypeNode(types);
-    }
-
-    private getAllPathParameters(): PathParameter[] {
-        return [...this.service.pathParameters, ...this.endpoint.pathParameters];
     }
 
     private getParameterNameForFile(file: FileProperty): string {

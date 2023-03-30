@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
 import { HttpHeader, HttpService, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
+import { VariableDeclaration, VariableId } from "@fern-fern/ir-model/variables";
 import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
@@ -13,6 +14,7 @@ import { GeneratedNonThrowingFileUploadEndpointImplementation } from "./endpoint
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { GeneratedThrowingEndpointImplementation } from "./endpoints/GeneratedThrowingEndpointImplementation";
 import { GeneratedThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedThrowingFileUploadEndpointImplementation";
+import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
@@ -371,7 +373,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        for (const pathParameter of this.intermediateRepresentation.pathParameters) {
+        for (const variable of this.intermediateRepresentation.variables) {
+            const variableType = context.type.getReferenceToType(variable.type);
+            properties.push({
+                name: this.getOptionNameForVariable(variable),
+                type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
+                hasQuestionToken: variableType.isOptional,
+            });
+        }
+
+        for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
             properties.push({
                 name: getParameterNameForPathParameter(pathParameter),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
@@ -656,6 +667,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
         return this.getReferenceToOption(getParameterNameForPathParameter(pathParameter));
+    }
+
+    public getReferenceToVariable(variableId: VariableId): ts.Expression {
+        const variable = this.intermediateRepresentation.variables.find((v) => v.id === variableId);
+        if (variable == null) {
+            throw new Error("Variable does not exist: " + variableId);
+        }
+        return this.getReferenceToOption(this.getOptionNameForVariable(variable));
+    }
+
+    private getOptionNameForVariable(variable: VariableDeclaration): string {
+        return variable.name.camelCase.unsafeName;
     }
 }
 
