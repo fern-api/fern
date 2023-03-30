@@ -46,5 +46,18 @@ export async function visitRootApiFileYamlAst(
                 nodePath: ["path-parameters"],
             });
         },
+        variables: async (variables) => {
+            if (variables != null) {
+                for (const [variableId, variable] of Object.entries(variables)) {
+                    await visitor.variableDeclaration?.(
+                        {
+                            variableId,
+                            variable,
+                        },
+                        ["variables", variableId]
+                    );
+                }
+            }
+        },
     });
 }

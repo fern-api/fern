@@ -1,7 +1,8 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { RawSchemas } from "../../..";
+import { RawSchemas, RootApiFileAstVisitor } from "../../..";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
+import { isVariablePathParameter } from "../../../utils/visitRawPathParameter";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 import { NodePath } from "../../NodePath";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
@@ -378,7 +379,7 @@ export async function visitPathParameters({
     nodePath,
 }: {
     pathParameters: Record<string, HttpPathParameterSchema> | undefined;
-    visitor: Partial<DefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor> | Partial<RootApiFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (pathParameters == null) {
@@ -390,17 +391,27 @@ export async function visitPathParameters({
 
         await visitor.pathParameter?.({ pathParameterKey, pathParameter }, nodePathForPathParameter);
 
-        if (typeof pathParameter === "string") {
-            await visitTypeReference(pathParameter, nodePathForPathParameter);
+        if (isVariablePathParameter(pathParameter)) {
+            if (typeof pathParameter === "string") {
+                await visitor.variableReference?.(pathParameter, nodePathForPathParameter);
+            } else {
+                await visitObject(pathParameter, {
+                    docs: createDocsVisitor(visitor, nodePathForPathParameter),
+                    variable: async (variable) =>
+                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"]),
+                });
+            }
         } else {
-            await visitObject(pathParameter, {
-                docs: createDocsVisitor(visitor, nodePathForPathParameter),
-                availability: noop,
-                type: async (type) => {
-                    await visitTypeReference(type, [...nodePathForPathParameter, "type"]);
-                },
-                audiences: noop,
-            });
+            if (typeof pathParameter === "string") {
+                await visitTypeReference(pathParameter, nodePathForPathParameter);
+            } else {
+                await visitObject(pathParameter, {
+                    docs: createDocsVisitor(visitor, nodePathForPathParameter),
+                    type: async (type) => {
+                        await visitTypeReference(type, [...nodePathForPathParameter, "type"]);
+                    },
+                });
+            }
         }
     }
 }

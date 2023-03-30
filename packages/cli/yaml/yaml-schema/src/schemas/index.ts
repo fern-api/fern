@@ -44,4 +44,5 @@ export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscrimina
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
+export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
 export { WithDocsSchema } from "./WithDocsSchema";

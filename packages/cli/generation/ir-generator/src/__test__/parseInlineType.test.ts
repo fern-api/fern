@@ -17,6 +17,9 @@ describe("parse inline types", () => {
                 relativeFilepath: dummyFilepath,
                 definitionFile: {},
                 casingsGenerator,
+                rootApiFile: {
+                    name: "api",
+                },
             }),
         });
         const expectedTypeReference = TypeReference.container(

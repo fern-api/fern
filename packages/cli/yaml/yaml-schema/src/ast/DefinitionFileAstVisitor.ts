@@ -67,6 +67,7 @@ export interface DefinitionFileAstNodeTypes {
     header: { headerKey: string; header: HttpHeaderSchema };
     errorDeclaration: { errorName: string; declaration: ErrorDeclarationSchema };
     errorReference: string;
+    variableReference: string;
 }
 
 export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: "inlinedRequest" };

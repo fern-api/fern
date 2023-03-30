@@ -1,9 +1,11 @@
 import {
     ErrorDiscriminationSchema,
+    HttpPathParameterSchema,
     MultipleBaseUrlsEnvironmentSchema,
     RootApiFileSchema,
     SingleBaseUrlEnvironmentSchema,
 } from "../schemas";
+import { VariableDeclarationSchema } from "../schemas/VariableDeclarationSchema";
 import { NodePath } from "./NodePath";
 
 export type RootApiFileAstVisitor<R = void | Promise<void>> = {
@@ -19,6 +21,12 @@ export interface RootApiFileAstNodeTypes {
     };
     errorDiscrimination: ErrorDiscriminationSchema | null | undefined;
     errorReference: string;
+    variableDeclaration: {
+        variableId: string;
+        variable: VariableDeclarationSchema;
+    };
+    pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
+    variableReference: string;
 }
 
 export type RootApiFileAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes, R = void | Promise<void>> = (

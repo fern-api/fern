@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { isVariablePathParameter, RawSchemas } from "@fern-api/yaml-schema";
 import {
     HttpEndpoint,
     HttpHeader,
@@ -9,11 +9,13 @@ import {
     PathParameterLocation,
     ResponseErrors,
 } from "@fern-fern/ir-model/http";
+import { TypeReference } from "@fern-fern/ir-model/types";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { VariableResolver } from "../../resolvers/VariableResolver";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
@@ -23,28 +25,29 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export function convertHttpService({
-    rawRootBasePath,
     rootPathParameters,
     serviceDefinition,
     file,
     errorResolver,
     typeResolver,
     exampleResolver,
+    variableResolver,
     globalErrors,
 }: {
-    rawRootBasePath: string | undefined;
     rootPathParameters: PathParameter[];
     serviceDefinition: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
     errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    variableResolver: VariableResolver;
     globalErrors: ResponseErrors;
 }): HttpService {
     const servicePathParameters = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
         location: PathParameterLocation.Service,
         file,
+        variableResolver,
     });
 
     return {
@@ -65,6 +68,7 @@ export function convertHttpService({
                 pathParameters: endpoint["path-parameters"],
                 location: PathParameterLocation.Endpoint,
                 file,
+                variableResolver,
             });
 
             return {
@@ -75,8 +79,8 @@ export function convertHttpService({
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
                 fullPath: constructHttpPath(
-                    rawRootBasePath != null
-                        ? urlJoin(rawRootBasePath, serviceDefinition["base-path"], endpoint.path)
+                    file.rootApiFile["base-path"] != null
+                        ? urlJoin(file.rootApiFile["base-path"], serviceDefinition["base-path"], endpoint.path)
                         : urlJoin(serviceDefinition["base-path"], endpoint.path)
                 ),
                 pathParameters: endpointPathParameters,
@@ -122,6 +126,7 @@ export function convertHttpService({
                                   typeResolver,
                                   errorResolver,
                                   exampleResolver,
+                                  variableResolver,
                                   file,
                               })
                           )
@@ -135,10 +140,12 @@ export function convertPathParameters({
     pathParameters,
     location,
     file,
+    variableResolver,
 }: {
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> | undefined;
     location: PathParameterLocation;
     file: FernFileContext;
+    variableResolver: VariableResolver;
 }): PathParameter[] {
     if (pathParameters == null) {
         return [];
@@ -149,6 +156,7 @@ export function convertPathParameters({
             parameter,
             location,
             file,
+            variableResolver,
         })
     );
 }
@@ -158,18 +166,91 @@ function convertPathParameter({
     parameter,
     location,
     file,
+    variableResolver,
 }: {
     parameterName: string;
     parameter: RawSchemas.HttpPathParameterSchema;
     location: PathParameterLocation;
     file: FernFileContext;
+    variableResolver: VariableResolver;
 }): PathParameter {
     return {
         ...convertDeclaration(parameter),
         name: file.casingsGenerator.generateName(parameterName),
-        valueType: file.parseTypeReference(parameter),
-        location,
+        valueType: getPathParameterType({ parameter, variableResolver, file }),
+        location: isVariablePathParameter(parameter) ? PathParameterLocation.Variable : location,
     };
+}
+
+function getPathParameterType({
+    parameter,
+    variableResolver,
+    file,
+}: {
+    parameter: RawSchemas.HttpPathParameterSchema;
+    variableResolver: VariableResolver;
+    file: FernFileContext;
+}): TypeReference {
+    const parsed = resolvePathParameterOrThrow({
+        parameter,
+        variableResolver,
+        file,
+    });
+    return parsed.file.parseTypeReference(parsed.rawType);
+}
+
+export function resolvePathParameterOrThrow({
+    parameter,
+    variableResolver,
+    file,
+}: {
+    parameter: RawSchemas.HttpPathParameterSchema;
+    variableResolver: VariableResolver;
+    file: FernFileContext;
+}): { rawType: string; file: FernFileContext } {
+    const resolved = resolvePathParameter({
+        parameter,
+        variableResolver,
+        file,
+    });
+    if (resolved == null) {
+        throw new Error("Cannot resolve path parameter");
+    }
+    return resolved;
+}
+
+export function resolvePathParameter({
+    parameter,
+    variableResolver,
+    file,
+}: {
+    parameter: RawSchemas.HttpPathParameterSchema;
+    variableResolver: VariableResolver;
+    file: FernFileContext;
+}): { rawType: string; file: FernFileContext } | undefined {
+    if (isVariablePathParameter(parameter)) {
+        const variable = typeof parameter === "string" ? parameter : parameter.variable;
+
+        const resolvedVariable = variableResolver.getDeclaration(variable, file);
+        if (resolvedVariable == null) {
+            return undefined;
+        }
+
+        const rawType =
+            typeof resolvedVariable.declaration === "string"
+                ? resolvedVariable.declaration
+                : resolvedVariable.declaration.type;
+
+        return {
+            rawType,
+            file: resolvedVariable.file,
+        };
+    } else {
+        return {
+            file,
+            rawType: typeof parameter === "string" ? parameter : parameter.type,
+        };
+    }
 }
 
 export function getQueryParameterName({

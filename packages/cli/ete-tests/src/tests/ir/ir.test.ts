@@ -38,6 +38,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "multiple-environment-urls",
     },
+    {
+        name: "variables",
+    },
 ];
 
 interface Fixture {
@@ -45,20 +48,26 @@ interface Fixture {
     audiences?: string[];
     language?: GenerationLanguage;
     version?: string;
+    only?: boolean;
 }
 
 describe("ir", () => {
     for (const fixture of FIXTURES) {
-        it(`${JSON.stringify(fixture)}`, async () => {
-            const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
-            const irContents = await generateIrAsString({
-                fixturePath,
-                language: fixture.language,
-                audiences: fixture.audiences,
-                version: fixture.version,
-            });
-            expect(irContents).toMatchSnapshot();
-        }, 90_000);
+        (fixture.only ? it.only : it)(
+            `${JSON.stringify(fixture)}`,
+            async () => {
+                const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
+                const irContents = await generateIrAsString({
+                    fixturePath,
+                    language: fixture.language,
+                    audiences: fixture.audiences,
+                    version: fixture.version,
+                });
+                // eslint-disable-next-line jest/no-standalone-expect
+                expect(irContents).toMatchSnapshot();
+            },
+            90_000
+        );
     }
 
     it("fails with invalid version", async () => {

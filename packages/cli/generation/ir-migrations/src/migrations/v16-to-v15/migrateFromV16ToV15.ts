@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
 import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
 
@@ -35,6 +36,33 @@ export const V16_TO_V15_MIGRATION: IrMigration<
                     : "Cannot backwards-migrate IR because this IR contains a root base-path."
             );
         }
-        return v16;
+        return {
+            ...v16,
+            services: mapValues(v16.services, (service) => ({
+                ...service,
+                pathParameters: convertPathParameters(service.pathParameters),
+                endpoints: service.endpoints.map((endpoint) => ({
+                    ...endpoint,
+                    allPathParameters: convertPathParameters(endpoint.allPathParameters),
+                    pathParameters: convertPathParameters(endpoint.pathParameters),
+                })),
+            })),
+        };
     },
 };
+
+function convertPathParameters(
+    pathParameters: IrVersions.V16.http.PathParameter[]
+): IrVersions.V15.http.PathParameter[] {
+    return pathParameters.map((pathParameter) => convertPathParameter(pathParameter));
+}
+
+function convertPathParameter(pathParameter: IrVersions.V16.http.PathParameter): IrVersions.V15.http.PathParameter {
+    return {
+        ...pathParameter,
+        availability: {
+            status: IrVersions.V15.commons.AvailabilityStatus.GeneralAvailability,
+            message: undefined,
+        },
+    };
+}
