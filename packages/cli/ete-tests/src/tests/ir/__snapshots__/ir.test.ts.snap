@@ -22503,7 +22503,8 @@ exports[`ir {"name":"variables"} 1`] = `
                                 "typeId": "type_commons:StringAlias",
                                 "_type": "named"
                             },
-                            "location": "VARIABLE"
+                            "location": "ENDPOINT",
+                            "variable": "my-variable"
                         }
                     ],
                     "allPathParameters": [
@@ -22596,7 +22597,8 @@ exports[`ir {"name":"variables"} 1`] = `
                                 "typeId": "type_commons:StringAlias",
                                 "_type": "named"
                             },
-                            "location": "VARIABLE"
+                            "location": "ROOT",
+                            "variable": "my-variable"
                         },
                         {
                             "availability": {
@@ -22687,7 +22689,8 @@ exports[`ir {"name":"variables"} 1`] = `
                                 "typeId": "type_commons:StringAlias",
                                 "_type": "named"
                             },
-                            "location": "VARIABLE"
+                            "location": "ENDPOINT",
+                            "variable": "my-variable"
                         }
                     ],
                     "queryParameters": [],
@@ -22824,12 +22827,14 @@ exports[`ir {"name":"variables"} 1`] = `
                 "typeId": "type_commons:StringAlias",
                 "_type": "named"
             },
-            "location": "VARIABLE"
+            "location": "ROOT",
+            "variable": "my-variable"
         }
     ],
     "variables": [
         {
             "docs": "I am a variable",
+            "id": "my-variable",
             "name": {
                 "originalName": "my-variable",
                 "camelCase": {

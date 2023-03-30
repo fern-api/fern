@@ -1,4 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { VariableId } from "@fern-fern/ir-model/variables";
 import { constructRootApiFileContext, FernFileContext } from "../FernFileContext";
 
 export interface VariableResolver {
@@ -10,6 +11,8 @@ export interface VariableResolver {
         referenceToVariable: string,
         file: FernFileContext
     ): { declaration: RawSchemas.VariableDeclarationSchema; file: FernFileContext } | undefined;
+    getVariableIdOrThrow(referenceToVariable: string): VariableId;
+    getVariableId(referenceToVariable: string): VariableId | undefined;
 }
 
 export class VariableResolverImpl implements VariableResolver {
@@ -46,5 +49,20 @@ export class VariableResolverImpl implements VariableResolver {
                 rootApiFile: file.rootApiFile,
             }),
         };
+    }
+
+    public getVariableIdOrThrow(referenceToVariable: string): VariableId {
+        const variableId = this.getVariableId(referenceToVariable);
+        if (variableId == null) {
+            throw new Error("Variable reference does not start with " + VariableResolverImpl.VARIABLE_PREFIX);
+        }
+        return variableId;
+    }
+
+    public getVariableId(referenceToVariable: string): VariableId | undefined {
+        if (!referenceToVariable.startsWith(VariableResolverImpl.VARIABLE_PREFIX)) {
+            return undefined;
+        }
+        return referenceToVariable.substring(VariableResolverImpl.VARIABLE_PREFIX.length);
     }
 }
