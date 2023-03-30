@@ -14,7 +14,7 @@ export {
 } from "./converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
 export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";
-export { constructFernFileContext, type FernFileContext } from "./FernFileContext";
+export { constructFernFileContext, constructRootApiFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
 export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";

@@ -50,5 +50,7 @@ export function createRootApiFileAstVisitorForRules({
         ...createAstNodeVisitor("errorDiscrimination"),
         ...createAstNodeVisitor("errorReference"),
         ...createAstNodeVisitor("variableDeclaration"),
+        ...createAstNodeVisitor("variableReference"),
+        ...createAstNodeVisitor("pathParameter"),
     };
 }

@@ -96,8 +96,14 @@ export async function generateIntermediateRepresentation({
             location: PathParameterLocation.Root,
             variableResolver,
         }),
-        // TODO
-        variables: [],
+        variables:
+            workspace.definition.rootApiFile.contents.variables != null
+                ? Object.entries(workspace.definition.rootApiFile.contents.variables).map(([key, variable]) => ({
+                      docs: typeof variable !== "string" ? variable.docs : undefined,
+                      name: rootApiFileContext.casingsGenerator.generateName(key),
+                      type: rootApiFileContext.parseTypeReference(variable),
+                  }))
+                : [],
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

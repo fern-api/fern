@@ -13,6 +13,8 @@ export interface VariableResolver {
 }
 
 export class VariableResolverImpl implements VariableResolver {
+    public static VARIABLE_PREFIX = "$";
+
     public getDeclarationOrThrow(
         referenceToVariable: string,
         file: FernFileContext
@@ -28,7 +30,7 @@ export class VariableResolverImpl implements VariableResolver {
         referenceToVariable: string,
         file: FernFileContext
     ): { declaration: RawSchemas.VariableDeclarationSchema; file: FernFileContext } | undefined {
-        if (!referenceToVariable.startsWith("$")) {
+        if (!referenceToVariable.startsWith(VariableResolverImpl.VARIABLE_PREFIX)) {
             return undefined;
         }
 

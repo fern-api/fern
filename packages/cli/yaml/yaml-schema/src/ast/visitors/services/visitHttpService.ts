@@ -1,5 +1,5 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { RawSchemas } from "../../..";
+import { RawSchemas, RootApiFileAstVisitor } from "../../..";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
 import { isVariablePathParameter } from "../../../utils/visitRawPathParameter";
@@ -379,7 +379,7 @@ export async function visitPathParameters({
     nodePath,
 }: {
     pathParameters: Record<string, HttpPathParameterSchema> | undefined;
-    visitor: Partial<DefinitionFileAstVisitor>;
+    visitor: Partial<DefinitionFileAstVisitor> | Partial<RootApiFileAstVisitor>;
     nodePath: NodePath;
 }): Promise<void> {
     if (pathParameters == null) {

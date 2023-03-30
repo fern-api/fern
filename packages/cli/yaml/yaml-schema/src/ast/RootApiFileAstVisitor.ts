@@ -1,5 +1,6 @@
 import {
     ErrorDiscriminationSchema,
+    HttpPathParameterSchema,
     MultipleBaseUrlsEnvironmentSchema,
     RootApiFileSchema,
     SingleBaseUrlEnvironmentSchema,
@@ -24,6 +25,8 @@ export interface RootApiFileAstNodeTypes {
         variableId: string;
         variable: VariableDeclarationSchema;
     };
+    pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
+    variableReference: string;
 }
 
 export type RootApiFileAstNodeVisitor<K extends keyof RootApiFileAstNodeTypes, R = void | Promise<void>> = (

@@ -21,3 +21,9 @@ service:
       path-parameters:
         parameter1: string
       method: POST
+
+    rootPathParameter:
+      path: /{x}
+      path-parameters:
+        x: $someVariable
+      method: POST
