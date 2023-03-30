@@ -189,7 +189,7 @@ export class EndpointConverter {
     }
 
     private getQueryParameters(): Record<string, RawSchemas.HttpQueryParameterSchema> {
-        const queryParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
+        const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
         for (const parameter of this.resolvedParameters) {
             if (parameter.in === "query") {
                 const parameterType = this.convertQueryParameter(parameter);

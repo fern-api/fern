@@ -62,13 +62,14 @@ types:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
   PathParameter:
-    extends: commons.Declaration
+    extends: commons.WithDocs
     properties:
       name: commons.Name
       valueType: types.TypeReference
       location: PathParameterLocation
   PathParameterLocation:
     enum:
+      - VARIABLE
       - ROOT
       - SERVICE
       - ENDPOINT

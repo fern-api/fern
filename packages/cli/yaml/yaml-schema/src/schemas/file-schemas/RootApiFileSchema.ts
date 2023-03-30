@@ -5,6 +5,7 @@ import { EnvironmentSchema } from "../EnvironmentSchema";
 import { ErrorDiscriminationSchema } from "../ErrorDiscriminationSchema";
 import { HttpHeaderSchema } from "../HttpHeaderSchema";
 import { HttpPathParameterSchema } from "../HttpPathParameterSchema";
+import { VariableDeclarationSchema } from "../VariableDeclarationSchema";
 
 export const RootApiFileSchema = z.strictObject({
     name: z.string(), // TODO: should this be migrated to id?
@@ -21,6 +22,7 @@ export const RootApiFileSchema = z.strictObject({
     errors: z.optional(z.array(z.string())),
     "base-path": z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
+    variables: z.optional(z.record(VariableDeclarationSchema)),
 });
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

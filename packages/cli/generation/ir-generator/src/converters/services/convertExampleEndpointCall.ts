@@ -12,11 +12,13 @@ import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { VariableResolver } from "../../resolvers/VariableResolver";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions,
 } from "../type-declarations/convertExampleType";
+import { resolvePathParameterOrThrow } from "./convertHttpService";
 
 export function convertExampleEndpointCall({
     service,
@@ -25,6 +27,7 @@ export function convertExampleEndpointCall({
     typeResolver,
     errorResolver,
     exampleResolver,
+    variableResolver,
     file,
 }: {
     service: RawSchemas.HttpServiceSchema;
@@ -33,13 +36,14 @@ export function convertExampleEndpointCall({
     typeResolver: TypeResolver;
     errorResolver: ErrorResolver;
     exampleResolver: ExampleResolver;
+    variableResolver: VariableResolver;
     file: FernFileContext;
 }): ExampleEndpointCall {
     return {
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example }),
-        ...convertPathParameters({ service, endpoint, example, typeResolver, exampleResolver, file }),
+        ...convertPathParameters({ service, endpoint, example, typeResolver, exampleResolver, variableResolver, file }),
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file }),
         queryParameters:
             example["query-parameters"] != null
@@ -78,6 +82,7 @@ function convertPathParameters({
     example,
     typeResolver,
     exampleResolver,
+    variableResolver,
     file,
 }: {
     service: RawSchemas.HttpServiceSchema;
@@ -85,6 +90,7 @@ function convertPathParameters({
     example: RawSchemas.ExampleEndpointCallSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    variableResolver: VariableResolver;
     file: FernFileContext;
 }): Pick<ExampleEndpointCall, "endpointPathParameters" | "servicePathParameters"> {
     const servicePathParameters: ExamplePathParameter[] = [];
@@ -95,32 +101,36 @@ function convertPathParameters({
             const endpointPathParameterDeclaration = endpoint["path-parameters"]?.[key];
             const servicePathParameterDeclaration = service["path-parameters"]?.[key];
             if (endpointPathParameterDeclaration != null) {
+                const resolvedPathParameter = resolvePathParameterOrThrow({
+                    parameter: endpointPathParameterDeclaration,
+                    variableResolver,
+                    file,
+                });
                 endpointPathParameters.push({
                     key,
                     value: convertTypeReferenceExample({
                         example: examplePathParameter,
-                        rawTypeBeingExemplified:
-                            typeof endpointPathParameterDeclaration === "string"
-                                ? endpointPathParameterDeclaration
-                                : endpointPathParameterDeclaration.type,
+                        rawTypeBeingExemplified: resolvedPathParameter.rawType,
                         typeResolver,
                         exampleResolver,
-                        fileContainingRawTypeReference: file,
+                        fileContainingRawTypeReference: resolvedPathParameter.file,
                         fileContainingExample: file,
                     }),
                 });
             } else if (servicePathParameterDeclaration != null) {
+                const resolvedPathParameter = resolvePathParameterOrThrow({
+                    parameter: servicePathParameterDeclaration,
+                    variableResolver,
+                    file,
+                });
                 servicePathParameters.push({
                     key,
                     value: convertTypeReferenceExample({
                         example: examplePathParameter,
-                        rawTypeBeingExemplified:
-                            typeof servicePathParameterDeclaration === "string"
-                                ? servicePathParameterDeclaration
-                                : servicePathParameterDeclaration.type,
+                        rawTypeBeingExemplified: resolvedPathParameter.rawType,
                         typeResolver,
                         exampleResolver,
-                        fileContainingRawTypeReference: file,
+                        fileContainingRawTypeReference: resolvedPathParameter.file,
                         fileContainingExample: file,
                     }),
                 });

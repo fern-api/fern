@@ -14,7 +14,7 @@ import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
 export class ComplexTypeDetector {
     private typeResolver: TypeResolver;
 
-    constructor(workspace: FernWorkspace) {
+    constructor(private readonly workspace: FernWorkspace) {
         this.typeResolver = new TypeResolverImpl(workspace);
     }
 
@@ -25,6 +25,7 @@ export class ComplexTypeDetector {
                 relativeFilepath: ruleRunnerArgs.relativeFilepath,
                 definitionFile: ruleRunnerArgs.contents,
                 casingsGenerator: CASINGS_GENERATOR,
+                rootApiFile: this.workspace.definition.rootApiFile.contents,
             }),
         });
         if (resolvedType == null) {

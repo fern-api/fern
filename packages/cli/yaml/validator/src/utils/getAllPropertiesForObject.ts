@@ -60,6 +60,7 @@ export function getAllPropertiesForObject({
         relativeFilepath: filepathOfDeclaration,
         definitionFile,
         casingsGenerator: CASINGS_GENERATOR,
+        rootApiFile: workspace.definition.rootApiFile.contents,
     });
 
     if (objectDeclaration.properties != null) {
@@ -149,6 +150,7 @@ export function getAllPropertiesForType({
             relativeFilepath: filepathOfDeclaration,
             definitionFile,
             casingsGenerator: CASINGS_GENERATOR,
+            rootApiFile: workspace.definition.rootApiFile.contents,
         }),
     });
     if (resolvedType == null || resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {

@@ -16,7 +16,7 @@ import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDis
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { constructFernFileContext, FernFileContext } from "./FernFileContext";
+import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
@@ -24,6 +24,7 @@ import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
+import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
 
@@ -40,12 +41,9 @@ export async function generateIntermediateRepresentation({
 
     const audienceIrGraph = audiences.type !== "all" ? new AudienceIrGraph(audiences.audiences) : undefined;
 
-    const rootApiFileContext = constructFernFileContext({
-        relativeFilepath: RelativeFilePath.of("."),
-        definitionFile: {
-            imports: workspace.definition.rootApiFile.contents.imports,
-        },
+    const rootApiFileContext = constructRootApiFileContext({
         casingsGenerator,
+        rootApiFile: workspace.definition.rootApiFile.contents,
     });
     const globalErrors: ResponseErrors = (workspace.definition.rootApiFile.contents.errors ?? []).map(
         (referenceToError) => {
@@ -56,6 +54,11 @@ export async function generateIntermediateRepresentation({
             return { error: errorName, docs: undefined };
         }
     );
+
+    const typeResolver = new TypeResolverImpl(workspace);
+    const errorResolver = new ErrorResolverImpl(workspace);
+    const exampleResolver = new ExampleResolverImpl(typeResolver);
+    const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
@@ -91,12 +94,9 @@ export async function generateIntermediateRepresentation({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
             location: PathParameterLocation.Root,
+            variableResolver,
         }),
     };
-
-    const typeResolver = new TypeResolverImpl(workspace);
-    const errorResolver = new ErrorResolverImpl(workspace);
-    const exampleResolver = new ExampleResolverImpl(typeResolver);
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
@@ -164,13 +164,13 @@ export async function generateIntermediateRepresentation({
 
                 const convertedHttpService = convertHttpService({
                     rootPathParameters: intermediateRepresentation.pathParameters,
-                    rawRootBasePath: workspace.definition.rootApiFile.contents["base-path"],
                     serviceDefinition: service,
                     file,
                     errorResolver,
                     typeResolver,
                     exampleResolver,
                     globalErrors,
+                    variableResolver,
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);
@@ -209,6 +209,7 @@ export async function generateIntermediateRepresentation({
                 relativeFilepath,
                 definitionFile: file,
                 casingsGenerator,
+                rootApiFile: workspace.definition.rootApiFile.contents,
             })
         );
     });

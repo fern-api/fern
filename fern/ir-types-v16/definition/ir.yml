@@ -36,6 +36,7 @@ types:
       pathParameters: list<http.PathParameter>
       errorDiscriminationStrategy: ErrorDiscriminationStrategy
       sdkConfig: SdkConfig
+      variables: list<VariableDeclaration>
   SdkConfig:
     properties:
       isAuthMandatory: boolean
@@ -60,3 +61,9 @@ types:
     extends: Package
     properties:
       name: commons.Name
+
+  VariableDeclaration:
+    extends: commons.WithDocs
+    properties:
+      name: commons.Name
+      type: types.TypeReference

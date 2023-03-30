@@ -6,7 +6,7 @@ export {
     DEFAULT_REQUEST_PARAMETER_NAME,
     doesRequestHaveNonBodyProperties,
 } from "./converters/services/convertHttpSdkRequest";
-export { getHeaderName, getQueryParameterName } from "./converters/services/convertHttpService";
+export { getHeaderName, getQueryParameterName, resolvePathParameter } from "./converters/services/convertHttpService";
 export {
     getSingleUnionTypeName,
     getUnionDiscriminant,
@@ -20,5 +20,6 @@ export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";
 export { type ResolvedContainerType, type ResolvedType } from "./resolvers/ResolvedType";
 export { TypeResolverImpl, type TypeResolver } from "./resolvers/TypeResolver";
+export { VariableResolverImpl, type VariableResolver } from "./resolvers/VariableResolver";
 export { getResolvedPathOfImportedFile } from "./utils/getResolvedPathOfImportedFile";
 export { parseReferenceToTypeName, type ReferenceToTypeName } from "./utils/parseReferenceToTypeName";

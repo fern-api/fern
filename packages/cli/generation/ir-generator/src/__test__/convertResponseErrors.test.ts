@@ -18,6 +18,9 @@ describe("convertResponseErrors", () => {
                     },
                 },
                 casingsGenerator,
+                rootApiFile: {
+                    name: "api",
+                },
             }),
         });
 
