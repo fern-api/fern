@@ -178,7 +178,10 @@ function convertPathParameter({
         ...convertDeclaration(parameter),
         name: file.casingsGenerator.generateName(parameterName),
         valueType: getPathParameterType({ parameter, variableResolver, file }),
-        location: isVariablePathParameter(parameter) ? PathParameterLocation.Variable : location,
+        location,
+        variable: isVariablePathParameter(parameter)
+            ? variableResolver.getVariableIdOrThrow(typeof parameter === "string" ? parameter : parameter.variable)
+            : undefined,
     };
 }
 

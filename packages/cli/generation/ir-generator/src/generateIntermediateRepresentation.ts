@@ -100,6 +100,7 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents.variables != null
                 ? Object.entries(workspace.definition.rootApiFile.contents.variables).map(([key, variable]) => ({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
+                      id: key,
                       name: rootApiFileContext.casingsGenerator.generateName(key),
                       type: rootApiFileContext.parseTypeReference(variable),
                   }))

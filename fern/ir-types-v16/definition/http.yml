@@ -5,6 +5,7 @@ imports:
   types: types.yml
   errors: errors.yml
   environment: environment.yml
+  variables: variables.yml
 types:
   HttpService:
     properties:
@@ -67,9 +68,9 @@ types:
       name: commons.Name
       valueType: types.TypeReference
       location: PathParameterLocation
+      variable: optional<variables.VariableId>
   PathParameterLocation:
     enum:
-      - VARIABLE
       - ROOT
       - SERVICE
       - ENDPOINT
