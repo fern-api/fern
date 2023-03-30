@@ -590,7 +590,7 @@ class ClientGenerator:
         for header_auth_scheme in self._get_header_auth_schemes():
             headers.append(
                 (
-                    header.name.wire_value,
+                    header_auth_scheme.name.wire_value,
                     AST.Expression(f"self.{self._get_auth_scheme_header_private_member_name(header_auth_scheme)}"),
                 ),
             )

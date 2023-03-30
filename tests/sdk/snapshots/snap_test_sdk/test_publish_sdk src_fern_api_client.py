@@ -6,9 +6,10 @@ from .resources.movie.client import MovieClient
 
 
 class FernIr:
-    def __init__(self, *, environment: str):
+    def __init__(self, *, environment: str, header_auth: str):
         self._environment = environment
+        self.header_auth = header_auth
 
     @cached_property
     def movie(self) -> MovieClient:
-        return MovieClient(environment=self._environment)
+        return MovieClient(environment=self._environment, header_auth=self.header_auth)
