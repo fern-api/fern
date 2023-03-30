@@ -96,6 +96,8 @@ export async function generateIntermediateRepresentation({
             location: PathParameterLocation.Root,
             variableResolver,
         }),
+        // TODO
+        variables: [],
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

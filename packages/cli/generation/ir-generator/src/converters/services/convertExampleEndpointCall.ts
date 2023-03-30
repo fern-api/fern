@@ -92,48 +92,68 @@ function convertPathParameters({
     exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
     file: FernFileContext;
-}): Pick<ExampleEndpointCall, "endpointPathParameters" | "servicePathParameters"> {
+}): Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters"> {
+    const rootPathParameters: ExamplePathParameter[] = [];
     const servicePathParameters: ExamplePathParameter[] = [];
     const endpointPathParameters: ExamplePathParameter[] = [];
 
+    const buildExamplePathParameter = ({
+        key,
+        pathParameterDeclaration,
+        examplePathParameter,
+    }: {
+        key: string;
+        pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
+        examplePathParameter: unknown;
+    }) => {
+        const resolvedPathParameter = resolvePathParameterOrThrow({
+            parameter: pathParameterDeclaration,
+            variableResolver,
+            file,
+        });
+        return {
+            key,
+            value: convertTypeReferenceExample({
+                example: examplePathParameter,
+                rawTypeBeingExemplified: resolvedPathParameter.rawType,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: resolvedPathParameter.file,
+                fileContainingExample: file,
+            }),
+        };
+    };
+
     if (example["path-parameters"] != null) {
         for (const [key, examplePathParameter] of Object.entries(example["path-parameters"])) {
-            const endpointPathParameterDeclaration = endpoint["path-parameters"]?.[key];
+            const rootPathParameterDeclaration = file.rootApiFile["path-parameters"]?.[key];
             const servicePathParameterDeclaration = service["path-parameters"]?.[key];
-            if (endpointPathParameterDeclaration != null) {
-                const resolvedPathParameter = resolvePathParameterOrThrow({
-                    parameter: endpointPathParameterDeclaration,
-                    variableResolver,
-                    file,
-                });
-                endpointPathParameters.push({
-                    key,
-                    value: convertTypeReferenceExample({
-                        example: examplePathParameter,
-                        rawTypeBeingExemplified: resolvedPathParameter.rawType,
-                        typeResolver,
-                        exampleResolver,
-                        fileContainingRawTypeReference: resolvedPathParameter.file,
-                        fileContainingExample: file,
-                    }),
-                });
+            const endpointPathParameterDeclaration = endpoint["path-parameters"]?.[key];
+
+            if (rootPathParameterDeclaration != null) {
+                rootPathParameters.push(
+                    buildExamplePathParameter({
+                        key,
+                        pathParameterDeclaration: rootPathParameterDeclaration,
+                        examplePathParameter,
+                    })
+                );
+            } else if (endpointPathParameterDeclaration != null) {
+                endpointPathParameters.push(
+                    buildExamplePathParameter({
+                        key,
+                        pathParameterDeclaration: endpointPathParameterDeclaration,
+                        examplePathParameter,
+                    })
+                );
             } else if (servicePathParameterDeclaration != null) {
-                const resolvedPathParameter = resolvePathParameterOrThrow({
-                    parameter: servicePathParameterDeclaration,
-                    variableResolver,
-                    file,
-                });
-                servicePathParameters.push({
-                    key,
-                    value: convertTypeReferenceExample({
-                        example: examplePathParameter,
-                        rawTypeBeingExemplified: resolvedPathParameter.rawType,
-                        typeResolver,
-                        exampleResolver,
-                        fileContainingRawTypeReference: resolvedPathParameter.file,
-                        fileContainingExample: file,
-                    }),
-                });
+                servicePathParameters.push(
+                    buildExamplePathParameter({
+                        key,
+                        pathParameterDeclaration: servicePathParameterDeclaration,
+                        examplePathParameter,
+                    })
+                );
             } else {
                 throw new Error(`Path parameter ${key} does not exist`);
             }
@@ -141,6 +161,7 @@ function convertPathParameters({
     }
 
     return {
+        rootPathParameters,
         endpointPathParameters,
         servicePathParameters,
     };

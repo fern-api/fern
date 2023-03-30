@@ -171,6 +171,7 @@ types:
     properties:
       name: optional<commons.Name>
       url: string
+      rootPathParameters: list<ExamplePathParameter>
       servicePathParameters: list<ExamplePathParameter>
       endpointPathParameters: list<ExamplePathParameter>
       serviceHeaders: list<ExampleHeader>

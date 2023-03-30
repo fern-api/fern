@@ -88,6 +88,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1092,6 +1093,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_app": {
             "fernFilepath": {
@@ -1606,6 +1608,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_file-upload": {
             "fernFilepath": {
@@ -7977,6 +7980,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_app": {
             "fernFilepath": {
@@ -8820,6 +8824,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     "examples": [
                         {
                             "url": "/nested",
+                            "rootPathParameters": [],
                             "endpointPathParameters": [],
                             "servicePathParameters": [],
                             "endpointHeaders": [],
@@ -9249,6 +9254,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_nested": {
             "fernFilepath": {
@@ -10087,6 +10093,7 @@ exports[`ir {"name":"packages"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_package": {
             "fernFilepath": {
@@ -11210,7 +11217,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "head": "/test/",
                         "parts": [
                             {
-                                "pathParameter": "pathParam",
+                                "pathParameter": "rootPathParam",
                                 "tail": "/movies"
                             }
                         ]
@@ -11222,22 +11229,22 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "status": "GENERAL_AVAILABILITY"
                             },
                             "name": {
-                                "originalName": "pathParam",
+                                "originalName": "rootPathParam",
                                 "camelCase": {
-                                    "unsafeName": "pathParam",
-                                    "safeName": "pathParam"
+                                    "unsafeName": "rootPathParam",
+                                    "safeName": "rootPathParam"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "path_param",
-                                    "safeName": "path_param"
+                                    "unsafeName": "root_path_param",
+                                    "safeName": "root_path_param"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "PATH_PARAM",
-                                    "safeName": "PATH_PARAM"
+                                    "unsafeName": "ROOT_PATH_PARAM",
+                                    "safeName": "ROOT_PATH_PARAM"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "PathParam",
-                                    "safeName": "PathParam"
+                                    "unsafeName": "RootPathParam",
+                                    "safeName": "RootPathParam"
                                 }
                             },
                             "valueType": {
@@ -11617,6 +11624,21 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "examples": [
                         {
                             "url": "/movies",
+                            "rootPathParameters": [
+                                {
+                                    "key": "rootPathParam",
+                                    "value": {
+                                        "shape": {
+                                            "primitive": {
+                                                "string": "root",
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        },
+                                        "jsonExample": "root"
+                                    }
+                                }
+                            ],
                             "endpointPathParameters": [],
                             "servicePathParameters": [],
                             "endpointHeaders": [],
@@ -11999,6 +12021,21 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "url": "/movies",
+                            "rootPathParameters": [
+                                {
+                                    "key": "rootPathParam",
+                                    "value": {
+                                        "shape": {
+                                            "primitive": {
+                                                "string": "root",
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        },
+                                        "jsonExample": "root"
+                                    }
+                                }
+                            ],
                             "endpointPathParameters": [],
                             "servicePathParameters": [],
                             "endpointHeaders": [],
@@ -12447,7 +12484,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         "head": "/test/",
         "parts": [
             {
-                "pathParameter": "pathParam",
+                "pathParameter": "rootPathParam",
                 "tail": ""
             }
         ]
@@ -12458,22 +12495,22 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "originalName": "pathParam",
+                "originalName": "rootPathParam",
                 "camelCase": {
-                    "unsafeName": "pathParam",
-                    "safeName": "pathParam"
+                    "unsafeName": "rootPathParam",
+                    "safeName": "rootPathParam"
                 },
                 "snakeCase": {
-                    "unsafeName": "path_param",
-                    "safeName": "path_param"
+                    "unsafeName": "root_path_param",
+                    "safeName": "root_path_param"
                 },
                 "screamingSnakeCase": {
-                    "unsafeName": "PATH_PARAM",
-                    "safeName": "PATH_PARAM"
+                    "unsafeName": "ROOT_PATH_PARAM",
+                    "safeName": "ROOT_PATH_PARAM"
                 },
                 "pascalCase": {
-                    "unsafeName": "PathParam",
-                    "safeName": "PathParam"
+                    "unsafeName": "RootPathParam",
+                    "safeName": "RootPathParam"
                 }
             },
             "valueType": {
@@ -12483,6 +12520,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "location": "ROOT"
         }
     ],
+    "variables": [],
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
@@ -18472,7 +18510,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         "head": "/test/",
                         "parts": [
                             {
-                                "pathParameter": "pathParam",
+                                "pathParameter": "rootPathParam",
                                 "tail": "/movies"
                             }
                         ]
@@ -18484,22 +18522,22 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "status": "GENERAL_AVAILABILITY"
                             },
                             "name": {
-                                "originalName": "pathParam",
+                                "originalName": "rootPathParam",
                                 "camelCase": {
-                                    "unsafeName": "pathParam",
-                                    "safeName": "pathParam"
+                                    "unsafeName": "rootPathParam",
+                                    "safeName": "rootPathParam"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "path_param",
-                                    "safeName": "path_param"
+                                    "unsafeName": "root_path_param",
+                                    "safeName": "root_path_param"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "PATH_PARAM",
-                                    "safeName": "PATH_PARAM"
+                                    "unsafeName": "ROOT_PATH_PARAM",
+                                    "safeName": "ROOT_PATH_PARAM"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "PathParam",
-                                    "safeName": "PathParam"
+                                    "unsafeName": "RootPathParam",
+                                    "safeName": "RootPathParam"
                                 }
                             },
                             "valueType": {
@@ -18879,6 +18917,21 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "url": "/movies",
+                            "rootPathParameters": [
+                                {
+                                    "key": "rootPathParam",
+                                    "value": {
+                                        "shape": {
+                                            "primitive": {
+                                                "string": "root",
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        },
+                                        "jsonExample": "root"
+                                    }
+                                }
+                            ],
                             "endpointPathParameters": [],
                             "servicePathParameters": [],
                             "endpointHeaders": [],
@@ -19261,6 +19314,21 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "url": "/movies",
+                            "rootPathParameters": [
+                                {
+                                    "key": "rootPathParam",
+                                    "value": {
+                                        "shape": {
+                                            "primitive": {
+                                                "string": "root",
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        },
+                                        "jsonExample": "root"
+                                    }
+                                }
+                            ],
                             "endpointPathParameters": [],
                             "servicePathParameters": [],
                             "endpointHeaders": [],
@@ -19670,7 +19738,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         "head": "/test/",
                         "parts": [
                             {
-                                "pathParameter": "pathParam",
+                                "pathParameter": "rootPathParam",
                                 "tail": "/movies/"
                             },
                             {
@@ -19778,22 +19846,22 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "status": "GENERAL_AVAILABILITY"
                             },
                             "name": {
-                                "originalName": "pathParam",
+                                "originalName": "rootPathParam",
                                 "camelCase": {
-                                    "unsafeName": "pathParam",
-                                    "safeName": "pathParam"
+                                    "unsafeName": "rootPathParam",
+                                    "safeName": "rootPathParam"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "path_param",
-                                    "safeName": "path_param"
+                                    "unsafeName": "root_path_param",
+                                    "safeName": "root_path_param"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "PATH_PARAM",
-                                    "safeName": "PATH_PARAM"
+                                    "unsafeName": "ROOT_PATH_PARAM",
+                                    "safeName": "ROOT_PATH_PARAM"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "PathParam",
-                                    "safeName": "PathParam"
+                                    "unsafeName": "RootPathParam",
+                                    "safeName": "RootPathParam"
                                 }
                             },
                             "valueType": {
@@ -20267,6 +20335,21 @@ exports[`ir {"name":"simple"} 1`] = `
                     "examples": [
                         {
                             "url": "/movies/id-123",
+                            "rootPathParameters": [
+                                {
+                                    "key": "rootPathParam",
+                                    "value": {
+                                        "shape": {
+                                            "primitive": {
+                                                "string": "root",
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        },
+                                        "jsonExample": "root"
+                                    }
+                                }
+                            ],
                             "endpointPathParameters": [
                                 {
                                     "key": "movieId",
@@ -20768,6 +20851,21 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "url": "/movies/id-123",
+                            "rootPathParameters": [
+                                {
+                                    "key": "rootPathParam",
+                                    "value": {
+                                        "shape": {
+                                            "primitive": {
+                                                "string": "root",
+                                                "type": "string"
+                                            },
+                                            "type": "primitive"
+                                        },
+                                        "jsonExample": "root"
+                                    }
+                                }
+                            ],
                             "endpointPathParameters": [
                                 {
                                     "key": "movieId",
@@ -20994,7 +21092,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         "head": "/test/",
                         "parts": [
                             {
-                                "pathParameter": "pathParam",
+                                "pathParameter": "rootPathParam",
                                 "tail": "/movies/"
                             },
                             {
@@ -21102,22 +21200,22 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "status": "GENERAL_AVAILABILITY"
                             },
                             "name": {
-                                "originalName": "pathParam",
+                                "originalName": "rootPathParam",
                                 "camelCase": {
-                                    "unsafeName": "pathParam",
-                                    "safeName": "pathParam"
+                                    "unsafeName": "rootPathParam",
+                                    "safeName": "rootPathParam"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "path_param",
-                                    "safeName": "path_param"
+                                    "unsafeName": "root_path_param",
+                                    "safeName": "root_path_param"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "PATH_PARAM",
-                                    "safeName": "PATH_PARAM"
+                                    "unsafeName": "ROOT_PATH_PARAM",
+                                    "safeName": "ROOT_PATH_PARAM"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "PathParam",
-                                    "safeName": "PathParam"
+                                    "unsafeName": "RootPathParam",
+                                    "safeName": "RootPathParam"
                                 }
                             },
                             "valueType": {
@@ -21369,7 +21467,7 @@ exports[`ir {"name":"simple"} 1`] = `
         "head": "/test/",
         "parts": [
             {
-                "pathParameter": "pathParam",
+                "pathParameter": "rootPathParam",
                 "tail": ""
             }
         ]
@@ -21380,22 +21478,22 @@ exports[`ir {"name":"simple"} 1`] = `
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
-                "originalName": "pathParam",
+                "originalName": "rootPathParam",
                 "camelCase": {
-                    "unsafeName": "pathParam",
-                    "safeName": "pathParam"
+                    "unsafeName": "rootPathParam",
+                    "safeName": "rootPathParam"
                 },
                 "snakeCase": {
-                    "unsafeName": "path_param",
-                    "safeName": "path_param"
+                    "unsafeName": "root_path_param",
+                    "safeName": "root_path_param"
                 },
                 "screamingSnakeCase": {
-                    "unsafeName": "PATH_PARAM",
-                    "safeName": "PATH_PARAM"
+                    "unsafeName": "ROOT_PATH_PARAM",
+                    "safeName": "ROOT_PATH_PARAM"
                 },
                 "pascalCase": {
-                    "unsafeName": "PathParam",
-                    "safeName": "PathParam"
+                    "unsafeName": "RootPathParam",
+                    "safeName": "RootPathParam"
                 }
             },
             "valueType": {
@@ -21405,6 +21503,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "location": "ROOT"
         }
     ],
+    "variables": [],
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
@@ -22008,6 +22107,7 @@ exports[`ir {"name":"streaming"} 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_streaming": {
             "fernFilepath": {

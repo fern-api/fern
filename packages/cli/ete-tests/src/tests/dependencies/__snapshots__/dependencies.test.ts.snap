@@ -447,6 +447,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "type": "statusCode"
     },
     "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_imported": {
             "fernFilepath": {
