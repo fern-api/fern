@@ -23,7 +23,7 @@ import com.fern.ir.v9.model.environment.SingleBaseUrlEnvironment;
 import com.fern.ir.v9.model.environment.SingleBaseUrlEnvironments;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedEnvironmentsClass;
-import com.fern.java.generators.AbstractOptionalFileGenerator;
+import com.fern.java.generators.AbstractFileGenerator;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -31,7 +31,9 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
-public final class EnvironmentGenerator extends AbstractOptionalFileGenerator {
+public final class EnvironmentGenerator extends AbstractFileGenerator {
+
+    public static final String GET_URL = "getUrl";
 
     private static final String URL_FIELD_NAME = "url";
 
@@ -40,21 +42,8 @@ public final class EnvironmentGenerator extends AbstractOptionalFileGenerator {
     }
 
     @Override
-    public Optional<GeneratedEnvironmentsClass> generateFile() {
-        if (generatorContext.getIr().getEnvironments().isEmpty()) {
-            return Optional.empty();
-        }
-
-        Environments environments =
-                generatorContext.getIr().getEnvironments().get().getEnvironments();
-        if (environments.isMultipleBaseUrls()) {
-            throw new RuntimeException("Multiple base URL environments are not supported!");
-        }
-
-        SingleBaseUrlEnvironments singleBaseUrlEnvironment =
-                environments.getSingleBaseUrl().get();
-
-        MethodSpec getUrlMethod = MethodSpec.methodBuilder("getUrl")
+    public GeneratedEnvironmentsClass generateFile() {
+        MethodSpec getUrlMethod = MethodSpec.methodBuilder(GET_URL)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
                 .addStatement("return this.$L", URL_FIELD_NAME)
@@ -71,35 +60,52 @@ public final class EnvironmentGenerator extends AbstractOptionalFileGenerator {
                         .build())
                 .addMethod(getUrlMethod);
 
-        Optional<EnvironmentId> defaultEnvironmentId =
-                generatorContext.getIr().getEnvironments().flatMap(EnvironmentsConfig::getDefaultEnvironment);
+        boolean optionsPresent = false;
         Optional<String> defaultEnvironmentConstant = Optional.empty();
-        for (SingleBaseUrlEnvironment environment : singleBaseUrlEnvironment.getEnvironments()) {
-            String constant = environment.getName().getScreamingSnakeCase().getSafeName();
-            environmentsBuilder.addField(
-                    FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                            .initializer("new $T($S)", className, environment.getUrl())
-                            .build());
-            if (defaultEnvironmentId.isPresent() && defaultEnvironmentId.get().equals(environment.getId())) {
-                defaultEnvironmentConstant = Optional.of(constant);
+        if (generatorContext.getIr().getEnvironments().isPresent()) {
+            Environments environments =
+                    generatorContext.getIr().getEnvironments().get().getEnvironments();
+            if (environments.isMultipleBaseUrls()) {
+                throw new RuntimeException("Multiple base URL environments are not supported!");
+            }
+
+            SingleBaseUrlEnvironments singleBaseUrlEnvironment =
+                    environments.getSingleBaseUrl().get();
+
+            Optional<EnvironmentId> defaultEnvironmentId =
+                    generatorContext.getIr().getEnvironments().flatMap(EnvironmentsConfig::getDefaultEnvironment);
+
+            for (SingleBaseUrlEnvironment environment : singleBaseUrlEnvironment.getEnvironments()) {
+                optionsPresent = true;
+                String constant = environment.getName().getScreamingSnakeCase().getSafeName();
+                environmentsBuilder.addField(
+                        FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                                .initializer("new $T($S)", className, environment.getUrl())
+                                .build());
+                if (defaultEnvironmentId.isPresent()
+                        && defaultEnvironmentId.get().equals(environment.getId())) {
+                    defaultEnvironmentConstant = Optional.of(constant);
+                }
             }
         }
 
-        TypeSpec environmentsTypeSpec = environmentsBuilder
-                .addMethod(MethodSpec.methodBuilder("custom")
-                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .returns(className)
-                        .addParameter(String.class, URL_FIELD_NAME)
-                        .addStatement("return new $T($L)", className, URL_FIELD_NAME)
-                        .build())
+        MethodSpec customMethod = MethodSpec.methodBuilder("custom")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(className)
+                .addParameter(String.class, URL_FIELD_NAME)
+                .addStatement("return new $T($L)", className, URL_FIELD_NAME)
                 .build();
+        TypeSpec environmentsTypeSpec =
+                environmentsBuilder.addMethod(customMethod).build();
         JavaFile environmentsFile =
                 JavaFile.builder(className.packageName(), environmentsTypeSpec).build();
-        return Optional.of(GeneratedEnvironmentsClass.builder()
+        return GeneratedEnvironmentsClass.builder()
                 .className(className)
                 .javaFile(environmentsFile)
                 .urlMethod(getUrlMethod)
+                .customMethod(customMethod)
+                .optionsPresent(optionsPresent)
                 .defaultEnvironmentConstant(defaultEnvironmentConstant)
-                .build());
+                .build();
     }
 }

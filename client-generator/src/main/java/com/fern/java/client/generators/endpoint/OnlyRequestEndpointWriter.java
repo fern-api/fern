@@ -21,6 +21,7 @@ import com.fern.ir.v9.model.http.HttpRequestBodyReference;
 import com.fern.ir.v9.model.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -71,12 +72,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters) {
         CodeBlock.Builder httpUrlInitBuilder = CodeBlock.builder()
                 .add(
-                        "$T $L = $T.parse(this.$L.$N()).newBuilder()\n",
+                        "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()\n",
                         HttpUrl.class,
                         HTTP_URL_NAME,
                         HttpUrl.class,
                         clientOptionsMember.name,
-                        clientOptions.url())
+                        clientOptions.environment(),
+                        EnvironmentGenerator.GET_URL)
                 .indent();
         for (ParameterSpec pathParameter : pathParameters) {
             httpUrlInitBuilder.add(".addPathSegment($L)\n", pathParameter.name);

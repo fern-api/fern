@@ -26,7 +26,7 @@ import org.immutables.value.Value;
 @StagedBuilderImmutablesStyle
 public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
 
-    public abstract MethodSpec url();
+    public abstract MethodSpec environment();
 
     public abstract MethodSpec headers();
 

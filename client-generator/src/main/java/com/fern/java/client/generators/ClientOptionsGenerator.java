@@ -18,6 +18,7 @@ package com.fern.java.client.generators;
 
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
@@ -35,8 +36,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 
-    private static final FieldSpec URL_FIELD = FieldSpec.builder(String.class, "url", Modifier.PRIVATE, Modifier.FINAL)
-            .build();
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
                     "headers",
@@ -48,35 +47,41 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             .build();
 
     private final ClassName builderClassName;
+    private final FieldSpec environmentField;
 
-    public ClientOptionsGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public ClientOptionsGenerator(
+            AbstractGeneratorContext<?> generatorContext, GeneratedEnvironmentsClass generatedEnvironmentsClass) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName(CLIENT_OPTIONS_CLASS_NAME), generatorContext);
         this.builderClassName = className.nestedClass("Builder");
+        this.environmentField = FieldSpec.builder(
+                        generatedEnvironmentsClass.getClassName(), "environment", Modifier.PRIVATE, Modifier.FINAL)
+                .addModifiers()
+                .build();
     }
 
     @Override
     public GeneratedClientOptions generateFile() {
-        MethodSpec urlGetter = createGetter(URL_FIELD);
+        MethodSpec environmentGetter = createGetter(environmentField);
         MethodSpec headersGetter = createGetter(HEADERS_FIELD);
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         TypeSpec clientOptionsTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addField(URL_FIELD)
+                .addField(environmentField)
                 .addField(HEADERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
-                        .addParameter(ParameterSpec.builder(URL_FIELD.type, URL_FIELD.name)
+                        .addParameter(ParameterSpec.builder(environmentField.type, environmentField.name)
                                 .build())
                         .addParameter(ParameterSpec.builder(HEADERS_FIELD.type, HEADERS_FIELD.name)
                                 .build())
                         .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
                                 .build())
-                        .addStatement("this.$L = $L", URL_FIELD.name, URL_FIELD.name)
+                        .addStatement("this.$L = $L", environmentField.name, environmentField.name)
                         .addStatement("this.$L = $L", HEADERS_FIELD.name, HEADERS_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .build())
-                .addMethod(urlGetter)
+                .addMethod(environmentGetter)
                 .addMethod(headersGetter)
                 .addMethod(httpClientGetter)
                 .addMethod(MethodSpec.methodBuilder("builder")
@@ -91,7 +96,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return GeneratedClientOptions.builder()
                 .className(className)
                 .javaFile(environmentsFile)
-                .url(urlGetter)
+                .environment(environmentGetter)
                 .headers(headersGetter)
                 .httpClient(httpClientGetter)
                 .builderClassName(builderClassName)
@@ -101,24 +106,24 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private TypeSpec createBuilder() {
         return TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                .addField(FieldSpec.builder(URL_FIELD.type, URL_FIELD.name)
+                .addField(FieldSpec.builder(environmentField.type, environmentField.name)
                         .addModifiers(Modifier.PRIVATE)
                         .build())
                 .addField(HEADERS_FIELD.toBuilder()
                         .initializer("new $T<>()", HashMap.class)
                         .build())
-                .addMethod(getUrlBuilder())
+                .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
                 .addMethod(getBuildMethod())
                 .build();
     }
 
-    private MethodSpec getUrlBuilder() {
-        return MethodSpec.methodBuilder(URL_FIELD.name)
+    private MethodSpec getEnvironmentBuilder() {
+        return MethodSpec.methodBuilder(environmentField.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(builderClassName)
-                .addParameter(String.class, URL_FIELD.name)
-                .addStatement("this.$L = $L", URL_FIELD.name, URL_FIELD.name)
+                .addParameter(environmentField.type, environmentField.name)
+                .addStatement("this.$L = $L", environmentField.name, environmentField.name)
                 .addStatement("return this")
                 .build();
     }
@@ -141,7 +146,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "return new $T($L, $L, new $T())",
                         className,
-                        URL_FIELD.name,
+                        environmentField.name,
                         HEADERS_FIELD.name,
                         OkHttpClient.class)
                 .build();

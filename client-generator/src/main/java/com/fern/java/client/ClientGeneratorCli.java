@@ -41,7 +41,6 @@ import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
 import com.fern.java.output.gradle.GradleDependency;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,10 +92,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         this.addGeneratedFile(objectMapper);
 
         EnvironmentGenerator environmentGenerator = new EnvironmentGenerator(context);
-        Optional<GeneratedEnvironmentsClass> generatedEnvironmentsClass = environmentGenerator.generateFile();
-        generatedEnvironmentsClass.ifPresent(this::addGeneratedFile);
+        GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
+        this.addGeneratedFile(generatedEnvironmentsClass);
 
-        ClientOptionsGenerator clientOptionsGenerator = new ClientOptionsGenerator(context);
+        ClientOptionsGenerator clientOptionsGenerator = new ClientOptionsGenerator(context, generatedEnvironmentsClass);
         GeneratedClientOptions generatedClientOptions = clientOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedClientOptions);
 

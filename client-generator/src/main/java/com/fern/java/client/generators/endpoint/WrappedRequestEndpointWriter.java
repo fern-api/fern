@@ -24,6 +24,7 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
+import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
@@ -87,12 +88,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters) {
         CodeBlock.Builder httpUrlBuilder = CodeBlock.builder()
                 .add(
-                        "$T $L = $T.parse(this.$L.$N()).newBuilder()" + (pathParameters.isEmpty() ? ";" : "") + "\n",
+                        "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()" + (pathParameters.isEmpty() ? ";" : "")
+                                + "\n",
                         HttpUrl.Builder.class,
                         HTTP_URL_BUILDER_NAME,
                         HttpUrl.class,
                         clientOptionsMember.name,
-                        clientOptions.url())
+                        clientOptions.environment(),
+                        EnvironmentGenerator.GET_URL)
                 .indent();
         for (int i = 0; i < pathParameters.size(); ++i) {
             ParameterSpec pathParameter = pathParameters.get(i);

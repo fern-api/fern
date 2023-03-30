@@ -30,6 +30,10 @@ public abstract class GeneratedEnvironmentsClass extends AbstractGeneratedJavaFi
 
     public abstract MethodSpec getUrlMethod();
 
+    public abstract MethodSpec getCustomMethod();
+
+    public abstract boolean optionsPresent();
+
     public static ImmutableGeneratedEnvironmentsClass.ClassNameBuildStage builder() {
         return ImmutableGeneratedEnvironmentsClass.builder();
     }

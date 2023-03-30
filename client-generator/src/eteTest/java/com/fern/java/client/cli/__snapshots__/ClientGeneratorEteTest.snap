@@ -376,7 +376,7 @@ public final class FernFernClientImpl implements FernFernClient {
   public static final class Builder implements FernFernClient.Builder {
     ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
-    String url = Environment.PROD.getUrl();
+    Environment environment = Environment.PROD;
 
     @Override
     public FernFernClient.Builder token(String token) {
@@ -392,18 +392,19 @@ public final class FernFernClientImpl implements FernFernClient {
 
     @Override
     public FernFernClient.Builder environment(Environment environment) {
-      this.url = environment.getUrl();
+      this.environment = environment;
       return this;
     }
 
     @Override
     public FernFernClient.Builder url(String url) {
-      this.url = url;
+      this.environment = Environment.custom(url);
       return this;
     }
 
     @Override
     public FernFernClient build() {
+      clientOptionsBuilder.environment(this.environment);
       return new FernFernClientImpl(clientOptionsBuilder.build());
     }
   }
@@ -420,20 +421,21 @@ import java.util.Map;
 import okhttp3.OkHttpClient;
 
 public final class ClientOptions {
-  private final String url;
+  private final Environment environment;
 
   private final Map<String, String> headers;
 
   private final OkHttpClient httpClient;
 
-  private ClientOptions(String url, Map<String, String> headers, OkHttpClient httpClient) {
-    this.url = url;
+  private ClientOptions(
+      Environment environment, Map<String, String> headers, OkHttpClient httpClient) {
+    this.environment = environment;
     this.headers = headers;
     this.httpClient = httpClient;
   }
 
-  public String url() {
-    return this.url;
+  public Environment environment() {
+    return this.environment;
   }
 
   public Map<String, String> headers() {
@@ -449,12 +451,12 @@ public final class ClientOptions {
   }
 
   public static final class Builder {
-    private String url;
+    private Environment environment;
 
     private final Map<String, String> headers = new HashMap<>();
 
-    public Builder url(String url) {
-      this.url = url;
+    public Builder environment(Environment environment) {
+      this.environment = environment;
       return this;
     }
 
@@ -464,7 +466,7 @@ public final class ClientOptions {
     }
 
     public ClientOptions build() {
-      return new ClientOptions(url, headers, new OkHttpClient());
+      return new ClientOptions(environment, headers, new OkHttpClient());
     }
   }
 }
@@ -573,7 +575,8 @@ public final class AuthClientImpl implements AuthClient {
 
   @Override
   public void getAuth() {
-    HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.url()).newBuilder().build();
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().build();
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
@@ -637,7 +640,8 @@ public final class BlogClientImpl implements BlogClient {
 
   @Override
   public void createPost(CreatePostRequest request) {
-    HttpUrl.Builder _httpUrlBuilder = HttpUrl.parse(this.clientOptions.url()).newBuilder();
+    HttpUrl.Builder _httpUrlBuilder =
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("title", request.getTitle());
@@ -676,7 +680,9 @@ public final class BlogClientImpl implements BlogClient {
   @Override
   public BlogPost getPost(String postId, GetPostRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(postId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegment(postId);
     _httpUrlBuilder.addQueryParameter("Optional[dummy]", request.getDummy());
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     RequestBody _requestBody = RequestBody.create("", null);
@@ -1898,7 +1904,8 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
 
   @Override
   public void getDummy(String request) {
-    HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.url()).newBuilder().build();
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().build();
     RequestBody _requestBody;
     try {
       _requestBody =
@@ -1927,7 +1934,8 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
 
   @Override
   public void health() {
-    HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.url()).newBuilder().build();
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().build();
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
@@ -2069,7 +2077,7 @@ public final class DeviceClientImpl implements DeviceClient {
   @Override
   public Device add(String appId, String userId, Device request) {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.url())
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegment(appId)
             .addPathSegment(userId)
@@ -2103,7 +2111,7 @@ public final class DeviceClientImpl implements DeviceClient {
   @Override
   public Device update(String appId, String userId, String deviceId, Device request) {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.url())
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegment(appId)
             .addPathSegment(userId)
@@ -2138,7 +2146,7 @@ public final class DeviceClientImpl implements DeviceClient {
   @Override
   public void delete(String appId, String userId, String deviceId) {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.url())
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegment(appId)
             .addPathSegment(userId)
@@ -2164,7 +2172,7 @@ public final class DeviceClientImpl implements DeviceClient {
   @Override
   public Device getDevice(String appId, String userId, String deviceId) {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.url())
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegment(appId)
             .addPathSegment(userId)
@@ -2764,7 +2772,7 @@ public final class EventClientImpl implements EventClient {
   @Override
   public SendEventResponse send(String appId, SendEventRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(appId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().addPathSegment(appId);
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("event", request.getEvent());
@@ -2805,7 +2813,7 @@ public final class EventClientImpl implements EventClient {
   @Override
   public SendEventResponse sendBulk(String appId, BulkSendEventRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(appId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().addPathSegment(appId);
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("event", request.getEvent());
@@ -6613,7 +6621,7 @@ public final class UserClientImpl implements UserClient {
   @Override
   public RavenUser createOrUpdate(String appId, CreateUserRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(appId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().addPathSegment(appId);
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("user_id", request.getUserId());
@@ -6649,7 +6657,7 @@ public final class UserClientImpl implements UserClient {
   @Override
   public RavenUser get(String appId, String userId) {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.url())
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegment(appId)
             .addPathSegment(userId)

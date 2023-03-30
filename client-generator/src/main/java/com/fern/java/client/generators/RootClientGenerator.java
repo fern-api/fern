@@ -38,19 +38,18 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Base64;
 import java.util.Map;
-import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 public final class RootClientGenerator extends AbstractFileGenerator {
 
     private static final String CLIENT_OPTIONS_BUILDER_NAME = "clientOptionsBuilder";
-    private static final String URL_FIELD_NAME = "url";
+    private static final String ENVIRONMENT_FIELD_NAME = "environment";
     private final GeneratedObjectMapper generatedObjectMapper;
     private final ClientGeneratorContext clientGeneratorContext;
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final GeneratedJavaFile generatedSuppliersFile;
-    private final Optional<GeneratedEnvironmentsClass> generatedEnvironmentsClass;
+    private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName interfaceClassName;
     private final ClassName implClassName;
     private final ClassName builderInterfaceName;
@@ -62,7 +61,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,
             GeneratedJavaFile generatedSuppliersFile,
-            Optional<GeneratedEnvironmentsClass> generatedEnvironmentsClass,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
         super(
                 generatorContext.getPoetClassNameFactory().getRootClassName(getRootClientName(generatorContext)),
@@ -133,26 +132,23 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .initializer("$T.builder()", generatedClientOptions.getClassName())
                 .build());
 
-        FieldSpec.Builder urlFieldBuilder = FieldSpec.builder(String.class, URL_FIELD_NAME);
+        FieldSpec.Builder environmentFieldBuilder =
+                FieldSpec.builder(generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME);
 
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(interfaceBuilder, implBuilder);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(authSchemeHandler::visitHeader);
 
-        if (generatedEnvironmentsClass.isPresent()) {
-            GeneratedEnvironmentsClass generatedEnvironmentsClassVal = generatedEnvironmentsClass.get();
-            if (generatedEnvironmentsClassVal.defaultEnvironmentConstant().isPresent()) {
-                urlFieldBuilder.initializer(
-                        "$T.$L.$N()",
-                        generatedEnvironmentsClassVal.getClassName(),
-                        generatedEnvironmentsClassVal
-                                .defaultEnvironmentConstant()
-                                .get(),
-                        generatedEnvironmentsClassVal.getUrlMethod());
-            }
+        if (generatedEnvironmentsClass.defaultEnvironmentConstant().isPresent()) {
+            environmentFieldBuilder.initializer(
+                    "$T.$L",
+                    generatedEnvironmentsClass.getClassName(),
+                    generatedEnvironmentsClass.defaultEnvironmentConstant().get());
+        }
+        if (generatedEnvironmentsClass.optionsPresent()) {
             MethodSpec environmentMethod = MethodSpec.methodBuilder("environment")
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameter(generatedEnvironmentsClassVal.getClassName(), "environment")
+                    .addParameter(generatedEnvironmentsClass.getClassName(), "environment")
                     .returns(builderInterfaceName)
                     .build();
             interfaceBuilder.addMethod(environmentMethod.toBuilder()
@@ -160,16 +156,13 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .build());
             implBuilder.addMethod(environmentMethod.toBuilder()
                     .addAnnotation(Override.class)
-                    .addStatement(
-                            "this.$L = $L.$N()",
-                            URL_FIELD_NAME,
-                            "environment",
-                            generatedEnvironmentsClassVal.getUrlMethod())
+                    .addStatement("this.$L = $L", ENVIRONMENT_FIELD_NAME, "environment")
                     .addStatement("return this")
                     .build());
         }
 
-        implBuilder.addField(urlFieldBuilder.build());
+        FieldSpec environmentField = environmentFieldBuilder.build();
+        implBuilder.addField(environmentField);
 
         MethodSpec urlMethod = MethodSpec.methodBuilder("url")
                 .addModifiers(Modifier.PUBLIC)
@@ -180,7 +173,12 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 urlMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
         implBuilder.addMethod(urlMethod.toBuilder()
                 .addAnnotation(Override.class)
-                .addStatement("this.$L = $L", URL_FIELD_NAME, URL_FIELD_NAME)
+                .addStatement(
+                        "this.$L = $T.$N($L)",
+                        ENVIRONMENT_FIELD_NAME,
+                        generatedEnvironmentsClass.getClassName(),
+                        generatedEnvironmentsClass.getCustomMethod(),
+                        "url")
                 .addStatement("return this")
                 .build());
 
@@ -192,6 +190,11 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 buildMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
         implBuilder.addMethod(buildMethod.toBuilder()
                 .addAnnotation(Override.class)
+                .addStatement(
+                        "$L.$N(this.$N)",
+                        CLIENT_OPTIONS_BUILDER_NAME,
+                        generatedClientOptions.environment(),
+                        environmentField)
                 .addStatement("return new $T($L.build())", implClassName, CLIENT_OPTIONS_BUILDER_NAME)
                 .build());
 
