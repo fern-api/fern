@@ -64,7 +64,7 @@
     },
     {
       "group": "Compiler",
-      "pages": ["compiler/generate", "compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
+      "pages": ["compiler/fern-generate", "compiler/generators", "compiler/fern-config-json", "compiler/cli-reference"]
     },
     {
       "group": "Advanced features",
