@@ -16,14 +16,14 @@
 
 package com.fern.java.spring;
 
-import com.fern.ir.v3.model.services.http.HttpService;
-import com.fern.ir.v3.model.services.http.InlinedRequestBody;
+import com.fern.ir.v9.model.commons.FernFilepath;
+import com.fern.ir.v9.model.http.HttpService;
+import com.fern.ir.v9.model.http.InlinedRequestBody;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import org.apache.commons.lang3.StringUtils;
 
 public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
@@ -34,14 +34,24 @@ public final class SpringLocalFilesPoetClassNameFactory extends AbstractNonModel
     public ClassName getServiceInterfaceClassName(HttpService httpService) {
         String packageName =
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
-        return ClassName.get(
-                packageName, StringUtils.capitalize(httpService.getName().getName()));
+        return ClassName.get(packageName, getServiceName(httpService.getName().getFernFilepath()));
     }
 
     public ClassName getInlinedRequestBodyClassName(HttpService httpService, InlinedRequestBody inlinedRequestBody) {
         String packageName =
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
         return ClassName.get(
-                packageName, inlinedRequestBody.getName().getSafeName().getPascalCase());
+                packageName, inlinedRequestBody.getName().getPascalCase().getSafeName());
+    }
+
+    private static String getServiceName(FernFilepath fernFilepath) {
+        if (fernFilepath.getAllParts().isEmpty()) {
+            return "RootService";
+        }
+        return fernFilepath
+                        .getAllParts()
+                        .get(fernFilepath.getAllParts().size() - 1)
+                        .getPascalCase()
+                        .getUnsafeName() + "Service";
     }
 }

@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-import com.fern.ir.v3.model.ir.FernConstants;
+import com.fern.ir.v9.model.constants.Constants;
 import com.fern.java.FernJavaAnnotations;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -46,7 +46,7 @@ public abstract class UnionTypeSpecGenerator {
     private final ClassName valueInterfaceClassName;
     private final List<? extends UnionSubType> subTypes;
     private final UnionSubType unknownSubType;
-    private final FernConstants fernConstants;
+    private final Constants fernConstants;
     private final ParameterizedTypeName visitorInterfaceClassName;
     private final boolean deserializable;
     private final String discriminantProperty;
@@ -55,7 +55,7 @@ public abstract class UnionTypeSpecGenerator {
             ClassName unionClassName,
             List<? extends UnionSubType> subTypes,
             UnionSubType unknownSubType,
-            FernConstants fernConstants,
+            Constants fernConstants,
             boolean deserializable,
             String discriminantProperty) {
         this.unionClassName = unionClassName;

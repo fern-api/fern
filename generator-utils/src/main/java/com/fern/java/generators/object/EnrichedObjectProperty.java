@@ -17,8 +17,8 @@
 package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.ir.v3.model.commons.StringWithAllCasings;
-import com.fern.ir.v3.model.types.ObjectProperty;
+import com.fern.ir.v9.model.commons.Name;
+import com.fern.ir.v9.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
@@ -81,13 +81,13 @@ public interface EnrichedObjectProperty {
     }
 
     static EnrichedObjectProperty of(ObjectProperty objectProperty, boolean fromInterface, TypeName poetTypeName) {
-        StringWithAllCasings safeName = objectProperty.getNameV2().getName().getSafeName();
+        Name name = objectProperty.getName().getName();
         return EnrichedObjectProperty.builder()
-                .camelCaseKey(safeName.getCamelCase())
-                .pascalCaseKey(safeName.getPascalCase())
+                .camelCaseKey(name.getCamelCase().getSafeName())
+                .pascalCaseKey(name.getPascalCase().getSafeName())
                 .poetTypeName(poetTypeName)
                 .fromInterface(fromInterface)
-                .wireKey(objectProperty.getNameV2().getWireValue())
+                .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
                 .build();
     }

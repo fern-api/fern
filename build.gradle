@@ -58,6 +58,7 @@ allprojects {
         options.errorprone.disable 'StrictUnusedVariable'
         options.errorprone.disable 'PreferSafeLoggableExceptions'
         options.errorprone.disable 'Slf4jConstantLogMessage'
+        options.errorprone.disable 'PreferSafeLogger'
     }
 
     sourceCompatibility = 11

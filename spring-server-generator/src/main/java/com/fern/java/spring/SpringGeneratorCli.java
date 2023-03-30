@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
-import com.fern.ir.v3.core.ObjectMappers;
-import com.fern.ir.v3.model.ir.IntermediateRepresentation;
+import com.fern.ir.v9.core.ObjectMappers;
+import com.fern.ir.v9.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.generators.AuthGenerator;
@@ -29,7 +29,7 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
-import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public final class SpringGeneratorCli
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
-        GeneratedJavaFile objectMapper = objectMappersGenerator.generateFile();
+        GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
 
         // auth
@@ -102,7 +102,7 @@ public final class SpringGeneratorCli
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
         // services
-        List<GeneratedSpringServerInterface> generatedSpringServerInterfaces = ir.getServices().getHttp().stream()
+        List<GeneratedSpringServerInterface> generatedSpringServerInterfaces = ir.getServices().values().stream()
                 .map(httpService -> {
                     SpringServerInterfaceGenerator httpServiceClientGenerator = new SpringServerInterfaceGenerator(
                             context, maybeAuth, generatedTypes.getInterfaces(), httpService);

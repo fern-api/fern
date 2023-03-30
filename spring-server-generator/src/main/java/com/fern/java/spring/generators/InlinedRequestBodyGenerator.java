@@ -16,10 +16,11 @@
 
 package com.fern.java.spring.generators;
 
-import com.fern.ir.v3.model.services.http.HttpService;
-import com.fern.ir.v3.model.services.http.InlinedRequestBody;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.http.HttpService;
+import com.fern.ir.v9.model.http.InlinedRequestBody;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
 import com.fern.java.InlinedRequestBodyUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
@@ -34,13 +35,13 @@ import java.util.stream.Collectors;
 public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
 
     private final InlinedRequestBody inlinedRequestBody;
-    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces;
 
     public InlinedRequestBodyGenerator(
             HttpService httpService,
             InlinedRequestBody inlinedRequestBody,
-            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             SpringGeneratorContext springGeneratorContext) {
         super(
                 springGeneratorContext
@@ -50,6 +51,7 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
         this.inlinedRequestBody = inlinedRequestBody;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.extendedInterfaces = inlinedRequestBody.getExtends().stream()
+                .map(DeclaredTypeName::getTypeId)
                 .map(allGeneratedInterfaces::get)
                 .collect(Collectors.toList());
     }

@@ -15,16 +15,18 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.v3.model.errors.ErrorDeclaration;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
-import com.fern.ir.v3.model.types.Type;
-import com.fern.ir.v3.model.types.TypeDeclaration;
+import com.fern.ir.v9.model.commons.ErrorId;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.errors.ErrorDeclaration;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v9.model.types.Type;
+import com.fern.ir.v9.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
+import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,21 +35,19 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class TypesGenerator {
-    private final List<TypeDeclaration> typeDeclarations;
-    private final List<ErrorDeclaration> errorDeclarations;
-    private final Map<DeclaredTypeName, TypeDeclaration> typeDeclarationsByName;
-    private final AbstractGeneratorContext generatorContext;
+    private final Map<TypeId, TypeDeclaration> typeDeclarations;
+    private final Map<ErrorId, ErrorDeclaration> errorDeclarations;
+    private final AbstractGeneratorContext<?> generatorContext;
 
-    public TypesGenerator(AbstractGeneratorContext generatorContext) {
-        this.typeDeclarations = generatorContext.getIr().getTypes();
+    public TypesGenerator(AbstractGeneratorContext<?> generatorContext) {
         this.errorDeclarations = generatorContext.getIr().getErrors();
-        this.typeDeclarationsByName = generatorContext.getTypeDefinitionsByName();
+        this.typeDeclarations = generatorContext.getTypeDeclarations();
         this.generatorContext = generatorContext;
     }
 
     public Result generateFiles() {
-        Map<DeclaredTypeName, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
-        Map<DeclaredTypeName, GeneratedJavaFile> generatedTypes = typeDeclarations.stream()
+        Map<TypeId, GeneratedJavaInterface> generatedInterfaces = getGeneratedInterfaces();
+        Map<TypeId, GeneratedJavaFile> generatedTypes = KeyedStream.stream(typeDeclarations)
                 .map(typeDeclaration -> {
                     ClassName className =
                             generatorContext.getPoetClassNameFactory().getTypeClassName(typeDeclaration.getName());
@@ -59,24 +59,25 @@ public final class TypesGenerator {
                                     className,
                                     generatedInterfaces,
                                     false));
-                    return new SimpleEntry<>(typeDeclaration, maybeGeneratedJavaFile);
+                    return maybeGeneratedJavaFile;
                 })
-                .filter(entry -> entry.getValue().isPresent())
-                .collect(Collectors.toMap(entry -> entry.getKey().getName(), entry -> entry.getValue()
-                        .get()));
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collectToMap();
         return new Result(generatedInterfaces, generatedTypes);
     }
 
-    private Map<DeclaredTypeName, GeneratedJavaInterface> getGeneratedInterfaces() {
-        Set<DeclaredTypeName> interfaceCandidates = typeDeclarations.stream()
+    private Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces() {
+        Set<TypeId> interfaceCandidates = typeDeclarations.values().stream()
                 .map(TypeDeclaration::getShape)
                 .map(Type::getObject)
                 .flatMap(Optional::stream)
                 .map(ObjectTypeDeclaration::getExtends)
                 .flatMap(List::stream)
+                .map(DeclaredTypeName::getTypeId)
                 .collect(Collectors.toSet());
-        return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), namedType -> {
-            TypeDeclaration typeDeclaration = typeDeclarationsByName.get(namedType);
+        return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
+            TypeDeclaration typeDeclaration = typeDeclarations.get(typeId);
             ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
                     .getShape()
                     .getObject()
@@ -90,21 +91,19 @@ public final class TypesGenerator {
     }
 
     public static final class Result {
-        private final Map<DeclaredTypeName, GeneratedJavaInterface> interfaces;
-        private final Map<DeclaredTypeName, GeneratedJavaFile> types;
+        private final Map<TypeId, GeneratedJavaInterface> interfaces;
+        private final Map<TypeId, GeneratedJavaFile> types;
 
-        public Result(
-                Map<DeclaredTypeName, GeneratedJavaInterface> interfaces,
-                Map<DeclaredTypeName, GeneratedJavaFile> types) {
+        public Result(Map<TypeId, GeneratedJavaInterface> interfaces, Map<TypeId, GeneratedJavaFile> types) {
             this.interfaces = interfaces;
             this.types = types;
         }
 
-        public Map<DeclaredTypeName, GeneratedJavaFile> getTypes() {
+        public Map<TypeId, GeneratedJavaFile> getTypes() {
             return types;
         }
 
-        public Map<DeclaredTypeName, GeneratedJavaInterface> getInterfaces() {
+        public Map<TypeId, GeneratedJavaInterface> getInterfaces() {
             return interfaces;
         }
     }

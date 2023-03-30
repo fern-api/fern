@@ -17,7 +17,7 @@
 package com.fern.java.model;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.ir.v3.model.ir.IntermediateRepresentation;
+import com.fern.ir.v9.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.CustomConfig;
 

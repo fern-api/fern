@@ -1,5 +1,5 @@
 /*
- * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ * (c) Copyright 2023 Birch Solutions Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,53 +16,142 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v3.model.services.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.generators.AbstractOptionalFileGenerator;
-import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.generators.object.ObjectTypeSpecGenerator;
+import com.fern.java.generators.AbstractFileGenerator;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
+import javax.lang.model.element.Modifier;
+import okhttp3.OkHttpClient;
 
-public final class ClientOptionsGenerator extends AbstractOptionalFileGenerator {
+public final class ClientOptionsGenerator extends AbstractFileGenerator {
+
+    private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
+
+    private static final FieldSpec URL_FIELD = FieldSpec.builder(String.class, "url", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+    private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(Map.class, String.class, String.class),
+                    "headers",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+    private static final FieldSpec OKHTTP_CLIENT_FIELD = FieldSpec.builder(
+                    OkHttpClient.class, "httpClient", Modifier.PRIVATE, Modifier.FINAL)
+            .build();
+
+    private final ClassName builderClassName;
 
     public ClientOptionsGenerator(AbstractGeneratorContext<?> generatorContext) {
-        super(generatorContext.getPoetClassNameFactory().getCoreClassName("ClientOptions"), generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getCoreClassName(CLIENT_OPTIONS_CLASS_NAME), generatorContext);
+        this.builderClassName = className.nestedClass("Builder");
     }
 
     @Override
-    public Optional<GeneratedClientOptions> generateFile() {
-        List<HttpHeader> optionalGlobalHeaders =
-                generatorContext.getGlobalHeaders().getOptionalGlobalHeaders();
-        if (optionalGlobalHeaders.isEmpty()) {
-            return Optional.empty();
-        }
-        List<EnrichedObjectProperty> enrichedObjectProperties = optionalGlobalHeaders.stream()
-                .map(optionalApiWideHeader -> EnrichedObjectProperty.builder()
-                        .camelCaseKey(optionalApiWideHeader.getName().getCamelCase())
-                        .pascalCaseKey(optionalApiWideHeader.getName().getPascalCase())
-                        .poetTypeName(generatorContext
-                                .getPoetTypeNameMapper()
-                                .convertToTypeName(true, optionalApiWideHeader.getValueType()))
-                        .fromInterface(false)
+    public GeneratedClientOptions generateFile() {
+        MethodSpec urlGetter = createGetter(URL_FIELD);
+        MethodSpec headersGetter = createGetter(HEADERS_FIELD);
+        MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
+        TypeSpec clientOptionsTypeSpec = TypeSpec.classBuilder(className)
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addField(URL_FIELD)
+                .addField(HEADERS_FIELD)
+                .addField(OKHTTP_CLIENT_FIELD)
+                .addMethod(MethodSpec.constructorBuilder()
+                        .addModifiers(Modifier.PRIVATE)
+                        .addParameter(ParameterSpec.builder(URL_FIELD.type, URL_FIELD.name)
+                                .build())
+                        .addParameter(ParameterSpec.builder(HEADERS_FIELD.type, HEADERS_FIELD.name)
+                                .build())
+                        .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
+                                .build())
+                        .addStatement("this.$L = $L", URL_FIELD.name, URL_FIELD.name)
+                        .addStatement("this.$L = $L", HEADERS_FIELD.name, HEADERS_FIELD.name)
+                        .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .build())
-                .collect(Collectors.toList());
-        ObjectTypeSpecGenerator genericObjectGenerator =
-                new ObjectTypeSpecGenerator(className, enrichedObjectProperties, Collections.emptyList(), true);
-        TypeSpec objectTypeSpec = genericObjectGenerator.generate();
-        JavaFile javaFile =
-                JavaFile.builder(className.packageName(), objectTypeSpec).build();
-        return Optional.of(GeneratedClientOptions.builder()
+                .addMethod(urlGetter)
+                .addMethod(headersGetter)
+                .addMethod(httpClientGetter)
+                .addMethod(MethodSpec.methodBuilder("builder")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .returns(builderClassName)
+                        .addStatement("return new $T()", builderClassName)
+                        .build())
+                .addType(createBuilder())
+                .build();
+        JavaFile environmentsFile =
+                JavaFile.builder(className.packageName(), clientOptionsTypeSpec).build();
+        return GeneratedClientOptions.builder()
                 .className(className)
-                .javaFile(javaFile)
-                .addAllOptionalGlobalHeaderMethodSpecs(enrichedObjectProperties.stream()
-                        .map(EnrichedObjectProperty::getterProperty)
-                        .collect(Collectors.toList()))
-                .build());
+                .javaFile(environmentsFile)
+                .url(urlGetter)
+                .headers(headersGetter)
+                .httpClient(httpClientGetter)
+                .builderClassName(builderClassName)
+                .build();
+    }
+
+    private TypeSpec createBuilder() {
+        return TypeSpec.classBuilder(builderClassName)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                .addField(FieldSpec.builder(URL_FIELD.type, URL_FIELD.name)
+                        .addModifiers(Modifier.PRIVATE)
+                        .build())
+                .addField(HEADERS_FIELD.toBuilder()
+                        .initializer("new $T<>()", HashMap.class)
+                        .build())
+                .addMethod(getUrlBuilder())
+                .addMethod(getHeaderBuilder())
+                .addMethod(getBuildMethod())
+                .build();
+    }
+
+    private MethodSpec getUrlBuilder() {
+        return MethodSpec.methodBuilder(URL_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, URL_FIELD.name)
+                .addStatement("this.$L = $L", URL_FIELD.name, URL_FIELD.name)
+                .addStatement("return this")
+                .build();
+    }
+
+    private MethodSpec getHeaderBuilder() {
+        return MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(String.class, "value")
+                .addStatement("this.$L.put($L, $L)", HEADERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build();
+    }
+
+    private MethodSpec getBuildMethod() {
+        return MethodSpec.methodBuilder("build")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(className)
+                .addStatement(
+                        "return new $T($L, $L, new $T())",
+                        className,
+                        URL_FIELD.name,
+                        HEADERS_FIELD.name,
+                        OkHttpClient.class)
+                .build();
+    }
+
+    private static MethodSpec createGetter(FieldSpec fieldSpec) {
+        return MethodSpec.methodBuilder(fieldSpec.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(fieldSpec.type)
+                .addStatement("return this.$L", fieldSpec.name)
+                .build();
     }
 }

@@ -19,13 +19,14 @@ package com.fern.java.generators;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.ir.v3.model.commons.NameAndWireValue;
-import com.fern.ir.v3.model.ir.FernConstants;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.SingleUnionType;
-import com.fern.ir.v3.model.types.SingleUnionTypeProperties;
-import com.fern.ir.v3.model.types.SingleUnionTypeProperty;
-import com.fern.ir.v3.model.types.UnionTypeDeclaration;
+import com.fern.ir.v9.model.commons.NameAndWireValue;
+import com.fern.ir.v9.model.constants.Constants;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.SingleUnionType;
+import com.fern.ir.v9.model.types.SingleUnionTypeProperties;
+import com.fern.ir.v9.model.types.SingleUnionTypeProperty;
+import com.fern.ir.v9.model.types.TypeReference;
+import com.fern.ir.v9.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.generators.union.UnionSubType;
@@ -51,7 +52,9 @@ public final class UnionGenerator extends AbstractFileGenerator {
     private final UnionTypeDeclaration unionTypeDeclaration;
 
     public UnionGenerator(
-            ClassName className, AbstractGeneratorContext generatorContext, UnionTypeDeclaration unionTypeDeclaration) {
+            ClassName className,
+            AbstractGeneratorContext<?> generatorContext,
+            UnionTypeDeclaration unionTypeDeclaration) {
         super(className, generatorContext);
         this.unionTypeDeclaration = unionTypeDeclaration;
     }
@@ -82,8 +85,14 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 ClassName unionClassName,
                 List<? extends UnionSubType> subTypes,
                 UnionSubType unionSubType,
-                FernConstants fernConstants) {
-            super(unionClassName, subTypes, unionSubType, fernConstants, true, unionTypeDeclaration.getDiscriminant());
+                Constants fernConstants) {
+            super(
+                    unionClassName,
+                    subTypes,
+                    unionSubType,
+                    fernConstants,
+                    true,
+                    unionTypeDeclaration.getDiscriminant().getWireValue());
         }
 
         @Override
@@ -120,46 +129,46 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
         @Override
         public Optional<NameAndWireValue> getDiscriminant() {
-            return Optional.of(this.singleUnionType.getDiscriminantValueV2());
+            return Optional.of(this.singleUnionType.getDiscriminantValue());
         }
 
         @Override
         public String getVisitMethodName() {
             return "visit"
                     + this.singleUnionType
-                            .getDiscriminantValueV2()
+                            .getDiscriminantValue()
                             .getName()
-                            .getUnsafeName()
-                            .getPascalCase();
+                            .getPascalCase()
+                            .getUnsafeName();
         }
 
         @Override
         public String getIsMethodName() {
             return "is"
                     + this.singleUnionType
-                            .getDiscriminantValueV2()
+                            .getDiscriminantValue()
                             .getName()
-                            .getUnsafeName()
-                            .getPascalCase();
+                            .getPascalCase()
+                            .getUnsafeName();
         }
 
         @Override
         public String getGetMethodName() {
             return "get"
                     + this.singleUnionType
-                            .getDiscriminantValueV2()
+                            .getDiscriminantValue()
                             .getName()
-                            .getUnsafeName()
-                            .getPascalCase();
+                            .getPascalCase()
+                            .getUnsafeName();
         }
 
         @Override
         public String getVisitorParameterName() {
             return this.singleUnionType
-                    .getDiscriminantValueV2()
+                    .getDiscriminantValue()
                     .getName()
-                    .getSafeName()
-                    .getCamelCase();
+                    .getCamelCase()
+                    .getSafeName();
         }
 
         @Override
@@ -170,7 +179,11 @@ public final class UnionGenerator extends AbstractFileGenerator {
         @Override
         public ClassName getUnionSubTypeWrapperClass() {
             return getUnionClassName()
-                    .nestedClass(singleUnionType.getDiscriminantValue().getPascalCase() + "Value");
+                    .nestedClass(singleUnionType
+                                    .getDiscriminantValue()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getUnsafeName() + "Value");
         }
 
         @Override
@@ -194,7 +207,8 @@ public final class UnionGenerator extends AbstractFileGenerator {
                             .addParameter(ParameterSpec.builder(
                                             generatorContext
                                                     .getPoetTypeNameMapper()
-                                                    .convertToTypeName(true, singleUnionType.getValueType()),
+                                                    .convertToTypeName(
+                                                            true, TypeReference.named(samePropertiesAsObject)),
                                             "value")
                                     .build())
                             .addStatement("this.$L = $L", "value", "value")
@@ -205,20 +219,20 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 @Override
                 public Void visitSingleProperty(SingleUnionTypeProperty singleProperty) {
                     String parameterName =
-                            singleProperty.getNameV2().getName().getSafeName().getCamelCase();
+                            singleProperty.getName().getName().getCamelCase().getSafeName();
                     constructors.add(MethodSpec.constructorBuilder()
                             .addModifiers(Modifier.PRIVATE)
                             .addAnnotation(FernJavaAnnotations.jacksonPropertiesCreator())
                             .addParameter(ParameterSpec.builder(
                                             generatorContext
                                                     .getPoetTypeNameMapper()
-                                                    .convertToTypeName(true, singleUnionType.getValueType()),
+                                                    .convertToTypeName(true, singleProperty.getType()),
                                             parameterName)
                                     .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                                             .addMember(
                                                     "value",
                                                     "$S",
-                                                    singleProperty.getNameV2().getWireValue())
+                                                    singleProperty.getName().getWireValue())
                                             .build())
                                     .build())
                             .addStatement("this.$L = $L", parameterName, parameterName)
@@ -277,7 +291,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
                     return Optional.of(FieldSpec.builder(
                                     generatorContext
                                             .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, singleUnionType.getValueType()),
+                                            .convertToTypeName(true, TypeReference.named(samePropertiesAsObject)),
                                     "value",
                                     Modifier.PRIVATE)
                             .addAnnotation(JsonUnwrapped.class)
@@ -287,18 +301,18 @@ public final class UnionGenerator extends AbstractFileGenerator {
                 @Override
                 public Optional<FieldSpec> visitSingleProperty(SingleUnionTypeProperty singleProperty) {
                     String fieldName =
-                            singleProperty.getNameV2().getName().getSafeName().getCamelCase();
+                            singleProperty.getName().getName().getCamelCase().getSafeName();
                     return Optional.of(FieldSpec.builder(
                                     generatorContext
                                             .getPoetTypeNameMapper()
-                                            .convertToTypeName(true, singleUnionType.getValueType()),
+                                            .convertToTypeName(true, singleProperty.getType()),
                                     fieldName,
                                     Modifier.PRIVATE)
                             .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                                     .addMember(
                                             "value",
                                             "$S",
-                                            singleProperty.getNameV2().getWireValue())
+                                            singleProperty.getName().getWireValue())
                                     .build())
                             .build());
                 }
@@ -316,7 +330,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
         }
     }
 
-    private final class ModelUnionUnknownSubType extends UnionSubType {
+    private static final class ModelUnionUnknownSubType extends UnionSubType {
 
         private ModelUnionUnknownSubType(ClassName unionClassName) {
             super(unionClassName);

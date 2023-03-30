@@ -15,8 +15,8 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedJavaInterface.PropertyMethodSpec;
@@ -34,7 +34,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public InterfaceGenerator(
-            AbstractGeneratorContext generatorContext,
+            AbstractGeneratorContext<?> generatorContext,
             DeclaredTypeName declaredTypeName,
             ObjectTypeDeclaration objectTypeDeclaration) {
         super(generatorContext.getPoetClassNameFactory().getInterfaceClassName(declaredTypeName), generatorContext);
@@ -71,8 +71,12 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
                     TypeName poetTypeName = generatorContext
                             .getPoetTypeNameMapper()
                             .convertToTypeName(true, objectProperty.getValueType());
-                    MethodSpec getter = MethodSpec.methodBuilder(
-                                    "get" + objectProperty.getName().getPascalCase())
+                    MethodSpec getter = MethodSpec.methodBuilder("get"
+                                    + objectProperty
+                                            .getName()
+                                            .getName()
+                                            .getPascalCase()
+                                            .getSafeName())
                             .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                             .returns(poetTypeName)
                             .build();

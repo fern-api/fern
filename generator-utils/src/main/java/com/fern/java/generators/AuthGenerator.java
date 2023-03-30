@@ -16,9 +16,9 @@
 
 package com.fern.java.generators;
 
-import com.fern.ir.v3.model.auth.ApiAuth;
-import com.fern.ir.v3.model.auth.AuthScheme;
-import com.fern.ir.v3.model.auth.AuthSchemesRequirement;
+import com.fern.ir.v9.model.auth.ApiAuth;
+import com.fern.ir.v9.model.auth.AuthScheme;
+import com.fern.ir.v9.model.auth.AuthSchemesRequirement;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.auth.AuthSchemeGenerator;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -44,6 +44,7 @@ public final class AuthGenerator {
             return Optional.of(GeneratedAuthFiles.builder()
                     .className(generatedFile.getClassName())
                     .javaFile(generatedFile.javaFile())
+                    .authScheme(authScheme)
                     .build());
         } else if (apiAuth.getRequirement().equals(AuthSchemesRequirement.ANY)) {
             throw new RuntimeException("Any auth is unsupported!");

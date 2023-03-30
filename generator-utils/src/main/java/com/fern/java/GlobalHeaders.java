@@ -16,9 +16,9 @@
 
 package com.fern.java;
 
-import com.fern.ir.v3.model.ir.IntermediateRepresentation;
-import com.fern.ir.v3.model.services.http.HttpHeader;
-import com.fern.ir.v3.model.types.ContainerType;
+import com.fern.ir.v9.model.http.HttpHeader;
+import com.fern.ir.v9.model.ir.IntermediateRepresentation;
+import com.fern.ir.v9.model.types.ContainerType;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public final class GlobalHeaders {
                     .orElse(false);
             ParameterSpec parameterSpec = ParameterSpec.builder(
                             poetTypeNameMapper.convertToTypeName(true, httpHeader.getValueType()),
-                            httpHeader.getName().getCamelCase())
+                            httpHeader.getName().getName().getCamelCase().getSafeName())
                     .build();
             if (isOptional) {
                 optionalGlobalHeaders.add(httpHeader);

@@ -976,9 +976,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public final class PostType {
-  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
-
   public static final PostType LONG = new PostType(Value.LONG, "LONG");
+
+  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
 
   public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
 
@@ -1014,10 +1014,10 @@ public final class PostType {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case SHORT:
-        return visitor.visitShort();
       case LONG:
         return visitor.visitLong();
+      case SHORT:
+        return visitor.visitShort();
       case MEDIUM:
         return visitor.visitMedium();
       case UNKNOWN:
@@ -1030,10 +1030,10 @@ public final class PostType {
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "SHORT":
-        return SHORT;
       case "LONG":
         return LONG;
+      case "SHORT":
+        return SHORT;
       case "med.med":
         return MEDIUM;
       default:

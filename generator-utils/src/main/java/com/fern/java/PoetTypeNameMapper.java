@@ -16,16 +16,17 @@
 
 package com.fern.java;
 
-import com.fern.ir.v3.model.types.AliasTypeDeclaration;
-import com.fern.ir.v3.model.types.ContainerType;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.Literal;
-import com.fern.ir.v3.model.types.MapType;
-import com.fern.ir.v3.model.types.PrimitiveType;
-import com.fern.ir.v3.model.types.ResolvedNamedType;
-import com.fern.ir.v3.model.types.ResolvedTypeReference;
-import com.fern.ir.v3.model.types.TypeDeclaration;
-import com.fern.ir.v3.model.types.TypeReference;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.types.AliasTypeDeclaration;
+import com.fern.ir.v9.model.types.ContainerType;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.Literal;
+import com.fern.ir.v9.model.types.MapType;
+import com.fern.ir.v9.model.types.PrimitiveType;
+import com.fern.ir.v9.model.types.ResolvedNamedType;
+import com.fern.ir.v9.model.types.ResolvedTypeReference;
+import com.fern.ir.v9.model.types.TypeDeclaration;
+import com.fern.ir.v9.model.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -42,12 +43,12 @@ public final class PoetTypeNameMapper {
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
     private final CustomConfig customConfig;
-    private final Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName;
+    private final Map<TypeId, TypeDeclaration> typeDefinitionsByName;
 
     public PoetTypeNameMapper(
             AbstractPoetClassNameFactory poetClassNameFactory,
             CustomConfig customConfig,
-            Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName) {
+            Map<TypeId, TypeDeclaration> typeDefinitionsByName) {
         this.poetClassNameFactory = poetClassNameFactory;
         this.customConfig = customConfig;
         this.typeDefinitionsByName = typeDefinitionsByName;
@@ -69,7 +70,7 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitNamed(DeclaredTypeName declaredTypeName) {
             if (!customConfig.wrappedAliases()) {
-                TypeDeclaration typeDeclaration = typeDefinitionsByName.get(declaredTypeName);
+                TypeDeclaration typeDeclaration = typeDefinitionsByName.get(declaredTypeName.getTypeId());
                 boolean isAlias = typeDeclaration.getShape().isAlias();
                 if (isAlias) {
                     AliasTypeDeclaration aliasTypeDeclaration =
@@ -96,11 +97,6 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitContainer(ContainerType containerType) {
             return containerType.visit(containerToTypeNameConverter);
-        }
-
-        @Override
-        public TypeName visitVoid() {
-            throw new RuntimeException("Void types should be handled separately!");
         }
 
         @Override

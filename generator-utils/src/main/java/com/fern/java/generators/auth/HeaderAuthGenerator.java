@@ -16,24 +16,24 @@
 
 package com.fern.java.generators.auth;
 
-import com.fern.ir.v3.model.services.http.HttpHeader;
-import com.fern.ir.v3.model.types.AliasTypeDeclaration;
-import com.fern.ir.v3.model.types.ResolvedTypeReference;
+import com.fern.ir.v9.model.http.HttpHeader;
+import com.fern.ir.v9.model.types.AliasTypeDeclaration;
+import com.fern.ir.v9.model.types.PrimitiveType;
+import com.fern.ir.v9.model.types.ResolvedTypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 
 public final class HeaderAuthGenerator extends AbstractFileGenerator {
-    private static final String VALUE_METHOD_NAME = "value";
-
     private final HttpHeader httpHeader;
 
     public HeaderAuthGenerator(AbstractGeneratorContext<?> generatorContext, HttpHeader httpHeader) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
-                        .getCoreClassName(httpHeader.getName().getPascalCase()),
+                        .getCoreClassName(
+                                httpHeader.getName().getName().getPascalCase().getSafeName()),
                 generatorContext);
         this.httpHeader = httpHeader;
     }
@@ -43,7 +43,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
         // TODO(dsinghvi): Fix resolved type
         AliasTypeDeclaration aliasTypeDeclaration = AliasTypeDeclaration.builder()
                 .aliasOf(httpHeader.getValueType())
-                .resolvedType(ResolvedTypeReference.void_())
+                .resolvedType(ResolvedTypeReference.primitive(PrimitiveType.STRING))
                 .build();
         AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration);
         return aliasGenerator.generateFile();

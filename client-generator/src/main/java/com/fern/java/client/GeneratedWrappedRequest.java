@@ -28,9 +28,9 @@ import org.immutables.value.Value;
 @StagedBuilderImmutablesStyle
 public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile {
 
-    public abstract List<MethodSpec> headerGetterMethods();
+    public abstract List<EnrichedObjectProperty> headerParams();
 
-    public abstract List<MethodSpec> queryParamGetterMethods();
+    public abstract List<EnrichedObjectProperty> queryParams();
 
     public abstract Optional<RequestBodyGetter> requestBodyGetter();
 

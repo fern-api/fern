@@ -17,14 +17,12 @@
 package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.ir.v3.model.errors.DeclaredErrorName;
-import com.fern.ir.v3.model.errors.ErrorDeclaration;
-import com.fern.ir.v3.model.ir.IntermediateRepresentation;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.TypeDeclaration;
+import com.fern.ir.v9.model.commons.ErrorId;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.errors.ErrorDeclaration;
+import com.fern.ir.v9.model.ir.IntermediateRepresentation;
+import com.fern.ir.v9.model.types.TypeDeclaration;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFactory> {
 
@@ -32,8 +30,8 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final GeneratorConfig generatorConfig;
     private final T poetClassNameFactory;
     private final PoetTypeNameMapper poetTypeNameMapper;
-    private final Map<DeclaredTypeName, TypeDeclaration> typeDefinitionsByName;
-    private final Map<DeclaredErrorName, ErrorDeclaration> errorDefinitionsByName;
+    private final Map<TypeId, TypeDeclaration> typeDefinitionsByName;
+    private final Map<ErrorId, ErrorDeclaration> errorDefinitionsByName;
     private final GlobalHeaders globalHeaders;
     private final CustomConfig customConfig;
 
@@ -46,11 +44,9 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.generatorConfig = generatorConfig;
         this.customConfig = customConfig;
         this.poetClassNameFactory = poetClassNameFactory;
-        this.typeDefinitionsByName = ir.getTypes().stream()
-                .collect(Collectors.toUnmodifiableMap(TypeDeclaration::getName, Function.identity()));
+        this.typeDefinitionsByName = ir.getTypes();
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
-        this.errorDefinitionsByName = ir.getErrors().stream()
-                .collect(Collectors.toUnmodifiableMap(ErrorDeclaration::getName, Function.identity()));
+        this.errorDefinitionsByName = ir.getErrors();
         this.globalHeaders = new GlobalHeaders(ir, poetTypeNameMapper);
     }
 
@@ -74,11 +70,11 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         return poetTypeNameMapper;
     }
 
-    public final Map<DeclaredTypeName, TypeDeclaration> getTypeDefinitionsByName() {
+    public final Map<TypeId, TypeDeclaration> getTypeDeclarations() {
         return typeDefinitionsByName;
     }
 
-    public final Map<DeclaredErrorName, ErrorDeclaration> getErrorDefinitionsByName() {
+    public final Map<ErrorId, ErrorDeclaration> getErrorDeclarations() {
         return errorDefinitionsByName;
     }
 

@@ -15,14 +15,14 @@
  */
 package com.fern.java.spring.generators;
 
-import com.fern.ir.v3.model.services.http.HttpEndpoint;
-import com.fern.ir.v3.model.services.http.HttpEndpointId;
-import com.fern.ir.v3.model.services.http.HttpRequestBody;
-import com.fern.ir.v3.model.services.http.HttpRequestBodyReference;
-import com.fern.ir.v3.model.services.http.HttpResponse;
-import com.fern.ir.v3.model.services.http.HttpService;
-import com.fern.ir.v3.model.services.http.InlinedRequestBody;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.http.EndpointName;
+import com.fern.ir.v9.model.http.HttpEndpoint;
+import com.fern.ir.v9.model.http.HttpRequestBody;
+import com.fern.ir.v9.model.http.HttpRequestBodyReference;
+import com.fern.ir.v9.model.http.HttpResponse;
+import com.fern.ir.v9.model.http.HttpService;
+import com.fern.ir.v9.model.http.InlinedRequestBody;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -32,6 +32,7 @@ import com.fern.java.spring.SpringGeneratorContext;
 import com.fern.java.spring.generators.spring.AuthToSpringParameterSpecConverter;
 import com.fern.java.spring.generators.spring.SpringHttpMethodToAnnotationSpec;
 import com.fern.java.spring.generators.spring.SpringParameterSpecFactory;
+import com.fern.java.utils.HttpPathUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -54,7 +55,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
     private final HttpService httpService;
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final SpringParameterSpecFactory springParameterSpecFactory;
-    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
 
     private final List<AbstractGeneratedJavaFile> generatedRequestBodyFiles = new ArrayList<>();
     private final SpringGeneratorContext springGeneratorContext;
@@ -62,7 +63,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
     public SpringServerInterfaceGenerator(
             SpringGeneratorContext springGeneratorContext,
             Optional<GeneratedAuthFiles> maybeAuth,
-            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             HttpService httpService) {
         super(
                 springGeneratorContext.getPoetClassNameFactory().getServiceInterfaceClassName(httpService),
@@ -76,16 +77,17 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
 
     @Override
     public GeneratedSpringServerInterface generateFile() {
+        String basePath = HttpPathUtils.getPathWithCurlyBracedPathParams(httpService.getBasePath());
         TypeSpec.Builder jerseyServiceBuilder = TypeSpec.interfaceBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(RequestMapping.class)
-                        .addMember("path", "$S", httpService.getBasePath().orElse("/"))
+                        .addMember("path", "$S", basePath.isEmpty() ? "/" : basePath)
                         .addMember("consumes", "$S", "application/json")
                         .addMember("produces", "$S", "application/json")
                         .build());
-        Map<HttpEndpointId, MethodSpec> endpointToMethodSpec = new LinkedHashMap<>();
+        Map<EndpointName, MethodSpec> endpointToMethodSpec = new LinkedHashMap<>();
         httpService.getEndpoints().forEach(httpEndpoint -> {
-            endpointToMethodSpec.put(httpEndpoint.getId(), getEndpointMethodSpec(httpEndpoint));
+            endpointToMethodSpec.put(httpEndpoint.getName(), getEndpointMethodSpec(httpEndpoint));
         });
         TypeSpec springServiceTypeSpec =
                 jerseyServiceBuilder.addMethods(endpointToMethodSpec.values()).build();
@@ -101,15 +103,16 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
     private MethodSpec getEndpointMethodSpec(HttpEndpoint httpEndpoint) {
         List<ParameterSpec> endpointParameters = getEndpointMethodParameters(httpEndpoint);
         MethodSpec.Builder endpointMethodBuilder = MethodSpec.methodBuilder(
-                        httpEndpoint.getName().getCamelCase())
+                        httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addAnnotation(httpEndpoint.getMethod().visit(new SpringHttpMethodToAnnotationSpec(httpEndpoint)))
                 .addParameters(endpointParameters);
 
         HttpResponse httpResponse = httpEndpoint.getResponse();
-        if (!httpResponse.getType().isVoid()) {
-            TypeName responseTypeName =
-                    generatorContext.getPoetTypeNameMapper().convertToTypeName(true, httpResponse.getType());
+        if (httpResponse.getType().isPresent()) {
+            TypeName responseTypeName = generatorContext
+                    .getPoetTypeNameMapper()
+                    .convertToTypeName(true, httpResponse.getType().get());
             endpointMethodBuilder.returns(responseTypeName);
         }
 
@@ -127,15 +130,22 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         });
 
         if (httpEndpoint.getAuth()) {
-            boolean isPrincipalPresent = httpService.getHeaders().stream()
-                            .anyMatch(httpHeader ->
-                                    httpHeader.getName().getCamelCase().equalsIgnoreCase("principal"))
-                    || httpService.getPathParameters().stream()
-                            .anyMatch(pathParameter ->
-                                    pathParameter.getName().getCamelCase().equalsIgnoreCase("principal"))
-                    || httpService.getPathParameters().stream()
-                            .anyMatch(queryParameter ->
-                                    queryParameter.getName().getCamelCase().equalsIgnoreCase("principal"));
+            boolean isPrincipalPresent = httpService.getHeaders().stream().anyMatch(httpHeader -> httpHeader
+                            .getName()
+                            .getName()
+                            .getCamelCase()
+                            .getSafeName()
+                            .equalsIgnoreCase("principal"))
+                    || httpService.getPathParameters().stream().anyMatch(pathParameter -> pathParameter
+                            .getName()
+                            .getCamelCase()
+                            .getSafeName()
+                            .equalsIgnoreCase("principal"))
+                    || httpService.getPathParameters().stream().anyMatch(queryParameter -> queryParameter
+                            .getName()
+                            .getCamelCase()
+                            .getSafeName()
+                            .equalsIgnoreCase("principal"));
             parameters.add(ParameterSpec.builder(
                             ClassName.get(Principal.class), isPrincipalPresent ? "_principal" : "principal")
                     .build());

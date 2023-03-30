@@ -280,272 +280,192 @@ exec "$JAVACMD" "$@"
 ]
 
 
-basic[src/main/java/com/fern/basic/DeviceClient.java]=[
-package com.fern.basic;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.Environment;
-import com.fern.basic.resources.raven.device.DeviceServiceClient;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
-
-public final class DeviceClient {
-  private final Supplier<DeviceServiceClient> deviceServiceClient;
-
-  public DeviceClient(String apiVersion) {
-    this(Environment.PROD, apiVersion);
-  }
-
-  public DeviceClient(BearerAuth auth, String apiVersion) {
-    this(Environment.PROD, auth, apiVersion);
-  }
-
-  public DeviceClient(Environment environment, String apiVersion) {
-    this.deviceServiceClient =
-        memoize(() -> new DeviceServiceClient(environment.getUrl(), apiVersion));
-  }
-
-  public DeviceClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.deviceServiceClient =
-        memoize(() -> new DeviceServiceClient(environment.getUrl(), auth, apiVersion));
-  }
-
-  public final DeviceServiceClient device() {
-    return this.deviceServiceClient.get();
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () -> {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    };
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/EventClient.java]=[
-package com.fern.basic;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.Environment;
-import com.fern.basic.resources.raven.event.EventServiceClient;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
-
-public final class EventClient {
-  private final Supplier<EventServiceClient> eventServiceClient;
-
-  public EventClient(String apiVersion) {
-    this(Environment.PROD, apiVersion);
-  }
-
-  public EventClient(BearerAuth auth, String apiVersion) {
-    this(Environment.PROD, auth, apiVersion);
-  }
-
-  public EventClient(Environment environment, String apiVersion) {
-    this.eventServiceClient =
-        memoize(() -> new EventServiceClient(environment.getUrl(), apiVersion));
-  }
-
-  public EventClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.eventServiceClient =
-        memoize(() -> new EventServiceClient(environment.getUrl(), auth, apiVersion));
-  }
-
-  public final EventServiceClient event() {
-    return this.eventServiceClient.get();
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () -> {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    };
-  }
-}
-
-]
-
-
 basic[src/main/java/com/fern/basic/FernFernClient.java]=[
 package com.fern.basic;
 
-import com.fern.basic.core.BearerAuth;
 import com.fern.basic.core.Environment;
-import com.fern.basic.resources.auth.AuthServiceClient;
-import com.fern.basic.resources.blog.BlogServiceClient;
-import com.fern.basic.resources.dummy.service.DummyServiceServiceClient;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
+import com.fern.basic.resources.auth.AuthClient;
+import com.fern.basic.resources.blog.BlogClient;
+import com.fern.basic.resources.dummy.service.DummyServiceClient;
+import com.fern.basic.resources.raven.RavenClient;
 
-public final class FernFernClient {
-  private final Supplier<AuthServiceClient> authServiceClient;
+public interface FernFernClient {
+  AuthClient auth();
 
-  private final Supplier<BlogServiceClient> blogServiceClient;
+  BlogClient blog();
 
-  private final Supplier<DummyServiceServiceClient> dummyServiceServiceClient;
+  DummyServiceClient dummyService();
 
-  private final EventClient event;
+  RavenClient raven();
 
-  private final DeviceClient device;
-
-  private final UserClient user;
-
-  public FernFernClient(String apiVersion) {
-    this(Environment.PROD, apiVersion);
+  static Builder builder() {
+    return new FernFernClientImpl.Builder();
   }
 
-  public FernFernClient(BearerAuth auth, String apiVersion) {
-    this(Environment.PROD, auth, apiVersion);
-  }
+  interface Builder {
+    Builder token(String token);
 
-  public FernFernClient(Environment environment, String apiVersion) {
-    this.blogServiceClient = memoize(() -> new BlogServiceClient(environment.getUrl(), apiVersion));
-    this.authServiceClient = memoize(() -> new AuthServiceClient(environment.getUrl(), apiVersion));
-    this.dummyServiceServiceClient =
-        memoize(() -> new DummyServiceServiceClient(environment.getUrl(), apiVersion));
-    this.event = new EventClient(environment, apiVersion);
-    this.device = new DeviceClient(environment, apiVersion);
-    this.user = new UserClient(environment, apiVersion);
-  }
+    Builder apiVersion(String apiVersion);
 
-  public FernFernClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.blogServiceClient = memoize(() -> new BlogServiceClient(environment.getUrl(), apiVersion));
-    this.authServiceClient =
-        memoize(() -> new AuthServiceClient(environment.getUrl(), auth, apiVersion));
-    this.dummyServiceServiceClient =
-        memoize(() -> new DummyServiceServiceClient(environment.getUrl(), apiVersion));
-    this.event = new EventClient(environment, auth, apiVersion);
-    this.device = new DeviceClient(environment, auth, apiVersion);
-    this.user = new UserClient(environment, auth, apiVersion);
-  }
+    Builder environment(Environment environment);
 
-  public final AuthServiceClient auth() {
-    return this.authServiceClient.get();
-  }
+    Builder url(String url);
 
-  public final BlogServiceClient blog() {
-    return this.blogServiceClient.get();
-  }
-
-  public final DummyServiceServiceClient dummyService() {
-    return this.dummyServiceServiceClient.get();
-  }
-
-  public final EventClient event() {
-    return this.event;
-  }
-
-  public final DeviceClient device() {
-    return this.device;
-  }
-
-  public final UserClient user() {
-    return this.user;
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () -> {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    };
+    FernFernClient build();
   }
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/UserClient.java]=[
+basic[src/main/java/com/fern/basic/FernFernClientImpl.java]=[
 package com.fern.basic;
 
-import com.fern.basic.core.BearerAuth;
+import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.Environment;
-import com.fern.basic.resources.raven.user.UserServiceClient;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
+import com.fern.basic.core.Suppliers;
+import com.fern.basic.resources.auth.AuthClient;
+import com.fern.basic.resources.auth.AuthClientImpl;
+import com.fern.basic.resources.blog.BlogClient;
+import com.fern.basic.resources.blog.BlogClientImpl;
+import com.fern.basic.resources.dummy.service.DummyServiceClient;
+import com.fern.basic.resources.dummy.service.DummyServiceClientImpl;
+import com.fern.basic.resources.raven.RavenClient;
+import com.fern.basic.resources.raven.RavenClientImpl;
 import java.util.function.Supplier;
 
-public final class UserClient {
-  private final Supplier<UserServiceClient> userServiceClient;
+public final class FernFernClientImpl implements FernFernClient {
+  private final ClientOptions clientOptions;
 
-  public UserClient(String apiVersion) {
-    this(Environment.PROD, apiVersion);
-  }
+  private final Supplier<AuthClient> authClient;
 
-  public UserClient(BearerAuth auth, String apiVersion) {
-    this(Environment.PROD, auth, apiVersion);
-  }
+  private final Supplier<BlogClient> blogClient;
 
-  public UserClient(Environment environment, String apiVersion) {
-    this.userServiceClient = memoize(() -> new UserServiceClient(environment.getUrl(), apiVersion));
-  }
+  private final Supplier<DummyServiceClient> dummyServiceClient;
 
-  public UserClient(Environment environment, BearerAuth auth, String apiVersion) {
-    this.userServiceClient =
-        memoize(() -> new UserServiceClient(environment.getUrl(), auth, apiVersion));
-  }
+  private final Supplier<RavenClient> ravenClient;
 
-  public final UserServiceClient user() {
-    return this.userServiceClient.get();
-  }
-
-  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
-    AtomicReference<T> value = new AtomicReference<>();
-    return () -> {
-      T val = value.get();
-      if (val == null) {
-        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
-      }
-      return val;
-    };
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/core/BearerAuth.java]=[
-package com.fern.basic.core;
-
-import com.fasterxml.jackson.annotation.JsonValue;
-
-public final class BearerAuth {
-  private final String token;
-
-  private BearerAuth(String token) {
-    this.token = token;
-  }
-
-  @JsonValue
-  public String getToken() {
-    return token;
+  public FernFernClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
+    this.authClient = Suppliers.memoize(() -> new AuthClientImpl(clientOptions));
+    this.blogClient = Suppliers.memoize(() -> new BlogClientImpl(clientOptions));
+    this.dummyServiceClient = Suppliers.memoize(() -> new DummyServiceClientImpl(clientOptions));
+    this.ravenClient = Suppliers.memoize(() -> new RavenClientImpl(clientOptions));
   }
 
   @Override
-  public String toString() {
-    return "Bearer " + getToken();
+  public AuthClient auth() {
+    return this.authClient.get();
   }
 
-  public static BearerAuth of(String token) {
-    return new BearerAuth(token.startsWith("Bearer ") ? token.substring(7) : token);
+  @Override
+  public BlogClient blog() {
+    return this.blogClient.get();
+  }
+
+  @Override
+  public DummyServiceClient dummyService() {
+    return this.dummyServiceClient.get();
+  }
+
+  @Override
+  public RavenClient raven() {
+    return this.ravenClient.get();
+  }
+
+  public static final class Builder implements FernFernClient.Builder {
+    ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+
+    String url = Environment.PROD.getUrl();
+
+    @Override
+    public FernFernClient.Builder token(String token) {
+      this.clientOptionsBuilder.addHeader("Authorization", token);
+      return this;
+    }
+
+    @Override
+    public FernFernClient.Builder apiVersion(String apiVersion) {
+      this.clientOptionsBuilder.addHeader("API-VERSION", apiVersion);
+      return this;
+    }
+
+    @Override
+    public FernFernClient.Builder environment(Environment environment) {
+      this.url = environment.getUrl();
+      return this;
+    }
+
+    @Override
+    public FernFernClient.Builder url(String url) {
+      this.url = url;
+      return this;
+    }
+
+    @Override
+    public FernFernClient build() {
+      return new FernFernClientImpl(clientOptionsBuilder.build());
+    }
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/core/ClientOptions.java]=[
+package com.fern.basic.core;
+
+import java.util.HashMap;
+import java.util.Map;
+import okhttp3.OkHttpClient;
+
+public final class ClientOptions {
+  private final String url;
+
+  private final Map<String, String> headers;
+
+  private final OkHttpClient httpClient;
+
+  private ClientOptions(String url, Map<String, String> headers, OkHttpClient httpClient) {
+    this.url = url;
+    this.headers = headers;
+    this.httpClient = httpClient;
+  }
+
+  public String url() {
+    return this.url;
+  }
+
+  public Map<String, String> headers() {
+    return this.headers;
+  }
+
+  public OkHttpClient httpClient() {
+    return this.httpClient;
+  }
+
+  public static Builder builder() {
+    return new Builder();
+  }
+
+  public static final class Builder {
+    private String url;
+
+    private final Map<String, String> headers = new HashMap<>();
+
+    public Builder url(String url) {
+      this.url = url;
+      return this;
+    }
+
+    public Builder addHeader(String key, String value) {
+      this.headers.put(key, value);
+      return this;
+    }
+
+    public ClientOptions build() {
+      return new ClientOptions(url, headers, new OkHttpClient());
+    }
   }
 }
 
@@ -599,226 +519,75 @@ public final class ObjectMappers {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/auth/AuthService.java]=[
-package com.fern.basic.resources.auth;
+basic[src/main/java/com/fern/basic/core/Suppliers.java]=[
+package com.fern.basic.core;
 
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.auth.exceptions.GetAuthException;
-import com.fern.java.jersey.contracts.OptionalAwareContract;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/auth")
-interface AuthService {
-  @GET
-  @Path("")
-  void getAuth(
-      @HeaderParam("Authorization") BearerAuth auth, @HeaderParam("API-VERSION") String apiVersion)
-      throws GetAuthException;
-
-  static AuthService getClient(String url) {
-    return Feign.builder()
-        .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new AuthServiceErrorDecoder())
-        .target(AuthService.class, url);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/auth/AuthServiceClient.java]=[
-package com.fern.basic.resources.auth;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.auth.exceptions.GetAuthException;
-import java.util.Optional;
-
-public final class AuthServiceClient {
-  private final AuthService service;
-
-  private final String apiVersion;
-
-  private final Optional<BearerAuth> auth;
-
-  public AuthServiceClient(String url, String apiVersion) {
-    this.service = AuthService.getClient(url);
-    this.apiVersion = apiVersion;
-    this.auth = Optional.empty();
-  }
-
-  public AuthServiceClient(String url, BearerAuth auth, String apiVersion) {
-    this.service = AuthService.getClient(url);
-    this.auth = Optional.of(auth);
-    this.apiVersion = apiVersion;
-  }
-
-  /**
-   * @throws GetAuthException Exception that wraps all possible endpoint errors
-   */
-  public void getAuth() throws GetAuthException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    this.service.getAuth(authValue, apiVersion);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/auth/AuthServiceErrorDecoder.java]=[
-package com.fern.basic.resources.auth;
-
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.auth.exceptions.GetAuthException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import java.io.IOException;
-
-final class AuthServiceErrorDecoder implements ErrorDecoder {
-  @Override
-  public Exception decode(String methodKey, Response response) {
-    try {
-      if (methodKey.contains("getAuth")) {
-        return decodeException(response, GetAuthException.class);
-      }
-    } catch (IOException e) {
-    }
-    return new RuntimeException(
-        "Failed to read response body. Received status "
-            + response.status()
-            + " for method "
-            + methodKey);
-  }
-
-  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
-      throws IOException {
-    return ObjectMappers.JSON_MAPPER
-        .reader()
-        .withAttribute("statusCode", response.status())
-        .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/auth/exceptions/GetAuthException.java]=[
-package com.fern.basic.resources.auth.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
-@JsonDeserialize(using = GetAuthException.Deserializer.class)
-public final class GetAuthException extends Exception {
-  private final Value value;
+public final class Suppliers {
+  private Suppliers() {}
 
-  private int statusCode;
+  public static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    AtomicReference<T> value = new AtomicReference<>();
+    return () -> {
+      T val = value.get();
+      if (val == null) {
+        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
+      }
+      return val;
+    };
+  }
+}
 
-  private GetAuthException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
+]
+
+
+basic[src/main/java/com/fern/basic/resources/auth/AuthClient.java]=[
+package com.fern.basic.resources.auth;
+
+public interface AuthClient {
+  void getAuth();
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/auth/AuthClientImpl.java]=[
+package com.fern.basic.resources.auth;
+
+import com.fern.basic.core.ClientOptions;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public final class AuthClientImpl implements AuthClient {
+  private final ClientOptions clientOptions;
+
+  public AuthClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
   }
 
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static GetAuthException other(Object unknownValue, int statusCode) {
-    return new GetAuthException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "GetAuthException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<GetAuthException> {
-    @Override
-    public GetAuthException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new GetAuthException(value, statusCode);
+  @Override
+  public void getAuth() {
+    HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.url()).newBuilder().build();
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("GET", RequestBody.create("", null))
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return;
+      }
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
@@ -826,575 +595,105 @@ public final class GetAuthException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/blog/BlogService.java]=[
+basic[src/main/java/com/fern/basic/resources/blog/BlogClient.java]=[
 package com.fern.basic.resources.blog;
 
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.blog.exceptions.CreatePostException;
-import com.fern.basic.resources.blog.exceptions.GetPostException;
+import com.fern.basic.resources.blog.requests.CreatePostRequest;
+import com.fern.basic.resources.blog.requests.GetPostRequest;
 import com.fern.basic.resources.blog.types.BlogPost;
-import com.fern.java.jersey.contracts.OptionalAwareContract;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/posts")
-interface BlogService {
-  @POST
-  @Path("/create")
-  void createPost(@HeaderParam("API-VERSION") String apiVersion, Object body)
-      throws CreatePostException;
+public interface BlogClient {
+  void createPost(CreatePostRequest request);
 
-  @GET
-  @Path("/{postId}")
-  BlogPost getPost(
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("postId") String postId,
-      @QueryParam("dummy") String dummy)
-      throws GetPostException;
-
-  static BlogService getClient(String url) {
-    return Feign.builder()
-        .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new BlogServiceErrorDecoder())
-        .target(BlogService.class, url);
-  }
+  BlogPost getPost(String postId, GetPostRequest request);
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/blog/BlogServiceClient.java]=[
+basic[src/main/java/com/fern/basic/resources/blog/BlogClientImpl.java]=[
 package com.fern.basic.resources.blog;
 
-import com.fern.basic.resources.blog.exceptions.CreatePostException;
-import com.fern.basic.resources.blog.exceptions.GetPostException;
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.blog.requests.CreatePostRequest;
 import com.fern.basic.resources.blog.requests.GetPostRequest;
 import com.fern.basic.resources.blog.types.BlogPost;
 import java.util.HashMap;
 import java.util.Map;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-public final class BlogServiceClient {
-  private final BlogService service;
+public final class BlogClientImpl implements BlogClient {
+  private final ClientOptions clientOptions;
 
-  private final String apiVersion;
-
-  public BlogServiceClient(String url, String apiVersion) {
-    this.service = BlogService.getClient(url);
-    this.apiVersion = apiVersion;
+  public BlogClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
   }
 
-  /**
-   * Create a new blog post
-   *
-   * @param request
-   * @throws CreatePostException Exception that wraps all possible endpoint errors
-   */
-  public void createPost(CreatePostRequest request) throws CreatePostException {
-    Map<String, Object> _body = new HashMap<>();
-    _body.put("title", request.getTitle());
-    _body.put("author", request.getAuthor());
-    _body.put("content", request.getContent());
-    _body.put("postType", request.getPostType());
-    _body.put("switch", request.getSwitch());
-    _body.put("ratings", request.getRatings());
-    _body.put("list", request.getList());
-    this.service.createPost(apiVersion, _body);
-  }
-
-  /**
-   * @param postId The post id for the blog post
-   * @param request
-   * @throws GetPostException Exception that wraps all possible endpoint errors
-   * @return BlogPost
-   */
-  public BlogPost getPost(String postId, GetPostRequest request) throws GetPostException {
-    return this.service.getPost(apiVersion, postId, request.getDummy());
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/BlogServiceErrorDecoder.java]=[
-package com.fern.basic.resources.blog;
-
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.blog.exceptions.CreatePostException;
-import com.fern.basic.resources.blog.exceptions.GetPostException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import java.io.IOException;
-
-final class BlogServiceErrorDecoder implements ErrorDecoder {
   @Override
-  public Exception decode(String methodKey, Response response) {
+  public void createPost(CreatePostRequest request) {
+    HttpUrl.Builder _httpUrlBuilder = HttpUrl.parse(this.clientOptions.url()).newBuilder();
+    HttpUrl _httpUrl = _httpUrlBuilder.build();
+    Map<String, Object> _requestBodyProperties = new HashMap<>();
+    _requestBodyProperties.put("title", request.getTitle());
+    _requestBodyProperties.put("author", request.getAuthor());
+    _requestBodyProperties.put("content", request.getContent());
+    _requestBodyProperties.put("postType", request.getPostType());
+    _requestBodyProperties.put("switch", request.getSwitch());
+    _requestBodyProperties.put("ratings", request.getRatings());
+    _requestBodyProperties.put("list", request.getList());
+    RequestBody _requestBody;
     try {
-      if (methodKey.contains("createPost")) {
-        return decodeException(response, CreatePostException.class);
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request.Builder _requestBuilder =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("POST", _requestBody)
+            .headers(Headers.of(clientOptions.headers()));
+    Request _request = _requestBuilder.build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return;
       }
-      if (methodKey.contains("getPost")) {
-        return decodeException(response, GetPostException.class);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public BlogPost getPost(String postId, GetPostRequest request) {
+    HttpUrl.Builder _httpUrlBuilder =
+        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(postId);
+    _httpUrlBuilder.addQueryParameter("Optional[dummy]", request.getDummy());
+    HttpUrl _httpUrl = _httpUrlBuilder.build();
+    RequestBody _requestBody = RequestBody.create("", null);
+    Request.Builder _requestBuilder =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("GET", _requestBody)
+            .headers(Headers.of(clientOptions.headers()));
+    Request _request = _requestBuilder.build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), BlogPost.class);
       }
-    } catch (IOException e) {
-    }
-    return new RuntimeException(
-        "Failed to read response body. Received status "
-            + response.status()
-            + " for method "
-            + methodKey);
-  }
-
-  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
-      throws IOException {
-    return ObjectMappers.JSON_MAPPER
-        .reader()
-        .withAttribute("statusCode", response.status())
-        .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/errors/GeneratorsDoNotExistError.java]=[
-package com.fern.basic.resources.blog.errors;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.basic.resources.blog.types.GeneratorIdAndVersion;
-import java.util.List;
-
-public final class GeneratorsDoNotExistError {
-  private final List<GeneratorIdAndVersion> value;
-
-  private GeneratorsDoNotExistError(List<GeneratorIdAndVersion> value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  public List<GeneratorIdAndVersion> get() {
-    return this.value;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return this == other
-        || (other instanceof GeneratorsDoNotExistError
-            && this.value.equals(((GeneratorsDoNotExistError) other).value));
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value.toString();
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static GeneratorsDoNotExistError of(List<GeneratorIdAndVersion> value) {
-    return new GeneratorsDoNotExistError(value);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/errors/PostNotFoundError.java]=[
-package com.fern.basic.resources.blog.errors;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.basic.resources.blog.types.PostNotFoundErrorBody;
-
-public final class PostNotFoundError {
-  private final PostNotFoundErrorBody value;
-
-  private PostNotFoundError(PostNotFoundErrorBody value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  public PostNotFoundErrorBody get() {
-    return this.value;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return this == other
-        || (other instanceof PostNotFoundError
-            && this.value.equals(((PostNotFoundError) other).value));
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value.toString();
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static PostNotFoundError of(PostNotFoundErrorBody value) {
-    return new PostNotFoundError(value);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/errors/UnauthorizedError.java]=[
-package com.fern.basic.resources.blog.errors;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.basic.resources.blog.types.UnauthorizedErrorBody;
-
-public final class UnauthorizedError {
-  private final UnauthorizedErrorBody value;
-
-  private UnauthorizedError(UnauthorizedErrorBody value) {
-    this.value = value;
-  }
-
-  @JsonValue
-  public UnauthorizedErrorBody get() {
-    return this.value;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return this == other
-        || (other instanceof UnauthorizedError
-            && this.value.equals(((UnauthorizedError) other).value));
-  }
-
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
-
-  @Override
-  public String toString() {
-    return value.toString();
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static UnauthorizedError of(UnauthorizedErrorBody value) {
-    return new UnauthorizedError(value);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/exceptions/CreatePostException.java]=[
-package com.fern.basic.resources.blog.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = CreatePostException.Deserializer.class)
-public final class CreatePostException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private CreatePostException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static CreatePostException other(Object unknownValue, int statusCode) {
-    return new CreatePostException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "CreatePostException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<CreatePostException> {
-    @Override
-    public CreatePostException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new CreatePostException(value, statusCode);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/exceptions/GetPostException.java]=[
-package com.fern.basic.resources.blog.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.basic.resources.blog.errors.PostNotFoundError;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-
-@JsonDeserialize(using = GetPostException.Deserializer.class)
-public final class GetPostException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private GetPostException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static GetPostException postNotFoundError(PostNotFoundError value) {
-    return new GetPostException(new PostNotFoundErrorValue(value), 400);
-  }
-
-  public static GetPostException other(Object unknownValue, int statusCode) {
-    return new GetPostException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean isPostNotFoundError() {
-    return value instanceof PostNotFoundErrorValue;
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<PostNotFoundError> getPostNotFoundError() {
-    if (isPostNotFoundError()) {
-      return Optional.of(((PostNotFoundErrorValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T visitPostNotFoundError(PostNotFoundError postNotFoundError);
-
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonSubTypes(@JsonSubTypes.Type(PostNotFoundErrorValue.class))
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  @JsonTypeName("PostNotFoundError")
-  private static final class PostNotFoundErrorValue implements Value {
-    private PostNotFoundError value;
-
-    private String errorInstanceId;
-
-    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    private PostNotFoundErrorValue(
-        @JsonProperty("value") PostNotFoundError value,
-        @JsonProperty("_errorInstanceId") String errorInstanceId) {
-      this.value = value;
-      this.errorInstanceId = errorInstanceId;
-    }
-
-    private PostNotFoundErrorValue(PostNotFoundError value) {
-      this.value = value;
-      this.errorInstanceId = UUID.randomUUID().toString();
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitPostNotFoundError(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof PostNotFoundErrorValue && equalTo((PostNotFoundErrorValue) other);
-    }
-
-    private boolean equalTo(PostNotFoundErrorValue other) {
-      return value.equals(other.value) && errorInstanceId.equals(other.errorInstanceId);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value, this.errorInstanceId);
-    }
-
-    @Override
-    public String toString() {
-      return "GetPostException{"
-          + "value: "
-          + value
-          + ", errorInstanceId: "
-          + errorInstanceId
-          + "}";
-    }
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "GetPostException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<GetPostException> {
-    @Override
-    public GetPostException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new GetPostException(value, statusCode);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
@@ -2387,9 +1686,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public final class PostType {
-  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
-
   public static final PostType LONG = new PostType(Value.LONG, "LONG");
+
+  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
 
   public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
 
@@ -2425,10 +1724,10 @@ public final class PostType {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case SHORT:
-        return visitor.visitShort();
       case LONG:
         return visitor.visitLong();
+      case SHORT:
+        return visitor.visitShort();
       case MEDIUM:
         return visitor.visitMedium();
       case UNKNOWN:
@@ -2441,10 +1740,10 @@ public final class PostType {
   public static PostType valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "SHORT":
-        return SHORT;
       case "LONG":
         return LONG;
+      case "SHORT":
+        return SHORT;
       case "med.med":
         return MEDIUM;
       default:
@@ -2566,679 +1865,83 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceService.java]=[
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceClient.java]=[
 package com.fern.basic.resources.dummy.service;
 
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
-import com.fern.basic.resources.dummy.service.exceptions.HealthException;
-import com.fern.java.jersey.contracts.OptionalAwareContract;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+public interface DummyServiceClient {
+  void getDummy(String request);
 
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/dummy")
-interface DummyServiceService {
-  @POST
-  @Path("")
-  void getDummy(@HeaderParam("API-VERSION") String apiVersion, Object body)
-      throws GetDummyException;
-
-  @GET
-  @Path("/health")
-  void health(@HeaderParam("API-VERSION") String apiVersion) throws HealthException;
-
-  static DummyServiceService getClient(String url) {
-    return Feign.builder()
-        .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new DummyServiceServiceErrorDecoder())
-        .target(DummyServiceService.class, url);
-  }
+  void health();
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceServiceClient.java]=[
+basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceClientImpl.java]=[
 package com.fern.basic.resources.dummy.service;
 
-import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
-import com.fern.basic.resources.dummy.service.exceptions.HealthException;
-
-public final class DummyServiceServiceClient {
-  private final DummyServiceService service;
-
-  private final String apiVersion;
-
-  public DummyServiceServiceClient(String url, String apiVersion) {
-    this.service = DummyServiceService.getClient(url);
-    this.apiVersion = apiVersion;
-  }
-
-  /**
-   * @param request
-   * @throws GetDummyException Exception that wraps all possible endpoint errors
-   */
-  public void getDummy(String request) throws GetDummyException {
-    this.service.getDummy(apiVersion, request);
-  }
-
-  /**
-   * @throws HealthException Exception that wraps all possible endpoint errors
-   */
-  public void health() throws HealthException {
-    this.service.health(apiVersion);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceServiceErrorDecoder.java]=[
-package com.fern.basic.resources.dummy.service;
-
+import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.dummy.service.exceptions.GetDummyException;
-import com.fern.basic.resources.dummy.service.exceptions.HealthException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import java.io.IOException;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-final class DummyServiceServiceErrorDecoder implements ErrorDecoder {
+public final class DummyServiceClientImpl implements DummyServiceClient {
+  private final ClientOptions clientOptions;
+
+  public DummyServiceClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
+  }
+
   @Override
-  public Exception decode(String methodKey, Response response) {
+  public void getDummy(String request) {
+    HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.url()).newBuilder().build();
+    RequestBody _requestBody;
     try {
-      if (methodKey.contains("getDummy")) {
-        return decodeException(response, GetDummyException.class);
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("POST", _requestBody)
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return;
       }
-      if (methodKey.contains("health")) {
-        return decodeException(response, HealthException.class);
-      }
-    } catch (IOException e) {
-    }
-    return new RuntimeException(
-        "Failed to read response body. Received status "
-            + response.status()
-            + " for method "
-            + methodKey);
-  }
-
-  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
-      throws IOException {
-    return ObjectMappers.JSON_MAPPER
-        .reader()
-        .withAttribute("statusCode", response.status())
-        .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/dummy/service/exceptions/GetDummyException.java]=[
-package com.fern.basic.resources.dummy.service.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = GetDummyException.Deserializer.class)
-public final class GetDummyException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private GetDummyException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static GetDummyException other(Object unknownValue, int statusCode) {
-    return new GetDummyException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "GetDummyException{" + "unknownValue: " + unknownValue + "}";
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
-  static final class Deserializer extends JsonDeserializer<GetDummyException> {
-    @Override
-    public GetDummyException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new GetDummyException(value, statusCode);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/dummy/service/exceptions/HealthException.java]=[
-package com.fern.basic.resources.dummy.service.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = HealthException.Deserializer.class)
-public final class HealthException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private HealthException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static HealthException other(Object unknownValue, int statusCode) {
-    return new HealthException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "HealthException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<HealthException> {
-    @Override
-    public HealthException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new HealthException(value, statusCode);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/DeviceService.java]=[
-package com.fern.basic.resources.raven.device;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.raven.device.exceptions.AddException;
-import com.fern.basic.resources.raven.device.exceptions.DeleteException;
-import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
-import com.fern.basic.resources.raven.device.exceptions.UpdateException;
-import com.fern.basic.resources.raven.device.types.Device;
-import com.fern.java.jersey.contracts.OptionalAwareContract;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/v1/apps")
-interface DeviceService {
-  @POST
-  @Path("/{app_id}/users/{user_id}/devices")
-  Device add(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("app_id") String appId,
-      @PathParam("user_id") String userId,
-      Object body)
-      throws AddException;
-
-  @PUT
-  @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  Device update(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("app_id") String appId,
-      @PathParam("user_id") String userId,
-      @PathParam("device_id") String deviceId,
-      Object body)
-      throws UpdateException;
-
-  @DELETE
-  @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  void delete(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("app_id") String appId,
-      @PathParam("user_id") String userId,
-      @PathParam("device_id") String deviceId)
-      throws DeleteException;
-
-  @GET
-  @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  Device getDevice(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("app_id") String appId,
-      @PathParam("user_id") String userId,
-      @PathParam("device_id") String deviceId)
-      throws GetDeviceException;
-
-  static DeviceService getClient(String url) {
-    return Feign.builder()
-        .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new DeviceServiceErrorDecoder())
-        .target(DeviceService.class, url);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/DeviceServiceClient.java]=[
-package com.fern.basic.resources.raven.device;
-
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.device.exceptions.AddException;
-import com.fern.basic.resources.raven.device.exceptions.DeleteException;
-import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
-import com.fern.basic.resources.raven.device.exceptions.UpdateException;
-import com.fern.basic.resources.raven.device.types.Device;
-import java.util.Optional;
-
-public final class DeviceServiceClient {
-  private final DeviceService service;
-
-  private final String apiVersion;
-
-  private final Optional<BearerAuth> auth;
-
-  public DeviceServiceClient(String url, String apiVersion) {
-    this.service = DeviceService.getClient(url);
-    this.apiVersion = apiVersion;
-    this.auth = Optional.empty();
-  }
-
-  public DeviceServiceClient(String url, BearerAuth auth, String apiVersion) {
-    this.service = DeviceService.getClient(url);
-    this.auth = Optional.of(auth);
-    this.apiVersion = apiVersion;
-  }
-
-  /**
-   * Add Device for a User. If a device_sid is specified, then devices will be merged if one is
-   * found. If no device_sid is specified, then a new device will be created.
-   *
-   * @param appId your app identifier
-   * @param userId your user identifier
-   * @param request
-   * @throws AddException Exception that wraps all possible endpoint errors
-   * @return
-   *     <p>the updated Device
-   */
-  public Device add(String appId, String userId, Device request) throws AddException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    return this.service.add(authValue, apiVersion, appId, userId, request);
-  }
-
-  /**
-   * Update a Device for a User.
-   *
-   * @param appId your app identifier
-   * @param userId your user identifier
-   * @param deviceId your device identifier; the same as device_sid
-   * @param request
-   * @throws UpdateException Exception that wraps all possible endpoint errors
-   * @return
-   *     <p>the updated Device
-   */
-  public Device update(String appId, String userId, String deviceId, Device request)
-      throws UpdateException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    return this.service.update(authValue, apiVersion, appId, userId, deviceId, request);
-  }
-
-  /**
-   * Delete a Device for a User
-   *
-   * @param appId your app identifier
-   * @param userId your user identifier
-   * @param deviceId your device identifier
-   * @throws DeleteException Exception that wraps all possible endpoint errors
-   */
-  public void delete(String appId, String userId, String deviceId) throws DeleteException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    this.service.delete(authValue, apiVersion, appId, userId, deviceId);
-  }
-
-  /**
-   * Get a Device for a User
-   *
-   * @param appId your app identifier
-   * @param userId your user identifier
-   * @param deviceId your device identifier
-   * @throws GetDeviceException Exception that wraps all possible endpoint errors
-   * @return Device
-   */
-  public Device getDevice(String appId, String userId, String deviceId) throws GetDeviceException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    return this.service.getDevice(authValue, apiVersion, appId, userId, deviceId);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/DeviceServiceErrorDecoder.java]=[
-package com.fern.basic.resources.raven.device;
-
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.raven.device.exceptions.AddException;
-import com.fern.basic.resources.raven.device.exceptions.DeleteException;
-import com.fern.basic.resources.raven.device.exceptions.GetDeviceException;
-import com.fern.basic.resources.raven.device.exceptions.UpdateException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import java.io.IOException;
-
-final class DeviceServiceErrorDecoder implements ErrorDecoder {
   @Override
-  public Exception decode(String methodKey, Response response) {
+  public void health() {
+    HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.url()).newBuilder().build();
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("GET", RequestBody.create("", null))
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
     try {
-      if (methodKey.contains("add")) {
-        return decodeException(response, AddException.class);
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return;
       }
-      if (methodKey.contains("update")) {
-        return decodeException(response, UpdateException.class);
-      }
-      if (methodKey.contains("delete")) {
-        return decodeException(response, DeleteException.class);
-      }
-      if (methodKey.contains("getDevice")) {
-        return decodeException(response, GetDeviceException.class);
-      }
-    } catch (IOException e) {
-    }
-    return new RuntimeException(
-        "Failed to read response body. Received status "
-            + response.status()
-            + " for method "
-            + methodKey);
-  }
-
-  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
-      throws IOException {
-    return ObjectMappers.JSON_MAPPER
-        .reader()
-        .withAttribute("statusCode", response.status())
-        .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/AddException.java]=[
-package com.fern.basic.resources.raven.device.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = AddException.Deserializer.class)
-public final class AddException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private AddException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static AddException other(Object unknownValue, int statusCode) {
-    return new AddException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "AddException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<AddException> {
-    @Override
-    public AddException deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new AddException(value, statusCode);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
@@ -3246,332 +1949,241 @@ public final class AddException extends Exception {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/DeleteException.java]=[
-package com.fern.basic.resources.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/RavenClient.java]=[
+package com.fern.basic.resources.raven;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
+import com.fern.basic.resources.raven.device.DeviceClient;
+import com.fern.basic.resources.raven.event.EventClient;
+import com.fern.basic.resources.raven.ids.IdsClient;
+import com.fern.basic.resources.raven.user.UserClient;
 
-@JsonDeserialize(using = DeleteException.Deserializer.class)
-public final class DeleteException extends Exception {
-  private final Value value;
+public interface RavenClient {
+  DeviceClient device();
 
-  private int statusCode;
+  EventClient event();
 
-  private DeleteException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
+  IdsClient ids();
+
+  UserClient user();
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/raven/RavenClientImpl.java]=[
+package com.fern.basic.resources.raven;
+
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.Suppliers;
+import com.fern.basic.resources.raven.device.DeviceClient;
+import com.fern.basic.resources.raven.device.DeviceClientImpl;
+import com.fern.basic.resources.raven.event.EventClient;
+import com.fern.basic.resources.raven.event.EventClientImpl;
+import com.fern.basic.resources.raven.ids.IdsClient;
+import com.fern.basic.resources.raven.ids.IdsClientImpl;
+import com.fern.basic.resources.raven.user.UserClient;
+import com.fern.basic.resources.raven.user.UserClientImpl;
+import java.util.function.Supplier;
+
+public final class RavenClientImpl implements RavenClient {
+  private final ClientOptions clientOptions;
+
+  private final Supplier<DeviceClient> deviceClient;
+
+  private final Supplier<EventClient> eventClient;
+
+  private final Supplier<IdsClient> idsClient;
+
+  private final Supplier<UserClient> userClient;
+
+  public RavenClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
+    this.deviceClient = Suppliers.memoize(() -> new DeviceClientImpl(clientOptions));
+    this.eventClient = Suppliers.memoize(() -> new EventClientImpl(clientOptions));
+    this.idsClient = Suppliers.memoize(() -> new IdsClientImpl(clientOptions));
+    this.userClient = Suppliers.memoize(() -> new UserClientImpl(clientOptions));
   }
 
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
+  @Override
+  public DeviceClient device() {
+    return this.deviceClient.get();
   }
 
-  public int getStatusCode() {
-    return this.statusCode;
+  @Override
+  public EventClient event() {
+    return this.eventClient.get();
   }
 
-  public static DeleteException other(Object unknownValue, int statusCode) {
-    return new DeleteException(new UnknownErrorValue(unknownValue), statusCode);
+  @Override
+  public IdsClient ids() {
+    return this.idsClient.get();
   }
 
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "DeleteException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<DeleteException> {
-    @Override
-    public DeleteException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new DeleteException(value, statusCode);
-    }
+  @Override
+  public UserClient user() {
+    return this.userClient.get();
   }
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/GetDeviceException.java]=[
-package com.fern.basic.resources.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/device/DeviceClient.java]=[
+package com.fern.basic.resources.raven.device;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
+import com.fern.basic.resources.raven.device.types.Device;
 
-@JsonDeserialize(using = GetDeviceException.Deserializer.class)
-public final class GetDeviceException extends Exception {
-  private final Value value;
+public interface DeviceClient {
+  Device add(String appId, String userId, Device request);
 
-  private int statusCode;
+  Device update(String appId, String userId, String deviceId, Device request);
 
-  private GetDeviceException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
+  void delete(String appId, String userId, String deviceId);
 
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static GetDeviceException other(Object unknownValue, int statusCode) {
-    return new GetDeviceException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "GetDeviceException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<GetDeviceException> {
-    @Override
-    public GetDeviceException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new GetDeviceException(value, statusCode);
-    }
-  }
+  Device getDevice(String appId, String userId, String deviceId);
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/device/exceptions/UpdateException.java]=[
-package com.fern.basic.resources.raven.device.exceptions;
+basic[src/main/java/com/fern/basic/resources/raven/device/DeviceClientImpl.java]=[
+package com.fern.basic.resources.raven.device;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.ObjectMappers;
+import com.fern.basic.resources.raven.device.types.Device;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-@JsonDeserialize(using = UpdateException.Deserializer.class)
-public final class UpdateException extends Exception {
-  private final Value value;
+public final class DeviceClientImpl implements DeviceClient {
+  private final ClientOptions clientOptions;
 
-  private int statusCode;
-
-  private UpdateException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
+  public DeviceClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
   }
 
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static UpdateException other(Object unknownValue, int statusCode) {
-    return new UpdateException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
+  @Override
+  public Device add(String appId, String userId, Device request) {
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.url())
+            .newBuilder()
+            .addPathSegment(appId)
+            .addPathSegment(userId)
+            .build();
+    RequestBody _requestBody;
+    try {
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "UpdateException{" + "unknownValue: " + unknownValue + "}";
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("POST", _requestBody)
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Device.class);
+      }
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 
-  static final class Deserializer extends JsonDeserializer<UpdateException> {
-    @Override
-    public UpdateException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new UpdateException(value, statusCode);
+  @Override
+  public Device update(String appId, String userId, String deviceId, Device request) {
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.url())
+            .newBuilder()
+            .addPathSegment(appId)
+            .addPathSegment(userId)
+            .addPathSegment(deviceId)
+            .build();
+    RequestBody _requestBody;
+    try {
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("PUT", _requestBody)
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Device.class);
+      }
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public void delete(String appId, String userId, String deviceId) {
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.url())
+            .newBuilder()
+            .addPathSegment(appId)
+            .addPathSegment(userId)
+            .addPathSegment(deviceId)
+            .build();
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("DELETE", RequestBody.create("", null))
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return;
+      }
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public Device getDevice(String appId, String userId, String deviceId) {
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.url())
+            .newBuilder()
+            .addPathSegment(appId)
+            .addPathSegment(userId)
+            .addPathSegment(deviceId)
+            .build();
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("GET", RequestBody.create("", null))
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Device.class);
+      }
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
@@ -4020,11 +2632,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public final class Platform {
-  public static final Platform ANDROID = new Platform(Value.ANDROID, "android");
+  public static final Platform WEB = new Platform(Value.WEB, "web");
 
   public static final Platform IOS = new Platform(Value.IOS, "ios");
 
-  public static final Platform WEB = new Platform(Value.WEB, "web");
+  public static final Platform ANDROID = new Platform(Value.ANDROID, "android");
 
   private final Value value;
 
@@ -4058,12 +2670,12 @@ public final class Platform {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case ANDROID:
-        return visitor.visitAndroid();
-      case IOS:
-        return visitor.visitIos();
       case WEB:
         return visitor.visitWeb();
+      case IOS:
+        return visitor.visitIos();
+      case ANDROID:
+        return visitor.visitAndroid();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -4074,12 +2686,12 @@ public final class Platform {
   public static Platform valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "android":
-        return ANDROID;
-      case "ios":
-        return IOS;
       case "web":
         return WEB;
+      case "ios":
+        return IOS;
+      case "android":
+        return ANDROID;
       default:
         return new Platform(Value.UNKNOWN, upperCasedValue);
     }
@@ -4109,390 +2721,122 @@ public final class Platform {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/event/EventService.java]=[
+basic[src/main/java/com/fern/basic/resources/raven/event/EventClient.java]=[
 package com.fern.basic.resources.raven.event;
 
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
-import com.fern.basic.resources.raven.event.exceptions.SendException;
+import com.fern.basic.resources.raven.event.requests.BulkSendEventRequest;
+import com.fern.basic.resources.raven.event.requests.SendEventRequest;
 import com.fern.basic.resources.raven.event.types.SendEventResponse;
-import com.fern.java.jersey.contracts.OptionalAwareContract;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
-import java.util.Optional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/v1/apps")
-interface EventService {
-  @POST
-  @Path("/{app_id}/events/send")
-  SendEventResponse send(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
-      @PathParam("app_id") String appId,
-      Object body)
-      throws SendException;
+public interface EventClient {
+  SendEventResponse send(String appId, SendEventRequest request);
 
-  @POST
-  @Path("/{app_id}/events/bulk_send")
-  SendEventResponse sendBulk(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
-      @PathParam("app_id") String appId,
-      Object body)
-      throws SendBulkException;
-
-  static EventService getClient(String url) {
-    return Feign.builder()
-        .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new EventServiceErrorDecoder())
-        .target(EventService.class, url);
-  }
+  SendEventResponse sendBulk(String appId, BulkSendEventRequest request);
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/event/EventServiceClient.java]=[
+basic[src/main/java/com/fern/basic/resources/raven/event/EventClientImpl.java]=[
 package com.fern.basic.resources.raven.event;
 
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
-import com.fern.basic.resources.raven.event.exceptions.SendException;
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.raven.event.requests.BulkSendEventRequest;
 import com.fern.basic.resources.raven.event.requests.SendEventRequest;
 import com.fern.basic.resources.raven.event.types.SendEventResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-public final class EventServiceClient {
-  private final EventService service;
+public final class EventClientImpl implements EventClient {
+  private final ClientOptions clientOptions;
 
-  private final String apiVersion;
-
-  private final Optional<BearerAuth> auth;
-
-  public EventServiceClient(String url, String apiVersion) {
-    this.service = EventService.getClient(url);
-    this.apiVersion = apiVersion;
-    this.auth = Optional.empty();
+  public EventClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
   }
 
-  public EventServiceClient(String url, BearerAuth auth, String apiVersion) {
-    this.service = EventService.getClient(url);
-    this.auth = Optional.of(auth);
-    this.apiVersion = apiVersion;
-  }
-
-  /**
-   * This endpoint allows you to send messages
-   *
-   * @param appId
-   * @param request
-   * @throws SendException Exception that wraps all possible endpoint errors
-   * @return SendEventResponse
-   */
-  public SendEventResponse send(String appId, SendEventRequest request) throws SendException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    Map<String, Object> _body = new HashMap<>();
-    _body.put("event", request.getEvent());
-    _body.put("data", request.getData());
-    _body.put("user", request.getUser());
-    _body.put("scheduleAt", request.getScheduleAt());
-    _body.put("override", request.getOverride());
-    return this.service.send(authValue, apiVersion, request.getIdempotencyKey(), appId, _body);
-  }
-
-  /**
-   * @param appId
-   * @param request
-   * @throws SendBulkException Exception that wraps all possible endpoint errors
-   * @return SendEventResponse
-   */
-  public SendEventResponse sendBulk(String appId, BulkSendEventRequest request)
-      throws SendBulkException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    Map<String, Object> _body = new HashMap<>();
-    _body.put("event", request.getEvent());
-    _body.put("batch", request.getBatch());
-    return this.service.sendBulk(authValue, apiVersion, request.getIdempotencyKey(), appId, _body);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/EventServiceErrorDecoder.java]=[
-package com.fern.basic.resources.raven.event;
-
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.raven.event.exceptions.SendBulkException;
-import com.fern.basic.resources.raven.event.exceptions.SendException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import java.io.IOException;
-
-final class EventServiceErrorDecoder implements ErrorDecoder {
   @Override
-  public Exception decode(String methodKey, Response response) {
+  public SendEventResponse send(String appId, SendEventRequest request) {
+    HttpUrl.Builder _httpUrlBuilder =
+        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(appId);
+    HttpUrl _httpUrl = _httpUrlBuilder.build();
+    Map<String, Object> _requestBodyProperties = new HashMap<>();
+    _requestBodyProperties.put("event", request.getEvent());
+    _requestBodyProperties.put("data", request.getData());
+    _requestBodyProperties.put("user", request.getUser());
+    _requestBodyProperties.put("scheduleAt", request.getScheduleAt());
+    _requestBodyProperties.put("override", request.getOverride());
+    RequestBody _requestBody;
     try {
-      if (methodKey.contains("send")) {
-        return decodeException(response, SendException.class);
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request.Builder _requestBuilder =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("POST", _requestBody)
+            .headers(Headers.of(clientOptions.headers()));
+    if (request.getIdempotencyKey().isPresent()) {
+      _requestBuilder.addHeader("Idempotency-Key", request.getIdempotencyKey().get());
+    }
+    Request _request = _requestBuilder.build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(
+            _response.body().string(), SendEventResponse.class);
       }
-      if (methodKey.contains("sendBulk")) {
-        return decodeException(response, SendBulkException.class);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public SendEventResponse sendBulk(String appId, BulkSendEventRequest request) {
+    HttpUrl.Builder _httpUrlBuilder =
+        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(appId);
+    HttpUrl _httpUrl = _httpUrlBuilder.build();
+    Map<String, Object> _requestBodyProperties = new HashMap<>();
+    _requestBodyProperties.put("event", request.getEvent());
+    _requestBodyProperties.put("batch", request.getBatch());
+    RequestBody _requestBody;
+    try {
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request.Builder _requestBuilder =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("POST", _requestBody)
+            .headers(Headers.of(clientOptions.headers()));
+    if (request.getIdempotencyKey().isPresent()) {
+      _requestBuilder.addHeader("Idempotency-Key", request.getIdempotencyKey().get());
+    }
+    Request _request = _requestBuilder.build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(
+            _response.body().string(), SendEventResponse.class);
       }
-    } catch (IOException e) {
-    }
-    return new RuntimeException(
-        "Failed to read response body. Received status "
-            + response.status()
-            + " for method "
-            + methodKey);
-  }
-
-  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
-      throws IOException {
-    return ObjectMappers.JSON_MAPPER
-        .reader()
-        .withAttribute("statusCode", response.status())
-        .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/exceptions/SendBulkException.java]=[
-package com.fern.basic.resources.raven.event.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = SendBulkException.Deserializer.class)
-public final class SendBulkException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private SendBulkException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static SendBulkException other(Object unknownValue, int statusCode) {
-    return new SendBulkException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "SendBulkException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<SendBulkException> {
-    @Override
-    public SendBulkException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new SendBulkException(value, statusCode);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/exceptions/SendException.java]=[
-package com.fern.basic.resources.raven.event.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = SendException.Deserializer.class)
-public final class SendException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private SendException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static SendException other(Object unknownValue, int statusCode) {
-    return new SendException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "SendException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<SendException> {
-    @Override
-    public SendException deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new SendException(value, statusCode);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
@@ -8204,386 +6548,126 @@ public final class WhatsappOverride implements IChannelOverride {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/user/UserService.java]=[
-package com.fern.basic.resources.raven.user;
+basic[src/main/java/com/fern/basic/resources/raven/ids/IdsClient.java]=[
+package com.fern.basic.resources.raven.ids;
 
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
-import com.fern.basic.resources.raven.user.exceptions.GetException;
-import com.fern.basic.resources.raven.user.types.RavenUser;
-import com.fern.java.jersey.contracts.OptionalAwareContract;
-import feign.Feign;
-import feign.jackson.JacksonDecoder;
-import feign.jackson.JacksonEncoder;
-import feign.jaxrs.JAXRSContract;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+public interface IdsClient {}
 
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-@Path("/v1/apps")
-interface UserService {
-  @POST
-  @Path("/{app_id}/users")
-  RavenUser createOrUpdate(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("app_id") String appId,
-      Object body)
-      throws CreateOrUpdateException;
+]
 
-  @GET
-  @Path("/{app_id}/users/{user_id}")
-  RavenUser get(
-      @HeaderParam("Authorization") BearerAuth auth,
-      @HeaderParam("API-VERSION") String apiVersion,
-      @PathParam("app_id") String appId,
-      @PathParam("user_id") String userId)
-      throws GetException;
 
-  static UserService getClient(String url) {
-    return Feign.builder()
-        .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new UserServiceErrorDecoder())
-        .target(UserService.class, url);
+basic[src/main/java/com/fern/basic/resources/raven/ids/IdsClientImpl.java]=[
+package com.fern.basic.resources.raven.ids;
+
+import com.fern.basic.core.ClientOptions;
+
+public final class IdsClientImpl implements IdsClient {
+  private final ClientOptions clientOptions;
+
+  public IdsClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
   }
 }
 
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/raven/user/UserServiceClient.java]=[
+basic[src/main/java/com/fern/basic/resources/raven/user/UserClient.java]=[
 package com.fern.basic.resources.raven.user;
 
-import com.fern.basic.core.BearerAuth;
-import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
-import com.fern.basic.resources.raven.user.exceptions.GetException;
+import com.fern.basic.resources.raven.user.requests.CreateUserRequest;
+import com.fern.basic.resources.raven.user.types.RavenUser;
+
+public interface UserClient {
+  RavenUser createOrUpdate(String appId, CreateUserRequest request);
+
+  RavenUser get(String appId, String userId);
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/raven/user/UserClientImpl.java]=[
+package com.fern.basic.resources.raven.user;
+
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.raven.user.requests.CreateUserRequest;
 import com.fern.basic.resources.raven.user.types.RavenUser;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-public final class UserServiceClient {
-  private final UserService service;
+public final class UserClientImpl implements UserClient {
+  private final ClientOptions clientOptions;
 
-  private final String apiVersion;
-
-  private final Optional<BearerAuth> auth;
-
-  public UserServiceClient(String url, String apiVersion) {
-    this.service = UserService.getClient(url);
-    this.apiVersion = apiVersion;
-    this.auth = Optional.empty();
+  public UserClientImpl(ClientOptions clientOptions) {
+    this.clientOptions = clientOptions;
   }
 
-  public UserServiceClient(String url, BearerAuth auth, String apiVersion) {
-    this.service = UserService.getClient(url);
-    this.auth = Optional.of(auth);
-    this.apiVersion = apiVersion;
-  }
-
-  /**
-   * Creates an AppUser if doesn't exist already, or updates user properties
-   *
-   * @param appId
-   * @param request
-   * @throws CreateOrUpdateException Exception that wraps all possible endpoint errors
-   * @return
-   *     <p>updated or newly created user.
-   */
-  public RavenUser createOrUpdate(String appId, CreateUserRequest request)
-      throws CreateOrUpdateException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    Map<String, Object> _body = new HashMap<>();
-    _body.put("user_id", request.getUserId());
-    _body.put("mobile", request.getMobile());
-    _body.put("email", request.getEmail());
-    _body.put("whats_app", request.getWhatsApp());
-    return this.service.createOrUpdate(authValue, apiVersion, appId, _body);
-  }
-
-  /**
-   * Gets the requested user
-   *
-   * @param appId your app identifier
-   * @param userId your user identifier
-   * @throws GetException Exception that wraps all possible endpoint errors
-   * @return RavenUser
-   */
-  public RavenUser get(String appId, String userId) throws GetException {
-    BearerAuth authValue = this.auth.orElseThrow(() -> new RuntimeException("Auth is required"));
-    return this.service.get(authValue, apiVersion, appId, userId);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/UserServiceErrorDecoder.java]=[
-package com.fern.basic.resources.raven.user;
-
-import com.fern.basic.core.ObjectMappers;
-import com.fern.basic.resources.raven.user.exceptions.CreateOrUpdateException;
-import com.fern.basic.resources.raven.user.exceptions.GetException;
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import java.io.IOException;
-
-final class UserServiceErrorDecoder implements ErrorDecoder {
   @Override
-  public Exception decode(String methodKey, Response response) {
+  public RavenUser createOrUpdate(String appId, CreateUserRequest request) {
+    HttpUrl.Builder _httpUrlBuilder =
+        HttpUrl.parse(this.clientOptions.url()).newBuilder().addPathSegment(appId);
+    HttpUrl _httpUrl = _httpUrlBuilder.build();
+    Map<String, Object> _requestBodyProperties = new HashMap<>();
+    _requestBodyProperties.put("user_id", request.getUserId());
+    _requestBodyProperties.put("mobile", request.getMobile());
+    _requestBodyProperties.put("email", request.getEmail());
+    _requestBodyProperties.put("whats_app", request.getWhatsApp());
+    RequestBody _requestBody;
     try {
-      if (methodKey.contains("createOrUpdate")) {
-        return decodeException(response, CreateOrUpdateException.class);
+      _requestBody =
+          RequestBody.create(
+              ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
+              MediaType.parse("application/json"));
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+    Request.Builder _requestBuilder =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("POST", _requestBody)
+            .headers(Headers.of(clientOptions.headers()));
+    Request _request = _requestBuilder.build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), RavenUser.class);
       }
-      if (methodKey.contains("get")) {
-        return decodeException(response, GetException.class);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public RavenUser get(String appId, String userId) {
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.url())
+            .newBuilder()
+            .addPathSegment(appId)
+            .addPathSegment(userId)
+            .build();
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("GET", RequestBody.create("", null))
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), RavenUser.class);
       }
-    } catch (IOException e) {
-    }
-    return new RuntimeException(
-        "Failed to read response body. Received status "
-            + response.status()
-            + " for method "
-            + methodKey);
-  }
-
-  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
-      throws IOException {
-    return ObjectMappers.JSON_MAPPER
-        .reader()
-        .withAttribute("statusCode", response.status())
-        .readValue(response.body().asInputStream(), clazz);
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/exceptions/CreateOrUpdateException.java]=[
-package com.fern.basic.resources.raven.user.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = CreateOrUpdateException.Deserializer.class)
-public final class CreateOrUpdateException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private CreateOrUpdateException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static CreateOrUpdateException other(Object unknownValue, int statusCode) {
-    return new CreateOrUpdateException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "CreateOrUpdateException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<CreateOrUpdateException> {
-    @Override
-    public CreateOrUpdateException deserialize(JsonParser p, DeserializationContext ctx)
-        throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new CreateOrUpdateException(value, statusCode);
-    }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/exceptions/GetException.java]=[
-package com.fern.basic.resources.raven.user.exceptions;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.Optional;
-
-@JsonDeserialize(using = GetException.Deserializer.class)
-public final class GetException extends Exception {
-  private final Value value;
-
-  private int statusCode;
-
-  private GetException(Value value, int statusCode) {
-    this.value = value;
-    this.statusCode = statusCode;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  public static GetException other(Object unknownValue, int statusCode) {
-    return new GetException(new UnknownErrorValue(unknownValue), statusCode);
-  }
-
-  public boolean _isOther() {
-    return value instanceof UnknownErrorValue;
-  }
-
-  public Optional<Object> _getOther() {
-    if (_isOther()) {
-      return Optional.of(((UnknownErrorValue) value).unknownValue);
-    }
-    return Optional.empty();
-  }
-
-  public interface Visitor<T> {
-    T _visitOther(Object otherType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "_error",
-      visible = true,
-      defaultImpl = UnknownErrorValue.class)
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  private static final class UnknownErrorValue implements Value {
-    private Object unknownValue;
-
-    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
-      this.unknownValue = unknownValue;
-    }
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitOther(unknownValue);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
-    }
-
-    private boolean equalTo(UnknownErrorValue other) {
-      return unknownValue.equals(other.unknownValue);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.unknownValue);
-    }
-
-    @Override
-    public String toString() {
-      return "GetException{" + "unknownValue: " + unknownValue + "}";
-    }
-  }
-
-  static final class Deserializer extends JsonDeserializer<GetException> {
-    @Override
-    public GetException deserialize(JsonParser p, DeserializationContext ctx) throws IOException {
-      Value value = ctx.readValue(p, Value.class);
-      int statusCode = (int) ctx.getAttribute("statusCode");
-      return new GetException(value, statusCode);
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 }
@@ -8806,23 +6890,23 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Locale;
 
 public final class Channel {
-  public static final Channel WHATSAPP = new Channel(Value.WHATSAPP, "WHATSAPP");
+  public static final Channel SMS = new Channel(Value.SMS, "SMS");
+
+  public static final Channel IN_APP = new Channel(Value.IN_APP, "IN_APP");
 
   public static final Channel TELEGRAM = new Channel(Value.TELEGRAM, "TELEGRAM");
 
   public static final Channel PUSH = new Channel(Value.PUSH, "PUSH");
 
-  public static final Channel IN_APP = new Channel(Value.IN_APP, "IN_APP");
-
-  public static final Channel VOICE = new Channel(Value.VOICE, "VOICE");
-
-  public static final Channel WEBHOOK = new Channel(Value.WEBHOOK, "WEBHOOK");
-
-  public static final Channel EMAIL = new Channel(Value.EMAIL, "EMAIL");
+  public static final Channel WHATSAPP = new Channel(Value.WHATSAPP, "WHATSAPP");
 
   public static final Channel SLACK = new Channel(Value.SLACK, "SLACK");
 
-  public static final Channel SMS = new Channel(Value.SMS, "SMS");
+  public static final Channel EMAIL = new Channel(Value.EMAIL, "EMAIL");
+
+  public static final Channel WEBHOOK = new Channel(Value.WEBHOOK, "WEBHOOK");
+
+  public static final Channel VOICE = new Channel(Value.VOICE, "VOICE");
 
   private final Value value;
 
@@ -8856,24 +6940,24 @@ public final class Channel {
 
   public <T> T visit(Visitor<T> visitor) {
     switch (value) {
-      case WHATSAPP:
-        return visitor.visitWhatsapp();
+      case SMS:
+        return visitor.visitSms();
+      case IN_APP:
+        return visitor.visitInApp();
       case TELEGRAM:
         return visitor.visitTelegram();
       case PUSH:
         return visitor.visitPush();
-      case IN_APP:
-        return visitor.visitInApp();
-      case VOICE:
-        return visitor.visitVoice();
-      case WEBHOOK:
-        return visitor.visitWebhook();
-      case EMAIL:
-        return visitor.visitEmail();
+      case WHATSAPP:
+        return visitor.visitWhatsapp();
       case SLACK:
         return visitor.visitSlack();
-      case SMS:
-        return visitor.visitSms();
+      case EMAIL:
+        return visitor.visitEmail();
+      case WEBHOOK:
+        return visitor.visitWebhook();
+      case VOICE:
+        return visitor.visitVoice();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -8884,24 +6968,24 @@ public final class Channel {
   public static Channel valueOf(String value) {
     String upperCasedValue = value.toUpperCase(Locale.ROOT);
     switch (upperCasedValue) {
-      case "WHATSAPP":
-        return WHATSAPP;
+      case "SMS":
+        return SMS;
+      case "IN_APP":
+        return IN_APP;
       case "TELEGRAM":
         return TELEGRAM;
       case "PUSH":
         return PUSH;
-      case "IN_APP":
-        return IN_APP;
-      case "VOICE":
-        return VOICE;
-      case "WEBHOOK":
-        return WEBHOOK;
-      case "EMAIL":
-        return EMAIL;
+      case "WHATSAPP":
+        return WHATSAPP;
       case "SLACK":
         return SLACK;
-      case "SMS":
-        return SMS;
+      case "EMAIL":
+        return EMAIL;
+      case "WEBHOOK":
+        return WEBHOOK;
+      case "VOICE":
+        return VOICE;
       default:
         return new Channel(Value.UNKNOWN, upperCasedValue);
     }

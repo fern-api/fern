@@ -17,8 +17,8 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.ir.v3.model.types.EnumTypeDeclaration;
-import com.fern.ir.v3.model.types.EnumValue;
+import com.fern.ir.v9.model.types.EnumTypeDeclaration;
+import com.fern.ir.v9.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.VisitorFactory;
@@ -59,7 +59,9 @@ public final class EnumGenerator extends AbstractFileGenerator {
     private final ClassName valueFieldClassName;
 
     public EnumGenerator(
-            ClassName className, AbstractGeneratorContext generatorContext, EnumTypeDeclaration enumTypeDeclaration) {
+            ClassName className,
+            AbstractGeneratorContext<?> generatorContext,
+            EnumTypeDeclaration enumTypeDeclaration) {
         super(className, generatorContext);
         this.enumTypeDeclaration = enumTypeDeclaration;
         this.valueFieldClassName = this.className.nestedClass(VALUE_TYPE_NAME);
@@ -96,7 +98,11 @@ public final class EnumGenerator extends AbstractFileGenerator {
         return enumTypeDeclaration.getValues().stream()
                 .collect(Collectors.toMap(Function.identity(), enumValue -> FieldSpec.builder(
                                 className,
-                                enumValue.getName().getScreamingSnakeCase(),
+                                enumValue
+                                        .getName()
+                                        .getName()
+                                        .getScreamingSnakeCase()
+                                        .getSafeName(),
                                 Modifier.PUBLIC,
                                 Modifier.STATIC,
                                 Modifier.FINAL)
@@ -104,8 +110,12 @@ public final class EnumGenerator extends AbstractFileGenerator {
                                 "new $T($T.$L, $S)",
                                 className,
                                 valueFieldClassName,
-                                enumValue.getName().getScreamingSnakeCase(),
-                                enumValue.getValue())
+                                enumValue
+                                        .getName()
+                                        .getName()
+                                        .getScreamingSnakeCase()
+                                        .getSafeName(),
+                                enumValue.getName().getWireValue())
                         .build()));
     }
 
@@ -179,7 +189,13 @@ public final class EnumGenerator extends AbstractFileGenerator {
         CodeBlock.Builder acceptMethodImplementation = CodeBlock.builder().beginControlFlow("switch (value)");
         generatedVisitor.visitMethodsByKey().forEach((enumValue, visitMethod) -> {
             acceptMethodImplementation
-                    .add("case $L:\n", enumValue.getName().getScreamingSnakeCase())
+                    .add(
+                            "case $L:\n",
+                            enumValue
+                                    .getName()
+                                    .getName()
+                                    .getScreamingSnakeCase()
+                                    .getSafeName())
                     .indent()
                     .addStatement("return visitor.$L()", visitMethod.name)
                     .unindent();
@@ -207,7 +223,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
                 .beginControlFlow("switch (upperCasedValue)");
         constants.forEach((enumValue, constantField) -> {
             valueOfCodeBlockBuilder
-                    .add("case $S:\n", enumValue.getValue())
+                    .add("case $S:\n", enumValue.getName().getWireValue())
                     .indent()
                     .addStatement("return $L", constantField.name)
                     .unindent();
@@ -235,7 +251,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
         enumTypeDeclaration
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
-                        enumValue.getName().getScreamingSnakeCase()));
+                        enumValue.getName().getName().getScreamingSnakeCase().getSafeName()));
         nestedValueEnumBuilder.addEnumConstant(UNKNOWN_ENUM_CONSTANT);
         return nestedValueEnumBuilder.build();
     }
@@ -245,7 +261,11 @@ public final class EnumGenerator extends AbstractFileGenerator {
                 .map(enumValue -> {
                     return VisitorFactory.VisitMethodArgs.<EnumValue>builder()
                             .key(enumValue)
-                            .pascalCaseName(enumValue.getName().getPascalCase())
+                            .pascalCaseName(enumValue
+                                    .getName()
+                                    .getName()
+                                    .getPascalCase()
+                                    .getSafeName())
                             .build();
                 })
                 .collect(Collectors.toList());

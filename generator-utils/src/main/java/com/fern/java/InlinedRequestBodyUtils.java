@@ -16,11 +16,12 @@
 
 package com.fern.java;
 
-import com.fern.ir.v3.model.commons.WireStringWithAllCasings;
-import com.fern.ir.v3.model.declaration.Availability;
-import com.fern.ir.v3.model.declaration.AvailabilityStatus;
-import com.fern.ir.v3.model.services.http.InlinedRequestBody;
-import com.fern.ir.v3.model.types.ObjectProperty;
+import com.fern.ir.v9.model.commons.Name;
+import com.fern.ir.v9.model.commons.NameAndWireValue;
+import com.fern.ir.v9.model.declaration.Availability;
+import com.fern.ir.v9.model.declaration.AvailabilityStatus;
+import com.fern.ir.v9.model.http.InlinedRequestBody;
+import com.fern.ir.v9.model.types.ObjectProperty;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,32 +35,30 @@ public final class InlinedRequestBodyUtils {
                         .availability(Availability.builder()
                                 .status(AvailabilityStatus.GENERAL_AVAILABILITY)
                                 .build())
-                        .name(WireStringWithAllCasings.builder()
-                                .originalValue(
-                                        inlinedRequestBodyProperty.getName().getWireValue())
-                                .camelCase(inlinedRequestBodyProperty
-                                        .getName()
-                                        .getName()
-                                        .getSafeName()
-                                        .getCamelCase())
-                                .pascalCase(inlinedRequestBodyProperty
-                                        .getName()
-                                        .getName()
-                                        .getSafeName()
-                                        .getPascalCase())
-                                .snakeCase(inlinedRequestBodyProperty
-                                        .getName()
-                                        .getName()
-                                        .getSafeName()
-                                        .getSnakeCase())
-                                .screamingSnakeCase(inlinedRequestBodyProperty
-                                        .getName()
-                                        .getName()
-                                        .getSafeName()
-                                        .getScreamingSnakeCase())
+                        .name(NameAndWireValue.builder()
                                 .wireValue(inlinedRequestBodyProperty.getName().getWireValue())
+                                .name(Name.builder()
+                                        .originalName(inlinedRequestBodyProperty
+                                                .getName()
+                                                .getWireValue())
+                                        .camelCase(inlinedRequestBodyProperty
+                                                .getName()
+                                                .getName()
+                                                .getCamelCase())
+                                        .pascalCase(inlinedRequestBodyProperty
+                                                .getName()
+                                                .getName()
+                                                .getPascalCase())
+                                        .snakeCase(inlinedRequestBodyProperty
+                                                .getName()
+                                                .getName()
+                                                .getSnakeCase())
+                                        .screamingSnakeCase(inlinedRequestBodyProperty
+                                                .getName()
+                                                .getName()
+                                                .getScreamingSnakeCase())
+                                        .build())
                                 .build())
-                        .nameV2(inlinedRequestBodyProperty.getName())
                         .valueType(inlinedRequestBodyProperty.getValueType())
                         .docs(inlinedRequestBodyProperty.getDocs())
                         .build())

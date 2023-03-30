@@ -1,5 +1,5 @@
 /*
- * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ * (c) Copyright 2023 Birch Solutions Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +23,13 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-public abstract class GeneratedClientWrapper extends AbstractGeneratedJavaFile {
+public abstract class GeneratedClient extends AbstractGeneratedJavaFile {
 
-    public abstract List<AbstractGeneratedJavaFile> nestedClients();
+    public abstract AbstractGeneratedJavaFile clientImpl();
 
-    public static ImmutableGeneratedClientWrapper.ClassNameBuildStage builder() {
-        return ImmutableGeneratedClientWrapper.builder();
+    public abstract List<GeneratedWrappedRequest> wrappedRequests();
+
+    public static ImmutableGeneratedClient.ClassNameBuildStage builder() {
+        return ImmutableGeneratedClient.builder();
     }
 }

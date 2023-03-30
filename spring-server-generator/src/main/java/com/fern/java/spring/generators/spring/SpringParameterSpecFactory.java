@@ -16,10 +16,10 @@
 
 package com.fern.java.spring.generators.spring;
 
-import com.fern.ir.v3.model.services.http.HttpHeader;
-import com.fern.ir.v3.model.services.http.PathParameter;
-import com.fern.ir.v3.model.services.http.QueryParameter;
-import com.fern.ir.v3.model.types.TypeReference;
+import com.fern.ir.v9.model.http.HttpHeader;
+import com.fern.ir.v9.model.http.PathParameter;
+import com.fern.ir.v9.model.http.QueryParameter;
+import com.fern.ir.v9.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ParameterSpec;
@@ -40,23 +40,23 @@ public final class SpringParameterSpecFactory {
         return getParameterSpec(
                 RequestHeader.class,
                 header.getName().getWireValue(),
-                header.getName().getCamelCase(),
+                header.getName().getName().getCamelCase().getSafeName(),
                 header.getValueType());
     }
 
     public ParameterSpec getPathParameterSpec(PathParameter pathParameter) {
         return getParameterSpec(
                 PathVariable.class,
-                pathParameter.getName().getOriginalValue(),
-                pathParameter.getName().getCamelCase(),
+                pathParameter.getName().getOriginalName(),
+                pathParameter.getName().getCamelCase().getSafeName(),
                 pathParameter.getValueType());
     }
 
     public ParameterSpec getQueryParameterSpec(QueryParameter queryParameter) {
         return getParameterSpec(
                 RequestParam.class,
-                queryParameter.getName().getOriginalValue(),
-                queryParameter.getName().getCamelCase(),
+                queryParameter.getName().getWireValue(),
+                queryParameter.getName().getName().getCamelCase().getSafeName(),
                 queryParameter.getValueType());
     }
 

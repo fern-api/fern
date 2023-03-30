@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -40,32 +40,34 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
     }
 
     @Override
-    public GeneratedJavaFile generateFile() {
+    public GeneratedObjectMapper generateFile() {
+        FieldSpec jsonMapperField = FieldSpec.builder(
+                        ObjectMapper.class,
+                        JSON_MAPPER_STATIC_FIELD_NAME,
+                        Modifier.PUBLIC,
+                        Modifier.STATIC,
+                        Modifier.FINAL)
+                .initializer(CodeBlock.builder()
+                        .add("$T.builder()\n", JsonMapper.class)
+                        .indent()
+                        .add(".addModule(new $T())\n", Jdk8Module.class)
+                        .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", DeserializationFeature.class)
+                        .add(".build()")
+                        .build())
+                .build();
         TypeSpec enumTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
-                .addField(FieldSpec.builder(
-                                ObjectMapper.class,
-                                JSON_MAPPER_STATIC_FIELD_NAME,
-                                Modifier.PUBLIC,
-                                Modifier.STATIC,
-                                Modifier.FINAL)
-                        .initializer(CodeBlock.builder()
-                                .add("$T.builder()\n", JsonMapper.class)
-                                .indent()
-                                .add(".addModule(new $T())\n", Jdk8Module.class)
-                                .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", DeserializationFeature.class)
-                                .add(".build()")
-                                .build())
-                        .build())
+                .addField(jsonMapperField)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build())
                 .build();
         JavaFile enumFile =
                 JavaFile.builder(className.packageName(), enumTypeSpec).build();
-        return GeneratedJavaFile.builder()
+        return GeneratedObjectMapper.builder()
                 .className(className)
                 .javaFile(enumFile)
+                .jsonMapperStaticField(jsonMapperField)
                 .build();
     }
 }

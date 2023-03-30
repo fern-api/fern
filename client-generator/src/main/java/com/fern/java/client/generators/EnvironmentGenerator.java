@@ -16,8 +16,11 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v3.model.environment.Environment;
-import com.fern.ir.v3.model.environment.EnvironmentId;
+import com.fern.ir.v9.model.environment.EnvironmentId;
+import com.fern.ir.v9.model.environment.Environments;
+import com.fern.ir.v9.model.environment.EnvironmentsConfig;
+import com.fern.ir.v9.model.environment.SingleBaseUrlEnvironment;
+import com.fern.ir.v9.model.environment.SingleBaseUrlEnvironments;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractOptionalFileGenerator;
@@ -42,6 +45,15 @@ public final class EnvironmentGenerator extends AbstractOptionalFileGenerator {
             return Optional.empty();
         }
 
+        Environments environments =
+                generatorContext.getIr().getEnvironments().get().getEnvironments();
+        if (environments.isMultipleBaseUrls()) {
+            throw new RuntimeException("Multiple base URL environments are not supported!");
+        }
+
+        SingleBaseUrlEnvironments singleBaseUrlEnvironment =
+                environments.getSingleBaseUrl().get();
+
         MethodSpec getUrlMethod = MethodSpec.methodBuilder("getUrl")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
@@ -59,10 +71,11 @@ public final class EnvironmentGenerator extends AbstractOptionalFileGenerator {
                         .build())
                 .addMethod(getUrlMethod);
 
-        Optional<EnvironmentId> defaultEnvironmentId = generatorContext.getIr().getDefaultEnvironment();
+        Optional<EnvironmentId> defaultEnvironmentId =
+                generatorContext.getIr().getEnvironments().flatMap(EnvironmentsConfig::getDefaultEnvironment);
         Optional<String> defaultEnvironmentConstant = Optional.empty();
-        for (Environment environment : generatorContext.getIr().getEnvironments()) {
-            String constant = environment.getName().getSafeName().getScreamingSnakeCase();
+        for (SingleBaseUrlEnvironment environment : singleBaseUrlEnvironment.getEnvironments()) {
+            String constant = environment.getName().getScreamingSnakeCase().getSafeName();
             environmentsBuilder.addField(
                     FieldSpec.builder(className, constant, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                             .initializer("new $T($S)", className, environment.getUrl())

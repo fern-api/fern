@@ -15,9 +15,10 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.ObjectProperty;
-import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.ObjectProperty;
+import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
@@ -42,15 +43,15 @@ import java.util.stream.Collectors;
 public final class ObjectGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
     private final Optional<GeneratedJavaInterface> selfInterface;
-    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final List<GeneratedJavaInterface> extendedInterfaces = new ArrayList<>();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
             Optional<GeneratedJavaInterface> selfInterface,
             List<GeneratedJavaInterface> extendedInterfaces,
-            AbstractGeneratorContext generatorContext,
-            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
+            AbstractGeneratorContext<?> generatorContext,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             ClassName className) {
         super(className, generatorContext);
         this.objectTypeDeclaration = objectTypeDeclaration;
@@ -90,6 +91,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                             continue;
                         }
                         interfaceQueue.addAll(generatedJavaInterface.extendedInterfaces().stream()
+                                .map(DeclaredTypeName::getTypeId)
                                 .map(allGeneratedInterfaces::get)
                                 .collect(Collectors.toList()));
                         enrichedProperties.addAll(

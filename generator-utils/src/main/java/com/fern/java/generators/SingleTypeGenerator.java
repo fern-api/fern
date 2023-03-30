@@ -16,12 +16,13 @@
 
 package com.fern.java.generators;
 
-import com.fern.ir.v3.model.types.AliasTypeDeclaration;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.EnumTypeDeclaration;
-import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
-import com.fern.ir.v3.model.types.Type;
-import com.fern.ir.v3.model.types.UnionTypeDeclaration;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.types.AliasTypeDeclaration;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.EnumTypeDeclaration;
+import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v9.model.types.Type;
+import com.fern.ir.v9.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -34,17 +35,17 @@ import java.util.stream.Collectors;
 
 public final class SingleTypeGenerator implements Type.Visitor<Optional<GeneratedJavaFile>> {
 
-    private final AbstractGeneratorContext generatorContext;
+    private final AbstractGeneratorContext<?> generatorContext;
     private final DeclaredTypeName declaredTypeName;
     private final ClassName className;
-    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean fromErrorDeclaration;
 
     public SingleTypeGenerator(
-            AbstractGeneratorContext generatorContext,
+            AbstractGeneratorContext<?> generatorContext,
             DeclaredTypeName declaredTypeName,
             ClassName className,
-            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             boolean fromErrorDeclaration) {
         this.generatorContext = generatorContext;
         this.className = className;
@@ -70,11 +71,13 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
 
     @Override
     public Optional<GeneratedJavaFile> visitObject(ObjectTypeDeclaration value) {
-        List<GeneratedJavaInterface> extendedInterfaces =
-                value.getExtends().stream().map(allGeneratedInterfaces::get).collect(Collectors.toList());
+        List<GeneratedJavaInterface> extendedInterfaces = value.getExtends().stream()
+                .map(DeclaredTypeName::getTypeId)
+                .map(allGeneratedInterfaces::get)
+                .collect(Collectors.toList());
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 value,
-                Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName)),
+                Optional.ofNullable(allGeneratedInterfaces.get(declaredTypeName.getTypeId())),
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,

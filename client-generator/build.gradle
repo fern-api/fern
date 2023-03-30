@@ -10,10 +10,7 @@ dependencies {
     implementation project(':runtime-utils:jersey-utils')
 
     implementation 'ch.qos.logback:logback-classic'
-    implementation 'org.glassfish.jersey.core:jersey-common'
-    implementation 'io.github.openfeign:feign-jackson'
-    implementation 'io.github.openfeign:feign-core'
-    implementation 'io.github.openfeign:feign-jaxrs'
+    implementation 'com.squareup.okhttp3:okhttp'
 
     compileOnly 'org.immutables:value::annotations'
     annotationProcessor 'org.immutables:value'

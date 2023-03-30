@@ -16,19 +16,20 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v3.model.commons.NameAndWireValue;
-import com.fern.ir.v3.model.commons.WireStringWithAllCasings;
-import com.fern.ir.v3.model.declaration.Availability;
-import com.fern.ir.v3.model.declaration.AvailabilityStatus;
-import com.fern.ir.v3.model.services.http.HttpEndpoint;
-import com.fern.ir.v3.model.services.http.HttpRequestBody;
-import com.fern.ir.v3.model.services.http.HttpRequestBodyReference;
-import com.fern.ir.v3.model.services.http.HttpService;
-import com.fern.ir.v3.model.services.http.InlinedRequestBody;
-import com.fern.ir.v3.model.services.http.SdkRequestWrapper;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
-import com.fern.ir.v3.model.types.ObjectProperty;
-import com.fern.ir.v3.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v9.model.commons.Name;
+import com.fern.ir.v9.model.commons.NameAndWireValue;
+import com.fern.ir.v9.model.commons.TypeId;
+import com.fern.ir.v9.model.declaration.Availability;
+import com.fern.ir.v9.model.declaration.AvailabilityStatus;
+import com.fern.ir.v9.model.http.HttpEndpoint;
+import com.fern.ir.v9.model.http.HttpRequestBody;
+import com.fern.ir.v9.model.http.HttpRequestBodyReference;
+import com.fern.ir.v9.model.http.HttpService;
+import com.fern.ir.v9.model.http.InlinedRequestBody;
+import com.fern.ir.v9.model.http.SdkRequestWrapper;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.types.ObjectProperty;
+import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
 import com.fern.java.InlinedRequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;
@@ -49,14 +50,14 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final SdkRequestWrapper sdkRequestWrapper;
-    private final Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
 
     public WrappedRequestGenerator(
             SdkRequestWrapper sdkRequestWrapper,
             HttpService httpService,
             HttpEndpoint httpEndpoint,
             ClassName className,
-            Map<DeclaredTypeName, GeneratedJavaInterface> allGeneratedInterfaces,
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             ClientGeneratorContext generatorContext) {
         super(className, generatorContext);
         this.httpService = httpService;
@@ -78,7 +79,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .status(AvailabilityStatus.GENERAL_AVAILABILITY)
                             .build())
                     .name(httpHeader.getName())
-                    .nameV2(httpHeader.getNameV2())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
                     .build());
@@ -89,7 +89,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .status(AvailabilityStatus.GENERAL_AVAILABILITY)
                             .build())
                     .name(httpHeader.getName())
-                    .nameV2(httpHeader.getNameV2())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
                     .build());
@@ -100,7 +99,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .status(AvailabilityStatus.GENERAL_AVAILABILITY)
                             .build())
                     .name(queryParameter.getName())
-                    .nameV2(queryParameter.getNameV2())
                     .valueType(queryParameter.getValueType())
                     .docs(queryParameter.getDocs())
                     .build());
@@ -122,38 +120,26 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                                 .availability(Availability.builder()
                                         .status(AvailabilityStatus.GENERAL_AVAILABILITY)
                                         .build())
-                                .name(WireStringWithAllCasings.builder()
-                                        .originalValue(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getOriginalValue())
-                                        .camelCase(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getCamelCase())
-                                        .pascalCase(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getPascalCase())
-                                        .snakeCase(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getSnakeCase())
-                                        .screamingSnakeCase(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getScreamingSnakeCase())
-                                        .wireValue(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getOriginalValue())
-                                        .build())
-                                .nameV2(NameAndWireValue.builder()
-                                        .wireValue(sdkRequestWrapper
-                                                .getBodyKey()
-                                                .getSafeName()
-                                                .getOriginalValue())
-                                        .name(sdkRequestWrapper.getBodyKey())
+                                .name(NameAndWireValue.builder()
+                                        .wireValue(
+                                                sdkRequestWrapper.getBodyKey().getOriginalName())
+                                        .name(Name.builder()
+                                                .originalName(sdkRequestWrapper
+                                                        .getBodyKey()
+                                                        .getOriginalName())
+                                                .camelCase(sdkRequestWrapper
+                                                        .getBodyKey()
+                                                        .getCamelCase())
+                                                .pascalCase(sdkRequestWrapper
+                                                        .getBodyKey()
+                                                        .getPascalCase())
+                                                .snakeCase(sdkRequestWrapper
+                                                        .getBodyKey()
+                                                        .getSnakeCase())
+                                                .screamingSnakeCase(sdkRequestWrapper
+                                                        .getBodyKey()
+                                                        .getScreamingSnakeCase())
+                                                .build())
                                         .build())
                                 .valueType(reference.getRequestBodyType())
                                 .docs(reference.getDocs())
@@ -176,7 +162,10 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 objectTypeDeclaration,
                 Optional.empty(),
-                extendedInterfaces.stream().map(allGeneratedInterfaces::get).collect(Collectors.toList()),
+                extendedInterfaces.stream()
+                        .map(DeclaredTypeName::getTypeId)
+                        .map(allGeneratedInterfaces::get)
+                        .collect(Collectors.toList()),
                 generatorContext,
                 allGeneratedInterfaces,
                 className);
@@ -198,17 +187,13 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                                         .get(referencedObjectProperties.get(0))
                                         .getterProperty())
                                 .build()))
-                .addAllHeaderGetterMethods(headerObjectProperties.stream()
-                        .map(objectProperty -> generatedObject
-                                .objectPropertyGetters()
-                                .get(objectProperty)
-                                .getterProperty())
+                .addAllHeaderParams(headerObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
-                .addAllQueryParamGetterMethods(queryParameterObjectProperties.stream()
-                        .map(objectProperty -> generatedObject
-                                .objectPropertyGetters()
-                                .get(objectProperty)
-                                .getterProperty())
+                .addAllQueryParams(queryParameterObjectProperties.stream()
+                        .map(objectProperty ->
+                                generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
                 .build();
     }

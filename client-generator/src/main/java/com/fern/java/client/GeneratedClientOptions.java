@@ -1,5 +1,5 @@
 /*
- * (c) Copyright 2022 Birch Solutions Inc. All rights reserved.
+ * (c) Copyright 2023 Birch Solutions Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,21 @@ package com.fern.java.client;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
-import java.util.List;
 import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
 
-    public abstract List<MethodSpec> optionalGlobalHeaderMethodSpecs();
+    public abstract MethodSpec url();
+
+    public abstract MethodSpec headers();
+
+    public abstract MethodSpec httpClient();
+
+    public abstract ClassName builderClassName();
 
     public static ImmutableGeneratedClientOptions.ClassNameBuildStage builder() {
         return ImmutableGeneratedClientOptions.builder();

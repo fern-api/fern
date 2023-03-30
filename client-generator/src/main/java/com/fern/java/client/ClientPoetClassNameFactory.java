@@ -16,12 +16,12 @@
 
 package com.fern.java.client;
 
-import com.fern.ir.v3.model.errors.ErrorDeclaration;
-import com.fern.ir.v3.model.ir.IntermediateRepresentation;
-import com.fern.ir.v3.model.services.commons.DeclaredServiceName;
-import com.fern.ir.v3.model.services.http.HttpEndpoint;
-import com.fern.ir.v3.model.services.http.HttpService;
-import com.fern.ir.v3.model.services.http.SdkRequestWrapper;
+import com.fern.ir.v9.model.commons.FernFilepath;
+import com.fern.ir.v9.model.errors.ErrorDeclaration;
+import com.fern.ir.v9.model.http.HttpService;
+import com.fern.ir.v9.model.http.SdkRequestWrapper;
+import com.fern.ir.v9.model.ir.IntermediateRepresentation;
+import com.fern.ir.v9.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.fern.java.AbstractPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
@@ -35,41 +35,37 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
         String packageName = getErrorsPackageName(errorDeclaration.getName().getFernFilepath());
-        return ClassName.get(packageName, errorDeclaration.getName().getName());
+        return ClassName.get(
+                packageName,
+                errorDeclaration.getName().getName().getPascalCase().getSafeName());
     }
 
-    public ClassName getEndpointClassName(DeclaredServiceName declaredServiceName, HttpEndpoint httpEndpoint) {
-        String packageName = getEndpointsPackageName(declaredServiceName.getFernFilepath());
-        return ClassName.get(packageName, httpEndpoint.getName().getPascalCase());
+    public ClassName getClientInterfaceClassName(Subpackage subpackage) {
+        String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
+        return ClassName.get(packageName, getClientName(subpackage.getFernFilepath()));
     }
 
-    public ClassName getEndpointExceptionClassName(DeclaredServiceName declaredServiceName, HttpEndpoint httpEndpoint) {
-        String packageName = getExceptionsPackageName(declaredServiceName.getFernFilepath());
-        return ClassName.get(packageName, httpEndpoint.getName().getPascalCase() + "Exception");
-    }
-
-    public ClassName getServiceInterfaceClassName(HttpService httpService) {
-        String packageName =
-                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
-        return ClassName.get(packageName, httpService.getName().getName());
-    }
-
-    public ClassName getServiceErrorDecoderClassname(HttpService httpService) {
-        String packageName =
-                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
-        return ClassName.get(packageName, httpService.getName().getName() + "ErrorDecoder");
-    }
-
-    public ClassName getServiceClientClassname(HttpService httpService) {
-        String packageName =
-                getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.empty());
-        return ClassName.get(packageName, httpService.getName().getName() + "Client");
+    public ClassName getClientImplClassName(Subpackage subpackage) {
+        String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
+        return ClassName.get(packageName, getClientImplName(subpackage.getFernFilepath()));
     }
 
     public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {
         String packageName =
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
         return ClassName.get(
-                packageName, sdkRequestWrapper.getWrapperName().getSafeName().getPascalCase());
+                packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
+    }
+
+    private static String getClientImplName(FernFilepath fernFilepath) {
+        return getClientName(fernFilepath) + "Impl";
+    }
+
+    private static String getClientName(FernFilepath fernFilepath) {
+        return fernFilepath
+                        .getAllParts()
+                        .get(fernFilepath.getAllParts().size() - 1)
+                        .getPascalCase()
+                        .getUnsafeName() + "Client";
     }
 }

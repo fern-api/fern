@@ -155,7 +155,7 @@ public final class BuilderGenerator {
                         (ParameterizedTypeName) poetTypeName,
                         enrichedProperty,
                         nestedBuilderClassName,
-                        (_unused) -> {},
+                        _unused -> {},
                         builderImplTypeSpec::addField,
                         builderImplTypeSpec::addMethod,
                         false);

@@ -17,7 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.java.AbstractGeneratorContext;
-import com.fern.java.client.GeneratedClientWrapper;
+import com.fern.java.client.GeneratedClient;
 import com.fern.java.generators.AbstractFilesGenerator;
 import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
@@ -35,12 +35,11 @@ import javax.lang.model.element.Modifier;
 
 public final class SampleAppGenerator extends AbstractFilesGenerator {
 
-    private final GeneratedClientWrapper generatedClientWrapper;
+    private final GeneratedClient generatedClientWrapper;
 
     public static final String SAMPLE_APP_DIRECTORY = "sample-app";
 
-    public SampleAppGenerator(
-            AbstractGeneratorContext<?> generatorContext, GeneratedClientWrapper generatedClientWrapper) {
+    public SampleAppGenerator(AbstractGeneratorContext<?> generatorContext, GeneratedClient generatedClientWrapper) {
         super(generatorContext);
         this.generatedClientWrapper = generatedClientWrapper;
     }

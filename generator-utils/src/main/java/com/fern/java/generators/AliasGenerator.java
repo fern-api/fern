@@ -17,9 +17,9 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.ir.v3.model.types.AliasTypeDeclaration;
-import com.fern.ir.v3.model.types.PrimitiveType;
-import com.fern.ir.v3.model.types.TypeReference;
+import com.fern.ir.v9.model.types.AliasTypeDeclaration;
+import com.fern.ir.v9.model.types.PrimitiveType;
+import com.fern.ir.v9.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.output.GeneratedJavaFile;
@@ -41,7 +41,9 @@ public final class AliasGenerator extends AbstractFileGenerator {
     private final AliasTypeDeclaration aliasTypeDeclaration;
 
     public AliasGenerator(
-            ClassName className, AbstractGeneratorContext generatorContext, AliasTypeDeclaration aliasTypeDeclaration) {
+            ClassName className,
+            AbstractGeneratorContext<?> generatorContext,
+            AliasTypeDeclaration aliasTypeDeclaration) {
         super(className, generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
     }
@@ -50,32 +52,25 @@ public final class AliasGenerator extends AbstractFileGenerator {
     public GeneratedJavaFile generateFile() {
         TypeSpec.Builder aliasTypeSpecBuilder =
                 TypeSpec.classBuilder(className).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
-        if (aliasTypeDeclaration.getAliasOf().isVoid()) {
-            aliasTypeSpecBuilder
-                    .addMethod(getConstructor())
-                    .addMethod(getOfMethodName())
-                    .build();
-        } else {
-            TypeName aliasTypeName =
-                    generatorContext.getPoetTypeNameMapper().convertToTypeName(true, aliasTypeDeclaration.getAliasOf());
-            TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
-                    .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
-                    .addMethod(getConstructor(aliasTypeName))
-                    .addMethod(getGetMethod(aliasTypeName))
-                    .addMethod(getEqualsMethod(aliasTypeName))
-                    .addMethod(getHashCodeMethod())
-                    .addMethod(getToStringMethod())
-                    .addMethod(getOfMethodName(aliasTypeName));
-            Optional<CodeBlock> maybeValueOfFactoryMethod = valueOfFactoryMethod(aliasTypeDeclaration.getAliasOf());
-            if (maybeValueOfFactoryMethod.isPresent()) {
-                aliasBuilder.addMethod(MethodSpec.methodBuilder("valueOf")
-                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .addParameter(ParameterSpec.builder(String.class, VALUE_FIELD_NAME)
-                                .build())
-                        .returns(className)
-                        .addCode(maybeValueOfFactoryMethod.get())
-                        .build());
-            }
+        TypeName aliasTypeName =
+                generatorContext.getPoetTypeNameMapper().convertToTypeName(true, aliasTypeDeclaration.getAliasOf());
+        TypeSpec.Builder aliasBuilder = aliasTypeSpecBuilder
+                .addField(aliasTypeName, VALUE_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                .addMethod(getConstructor(aliasTypeName))
+                .addMethod(getGetMethod(aliasTypeName))
+                .addMethod(getEqualsMethod(aliasTypeName))
+                .addMethod(getHashCodeMethod())
+                .addMethod(getToStringMethod())
+                .addMethod(getOfMethodName(aliasTypeName));
+        Optional<CodeBlock> maybeValueOfFactoryMethod = valueOfFactoryMethod(aliasTypeDeclaration.getAliasOf());
+        if (maybeValueOfFactoryMethod.isPresent()) {
+            aliasBuilder.addMethod(MethodSpec.methodBuilder("valueOf")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .addParameter(ParameterSpec.builder(String.class, VALUE_FIELD_NAME)
+                            .build())
+                    .returns(className)
+                    .addCode(maybeValueOfFactoryMethod.get())
+                    .build());
         }
         JavaFile aliasFile = JavaFile.builder(className.packageName(), aliasTypeSpecBuilder.build())
                 .build();
@@ -93,24 +88,12 @@ public final class AliasGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec getConstructor() {
-        return MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build();
-    }
-
     private MethodSpec getOfMethodName(TypeName aliasTypeName) {
         return MethodSpec.methodBuilder(OF_METHOD_NAME)
                 .addAnnotation(FernJavaAnnotations.jacksonDelegatingCreator())
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(aliasTypeName, "value")
                 .addStatement("return new $T($L)", className, "value")
-                .returns(className)
-                .build();
-    }
-
-    private MethodSpec getOfMethodName() {
-        return MethodSpec.methodBuilder(OF_METHOD_NAME)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addStatement("return new $T()", className)
                 .returns(className)
                 .build();
     }
@@ -197,6 +180,10 @@ public final class AliasGenerator extends AbstractFileGenerator {
             case BOOLEAN:
                 return CodeBlock.builder()
                         .addStatement("return of($T.parseBoolean(value))", Boolean.class)
+                        .build();
+            case LONG:
+                return CodeBlock.builder()
+                        .addStatement("return of($T.parseLong(value))", Long.class)
                         .build();
         }
         throw new IllegalStateException("Unsupported primitive type: " + primitiveType + "for `valueOf` method.");

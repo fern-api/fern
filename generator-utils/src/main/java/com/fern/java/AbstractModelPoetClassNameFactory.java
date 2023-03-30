@@ -16,9 +16,10 @@
 
 package com.fern.java;
 
-import com.fern.ir.v3.model.commons.FernFilepath;
-import com.fern.ir.v3.model.commons.StringWithAllCasings;
-import com.fern.ir.v3.model.types.DeclaredTypeName;
+import com.fern.ir.v9.model.commons.FernFilepath;
+import com.fern.ir.v9.model.commons.Name;
+import com.fern.ir.v9.model.commons.SafeAndUnsafeString;
+import com.fern.ir.v9.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +35,22 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
     public final ClassName getTypeClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, declaredTypeName.getNameV3().getSafeName().getPascalCase());
+                packageName, declaredTypeName.getName().getPascalCase().getSafeName());
     }
 
+    @Override
     public final ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName) {
         String packageName = getTypesPackageName(declaredTypeName.getFernFilepath());
         return ClassName.get(
-                packageName, "I" + declaredTypeName.getNameV3().getSafeName().getPascalCase());
+                packageName, "I" + declaredTypeName.getName().getPascalCase().getSafeName());
     }
 
     protected final String getTypesPackageName(FernFilepath fernFilepath) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
         tokens.add("model");
-        tokens.addAll(fernFilepath.get().stream()
-                .map(StringWithAllCasings::getSnakeCase)
+        tokens.addAll(fernFilepath.getAllParts().stream()
+                .map(Name::getSnakeCase)
+                .map(SafeAndUnsafeString::getSafeName)
                 .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
                 .collect(Collectors.toList()));
         return String.join(".", tokens);
