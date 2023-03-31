@@ -12,6 +12,7 @@ from .movie_id import MovieId
 class Movie(pydantic.BaseModel):
     id: MovieId
     title: str
+    from_: str = pydantic.Field(alias="from")
     rating: float = pydantic.Field(description=("The rating scale is one to five stars\n"))
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -24,4 +25,5 @@ class Movie(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
         json_encoders = {dt.datetime: serialize_datetime}

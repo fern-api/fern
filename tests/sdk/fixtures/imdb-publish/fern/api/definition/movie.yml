@@ -39,6 +39,7 @@ types:
     properties:
       id: MovieId
       title: string
+      from: string
       rating:
         type: double
         docs: The rating scale is one to five stars
