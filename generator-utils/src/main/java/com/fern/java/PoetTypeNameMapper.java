@@ -208,8 +208,14 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitOptional(TypeReference typeReference) {
-            return ParameterizedTypeName.get(
-                    ClassName.get(Optional.class), typeReference.visit(primitiveDisAllowedTypeReferenceConverter));
+            TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+            if (typeName instanceof ParameterizedTypeName) {
+                // Optional should not be re-wrapped in Optional
+                if (((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class))) {
+                    return typeName;
+                }
+            }
+            return ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
         }
 
         @Override
