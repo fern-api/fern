@@ -213,3 +213,219 @@ class AdminClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncAdminClient:
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
+        self._environment = environment
+        self.x_random_header = x_random_header
+        self._token = token
+
+    async def update_test_submission_status(
+        self, submission_id: SubmissionId, *, request: TestSubmissionStatus
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status/{submission_id}"),
+                json=jsonable_encoder(request),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status-v2/{submission_id}"),
+                json=jsonable_encoder(request),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_workspace_submission_status(
+        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(
+                    f"{self._environment}/", f"admin/store-workspace-submission-status/{submission_id}"
+                ),
+                json=jsonable_encoder(request),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def send_workspace_submission_update(
+        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(
+                    f"{self._environment}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                ),
+                json=jsonable_encoder(request),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def store_traced_test_case(
+        self,
+        submission_id: SubmissionId,
+        test_case_id: str,
+        *,
+        result: TestCaseResultWithStdout,
+        trace_responses: typing.List[TraceResponse],
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(
+                    f"{self._environment}/",
+                    f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+                ),
+                json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def store_traced_test_case_v_2(
+        self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(
+                    f"{self._environment}/",
+                    f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+                ),
+                json=jsonable_encoder(request),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def store_traced_workspace(
+        self,
+        submission_id: SubmissionId,
+        *,
+        workspace_run_details: WorkspaceRunDetails,
+        trace_responses: typing.List[TraceResponse],
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(
+                    f"{self._environment}/", f"admin/store-workspace-trace/submission/{submission_id}"
+                ),
+                json=jsonable_encoder(
+                    {"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}
+                ),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def store_traced_workspace_v_2(
+        self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]
+    ) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "POST",
+                urllib.parse.urljoin(
+                    f"{self._environment}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+                ),
+                json=jsonable_encoder(request),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)

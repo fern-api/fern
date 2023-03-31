@@ -99,3 +99,94 @@ class ProblemClient:
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ProblemInfoV2, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncProblemClient:
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
+        self._environment = environment
+        self.x_random_header = x_random_header
+        self._token = token
+
+    async def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "GET",
+                urllib.parse.urljoin(f"{self._environment}/", "problems-v2/lightweight-problem-info"),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.List[LightweightProblemInfoV2], _response_json)  # type: ignore
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_problems(self) -> typing.List[ProblemInfoV2]:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "GET",
+                urllib.parse.urljoin(f"{self._environment}/", "problems-v2/problem-info"),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.List[ProblemInfoV2], _response_json)  # type: ignore
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "GET",
+                urllib.parse.urljoin(f"{self._environment}/", f"problems-v2/problem-info/{problem_id}"),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(ProblemInfoV2, _response_json)  # type: ignore
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "GET",
+                urllib.parse.urljoin(
+                    f"{self._environment}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
+                ),
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(ProblemInfoV2, _response_json)  # type: ignore
+        raise ApiError(status_code=_response.status_code, body=_response_json)

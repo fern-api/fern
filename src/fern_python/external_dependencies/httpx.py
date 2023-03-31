@@ -12,6 +12,8 @@ HTTPX_MODULE = AST.Module.external(
 
 
 class HttpX:
+    _ASYNC_CLIENT_NAME = "_client"
+
     @staticmethod
     def make_request(
         *,
@@ -22,12 +24,13 @@ class HttpX:
         headers: Optional[AST.Expression],
         auth: Optional[AST.Expression],
         response_variable_name: str,
+        is_async: bool,
     ) -> AST.Expression:
-        def write(writer: AST.NodeWriter) -> None:
+        def write_request_call(*, writer: AST.NodeWriter, reference_to_client: AST.Expression) -> None:
             writer.write(f"{response_variable_name} = ")
-            writer.write_reference(
-                AST.ClassReference(qualified_name_excluding_import=(), import_=AST.ReferenceImport(module=HTTPX_MODULE))
-            )
+            if is_async:
+                writer.write("await ")
+            writer.write_node(reference_to_client)
             writer.write(f'.request("{method}", ')
             writer.write_node(url)
             writer.write(", ")
@@ -59,5 +62,32 @@ class HttpX:
                     writer.write_line(",")
 
             writer.write_line(")")
+
+        def write(writer: AST.NodeWriter) -> None:
+            if is_async:
+                writer.write("async with ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=AST.ClassReference(
+                            qualified_name_excluding_import=("AsyncClient",),
+                            import_=AST.ReferenceImport(module=HTTPX_MODULE),
+                        )
+                    )
+                )
+                writer.write_line(f" as {HttpX._ASYNC_CLIENT_NAME}:")
+                with writer.indent():
+                    write_request_call(
+                        writer=writer,
+                        reference_to_client=AST.Expression(HttpX._ASYNC_CLIENT_NAME),
+                    )
+            else:
+                write_request_call(
+                    writer=writer,
+                    reference_to_client=AST.Expression(
+                        AST.ClassReference(
+                            qualified_name_excluding_import=(), import_=AST.ReferenceImport(module=HTTPX_MODULE)
+                        )
+                    ),
+                )
 
         return AST.Expression(AST.CodeWriter(write))

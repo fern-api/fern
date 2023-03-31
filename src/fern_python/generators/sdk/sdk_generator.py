@@ -129,6 +129,7 @@ class SdkGenerator(AbstractGenerator):
                 context=context,
                 package=ir.root_package,
                 class_name=context.get_class_name_for_root_client(),
+                async_class_name="Async" + context.get_class_name_for_root_client(),
             ).generate(source_file=source_file)
 
     def _generate_subpackage_client(
@@ -148,6 +149,7 @@ class SdkGenerator(AbstractGenerator):
                 context=context,
                 package=subpackage,
                 class_name=context.get_class_name_of_subpackage_service(subpackage_id),
+                async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
             ).generate(source_file=source_file)
 
     def _generate_error(

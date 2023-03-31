@@ -2,7 +2,7 @@
 
 from backports.cached_property import cached_property
 
-from .resources.movie.client import MovieClient
+from .resources.movie.client import AsyncMovieClient, MovieClient
 
 
 class FernIr:
@@ -12,3 +12,12 @@ class FernIr:
     @cached_property
     def movie(self) -> MovieClient:
         return MovieClient(environment=self._environment)
+
+
+class AsyncFernIr:
+    def __init__(self, *, environment: str):
+        self._environment = environment
+
+    @cached_property
+    def movie(self) -> AsyncMovieClient:
+        return AsyncMovieClient(environment=self._environment)

@@ -44,14 +44,32 @@ class ClientGenerator:
     PASSWORD_CONSTRUCTOR_PARAMETER_NAME = "password"
     PASSWORD_MEMBER_NAME = "_password"
 
-    def __init__(self, context: SdkGeneratorContext, package: ir_types.Package, class_name: str):
+    def __init__(
+        self,
+        *,
+        context: SdkGeneratorContext,
+        package: ir_types.Package,
+        class_name: str,
+        async_class_name: str,
+    ):
         self._context = context
         self._package = package
         self._class_name = class_name
+        self._async_class_name = async_class_name
 
     def generate(self, source_file: SourceFile) -> None:
+        source_file.add_class_declaration(
+            declaration=self._create_class_declaration(is_async=False),
+            should_export=False,
+        )
+        source_file.add_class_declaration(
+            declaration=self._create_class_declaration(is_async=True),
+            should_export=False,
+        )
+
+    def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
         class_declaration = AST.ClassDeclaration(
-            name=self._class_name,
+            name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
                 signature=AST.FunctionSignature(
                     named_parameters=[
@@ -86,6 +104,7 @@ class ClientGenerator:
                 class_declaration.add_method(
                     AST.FunctionDeclaration(
                         name=endpoint.name.get_as_name().snake_case.unsafe_name,
+                        is_async=is_async,
                         signature=AST.FunctionSignature(
                             parameters=[
                                 AST.FunctionParameter(
@@ -107,6 +126,7 @@ class ClientGenerator:
                             service=service,
                             endpoint=endpoint,
                             request_body_parameters=request_body_parameters,
+                            is_async=is_async,
                         ),
                     )
                 )
@@ -118,17 +138,18 @@ class ClientGenerator:
                     AST.FunctionDeclaration(
                         name=subpackage.name.snake_case.unsafe_name,
                         signature=AST.FunctionSignature(
-                            return_type=AST.TypeHint(self._context.get_reference_to_subpackage_service(subpackage_id))
+                            return_type=AST.TypeHint(
+                                self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                                if is_async
+                                else self._context.get_reference_to_subpackage_service(subpackage_id)
+                            )
                         ),
-                        body=self._write_subpackage_getter(subpackage_id),
+                        body=self._write_subpackage_getter(subpackage_id, is_async=is_async),
                         decorators=[Backports.cached_property()],
                     )
                 )
 
-        source_file.add_class_declaration(
-            declaration=class_declaration,
-            should_export=False,
-        )
+        return class_declaration
 
     def _get_constructor_parameters(self) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
@@ -275,10 +296,12 @@ class ClientGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         request_body_parameters: Optional[AbstractRequestBodyParameters],
+        is_async: bool,
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
                 HttpX.make_request(
+                    is_async=is_async,
                     url=AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}")
                     if is_endpoint_path_empty(endpoint)
                     else UrlLibParse.urljoin(
@@ -639,12 +662,14 @@ class ClientGenerator:
             f"(self.{ClientGenerator.USERNAME_MEMBER_NAME}, self.{ClientGenerator.PASSWORD_MEMBER_NAME})"
         )
 
-    def _write_subpackage_getter(self, subpackage_id: ir_types.SubpackageId) -> AST.CodeWriter:
+    def _write_subpackage_getter(self, subpackage_id: ir_types.SubpackageId, *, is_async: bool) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             writer.write("return ")
             writer.write_node(
                 AST.ClassInstantiation(
-                    class_=self._context.get_reference_to_subpackage_service(subpackage_id),
+                    class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                    if is_async
+                    else self._context.get_reference_to_subpackage_service(subpackage_id),
                     kwargs=[
                         (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
                         for param in self._get_constructor_parameters()

@@ -24,6 +24,7 @@ class FunctionDeclaration(AstNode):
         overloads: Sequence[FunctionSignature] = None,
         decorators: Sequence[AstNode] = None,
         docstring: Docstring = None,
+        is_async: Optional[bool] = False,
     ):
         self.name = name
         self.signature = signature
@@ -31,6 +32,7 @@ class FunctionDeclaration(AstNode):
         self.body = body
         self.decorators = decorators or []
         self.docstring = docstring
+        self.is_async = is_async
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
@@ -67,6 +69,8 @@ class FunctionDeclaration(AstNode):
             writer.write_node(decorator)
             writer.write_line()
 
+        if self.is_async:
+            writer.write("async ")
         writer.write(f"def {self.name}")
         writer.write_node(signature)
         with writer.indent():

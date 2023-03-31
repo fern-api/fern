@@ -8,6 +8,7 @@ from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
     RootClientDeclarationReferencer,
+    SubpackageAsyncClientDeclarationReferencer,
     SubpackageClientDeclarationReferencer,
 )
 from .sdk_generator_context import SdkGeneratorContext
@@ -28,6 +29,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             client_class_name=client_class_name,
         )
         self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
+            filepath_creator=self.filepath_creator
+        )
+        self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
             filepath_creator=self.filepath_creator
         )
         self._root_client_declaration_referencer = RootClientDeclarationReferencer(
@@ -67,3 +71,15 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
 
     def get_class_name_for_root_client(self) -> str:
         return self._root_client_declaration_referencer.get_class_name(name=None)
+
+    def get_filepath_for_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_client_declaration_referencer.get_filepath(name=subpackage)
+
+    def get_class_name_of_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_client_declaration_referencer.get_class_name(name=subpackage)
+
+    def get_reference_to_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
+        subpackage = self.ir.subpackages[subpackage_id]
+        return self._subpackage_async_client_declaration_referencer.get_class_reference(name=subpackage)

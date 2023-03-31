@@ -78,6 +78,7 @@ class ClassDeclaration(AstNode):
             decorators=decorators,
             overloads=[augment_signature(overload) for overload in declaration.overloads],
             docstring=declaration.docstring,
+            is_async=declaration.is_async,
         )
 
         self.statements.append(declaration)

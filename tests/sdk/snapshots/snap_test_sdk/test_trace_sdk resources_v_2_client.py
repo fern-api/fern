@@ -8,8 +8,8 @@ from backports.cached_property import cached_property
 
 from ...core.api_error import ApiError
 from ...core.remove_none_from_headers import remove_none_from_headers
-from .resources.problem.client import ProblemClient
-from .resources.v_3.client import V3Client
+from .resources.problem.client import AsyncProblemClient, ProblemClient
+from .resources.v_3.client import AsyncV3Client, V3Client
 
 
 class V2Client:
@@ -46,3 +46,42 @@ class V2Client:
     @cached_property
     def v_3(self) -> V3Client:
         return V3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+
+
+class AsyncV2Client:
+    def __init__(
+        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+    ):
+        self._environment = environment
+        self.x_random_header = x_random_header
+        self._token = token
+
+    async def test(self) -> None:
+        async with httpx.AsyncClient() as _client:
+            _response = await _client.request(
+                "GET",
+                self._environment,
+                headers=remove_none_from_headers(
+                    {
+                        "X-Random-Header": self.x_random_header,
+                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
+                    }
+                ),
+            )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    @cached_property
+    def problem(self) -> AsyncProblemClient:
+        return AsyncProblemClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+
+    @cached_property
+    def v_3(self) -> AsyncV3Client:
+        return AsyncV3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
