@@ -106,10 +106,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 httpUrlBuilder
                         .beginControlFlow("if ($L.$N.isPresent())", requestParameterName, queryParam.getterProperty())
                         .addStatement(
-                                "$L.addQueryParameter($S, $L)",
+                                "$L.addQueryParameter($S, $L.$N().get())",
                                 AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
                                 queryParam.wireKey(),
-                                "$L.$N().get()",
                                 "request",
                                 queryParam.getterProperty())
                         .endControlFlow();

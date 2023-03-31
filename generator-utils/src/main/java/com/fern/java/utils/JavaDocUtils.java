@@ -54,7 +54,7 @@ public final class JavaDocUtils {
     }
 
     public static String render(String docs, boolean excludeOuterParagraphTags) {
-        String rawDocs = StringUtils.stripToEmpty(docs);
+        String rawDocs = StringUtils.stripToEmpty(docs).replace("$", "$$");
         if (StringUtils.isBlank(rawDocs)) {
             return "";
         }
