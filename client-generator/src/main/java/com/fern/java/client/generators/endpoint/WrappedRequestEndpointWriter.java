@@ -226,11 +226,4 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
-
-    private static boolean isString(TypeName typeName) {
-        if (typeName instanceof ParameterizedTypeName) {
-            return ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class));
-        }
-        return typeName.equals(ClassName.get(String.class));
-    }
 }

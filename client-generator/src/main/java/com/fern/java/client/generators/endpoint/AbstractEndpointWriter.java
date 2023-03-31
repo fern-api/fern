@@ -28,10 +28,12 @@ import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.google.common.base.Functions;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,8 +164,10 @@ public abstract class AbstractEndpointWriter {
                         pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
         for (HttpPathPart httpPathPart : httpService.getBasePath().getParts()) {
             PathParameter pathParameter = servicePathParameters.get(httpPathPart.getPathParameter());
-            builder.add(".addPathSegment($L)\n", convertPathParameter(pathParameter).name);
-
+            ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
+            builder.add(
+                    ".addPathSegment($L)" + (isString(poetPathParameter.type) ? "" : ".toString()") + "\n",
+                    poetPathParameter.name);
             String pathTail = stripLeadingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
                 builder.add(".addPathSegments($S)\n", pathTail);
@@ -175,7 +179,10 @@ public abstract class AbstractEndpointWriter {
                         pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
         for (HttpPathPart httpPathPart : httpEndpoint.getPath().getParts()) {
             PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
-            builder.add(".addPathSegment($L)\n", convertPathParameter(pathParameter).name);
+            ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
+            builder.add(
+                    ".addPathSegment($L)" + (isString(poetPathParameter.type) ? "" : ".toString()") + "\n",
+                    poetPathParameter.name);
 
             String pathTail = stripLeadingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
@@ -222,5 +229,12 @@ public abstract class AbstractEndpointWriter {
                                 .convertToTypeName(true, pathParameter.getValueType()),
                         pathParameter.getName().getCamelCase().getSafeName())
                 .build();
+    }
+
+    public static boolean isString(TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName) {
+            return ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class));
+        }
+        return typeName.equals(ClassName.get(String.class));
     }
 }
