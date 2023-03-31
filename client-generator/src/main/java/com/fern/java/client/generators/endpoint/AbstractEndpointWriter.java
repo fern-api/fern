@@ -166,7 +166,7 @@ public abstract class AbstractEndpointWriter {
             PathParameter pathParameter = servicePathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
             builder.add(
-                    ".addPathSegment($L)" + (isString(poetPathParameter.type) ? "" : ".toString()") + "\n",
+                    ".addPathSegment($L" + (isString(poetPathParameter.type) ? "" : ".toString()") + ")\n",
                     poetPathParameter.name);
             String pathTail = stripLeadingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
@@ -181,7 +181,7 @@ public abstract class AbstractEndpointWriter {
             PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
             builder.add(
-                    ".addPathSegment($L)" + (isString(poetPathParameter.type) ? "" : ".toString()") + "\n",
+                    ".addPathSegment($L" + (isString(poetPathParameter.type) ? "" : ".toString()") + ")\n",
                     poetPathParameter.name);
 
             String pathTail = stripLeadingSlash(httpPathPart.getTail());
