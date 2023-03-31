@@ -102,21 +102,22 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         httpUrlBuilder.add(";");
 
         for (EnrichedObjectProperty queryParam : generatedWrappedRequest.queryParams()) {
+            boolean isString = isString(queryParam.poetTypeName());
             if (typeNameIsOptional(queryParam.poetTypeName())) {
                 httpUrlBuilder
-                        .beginControlFlow("if ($L.$N.isPresent())", requestParameterName, queryParam.getterProperty())
+                        .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, queryParam.getterProperty())
                         .addStatement(
-                                "$L.addQueryParameter($S, $L.$N().get())",
+                                "$L.addQueryParameter($S, $L.$N().get()" + (isString ? "" : ".toString()") + ")",
                                 AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
-                                queryParam.wireKey(),
+                                queryParam.wireKey().get(),
                                 "request",
                                 queryParam.getterProperty())
                         .endControlFlow();
             } else {
                 httpUrlBuilder.addStatement(
-                        "$L.addQueryParameter($S, $L.$N())",
+                        "$L.addQueryParameter($S, $L.$N()" + (isString ? "" : ".toString()") + ")",
                         AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
-                        queryParam.wireKey(),
+                        queryParam.wireKey().get(),
                         requestParameterName,
                         queryParam.getterProperty());
             }
@@ -224,5 +225,12 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
+    private static boolean isString(TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName) {
+            return ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class));
+        }
+        return typeName.equals(ClassName.get(String.class));
     }
 }

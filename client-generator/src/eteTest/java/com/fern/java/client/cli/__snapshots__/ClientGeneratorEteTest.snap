@@ -689,7 +689,7 @@ public final class BlogClientImpl implements BlogClient {
             .newBuilder()
             .addPathSegments("posts")
             .addPathSegment(postId);
-    _httpUrlBuilder.addQueryParameter("Optional[dummy]", request.getDummy());
+    _httpUrlBuilder.addQueryParameter("dummy", request.getDummy());
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     RequestBody _requestBody = RequestBody.create("", null);
     Request.Builder _requestBuilder =
