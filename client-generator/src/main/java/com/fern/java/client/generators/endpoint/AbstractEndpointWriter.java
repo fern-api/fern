@@ -16,11 +16,15 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.ir.v9.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.v9.model.http.HttpEndpoint;
 import com.fern.ir.v9.model.http.HttpService;
 import com.fern.ir.v9.model.http.PathParameter;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
+import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -47,6 +51,7 @@ public abstract class AbstractEndpointWriter {
     private final ClientGeneratorContext clientGeneratorContext;
     private final MethodSpec.Builder endpointMethodBuilder;
     private final GeneratedObjectMapper generatedObjectMapper;
+    private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -54,13 +59,15 @@ public abstract class AbstractEndpointWriter {
             GeneratedObjectMapper generatedObjectMapper,
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
-            GeneratedClientOptions generatedClientOptions) {
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientOptionsField = clientOptionsField;
         this.generatedClientOptions = generatedClientOptions;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedObjectMapper = generatedObjectMapper;
+        this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
@@ -139,6 +146,19 @@ public abstract class AbstractEndpointWriter {
                 .endControlFlow()
                 .build();
         return httpResponseBuilder.build();
+    }
+
+    protected final MethodSpec getEnvironmentToUrlMethod() {
+        if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
+            return ((SingleUrlEnvironmentClass) generatedEnvironmentsClass.info()).getUrlMethod();
+        } else if (generatedEnvironmentsClass.info() instanceof MultiUrlEnvironmentsClass) {
+            EnvironmentBaseUrlId environmentBaseUrlId = httpService.getBaseUrl().get();
+            return ((MultiUrlEnvironmentsClass) generatedEnvironmentsClass.info())
+                    .urlGetterMethods()
+                    .get(environmentBaseUrlId);
+        } else {
+            throw new RuntimeException("Generated Environments class was unknown : " + generatedEnvironmentsClass);
+        }
     }
 
     private List<ParameterSpec> getPathParameters() {

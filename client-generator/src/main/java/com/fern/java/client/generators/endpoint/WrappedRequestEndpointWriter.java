@@ -21,10 +21,10 @@ import com.fern.ir.v9.model.http.HttpService;
 import com.fern.ir.v9.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
-import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
@@ -61,6 +61,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             ClientGeneratorContext clientGeneratorContext,
             SdkRequest sdkRequest,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedWrappedRequest generatedWrappedRequest) {
         super(
                 httpService,
@@ -68,7 +69,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 generatedObjectMapper,
                 clientGeneratorContext,
                 clientOptionsField,
-                generatedClientOptions);
+                generatedClientOptions,
+                generatedEnvironmentsClass);
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
@@ -95,7 +97,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         HttpUrl.class,
                         clientOptionsMember.name,
                         clientOptions.environment(),
-                        EnvironmentGenerator.GET_URL)
+                        getEnvironmentToUrlMethod().name)
                 .indent();
         for (int i = 0; i < pathParameters.size(); ++i) {
             ParameterSpec pathParameter = pathParameters.get(i);

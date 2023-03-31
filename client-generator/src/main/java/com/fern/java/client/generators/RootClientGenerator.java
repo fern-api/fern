@@ -25,6 +25,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClient;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.generators.ClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -87,6 +88,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 clientGeneratorContext,
                 generatedClientOptions,
                 generatedObjectMapper,
+                generatedEnvironmentsClass,
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
                 generatorContext.getIr().getRootPackage());
@@ -164,23 +166,27 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         FieldSpec environmentField = environmentFieldBuilder.build();
         implBuilder.addField(environmentField);
 
-        MethodSpec urlMethod = MethodSpec.methodBuilder("url")
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(String.class, "url")
-                .returns(builderInterfaceName)
-                .build();
-        interfaceBuilder.addMethod(
-                urlMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
-        implBuilder.addMethod(urlMethod.toBuilder()
-                .addAnnotation(Override.class)
-                .addStatement(
-                        "this.$L = $T.$N($L)",
-                        ENVIRONMENT_FIELD_NAME,
-                        generatedEnvironmentsClass.getClassName(),
-                        generatedEnvironmentsClass.getCustomMethod(),
-                        "url")
-                .addStatement("return this")
-                .build());
+        if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
+            SingleUrlEnvironmentClass singleUrlEnvironmentClass =
+                    ((SingleUrlEnvironmentClass) generatedEnvironmentsClass.info());
+            MethodSpec urlMethod = MethodSpec.methodBuilder("url")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(String.class, "url")
+                    .returns(builderInterfaceName)
+                    .build();
+            interfaceBuilder.addMethod(
+                    urlMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
+            implBuilder.addMethod(urlMethod.toBuilder()
+                    .addAnnotation(Override.class)
+                    .addStatement(
+                            "this.$L = $T.$N($L)",
+                            ENVIRONMENT_FIELD_NAME,
+                            generatedEnvironmentsClass.getClassName(),
+                            singleUrlEnvironmentClass.getCustomMethod(),
+                            "url")
+                    .addStatement("return this")
+                    .build());
+        }
 
         MethodSpec buildMethod = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)

@@ -20,7 +20,7 @@ import com.fern.ir.v9.model.http.HttpEndpoint;
 import com.fern.ir.v9.model.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
-import com.fern.java.client.generators.EnvironmentGenerator;
+import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -40,6 +40,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedObjectMapper generatedObjectMapper,
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedClientOptions generatedClientOptions) {
         super(
                 httpService,
@@ -47,7 +48,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 generatedObjectMapper,
                 clientGeneratorContext,
                 clientOptionsField,
-                generatedClientOptions);
+                generatedClientOptions,
+                generatedEnvironmentsClass);
     }
 
     @Override
@@ -58,6 +60,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
     @Override
     public CodeBlock getInitializeHttpUrlCodeBlock(
             FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters) {
+
         CodeBlock.Builder httpUrlInitBuilder = CodeBlock.builder()
                 .add(
                         "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()\n",
@@ -66,7 +69,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                         HttpUrl.class,
                         clientOptionsMember.name,
                         clientOptions.environment(),
-                        EnvironmentGenerator.GET_URL)
+                        getEnvironmentToUrlMethod().name)
                 .indent();
         for (ParameterSpec pathParameter : pathParameters) {
             httpUrlInitBuilder.add(".addPathSegment($L)\n", pathParameter.name);

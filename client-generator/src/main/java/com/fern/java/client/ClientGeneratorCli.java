@@ -118,6 +118,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                     context,
                     generatedClientOptions,
                     generatedSuppliersFile,
+                    generatedEnvironmentsClass,
                     generatedTypes.getInterfaces());
             GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
             this.addGeneratedFile(generatedClient);

@@ -22,6 +22,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClient;
 import com.fern.java.client.GeneratedClientOptions;
+import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.generators.ClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -37,6 +38,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final GeneratedJavaFile generatedSuppliersFile;
+    private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName interfaceClassName;
     private final ClassName implClassName;
     private final Subpackage subpackage;
@@ -48,6 +50,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,
             GeneratedJavaFile generatedSuppliersFile,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
         super(
                 clientGeneratorContext.getPoetClassNameFactory().getClientInterfaceClassName(subpackage),
@@ -57,6 +60,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
         this.generatedClientOptions = generatedClientOptions;
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.interfaceClassName = className;
         this.implClassName = clientGeneratorContext.getPoetClassNameFactory().getClientImplClassName(subpackage);
         this.subpackage = subpackage;
@@ -70,6 +74,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
                 clientGeneratorContext,
                 generatedClientOptions,
                 generatedObjectMapper,
+                generatedEnvironmentsClass,
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
                 subpackage);
