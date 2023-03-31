@@ -82,9 +82,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         clientOptions.environment(),
                         getEnvironmentToUrlMethod().name)
                 .indent();
-        for (ParameterSpec pathParameter : pathParameters) {
-            httpUrlInitBuilder.add(".addPathSegment($L)\n", pathParameter.name);
-        }
+        addPathToHttpUrl(httpUrlInitBuilder);
         return httpUrlInitBuilder.add(".build();\n").unindent().build();
     }
 

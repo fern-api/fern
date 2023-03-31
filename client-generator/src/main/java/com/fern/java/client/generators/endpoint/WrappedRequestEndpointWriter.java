@@ -90,8 +90,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters) {
         CodeBlock.Builder httpUrlBuilder = CodeBlock.builder()
                 .add(
-                        "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()" + (pathParameters.isEmpty() ? ";" : "")
-                                + "\n",
+                        "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()\n",
                         HttpUrl.Builder.class,
                         HTTP_URL_BUILDER_NAME,
                         HttpUrl.class,
@@ -99,14 +98,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         clientOptions.environment(),
                         getEnvironmentToUrlMethod().name)
                 .indent();
-        for (int i = 0; i < pathParameters.size(); ++i) {
-            ParameterSpec pathParameter = pathParameters.get(i);
-            if (i == pathParameters.size() - 1) {
-                httpUrlBuilder.add(".addPathSegment($L);\n", pathParameter.name).unindent();
-            } else {
-                httpUrlBuilder.add(".addPathSegment($L)\n", pathParameter.name);
-            }
-        }
+        addPathToHttpUrl(httpUrlBuilder);
+        httpUrlBuilder.add(";");
 
         for (EnrichedObjectProperty queryParam : generatedWrappedRequest.queryParams()) {
             if (typeNameIsOptional(queryParam.poetTypeName())) {

@@ -71,9 +71,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                         clientOptions.environment(),
                         getEnvironmentToUrlMethod().name)
                 .indent();
-        for (ParameterSpec pathParameter : pathParameters) {
-            httpUrlInitBuilder.add(".addPathSegment($L)\n", pathParameter.name);
-        }
+        addPathToHttpUrl(httpUrlInitBuilder);
         return httpUrlInitBuilder.add(".build();").unindent().build();
     }
 
@@ -96,5 +94,15 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 .add(".build();\n")
                 .unindent()
                 .build();
+    }
+
+    public static void main(String... args) {
+
+        HttpUrl httpUrl = HttpUrl.parse("https://buildwithfern.com")
+                .newBuilder()
+                .addPathSegments("fdr")
+                .addPathSegments("def_1223232")
+                .build();
+        System.out.println(httpUrl.toString());
     }
 }

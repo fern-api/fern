@@ -576,7 +576,10 @@ public final class AuthClientImpl implements AuthClient {
   @Override
   public void getAuth() {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().build();
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("auth")
+            .build();
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
@@ -641,7 +644,9 @@ public final class BlogClientImpl implements BlogClient {
   @Override
   public void createPost(CreatePostRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder();
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("posts");
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("title", request.getTitle());
@@ -682,6 +687,7 @@ public final class BlogClientImpl implements BlogClient {
     HttpUrl.Builder _httpUrlBuilder =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
+            .addPathSegments("posts")
             .addPathSegment(postId);
     _httpUrlBuilder.addQueryParameter("Optional[dummy]", request.getDummy());
     HttpUrl _httpUrl = _httpUrlBuilder.build();
@@ -1905,7 +1911,10 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
   @Override
   public void getDummy(String request) {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().build();
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("dummy")
+            .build();
     RequestBody _requestBody;
     try {
       _requestBody =
@@ -1935,7 +1944,10 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
   @Override
   public void health() {
     HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().build();
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("dummy")
+            .build();
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
@@ -2079,8 +2091,11 @@ public final class DeviceClientImpl implements DeviceClient {
     HttpUrl _httpUrl =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
+            .addPathSegments("v1/apps")
             .addPathSegment(appId)
+            .addPathSegments("users/")
             .addPathSegment(userId)
+            .addPathSegments("devices")
             .build();
     RequestBody _requestBody;
     try {
@@ -2113,8 +2128,11 @@ public final class DeviceClientImpl implements DeviceClient {
     HttpUrl _httpUrl =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
+            .addPathSegments("v1/apps")
             .addPathSegment(appId)
+            .addPathSegments("users/")
             .addPathSegment(userId)
+            .addPathSegments("devices/")
             .addPathSegment(deviceId)
             .build();
     RequestBody _requestBody;
@@ -2148,8 +2166,11 @@ public final class DeviceClientImpl implements DeviceClient {
     HttpUrl _httpUrl =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
+            .addPathSegments("v1/apps")
             .addPathSegment(appId)
+            .addPathSegments("users/")
             .addPathSegment(userId)
+            .addPathSegments("devices/")
             .addPathSegment(deviceId)
             .build();
     Request _request =
@@ -2174,8 +2195,11 @@ public final class DeviceClientImpl implements DeviceClient {
     HttpUrl _httpUrl =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
+            .addPathSegments("v1/apps")
             .addPathSegment(appId)
+            .addPathSegments("users/")
             .addPathSegment(userId)
+            .addPathSegments("devices/")
             .addPathSegment(deviceId)
             .build();
     Request _request =
@@ -2772,7 +2796,11 @@ public final class EventClientImpl implements EventClient {
   @Override
   public SendEventResponse send(String appId, SendEventRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().addPathSegment(appId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("v1/apps")
+            .addPathSegment(appId)
+            .addPathSegments("events/send");
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("event", request.getEvent());
@@ -2813,7 +2841,11 @@ public final class EventClientImpl implements EventClient {
   @Override
   public SendEventResponse sendBulk(String appId, BulkSendEventRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().addPathSegment(appId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("v1/apps")
+            .addPathSegment(appId)
+            .addPathSegments("events/bulk_send");
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("event", request.getEvent());
@@ -6621,7 +6653,11 @@ public final class UserClientImpl implements UserClient {
   @Override
   public RavenUser createOrUpdate(String appId, CreateUserRequest request) {
     HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder().addPathSegment(appId);
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("v1/apps")
+            .addPathSegment(appId)
+            .addPathSegments("users");
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("user_id", request.getUserId());
@@ -6659,7 +6695,9 @@ public final class UserClientImpl implements UserClient {
     HttpUrl _httpUrl =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
+            .addPathSegments("v1/apps")
             .addPathSegment(appId)
+            .addPathSegments("users/")
             .addPathSegment(userId)
             .build();
     Request _request =

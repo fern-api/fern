@@ -18,6 +18,7 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.v9.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.v9.model.http.HttpEndpoint;
+import com.fern.ir.v9.model.http.HttpPathPart;
 import com.fern.ir.v9.model.http.HttpService;
 import com.fern.ir.v9.model.http.PathParameter;
 import com.fern.java.client.ClientGeneratorContext;
@@ -26,6 +27,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.google.common.base.Functions;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -33,6 +35,8 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import okhttp3.Response;
 
@@ -146,6 +150,45 @@ public abstract class AbstractEndpointWriter {
                 .endControlFlow()
                 .build();
         return httpResponseBuilder.build();
+    }
+
+    protected final void addPathToHttpUrl(CodeBlock.Builder builder) {
+        String basePathHead = stripLeadingSlash(httpService.getBasePath().getHead());
+        if (!basePathHead.isEmpty()) {
+            builder.add(".addPathSegments($S)\n", basePathHead);
+        }
+        Map<String, PathParameter> servicePathParameters = httpService.getPathParameters().stream()
+                .collect(Collectors.toMap(
+                        pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
+        for (HttpPathPart httpPathPart : httpService.getBasePath().getParts()) {
+            PathParameter pathParameter = servicePathParameters.get(httpPathPart.getPathParameter());
+            builder.add(".addPathSegment($L)\n", convertPathParameter(pathParameter).name);
+
+            String pathTail = stripLeadingSlash(httpPathPart.getTail());
+            if (!pathTail.isEmpty()) {
+                builder.add(".addPathSegments($S)\n", pathTail);
+            }
+        }
+
+        Map<String, PathParameter> endpointPathParameters = httpEndpoint.getPathParameters().stream()
+                .collect(Collectors.toMap(
+                        pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
+        for (HttpPathPart httpPathPart : httpEndpoint.getPath().getParts()) {
+            PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
+            builder.add(".addPathSegment($L)\n", convertPathParameter(pathParameter).name);
+
+            String pathTail = stripLeadingSlash(httpPathPart.getTail());
+            if (!pathTail.isEmpty()) {
+                builder.add(".addPathSegments($S)\n", pathTail);
+            }
+        }
+    }
+
+    private static String stripLeadingSlash(String value) {
+        if (value.startsWith("/")) {
+            return value.substring(1);
+        }
+        return value;
     }
 
     protected final MethodSpec getEnvironmentToUrlMethod() {
