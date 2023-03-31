@@ -95,14 +95,4 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 .unindent()
                 .build();
     }
-
-    public static void main(String... args) {
-
-        HttpUrl httpUrl = HttpUrl.parse("https://buildwithfern.com")
-                .newBuilder()
-                .addPathSegments("fdr")
-                .addPathSegments("def_1223232")
-                .build();
-        System.out.println(httpUrl.toString());
-    }
 }
