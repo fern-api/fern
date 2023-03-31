@@ -165,9 +165,7 @@ public abstract class AbstractEndpointWriter {
         for (HttpPathPart httpPathPart : httpService.getBasePath().getParts()) {
             PathParameter pathParameter = servicePathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
-            builder.add(
-                    ".addPathSegment($L" + (isString(poetPathParameter.type) ? "" : ".toString()") + ")\n",
-                    poetPathParameter.name);
+            builder.add(".addPathSegment($L)\n", stringify(poetPathParameter.name, poetPathParameter.type));
             String pathTail = stripLeadingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
                 builder.add(".addPathSegments($S)\n", pathTail);
@@ -180,9 +178,7 @@ public abstract class AbstractEndpointWriter {
         for (HttpPathPart httpPathPart : httpEndpoint.getPath().getParts()) {
             PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
-            builder.add(
-                    ".addPathSegment($L" + (isString(poetPathParameter.type) ? "" : ".toString()") + ")\n",
-                    poetPathParameter.name);
+            builder.add(".addPathSegment($L)\n", stringify(poetPathParameter.name, poetPathParameter.type));
 
             String pathTail = stripLeadingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
@@ -231,10 +227,18 @@ public abstract class AbstractEndpointWriter {
                 .build();
     }
 
-    public static boolean isString(TypeName typeName) {
-        if (typeName instanceof ParameterizedTypeName) {
-            return ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class));
+    public static CodeBlock stringify(String reference, TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class))) {
+            return CodeBlock.of(reference);
+        } else if (typeName.equals(ClassName.get(String.class))) {
+            return CodeBlock.of(reference);
+        } else if (typeName.equals(TypeName.DOUBLE)) {
+            return CodeBlock.of("$T.toString($L)", Double.class, reference);
+        } else if (typeName.equals(TypeName.INT)) {
+            return CodeBlock.of("$T.toString($L)", Integer.class, reference);
+        } else {
+            return CodeBlock.of("$L.toString()", reference);
         }
-        return typeName.equals(ClassName.get(String.class));
     }
 }

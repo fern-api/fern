@@ -102,24 +102,27 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         httpUrlBuilder.add(";");
 
         for (EnrichedObjectProperty queryParam : generatedWrappedRequest.queryParams()) {
-            boolean isString = isString(queryParam.poetTypeName());
             if (typeNameIsOptional(queryParam.poetTypeName())) {
                 httpUrlBuilder
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, queryParam.getterProperty())
                         .addStatement(
-                                "$L.addQueryParameter($S, $L.$N().get()" + (isString ? "" : ".toString()") + ")",
+                                "$L.addQueryParameter($S, $L)",
                                 AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
                                 queryParam.wireKey().get(),
-                                "request",
-                                queryParam.getterProperty())
+                                stringify(
+                                        CodeBlock.of("$L.$N().get()", "request", queryParam.getterProperty())
+                                                .toString(),
+                                        queryParam.poetTypeName()))
                         .endControlFlow();
             } else {
                 httpUrlBuilder.addStatement(
-                        "$L.addQueryParameter($S, $L.$N()" + (isString ? "" : ".toString()") + ")",
+                        "$L.addQueryParameter($S, $L)",
                         AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
                         queryParam.wireKey().get(),
-                        requestParameterName,
-                        queryParam.getterProperty());
+                        stringify(
+                                CodeBlock.of("$L.$N()", "request", queryParam.getterProperty())
+                                        .toString(),
+                                queryParam.poetTypeName()));
             }
         }
         httpUrlBuilder.addStatement(
