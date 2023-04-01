@@ -15,10 +15,10 @@
  */
 package com.fern.java.generators;
 
-import com.fern.ir.v9.model.commons.TypeId;
-import com.fern.ir.v9.model.types.DeclaredTypeName;
-import com.fern.ir.v9.model.types.ObjectProperty;
-import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v11.model.commons.TypeId;
+import com.fern.ir.v11.model.types.DeclaredTypeName;
+import com.fern.ir.v11.model.types.ObjectProperty;
+import com.fern.ir.v11.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;

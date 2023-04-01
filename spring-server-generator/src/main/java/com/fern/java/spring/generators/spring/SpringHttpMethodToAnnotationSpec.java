@@ -15,8 +15,8 @@
  */
 package com.fern.java.spring.generators.spring;
 
-import com.fern.ir.v9.model.http.HttpEndpoint;
-import com.fern.ir.v9.model.http.HttpMethod;
+import com.fern.ir.v11.model.http.HttpEndpoint;
+import com.fern.ir.v11.model.http.HttpMethod;
 import com.fern.java.utils.HttpPathUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import org.springframework.web.bind.annotation.DeleteMapping;

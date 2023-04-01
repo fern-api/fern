@@ -16,12 +16,12 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.v9.model.commons.TypeId;
-import com.fern.ir.v9.model.http.HttpEndpoint;
-import com.fern.ir.v9.model.http.HttpRequestBodyReference;
-import com.fern.ir.v9.model.http.HttpService;
-import com.fern.ir.v9.model.http.SdkRequestShape;
-import com.fern.ir.v9.model.http.SdkRequestWrapper;
+import com.fern.ir.v11.model.commons.TypeId;
+import com.fern.ir.v11.model.http.HttpEndpoint;
+import com.fern.ir.v11.model.http.HttpRequestBodyReference;
+import com.fern.ir.v11.model.http.HttpService;
+import com.fern.ir.v11.model.http.SdkRequestShape;
+import com.fern.ir.v11.model.http.SdkRequestWrapper;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;

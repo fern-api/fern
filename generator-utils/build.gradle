@@ -2,7 +2,7 @@ dependencies {
     implementation project(':runtime-utils:immutables-utils')
 
     api 'com.squareup:javapoet'
-    api 'com.fern.fern:ir-v9-model'
+    api 'com.fern.fern:ir-v11-model'
     api 'com.fern.fern:generator-exec-client'
     api 'com.fasterxml.jackson.core:jackson-annotations'
     api 'com.fasterxml.jackson.core:jackson-databind'

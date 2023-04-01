@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
-import com.fern.ir.v9.core.ObjectMappers;
-import com.fern.ir.v9.model.ir.IntermediateRepresentation;
+import com.fern.ir.v11.core.ObjectMappers;
+import com.fern.ir.v11.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -111,6 +111,9 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
 
         // subpackage clients
         ir.getSubpackages().values().forEach(subpackage -> {
+            if (!subpackage.getHasEndpointsInTree()) {
+                return;
+            }
             SubpackageClientGenerator httpServiceClientGenerator = new SubpackageClientGenerator(
                     subpackage,
                     context,

@@ -100,7 +100,7 @@ public final class LocalTestRunner {
         Files.writeString(pathToConfig, ClientObjectMappers.JSON_MAPPER.writeValueAsString(generatorConfig));
 
         runCommand(fernDir, new String[] {
-            "fern", "ir", pathToIr.toAbsolutePath().toString(), "--language", "java", "--version", "v9"
+            "fern", "ir", pathToIr.toAbsolutePath().toString(), "--language", "java", "--version", "v11"
         });
 
         generator.run(pathToConfig.toAbsolutePath().toString());

@@ -16,20 +16,20 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v9.model.commons.Name;
-import com.fern.ir.v9.model.commons.NameAndWireValue;
-import com.fern.ir.v9.model.commons.TypeId;
-import com.fern.ir.v9.model.declaration.Availability;
-import com.fern.ir.v9.model.declaration.AvailabilityStatus;
-import com.fern.ir.v9.model.http.HttpEndpoint;
-import com.fern.ir.v9.model.http.HttpRequestBody;
-import com.fern.ir.v9.model.http.HttpRequestBodyReference;
-import com.fern.ir.v9.model.http.HttpService;
-import com.fern.ir.v9.model.http.InlinedRequestBody;
-import com.fern.ir.v9.model.http.SdkRequestWrapper;
-import com.fern.ir.v9.model.types.DeclaredTypeName;
-import com.fern.ir.v9.model.types.ObjectProperty;
-import com.fern.ir.v9.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v11.model.commons.Availability;
+import com.fern.ir.v11.model.commons.AvailabilityStatus;
+import com.fern.ir.v11.model.commons.Name;
+import com.fern.ir.v11.model.commons.NameAndWireValue;
+import com.fern.ir.v11.model.commons.TypeId;
+import com.fern.ir.v11.model.http.HttpEndpoint;
+import com.fern.ir.v11.model.http.HttpRequestBody;
+import com.fern.ir.v11.model.http.HttpRequestBodyReference;
+import com.fern.ir.v11.model.http.HttpService;
+import com.fern.ir.v11.model.http.InlinedRequestBody;
+import com.fern.ir.v11.model.http.SdkRequestWrapper;
+import com.fern.ir.v11.model.types.DeclaredTypeName;
+import com.fern.ir.v11.model.types.ObjectProperty;
+import com.fern.ir.v11.model.types.ObjectTypeDeclaration;
 import com.fern.java.InlinedRequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;

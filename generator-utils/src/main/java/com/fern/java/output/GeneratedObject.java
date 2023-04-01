@@ -16,7 +16,7 @@
 
 package com.fern.java.output;
 
-import com.fern.ir.v9.model.types.ObjectProperty;
+import com.fern.ir.v11.model.types.ObjectProperty;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import java.util.Map;

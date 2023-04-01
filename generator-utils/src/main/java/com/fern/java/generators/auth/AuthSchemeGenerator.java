@@ -16,9 +16,9 @@
 
 package com.fern.java.generators.auth;
 
-import com.fern.ir.v9.model.auth.AuthScheme;
-import com.fern.ir.v9.model.commons.WithDocs;
-import com.fern.ir.v9.model.http.HttpHeader;
+import com.fern.ir.v11.model.auth.AuthScheme;
+import com.fern.ir.v11.model.auth.HeaderAuthScheme;
+import com.fern.ir.v11.model.commons.WithDocs;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 
@@ -43,7 +43,7 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJa
     }
 
     @Override
-    public GeneratedJavaFile visitHeader(HttpHeader value) {
+    public GeneratedJavaFile visitHeader(HeaderAuthScheme value) {
         HeaderAuthGenerator headerAuthGenerator = new HeaderAuthGenerator(generatorContext, value);
         return headerAuthGenerator.generateFile();
     }

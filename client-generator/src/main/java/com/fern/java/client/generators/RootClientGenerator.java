@@ -16,10 +16,10 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v9.model.auth.AuthScheme;
-import com.fern.ir.v9.model.commons.TypeId;
-import com.fern.ir.v9.model.commons.WithDocs;
-import com.fern.ir.v9.model.http.HttpHeader;
+import com.fern.ir.v11.model.auth.AuthScheme;
+import com.fern.ir.v11.model.auth.HeaderAuthScheme;
+import com.fern.ir.v11.model.commons.TypeId;
+import com.fern.ir.v11.model.commons.WithDocs;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClient;
@@ -139,7 +139,14 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(interfaceBuilder, implBuilder);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
-        generatorContext.getIr().getHeaders().forEach(authSchemeHandler::visitHeader);
+        generatorContext.getIr().getHeaders().forEach(httpHeader -> {
+            authSchemeHandler.visitHeader(HeaderAuthScheme.builder()
+                    .name(httpHeader.getName().getName())
+                    .header(httpHeader.getName().getWireValue())
+                    .valueType(httpHeader.getValueType())
+                    .docs(httpHeader.getDocs())
+                    .build());
+        });
 
         if (generatedEnvironmentsClass.defaultEnvironmentConstant().isPresent()) {
             environmentFieldBuilder.initializer(
@@ -259,9 +266,10 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             builderImpl.addMethod(tokenMethod.toBuilder()
                     .addAnnotation(Override.class)
                     .addStatement(
-                            "this.$L.addHeader($S, $L)",
+                            "this.$L.addHeader($S, $S + $L)",
                             CLIENT_OPTIONS_BUILDER_NAME,
                             "Authorization",
+                            "Bearer ",
                             BEARER_TOKEN_NAME)
                     .addStatement("return this")
                     .build());
@@ -286,15 +294,19 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                             builderImplName,
                             Base64.class)
                     .addStatement(
-                            "this.$L.addHeader($S, $L)", CLIENT_OPTIONS_BUILDER_NAME, "Authorization", "unencodedToken")
+                            "this.$L.addHeader($S, $S + $L)",
+                            CLIENT_OPTIONS_BUILDER_NAME,
+                            "Authorization",
+                            "Basic ",
+                            "unencodedToken")
                     .addStatement("return this")
                     .build());
             return null;
         }
 
         @Override
-        public Void visitHeader(HttpHeader header) {
-            String headerCamelCase = header.getName().getName().getCamelCase().getSafeName();
+        public Void visitHeader(HeaderAuthScheme header) {
+            String headerCamelCase = header.getName().getCamelCase().getSafeName();
             MethodSpec tokenMethod = MethodSpec.methodBuilder(headerCamelCase)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, headerCamelCase)
@@ -302,15 +314,28 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .build();
             builderInterface.addMethod(
                     tokenMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
-            builderImpl.addMethod(tokenMethod.toBuilder()
-                    .addAnnotation(Override.class)
-                    .addStatement(
-                            "this.$L.addHeader($S, $L)",
-                            CLIENT_OPTIONS_BUILDER_NAME,
-                            header.getName().getWireValue(),
-                            headerCamelCase)
-                    .addStatement("return this")
-                    .build());
+            if (header.getPrefix().isPresent()) {
+                builderImpl.addMethod(tokenMethod.toBuilder()
+                        .addAnnotation(Override.class)
+                        .addStatement(
+                                "this.$L.addHeader($S, $S + $L)",
+                                CLIENT_OPTIONS_BUILDER_NAME,
+                                header.getHeader(),
+                                header.getPrefix().get(),
+                                headerCamelCase)
+                        .addStatement("return this")
+                        .build());
+            } else {
+                builderImpl.addMethod(tokenMethod.toBuilder()
+                        .addAnnotation(Override.class)
+                        .addStatement(
+                                "this.$L.addHeader($S, $L)",
+                                CLIENT_OPTIONS_BUILDER_NAME,
+                                header.getHeader(),
+                                headerCamelCase)
+                        .addStatement("return this")
+                        .build());
+            }
             return null;
         }
 

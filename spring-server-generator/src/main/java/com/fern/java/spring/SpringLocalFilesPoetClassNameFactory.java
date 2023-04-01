@@ -16,9 +16,9 @@
 
 package com.fern.java.spring;
 
-import com.fern.ir.v9.model.commons.FernFilepath;
-import com.fern.ir.v9.model.http.HttpService;
-import com.fern.ir.v9.model.http.InlinedRequestBody;
+import com.fern.ir.v11.model.commons.FernFilepath;
+import com.fern.ir.v11.model.http.HttpService;
+import com.fern.ir.v11.model.http.InlinedRequestBody;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;

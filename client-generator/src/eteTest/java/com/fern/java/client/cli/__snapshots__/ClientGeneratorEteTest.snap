@@ -380,7 +380,7 @@ public final class FernFernClientImpl implements FernFernClient {
 
     @Override
     public FernFernClient.Builder token(String token) {
-      this.clientOptionsBuilder.addHeader("Authorization", token);
+      this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
       return this;
     }
 
@@ -1974,15 +1974,12 @@ package com.fern.basic.resources.raven;
 
 import com.fern.basic.resources.raven.device.DeviceClient;
 import com.fern.basic.resources.raven.event.EventClient;
-import com.fern.basic.resources.raven.ids.IdsClient;
 import com.fern.basic.resources.raven.user.UserClient;
 
 public interface RavenClient {
   DeviceClient device();
 
   EventClient event();
-
-  IdsClient ids();
 
   UserClient user();
 }
@@ -1999,8 +1996,6 @@ import com.fern.basic.resources.raven.device.DeviceClient;
 import com.fern.basic.resources.raven.device.DeviceClientImpl;
 import com.fern.basic.resources.raven.event.EventClient;
 import com.fern.basic.resources.raven.event.EventClientImpl;
-import com.fern.basic.resources.raven.ids.IdsClient;
-import com.fern.basic.resources.raven.ids.IdsClientImpl;
 import com.fern.basic.resources.raven.user.UserClient;
 import com.fern.basic.resources.raven.user.UserClientImpl;
 import java.util.function.Supplier;
@@ -2012,15 +2007,12 @@ public final class RavenClientImpl implements RavenClient {
 
   private final Supplier<EventClient> eventClient;
 
-  private final Supplier<IdsClient> idsClient;
-
   private final Supplier<UserClient> userClient;
 
   public RavenClientImpl(ClientOptions clientOptions) {
     this.clientOptions = clientOptions;
     this.deviceClient = Suppliers.memoize(() -> new DeviceClientImpl(clientOptions));
     this.eventClient = Suppliers.memoize(() -> new EventClientImpl(clientOptions));
-    this.idsClient = Suppliers.memoize(() -> new IdsClientImpl(clientOptions));
     this.userClient = Suppliers.memoize(() -> new UserClientImpl(clientOptions));
   }
 
@@ -2032,11 +2024,6 @@ public final class RavenClientImpl implements RavenClient {
   @Override
   public EventClient event() {
     return this.eventClient.get();
-  }
-
-  @Override
-  public IdsClient ids() {
-    return this.idsClient.get();
   }
 
   @Override
@@ -6582,30 +6569,6 @@ public final class WhatsappOverride implements IChannelOverride {
     public WhatsappOverride build() {
       return new WhatsappOverride(scheduleAt, message);
     }
-  }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/ids/IdsClient.java]=[
-package com.fern.basic.resources.raven.ids;
-
-public interface IdsClient {}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/ids/IdsClientImpl.java]=[
-package com.fern.basic.resources.raven.ids;
-
-import com.fern.basic.core.ClientOptions;
-
-public final class IdsClientImpl implements IdsClient {
-  private final ClientOptions clientOptions;
-
-  public IdsClientImpl(ClientOptions clientOptions) {
-    this.clientOptions = clientOptions;
   }
 }
 

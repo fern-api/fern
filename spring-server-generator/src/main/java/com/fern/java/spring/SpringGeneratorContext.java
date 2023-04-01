@@ -17,7 +17,7 @@
 package com.fern.java.spring;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.ir.v9.model.ir.IntermediateRepresentation;
+import com.fern.ir.v11.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
 
 public final class SpringGeneratorContext extends AbstractGeneratorContext<SpringLocalFilesPoetClassNameFactory> {

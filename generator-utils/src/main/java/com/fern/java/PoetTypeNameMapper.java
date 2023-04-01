@@ -16,17 +16,17 @@
 
 package com.fern.java;
 
-import com.fern.ir.v9.model.commons.TypeId;
-import com.fern.ir.v9.model.types.AliasTypeDeclaration;
-import com.fern.ir.v9.model.types.ContainerType;
-import com.fern.ir.v9.model.types.DeclaredTypeName;
-import com.fern.ir.v9.model.types.Literal;
-import com.fern.ir.v9.model.types.MapType;
-import com.fern.ir.v9.model.types.PrimitiveType;
-import com.fern.ir.v9.model.types.ResolvedNamedType;
-import com.fern.ir.v9.model.types.ResolvedTypeReference;
-import com.fern.ir.v9.model.types.TypeDeclaration;
-import com.fern.ir.v9.model.types.TypeReference;
+import com.fern.ir.v11.model.commons.TypeId;
+import com.fern.ir.v11.model.types.AliasTypeDeclaration;
+import com.fern.ir.v11.model.types.ContainerType;
+import com.fern.ir.v11.model.types.DeclaredTypeName;
+import com.fern.ir.v11.model.types.Literal;
+import com.fern.ir.v11.model.types.MapType;
+import com.fern.ir.v11.model.types.PrimitiveType;
+import com.fern.ir.v11.model.types.ResolvedNamedType;
+import com.fern.ir.v11.model.types.ResolvedTypeReference;
+import com.fern.ir.v11.model.types.TypeDeclaration;
+import com.fern.ir.v11.model.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
