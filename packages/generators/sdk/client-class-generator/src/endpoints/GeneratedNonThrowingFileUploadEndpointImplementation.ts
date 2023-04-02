@@ -19,6 +19,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { EndpointSignature } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
+import { GeneratedQueryParams } from "./utils/GeneratedQueryParams";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
@@ -39,7 +40,6 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
     implements GeneratedNonThrowingFileUploadEndpointImplementation
 {
     private static RESPONSE_VARIABLE_NAME = "_response";
-    private static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
     private static FORM_DATA_VARIABLE_NAME = "_request";
 
     public readonly endpoint: HttpEndpoint;
@@ -47,6 +47,7 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
     private service: HttpService;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private requestParameter: FileUploadRequestParameter;
+    private queryParams: GeneratedQueryParams;
     private requestBody: HttpRequestBody.FileUpload;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private errorResolver: ErrorResolver;
@@ -77,11 +78,16 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
         if (this.endpoint.sdkRequest.shape.type != "wrapper") {
             throw new Error("SdkRequest is not a wrapper for file upload endpoint");
         }
-        this.requestParameter = new FileUploadRequestParameter({
+        const requestParameter = new FileUploadRequestParameter({
             packageId,
             service,
             endpoint,
             sdkRequest: this.endpoint.sdkRequest,
+        });
+
+        this.requestParameter = requestParameter;
+        this.queryParams = new GeneratedQueryParams({
+            requestParameter,
         });
     }
 
@@ -146,61 +152,8 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        let urlSearchParamsVariable: ts.Expression | undefined;
         statements.push(...this.requestParameter.getInitialStatements());
-        const queryParameters = this.requestParameter.getAllQueryParameters(context);
-        if (queryParameters.length > 0) {
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                GeneratedNonThrowingFileUploadEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME,
-                                undefined,
-                                undefined,
-                                ts.factory.createNewExpression(
-                                    ts.factory.createIdentifier("URLSearchParams"),
-                                    undefined,
-                                    []
-                                )
-                            ),
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-            for (const queryParameter of queryParameters) {
-                statements.push(
-                    ...this.requestParameter.withQueryParameter(
-                        queryParameter,
-                        context,
-                        (referenceToQueryParameter) => {
-                            return [
-                                ts.factory.createExpressionStatement(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createIdentifier(
-                                                GeneratedNonThrowingFileUploadEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
-                                            ),
-                                            ts.factory.createIdentifier("append")
-                                        ),
-                                        undefined,
-                                        [
-                                            ts.factory.createStringLiteral(queryParameter.name.wireValue),
-                                            context.type.stringify(referenceToQueryParameter, queryParameter.valueType),
-                                        ]
-                                    )
-                                ),
-                            ];
-                        }
-                    )
-                );
-            }
-            urlSearchParamsVariable = ts.factory.createIdentifier(
-                GeneratedNonThrowingFileUploadEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
-            );
-        }
+        statements.push(...this.queryParams.getBuildStatements(context));
 
         statements.push(
             ts.factory.createVariableStatement(
@@ -226,7 +179,7 @@ export class GeneratedNonThrowingFileUploadEndpointImplementation
             url: this.getReferenceToEnvironment(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             headers: this.getHeaders(context),
-            queryParameters: urlSearchParamsVariable,
+            queryParameters: this.queryParams.getReferenceTo(context),
             body: ts.factory.createIdentifier(
                 GeneratedNonThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
             ),

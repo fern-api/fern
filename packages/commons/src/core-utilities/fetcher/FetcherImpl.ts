@@ -14,6 +14,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("axios", "0.27.2");
+            dependencyManager.addDependency("@ungap/url-search-params", "0.2.2");
         },
     };
 

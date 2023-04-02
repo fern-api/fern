@@ -1,3 +1,4 @@
+import URLSearchParams from "@ungap/url-search-params";
 import axios, { AxiosError } from "axios";
 import { APIResponse } from "./APIResponse";
 

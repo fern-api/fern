@@ -16,6 +16,7 @@ import { RequestParameter } from "../request-parameter/RequestParameter";
 import { RequestWrapperParameter } from "../request-parameter/RequestWrapperParameter";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
+import { GeneratedQueryParams } from "./utils/GeneratedQueryParams";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
@@ -32,7 +33,6 @@ export declare namespace GeneratedStreamingEndpointImplementation {
 }
 
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
-    private static QUERY_PARAMS_VARIABLE_NAME = "_queryParams";
     private static CB_CALLBACK_NAME = "cb";
     private static DATA_PARAMETER_NAME = "data";
     private static OPTS_PARAMETER_NAME = "opts";
@@ -44,6 +44,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private response: StreamingResponse;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private requestParameter: RequestParameter | undefined;
+    private queryParams: GeneratedQueryParams;
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private includeCredentialsOnCrossOriginRequests: boolean;
 
@@ -65,7 +66,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.response = response;
 
         const sdkRequest = this.endpoint.sdkRequest;
-        this.requestParameter =
+        const requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
                       justRequestBody: (requestBodyReference) =>
@@ -76,6 +77,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                       },
                   })
                 : undefined;
+
+        this.requestParameter = requestParameter;
+        this.queryParams = new GeneratedQueryParams({
+            requestParameter,
+        });
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -204,60 +210,9 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
         if (this.requestParameter != null) {
             statements.push(...this.requestParameter.getInitialStatements(context));
-            const queryParameters = this.requestParameter.getAllQueryParameters(context);
-            if (queryParameters.length > 0) {
-                statements.push(
-                    ts.factory.createVariableStatement(
-                        undefined,
-                        ts.factory.createVariableDeclarationList(
-                            [
-                                ts.factory.createVariableDeclaration(
-                                    GeneratedStreamingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME,
-                                    undefined,
-                                    undefined,
-                                    ts.factory.createNewExpression(
-                                        ts.factory.createIdentifier("URLSearchParams"),
-                                        undefined,
-                                        []
-                                    )
-                                ),
-                            ],
-                            ts.NodeFlags.Const
-                        )
-                    )
-                );
-                for (const queryParameter of queryParameters) {
-                    statements.push(
-                        ...this.requestParameter.withQueryParameter(
-                            queryParameter,
-                            context,
-                            (referenceToQueryParameter) => {
-                                return [
-                                    ts.factory.createExpressionStatement(
-                                        ts.factory.createCallExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createIdentifier(
-                                                    GeneratedStreamingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME
-                                                ),
-                                                ts.factory.createIdentifier("append")
-                                            ),
-                                            undefined,
-                                            [
-                                                ts.factory.createStringLiteral(queryParameter.name.wireValue),
-                                                context.type.stringify(
-                                                    referenceToQueryParameter,
-                                                    queryParameter.valueType
-                                                ),
-                                            ]
-                                        )
-                                    ),
-                                ];
-                            }
-                        )
-                    );
-                }
-            }
         }
+
+        statements.push(...this.queryParams.getBuildStatements(context));
 
         return statements;
     }
@@ -329,10 +284,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             url: this.getReferenceToEnvironment(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             headers: this.getHeaders(context),
-            queryParameters:
-                this.endpoint.queryParameters.length > 0
-                    ? ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.QUERY_PARAMS_VARIABLE_NAME)
-                    : undefined,
+            queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBody(context),
             timeoutMs: undefined,
             withCredentials: this.includeCredentialsOnCrossOriginRequests,

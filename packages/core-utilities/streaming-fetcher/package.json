@@ -24,7 +24,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "@ungap/url-search-params": "0.2.2",
+    "axios": "0.27.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

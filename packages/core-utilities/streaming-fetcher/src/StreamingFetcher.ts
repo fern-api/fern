@@ -1,3 +1,4 @@
+import URLSearchParams from "@ungap/url-search-params";
 import axios, { AxiosResponse } from "axios";
 
 const DATA_EVENT_REGEX = /data: (.*)/;

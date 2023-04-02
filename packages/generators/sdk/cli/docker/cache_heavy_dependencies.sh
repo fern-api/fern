@@ -19,7 +19,8 @@ express@4.18.2 \
 prettier@2.7.1 \
 tsc-alias@1.7.1 \
 typescript@4.6.4 \
-url-join@4.0.1
+url-join@4.0.1 \
+@ungap/url-search-params@0.2.2
 
 cd ..
 /bin/rm -rf $project_name
