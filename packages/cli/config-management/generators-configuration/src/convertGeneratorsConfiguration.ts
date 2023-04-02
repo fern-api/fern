@@ -156,7 +156,7 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             });
         case "pypi":
             return FernFiddle.GithubPublishInfo.pypi({
-                registryUrl: output.url ?? "",
+                registryUrl: output.url ?? "https://upload.pypi.org/legacy/",
                 packageName: output["package-name"],
                 credentials:
                     output.token != null
