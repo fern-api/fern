@@ -4,12 +4,17 @@ import typing
 
 from backports.cached_property import cached_property
 
+from .....environment import FernIrEnvironment
 from .resources.problem.client import AsyncProblemClient, ProblemClient
 
 
 class V3Client:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -22,7 +27,11 @@ class V3Client:
 
 class AsyncV3Client:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None
     ):
         self._environment = environment
         self.x_random_header = x_random_header

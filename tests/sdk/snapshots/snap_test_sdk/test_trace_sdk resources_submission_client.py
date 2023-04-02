@@ -9,6 +9,7 @@ import pydantic
 
 from ...core.api_error import ApiError
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from ..commons.types.language import Language
 from .types.execution_session_response import ExecutionSessionResponse
 from .types.get_execution_session_state_response import GetExecutionSessionStateResponse
@@ -16,7 +17,11 @@ from .types.get_execution_session_state_response import GetExecutionSessionState
 
 class SubmissionClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -25,7 +30,7 @@ class SubmissionClient:
     def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"sessions/create-session/{language}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -44,7 +49,7 @@ class SubmissionClient:
     def get_execution_session(self, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"sessions/{session_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -63,7 +68,7 @@ class SubmissionClient:
     def stop_execution_session(self, session_id: str) -> None:
         _response = httpx.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment}/", f"sessions/stop/{session_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -82,7 +87,7 @@ class SubmissionClient:
     def get_execution_sessions_state(self) -> GetExecutionSessionStateResponse:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "sessions/execution-sessions-state"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "sessions/execution-sessions-state"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -101,7 +106,11 @@ class SubmissionClient:
 
 class AsyncSubmissionClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -111,7 +120,7 @@ class AsyncSubmissionClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", f"sessions/create-session/{language}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -131,7 +140,7 @@ class AsyncSubmissionClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", f"sessions/{session_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -151,7 +160,7 @@ class AsyncSubmissionClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "DELETE",
-                urllib.parse.urljoin(f"{self._environment}/", f"sessions/stop/{session_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -171,7 +180,7 @@ class AsyncSubmissionClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "sessions/execution-sessions-state"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "sessions/execution-sessions-state"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,

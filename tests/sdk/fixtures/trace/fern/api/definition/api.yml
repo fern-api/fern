@@ -5,3 +5,7 @@ headers:
 error-discrimination:
   strategy: property
   property-name: errorName
+
+environments:
+  Prod: https://api.trace.come
+default-environment: Prod

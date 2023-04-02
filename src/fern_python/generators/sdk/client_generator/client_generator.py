@@ -159,7 +159,7 @@ class ClientGenerator:
                 constructor_parameter_name=ClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
                 private_member_name=ClientGenerator.ENVIRONMENT_MEMBER_NAME,
                 type_hint=AST.TypeHint(self._context.get_reference_to_environments_enum())
-                if self._context.ir.environments is not None
+                if self._environment_is_enum()
                 else AST.TypeHint.str_(),
             )
         )
@@ -212,6 +212,9 @@ class ClientGenerator:
             )
 
         return parameters
+
+    def _environment_is_enum(self) -> bool:
+        return self._context.ir.environments is not None
 
     def _write_constructor_body(self, writer: AST.NodeWriter) -> None:
         for param in self._get_constructor_parameters():
@@ -302,10 +305,10 @@ class ClientGenerator:
             writer.write_node(
                 HttpX.make_request(
                     is_async=is_async,
-                    url=AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}")
+                    url=self._get_environment_as_str()
                     if is_endpoint_path_empty(endpoint)
                     else UrlLibParse.urljoin(
-                        AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}"),
+                        self._get_environment_as_str(),
                         self._get_path_for_endpoint(endpoint),
                     ),
                     method=endpoint.method.visit(
@@ -346,6 +349,12 @@ class ClientGenerator:
             )
 
         return AST.CodeWriter(write)
+
+    def _get_environment_as_str(self) -> AST.Expression:
+        if self._environment_is_enum():
+            return AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}.value")
+        else:
+            return AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}")
 
     def _deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
         writer.write_line(f"{ClientGenerator.RESPONSE_JSON_VARIABLE} = {ClientGenerator.RESPONSE_VARIABLE}.json()")

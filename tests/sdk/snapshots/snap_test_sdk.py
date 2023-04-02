@@ -136,6 +136,8 @@ snapshots['test_trace_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/
 
 snapshots['test_trace_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_remove_none_from_headers.py')
 
+snapshots['test_trace_sdk environment'] = FileSnapshot('snap_test_sdk/test_trace_sdk environment.py')
+
 snapshots['test_trace_sdk filepaths'] = [
     '__init__.py',
     'client.py',
@@ -144,6 +146,7 @@ snapshots['test_trace_sdk filepaths'] = [
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
     'core/remove_none_from_headers.py',
+    'environment.py',
     'resources/__init__.py',
     'resources/admin/__init__.py',
     'resources/admin/client.py',

@@ -4,6 +4,7 @@ import typing
 
 from backports.cached_property import cached_property
 
+from .environment import FernIrEnvironment
 from .resources.admin.client import AdminClient, AsyncAdminClient
 from .resources.homepage.client import AsyncHomepageClient, HomepageClient
 from .resources.migration.client import AsyncMigrationClient, MigrationClient
@@ -16,7 +17,11 @@ from .resources.v_2.client import AsyncV2Client, V2Client
 
 class FernIr:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -57,7 +62,11 @@ class FernIr:
 
 class AsyncFernIr:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None
     ):
         self._environment = environment
         self.x_random_header = x_random_header

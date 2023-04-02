@@ -9,6 +9,7 @@ import httpx
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
 from ..submission.types.test_submission_status import TestSubmissionStatus
@@ -23,7 +24,11 @@ from ..v_2.resources.problem.types.test_case_id import TestCaseId
 
 class AdminClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -32,7 +37,7 @@ class AdminClient:
     def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status/{submission_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -52,7 +57,9 @@ class AdminClient:
     def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status-v2/{submission_id}"),
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
+            ),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -74,7 +81,9 @@ class AdminClient:
     ) -> None:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"admin/store-workspace-submission-status/{submission_id}"),
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
+            ),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -97,7 +106,7 @@ class AdminClient:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
@@ -126,7 +135,8 @@ class AdminClient:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment}/", f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}"
+                f"{self._environment.value}/",
+                f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
             headers=remove_none_from_headers(
@@ -150,7 +160,8 @@ class AdminClient:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment}/", f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}"
+                f"{self._environment.value}/",
+                f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
@@ -177,7 +188,9 @@ class AdminClient:
     ) -> None:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"admin/store-workspace-trace/submission/{submission_id}"),
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
+            ),
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
             headers=remove_none_from_headers(
                 {
@@ -197,7 +210,9 @@ class AdminClient:
     def store_traced_workspace_v_2(self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]) -> None:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"),
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+            ),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -217,7 +232,11 @@ class AdminClient:
 
 class AsyncAdminClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -229,7 +248,9 @@ class AsyncAdminClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status/{submission_id}"),
+                urllib.parse.urljoin(
+                    f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"
+                ),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
@@ -250,7 +271,9 @@ class AsyncAdminClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", f"admin/store-test-submission-status-v2/{submission_id}"),
+                urllib.parse.urljoin(
+                    f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
+                ),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
@@ -274,7 +297,7 @@ class AsyncAdminClient:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(
-                    f"{self._environment}/", f"admin/store-workspace-submission-status/{submission_id}"
+                    f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
@@ -299,7 +322,7 @@ class AsyncAdminClient:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(
-                    f"{self._environment}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                    f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
@@ -329,7 +352,7 @@ class AsyncAdminClient:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(
-                    f"{self._environment}/",
+                    f"{self._environment.value}/",
                     f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
                 ),
                 json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
@@ -355,7 +378,7 @@ class AsyncAdminClient:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(
-                    f"{self._environment}/",
+                    f"{self._environment.value}/",
                     f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
                 ),
                 json=jsonable_encoder(request),
@@ -385,7 +408,7 @@ class AsyncAdminClient:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(
-                    f"{self._environment}/", f"admin/store-workspace-trace/submission/{submission_id}"
+                    f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
                 ),
                 json=jsonable_encoder(
                     {"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}
@@ -412,7 +435,7 @@ class AsyncAdminClient:
             _response = await _client.request(
                 "POST",
                 urllib.parse.urljoin(
-                    f"{self._environment}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+                    f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(

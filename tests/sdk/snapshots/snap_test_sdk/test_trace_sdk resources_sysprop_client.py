@@ -9,12 +9,17 @@ import pydantic
 
 from ...core.api_error import ApiError
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from ..commons.types.language import Language
 
 
 class SyspropClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -24,7 +29,7 @@ class SyspropClient:
         _response = httpx.request(
             "PUT",
             urllib.parse.urljoin(
-                f"{self._environment}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
+                f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
             ),
             headers=remove_none_from_headers(
                 {
@@ -44,7 +49,7 @@ class SyspropClient:
     def get_num_warm_instances(self) -> typing.Dict[Language, int]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "sysprop/num-warm-instances"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -63,7 +68,11 @@ class SyspropClient:
 
 class AsyncSyspropClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -74,7 +83,7 @@ class AsyncSyspropClient:
             _response = await _client.request(
                 "PUT",
                 urllib.parse.urljoin(
-                    f"{self._environment}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
+                    f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
                 ),
                 headers=remove_none_from_headers(
                     {
@@ -95,7 +104,7 @@ class AsyncSyspropClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "sysprop/num-warm-instances"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,

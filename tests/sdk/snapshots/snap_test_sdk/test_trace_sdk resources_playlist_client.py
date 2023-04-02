@@ -10,6 +10,7 @@ import pydantic
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
 from .errors.unauthorized_error import UnauthorizedError
 from .types.playlist import Playlist
@@ -21,7 +22,11 @@ from .types.update_playlist_request import UpdatePlaylistRequest
 
 class PlaylistClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -30,7 +35,7 @@ class PlaylistClient:
     def create_playlist(self, service_param: int, *, request: PlaylistCreateRequest) -> Playlist:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/create"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -59,7 +64,7 @@ class PlaylistClient:
     ) -> typing.List[Playlist]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/all"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
             params={
                 "limit": limit,
                 "otherField": other_field,
@@ -85,7 +90,7 @@ class PlaylistClient:
     def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -113,7 +118,7 @@ class PlaylistClient:
     ) -> typing.Optional[Playlist]:
         _response = httpx.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -138,7 +143,7 @@ class PlaylistClient:
     def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
         _response = httpx.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -157,7 +162,11 @@ class PlaylistClient:
 
 class AsyncPlaylistClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -167,7 +176,7 @@ class AsyncPlaylistClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/create"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
@@ -197,7 +206,7 @@ class AsyncPlaylistClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/all"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
                 params={
                     "limit": limit,
                     "otherField": other_field,
@@ -224,7 +233,7 @@ class AsyncPlaylistClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -253,7 +262,7 @@ class AsyncPlaylistClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "PUT",
-                urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
@@ -279,7 +288,7 @@ class AsyncPlaylistClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "DELETE",
-                urllib.parse.urljoin(f"{self._environment}/", f"v2/playlist/{service_param}/{playlist_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,

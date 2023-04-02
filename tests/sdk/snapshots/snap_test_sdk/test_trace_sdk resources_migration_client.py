@@ -9,12 +9,17 @@ import pydantic
 
 from ...core.api_error import ApiError
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from .types.migration import Migration
 
 
 class MigrationClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -23,7 +28,7 @@ class MigrationClient:
     def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "migration-info/all"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -43,7 +48,11 @@ class MigrationClient:
 
 class AsyncMigrationClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -53,7 +62,7 @@ class AsyncMigrationClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "migration-info/all"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,

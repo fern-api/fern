@@ -45,6 +45,10 @@ class SdkGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def get_class_name_of_environments_enum(self) -> str:
+        ...
+
+    @abstractmethod
     def get_filepath_for_environments_enum(self) -> Filepath:
         ...
 

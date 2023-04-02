@@ -9,6 +9,7 @@ import pydantic
 
 from .......core.api_error import ApiError
 from .......core.remove_none_from_headers import remove_none_from_headers
+from .......environment import FernIrEnvironment
 from ......commons.types.problem_id import ProblemId
 from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from .types.problem_info_v_2 import ProblemInfoV2
@@ -16,7 +17,11 @@ from .types.problem_info_v_2 import ProblemInfoV2
 
 class ProblemClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -25,7 +30,7 @@ class ProblemClient:
     def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "problems-v2/lightweight-problem-info"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -44,7 +49,7 @@ class ProblemClient:
     def get_problems(self) -> typing.List[ProblemInfoV2]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "problems-v2/problem-info"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -63,7 +68,7 @@ class ProblemClient:
     def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"problems-v2/problem-info/{problem_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -83,7 +88,7 @@ class ProblemClient:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._environment}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
+                f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
             ),
             headers=remove_none_from_headers(
                 {
@@ -103,7 +108,11 @@ class ProblemClient:
 
 class AsyncProblemClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -113,7 +122,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "problems-v2/lightweight-problem-info"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -133,7 +142,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "problems-v2/problem-info"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -153,7 +162,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", f"problems-v2/problem-info/{problem_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -174,7 +183,7 @@ class AsyncProblemClient:
             _response = await _client.request(
                 "GET",
                 urllib.parse.urljoin(
-                    f"{self._environment}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
+                    f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
                 ),
                 headers=remove_none_from_headers(
                     {

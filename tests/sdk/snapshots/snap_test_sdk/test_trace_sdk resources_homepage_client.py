@@ -10,12 +10,17 @@ import pydantic
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from ..commons.types.problem_id import ProblemId
 
 
 class HomepageClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -24,7 +29,7 @@ class HomepageClient:
     def get_homepage_problems(self) -> typing.List[ProblemId]:
         _response = httpx.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "homepage-problems"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -43,7 +48,7 @@ class HomepageClient:
     def set_homepage_problems(self, *, request: typing.List[ProblemId]) -> None:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "homepage-problems"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -63,7 +68,11 @@ class HomepageClient:
 
 class AsyncHomepageClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -73,7 +82,7 @@ class AsyncHomepageClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "homepage-problems"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -93,7 +102,7 @@ class AsyncHomepageClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", "homepage-problems"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {

@@ -10,6 +10,7 @@ import pydantic
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from ..commons.types.problem_id import ProblemId
 from ..commons.types.variable_type import VariableType
 from .types.create_problem_request import CreateProblemRequest
@@ -21,7 +22,11 @@ from .types.variable_type_and_name import VariableTypeAndName
 
 class ProblemClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -30,7 +35,7 @@ class ProblemClient:
     def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "problem-crud/create"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -50,7 +55,7 @@ class ProblemClient:
     def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"problem-crud/update/{problem_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
@@ -70,7 +75,7 @@ class ProblemClient:
     def delete_problem(self, problem_id: ProblemId) -> None:
         _response = httpx.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment}/", f"problem-crud/delete/{problem_id}"),
+            urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -91,7 +96,7 @@ class ProblemClient:
     ) -> GetDefaultStarterFilesResponse:
         _response = httpx.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "problem-crud/default-starter-files"),
+            urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
             headers=remove_none_from_headers(
                 {
@@ -111,7 +116,11 @@ class ProblemClient:
 
 class AsyncProblemClient:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -121,7 +130,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", "problem-crud/create"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
@@ -142,7 +151,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", f"problem-crud/update/{problem_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
@@ -163,7 +172,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "DELETE",
-                urllib.parse.urljoin(f"{self._environment}/", f"problem-crud/delete/{problem_id}"),
+                urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
@@ -185,7 +194,7 @@ class AsyncProblemClient:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "POST",
-                urllib.parse.urljoin(f"{self._environment}/", "problem-crud/default-starter-files"),
+                urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),
                 json=jsonable_encoder(
                     {"inputParams": input_params, "outputType": output_type, "methodName": method_name}
                 ),

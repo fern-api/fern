@@ -8,13 +8,18 @@ from backports.cached_property import cached_property
 
 from ...core.api_error import ApiError
 from ...core.remove_none_from_headers import remove_none_from_headers
+from ...environment import FernIrEnvironment
 from .resources.problem.client import AsyncProblemClient, ProblemClient
 from .resources.v_3.client import AsyncV3Client, V3Client
 
 
 class V2Client:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -23,7 +28,7 @@ class V2Client:
     def test(self) -> None:
         _response = httpx.request(
             "GET",
-            self._environment,
+            self._environment.value,
             headers=remove_none_from_headers(
                 {
                     "X-Random-Header": self.x_random_header,
@@ -50,7 +55,11 @@ class V2Client:
 
 class AsyncV2Client:
     def __init__(
-        self, *, environment: str, x_random_header: typing.Optional[str] = None, token: typing.Optional[str] = None
+        self,
+        *,
+        environment: FernIrEnvironment,
+        x_random_header: typing.Optional[str] = None,
+        token: typing.Optional[str] = None,
     ):
         self._environment = environment
         self.x_random_header = x_random_header
@@ -60,7 +69,7 @@ class AsyncV2Client:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
-                self._environment,
+                self._environment.value,
                 headers=remove_none_from_headers(
                     {
                         "X-Random-Header": self.x_random_header,
