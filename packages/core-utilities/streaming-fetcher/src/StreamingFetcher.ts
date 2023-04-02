@@ -1,5 +1,5 @@
 import URLSearchParams from "@ungap/url-search-params";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosAdapter, AxiosResponse } from "axios";
 
 const DATA_EVENT_REGEX = /data: (.*)/;
 
@@ -12,6 +12,7 @@ export declare namespace StreamingFetcher {
         body?: unknown;
         timeoutMs?: number;
         withCredentials?: boolean;
+        adapter?: AxiosAdapter;
 
         onData: (data: unknown) => void;
         onError?: (err: unknown) => void;
@@ -46,6 +47,7 @@ export async function streamingFetcher(args: StreamingFetcher.Args): Promise<voi
             withCredentials: args.withCredentials,
             signal: args.abortController?.signal,
             responseType: "stream",
+            adapter: args.adapter,
         });
     } catch (error) {
         args.onError?.(error);

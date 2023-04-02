@@ -29,6 +29,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
+                adapter: "adapter",
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args"),
         },

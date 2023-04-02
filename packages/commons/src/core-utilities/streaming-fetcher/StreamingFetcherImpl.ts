@@ -32,6 +32,7 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                 onFinish: "onFinish",
                 abortController: "abortController",
                 terminator: "terminator",
+                adapter: "adapter",
             },
             _getReferenceToType: this.getReferenceToTypeInStreamingFetcherModule("Args"),
         },
