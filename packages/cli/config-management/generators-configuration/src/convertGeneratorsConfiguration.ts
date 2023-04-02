@@ -116,7 +116,7 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         case "pypi":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
-                    registryUrl: generator.output.url ?? "",
+                    registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
