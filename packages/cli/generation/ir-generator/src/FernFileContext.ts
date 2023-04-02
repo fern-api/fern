@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { mapValues } from "lodash-es";
@@ -17,16 +17,36 @@ export interface FernFileContext {
     definitionFile: DefinitionFileSchema;
     parseTypeReference: (type: string | { type: string }) => TypeReference;
     casingsGenerator: CasingsGenerator;
+    rootApiFile: RootApiFileSchema;
+}
+
+export function constructRootApiFileContext({
+    casingsGenerator,
+    rootApiFile,
+}: {
+    casingsGenerator: CasingsGenerator;
+    rootApiFile: RootApiFileSchema;
+}): FernFileContext {
+    return constructFernFileContext({
+        relativeFilepath: RelativeFilePath.of("."),
+        definitionFile: {
+            imports: rootApiFile.imports,
+        },
+        casingsGenerator,
+        rootApiFile,
+    });
 }
 
 export function constructFernFileContext({
     relativeFilepath,
     definitionFile,
     casingsGenerator,
+    rootApiFile,
 }: {
     relativeFilepath: RelativeFilePath;
     definitionFile: DefinitionFileSchema;
     casingsGenerator: CasingsGenerator;
+    rootApiFile: RootApiFileSchema;
 }): FernFileContext {
     const file: FernFileContext = {
         relativeFilepath,
@@ -38,6 +58,7 @@ export function constructFernFileContext({
             return parseInlineType({ type: typeAsString, file });
         },
         casingsGenerator,
+        rootApiFile,
     };
     return file;
 }

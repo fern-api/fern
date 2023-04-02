@@ -15,6 +15,11 @@ const FIXTURES: Fixture[] = [
         generationLanguage: undefined,
         audiences: { type: "all" },
     },
+    {
+        name: "undiscriminated-union-examples",
+        generationLanguage: undefined,
+        audiences: { type: "all" },
+    },
 ];
 
 interface Fixture {
@@ -30,7 +35,7 @@ describe("generateIntermediateRepresentation", () => {
             const workspace = await loadWorkspace({
                 absolutePathToWorkspace: join(
                     AbsoluteFilePath.of(__dirname),
-                    "fixtures/fern",
+                    RelativeFilePath.of("fixtures/fern"),
                     RelativeFilePath.of(fixture.name)
                 ),
                 context: createMockTaskContext(),

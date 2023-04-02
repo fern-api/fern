@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { constructFernFileContext } from "../FernFileContext";
@@ -9,13 +10,16 @@ describe("parse inline types", () => {
         const casingsGenerator = constructCasingsGenerator(undefined);
 
         const dummyTypeName = "Dummy";
-        const dummyFilepath = "a/b/c";
+        const dummyFilepath = RelativeFilePath.of("a/b/c");
         const parsedTypeReference = parseInlineType({
             type: "optional<list<" + dummyTypeName + ">>",
             file: constructFernFileContext({
                 relativeFilepath: dummyFilepath,
                 definitionFile: {},
                 casingsGenerator,
+                rootApiFile: {
+                    name: "api",
+                },
             }),
         });
         const expectedTypeReference = TypeReference.container(

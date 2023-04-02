@@ -23,6 +23,7 @@ export const ValidExampleTypeRule: Rule = {
                             relativeFilepath,
                             definitionFile,
                             casingsGenerator: CASINGS_GENERATOR,
+                            rootApiFile: workspace.definition.rootApiFile.contents,
                         }),
                         typeResolver,
                         exampleResolver,

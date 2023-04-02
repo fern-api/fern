@@ -1,5 +1,5 @@
 import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth";
-import { AbsoluteFilePath, cwd, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { convertOpenApi, OpenApiConvertedFernDefinition } from "@fern-api/openapi-migrator";
 import {
@@ -26,7 +26,7 @@ export async function initialize({
     openApiPath: AbsoluteFilePath | undefined;
     context: TaskContext;
 }): Promise<void> {
-    const pathToFernDirectory = join(cwd(), FERN_DIRECTORY);
+    const pathToFernDirectory = join(cwd(), RelativeFilePath.of(FERN_DIRECTORY));
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
@@ -48,7 +48,7 @@ export async function initialize({
 
         await mkdir(FERN_DIRECTORY);
         await writeProjectConfig({
-            filepath: join(pathToFernDirectory, PROJECT_CONFIG_FILENAME),
+            filepath: join(pathToFernDirectory, RelativeFilePath.of(PROJECT_CONFIG_FILENAME)),
             organization,
             versionOfCli,
         });
@@ -83,11 +83,17 @@ async function writeProjectConfig({
 }
 
 async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
-    let pathToWorkspaceDirectory: AbsoluteFilePath = join(pathToFernDirectory, DEFAULT_WORSPACE_FOLDER_NAME);
+    let pathToWorkspaceDirectory: AbsoluteFilePath = join(
+        pathToFernDirectory,
+        RelativeFilePath.of(DEFAULT_WORSPACE_FOLDER_NAME)
+    );
 
     let attemptCount = 0;
     while (await doesPathExist(pathToWorkspaceDirectory)) {
-        pathToWorkspaceDirectory = join(pathToFernDirectory, `${DEFAULT_WORSPACE_FOLDER_NAME}${++attemptCount}`);
+        pathToWorkspaceDirectory = join(
+            pathToFernDirectory,
+            RelativeFilePath.of(`${DEFAULT_WORSPACE_FOLDER_NAME}${++attemptCount}`)
+        );
     }
 
     return pathToWorkspaceDirectory;

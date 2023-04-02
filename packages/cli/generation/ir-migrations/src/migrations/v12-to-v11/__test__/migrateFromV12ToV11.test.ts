@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
@@ -10,7 +10,7 @@ describe("migrateFromV12ToV11", () => {
     it("works for non-streaming APIs", async () => {
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/non-streaming"),
+                pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/non-streaming")),
             })
         ).resolves.toBeTruthy();
     });
@@ -24,7 +24,7 @@ describe("migrateFromV12ToV11", () => {
         });
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/streaming"),
+                pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/streaming")),
                 context: {
                     taskContext: context,
                 },

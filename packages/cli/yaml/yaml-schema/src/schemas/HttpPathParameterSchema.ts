@@ -1,6 +1,12 @@
 import { z } from "zod";
-import { TypeReferenceDeclarationSchema } from "./TypeReferenceSchema";
+import { TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+import { VariableReferenceSchema } from "./VariableReferenceSchema";
 
-export const HttpPathParameterSchema = TypeReferenceDeclarationSchema;
+export const HttpPathParameterSchema = z.union([
+    TypeReferenceWithDocsSchema,
+    // pathParam: $myVariable
+    z.string(),
+    VariableReferenceSchema,
+]);
 
 export type HttpPathParameterSchema = z.infer<typeof HttpPathParameterSchema>;

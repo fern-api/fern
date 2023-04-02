@@ -8,6 +8,18 @@ export const NoUndefinedPathParametersRule: Rule = {
     name: "no-undefined-path-parameters",
     create: () => {
         return {
+            rootApiFile: {
+                file: (file) => {
+                    if (file["base-path"] == null) {
+                        return [];
+                    }
+                    return getPathParameterRuleViolations({
+                        path: file["base-path"],
+                        pathParameters: file["path-parameters"] ?? {},
+                        pathType: "file",
+                    });
+                },
+            },
             definitionFile: {
                 httpService: (service) => {
                     return getPathParameterRuleViolations({
@@ -35,7 +47,7 @@ function getPathParameterRuleViolations({
 }: {
     path: string;
     pathParameters: Record<string, RawSchemas.HttpPathParameterSchema>;
-    pathType: "service" | "endpoint";
+    pathType: "file" | "service" | "endpoint";
 }): RuleViolation[] {
     const errors: RuleViolation[] = [];
 

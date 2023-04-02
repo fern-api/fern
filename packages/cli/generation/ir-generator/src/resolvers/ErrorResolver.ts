@@ -58,6 +58,7 @@ export class ErrorResolverImpl implements ErrorResolver {
                 definitionFile,
                 relativeFilepath: parsedReference.relativeFilepath,
                 casingsGenerator: file.casingsGenerator,
+                rootApiFile: this.workspace.definition.rootApiFile.contents,
             }),
         };
     }

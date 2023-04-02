@@ -1,10 +1,10 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { convertOpenApi } from "../convertOpenApi";
 
-const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), "fixtures");
+const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const OPENAPI_JSON_FILENAME = "openapi.json";
 
 describe("open api converter", () => {

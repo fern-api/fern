@@ -24,7 +24,9 @@ export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser
     function parseFilePath(file: FernFile) {
         try {
             parsedFiles[file.filepath] = {
-                contents: yaml.load(file.fileContents),
+                contents: yaml.load(file.fileContents, {
+                    schema: yaml.CORE_SCHEMA,
+                }),
                 rawContents: file.fileContents,
             };
         } catch (error) {

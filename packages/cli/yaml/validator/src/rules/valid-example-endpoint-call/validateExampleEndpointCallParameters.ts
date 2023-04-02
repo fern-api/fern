@@ -4,14 +4,14 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
 import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
 
-export function validateExampleEndpointCallParameters<T extends string | { type: string }>({
+export function validateExampleEndpointCallParameters<T>({
     allDeclarations = {},
     examples,
     parameterDisplayName,
     typeResolver,
     exampleResolver,
     workspace,
-    file,
+    getRawType,
 }: {
     allDeclarations: Record<string, T> | undefined;
     examples: Record<string, RawSchemas.ExampleTypeReferenceSchema> | undefined;
@@ -19,21 +19,29 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
-    file: FernFileContext;
+    getRawType: (parameter: T) => { rawType: string; file: FernFileContext } | undefined;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
     const requiredParameters = Object.entries(allDeclarations).reduce<string[]>((acc, [key, parameter]) => {
-        const resolvedType = typeResolver.resolveType({
-            type: typeof parameter !== "string" ? parameter.type : parameter,
-            file,
-        });
+        const rawType = getRawType(parameter);
 
-        const isOptional =
-            resolvedType != null && resolvedType._type === "container" && resolvedType.container._type === "optional";
+        // if rawType is not defined, then variable couldn't be de-referenced.
+        // this will be caught by another rule
+        if (rawType != null) {
+            const resolvedType = typeResolver.resolveType({
+                type: rawType.rawType,
+                file: rawType.file,
+            });
 
-        if (!isOptional) {
-            acc.push(key);
+            const isOptional =
+                resolvedType != null &&
+                resolvedType._type === "container" &&
+                resolvedType.container._type === "optional";
+
+            if (!isOptional) {
+                acc.push(key);
+            }
         }
 
         return acc;
@@ -57,16 +65,22 @@ export function validateExampleEndpointCallParameters<T extends string | { type:
                     message: `Unexpected ${parameterDisplayName} "${key}"`,
                 });
             } else {
-                violations.push(
-                    ...validateTypeReferenceExample({
-                        rawTypeReference: typeof expectedType !== "string" ? expectedType.type : expectedType,
-                        example: exampleParameter,
-                        file,
-                        workspace,
-                        typeResolver,
-                        exampleResolver,
-                    })
-                );
+                const rawType = getRawType(expectedType);
+
+                // if rawType is not defined, then variable couldn't be de-referenced.
+                // this will be caught by another rule
+                if (rawType != null) {
+                    violations.push(
+                        ...validateTypeReferenceExample({
+                            rawTypeReference: rawType.rawType,
+                            example: exampleParameter,
+                            file: rawType.file,
+                            workspace,
+                            typeResolver,
+                            exampleResolver,
+                        })
+                    );
+                }
             }
         }
     }

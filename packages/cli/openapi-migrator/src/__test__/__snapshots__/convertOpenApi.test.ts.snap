@@ -12009,19 +12009,7 @@ exports[`open api converter suger simple 1`] = `
     },
     "commons.yml": {
       "types": {
-        "_InlinedType100": {
-          "enum": [
-            "VALUE_TYPE_UNSPECIFIED",
-            "BOOL",
-            "INT64",
-            "DOUBLE",
-            "STRING",
-            "DISTRIBUTION",
-            "MONEY",
-          ],
-        },
-        "_InlinedType75": "string",
-        "_InlinedType76": {
+        "_InlinedType67": {
           "enum": [
             "SCMP",
             "ECMP",
@@ -12029,14 +12017,14 @@ exports[`open api converter suger simple 1`] = `
             "CUSTOM",
           ],
         },
-        "_InlinedType77": {
+        "_InlinedType68": {
           "enum": [
             "Read",
             "Update",
             "Delete",
           ],
         },
-        "_InlinedType78": {
+        "_InlinedType69": {
           "enum": [
             "NotStarted",
             "PendingFulfillmentStart",
@@ -12045,19 +12033,19 @@ exports[`open api converter suger simple 1`] = `
             "Unsubscribed",
           ],
         },
-        "_InlinedType79": {
+        "_InlinedType70": {
           "enum": [
             "None",
             "Csp",
           ],
         },
-        "_InlinedType80": {
+        "_InlinedType71": {
           "enum": [
             "None",
             "DryRun",
           ],
         },
-        "_InlinedType81": {
+        "_InlinedType72": {
           "docs": "The term unit for the commit amount.",
           "enum": [
             "DAY",
@@ -12065,14 +12053,14 @@ exports[`open api converter suger simple 1`] = `
             "YEAR",
           ],
         },
-        "_InlinedType82": {
+        "_InlinedType73": {
           "docs": "The Commit Dimension Type.",
           "enum": [
             "FLAT_RATE",
             "PER_USER",
           ],
         },
-        "_InlinedType83": {
+        "_InlinedType74": {
           "enum": [
             "VALUE_TYPE_UNSPECIFIED",
             "BOOL",
@@ -12083,13 +12071,13 @@ exports[`open api converter suger simple 1`] = `
             "MONEY",
           ],
         },
-        "_InlinedType84": {
+        "_InlinedType75": {
           "enum": [
             "Monthly",
             "Annual",
           ],
         },
-        "_InlinedType85": {
+        "_InlinedType76": {
           "docs": "Enums of the Entitlement State. https://cloud.google.com/marketplace/docs/partners/commerce-procurement-api/reference/rest/v1/providers.entitlements#EntitlementState",
           "enum": [
             "ENTITLEMENT_STATE_UNSPECIFIED",
@@ -12102,12 +12090,12 @@ exports[`open api converter suger simple 1`] = `
             "ENTITLEMENT_SUSPENDED",
           ],
         },
-        "_InlinedType86": {
+        "_InlinedType77": {
           "enum": [
             "PURCHASE_MODE_PUBLIC",
           ],
         },
-        "_InlinedType87": {
+        "_InlinedType78": {
           "enum": [
             "FREE",
             "SUBSCRIPTION",
@@ -12115,40 +12103,40 @@ exports[`open api converter suger simple 1`] = `
             "SUBSCRIPTION_PLUS_USAGE",
           ],
         },
-        "_InlinedType88": {
+        "_InlinedType79": {
           "enum": [
             "ONE_YEAR",
           ],
         },
-        "_InlinedType89": {
+        "_InlinedType80": {
           "enum": [
             "TAX_CATEGORY_UNSPECIFIED",
           ],
         },
-        "_InlinedType90": {
+        "_InlinedType81": {
           "enum": [
             "TAX_CATEGORY_UNSPECIFIED",
           ],
         },
-        "_InlinedType91": {
+        "_InlinedType82": {
           "enum": [
             "AzureSkuVariant",
             "AzureTestDriveVariant",
           ],
         },
-        "_InlinedType92": {
+        "_InlinedType83": {
           "enum": [
             "InActive",
             "Active",
           ],
         },
-        "_InlinedType93": {
+        "_InlinedType84": {
           "enum": [
             "Public",
             "Private",
           ],
         },
-        "_InlinedType94": {
+        "_InlinedType85": {
           "enum": [
             "Disabled",
             "Enabled",
@@ -12156,38 +12144,49 @@ exports[`open api converter suger simple 1`] = `
             "Terminated",
           ],
         },
-        "_InlinedType95": {
+        "_InlinedType86": {
           "enum": [
             "Flat",
             "Recurring",
             "Usage",
           ],
         },
-        "_InlinedType96": {
+        "_InlinedType87": {
           "enum": [
             "Month",
             "Year",
           ],
         },
-        "_InlinedType97": {
+        "_InlinedType88": {
           "enum": [
             "sharedcore",
             "transactions",
           ],
         },
-        "_InlinedType98": {
+        "_InlinedType89": {
           "enum": [
             "Minute",
             "Days",
             "Months",
           ],
         },
-        "_InlinedType99": {
+        "_InlinedType90": {
           "enum": [
             "NoTrial",
             "TimedAccess",
             "TimedUsage",
             "Unlimited",
+          ],
+        },
+        "_InlinedType91": {
+          "enum": [
+            "VALUE_TYPE_UNSPECIFIED",
+            "BOOL",
+            "INT64",
+            "DOUBLE",
+            "STRING",
+            "DISTRIBUTION",
+            "MONEY",
           ],
         },
         "partnercentersubmission.AzureAudience": {
@@ -12236,7 +12235,7 @@ exports[`open api converter suger simple 1`] = `
               "docs": "ISO Country Code",
               "type": "optional<string>",
             },
-            "state": "optional<_InlinedType94>",
+            "state": "optional<_InlinedType85>",
           },
         },
         "partnercentersubmission.AzurePrice": {
@@ -12253,7 +12252,7 @@ exports[`open api converter suger simple 1`] = `
         "partnercentersubmission.AzurePriceCadence": {
           "extends": undefined,
           "properties": {
-            "type": "optional<_InlinedType96>",
+            "type": "optional<_InlinedType87>",
             "value": "optional<integer>",
           },
         },
@@ -12261,7 +12260,7 @@ exports[`open api converter suger simple 1`] = `
           "extends": undefined,
           "properties": {
             "priceCadence": "optional<partnercentersubmission.AzurePriceCadence>",
-            "pricingModel": "optional<_InlinedType95>",
+            "pricingModel": "optional<_InlinedType86>",
             "pricingUnits": "optional<list<partnercentersubmission.AzurePricingUnit>>",
             "retailPrice": "optional<partnercentersubmission.AzurePrice>",
           },
@@ -12271,7 +12270,7 @@ exports[`open api converter suger simple 1`] = `
           "properties": {
             "isUnlimitedUnit": "optional<boolean>",
             "lowerUnit": "optional<integer>",
-            "name": "optional<_InlinedType97>",
+            "name": "optional<_InlinedType88>",
             "unitType": "optional<string>",
             "upperUnit": "optional<integer>",
           },
@@ -12293,7 +12292,7 @@ exports[`open api converter suger simple 1`] = `
             "subscriptionAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
             "tenantAudiences": "optional<list<partnercentersubmission.AzureAudience>>",
             "trial": "optional<partnercentersubmission.AzureProductVariantTrial>",
-            "visibility": "optional<_InlinedType93>",
+            "visibility": "optional<_InlinedType84>",
           },
         },
         "partnercentersubmission.AzureProductVariant": {
@@ -12312,8 +12311,8 @@ exports[`open api converter suger simple 1`] = `
             "id": "optional<string>",
             "leadGenID": "optional<string>",
             "referenceVariantID": "optional<string>",
-            "resourceType": "optional<_InlinedType91>",
-            "state": "optional<_InlinedType92>",
+            "resourceType": "optional<_InlinedType82>",
+            "state": "optional<_InlinedType83>",
           },
         },
         "partnercentersubmission.AzureProductVariantCustomMeter": {
@@ -12349,8 +12348,8 @@ exports[`open api converter suger simple 1`] = `
           "properties": {
             "dateTimeRange": "optional<partnercentersubmission.AzureLocalizedTimeRange>",
             "duration": "optional<integer>",
-            "durationType": "optional<_InlinedType98>",
-            "type": "optional<_InlinedType99>",
+            "durationType": "optional<_InlinedType89>",
+            "type": "optional<_InlinedType90>",
           },
         },
         "partnercentersubmission.AzureValidationResult": {
@@ -12365,7 +12364,7 @@ exports[`open api converter suger simple 1`] = `
           "properties": {
             "isInfinite": "optional<boolean>",
             "quantity": "optional<double>",
-            "recurringUnit": "optional<_InlinedType84>",
+            "recurringUnit": "optional<_InlinedType75>",
           },
         },
         "partnercentersubmission.TypeValue": {
@@ -12404,7 +12403,7 @@ exports[`open api converter suger simple 1`] = `
         "shared.AzureMarketplaceSubscription": {
           "extends": undefined,
           "properties": {
-            "allowedCustomerOperations": "optional<list<_InlinedType77>>",
+            "allowedCustomerOperations": "optional<list<_InlinedType68>>",
             "autoRenew": "optional<boolean>",
             "beneficiary": "optional<shared.AzureADIdentifier>",
             "created": "optional<string>",
@@ -12419,10 +12418,10 @@ exports[`open api converter suger simple 1`] = `
             "publisherId": "optional<string>",
             "purchaser": "optional<shared.AzureADIdentifier>",
             "quantity": "optional<integer>",
-            "saasSubscriptionStatus": "optional<_InlinedType78>",
-            "sandboxType": "optional<_InlinedType79>",
+            "saasSubscriptionStatus": "optional<_InlinedType69>",
+            "sandboxType": "optional<_InlinedType70>",
             "sessionId": "optional<string>",
-            "sessionMode": "optional<_InlinedType80>",
+            "sessionMode": "optional<_InlinedType71>",
             "storeFront": "optional<string>",
             "term": "optional<shared.AzureTerm>",
           },
@@ -12472,11 +12471,11 @@ exports[`open api converter suger simple 1`] = `
             },
             "timeUnit": {
               "docs": "The term unit for the commit amount.",
-              "type": "optional<_InlinedType81>",
+              "type": "optional<_InlinedType72>",
             },
             "type": {
               "docs": "The Commit Dimension Type.",
-              "type": "optional<_InlinedType82>",
+              "type": "optional<_InlinedType73>",
             },
             "types": "optional<list<string>>",
           },
@@ -12497,7 +12496,7 @@ exports[`open api converter suger simple 1`] = `
         "shared.EntitlementInfo": {
           "extends": undefined,
           "properties": {
-            "attributes": "optional<map<string, _InlinedType75>>",
+            "attributes": "optional<map<string, string>>",
             "autoRenew": {
               "docs": "Is this Entitlement Auto Renew enabled.",
               "type": "optional<boolean>",
@@ -12534,7 +12533,7 @@ exports[`open api converter suger simple 1`] = `
               "docs": "The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
               "type": "optional<double>",
             },
-            "eulaType": "optional<_InlinedType76>",
+            "eulaType": "optional<_InlinedType67>",
             "eulaUrl": "optional<string>",
             "gcpEntitlements": {
               "docs": "Nullable. GCP Entitlements from GCP Marketplace.",
@@ -12577,7 +12576,7 @@ exports[`open api converter suger simple 1`] = `
           "extends": undefined,
           "properties": {
             "description": "optional<string>",
-            "priceModel": "optional<_InlinedType87>",
+            "priceModel": "optional<_InlinedType78>",
             "subscriptionPlans": {
               "docs": "Commit price plan, when priceModel = SUBSCRIPTION or SUBSCRIPTION_PLUS_USAGE.",
               "type": "optional<list<shared.GcpCommerceProducerPriceSubscription>>",
@@ -12591,9 +12590,9 @@ exports[`open api converter suger simple 1`] = `
         "shared.GcpCommerceProducerPriceSubscription": {
           "extends": undefined,
           "properties": {
-            "period": "optional<_InlinedType88>",
+            "period": "optional<_InlinedType79>",
             "price": "optional<shared.GcpCommerceProducerPrice>",
-            "taxCategoryOverride": "optional<_InlinedType89>",
+            "taxCategoryOverride": "optional<_InlinedType80>",
           },
         },
         "shared.GcpCommerceProducerPriceTier": {
@@ -12622,7 +12621,7 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<string>",
             },
             "priceTiers": "optional<list<shared.GcpCommerceProducerPriceTier>>",
-            "taxCategoryOverride": "optional<_InlinedType90>",
+            "taxCategoryOverride": "optional<_InlinedType81>",
           },
         },
         "shared.GcpCommerceProducerPurchaseMetric": {
@@ -12646,7 +12645,7 @@ exports[`open api converter suger simple 1`] = `
             },
             "reportingUnit": "optional<string>",
             "unit": "optional<string>",
-            "valueType": "optional<_InlinedType100>",
+            "valueType": "optional<_InlinedType91>",
           },
         },
         "shared.GcpMarketplaceConsumer": {
@@ -12754,7 +12753,7 @@ depending on whether the offer is private or public.",
             },
             "state": {
               "docs": "Enums of the Entitlement State. https://cloud.google.com/marketplace/docs/partners/commerce-procurement-api/reference/rest/v1/providers.entitlements#EntitlementState",
-              "type": "optional<_InlinedType85>",
+              "type": "optional<_InlinedType76>",
             },
             "subscriptionEndTime": {
               "docs": "The End time for the subscription corresponding to this entitlement.",
@@ -12780,7 +12779,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "priceInfo": "optional<shared.GcpCommerceProducerPriceInfo>",
-            "purchaseMode": "optional<_InlinedType86>",
+            "purchaseMode": "optional<_InlinedType77>",
             "title": {
               "docs": "The Plan title",
               "type": "optional<string>",
@@ -12805,7 +12804,7 @@ This field is present only if the product has usage-based billing configured.",
             "rate": "optional<double>",
             "types": "optional<list<string>>",
             "usageCount": "optional<shared.UsageCount>",
-            "valueType": "optional<_InlinedType83>",
+            "valueType": "optional<_InlinedType74>",
           },
         },
         "shared.PaymentInstallment": {
@@ -13198,11 +13197,11 @@ entitled to for the product.",
             "path-parameters": {
               "partner": {
                 "docs": "Cloud Partner",
-                "type": "_InlinedType24",
+                "type": "_InlinedType18",
               },
               "service": {
                 "docs": "Partner Service",
-                "type": "_InlinedType26",
+                "type": "_InlinedType20",
               },
             },
             "response": "shared.IdentityIntegration",
@@ -13215,11 +13214,11 @@ entitled to for the product.",
             "path-parameters": {
               "partner": {
                 "docs": "Cloud Partner",
-                "type": "_InlinedType28",
+                "type": "_InlinedType22",
               },
               "service": {
                 "docs": "Partner Service",
-                "type": "_InlinedType30",
+                "type": "_InlinedType24",
               },
             },
             "response": "string",
@@ -13232,11 +13231,11 @@ entitled to for the product.",
             "path-parameters": {
               "partner": {
                 "docs": "Cloud Partner",
-                "type": "_InlinedType32",
+                "type": "_InlinedType26",
               },
               "service": {
                 "docs": "Partner Service",
-                "type": "_InlinedType34",
+                "type": "_InlinedType28",
               },
             },
             "request": {
@@ -13252,11 +13251,11 @@ entitled to for the product.",
             "path-parameters": {
               "partner": {
                 "docs": "Cloud Partner",
-                "type": "_InlinedType36",
+                "type": "_InlinedType30",
               },
               "service": {
                 "docs": "Partner Service",
-                "type": "_InlinedType38",
+                "type": "_InlinedType32",
               },
             },
             "response": "boolean",
@@ -13270,26 +13269,50 @@ entitled to for the product.",
         },
       },
       "types": {
-        "_InlinedType17": {
+        "_InlinedType11": {
           "enum": [
             "AWS",
             "AZURE",
             "GCP",
           ],
         },
-        "_InlinedType18": {
+        "_InlinedType12": {
           "enum": [
             "MARKETPLACE",
           ],
         },
-        "_InlinedType19": {
+        "_InlinedType13": {
           "enum": [
             "CREATED",
             "VERIFIED",
             "NOT_VERIFIED",
           ],
         },
-        "_InlinedType20": {
+        "_InlinedType14": {
+          "enum": [
+            "AWS",
+            "AZURE",
+            "GCP",
+          ],
+        },
+        "_InlinedType15": {
+          "enum": [
+            "MARKETPLACE",
+          ],
+        },
+        "_InlinedType16": {
+          "enum": [
+            "AWS",
+            "AZURE",
+            "GCP",
+          ],
+        },
+        "_InlinedType17": {
+          "enum": [
+            "MARKETPLACE",
+          ],
+        },
+        "_InlinedType19": {
           "enum": [
             "AWS",
             "AZURE",
@@ -13299,67 +13322,43 @@ entitled to for the product.",
         "_InlinedType21": {
           "enum": [
             "MARKETPLACE",
-          ],
-        },
-        "_InlinedType22": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
+            "CRM",
           ],
         },
         "_InlinedType23": {
           "enum": [
-            "MARKETPLACE",
+            "AWS",
+            "AZURE",
+            "GCP",
           ],
         },
         "_InlinedType25": {
           "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
+            "MARKETPLACE",
+            "CRM",
           ],
         },
         "_InlinedType27": {
           "enum": [
-            "MARKETPLACE",
-            "CRM",
+            "AWS",
+            "AZURE",
+            "GCP",
           ],
         },
         "_InlinedType29": {
           "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
+            "MARKETPLACE",
+            "CRM",
           ],
         },
         "_InlinedType31": {
           "enum": [
-            "MARKETPLACE",
-            "CRM",
+            "AWS",
+            "AZURE",
+            "GCP",
           ],
         },
         "_InlinedType33": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
-          ],
-        },
-        "_InlinedType35": {
-          "enum": [
-            "MARKETPLACE",
-            "CRM",
-          ],
-        },
-        "_InlinedType37": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
-          ],
-        },
-        "_InlinedType39": {
           "enum": [
             "MARKETPLACE",
             "CRM",
@@ -13443,8 +13442,8 @@ entitled to for the product.",
           "properties": {
             "info": "shared.IntegrationInfo",
             "organizationID": "string",
-            "partner": "_InlinedType20",
-            "service": "_InlinedType21",
+            "partner": "_InlinedType14",
+            "service": "_InlinedType15",
           },
         },
         "shared.GcpIntegration": {
@@ -13490,9 +13489,9 @@ entitled to for the product.",
             "lastUpdateTime": "optional<string>",
             "lastUpdatedBy": "optional<string>",
             "organizationID": "optional<string>",
-            "partner": "optional<_InlinedType17>",
-            "service": "optional<_InlinedType18>",
-            "status": "optional<_InlinedType19>",
+            "partner": "optional<_InlinedType11>",
+            "service": "optional<_InlinedType12>",
+            "status": "optional<_InlinedType13>",
           },
         },
         "shared.IntegrationInfo": {
@@ -13508,8 +13507,8 @@ entitled to for the product.",
           "properties": {
             "info": "shared.IntegrationInfo",
             "organizationID": "string",
-            "partner": "_InlinedType22",
-            "service": "_InlinedType23",
+            "partner": "_InlinedType16",
+            "service": "_InlinedType17",
           },
         },
       },
@@ -13647,14 +13646,8 @@ entitled to for the product.",
         },
       },
       "types": {
-        "_InlinedType10": "double",
-        "_InlinedType11": "double",
-        "_InlinedType12": "double",
-        "_InlinedType13": "double",
-        "_InlinedType14": "double",
-        "_InlinedType15": "double",
-        "_InlinedType16": "list<string>",
-        "http.Header": "map<string, _InlinedType16>",
+        "_InlinedType10": "list<string>",
+        "http.Header": "map<string, _InlinedType10>",
         "marketplacemetering.BatchMeterUsageOutput": {
           "extends": undefined,
           "properties": {
@@ -13853,7 +13846,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "organizationID": "string",
-            "records": "map<string, _InlinedType11>",
+            "records": "map<string, double>",
           },
         },
         "shared.ListUsageRecordGroupsResponse": {
@@ -13877,7 +13870,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             "id": "optional<string>",
             "lastUpdateTime": "optional<string>",
             "organizationID": "optional<string>",
-            "records": "optional<map<string, _InlinedType10>>",
+            "records": "optional<map<string, double>>",
             "serialID": "optional<integer>",
             "status": "optional<string>",
             "usageRecordReportID": "optional<string>",
@@ -13910,11 +13903,11 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "creditRecords": {
               "docs": "The credit usage records in the map of",
-              "type": "optional<map<string, _InlinedType12>>",
+              "type": "optional<map<string, double>>",
             },
             "dimensionUnitPrice": {
               "docs": "The unit price of each dimension in the map of",
-              "type": "optional<map<string, _InlinedType13>>",
+              "type": "optional<map<string, double>>",
             },
             "endTime": {
               "docs": "time in UTC when the UsageRecordReport ends",
@@ -13923,11 +13916,11 @@ in the google.rpc.Status.details field, or localized by the client.",
             "gcpMeteringResponse": "optional<servicecontrol.ReportResponse>",
             "includedRecords": {
               "docs": "The included usage records in the map of",
-              "type": "optional<map<string, _InlinedType14>>",
+              "type": "optional<map<string, double>>",
             },
             "reportedRecords": {
               "docs": "The reported usage records in the map of",
-              "type": "optional<map<string, _InlinedType15>>",
+              "type": "optional<map<string, double>>",
             },
             "startTime": {
               "docs": "time in UTC when the UsageRecordReport starts",
@@ -14124,7 +14117,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path-parameters": {
               "partner": {
                 "docs": "Cloud Partner",
-                "type": "_InlinedType49",
+                "type": "_InlinedType42",
               },
             },
             "response": "list<shared.WorkloadOffer>",
@@ -14151,6 +14144,56 @@ the same customer, dimension, and time, but a different quantity.",
         },
       },
       "types": {
+        "_InlinedType34": {
+          "enum": [
+            "AWS",
+            "AZURE",
+            "GCP",
+          ],
+        },
+        "_InlinedType35": {
+          "enum": [
+            "MARKETPLACE",
+          ],
+        },
+        "_InlinedType36": {
+          "enum": [
+            "CREATE_PENDING",
+            "CREATE_FAILED",
+            "CREATE_SUCCESS",
+            "ACCEPTED",
+            "EXPIRED",
+            "ACTIVE",
+            "UNKNOWN",
+          ],
+        },
+        "_InlinedType37": {
+          "enum": [
+            "SCMP",
+            "ECMP",
+            "CURRENT",
+            "CUSTOM",
+          ],
+        },
+        "_InlinedType38": {
+          "docs": "The default visibility of offer is PRIVATE.",
+          "enum": [
+            "PRIVATE",
+            "PUBLIC",
+          ],
+        },
+        "_InlinedType39": {
+          "docs": "Optional",
+          "enum": [
+            "DEFAULT",
+            "COMMIT",
+            "SUBSCRIBE",
+            "FREE_TRIAL",
+            "FLAT_RATE",
+            "PER_USER",
+            "UNKNOWN",
+          ],
+        },
         "_InlinedType40": {
           "enum": [
             "AWS",
@@ -14163,58 +14206,7 @@ the same customer, dimension, and time, but a different quantity.",
             "MARKETPLACE",
           ],
         },
-        "_InlinedType42": {
-          "enum": [
-            "CREATE_PENDING",
-            "CREATE_FAILED",
-            "CREATE_SUCCESS",
-            "ACCEPTED",
-            "EXPIRED",
-            "ACTIVE",
-            "UNKNOWN",
-          ],
-        },
-        "_InlinedType43": "string",
-        "_InlinedType44": {
-          "enum": [
-            "SCMP",
-            "ECMP",
-            "CURRENT",
-            "CUSTOM",
-          ],
-        },
-        "_InlinedType45": {
-          "docs": "The default visibility of offer is PRIVATE.",
-          "enum": [
-            "PRIVATE",
-            "PUBLIC",
-          ],
-        },
-        "_InlinedType46": {
-          "docs": "Optional",
-          "enum": [
-            "DEFAULT",
-            "COMMIT",
-            "SUBSCRIBE",
-            "FREE_TRIAL",
-            "FLAT_RATE",
-            "PER_USER",
-            "UNKNOWN",
-          ],
-        },
-        "_InlinedType47": {
-          "enum": [
-            "AWS",
-            "AZURE",
-            "GCP",
-          ],
-        },
-        "_InlinedType48": {
-          "enum": [
-            "MARKETPLACE",
-          ],
-        },
-        "_InlinedType50": {
+        "_InlinedType43": {
           "enum": [
             "AWS",
             "AZURE",
@@ -14251,12 +14243,12 @@ the same customer, dimension, and time, but a different quantity.",
             },
             "offerType": {
               "docs": "Optional",
-              "type": "optional<_InlinedType46>",
+              "type": "optional<_InlinedType39>",
             },
             "organizationID": "string",
-            "partner": "_InlinedType47",
+            "partner": "_InlinedType40",
             "productID": "string",
-            "service": "_InlinedType48",
+            "service": "_InlinedType41",
             "status": {
               "docs": "optional",
               "type": "optional<string>",
@@ -14266,7 +14258,7 @@ the same customer, dimension, and time, but a different quantity.",
         "shared.OfferInfo": {
           "extends": undefined,
           "properties": {
-            "attributes": "optional<map<string, _InlinedType43>>",
+            "attributes": "optional<map<string, string>>",
             "azureProductVariant": "optional<commons.partnercentersubmission.AzureProductVariant>",
             "baseAgreementId": {
               "docs": "Applicable for AWS Marketplace only, when the IsAgreementBasedOffer is true.",
@@ -14287,7 +14279,7 @@ the same customer, dimension, and time, but a different quantity.",
               "docs": "The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
               "type": "optional<double>",
             },
-            "eulaType": "optional<_InlinedType44>",
+            "eulaType": "optional<_InlinedType37>",
             "eulaUrl": "optional<string>",
             "gcpMetrics": {
               "docs": "Only applicable for GCP Marketplace Offers (the default or private offer)",
@@ -14309,7 +14301,7 @@ the same customer, dimension, and time, but a different quantity.",
             "sellerNotes": "optional<string>",
             "visibility": {
               "docs": "The default visibility of offer is PRIVATE.",
-              "type": "optional<_InlinedType45>",
+              "type": "optional<_InlinedType38>",
             },
           },
         },
@@ -14334,10 +14326,10 @@ the same customer, dimension, and time, but a different quantity.",
             "name": "optional<string>",
             "offerType": "optional<string>",
             "organizationID": "optional<string>",
-            "partner": "optional<_InlinedType40>",
+            "partner": "optional<_InlinedType34>",
             "productID": "optional<string>",
-            "service": "optional<_InlinedType41>",
-            "status": "optional<_InlinedType42>",
+            "service": "optional<_InlinedType35>",
+            "status": "optional<_InlinedType36>",
           },
         },
       },
@@ -14408,7 +14400,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path-parameters": {
               "partner": {
                 "docs": "Cloud Partner",
-                "type": "_InlinedType69",
+                "type": "_InlinedType61",
               },
             },
             "response": "list<shared.WorkloadProduct>",
@@ -14494,32 +14486,31 @@ the same customer, dimension, and time, but a different quantity.",
         },
       },
       "types": {
-        "_InlinedType51": {
+        "_InlinedType44": {
           "enum": [
             "AWS",
             "AZURE",
             "GCP",
           ],
         },
-        "_InlinedType52": {
+        "_InlinedType45": {
           "enum": [
             "MARKETPLACE",
           ],
         },
-        "_InlinedType53": "string",
-        "_InlinedType54": {
+        "_InlinedType46": {
           "enum": [
             "AzureListing",
           ],
         },
-        "_InlinedType55": {
+        "_InlinedType47": {
           "enum": [
             "ListingAsset",
             "ListingImage",
             "ListingVideo",
           ],
         },
-        "_InlinedType56": {
+        "_InlinedType48": {
           "enum": [
             "PendingUpload",
             "Uploaded",
@@ -14528,48 +14519,48 @@ the same customer, dimension, and time, but a different quantity.",
             "ProcessFailed",
           ],
         },
-        "_InlinedType57": {
+        "_InlinedType49": {
           "enum": [
             "CustomerSupport",
             "Engineering",
             "ChannelManager",
           ],
         },
-        "_InlinedType58": {
+        "_InlinedType50": {
           "enum": [
             "AzureSoftwareAsAServicePackageConfiguration",
           ],
         },
-        "_InlinedType59": {
+        "_InlinedType51": {
           "enum": [
             "free",
             "free-trial",
             "contact-me",
           ],
         },
-        "_InlinedType60": {
+        "_InlinedType52": {
           "enum": [
             "AzureProductSetup",
           ],
         },
-        "_InlinedType61": {
+        "_InlinedType53": {
           "enum": [
             "ListingOnly",
             "ListAndSell",
           ],
         },
-        "_InlinedType62": {
+        "_InlinedType54": {
           "enum": [
             "Submission",
           ],
         },
-        "_InlinedType63": {
+        "_InlinedType55": {
           "enum": [
             "Inprogress",
             "Published",
           ],
         },
-        "_InlinedType64": {
+        "_InlinedType56": {
           "enum": [
             "InDraft",
             "Submitted",
@@ -14581,29 +14572,29 @@ the same customer, dimension, and time, but a different quantity.",
             "InStore",
           ],
         },
-        "_InlinedType65": {
+        "_InlinedType57": {
           "enum": [
             "marketplaces/google-cloud",
           ],
         },
-        "_InlinedType66": {
+        "_InlinedType58": {
           "enum": [
             "BillingIntegratedManagedService",
           ],
         },
-        "_InlinedType67": {
+        "_InlinedType59": {
           "enum": [
             "AWS",
             "AZURE",
             "GCP",
           ],
         },
-        "_InlinedType68": {
+        "_InlinedType60": {
           "enum": [
             "MARKETPLACE",
           ],
         },
-        "_InlinedType70": {
+        "_InlinedType62": {
           "enum": [
             "AWS",
             "AZURE",
@@ -14616,7 +14607,7 @@ the same customer, dimension, and time, but a different quantity.",
             "email": "optional<string>",
             "name": "optional<string>",
             "phone": "optional<string>",
-            "type": "optional<_InlinedType57>",
+            "type": "optional<_InlinedType49>",
             "uri": "optional<string>",
           },
         },
@@ -14695,7 +14686,7 @@ the same customer, dimension, and time, but a different quantity.",
             "listingUris": "optional<list<partnercentersubmission.AzureListingUri>>",
             "productDisplayName": "optional<string>",
             "publisherName": "optional<string>",
-            "resourceType": "optional<_InlinedType54>",
+            "resourceType": "optional<_InlinedType46>",
             "shortDescription": "optional<string>",
             "summary": "optional<string>",
             "title": "optional<string>",
@@ -14711,8 +14702,8 @@ the same customer, dimension, and time, but a different quantity.",
             "id": "optional<string>",
             "order": "optional<integer>",
             "publisherDefinedSasUri": "optional<string>",
-            "resourceType": "optional<_InlinedType55>",
-            "state": "optional<_InlinedType56>",
+            "resourceType": "optional<_InlinedType47>",
+            "state": "optional<_InlinedType48>",
             "type": "optional<string>",
           },
         },
@@ -14724,7 +14715,7 @@ the same customer, dimension, and time, but a different quantity.",
             "connectionWebhook": "optional<string>",
             "id": "optional<string>",
             "landingPageUri": "optional<string>",
-            "resourceType": "optional<_InlinedType58>",
+            "resourceType": "optional<_InlinedType50>",
           },
         },
         "partnercentersubmission.AzureProductProperty": {
@@ -14753,11 +14744,11 @@ the same customer, dimension, and time, but a different quantity.",
         "partnercentersubmission.AzureProductSetup": {
           "extends": undefined,
           "properties": {
-            "callToAction": "optional<_InlinedType59>",
+            "callToAction": "optional<_InlinedType51>",
             "channelStates": "optional<list<commons.partnercentersubmission.TypeValue>>",
             "enableTestDrive": "optional<boolean>",
-            "resourceType": "optional<_InlinedType60>",
-            "sellingOption": "optional<_InlinedType61>",
+            "resourceType": "optional<_InlinedType52>",
+            "sellingOption": "optional<_InlinedType53>",
             "testDriveType": "optional<string>",
             "trialUri": "optional<string>",
           },
@@ -14771,10 +14762,10 @@ the same customer, dimension, and time, but a different quantity.",
             "pendingUpdateInfo": "optional<partnercentersubmission.AzurePendingUpdateInfo>",
             "publishedTimeInUtc": "optional<string>",
             "releaseNumber": "optional<integer>",
-            "resourceType": "optional<_InlinedType62>",
+            "resourceType": "optional<_InlinedType54>",
             "resources": "optional<list<commons.partnercentersubmission.TypeValue>>",
-            "state": "optional<_InlinedType63>",
-            "subState": "optional<_InlinedType64>",
+            "state": "optional<_InlinedType55>",
+            "subState": "optional<_InlinedType56>",
             "targets": "optional<list<commons.partnercentersubmission.TypeValue>>",
             "variantResources": "optional<list<partnercentersubmission.AzureVariantResource>>",
           },
@@ -14888,9 +14879,9 @@ the same customer, dimension, and time, but a different quantity.",
             "info": "optional<shared.ProductInfo>",
             "name": "optional<string>",
             "organizationID": "optional<string>",
-            "partner": "optional<_InlinedType67>",
+            "partner": "optional<_InlinedType59>",
             "productType": "optional<string>",
-            "service": "optional<_InlinedType68>",
+            "service": "optional<_InlinedType60>",
             "status": "optional<string>",
           },
         },
@@ -14906,7 +14897,7 @@ the same customer, dimension, and time, but a different quantity.",
           "extends": undefined,
           "properties": {
             "externalAccountSpec": "optional<shared.GcpCommerceProducerExternalAccountSpec>",
-            "listingType": "optional<_InlinedType66>",
+            "listingType": "optional<_InlinedType58>",
             "marketingSpec": "optional<shared.GcpCommerceProducerMarketingSpec>",
             "purchaseSpec": "optional<shared.GcpCommerceProducerPurchaseSpec>",
           },
@@ -14988,7 +14979,7 @@ the same customer, dimension, and time, but a different quantity.",
               "type": "optional<string>",
             },
             "listingSpec": "optional<shared.GcpCommerceProducerListingSpec>",
-            "marketplace": "optional<_InlinedType65>",
+            "marketplace": "optional<_InlinedType57>",
             "name": {
               "docs": "In format of "projects/{project-number}/listings/{product-name}.endpoints.{provider-id}.cloud.goog"",
               "type": "optional<string>",
@@ -15003,7 +14994,7 @@ the same customer, dimension, and time, but a different quantity.",
         "shared.ProductInfo": {
           "extends": undefined,
           "properties": {
-            "attributes": "optional<map<string, _InlinedType53>>",
+            "attributes": "optional<map<string, string>>",
             "awsSaasProduct": "optional<shared.AwsSaasProduct>",
             "awsSnsSubscriptions": "optional<list<shared.AwsSnsSubscription>>",
             "azureProduct": "optional<partnercentersubmission.AzureProduct>",
@@ -15037,9 +15028,9 @@ the same customer, dimension, and time, but a different quantity.",
             "lastUpdatedBy": "optional<string>",
             "name": "optional<string>",
             "organizationID": "optional<string>",
-            "partner": "optional<_InlinedType51>",
+            "partner": "optional<_InlinedType44>",
             "productType": "optional<string>",
-            "service": "optional<_InlinedType52>",
+            "service": "optional<_InlinedType45>",
             "status": "optional<string>",
           },
         },
@@ -15079,7 +15070,7 @@ the same customer, dimension, and time, but a different quantity.",
         },
       },
       "types": {
-        "_InlinedType71": {
+        "_InlinedType63": {
           "docs": "Required.",
           "enum": [
             "AWS",
@@ -15087,20 +15078,20 @@ the same customer, dimension, and time, but a different quantity.",
             "GCP",
           ],
         },
-        "_InlinedType72": {
+        "_InlinedType64": {
           "enum": [
             "InvoicedAmount",
             "CollectableAmount",
             "DisbursedAmount",
           ],
         },
-        "_InlinedType73": {
+        "_InlinedType65": {
           "docs": "Required.",
           "enum": [
             "MARKETPLACE",
           ],
         },
-        "_InlinedType74": {
+        "_InlinedType66": {
           "enum": [
             "InvoicedAmount",
             "CollectableAmount",
@@ -15133,16 +15124,16 @@ the same customer, dimension, and time, but a different quantity.",
             },
             "partner": {
               "docs": "Required.",
-              "type": "_InlinedType71",
+              "type": "_InlinedType63",
             },
             "productID": {
               "docs": "Optional, if available, return the report for the Product.",
               "type": "optional<string>",
             },
-            "reportType": "_InlinedType72",
+            "reportType": "_InlinedType64",
             "service": {
               "docs": "Required.",
-              "type": "_InlinedType73",
+              "type": "_InlinedType65",
             },
           },
         },
@@ -15169,7 +15160,7 @@ the same customer, dimension, and time, but a different quantity.",
             "partner": "optional<string>",
             "productID": "optional<string>",
             "reportDate": "optional<string>",
-            "reportType": "optional<_InlinedType74>",
+            "reportType": "optional<_InlinedType66>",
             "revenueRecords": "optional<list<shared.RevenueRecord>>",
             "service": "optional<string>",
           },

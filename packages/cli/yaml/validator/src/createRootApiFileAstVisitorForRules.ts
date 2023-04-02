@@ -44,9 +44,13 @@ export function createRootApiFileAstVisitorForRules({
     }
 
     return {
+        ...createAstNodeVisitor("file"),
         ...createAstNodeVisitor("defaultEnvironment"),
         ...createAstNodeVisitor("environment"),
         ...createAstNodeVisitor("errorDiscrimination"),
         ...createAstNodeVisitor("errorReference"),
+        ...createAstNodeVisitor("variableDeclaration"),
+        ...createAstNodeVisitor("variableReference"),
+        ...createAstNodeVisitor("pathParameter"),
     };
 }

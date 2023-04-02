@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { IrVersions } from "../../../ir-versions";
@@ -10,14 +10,17 @@ const runMigration = createMigrationTester(V6_TO_V5_MIGRATION);
 describe("migrateFromV6ToV5", () => {
     it("correctly migrates when not using environments", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/no-environments"),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/no-environments")),
         });
         expect(migrated.environments).toEqual([]);
     });
 
     it("correctly migrates when using one base-url per environment", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/single-url-per-environment"),
+            pathToFixture: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("./fixtures/single-url-per-environment")
+            ),
         });
 
         const expectedEnvironments: IrVersions.V5.environment.Environment[] = [
@@ -84,7 +87,10 @@ describe("migrateFromV6ToV5", () => {
         });
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/multiple-urls-per-environment"),
+                pathToFixture: join(
+                    AbsoluteFilePath.of(__dirname),
+                    RelativeFilePath.of("./fixtures/multiple-urls-per-environment")
+                ),
                 context: {
                     taskContext: context,
                 },

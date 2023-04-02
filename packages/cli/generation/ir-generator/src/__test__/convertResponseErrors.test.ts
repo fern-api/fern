@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ResponseErrors } from "@fern-fern/ir-model/http";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
@@ -10,13 +11,16 @@ describe("convertResponseErrors", () => {
         const actualResponseErrors = convertResponseErrors({
             errors: ["commons.UnauthorizedError"],
             file: constructFernFileContext({
-                relativeFilepath: "path/to/other",
+                relativeFilepath: RelativeFilePath.of("path/to/other"),
                 definitionFile: {
                     imports: {
                         commons: "./commons",
                     },
                 },
                 casingsGenerator,
+                rootApiFile: {
+                    name: "api",
+                },
             }),
         });
 
@@ -25,7 +29,10 @@ describe("convertResponseErrors", () => {
                 docs: undefined,
                 error: {
                     errorId: "error_path/to/commons:UnauthorizedError",
-                    fernFilepath: convertToFernFilepath({ relativeFilepath: "path/to/commons", casingsGenerator }),
+                    fernFilepath: convertToFernFilepath({
+                        relativeFilepath: RelativeFilePath.of("path/to/commons"),
+                        casingsGenerator,
+                    }),
                     name: {
                         originalName: "UnauthorizedError",
                         camelCase: {

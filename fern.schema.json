@@ -269,7 +269,6 @@
         "service": {
           "type": "object",
           "properties": {
-            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
             "availability": {
               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
             },
@@ -282,20 +281,28 @@
               "type": "object",
               "additionalProperties": {
                 "anyOf": [
+                  {
+                    "anyOf": [
+                      { "type": "string" },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": { "type": "string" },
+                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" }
+                        },
+                        "required": ["type"],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
                   { "type": "string" },
                   {
                     "type": "object",
                     "properties": {
-                      "type": { "type": "string" },
                       "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                      "availability": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
-                      },
-                      "audiences": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
-                      }
+                      "variable": { "type": "string" }
                     },
-                    "required": ["type"],
+                    "required": ["variable"],
                     "additionalProperties": false
                   }
                 ]

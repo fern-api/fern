@@ -68,5 +68,6 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("exampleQueryParameters"),
         ...createAstNodeVisitor("exampleRequest"),
         ...createAstNodeVisitor("exampleResponse"),
+        ...createAstNodeVisitor("variableReference"),
     };
 }

@@ -124,6 +124,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     boolean: FernRegistry.PrimitiveType.boolean,
                     dateTime: FernRegistry.PrimitiveType.datetime,
                     date: FernRegistry.PrimitiveType.string, // TODO(dsinghvi): FDR to accept Date
+                    base64: FernRegistry.PrimitiveType.string, // TODO(dsinghvi): FDR to accept Date
                     uuid: FernRegistry.PrimitiveType.uuid,
                     _unknown: () => {
                         throw new Error("Unknown primitive: " + primitive);

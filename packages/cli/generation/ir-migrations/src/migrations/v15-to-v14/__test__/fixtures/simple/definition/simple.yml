@@ -1,0 +1,5 @@
+types:
+  MyObject:
+    properties:
+      a: base64
+      b: string

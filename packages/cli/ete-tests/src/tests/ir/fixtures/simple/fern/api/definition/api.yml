@@ -13,3 +13,7 @@ audiences:
   - test
 errors:
   - commons.BadRequestError
+
+base-path: /test/{rootPathParam}
+path-parameters:
+  rootPathParam: string

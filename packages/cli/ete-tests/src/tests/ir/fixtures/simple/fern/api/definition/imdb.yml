@@ -91,12 +91,16 @@ service:
       audiences:
         - test
       examples:
-        - request:
+        - path-parameters:
+            rootPathParam: root
+          request:
             title: Shrek
             ratings: [10, 10, 10, 10]
           response:
             body: shrek-123
-        - request: $CreateMovieRequest.Example1
+        - path-parameters:
+            rootPathParam: root
+          request: $CreateMovieRequest.Example1
           response:
             body: shrek-123
     getMovie:
@@ -116,6 +120,7 @@ service:
         - NotFoundError
       examples:
         - path-parameters:
+            rootPathParam: root
             movieId: id-123
           query-parameters:
             movieName: hello
@@ -125,6 +130,7 @@ service:
               title: Shrek
               rating: 10
         - path-parameters:
+            rootPathParam: root
             movieId: id-123
           query-parameters:
             movieName: hello

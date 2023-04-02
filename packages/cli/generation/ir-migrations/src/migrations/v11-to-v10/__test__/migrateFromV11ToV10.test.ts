@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
@@ -9,7 +9,7 @@ const runMigration = createMigrationTester(V11_TO_V10_MIGRATION);
 describe("migrateFromV11ToV10", () => {
     it("tranforms auth header correctly", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
         });
         expect(migrated.auth).toEqual({
             docs: undefined,
@@ -62,7 +62,10 @@ describe("migrateFromV11ToV10", () => {
         });
         await expect(
             runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/auth-header-prefix"),
+                pathToFixture: join(
+                    AbsoluteFilePath.of(__dirname),
+                    RelativeFilePath.of("./fixtures/auth-header-prefix")
+                ),
                 context: {
                     taskContext: context,
                 },

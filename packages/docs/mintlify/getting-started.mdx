@@ -31,26 +31,27 @@ fern/
     └─ imdb.yml # endpoints, types, and errors
 ```
 
+### Already have an OpenAPI spec?
+
+You can import an existing OpenAPI spec by running
+
+```bash
+fern init --openapi /path/to/openapi.yml
+```
+
+⚠️ This importer is still in beta, and there may be issues when importing.
+
 ### Generating an SDK
 
-To generate SDKs, you can log in with GitHub from the CLI:
-
-```bash
-fern login
-```
-
-You can add [generators](compiler/generators) using `fern add`. By default, this
-will publish your SDK to the Fern npm registry (npm.buildwithfern.com).
-
-```bash
-fern add fern-typescript-sdk
-```
-
-To generate the TypeScript SDK, run:
+To generate the TypeScript SDK and an OpenAPI spec, run:
 
 ```bash
 fern generate
 ```
+
+By default, `generators.yml` is configured to generate a TypeScript SDK and an
+OpenAPI spec. You can read more about generation on the [`fern generate`](compiler/fern_generate)
+page.
 
 ### Defining your API
 
@@ -103,14 +104,6 @@ errors:
 
 Your **Fern Definition** is a set of YAML files that describe your API. You can
 learn more about this in the [Define your API](/definition) section.
-
-<Card
-  title="Already have an OpenAPI spec?"
-  icon="repeat"
-  href="mailto:hey@buildwithfern.com?subject=OpenAPI%20to%20Fern&body=Hey-%20%0A%0AHere's%20an%20attachment%2Flink%20to%20my%20OpenAPI%20description.%20Can%20you%20convert%20it%20to%20a%20Fern%20Definition%3F"
->
-  Get early access to our OpenAPI → Fern converter
-</Card>
 
 ### Running the Fern compiler
 

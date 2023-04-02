@@ -1,11 +1,11 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Document, Spectral } from "@stoplight/spectral-core";
 import { Yaml } from "@stoplight/spectral-parsers";
 import { readFile } from "fs/promises";
 import path from "path";
 import { OperationIdRequired } from "../operation-id-required";
 
-const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), "fixtures");
+const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const OPENAPI_JSON_FILENAME = "openapi.yml";
 
 describe("operation-id-required", () => {

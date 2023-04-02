@@ -405,7 +405,12 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                         "head": "",
                         "parts": []
                     },
+                    "fullPath": {
+                        "head": "",
+                        "parts": []
+                    },
                     "pathParameters": [],
+                    "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
                     "errors": [],
@@ -441,6 +446,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "pathParameters": [],
+    "variables": [],
     "subpackages": {
         "subpackage_imported": {
             "fernFilepath": {
@@ -710,7 +717,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;

@@ -24,7 +24,7 @@ This repository contains the **Fern compiler.** The compiler transforms the API 
 
 ### 🌿 SDKs
 
-Client libraries speed up internal developement, and help acquire customers who use your API. Our auto-generated SDKs are idiomatic and feel handwritten.
+Client libraries speed up internal development, and help acquire customers who use your API. Our auto-generated SDKs are idiomatic and feel handwritten.
 
 ### 🌿 Server-side code generation
 

@@ -1,5 +1,5 @@
 ---
-title: "Generate"
+title: "fern generate"
 ---
 
 You can run the fern compiler using the Fern CLI:
@@ -8,7 +8,8 @@ You can run the fern compiler using the Fern CLI:
 fern generate --group <group name>
 ```
 
-**TL;DR:** `fern generate` validates your API and runs generators in the cloud
+**TL;DR:** `generators.yml` controls what Fern will generate for you.
+`fern generate` validates your API and runs generators in the cloud
 in isolated, containerized environments. You can view the list of available
 generators [here](generators).
 
@@ -137,14 +138,15 @@ groups:
 
 ## Output locations
 
-You can optionally specify an location for the generated output. There are currently four supported output locations:
+You can optionally specify an location for the generated output. There are currently five supported output locations:
 
-- npm registries
-- Maven repositories
+- npm registry
+- Maven repository
+- PyPI registry
 - postman.com collection
 - local filesystem output
 
-### npm registries
+### npm registry
 
 For generators that output a TypeScript/JavaScript package, you can publish the
 generated code directly to npm.
@@ -210,6 +212,40 @@ override the registry using the `url` key.
            username: ${MAVEN_USERNAME}
            password: ${MAVEN_PASSWORD}
 +          url: your-maven-repo.com
+```
+
+### PyPI registry
+
+For generators that output a Python package, you can publish the
+generated code directly to PyPI.
+
+```yaml generators.yml
+groups:
+  external:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 0.1.0
+        output: # <---
+          location: pypi
+          package-name: your-package-name
+          token: ${PYPI_TOKEN}
+```
+
+By default, Fern publishes to [pypi.org](https://www.pypi.org/). You can
+override the registry using the `url` key.
+
+```diff generators.yml
+ groups:
+   external:
+     generators:
+       - name: fernapi/fern-python-sdk
+         version: 0.1.0
+         output:
+           location: pypi
+           package-name: your-package-name
++          username: your-username
++          password: ${PYPI_PASSWORD}
++          url: your-pypi.com
 ```
 
 ### postman.com collection

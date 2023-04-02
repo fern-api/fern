@@ -14,6 +14,7 @@ echo "Running Fern Commands!"
 set -x
 node "$cli_path" init --organization fern
 node "$cli_path" add fern-java-sdk
+node "$cli_path" add fern-python-sdk
 node "$cli_path" add fern-postman
 node "$cli_path" generate --log-level debug
 set +x

@@ -1,0 +1,191 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  address: address.yml
+
+types:
+  Response:
+    docs: An error response
+    properties:
+      status:
+        docs: A 2XX code
+        type: integer
+      message:
+        docs: A human readable message to display to an end user
+        type: string
+      code: optional<string>
+      errors:
+        docs: An list of errors that occurred. Normally will be of the properties that failed validation.
+        type: list<string>
+      pagination: optional<Pagination>
+      events:
+        docs: All of the events that were triggered due to this request
+        type: optional<list<string>>
+      endpoint:
+        docs: The endpoint that was hit
+        type: string
+
+  Options:
+    properties:
+      parse_addresses:
+        type: boolean
+        docs: If the extracted sender and recipient addresses should be run through the address parser.
+      match_contacts:
+        type: boolean
+        docs: If you want the extracted sender and recipient fields to be matched to existing contacts in your organization.
+
+  Recipient:
+    docs: The information about the shipment recipient
+    properties:
+      address: address.Address
+      name:
+        docs: The recipient's name
+        type: string
+      email:
+        docs: The recipient's email
+        type: string
+      phone:
+        docs: The recipient's phone
+        type: string
+      contact_id:
+        docs: The ID of the contact if one was used to create this recipient.
+        type: string
+    examples:
+      - name: Example1
+        value:
+          name: Odin Oliver
+          email: odin.oliver@packagex.io
+          phone: "4844836699"
+          contact_id: fwefwv28281
+          address: $address.ParsedAddress.Example2
+
+  Sender:
+    docs: The information about the shipment sender, which is normally the organization using this API
+    properties:
+      address: address.Address
+      address_line2:
+        type: optional<string>
+      name:
+        docs: The sender's name
+        type: string
+      email:
+        docs: The sender's email
+        type: string
+      phone:
+        docs: The sender's phone
+        type: string
+      contact_id:
+        docs: The sender's unique packagex ID
+        type: string
+    examples:
+      - name: Example1
+        value:
+          name: Jamie Jones
+          email: jamie@packagex.io
+          phone: "4844836699"
+          contact_id: cwnwif2821
+          address: $address.ParsedAddress.Example1
+
+  Search:
+    docs: A special property that will be included if searching through shipments.
+    properties:
+      id:
+        docs: The ID of the shipment.
+        type: string
+      tracking_number:
+        docs: The tracking number.
+        type: string
+      sender_name:
+        docs: The sender's name. It will also match common nicknames.
+        type: string
+      sender_email:
+        docs: The sender's email.
+        type: string
+      sender_phone:
+        docs: The sender's phone.
+        type: string
+      sender_formatted_address:
+        docs: The sender's full address string.
+        type: string
+      recipient_name:
+        docs: The recipient's name. It will also match common nicknames.
+        type: string
+      recipient_email:
+        docs: The recipient's email.
+        type: string
+      recipient_phone:
+        docs: The recipient's phone.
+        type: string
+      recipient_formatted_address:
+        docs: The recipient's full address string.
+        type: string
+      provider_name:
+        docs: The shipping provider's name.
+        type: string
+      provider_id:
+        docs: The shipping provider's ID
+        type: string
+      metadata:
+        docs: Any custom metadata that you have added
+        type: optional<map<string, unknown>>
+      relevance_score:
+        docs: A number from 0 - 1 about how relevant the result was to the search query, with 1 being a perfect match.
+        type: double
+
+  Filters:
+    docs: A sudo status given to the delivery to know what is happening with the delivery.
+    enum:
+      - completed
+      - outstanding
+      - exception
+
+  Pagination:
+    docs: The pagination object returned in responses where multiple values are returned
+    properties:
+      limit:
+        type: integer
+        docs: The limit for the responses
+      page:
+        type: integer
+        docs: The current page offset that is being retrieved
+      has_more:
+        type: boolean
+        docs: indicates if there are more values in the database not retrieved in this query
+
+  Provider:
+    docs: Details about a shipping provider for a given rate or shipment
+    properties:
+      name:
+        docs: The name of the provider
+        type: string
+      id:
+        docs: Unique ID of the provider
+        type: string
+      logo_url:
+        docs: The url for the provider's logo
+        type: string
+      support_email:
+        docs: The contact email provided by the shipping provider
+        type: optional<string>
+      support_phone:
+        docs: The contact phone provided by the shipping provider
+        type: optional<string>
+      support_url:
+        docs: The contact website provided by the shipping provider
+        type: string
+      support_reference:
+        docs: A support reference code that some providers use to help customers.
+        type: optional<string>
+      marketplace:
+        docs: If this shipping provider came from the PackageX marketplace. Typically large providers like FedEx, UPS, USPS, etc are not from the marketplace and same-day courier are not.
+        type: boolean
+    examples:
+      - name: Example1
+        value:
+          name: UPS
+          id: 2dij3dn9
+          logo_url: "NA"
+          support_email: support@ups.com
+          support_phone: 1-800-742-5877
+          support_url: https://www.ups.com/us/en/support/contact-us.page
+          marketplace: false

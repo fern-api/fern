@@ -116,7 +116,7 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         case "pypi":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
-                    registryUrl: generator.output.url ?? "",
+                    registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
@@ -156,12 +156,18 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             });
         case "pypi":
             return FernFiddle.GithubPublishInfo.pypi({
-                registryUrl: output.url ?? "",
+                registryUrl: output.url ?? "https://upload.pypi.org/legacy/",
                 packageName: output["package-name"],
-                credentials: {
-                    username: output.username ?? "",
-                    password: output.password ?? "",
-                },
+                credentials:
+                    output.token != null
+                        ? {
+                              username: "__token__",
+                              password: output.token,
+                          }
+                        : {
+                              username: output.username ?? "",
+                              password: output.password ?? "",
+                          },
             });
         default:
             assertNever(output);

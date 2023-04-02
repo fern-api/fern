@@ -1,0 +1,177 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: true
+  base-path: /v1/address
+  endpoints:
+    autocomplete:
+      docs: Allows users to submit a piece of an address string and have the API respond with the best possible options
+      path: /autocomplete
+      method: POST
+      request:
+        name: AutocompleteAddressRequest
+        body:
+          properties:
+            address:
+              docs: A piece of an address string
+              type: string
+      response: AutocompleteAddressResponse
+      examples:
+        - request:
+            address: 500 7th Ave
+          response:
+            body:
+              status: 200
+              data: [$AddressSuggestion.Example1, $AddressSuggestion.Example2]
+              message: You received two options to autocomplete your input
+              errors: []
+              endpoint: /v1/address/autocomplete
+
+    parse:
+      docs: Takes addresses in multiple different formats and returns the address in the PackageX address mode.
+      path: /parse
+      method: POST
+      request:
+        name: ParseAddressRequest
+        body:
+          properties:
+            address: string
+      response: ParseAddressResponse
+      examples:
+        - request:
+            address: "500 7th Ave, New York, NY"
+          response:
+            body:
+              status: 200
+              data: $ParsedAddress.Example1
+              message: You received the address in PackageX address mode
+              errors: []
+              endpoint: /v1/address/parse
+
+types:
+  AddressId:
+    type: string
+    docs: |
+      All address objects ids will be prefixed with addr_ to make them easy to distinguish.
+
+  Address:
+    discriminated: false
+    union:
+      - string
+      - ParsedAddress
+
+  ParseAddressResponse:
+    extends: commons.Response
+    properties:
+      data: ParsedAddress
+
+  ParsedAddress:
+    docs: The PackageX address object
+    properties:
+      id:
+        docs: The ID for this address. Can be passed into any address field in the future to retrieve this exact address.
+        type: AddressId
+      hash:
+        docs: Similar to the address ID, the hash is a unique string that identifies the address but without the line2 property.
+        type: string
+      line1:
+        docs: The first line of the street address.
+        type: string
+      line2:
+        docs: The second line of the street address.
+        type: string
+      city:
+        docs: The name of the city.
+        type: string
+      state:
+        docs: The full name of the state.
+        type: string
+      state_code:
+        docs: The abbreviated code for the state if applicable.
+        type: string
+      country:
+        docs: The full name of the country for this address.
+        type: string
+      country_code:
+        docs: The two character country code for this address.
+        type: string
+      postal_code:
+        docs: The postal code for this address.
+        type: string
+      formatted_address:
+        docs: The full text string of the address.
+        type: string
+      textarea:
+        docs: The full text string of the address without the line2 address. This is useful if using address auto complete that does not provide a line2 address which would be asked for in a separate input field.
+        type: string
+      timezone:
+        docs: The timezone for this address
+        type: string
+      verified:
+        docs: If we have verified this address
+        type: boolean
+    examples:
+      - name: Example1
+        value:
+          id: defnewfed_93392
+          hash: dac0efe_w9dw
+          line1: 500 7th Ave
+          line2: Fl 10
+          city: New York
+          state: New York
+          state_code: NY
+          country: United States
+          country_code: US
+          postal_code: "10018"
+          formatted_address: 500 7th Ave, Fl 10, New York, NY, 10018
+          textarea: 500 7th Ave
+          timezone: EST
+          verified: true
+      - name: Example2
+        value:
+          id: fefewfe_9292
+          hash: efneif_2921
+          line1: 600 B. Street
+          line2: Suite 300
+          city: San Diego
+          state: California
+          state_code: CA
+          country: United States
+          country_code: US
+          postal_code: "90101"
+          formatted_address: 600 B. Street, Suite 300 7th Ave, Fl 10, San Diego, California 90101
+          textarea: 600 B. Street
+          timezone: PST
+          verified: true
+
+  AutocompleteAddressResponse:
+    extends: commons.Response
+    properties:
+      data: list<AddressSuggestion>
+
+  AddressSuggestion:
+    docs: Suggested addresses based on input
+    properties:
+      address:
+        docs: The full predicted address
+        type: string
+      matched_text:
+        docs: The input given by user
+        type: string
+      autocomplete_text:
+        docs: The text added by the API to provide prediction
+        type: string
+    examples:
+      - name: Example1
+        value:
+          address: 500 7th Avenue, San Diego, CA, USA
+          matched_text: 500 7th Avenue
+          autocomplete_text: San Diego, CA, USA
+      - name: Example2
+        value:
+          address: 500 7th Avenue, New York, NY, USA
+          matched_text: 500 7th Avenue
+          autocomplete_text: New York, NY, USA

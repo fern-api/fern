@@ -21,6 +21,7 @@ import { NoUndefinedErrorReferenceRule } from "./rules/no-undefined-error-refere
 import { NoUndefinedExampleReferenceRule } from "./rules/no-undefined-example-reference";
 import { NoUndefinedPathParametersRule } from "./rules/no-undefined-path-parameters";
 import { NoUndefinedTypeReferenceRule } from "./rules/no-undefined-type-reference";
+import { NoUndefinedVariableReferenceRule } from "./rules/no-undefined-variable-reference";
 import { ValidBasePathRule } from "./rules/valid-base-path";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment";
 import { ValidEndpointPathRule } from "./rules/valid-endpoint-path";
@@ -66,6 +67,7 @@ export function getAllRules(): Rule[] {
         ValidStreamConditionRule,
         NoExtensionsWithFileUploadRule,
         ValidNavigationRule,
+        NoUndefinedVariableReferenceRule,
     ];
 }
 

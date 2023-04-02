@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
 import { V3_TO_V2_MIGRATION } from "../migrateFromV3ToV2";
 
@@ -7,7 +7,7 @@ const runMigration = createMigrationTester(V3_TO_V2_MIGRATION);
 describe("migrateFromV3ToV2", () => {
     it("adds discriminantValue to errors", async () => {
         const migrated = await runMigration({
-            pathToFixture: join(AbsoluteFilePath.of(__dirname), "./fixtures/simple"),
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple")),
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -40,6 +40,11 @@ export {
     visitRawEnvironmentDeclaration,
 } from "./utils/visitRawEnvironmentDeclaration";
 export {
+    isVariablePathParameter,
+    visitRawPathParameter,
+    type PathParameterDeclarationVisitor,
+} from "./utils/visitRawPathParameter";
+export {
     isRawAliasDefinition,
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,

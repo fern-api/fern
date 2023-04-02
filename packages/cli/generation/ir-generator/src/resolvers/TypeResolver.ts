@@ -79,6 +79,7 @@ export class TypeResolverImpl implements TypeResolver {
                 relativeFilepath: parsedReference.relativeFilepath,
                 definitionFile,
                 casingsGenerator: file.casingsGenerator,
+                rootApiFile: this.workspace.definition.rootApiFile.contents,
             }),
         };
     }
@@ -234,6 +235,7 @@ export class TypeResolverImpl implements TypeResolver {
                 relativeFilepath: fileOfResolvedDeclaration.relativeFilepath,
                 definitionFile,
                 casingsGenerator: file.casingsGenerator,
+                rootApiFile: this.workspace.definition.rootApiFile.contents,
             }),
         };
     }

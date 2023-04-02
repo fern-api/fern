@@ -24,6 +24,24 @@ SDK. It can publish the SDK to npmjs.org (or any other npm repository).
     repository: fern-api/plantstore-node
 ```
 
+## `fern-python-sdk`
+
+[Source code](https://github.com/fern-api/fern-python)
+
+The Python SDK generator outputs a fully functionality Python
+SDK. It can publish the SDK to pypi.org (or any other pypi repository).
+
+```yaml generators.yml
+- name: fernapi/fern-python-sdk
+  version: 0.1.0
+  output:
+    location: pypi
+    package-name: fern-plantstore
+    token: ${PYPI_TOKEN}
+  github:
+    repository: fern-api/plantstore-python
+```
+
 ## `fern-java-sdk`
 
 [Source code](https://github.com/fern-api/fern-java)

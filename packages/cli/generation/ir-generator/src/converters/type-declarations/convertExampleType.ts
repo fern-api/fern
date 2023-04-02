@@ -294,6 +294,12 @@ function convertPrimitiveExample({
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example));
         },
+        base64: () => {
+            if (typeof example !== "string") {
+                throw new Error("Example is not a string");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
+        },
         integer: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
@@ -365,9 +371,9 @@ function convertObject({
                           if (originalTypeDeclaration == null) {
                               throw new Error("Could not find original type declaration for property: " + wireKey);
                           }
-                          exampleProperties.push({
-                              wireKey,
-                              value: convertTypeReferenceExample({
+
+                          try {
+                              const valueExample = convertTypeReferenceExample({
                                   example: propertyExample,
                                   fileContainingExample,
                                   rawTypeBeingExemplified:
@@ -377,9 +383,16 @@ function convertObject({
                                   fileContainingRawTypeReference: originalTypeDeclaration.file,
                                   typeResolver,
                                   exampleResolver,
-                              }),
-                              originalTypeDeclaration: originalTypeDeclaration.typeName,
-                          });
+                              });
+                              exampleProperties.push({
+                                  wireKey,
+                                  value: valueExample,
+                                  originalTypeDeclaration: originalTypeDeclaration.typeName,
+                              });
+                          } catch (e) {
+                              // skip properties that fail to convert (undiscriminated unions)
+                          }
+
                           return exampleProperties;
                       },
                       []

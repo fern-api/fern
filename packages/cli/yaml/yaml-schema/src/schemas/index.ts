@@ -5,9 +5,8 @@ export { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
 export { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 export { AvailabilitySchema } from "./AvailabilitySchema";
 export { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
-export { BaseServiceSchema } from "./BaseServiceSchema";
 export { BaseTypeDeclarationSchema } from "./BaseTypeDeclarationSchema";
-export { DeclarationSchema } from "./DeclarationSchema";
+export { DeclarationSchema, DeclarationWithoutDocsSchema } from "./DeclarationSchema";
 export { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
 export { EnumSchema } from "./EnumSchema";
 export { EnumValueSchema } from "./EnumValueSchema";
@@ -45,4 +44,5 @@ export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscrimina
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
+export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
 export { WithDocsSchema } from "./WithDocsSchema";

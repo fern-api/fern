@@ -3,7 +3,7 @@ import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
-import { HttpEndpoint, ResponseErrors } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, PathParameterLocation, ResponseErrors } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
@@ -13,9 +13,10 @@ import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
-import { convertHttpHeader, convertHttpService } from "./converters/services/convertHttpService";
+import { constructHttpPath } from "./converters/services/constructHttpPath";
+import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
-import { constructFernFileContext, FernFileContext } from "./FernFileContext";
+import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
@@ -23,6 +24,7 @@ import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
+import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { parseErrorName } from "./utils/parseErrorName";
 
@@ -39,12 +41,9 @@ export async function generateIntermediateRepresentation({
 
     const audienceIrGraph = audiences.type !== "all" ? new AudienceIrGraph(audiences.audiences) : undefined;
 
-    const rootApiFileContext = constructFernFileContext({
-        relativeFilepath: ".",
-        definitionFile: {
-            imports: workspace.definition.rootApiFile.contents.imports,
-        },
+    const rootApiFileContext = constructRootApiFileContext({
         casingsGenerator,
+        rootApiFile: workspace.definition.rootApiFile.contents,
     });
     const globalErrors: ResponseErrors = (workspace.definition.rootApiFile.contents.errors ?? []).map(
         (referenceToError) => {
@@ -55,6 +54,11 @@ export async function generateIntermediateRepresentation({
             return { error: errorName, docs: undefined };
         }
     );
+
+    const typeResolver = new TypeResolverImpl(workspace);
+    const errorResolver = new ErrorResolverImpl(workspace);
+    const exampleResolver = new ExampleResolverImpl(typeResolver);
+    const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
@@ -82,25 +86,39 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents["error-discrimination"],
             rootApiFileContext
         ),
+        basePath:
+            workspace.definition.rootApiFile.contents["base-path"] != null
+                ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
+                : undefined,
+        pathParameters: convertPathParameters({
+            pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
+            file: rootApiFileContext,
+            location: PathParameterLocation.Root,
+            variableResolver,
+        }),
+        variables:
+            workspace.definition.rootApiFile.contents.variables != null
+                ? Object.entries(workspace.definition.rootApiFile.contents.variables).map(([key, variable]) => ({
+                      docs: typeof variable !== "string" ? variable.docs : undefined,
+                      id: key,
+                      name: rootApiFileContext.casingsGenerator.generateName(key),
+                      type: rootApiFileContext.parseTypeReference(variable),
+                  }))
+                : [],
     };
-
-    const typeResolver = new TypeResolverImpl(workspace);
-    const errorResolver = new ErrorResolverImpl(workspace);
-    const exampleResolver = new ExampleResolverImpl(typeResolver);
 
     const packageTreeGenerator = new PackageTreeGenerator();
 
     const visitDefinitionFile = async (file: FernFileContext) => {
         packageTreeGenerator.addSubpackage(file.fernFilepath);
 
-        const docs = file.definitionFile.docs ?? file.definitionFile.service?.docs;
-        if (docs != null) {
-            packageTreeGenerator.addDocs(file.fernFilepath, docs);
-        }
-
         await visitObject(file.definitionFile, {
             imports: noop,
-            docs: noop,
+            docs: (docs) => {
+                if (docs != null) {
+                    packageTreeGenerator.addDocs(file.fernFilepath, docs);
+                }
+            },
 
             types: (types) => {
                 if (types == null) {
@@ -154,12 +172,14 @@ export async function generateIntermediateRepresentation({
                 }
 
                 const convertedHttpService = convertHttpService({
+                    rootPathParameters: intermediateRepresentation.pathParameters,
                     serviceDefinition: service,
                     file,
                     errorResolver,
                     typeResolver,
                     exampleResolver,
                     globalErrors,
+                    variableResolver,
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);
@@ -198,6 +218,7 @@ export async function generateIntermediateRepresentation({
                 relativeFilepath,
                 definitionFile: file,
                 casingsGenerator,
+                rootApiFile: workspace.definition.rootApiFile.contents,
             })
         );
     });
@@ -243,11 +264,16 @@ export async function generateIntermediateRepresentation({
             return service.endpoints.every((endpoint) => endpoint.auth);
         });
 
+    const hasStreamingEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
+        return service.endpoints.some((endpoint) => endpoint.streamingResponse != null);
+    });
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
             isAuthMandatory,
+            hasStreamingEndpoints,
         },
     };
 }

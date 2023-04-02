@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { exec } from "child_process";
 import { mkdir, rm } from "fs/promises";
 import path from "path";
@@ -7,8 +7,12 @@ import { runDocker } from "../runDocker";
 
 const promisifiedExec = promisify(exec);
 
-const BASIC_WRITER_DIR = join(AbsoluteFilePath.of(__dirname), "resources", "basic-writer");
-const HOST_OUTPUT_DIR = join(BASIC_WRITER_DIR, "host-output");
+const BASIC_WRITER_DIR = join(
+    AbsoluteFilePath.of(__dirname),
+    RelativeFilePath.of("resources"),
+    RelativeFilePath.of("basic-writer")
+);
+const HOST_OUTPUT_DIR = join(BASIC_WRITER_DIR, RelativeFilePath.of("host-output"));
 
 const BASIC_WRITER_IMAGE_NAME = "basic-writer";
 const IMAGE_OUTPUT_DIR = "/image-output";
@@ -34,7 +38,7 @@ describe("runDocker", () => {
             binds: [`${HOST_OUTPUT_DIR}:${IMAGE_OUTPUT_DIR}`],
         });
 
-        const fileExists = await doesPathExist(join(HOST_OUTPUT_DIR, expectedOutputFilePath));
+        const fileExists = await doesPathExist(join(HOST_OUTPUT_DIR, RelativeFilePath.of(expectedOutputFilePath)));
         expect(fileExists).toBe(true);
     }, 15_000);
 });

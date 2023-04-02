@@ -8,6 +8,7 @@ export const GeneratorName = {
     JAVA_SPRING: "fernapi/fern-java-spring",
     PYTHON_FASTAPI: "fernapi/fern-fastapi-server",
     PYTHON_PYDANTIC: "fernapi/fern-pydantic-model",
+    PYTHON_SDK: "fernapi/fern-python-sdk",
     OPENAPI: "fernapi/fern-openapi",
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",

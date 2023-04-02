@@ -91,7 +91,7 @@ export function validateStructureOfYamlFiles({
         return {
             didSucceed: false,
             failures: {
-                [ROOT_API_FILENAME]: {
+                [RelativeFilePath.of(ROOT_API_FILENAME)]: {
                     type: WorkspaceLoaderFailureType.FILE_MISSING,
                 },
                 ...failures,

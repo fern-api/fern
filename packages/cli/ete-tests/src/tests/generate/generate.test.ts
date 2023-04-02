@@ -1,4 +1,4 @@
-import { doesPathExist, join } from "@fern-api/fs-utils";
+import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
@@ -9,5 +9,5 @@ it("fern generate", async () => {
         cwd: pathOfDirectory,
     });
 
-    expect(await doesPathExist(join(pathOfDirectory, "generated/typescript"))).toBe(true);
+    expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/typescript")))).toBe(true);
 }, 180_000);
