@@ -264,11 +264,16 @@ export async function generateIntermediateRepresentation({
             return service.endpoints.every((endpoint) => endpoint.auth);
         });
 
+    const hasStreamingEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
+        return service.endpoints.some((endpoint) => endpoint.streamingResponse != null);
+    });
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
             isAuthMandatory,
+            hasStreamingEndpoints,
         },
     };
 }

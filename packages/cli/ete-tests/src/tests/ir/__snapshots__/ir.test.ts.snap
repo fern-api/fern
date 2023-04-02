@@ -101,7 +101,8 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "hasEndpointsInTree": false
     },
     "sdkConfig": {
-        "isAuthMandatory": true
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -1251,7 +1252,8 @@ exports[`ir {"name":"extended-examples"} 1`] = `
         "hasEndpointsInTree": false
     },
     "sdkConfig": {
-        "isAuthMandatory": true
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -1693,7 +1695,8 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -7466,7 +7469,8 @@ exports[`ir {"name":"migration","version":"v1"} 1`] = `
         "type": "property"
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     },
     "errors": [
         {
@@ -8065,7 +8069,8 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -9343,7 +9348,8 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": true
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -10475,7 +10481,8 @@ exports[`ir {"name":"packages"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -12681,7 +12688,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -21745,7 +21753,8 @@ exports[`ir {"name":"simple"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
@@ -22192,7 +22201,8 @@ exports[`ir {"name":"streaming"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": true
     }
 }"
 `;
@@ -23077,7 +23087,8 @@ exports[`ir {"name":"variables"} 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;

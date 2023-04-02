@@ -717,7 +717,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
         "hasEndpointsInTree": true
     },
     "sdkConfig": {
-        "isAuthMandatory": false
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false
     }
 }"
 `;
