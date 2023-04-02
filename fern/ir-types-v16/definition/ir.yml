@@ -41,6 +41,7 @@ types:
   SdkConfig:
     properties:
       isAuthMandatory: boolean
+      hasStreamingEndpoints: boolean
   ErrorDiscriminationStrategy:
     union:
       statusCode: {}

@@ -111,6 +111,7 @@ exports[`migrateFromV5ToV4 correctly migrates 1`] = `
   "errors": [],
   "headers": [],
   "sdkConfig": {
+    "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
   },
   "services": {
