@@ -623,7 +623,13 @@ class ClientGenerator:
             headers.append(
                 (
                     header_auth_scheme.name.wire_value,
-                    AST.Expression(f"self.{self._get_auth_scheme_header_private_member_name(header_auth_scheme)}"),
+                    AST.Expression(
+                        f"self.{self._get_auth_scheme_header_private_member_name(header_auth_scheme)}"
+                        if header_auth_scheme.prefix is None
+                        else 'f"'
+                        + f"{header_auth_scheme.prefix} {{self.{self._get_auth_scheme_header_private_member_name(header_auth_scheme)}}}"
+                        + '"'
+                    ),
                 ),
             )
 

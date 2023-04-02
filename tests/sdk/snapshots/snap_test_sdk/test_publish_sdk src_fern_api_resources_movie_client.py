@@ -26,7 +26,7 @@ class MovieClient:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
-            headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
@@ -42,7 +42,7 @@ class MovieClient:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-            headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
@@ -57,7 +57,7 @@ class MovieClient:
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
         )
         if 200 <= _response.status_code < 300:
             return
@@ -75,7 +75,7 @@ class MovieClient:
         _response = httpx.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
-            headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
         )
         if 200 <= _response.status_code < 300:
             return
@@ -98,7 +98,7 @@ class AsyncMovieClient:
             _response = await _client.request(
                 "GET",
                 urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
-                headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
             )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
@@ -115,7 +115,7 @@ class AsyncMovieClient:
             _response = await _client.request(
                 "GET",
                 urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-                headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
             )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
@@ -131,7 +131,7 @@ class AsyncMovieClient:
                 "POST",
                 urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
             )
         if 200 <= _response.status_code < 300:
             return
@@ -150,7 +150,7 @@ class AsyncMovieClient:
             _response = await _client.request(
                 "DELETE",
                 urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
-                headers=remove_none_from_headers({"X-Header-Auth": self.header_auth}),
+                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
             )
         if 200 <= _response.status_code < 300:
             return

@@ -8,3 +8,4 @@ auth-schemes:
   HeaderAuth:
     header: X-Header-Auth
     type: string
+    prefix: MyPrefix
