@@ -1,1 +1,1 @@
-export { streamingFetcher, type StreamingFetcher } from "./StreamingFetcher";
+export { streamingFetcher, type StreamingFetcher, type StreamingFetchFunction } from "./StreamingFetcher";

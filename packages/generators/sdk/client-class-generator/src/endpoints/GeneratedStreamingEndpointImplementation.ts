@@ -424,8 +424,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                 : undefined,
                     },
                     {
-                        referenceToFetcher:
-                            context.base.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo(),
+                        referenceToFetcher: this.generatedSdkClientClass.getReferenceToStreamingFetcher(context),
                     }
                 )
             ),

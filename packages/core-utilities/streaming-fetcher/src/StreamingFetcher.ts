@@ -1,7 +1,7 @@
 import URLSearchParams from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosResponse } from "axios";
 
-const DATA_EVENT_REGEX = /data: (.*)/;
+export type StreamingFetchFunction = (args: StreamingFetcher.Args) => Promise<void>;
 
 export declare namespace StreamingFetcher {
     export interface Args {
@@ -22,7 +22,9 @@ export declare namespace StreamingFetcher {
     }
 }
 
-export async function streamingFetcher(args: StreamingFetcher.Args): Promise<void> {
+const DATA_EVENT_REGEX = /data: (.*)/;
+
+export const streamingFetcher: StreamingFetchFunction = async (args) => {
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
     };
@@ -73,4 +75,4 @@ export async function streamingFetcher(args: StreamingFetcher.Args): Promise<voi
     if (args.onFinish != null) {
         response.data.on("end", args.onFinish);
     }
-}
+};

@@ -40,6 +40,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static BASIC_AUTH_OPTION_PROPERTY_NAME = "credentials";
     private static BEARER_OPTION_PROPERTY_NAME = "token";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
+    private static CUSTOM_STREAMING_FETCHER_PROPERTY_NAME = "streamingFetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
 
     private intermediateRepresentation: IntermediateRepresentation;
@@ -453,6 +454,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 type: getTextOfTsNode(context.base.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
                 hasQuestionToken: true,
             });
+            if (this.intermediateRepresentation.sdkConfig.hasStreamingEndpoints) {
+                properties.push({
+                    name: GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME,
+                    type: getTextOfTsNode(
+                        context.base.coreUtilities.streamingFetcher.StreamingFetchFunction._getReferenceToType()
+                    ),
+                    hasQuestionToken: true,
+                });
+            }
         }
 
         return {
@@ -481,6 +491,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             );
         } else {
             return context.base.coreUtilities.fetcher.fetcher._getReferenceTo();
+        }
+    }
+
+    public getReferenceToStreamingFetcher(context: SdkClientClassContext): ts.Expression {
+        if (this.allowCustomFetcher) {
+            return ts.factory.createBinaryExpression(
+                this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                context.base.coreUtilities.fetcher.fetcher._getReferenceTo()
+            );
+        } else {
+            return context.base.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo();
         }
     }
 

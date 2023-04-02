@@ -28,7 +28,7 @@
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-api/logger": "0.0.248-7-gb4189be0",
     "@fern-fern/generator-exec-sdk": "^0.0.142",
-    "@fern-fern/ir-model": "0.0.1333",
+    "@fern-fern/ir-model": "0.0.1374",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*"
   },

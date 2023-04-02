@@ -18,6 +18,10 @@ export interface StreamingFetcher {
             }
         ) => ts.Expression;
     };
+
+    readonly StreamingFetchFunction: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
 }
 
 export declare namespace StreamingFetcher {

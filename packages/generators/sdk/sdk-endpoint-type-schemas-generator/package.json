@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-model": "0.0.1333",
+    "@fern-fern/ir-model": "0.0.1374",
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",

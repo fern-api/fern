@@ -28,6 +28,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         customConfig: {
             requireDefaultEnvironment: true,
+            allowCustomFetcher: true,
         },
     },
     {
