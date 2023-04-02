@@ -132,6 +132,14 @@ export class SchemaConverter {
                     this.imports
                 );
                 typeDeclaration = `map<string, ${valueType}>`;
+            } else if (schema.additionalProperties.type === "number") {
+                typeDeclaration = "map<string, double>";
+            } else if (schema.additionalProperties.type === "integer") {
+                typeDeclaration = "map<string, integer>";
+            } else if (schema.additionalProperties.type === "string") {
+                typeDeclaration = "map<string, string>";
+            } else if (schema.additionalProperties.type == null) {
+                typeDeclaration = "map<string, unknown>";
             } else {
                 const convertedSchema = this.convertSchema(schema.additionalProperties, [
                     ...breadcrumbs,
