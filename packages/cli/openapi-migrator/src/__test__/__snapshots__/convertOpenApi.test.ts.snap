@@ -1,1406 +1,483 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`open api converter neon simple 1`] = `
+exports[`open api converter vallum simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {},
-    "apiKey.yml": {
+    "api.yml": {
       "service": {
-        "auth": true,
-        "base-path": "/api_keys",
+        "auth": false,
+        "base-path": "/api/v2",
         "endpoints": {
-          "createApiKey": {
-            "display-name": "Create an API key",
-            "docs": "Creates an API key.
-The \`key_name\` is a user-specified name for the key.
-This method returns an \`id\` and \`key\`. The \`key\` is a randomly generated, 64-bit token required to access the Neon API.
-API keys can also be managed in the Neon Console.
-See [Manage API keys](https://neon.tech/docs/manage/api-keys/).
-",
-            "method": "POST",
-            "path": "",
-            "request": {
-              "body": "ApiKeyCreateRequest",
-            },
-            "response": "ApiKeyCreateResponse",
-          },
-          "listApiKeys": {
-            "display-name": "Get a list of API keys",
-            "docs": "Retrieves the API keys for your Neon account.
-The response does not include API key tokens. A token is only provided when creating an API key.
-API keys can also be managed in the Neon Console.
-For more information, see [Manage API keys](https://neon.tech/docs/manage/api-keys/).
-",
+          "listAccounts": {
+            "display-name": undefined,
+            "docs": "",
             "method": "GET",
-            "path": "",
-            "response": "list<ApiKeysListResponseItem>",
-          },
-          "revokeApiKey": {
-            "display-name": "Revoke an API key",
-            "docs": "Revokes the specified API key.
-An API key that is no longer needed can be revoked.
-This action cannot be reversed.
-You can obtain \`key_id\` values by listing the API keys for your Neon account.
-API keys can also be managed in the Neon Console.
-See [Manage API keys](https://neon.tech/docs/manage/api-keys/).
-",
-            "method": "DELETE",
-            "path": "/{key_id}",
-            "path-parameters": {
-              "key_id": {
-                "docs": "The API key ID",
-                "type": "integer",
+            "path": "/accounts/",
+            "request": {
+              "query-parameters": {
+                "page": {
+                  "docs": "A page number within the paginated result set.",
+                  "type": "optional<integer>",
+                },
               },
             },
-            "response": "ApiKeyRevokeResponse",
+            "response": "_InlinedType11",
+          },
+          "listGames": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/games/",
+            "request": {
+              "query-parameters": {
+                "after": {
+                  "docs": "After",
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "docs": "Before",
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "docs": "complete",
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "docs": "Date",
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "docs": "A page number within the paginated result set.",
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": "_InlinedType12",
+          },
+          "listGroups": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/groups/",
+            "request": {
+              "query-parameters": {
+                "complete": {
+                  "docs": "complete",
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "docs": "is_event",
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "docs": "A page number within the paginated result set.",
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": "_InlinedType13",
+          },
+          "listLocations": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/rooms/",
+            "request": {
+              "query-parameters": {
+                "page": {
+                  "docs": "A page number within the paginated result set.",
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": "_InlinedType15",
+          },
+          "listPhotos": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/photos/",
+            "request": {
+              "query-parameters": {
+                "page": {
+                  "docs": "A page number within the paginated result set.",
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": "_InlinedType16",
+          },
+          "listPlayers": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/players/",
+            "request": {
+              "query-parameters": {
+                "page": {
+                  "docs": "A page number within the paginated result set.",
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": "_InlinedType14",
+          },
+          "retrieveAccount": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/accounts/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": "A unique integer value identifying this account.",
+                "type": "string",
+              },
+            },
+            "response": "Room",
+          },
+          "retrieveGame": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/games/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": "A unique integer value identifying this group.",
+                "type": "string",
+              },
+            },
+            "request": {
+              "query-parameters": {
+                "after": {
+                  "docs": "After",
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "docs": "Before",
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "docs": "complete",
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "docs": "Date",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": "Game",
+          },
+          "retrieveGroup": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/groups/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": "A unique integer value identifying this group.",
+                "type": "string",
+              },
+            },
+            "request": {
+              "query-parameters": {
+                "complete": {
+                  "docs": "complete",
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "docs": "is_event",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": "Group",
+          },
+          "retrieveLocation": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/rooms/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": "A unique integer value identifying this location.",
+                "type": "string",
+              },
+            },
+            "response": "Room",
+          },
+          "retrievePhoto": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/photos/{photo_id}/",
+            "path-parameters": {
+              "photo_id": {
+                "docs": "",
+                "type": "string",
+              },
+            },
+            "response": "Photo",
+          },
+          "retrievePlayer": {
+            "display-name": undefined,
+            "docs": "",
+            "method": "GET",
+            "path": "/players/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": "A unique integer value identifying this player.",
+                "type": "string",
+              },
+            },
+            "response": "Player",
           },
         },
         "path-parameters": undefined,
       },
       "types": {
-        "ApiKeyCreateRequest": {
+        "Game": {
           "extends": undefined,
           "properties": {
-            "key_name": {
-              "docs": "A user-specified API key name. This value is required when creating an API key.",
-              "type": "string",
-            },
-          },
-        },
-        "ApiKeyCreateResponse": {
-          "extends": undefined,
-          "properties": {
-            "id": {
-              "docs": "The API key ID",
-              "type": "integer",
-            },
-            "key": {
-              "docs": "The generated 64-bit token required to access the Neon API",
-              "type": "string",
-            },
-          },
-        },
-        "ApiKeyRevokeResponse": {
-          "extends": undefined,
-          "properties": {
-            "id": {
-              "docs": "The API key ID",
-              "type": "integer",
-            },
-            "last_used_at": {
-              "docs": "A timestamp indicating when the API was last used",
-              "type": "optional<string>",
-            },
-            "last_used_from_addr": {
-              "docs": "The IP address from which the API key was last used",
-              "type": "string",
-            },
-            "name": {
-              "docs": "The user-specified API key name",
-              "type": "string",
-            },
-            "revoked": {
-              "docs": "A \`true\` or \`false\` value indicating whether the API key is revoked",
-              "type": "boolean",
-            },
-          },
-        },
-        "ApiKeysListResponseItem": {
-          "extends": undefined,
-          "properties": {
-            "created_at": {
-              "docs": "A timestamp indicating when the API key was created",
-              "type": "string",
-            },
-            "id": {
-              "docs": "The API key ID",
-              "type": "integer",
-            },
-            "last_used_at": {
-              "docs": "A timestamp indicating when the API was last used",
-              "type": "optional<string>",
-            },
-            "last_used_from_addr": {
-              "docs": "The IP address from which the API key was last used",
-              "type": "string",
-            },
-            "name": {
-              "docs": "The user-specified API key name",
-              "type": "string",
-            },
-          },
-        },
-      },
-    },
-    "branch.yml": {
-      "imports": {
-        "commons": "commons.yml",
-      },
-      "service": {
-        "auth": true,
-        "base-path": "/projects/{project_id}/branches/{branch_id}",
-        "endpoints": {
-          "createDatabase": {
-            "display-name": "Create a database",
-            "docs": "Creates a database in the specified branch.
-A branch can have multiple databases.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-For related information, see [Manage databases](https://neon.tech/docs/manage/databases/).
-",
-            "method": "POST",
-            "path": "/databases",
-            "request": {
-              "body": "DatabaseCreateRequest",
-            },
-          },
-          "createRole": {
-            "display-name": "Create a role",
-            "docs": "Creates a role in the specified branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-In Neon, the terms "role" and "user" are synonymous.
-For related information, see [Manage users](https://neon.tech/docs/manage/users/).
-
-Connections established to the active read-write endpoint will be dropped.
-If the read-write endpoint is idle, the endpoint becomes active for a short period of time and is suspended afterward.
-",
-            "method": "POST",
-            "path": "/roles",
-            "request": {
-              "body": "RoleCreateRequest",
-            },
-          },
-          "delete": {
-            "display-name": "Delete a branch",
-            "docs": "Deletes the specified branch from a project, and places
-all endpoints into an idle state, breaking existing client connections.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain a \`branch_id\` by listing the project's branches.
-For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-
-When a successful response status is received, the endpoints are still active,
-and the branch is not yet deleted from storage.
-The deletion occurs after all operations finish.
-You cannot delete a branch if it is the only remaining branch in the project.
-A project must have at least one branch.
-",
-            "method": "DELETE",
-            "path": "",
-            "response": "BranchOperations",
-          },
-          "deleteDatabase": {
-            "display-name": "Delete a database",
-            "docs": "Deletes the specified database from the branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` and \`database_name\` by listing branch's databases.
-For related information, see [Manage databases](https://neon.tech/docs/manage/databases/).
-",
-            "method": "DELETE",
-            "path": "/databases/{database_name}",
-            "path-parameters": {
-              "database_name": {
-                "docs": "The database name",
-                "type": "string",
-              },
-            },
-            "response": "DatabaseOperations",
-          },
-          "deleteRole": {
-            "display-name": "Delete a role",
-            "docs": "Deletes the specified role from the branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-You can obtain the \`role_name\` by listing the roles for a branch.
-In Neon, the terms "role" and "user" are synonymous.
-For related information, see [Managing users](https://neon.tech/docs/manage/users/).
-",
-            "method": "DELETE",
-            "path": "/roles/{role_name}",
-            "path-parameters": {
-              "role_name": {
-                "docs": "The role name",
-                "type": "string",
-              },
-            },
-            "response": "RoleOperations",
-          },
-          "get": {
-            "display-name": "Get branch details",
-            "docs": "Retrieves information about the specified branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain a \`branch_id\` by listing the project's branches.
-A \`branch_id\` value has a \`br-\` prefix.
-
-Each Neon project has a root branch named \`main\`.
-A project may contain child branches that were branched from \`main\` or from another branch.
-A parent branch is identified by a \`parent_id\` value, which is the \`id\` of the parent branch.
-For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-",
-            "method": "GET",
-            "path": "",
-            "response": "commons.BranchResponse",
-          },
-          "getDatabase": {
-            "display-name": "Get database details",
-            "docs": "Retrieves information about the specified database.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` and \`database_name\` by listing branch's databases.
-For related information, see [Manage databases](https://neon.tech/docs/manage/databases/).
-",
-            "method": "GET",
-            "path": "/databases/{database_name}",
-            "path-parameters": {
-              "database_name": {
-                "docs": "The database name",
-                "type": "string",
-              },
-            },
-            "response": "DatabaseResponse",
-          },
-          "getRole": {
-            "display-name": "Get role details",
-            "docs": "Retrieves details about the specified role.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-You can obtain the \`role_name\` by listing the roles for a branch.
-In Neon, the terms "role" and "user" are synonymous.
-For related information, see [Managing users](https://neon.tech/docs/manage/users/).
-",
-            "method": "GET",
-            "path": "/roles/{role_name}",
-            "path-parameters": {
-              "role_name": {
-                "docs": "The role name",
-                "type": "string",
-              },
-            },
-            "response": "RoleResponse",
-          },
-          "getRolePassword": {
-            "display-name": "Get role password",
-            "docs": "Retrieves password of the specified role if possible.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-You can obtain the \`role_name\` by listing the roles for a branch.
-In Neon, the terms "role" and "user" are synonymous.
-For related information, see [Managing users](https://neon.tech/docs/manage/users/).
-",
-            "method": "GET",
-            "path": "/roles/{role_name}/reveal_password",
-            "path-parameters": {
-              "role_name": {
-                "docs": "The role name",
-                "type": "string",
-              },
-            },
-            "response": "RolePasswordResponse",
-          },
-          "listDatabases": {
-            "display-name": "Get a list of databases",
-            "docs": "Retrieves a list of databases for the specified branch.
-A branch can have multiple databases.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-For related information, see [Manage databases](https://neon.tech/docs/manage/databases/).
-",
-            "method": "GET",
-            "path": "/databases",
-            "response": "commons.DatabasesResponse",
-          },
-          "listEndpoints": {
-            "display-name": "Get a list of branch endpoints",
-            "docs": "Retrieves a list of endpoints for the specified branch.
-Currently, Neon permits only one endpoint per branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-",
-            "method": "GET",
-            "path": "/endpoints",
-            "response": "commons.EndpointsResponse",
-          },
-          "listRoles": {
-            "display-name": "Get a list of roles",
-            "docs": "Retrieves a list of roles from the specified branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-In Neon, the terms "role" and "user" are synonymous.
-For related information, see [Manage users](https://neon.tech/docs/manage/users/).
-",
-            "method": "GET",
-            "path": "/roles",
-            "response": "commons.RolesResponse",
-          },
-          "resetRolePassword": {
-            "display-name": "Reset the role password",
-            "docs": "Resets the password for the specified role.
-Returns a new password and operations. The new password is ready to use when the last operation finishes.
-The old password remains valid until last operation finishes.
-Connections to the read-write endpoint are dropped. If idle,
-the read-write endpoint becomes active for a short period of time.
-
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-You can obtain the \`role_name\` by listing the roles for a branch.
-In Neon, the terms "role" and "user" are synonymous.
-For related information, see [Managing users](https://neon.tech/docs/manage/users/).
-",
-            "method": "POST",
-            "path": "/roles/{role_name}/reset_password",
-            "path-parameters": {
-              "role_name": {
-                "docs": "The role nam",
-                "type": "string",
-              },
-            },
-            "response": "RoleOperations",
-          },
-          "setPrimaryProjectBranch": {
-            "display-name": "Set the branch as the primary branch of a project",
-            "docs": "The primary mark is automatically removed from the previous primary branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-For more information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-",
-            "method": "POST",
-            "path": "/set_as_primary",
-            "response": "BranchOperations",
-          },
-          "update": {
-            "display-name": "Update a branch",
-            "docs": "Updates the specified branch. Only changing the branch name is supported.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` by listing the project's branches.
-For more information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-",
-            "method": "PATCH",
-            "path": "",
-            "request": {
-              "body": "BranchUpdateRequest",
-            },
-            "response": "BranchOperations",
-          },
-          "updateDatabase": {
-            "display-name": "Update a database",
-            "docs": "Updates the specified database in the branch.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain the \`branch_id\` and \`database_name\` by listing the branch's databases.
-For related information, see [Manage databases](https://neon.tech/docs/manage/databases/).
-",
-            "method": "PATCH",
-            "path": "/databases/{database_name}",
-            "path-parameters": {
-              "database_name": {
-                "docs": "The database name",
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": "DatabaseUpdateRequest",
-            },
-            "response": "DatabaseOperations",
-          },
-        },
-        "path-parameters": {
-          "branch_id": {
-            "docs": "The branch ID",
-            "type": "string",
-          },
-          "project_id": {
-            "docs": "The Neon project ID",
-            "type": "string",
-          },
-        },
-      },
-      "types": {
-        "BranchOperations": {
-          "extends": [
-            "commons.BranchResponse",
-            "commons.OperationsResponse",
-          ],
-        },
-        "BranchUpdateRequest": {
-          "extends": undefined,
-          "properties": {
-            "branch": "BranchUpdateRequestProperties",
-          },
-        },
-        "BranchUpdateRequestProperties": {
-          "extends": undefined,
-          "properties": {
+            "added_at": "optional<string>",
+            "complete": "_InlinedType2",
+            "date": "string",
+            "extra_fields": "list<_InlinedType1>",
+            "group": "optional<string>",
+            "id": "optional<integer>",
             "name": "optional<string>",
+            "photos": "optional<list<_InlinedType0>>",
+            "room": "optional<string>",
+            "start_at": "optional<string>",
+            "time": "string",
+            "updated_at": "optional<string>",
           },
         },
-        "DatabaseCreateProperties": {
+        "Group": {
           "extends": undefined,
           "properties": {
+            "added_at": "optional<string>",
+            "date": "string",
+            "games": "optional<list<_InlinedType5>>",
+            "id": "optional<integer>",
+            "is_event": "optional<boolean>",
             "name": "optional<string>",
-            "owner_name": "optional<string>",
+            "photos": "optional<list<_InlinedType8>>",
+            "players": "list<_InlinedType7>",
+            "start_at": "optional<string>",
+            "time": "string",
+            "updated_at": "optional<string>",
           },
         },
-        "DatabaseCreateRequest": {
+        "Photo": {
           "extends": undefined,
           "properties": {
-            "database": "DatabaseCreateProperties",
+            "added_at": "optional<string>",
+            "id": "optional<string>",
+            "original_image": "string",
+            "processed": "list<_InlinedType10>",
           },
         },
-        "DatabaseOperations": {
-          "extends": [
-            "DatabaseResponse",
-            "commons.OperationsResponse",
-          ],
-        },
-        "DatabaseResponse": {
+        "Player": {
           "extends": undefined,
           "properties": {
-            "database": "commons.Database",
+            "added_at": "optional<string>",
+            "email": "string",
+            "extra_fields": "list<_InlinedType9>",
+            "first_name": "optional<string>",
+            "id": "optional<integer>",
+            "last_name": "optional<string>",
+            "marketing_email_allowed": "optional<boolean>",
+            "phone": "string",
+            "updated_at": "optional<string>",
           },
         },
-        "DatabaseUpdateProperties": {
+        "Room": {
           "extends": undefined,
           "properties": {
-            "name": "optional<string>",
-            "owner_name": "optional<string>",
-          },
-        },
-        "DatabaseUpdateRequest": {
-          "extends": undefined,
-          "properties": {
-            "database": "DatabaseUpdateProperties",
-          },
-        },
-        "RoleCreateProperties": {
-          "extends": undefined,
-          "properties": {
-            "name": "optional<string>",
-          },
-        },
-        "RoleCreateRequest": {
-          "extends": undefined,
-          "properties": {
-            "role": "RoleCreateProperties",
-          },
-        },
-        "RoleOperations": {
-          "extends": [
-            "RoleResponse",
-            "commons.OperationsResponse",
-          ],
-        },
-        "RolePasswordResponse": {
-          "extends": undefined,
-          "properties": {
-            "password": "string",
-          },
-        },
-        "RoleResponse": {
-          "extends": undefined,
-          "properties": {
-            "role": "commons.Role",
-          },
-        },
-      },
-    },
-    "commons.yml": {
-      "types": {
-        "Branch": {
-          "extends": undefined,
-          "properties": {
-            "created_at": "string",
-            "creation_source": "string",
-            "current_state": "BranchState",
-            "id": "string",
-            "logical_size": {
-              "docs": "Branch logical size in bytes",
-              "type": "optional<integer>",
-            },
+            "hidden": "optional<boolean>",
+            "id": "optional<integer>",
             "name": "string",
-            "parent_id": "optional<string>",
-            "parent_lsn": "optional<string>",
-            "parent_timestamp": "optional<string>",
-            "pending_state": "optional<BranchState>",
-            "physical_size": {
-              "docs": "Branch physical size in bytes",
-              "type": "optional<integer>",
-            },
-            "primary": "boolean",
-            "project_id": "string",
-            "updated_at": "string",
           },
         },
-        "BranchResponse": {
+        "_InlinedType0": {
           "extends": undefined,
           "properties": {
-            "branch": "Branch",
+            "added_at": "optional<string>",
+            "photo": "string",
+            "processed_image": "optional<string>",
+            "ready": "optional<string>",
           },
         },
-        "BranchState": {
-          "enum": [
-            "init",
-            "ready",
-          ],
-        },
-        "Database": {
+        "_InlinedType1": {
           "extends": undefined,
           "properties": {
-            "branch_id": "string",
-            "created_at": "string",
-            "id": "integer",
-            "name": "string",
-            "owner_name": "string",
-            "updated_at": "string",
+            "key": "string",
+            "label": "optional<string>",
+            "present": "boolean",
+            "value": "optional<map<string, unknown>>",
           },
         },
-        "DatabasesResponse": {
+        "_InlinedType10": {
           "extends": undefined,
           "properties": {
-            "databases": "list<Database>",
+            "added_at": "optional<string>",
+            "game": "optional<string>",
+            "group": "optional<string>",
+            "photo": "string",
+            "processed_image": "optional<string>",
+            "ready": "optional<string>",
           },
         },
-        "Endpoint": {
+        "_InlinedType11": {
           "extends": undefined,
           "properties": {
-            "autoscaling_limit_max_cu": "integer",
-            "autoscaling_limit_min_cu": "integer",
-            "branch_id": "string",
-            "created_at": "string",
-            "creation_source": "string",
-            "current_state": "EndpointState",
-            "disabled": {
-              "docs": "Restrict any connections to this endpoint.",
-              "type": "boolean",
-            },
-            "host": {
-              "docs": "Hostname to connect to.
-",
-              "type": "string",
-            },
-            "id": "string",
-            "last_active": {
-              "docs": "Timestamp of the last detected activity of the endpoint.",
-              "type": "optional<string>",
-            },
-            "passwordless_access": {
-              "docs": "Allow or restrict passwordless access to this endpoint.",
-              "type": "boolean",
-            },
-            "pending_state": "optional<EndpointState>",
-            "pooler_enabled": {
-              "docs": "Enable or disable connection pooling for this endpoint.",
-              "type": "boolean",
-            },
-            "pooler_mode": "EndpointPoolerMode",
-            "project_id": "string",
-            "proxy_host": {
-              "docs": "DEPRECATED. Use the "host" property instead.
-",
-              "type": "string",
-            },
-            "region_id": "string",
-            "settings": "EndpointSettingsData",
-            "type": "EndpointType",
-            "updated_at": "string",
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<Room>>",
           },
         },
-        "EndpointPoolerMode": {
-          "enum": [
-            "transaction",
-          ],
-        },
-        "EndpointSettingsData": {
-          "docs": "Endpoint settings is a collection of settings for an Endpoint",
+        "_InlinedType12": {
           "extends": undefined,
           "properties": {
-            "pg_settings": "optional<PgSettingsData>",
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<Game>>",
           },
         },
-        "EndpointState": {
-          "enum": [
-            "init",
-            "active",
-            "idle",
-          ],
-        },
-        "EndpointType": {
-          "docs": "Endpoint type. Either "read_write" for read-write primary or "read_only" for read-only secondary.
-"read_only" endpoints are not yet implemented.
-",
-          "enum": [
-            "read_only",
-            "read_write",
-          ],
-        },
-        "EndpointsResponse": {
+        "_InlinedType13": {
           "extends": undefined,
           "properties": {
-            "endpoints": "list<Endpoint>",
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<Group>>",
           },
         },
-        "InlineString": "string",
-        "Operation": {
+        "_InlinedType14": {
           "extends": undefined,
           "properties": {
-            "action": "OperationAction",
-            "branch_id": "optional<string>",
-            "created_at": "string",
-            "endpoint_id": "optional<string>",
-            "error": "optional<string>",
-            "failures_count": "integer",
-            "id": "string",
-            "project_id": "string",
-            "retry_at": "optional<string>",
-            "status": "OperationStatus",
-            "updated_at": "string",
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<Player>>",
           },
         },
-        "OperationAction": {
-          "enum": [
-            "create_compute",
-            "create_timeline",
-            "start_compute",
-            "suspend_compute",
-            "apply_config",
-            "check_availability",
-            "delete_timeline",
-            "create_branch",
-            "tenant_migrate",
-            "tenant_detach",
-            "tenant_reattach",
-            "replace_safekeeper",
-          ],
-        },
-        "OperationStatus": {
-          "enum": [
-            "running",
-            "finished",
-            "failed",
-            "scheduling",
-          ],
-        },
-        "OperationsResponse": {
+        "_InlinedType15": {
           "extends": undefined,
           "properties": {
-            "operations": "list<Operation>",
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<Room>>",
           },
         },
-        "PgSettingsData": {
-          "docs": "PgSettingsData is a raw representation of Postgres settings",
-          "type": "map<string, InlineString>",
-        },
-        "Role": {
+        "_InlinedType16": {
           "extends": undefined,
           "properties": {
-            "branch_id": "string",
-            "created_at": "string",
-            "name": "string",
-            "password": "optional<string>",
-            "protected": "optional<boolean>",
-            "updated_at": "string",
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<Photo>>",
           },
         },
-        "RolesResponse": {
+        "_InlinedType2": {
           "extends": undefined,
           "properties": {
-            "roles": "list<Role>",
+            "completed_at": "string",
+            "completion_time": "optional<integer>",
+            "did_win": "optional<boolean>",
+            "hints": "optional<integer>",
+            "score": "optional<integer>",
           },
         },
-      },
-    },
-    "endpoint.yml": {
-      "imports": {
-        "commons": "commons.yml",
-      },
-      "service": {
-        "auth": true,
-        "base-path": "/projects/{project_id}/endpoints",
-        "endpoints": {
-          "createProjectEndpoint": {
-            "display-name": "Create an endpoint",
-            "docs": "Creates an endpoint for the specified branch.
-An endpoint is a Neon compute instance.
-There is a maximum of one endpoint per branch.
-If the specified branch already has an endpoint, the operation fails.
-
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain \`branch_id\` by listing the project's branches.
-A \`branch_id\` has a \`br-\` prefix.
-Currently, only the \`read_write\` endpoint type is supported.
-For supported regions and \`region_id\` values, see [Regions](https://neon.tech/docs/introduction/regions/).
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-",
-            "method": "POST",
-            "path": "",
-            "request": {
-              "body": "EndpointCreateRequest",
-            },
-          },
-          "deleteProjectEndpoint": {
-            "display-name": "Delete an endpoint",
-            "docs": "Delete the specified endpoint.
-An endpoint is a Neon compute instance.
-Deleting an endpoint drops existing network connections to the endpoint.
-The deletion is completed when last operation in the chain finishes successfully.
-
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain an \`endpoint_id\` by listing your project's endpoints.
-An \`endpoint_id\` has an \`ep-\` prefix.
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-",
-            "method": "DELETE",
-            "path": "/{endpoint_id}",
-            "path-parameters": {
-              "endpoint_id": {
-                "docs": "The endpoint ID",
-                "type": "string",
-              },
-            },
-            "response": "EndpointOperations",
-          },
-          "getProjectEndpoint": {
-            "display-name": "Get an endpoint",
-            "docs": "Retrieves information about the specified endpoint.
-An endpoint is a Neon compute instance.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain an \`endpoint_id\` by listing your project's endpoints.
-An \`endpoint_id\` has an \`ep-\` prefix.
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-",
-            "method": "GET",
-            "path": "/{endpoint_id}",
-            "path-parameters": {
-              "endpoint_id": {
-                "docs": "The endpoint ID",
-                "type": "string",
-              },
-            },
-            "response": "EndpointResponse",
-          },
-          "startProjectEndpoint": {
-            "display-name": "Start an endpoint",
-            "docs": "Starts an endpoint. The endpoint is ready to use
-after the last operation in chain finishes successfully.
-
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain an \`endpoint_id\` by listing your project's endpoints.
-An \`endpoint_id\` has an \`ep-\` prefix.
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-",
-            "method": "POST",
-            "path": "/{endpoint_id}/start",
-            "path-parameters": {
-              "endpoint_id": {
-                "docs": "The endpoint ID",
-                "type": "string",
-              },
-            },
-            "response": "EndpointOperations",
-          },
-          "suspendProjectEndpoint": {
-            "display-name": "Suspend an endpoint",
-            "docs": "Suspend the specified endpoint
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain an \`endpoint_id\` by listing your project's endpoints.
-An \`endpoint_id\` has an \`ep-\` prefix.
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-",
-            "method": "POST",
-            "path": "/{endpoint_id}/suspend",
-            "path-parameters": {
-              "endpoint_id": {
-                "docs": "The endpoint ID",
-                "type": "string",
-              },
-            },
-            "response": "EndpointOperations",
-          },
-          "updateProjectEndpoint": {
-            "display-name": "Update an endpoint",
-            "docs": "Updates the specified endpoint. Currently, only changing the associated branch is supported.
-The branch that you specify cannot have an existing endpoint.
-
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain an \`endpoint_id\` and \`branch_id\` by listing your project's endpoints.
-An \`endpoint_id\` has an \`ep-\` prefix. A \`branch_id\` has a \`br-\` prefix.
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-
-If the returned list of operations is not empty, the endpoint is not ready to use.
-The client must wait for the last operation to finish before using the endpoint.
-If the endpoint was idle before the update, the endpoint becomes active for a short period of time,
-and the control plane suspends it again after the update.
-",
-            "method": "PATCH",
-            "path": "/{endpoint_id}",
-            "path-parameters": {
-              "endpoint_id": {
-                "docs": "The endpoint ID",
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": "EndpointUpdateRequest",
-            },
-            "response": "EndpointOperations",
-          },
-        },
-        "path-parameters": {
-          "project_id": {
-            "docs": "The Neon project ID",
-            "type": "string",
-          },
-        },
-      },
-      "types": {
-        "EndpointCreateRequest": {
+        "_InlinedType3": {
           "extends": undefined,
           "properties": {
-            "endpoint": "EndpointProperties",
+            "key": "string",
+            "label": "optional<string>",
+            "present": "boolean",
+            "value": "optional<map<string, unknown>>",
           },
         },
-        "EndpointOperations": {
-          "extends": [
-            "EndpointResponse",
-            "commons.OperationsResponse",
-          ],
-        },
-        "EndpointProperties": {
+        "_InlinedType4": {
           "extends": undefined,
           "properties": {
-            "autoscaling_limit_max_cu": "optional<integer>",
-            "autoscaling_limit_min_cu": "optional<integer>",
-            "branch_id": "optional<string>",
-            "disabled": {
-              "docs": "Restrict any connections to this endpoint.",
-              "type": "optional<boolean>",
-            },
-            "passwordless_access": {
-              "docs": "NOT IMPLEMENTED YET
-",
-              "type": "optional<boolean>",
-            },
-            "pooler_enabled": "optional<boolean>",
-            "pooler_mode": "optional<commons.EndpointPoolerMode>",
-            "region_id": {
-              "docs": "Only the project region_id is allowed for now
-",
-              "type": "optional<string>",
-            },
-            "settings": "optional<commons.EndpointSettingsData>",
-            "type": "optional<commons.EndpointType>",
+            "completed_at": "string",
+            "completion_time": "optional<integer>",
+            "did_win": "optional<boolean>",
+            "hints": "optional<integer>",
+            "score": "optional<integer>",
           },
         },
-        "EndpointResponse": {
+        "_InlinedType5": {
           "extends": undefined,
           "properties": {
-            "endpoint": "commons.Endpoint",
-          },
-        },
-        "EndpointUpdateProperties": {
-          "extends": undefined,
-          "properties": {
-            "autoscaling_limit_max_cu": "optional<integer>",
-            "autoscaling_limit_min_cu": "optional<integer>",
-            "branch_id": {
-              "docs": "Destination branch identifier. The destination branch must not have an exsiting read-write endpoint.
-",
-              "type": "optional<string>",
-            },
-            "disabled": {
-              "docs": "Restrict any connections to this endpoint.",
-              "type": "optional<boolean>",
-            },
-            "passwordless_access": {
-              "docs": "NOT IMPLEMENTED YET
-",
-              "type": "optional<boolean>",
-            },
-            "pooler_enabled": "optional<boolean>",
-            "pooler_mode": "optional<commons.EndpointPoolerMode>",
-            "settings": "optional<commons.EndpointSettingsData>",
-          },
-        },
-        "EndpointUpdateRequest": {
-          "extends": undefined,
-          "properties": {
-            "endpoint": "EndpointUpdateProperties",
-          },
-        },
-      },
-    },
-    "operation.yml": {
-      "imports": {
-        "commons": "commons.yml",
-      },
-      "service": {
-        "auth": true,
-        "base-path": "/projects/{project_id}/operations/{operation_id}",
-        "endpoints": {
-          "getProjectOperation": {
-            "display-name": "Get operation details",
-            "docs": "Retrieves details for the specified operation.
-An operation is an action performed on a Neon project resource.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-You can obtain a \`operation_id\` by listing operations for the project.
-",
-            "method": "GET",
-            "path": "",
-            "response": "OperationResponse",
-          },
-        },
-        "path-parameters": {
-          "operation_id": {
-            "docs": "The operation ID",
-            "type": "string",
-          },
-          "project_id": {
-            "docs": "The Neon project ID",
-            "type": "string",
-          },
-        },
-      },
-      "types": {
-        "OperationResponse": {
-          "extends": undefined,
-          "properties": {
-            "operation": "commons.Operation",
-          },
-        },
-      },
-    },
-    "project.yml": {
-      "imports": {
-        "commons": "commons.yml",
-      },
-      "service": {
-        "auth": true,
-        "base-path": "/projects",
-        "endpoints": {
-          "create": {
-            "display-name": "Create a project",
-            "docs": "Creates a Neon project.
-A project is the top-level object in the Neon object hierarchy.
-Tier limits define how many projects you can create.
-Neon's Free Tier permits one project per Neon account.
-For more information, see [Manage projects](https://neon.tech/docs/manage/projects/).
-
-You can specify a region and PostgreSQL version in the request body.
-Neon currently supports PostgreSQL 14 and 15.
-For supported regions and \`region_id\` values, see [Regions](https://neon.tech/docs/introduction/regions/).
-",
-            "method": "POST",
-            "path": "",
-            "request": {
-              "body": "ProjectCreateRequest",
-            },
-          },
-          "createProjectBranch": {
-            "display-name": "Create a branch",
-            "docs": "Creates a branch in the specified project.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-
-This method does not require a request body, but you can specify one to create an endpoint for the branch or to select a non-default parent branch.
-The default behavior is to create a branch from the project's root branch (\`main\`) with no endpoint, and the branch name is auto-generated.
-For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-",
-            "method": "POST",
-            "path": "/{project_id}/branches",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": "BranchCreateRequest",
-            },
-          },
-          "delete": {
-            "display-name": "Delete a project",
-            "docs": "Deletes the specified project.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-Deleting a project is a permanent action.
-Deleting a project also deletes endpoints, branches, databases, and users that belong to the project.
-",
-            "method": "DELETE",
-            "path": "/{project_id}",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "response": "ProjectResponse",
-          },
-          "get": {
-            "display-name": "Get project details",
-            "docs": "Retrieves information about the specified project.
-A project is the top-level object in the Neon object hierarchy.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-",
-            "method": "GET",
-            "path": "/{project_id}",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "response": "ProjectResponse",
-          },
-          "listProjectBranches": {
-            "display-name": "Get a list of branches",
-            "docs": "Retrieves a list of branches for the specified project.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-
-Each Neon project has a root branch named \`main\`.
-A \`branch_id\` value has a \`br-\` prefix.
-A project may contain child branches that were branched from \`main\` or from another branch.
-A parent branch is identified by the \`parent_id\` value, which is the \`id\` of the parent branch.
-For related information, see [Manage branches](https://neon.tech/docs/manage/branches/).
-",
-            "method": "GET",
-            "path": "/{project_id}/branches",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "response": "BranchesResponse",
-          },
-          "listProjectEndpoints": {
-            "display-name": "Get a list of endpoints",
-            "docs": "Retrieves a list of endpoints for the specified project.
-An endpoint is a Neon compute instance.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-For more information about endpoints, see [Manage endpoints](https://neon.tech/docs/manage/endpoints/).
-",
-            "method": "GET",
-            "path": "/{project_id}/endpoints",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "response": "commons.EndpointsResponse",
-          },
-          "listProjectOperations": {
-            "display-name": "Get a list of operations",
-            "docs": "Retrieves a list of operations for the specified Neon project.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-The number of operations returned can be large.
-To paginate the response, issue an initial request with a \`limit\` value.
-Then, add the \`cursor\` value that was returned in the response to the next request.
-",
-            "method": "GET",
-            "path": "/{project_id}/operations",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListProjectOperationsRequest",
-              "query-parameters": {
-                "cursor": {
-                  "docs": "Specify the cursor value from the previous response to get the next batch of operations",
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "docs": "Specify a value from 1 to 1000 to limit number of operations in the response",
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": "ListOperations",
-          },
-          "listProjects": {
-            "display-name": "Get a list of projects",
-            "docs": "Retrieves a list of projects for the Neon account.
-A project is the top-level object in the Neon object hierarchy.
-For more information, see [Manage projects](https://neon.tech/docs/manage/projects/).
-",
-            "method": "GET",
-            "path": "",
-            "request": {
-              "name": "ListProjectsRequest",
-              "query-parameters": {
-                "cursor": {
-                  "docs": "Specify the cursor value from the previous response to get the next batch of projects.",
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "docs": "Specify a value from 1 to 100 to limit number of projects in the response.",
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": "ListProjects",
-          },
-          "update": {
-            "display-name": "Update a project",
-            "docs": "Updates the specified project.
-You can obtain a \`project_id\` by listing the projects for your Neon account.
-Neon permits updating the project name only.
-",
-            "method": "PATCH",
-            "path": "/{project_id}",
-            "path-parameters": {
-              "project_id": {
-                "docs": "The Neon project ID",
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": "ProjectUpdateRequest",
-            },
-            "response": "ProjectOperations",
-          },
-        },
-        "path-parameters": undefined,
-      },
-      "types": {
-        "BranchCreateRequest": {
-          "extends": undefined,
-          "properties": {
-            "branch": "optional<BranchProperties>",
-            "endpoints": "optional<list<BranchCreateRequestEndpointOptions>>",
-          },
-        },
-        "BranchCreateRequestEndpointOptions": {
-          "extends": undefined,
-          "properties": {
-            "autoscaling_limit_max_cu": "optional<integer>",
-            "autoscaling_limit_min_cu": "optional<integer>",
-            "type": "commons.EndpointType",
-          },
-        },
-        "BranchProperties": {
-          "extends": undefined,
-          "properties": {
+            "added_at": "optional<string>",
+            "complete": "_InlinedType4",
+            "date": "string",
+            "extra_fields": "list<_InlinedType3>",
+            "id": "optional<integer>",
             "name": "optional<string>",
-            "parent_id": "optional<string>",
-            "parent_lsn": "optional<string>",
-            "parent_timestamp": "optional<string>",
+            "room": "optional<string>",
+            "start_at": "optional<string>",
+            "time": "string",
+            "updated_at": "optional<string>",
           },
         },
-        "BranchesResponse": {
+        "_InlinedType6": {
           "extends": undefined,
           "properties": {
-            "branches": "list<commons.Branch>",
+            "key": "string",
+            "label": "optional<string>",
+            "present": "boolean",
+            "value": "optional<map<string, unknown>>",
           },
         },
-        "ConnectionURI": {
+        "_InlinedType7": {
           "extends": undefined,
           "properties": {
-            "connection_uri": {
-              "docs": "Connection URI is same as specified in https://www.postgresql.org/docs/current/libpq-connect.html#id-1.7.3.8.3.6
-It is a ready to use string for psql or for DATABASE_URL environment variable.
-",
-              "type": "string",
-            },
+            "added_at": "optional<string>",
+            "email": "string",
+            "extra_fields": "list<_InlinedType6>",
+            "first_name": "optional<string>",
+            "last_name": "optional<string>",
+            "phone": "string",
+            "player": "optional<string>",
+            "signature": "optional<string>",
+            "updated_at": "optional<string>",
           },
         },
-        "ConnectionURIsResponse": {
+        "_InlinedType8": {
           "extends": undefined,
           "properties": {
-            "connection_uris": "list<ConnectionURI>",
+            "added_at": "optional<string>",
+            "game": "optional<string>",
+            "photo": "string",
+            "processed_image": "optional<string>",
+            "ready": "optional<string>",
           },
         },
-        "CreatedBranch": {
-          "extends": [
-            "commons.BranchResponse",
-            "commons.EndpointsResponse",
-            "commons.OperationsResponse",
-            "ConnectionURIsResponse",
-          ],
-        },
-        "CreatedProject": {
-          "extends": [
-            "ProjectResponse",
-            "ConnectionURIsResponse",
-            "commons.RolesResponse",
-            "commons.DatabasesResponse",
-            "commons.OperationsResponse",
-            "commons.BranchResponse",
-            "commons.EndpointsResponse",
-          ],
-        },
-        "ListOperations": {
-          "extends": [
-            "commons.OperationsResponse",
-            "PaginationResponse",
-          ],
-        },
-        "ListProjects": {
-          "extends": [
-            "ProjectsResponse",
-            "PaginationResponse",
-          ],
-        },
-        "Pagination": {
-          "docs": "Cursor based pagination is used. The user must pass the cursor as is to the backend.
-For more information about cursor based pagination, see
-https://learn.microsoft.com/en-us/ef/core/querying/pagination#keyset-pagination
-",
+        "_InlinedType9": {
           "extends": undefined,
           "properties": {
-            "cursor": "string",
-          },
-        },
-        "PaginationResponse": {
-          "extends": undefined,
-          "properties": {
-            "pagination": "optional<Pagination>",
-          },
-        },
-        "PgVersion": {
-          "docs": "Major version of the Postgres",
-          "type": "integer",
-        },
-        "Project": {
-          "extends": undefined,
-          "properties": {
-            "branch_logical_size_limit": {
-              "docs": "Value is in MiB.
-",
-              "type": "integer",
-            },
-            "cpu_used_sec": {
-              "docs": "CPU seconds used by all the endpoints of the project, including deleted ones.
-This value is reset at the beginning of each billing period.
-Examples:
-1. An endpoint that uses 1 CPU for 1 second is equal to \`cpu_used_sec=1\`.
-2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to \`cpu_used_sec=2\`.
-",
-              "type": "integer",
-            },
-            "created_at": "string",
-            "creation_source": "string",
-            "default_endpoint_settings": "optional<ProjectSettingsData>",
-            "id": "string",
-            "maintenance_starts_at": {
-              "docs": "If set, the project will be in maintenance mode from that time.
-",
-              "type": "optional<string>",
-            },
-            "name": "string",
-            "pg_version": "PgVersion",
-            "platform_id": "string",
-            "provisioner": "optional<ProjectProvisioner>",
-            "proxy_host": "string",
-            "quota_reset_at": "optional<string>",
-            "region_id": "string",
-            "settings": "optional<ProjectSettings>",
-            "store_passwords": "boolean",
-            "synthetic_storage_size": {
-              "docs": "Experimental. Do not use this field yet!
-Data storage size in bytes.
-",
-              "type": "optional<integer>",
-            },
-            "updated_at": "string",
-          },
-        },
-        "ProjectCreateRequest": {
-          "extends": undefined,
-          "properties": {
-            "project": "ProjectCreateRequestProperties",
-          },
-        },
-        "ProjectCreateRequestProperties": {
-          "extends": undefined,
-          "properties": {
-            "autoscaling_limit_max_cu": "optional<integer>",
-            "autoscaling_limit_min_cu": "optional<integer>",
-            "default_endpoint_settings": "optional<commons.PgSettingsData>",
-            "name": "optional<string>",
-            "pg_version": "optional<PgVersion>",
-            "provisioner": "optional<ProjectProvisioner>",
-            "region_id": "optional<string>",
-            "settings": "optional<ProjectSettings>",
-            "store_passwords": "optional<boolean>",
-          },
-        },
-        "ProjectOperations": {
-          "extends": [
-            "ProjectResponse",
-            "commons.OperationsResponse",
-          ],
-        },
-        "ProjectProvisioner": "unknown",
-        "ProjectResponse": {
-          "extends": undefined,
-          "properties": {
-            "project": "Project",
-          },
-        },
-        "ProjectSettings": {
-          "extends": undefined,
-          "properties": {
-            "quota": "optional<ProjectSettingsQuota>",
-          },
-        },
-        "ProjectSettingsData": {
-          "docs": "ProjectSettingsData is a collection of settings for a Project",
-          "extends": undefined,
-          "properties": {
-            "pg_settings": "optional<commons.PgSettingsData>",
-          },
-        },
-        "ProjectSettingsQuota": {
-          "docs": "The consumption quota of a project.
-After the quota has been exceeded, it is impossible to use the project until either:
-* Neon cloud resets the calculated consumption,
-* or the user increases quota for the project.
-The Neon cloud resets the quota in the beginning of the billing period.
-
-If the quota is not set, the project can use as many resources as needed.
-",
-          "extends": undefined,
-          "properties": {
-            "cpu_quota_sec": {
-              "docs": "The total amount of CPU seconds allowed to be spent by the endpoints of the project.
-",
-              "type": "optional<integer>",
-            },
-          },
-        },
-        "ProjectUpdateRequest": {
-          "extends": undefined,
-          "properties": {
-            "project": "ProjectUpdateRequestProperties",
-          },
-        },
-        "ProjectUpdateRequestProperties": {
-          "extends": undefined,
-          "properties": {
-            "default_endpoint_settings": "optional<commons.PgSettingsData>",
-            "name": "optional<string>",
-            "settings": "optional<ProjectSettings>",
-          },
-        },
-        "ProjectsResponse": {
-          "extends": undefined,
-          "properties": {
-            "projects": "list<Project>",
+            "key": "string",
+            "label": "optional<string>",
+            "present": "boolean",
+            "value": "optional<map<string, unknown>>",
           },
         },
       },
     },
+    "commons.yml": {},
   },
   "rootApiFile": {
-    "auth": "bearer",
+    "auth": undefined,
     "auth-schemes": undefined,
-    "default-environment": null,
-    "display-name": "Neon API",
-    "environments": {
-      "Production": {
-        "docs": "Prod",
-        "url": "https://console.neon.tech/api/v2",
-      },
-    },
+    "display-name": "",
     "headers": {},
     "name": "api",
   },
