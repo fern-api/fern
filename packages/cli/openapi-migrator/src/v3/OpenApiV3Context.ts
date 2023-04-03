@@ -414,6 +414,21 @@ export class OpenApiV3Context {
                 }
             }
         }
+
+        if (schema.discriminator?.mapping != null) {
+            for (const [_, ref] of Object.entries(schema.discriminator.mapping)) {
+                if (ref.startsWith("#/components/schemas")) {
+                    const referenceObject = {
+                        $ref: ref,
+                    };
+                    schemaReferences.add(referenceObject);
+                    const resolvedSchema = this.maybeResolveReference(referenceObject);
+                    if (resolvedSchema != null) {
+                        this.getAllReferencedSchemas(resolvedSchema.schemaObject, schemaReferences);
+                    }
+                }
+            }
+        }
     }
 }
 
