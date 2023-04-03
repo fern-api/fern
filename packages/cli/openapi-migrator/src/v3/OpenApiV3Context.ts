@@ -392,6 +392,9 @@ export class OpenApiV3Context {
         if (schema.allOf != null) {
             for (const allOfElement of schema.allOf) {
                 if (isReferenceObject(allOfElement)) {
+                    if (schemaReferences.has(allOfElement)) {
+                        continue;
+                    }
                     schemaReferences.add(allOfElement);
                     const resolvedSchema = this.maybeResolveReference(allOfElement);
                     if (resolvedSchema != null) {
@@ -406,6 +409,9 @@ export class OpenApiV3Context {
         if (schema.oneOf != null) {
             for (const oneOfElement of schema.oneOf) {
                 if (isReferenceObject(oneOfElement)) {
+                    if (schemaReferences.has(oneOfElement)) {
+                        continue;
+                    }
                     schemaReferences.add(oneOfElement);
                     const resolvedSchema = this.maybeResolveReference(oneOfElement);
                     if (resolvedSchema != null) {
@@ -421,6 +427,9 @@ export class OpenApiV3Context {
                     const referenceObject = {
                         $ref: ref,
                     };
+                    if (schemaReferences.has(referenceObject)) {
+                        continue;
+                    }
                     schemaReferences.add(referenceObject);
                     const resolvedSchema = this.maybeResolveReference(referenceObject);
                     if (resolvedSchema != null) {
