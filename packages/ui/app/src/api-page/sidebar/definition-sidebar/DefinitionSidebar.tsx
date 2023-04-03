@@ -1,26 +1,23 @@
-import { InputGroup } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { useState } from "react";
 import { ApiDefinitionContextProvider } from "../../api-context/ApiDefinitionContextProvider";
-import { ParsedEnvironmentId, useCurrentEnvironmentId } from "../../routes/useCurrentEnvironment";
+import { useCurrentEnvironmentId } from "../../routes/useCurrentEnvironment";
 import { ApiDefinitionSidebarContextProvider } from "./context/ApiDefinitionSidebarContextProvider";
 import { DefinitionSidebarItems } from "./DefinitionSidebarItems";
-import { EnvironmentSelect } from "./environment-select/EnvironmentSelect";
 
 export const DefinitionSidebar: React.FC = () => {
     const currentEnvironmentId = useCurrentEnvironmentId();
-    const [selectedEnvironmentId, setSelectedEnvironmentId] = useState<ParsedEnvironmentId>(currentEnvironmentId);
 
     return (
-        <ApiDefinitionContextProvider environmentId={selectedEnvironmentId}>
-            <ApiDefinitionSidebarContextProvider environmentId={selectedEnvironmentId}>
-                <div className="flex-1 flex flex-col min-w-0 bg-white">
-                    <div className="flex flex-col m-3 gap-3">
-                        <InputGroup leftIcon={IconNames.SEARCH} placeholder="Search..." />
-                        <EnvironmentSelect
-                            selectedEnvironmentId={selectedEnvironmentId}
-                            onChange={setSelectedEnvironmentId}
-                        />
+        <ApiDefinitionContextProvider environmentId={currentEnvironmentId}>
+            <ApiDefinitionSidebarContextProvider environmentId={currentEnvironmentId}>
+                <div className="flex-1 flex flex-col min-w-0">
+                    <div className="flex items-center justify-between m-3 px-2 py-1 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded cursor-pointer text-gray-500">
+                        <div className="flex items-center gap-3">
+                            <Icon icon={IconNames.SEARCH} />
+                            <div>Search...</div>
+                        </div>
+                        <div>⌘K</div>
                     </div>
                     <DefinitionSidebarItems />
                 </div>

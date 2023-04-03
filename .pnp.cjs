@@ -9626,6 +9626,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fontsource/source-sans-pro", "npm:4.5.11"],\
             ["@tanstack/react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.24.10"],\
             ["@tanstack/react-query-devtools", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.24.12"],\
+            ["@types/httpsnippet", "npm:1.23.1"],\
             ["@types/indefinite", "npm:2.3.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
@@ -12370,6 +12371,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@types/har-format", [\
+        ["npm:1.2.10", {\
+          "packageLocation": "./.yarn/cache/@types-har-format-npm-1.2.10-5a11b22f1e-14c0118d80.zip/node_modules/@types/har-format/",\
+          "packageDependencies": [\
+            ["@types/har-format", "npm:1.2.10"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@types/hast", [\
         ["npm:2.3.4", {\
           "packageLocation": "./.yarn/cache/@types-hast-npm-2.3.4-7249cc0ece-fff47998f4.zip/node_modules/@types/hast/",\
@@ -12413,6 +12423,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/http-proxy", "npm:1.17.9"],\
             ["@types/node", "npm:18.6.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/httpsnippet", [\
+        ["npm:1.23.1", {\
+          "packageLocation": "./.yarn/cache/@types-httpsnippet-npm-1.23.1-3c51ac3944-f7b72cb217.zip/node_modules/@types/httpsnippet/",\
+          "packageDependencies": [\
+            ["@types/httpsnippet", "npm:1.23.1"],\
+            ["@types/har-format", "npm:1.2.10"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,8 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { MonospaceText } from "../../../commons/MonospaceText";
-import { EndpointIcon } from "../../sidebar/definition-sidebar/EndpointIcon";
 import { DefinitionItemPage } from "../DefinitionItemPage";
 import { EndpointPathParameter } from "./EndpointPathParameter";
+import { EndpointSection } from "./EndpointSection";
 import { EndpointTitle } from "./EndpointTitle";
 import { EndpointTypeSection } from "./EndpointTypeSection";
 import { PathParametersSection } from "./PathParametersSection";
@@ -19,8 +19,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
         <DefinitionItemPage
             title={<EndpointTitle endpoint={endpoint} />}
             subtitle={
-                <div className="flex items-center gap-2">
-                    <EndpointIcon size={20} />
+                <div className="flex items-center gap-2 text-gray-500">
                     <div className="font-bold text-base">GET</div>
                     <div className="flex">
                         {endpoint.path.parts.map((part, index) => (
@@ -39,27 +38,27 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
             }
             description={endpoint.description}
         >
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-1 flex-col gap-12">
                 {endpoint.path.pathParameters.length > 0 && (
                     <PathParametersSection pathParameters={endpoint.path.pathParameters} />
                 )}
                 {endpoint.queryParameters.length > 0 && (
                     <QueryParametersSection queryParameters={endpoint.queryParameters} />
                 )}
-                {endpoint.request != null && (
-                    <EndpointTypeSection
-                        title="Request"
-                        httpBody={endpoint.request}
-                        preamble="The request for this endpoint is"
-                    />
-                )}
-                {endpoint.response != null && (
-                    <EndpointTypeSection
-                        title="Response"
-                        httpBody={endpoint.response}
-                        preamble="This endpoint returns"
-                    />
-                )}
+                <EndpointSection title="Request">
+                    {endpoint.request != null ? (
+                        <EndpointTypeSection httpBody={endpoint.request} preamble="The request for this endpoint is" />
+                    ) : (
+                        <div>This endpoint does not expect a request body.</div>
+                    )}
+                </EndpointSection>
+                <EndpointSection title="Response">
+                    {endpoint.response != null ? (
+                        <EndpointTypeSection httpBody={endpoint.response} preamble="This endpoint returns" />
+                    ) : (
+                        <div>This endpoint does not return a response.</div>
+                    )}
+                </EndpointSection>
             </div>
         </DefinitionItemPage>
     );

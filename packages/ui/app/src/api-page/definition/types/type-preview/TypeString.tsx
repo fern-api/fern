@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React from "react";
 
 export declare namespace TypeString {
@@ -11,9 +10,9 @@ export declare namespace TypeString {
 
 export const TypeString: React.FC<TypeString.Props> = ({ className, article, children }) => {
     return (
-        <div className={classNames("flex", className)}>
-            {article != null && <span className="mr-1">{article}</span>}
+        <span className={className}>
+            {article != null && `${article} `}
             {children}
-        </div>
+        </span>
     );
 };

@@ -1,22 +1,16 @@
-import { generatePath } from "react-router-dom";
-import { useCurrentOrganizationIdOrThrow } from "../routes/useCurrentOrganization";
-import { ApiTabsContextProvider } from "./api-tabs/context/ApiTabsContextProvider";
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { ApiDefinitionContextProvider } from "./api-context/ApiDefinitionContextProvider";
 import { ApiPageContents } from "./ApiPageContents";
-import { DefinitionRoutes } from "./routes";
-import { useCurrentApiIdOrThrow } from "./routes/useCurrentApiId";
+import { parseEnvironmentIdFromPath } from "./routes/useCurrentEnvironment";
 
 export const ApiPage: React.FC = () => {
-    const organiationId = useCurrentOrganizationIdOrThrow();
-    const apiId = useCurrentApiIdOrThrow();
+    const location = useLocation();
+    const environmentId = useMemo(() => parseEnvironmentIdFromPath(location.pathname), [location.pathname]);
 
     return (
-        <ApiTabsContextProvider
-            noTabsRedirectPath={generatePath(DefinitionRoutes.API_DEFINITION.absolutePath, {
-                ORGANIZATION_ID: organiationId,
-                API_ID: apiId,
-            })}
-        >
+        <ApiDefinitionContextProvider environmentId={environmentId}>
             <ApiPageContents />
-        </ApiTabsContextProvider>
+        </ApiDefinitionContextProvider>
     );
 };

@@ -1,4 +1,3 @@
-import { NonIdealState } from "@blueprintjs/core";
 import { useNumericState } from "@fern-api/react-commons";
 import { Markdown } from "../markdown/Markdown";
 import { DefinitionItemExamplesLayout } from "./DefinitionItemExamplesLayout";
@@ -32,9 +31,12 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
 
     return (
         <DefinitionItemExamplesLayout
+            topLeftContent={
+                examples.length > 1 ? <div className="text-gray-500">{examples.length} examples</div> : undefined
+            }
             topRightContent={
                 examples.length > 1 ? (
-                    <div className="flex items-center gap-2 ml-3">
+                    <div className="flex items-center gap-2">
                         <ExampleChevron direction="left" onClick={onClickLeft} />
                         <div className="flex items-center gap-1">
                             {examples.map((_example, index) => (
@@ -51,18 +53,12 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
                 ) : undefined
             }
         >
-            {example != null ? (
-                <div className="flex flex-col p-5 overflow-y-auto">
-                    <div className="text-lg font-bold">{example.name ?? "Example"}</div>
-                    {example.description != null && (
-                        <div className="mt-1">
-                            <Markdown>{example.description}</Markdown>
-                        </div>
-                    )}
+            {example != null && (
+                <div className="flex flex-col pt-5 pr-5 overflow-y-auto">
+                    {example.name != null && <div className="text-lg font-bold mb-1">{example.name}</div>}
+                    {example.description != null && <Markdown>{example.description}</Markdown>}
                     <div className="flex flex-col mt-5">{example.render()}</div>
                 </div>
-            ) : (
-                <NonIdealState title="No examples" />
             )}
         </DefinitionItemExamplesLayout>
     );

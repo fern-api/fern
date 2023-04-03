@@ -1,38 +1,24 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { EnglishTypeReferenceSummary } from "../types/english-summary/EnglishTypeReferenceSummary";
-import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
-import { TypeReferenceTree } from "../types/TypeReferenceTree";
-import { EndpointSection } from "./EndpointSection";
+import { AllReferencedTypes } from "./AllReferencedTypes";
 
 export declare namespace EndpointTypeSection {
     export interface Props {
-        title: string;
         preamble: string;
         httpBody: FernRegistry.HttpBody;
     }
 }
 
-export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ title, httpBody, preamble }) => {
+export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ httpBody, preamble }) => {
     return (
-        <EndpointSection
-            title={title}
-            titleRightText={httpBody.type._visit<JSX.Element | string | undefined>({
-                object: () => "object",
-                reference: (type) => (
-                    <div className="flex items-center">
-                        <TypeShorthand type={type} />
-                    </div>
-                ),
-                _other: () => undefined,
-            })}
-        >
+        <div className="flex flex-col">
             {httpBody.description != null && <div className="text-gray-500 mb-2">{httpBody.description}</div>}
             {httpBody.type._visit({
                 object: () => null,
                 reference: (type) => {
                     return (
-                        <div className="flex flex-wrap items-center leading-7 max-w-xl mb-3">
-                            <span className="mr-1">{preamble}</span>
+                        <div className="border border-gray-300 rounded p-2 bg-[#f5f5f5] leading-7">
+                            {preamble + " "}
                             <EnglishTypeReferenceSummary type={type} isEndOfSentence />
                         </div>
                     );
@@ -41,9 +27,9 @@ export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ title
             })}
             {httpBody.type._visit({
                 object: () => <div>properties</div>,
-                reference: (type) => <TypeReferenceTree type={type} />,
+                reference: (type) => <AllReferencedTypes className="mt-5" type={type} />,
                 _other: () => null,
             })}
-        </EndpointSection>
+        </div>
     );
 };

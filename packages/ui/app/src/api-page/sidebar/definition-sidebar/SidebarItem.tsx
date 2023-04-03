@@ -1,7 +1,7 @@
 import { IconName, Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
-import { useApiTab } from "../../api-tabs/context/useApiTab";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace SidebarItem {
@@ -13,23 +13,31 @@ export declare namespace SidebarItem {
 }
 
 export const SidebarItem: React.FC<SidebarItem.Props> = ({ title, icon, path }) => {
-    const { openTab, isSelected, makeTabLongLived } = useApiTab(path);
+    const isSelected = useLocation().pathname === path;
 
+    const navigate = useNavigate();
     const onClick = useCallback(() => {
-        openTab();
-    }, [openTab]);
+        navigate(path);
+    }, [navigate, path]);
 
-    const getOverlayClassName = useCallback(
+    const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
-            if (isSelected) {
-                return isHovering ? "bg-green-500/[0.25]" : "bg-green-500/[0.15]";
-            }
-            if (isHovering) {
-                return "bg-neutral-400/20";
-            }
-            return undefined;
+            return (
+                <Text
+                    className={classNames(
+                        "pr-1",
+                        isSelected ? "text-green-700" : isHovering ? "text-black" : "text-gray-500",
+                        {
+                            "font-bold": isSelected,
+                        }
+                    )}
+                    ellipsize
+                >
+                    {title}
+                </Text>
+            );
         },
-        [isSelected]
+        [isSelected, title]
     );
 
     const renderIcon = useMemo(() => {
@@ -40,22 +48,5 @@ export const SidebarItem: React.FC<SidebarItem.Props> = ({ title, icon, path }) 
         }
     }, [icon, isSelected]);
 
-    return (
-        <SidebarItemLayout
-            title={
-                <Text
-                    className={classNames("pr-1", {
-                        "text-green-700": isSelected,
-                    })}
-                    ellipsize
-                >
-                    {title}
-                </Text>
-            }
-            icon={renderIcon}
-            onClick={onClick}
-            onDoubleClick={makeTabLongLived}
-            overlayClassName={getOverlayClassName}
-        />
-    );
+    return <SidebarItemLayout title={renderTitle} icon={renderIcon} onClick={onClick} />;
 };

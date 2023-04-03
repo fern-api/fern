@@ -4759,6 +4759,7 @@ __metadata:
     "@fontsource/source-sans-pro": ^4.5.11
     "@tanstack/react-query": ^4.24.10
     "@tanstack/react-query-devtools": ^4.24.12
+    "@types/httpsnippet": ^1.23.1
     "@types/indefinite": ^2.3.1
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
@@ -6927,6 +6928,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/har-format@npm:*":
+  version: 1.2.10
+  resolution: "@types/har-format@npm:1.2.10"
+  checksum: 14c0118d809e77a0bac9deec0a87159c28beab21105cfce3aa291b51e28d4c07142851c4e6b93b7ecb4ea237fe07d39ba98a42bb2de2f5891144733411ac76b7
+  languageName: node
+  linkType: hard
+
 "@types/hast@npm:^2.0.0":
   version: 2.3.4
   resolution: "@types/hast@npm:2.3.4"
@@ -6963,6 +6971,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 7a6746d00729b2a9fe9f9dd3453430b099931df879ec8f7a7b5f07b1795f6d99b0512640c45a67390b1e4bacb9401e36824952aeeaf089feba8627a063cf8e00
+  languageName: node
+  linkType: hard
+
+"@types/httpsnippet@npm:^1.23.1":
+  version: 1.23.1
+  resolution: "@types/httpsnippet@npm:1.23.1"
+  dependencies:
+    "@types/har-format": "*"
+  checksum: f7b72cb21719596bdb93adcdb54cd1b99f07df6526d3da7383fe0b310199f6837abe6877ea1088d27ad2c19ac595337f8a644eab97514b773acce0c72e3d7216
   languageName: node
   linkType: hard
 

@@ -1,6 +1,4 @@
 import { FernRegistry } from "@fern-fern/registry";
-import indefinite from "indefinite";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { PrimitivePreviewPart } from "../type-preview/PrimitivePreviewPart";
 import { ReferencedTypePreviewPart } from "../type-preview/ReferencedTypePreviewPart";
 import { TypeString } from "../type-preview/TypeString";
@@ -18,22 +16,10 @@ export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.P
     isEndOfSentence = false,
     plural = false,
 }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
-
     const summary = (
         <>
             {type._visit<JSX.Element | string>({
-                id: (typeId) => {
-                    const resolvedType = resolveTypeById(typeId);
-                    return (
-                        <>
-                            {plural || (
-                                <span className="mr-1">{indefinite(resolvedType.name, { articleOnly: true })}</span>
-                            )}
-                            <ReferencedTypePreviewPart typeId={typeId} />
-                        </>
-                    );
-                },
+                id: (typeId) => <ReferencedTypePreviewPart typeId={typeId} />,
                 primitive: (primitive) => {
                     return <PrimitivePreviewPart primitive={primitive} shouldIncludeArticle plural={plural} />;
                 },
@@ -41,10 +27,8 @@ export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.P
                 list: ({ itemType }) => {
                     return (
                         <>
-                            <TypeString article={plural ? undefined : "a"} className="mr-1">
-                                {plural ? "lists" : "list"}
-                            </TypeString>
-                            <span className="mr-1">of</span>
+                            <TypeString article={plural ? undefined : "a"}>{plural ? "lists" : "list"}</TypeString>
+                            {" of "}
                             <EnglishTypeReferenceSummary type={itemType} plural />
                         </>
                     );
@@ -52,10 +36,8 @@ export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.P
                 set: ({ itemType }) => {
                     return (
                         <>
-                            <TypeString article={plural ? undefined : "a"} className="mr-1">
-                                {plural ? "sets" : "set"}
-                            </TypeString>
-                            <span className="mr-1">of</span>
+                            <TypeString article={plural ? undefined : "a"}>{plural ? "sets" : "set"}</TypeString>
+                            {" of "}
                             <EnglishTypeReferenceSummary type={itemType} plural />
                         </>
                     );
@@ -64,17 +46,22 @@ export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.P
                     return (
                         <>
                             <TypeString article={plural ? undefined : "a"}>
-                                {plural ? "maps" : "map" + " of key-value pairs"}
+                                {plural ? "maps" : "map" + " of key-value pairs:"}
                             </TypeString>
-                            <span className="mr-1">. The</span>
-                            <TypeString className="mr-1">keys</TypeString>
-                            <span className="mr-1">are</span>
-                            <EnglishTypeReferenceSummary type={keyType} plural />
-                            <span className="mx-1">and</span>
-                            <span className="mr-1">the</span>
-                            <TypeString className="mr-1">values</TypeString>
-                            <span className="mr-1">are</span>
-                            <EnglishTypeReferenceSummary type={valueType} plural />
+                            <div className="flex flex-col gap-1 ml-2 mt-1">
+                                <div>
+                                    {"The "}
+                                    <span className="font-bold">keys</span>
+                                    {" are "}
+                                    <EnglishTypeReferenceSummary type={keyType} plural isEndOfSentence />
+                                </div>
+                                <div>
+                                    {"The "}
+                                    <span className="font-bold">values</span>
+                                    {" are "}
+                                    <EnglishTypeReferenceSummary type={valueType} plural isEndOfSentence />
+                                </div>
+                            </div>
                         </>
                     );
                 },
@@ -84,7 +71,11 @@ export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.P
         </>
     );
 
-    if (!isEndOfSentence) {
+    if (
+        !isEndOfSentence ||
+        // maps are multiline so shouldn't have a trailing period
+        type.type === "map"
+    ) {
         return summary;
     }
 

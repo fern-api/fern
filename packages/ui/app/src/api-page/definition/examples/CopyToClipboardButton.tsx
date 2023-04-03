@@ -29,7 +29,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({ c
         <div
             className={classNames(
                 "absolute top-2 right-2 cursor-pointer",
-                isCopied ? "text-green-500" : "text-gray-500 hover:text-gray-300"
+                isCopied ? "text-green-500" : "text-gray-400 hover:text-gray-500"
             )}
             onClick={onClickCopy}
         >
