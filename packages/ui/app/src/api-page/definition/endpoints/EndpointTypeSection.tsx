@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { AllReferencedTypes } from "../types/AllReferencedTypes";
 import { EnglishTypeReferenceSummary } from "../types/english-summary/EnglishTypeReferenceSummary";
-import { AllReferencedTypes } from "./AllReferencedTypes";
 
 export declare namespace EndpointTypeSection {
     export interface Props {
@@ -27,7 +27,7 @@ export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ httpB
             })}
             {httpBody.type._visit({
                 object: () => <div>properties</div>,
-                reference: (type) => <AllReferencedTypes className="mt-5" type={type} />,
+                reference: (type) => <AllReferencedTypes className="mt-5" type={type} defaultIsCollapsed={false} />,
                 _other: () => null,
             })}
         </div>

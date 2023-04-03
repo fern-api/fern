@@ -1,0 +1,14 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.showPropertiesButton {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    &::before {
+        content: attr(data-show-text);
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+}

@@ -4759,8 +4759,6 @@ __metadata:
     "@fontsource/source-sans-pro": ^4.5.11
     "@tanstack/react-query": ^4.24.10
     "@tanstack/react-query-devtools": ^4.24.12
-    "@types/httpsnippet": ^1.23.1
-    "@types/indefinite": ^2.3.1
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -4772,7 +4770,6 @@ __metadata:
     depcheck: ^1.4.3
     emoji-picker-react: ^4.4.7
     eslint: ^8.26.0
-    indefinite: ^2.4.2
     jest: ^29.0.3
     lodash-es: ^4.17.21
     normalize.css: ^8.0.1
@@ -4787,7 +4784,6 @@ __metadata:
     remark-gfm: ^3.0.1
     stylelint: ^14.14.0
     typescript: 4.6.4
-    use-immer: ^0.8.1
     vite: ^4.1.3
   languageName: unknown
   linkType: soft
@@ -6928,13 +6924,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/har-format@npm:*":
-  version: 1.2.10
-  resolution: "@types/har-format@npm:1.2.10"
-  checksum: 14c0118d809e77a0bac9deec0a87159c28beab21105cfce3aa291b51e28d4c07142851c4e6b93b7ecb4ea237fe07d39ba98a42bb2de2f5891144733411ac76b7
-  languageName: node
-  linkType: hard
-
 "@types/hast@npm:^2.0.0":
   version: 2.3.4
   resolution: "@types/hast@npm:2.3.4"
@@ -6971,22 +6960,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 7a6746d00729b2a9fe9f9dd3453430b099931df879ec8f7a7b5f07b1795f6d99b0512640c45a67390b1e4bacb9401e36824952aeeaf089feba8627a063cf8e00
-  languageName: node
-  linkType: hard
-
-"@types/httpsnippet@npm:^1.23.1":
-  version: 1.23.1
-  resolution: "@types/httpsnippet@npm:1.23.1"
-  dependencies:
-    "@types/har-format": "*"
-  checksum: f7b72cb21719596bdb93adcdb54cd1b99f07df6526d3da7383fe0b310199f6837abe6877ea1088d27ad2c19ac595337f8a644eab97514b773acce0c72e3d7216
-  languageName: node
-  linkType: hard
-
-"@types/indefinite@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "@types/indefinite@npm:2.3.1"
-  checksum: 12394d59e02135edb925d6c45cca555f97ce3a6dc2589ca4393919c479f390760c67f2afe0a34baf00995e4e243c2a287599f9a9db5e69c2a45b59e0167a25a9
   languageName: node
   linkType: hard
 
@@ -14001,13 +13974,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.1.4
   resolution: "imurmurhash@npm:0.1.4"
   checksum: 7cae75c8cd9a50f57dadd77482359f659eaebac0319dd9368bcd1714f55e65badd6929ca58569da2b6494ef13fdd5598cd700b1eba23f8b79c5f19d195a3ecf7
-  languageName: node
-  linkType: hard
-
-"indefinite@npm:^2.4.2":
-  version: 2.4.2
-  resolution: "indefinite@npm:2.4.2"
-  checksum: f157de6007277af014ecb4ae8190fd8c945c321ca987acb5ac449197a6b16cfb656376079c6be70a3c3d879c2b5b875ff5f051187d4961b5488fb21251063a77
   languageName: node
   linkType: hard
 
@@ -22494,16 +22460,6 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: f771cbadfdc91e03b7ab9eb32d0fc0cc647755711801bf507e891ad38c4bbc5f02b2509acadf9c965ec9c5f2f642fd33bdfdfb17b0873c4ad0a9b1f5e5e724bf
-  languageName: node
-  linkType: hard
-
-"use-immer@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "use-immer@npm:0.8.1"
-  peerDependencies:
-    immer: ">=2.0.0"
-    react: ^16.8.0 || ^17.0.1 || ^18.0.0
-  checksum: 9ffc1a201a92b6b026c420718e6a00e72ba48b62420bb515927b379bb1d791b5b4766b57c755b4851c0e1f80000e639bc1cf8e73424e44466741c159391d35dd
   languageName: node
   linkType: hard
 

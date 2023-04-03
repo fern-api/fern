@@ -2,16 +2,17 @@ import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { uniq } from "lodash-es";
 import { useMemo } from "react";
-import { TypeDefinition } from "../types/TypeDefinition";
+import { TypeDefinition } from "./TypeDefinition";
 
 export declare namespace AllReferencedTypes {
     export interface Props {
         type: FernRegistry.TypeReference;
+        defaultIsCollapsed: boolean;
         className?: string;
     }
 }
 
-export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, className }) => {
+export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, defaultIsCollapsed, className }) => {
     const allReferencedTypes = useMemo(() => getAllReferencedTypes(type), [type]);
 
     if (allReferencedTypes.length === 0) {
@@ -21,7 +22,7 @@ export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, c
     return (
         <div className={classNames("flex flex-col gap-5", className)}>
             {allReferencedTypes.map((typeId) => (
-                <TypeDefinition key={typeId} typeId={typeId} />
+                <TypeDefinition key={typeId} typeId={typeId} defaultIsCollapsed={defaultIsCollapsed} />
             ))}
         </div>
     );

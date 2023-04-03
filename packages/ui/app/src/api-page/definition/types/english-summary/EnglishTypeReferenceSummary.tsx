@@ -65,7 +65,7 @@ export const EnglishTypeReferenceSummary: React.FC<EnglishTypeReferenceSummary.P
                         </>
                     );
                 },
-                unknown: () => "unknown",
+                unknown: () => "untyped (any JSON)",
                 _other: () => "<unknown>",
             })}
         </>

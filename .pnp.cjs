@@ -9626,8 +9626,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fontsource/source-sans-pro", "npm:4.5.11"],\
             ["@tanstack/react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.24.10"],\
             ["@tanstack/react-query-devtools", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.24.12"],\
-            ["@types/httpsnippet", "npm:1.23.1"],\
-            ["@types/indefinite", "npm:2.3.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.6"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9639,7 +9637,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["emoji-picker-react", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.4.7"],\
             ["eslint", "npm:8.26.0"],\
-            ["indefinite", "npm:2.4.2"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
             ["normalize.css", "npm:8.0.1"],\
@@ -9654,7 +9651,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["remark-gfm", "npm:3.0.1"],\
             ["stylelint", "npm:14.14.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"],\
-            ["use-immer", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:0.8.1"],\
             ["vite", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:4.1.3"]\
           ],\
           "linkType": "SOFT"\
@@ -12371,15 +12367,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@types/har-format", [\
-        ["npm:1.2.10", {\
-          "packageLocation": "./.yarn/cache/@types-har-format-npm-1.2.10-5a11b22f1e-14c0118d80.zip/node_modules/@types/har-format/",\
-          "packageDependencies": [\
-            ["@types/har-format", "npm:1.2.10"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["@types/hast", [\
         ["npm:2.3.4", {\
           "packageLocation": "./.yarn/cache/@types-hast-npm-2.3.4-7249cc0ece-fff47998f4.zip/node_modules/@types/hast/",\
@@ -12423,25 +12410,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/http-proxy", "npm:1.17.9"],\
             ["@types/node", "npm:18.6.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/httpsnippet", [\
-        ["npm:1.23.1", {\
-          "packageLocation": "./.yarn/cache/@types-httpsnippet-npm-1.23.1-3c51ac3944-f7b72cb217.zip/node_modules/@types/httpsnippet/",\
-          "packageDependencies": [\
-            ["@types/httpsnippet", "npm:1.23.1"],\
-            ["@types/har-format", "npm:1.2.10"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@types/indefinite", [\
-        ["npm:2.3.1", {\
-          "packageLocation": "./.yarn/cache/@types-indefinite-npm-2.3.1-49d5e321ec-12394d59e0.zip/node_modules/@types/indefinite/",\
-          "packageDependencies": [\
-            ["@types/indefinite", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21074,15 +21042,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/imurmurhash-npm-0.1.4-610c5068a0-7cae75c8cd.zip/node_modules/imurmurhash/",\
           "packageDependencies": [\
             ["imurmurhash", "npm:0.1.4"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["indefinite", [\
-        ["npm:2.4.2", {\
-          "packageLocation": "./.yarn/cache/indefinite-npm-2.4.2-e443c1b84e-f157de6007.zip/node_modules/indefinite/",\
-          "packageDependencies": [\
-            ["indefinite", "npm:2.4.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -32025,32 +31984,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
-            "react"\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["use-immer", [\
-        ["npm:0.8.1", {\
-          "packageLocation": "./.yarn/cache/use-immer-npm-0.8.1-2cf589888f-9ffc1a201a.zip/node_modules/use-immer/",\
-          "packageDependencies": [\
-            ["use-immer", "npm:0.8.1"]\
-          ],\
-          "linkType": "SOFT"\
-        }],\
-        ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:0.8.1", {\
-          "packageLocation": "./.yarn/__virtual__/use-immer-virtual-15a4551859/0/cache/use-immer-npm-0.8.1-2cf589888f-9ffc1a201a.zip/node_modules/use-immer/",\
-          "packageDependencies": [\
-            ["use-immer", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:0.8.1"],\
-            ["@types/immer", null],\
-            ["@types/react", "npm:18.0.20"],\
-            ["immer", null],\
-            ["react", "npm:18.2.0"]\
-          ],\
-          "packagePeers": [\
-            "@types/immer",\
-            "@types/react",\
-            "immer",\
             "react"\
           ],\
           "linkType": "HARD"\

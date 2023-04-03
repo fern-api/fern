@@ -1,5 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { ReferencedTypePreviewPart } from "../type-preview/ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
     export interface Props {
@@ -8,13 +8,10 @@ export declare namespace TypeShorthand {
 }
 
 export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
     return (
         <>
             {type._visit<JSX.Element | string>({
-                id: (typeId) => {
-                    return resolveTypeById(typeId).name;
-                },
+                id: (typeId) => <ReferencedTypePreviewPart typeId={typeId} />,
                 primitive: (primitive) => {
                     return primitive._visit({
                         string: () => "string",
