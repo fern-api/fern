@@ -16,11 +16,11 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.v11.model.environment.EnvironmentBaseUrlId;
-import com.fern.ir.v11.model.http.HttpEndpoint;
-import com.fern.ir.v11.model.http.HttpPathPart;
-import com.fern.ir.v11.model.http.HttpService;
-import com.fern.ir.v11.model.http.PathParameter;
+import com.fern.ir.v12.model.environment.EnvironmentBaseUrlId;
+import com.fern.ir.v12.model.http.HttpEndpoint;
+import com.fern.ir.v12.model.http.HttpPathPart;
+import com.fern.ir.v12.model.http.HttpService;
+import com.fern.ir.v12.model.http.PathParameter;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -127,11 +127,10 @@ public abstract class AbstractEndpointWriter {
                         generatedClientOptions.httpClient(),
                         REQUEST_NAME)
                 .beginControlFlow("if ($L.isSuccessful())", RESPONSE_NAME);
-        if (httpEndpoint.getResponse().getType().isPresent()) {
+        if (httpEndpoint.getResponse().isPresent()) {
             TypeName returnType = clientGeneratorContext
                     .getPoetTypeNameMapper()
-                    .convertToTypeName(
-                            true, httpEndpoint.getResponse().getType().get());
+                    .convertToTypeName(true, httpEndpoint.getResponse().get().getResponseBodyType());
             endpointMethodBuilder.returns(returnType);
             httpResponseBuilder
                     .addStatement(

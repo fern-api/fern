@@ -16,11 +16,11 @@
 
 package com.fern.java;
 
-import com.fern.ir.v11.model.commons.FernFilepath;
-import com.fern.ir.v11.model.commons.Name;
-import com.fern.ir.v11.model.commons.SafeAndUnsafeString;
-import com.fern.ir.v11.model.ir.IntermediateRepresentation;
-import com.fern.ir.v11.model.types.DeclaredTypeName;
+import com.fern.ir.v12.model.commons.FernFilepath;
+import com.fern.ir.v12.model.commons.Name;
+import com.fern.ir.v12.model.commons.SafeAndUnsafeString;
+import com.fern.ir.v12.model.ir.IntermediateRepresentation;
+import com.fern.ir.v12.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +29,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class AbstractPoetClassNameFactory {
+
+    private static final String OBJECT_MAPPERS_CLASS_SIMPLE_NAME = "ObjectMappers";
 
     private final List<String> packagePrefixTokens;
 
@@ -39,6 +41,10 @@ public abstract class AbstractPoetClassNameFactory {
     public abstract ClassName getTypeClassName(DeclaredTypeName declaredTypeName);
 
     public abstract ClassName getInterfaceClassName(DeclaredTypeName declaredTypeName);
+
+    public final ClassName getObjectMapperClassName() {
+        return getCoreClassName(OBJECT_MAPPERS_CLASS_SIMPLE_NAME);
+    }
 
     public final ClassName getCoreClassName(String className) {
         return ClassName.get(getCorePackage(), className);

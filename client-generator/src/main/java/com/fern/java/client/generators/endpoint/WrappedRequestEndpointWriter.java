@@ -16,9 +16,9 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.v11.model.http.HttpEndpoint;
-import com.fern.ir.v11.model.http.HttpService;
-import com.fern.ir.v11.model.http.SdkRequest;
+import com.fern.ir.v12.model.http.HttpEndpoint;
+import com.fern.ir.v12.model.http.HttpService;
+import com.fern.ir.v12.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;

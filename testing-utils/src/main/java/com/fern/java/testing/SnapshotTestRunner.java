@@ -140,7 +140,7 @@ public final class SnapshotTestRunner {
         Files.writeString(pathToConfig, ClientObjectMappers.JSON_MAPPER.writeValueAsString(generatorConfig));
 
         runCommand(fernDir, new String[] {
-            "fern", "ir", pathToIr.toAbsolutePath().toString(), "--language", "java", "--version", "v11"
+            "fern", "ir", pathToIr.toAbsolutePath().toString(), "--language", "java", "--version", "v12"
         });
 
         runCommand(fernDir, new String[] {

@@ -15,14 +15,15 @@
  */
 package com.fern.java.spring.generators;
 
-import com.fern.ir.v11.model.commons.TypeId;
-import com.fern.ir.v11.model.http.EndpointName;
-import com.fern.ir.v11.model.http.HttpEndpoint;
-import com.fern.ir.v11.model.http.HttpRequestBody;
-import com.fern.ir.v11.model.http.HttpRequestBodyReference;
-import com.fern.ir.v11.model.http.HttpResponse;
-import com.fern.ir.v11.model.http.HttpService;
-import com.fern.ir.v11.model.http.InlinedRequestBody;
+import com.fern.ir.v12.model.commons.TypeId;
+import com.fern.ir.v12.model.http.EndpointName;
+import com.fern.ir.v12.model.http.FileUploadRequest;
+import com.fern.ir.v12.model.http.HttpEndpoint;
+import com.fern.ir.v12.model.http.HttpRequestBody;
+import com.fern.ir.v12.model.http.HttpRequestBodyReference;
+import com.fern.ir.v12.model.http.HttpService;
+import com.fern.ir.v12.model.http.InlinedRequestBody;
+import com.fern.ir.v12.model.http.NonStreamingResponse;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -108,11 +109,11 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 .addAnnotation(httpEndpoint.getMethod().visit(new SpringHttpMethodToAnnotationSpec(httpEndpoint)))
                 .addParameters(endpointParameters);
 
-        HttpResponse httpResponse = httpEndpoint.getResponse();
-        if (httpResponse.getType().isPresent()) {
+        Optional<NonStreamingResponse> httpResponse = httpEndpoint.getResponse();
+        if (httpResponse.isPresent()) {
             TypeName responseTypeName = generatorContext
                     .getPoetTypeNameMapper()
-                    .convertToTypeName(true, httpResponse.getType().get());
+                    .convertToTypeName(true, httpResponse.get().getResponseBodyType());
             endpointMethodBuilder.returns(responseTypeName);
         }
 
@@ -193,6 +194,11 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                     return generatorContext
                             .getPoetTypeNameMapper()
                             .convertToTypeName(true, reference.getRequestBodyType());
+                }
+
+                @Override
+                public TypeName visitFileUpload(FileUploadRequest fileUpload) {
+                    throw new UnsupportedOperationException("File upload not supported");
                 }
 
                 @Override

@@ -27,7 +27,7 @@ import com.fern.generator.exec.model.logging.ExitStatusUpdate;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
-import com.fern.ir.v11.model.ir.IntermediateRepresentation;
+import com.fern.ir.v12.model.ir.IntermediateRepresentation;
 import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.generators.GithubWorkflowGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;

@@ -31,12 +31,9 @@ import javax.lang.model.element.Modifier;
 public final class ObjectMappersGenerator extends AbstractFileGenerator {
 
     public static final String JSON_MAPPER_STATIC_FIELD_NAME = "JSON_MAPPER";
-    private static final String OBJECT_MAPPERS_CLASS_SIMPLE_NAME = "ObjectMappers";
 
     public ObjectMappersGenerator(AbstractGeneratorContext<?> generatorContext) {
-        super(
-                generatorContext.getPoetClassNameFactory().getCoreClassName(OBJECT_MAPPERS_CLASS_SIMPLE_NAME),
-                generatorContext);
+        super(generatorContext.getPoetClassNameFactory().getObjectMapperClassName(), generatorContext);
     }
 
     @Override

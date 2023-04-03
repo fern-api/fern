@@ -16,12 +16,12 @@
 
 package com.fern.java;
 
-import com.fern.ir.v11.model.commons.Availability;
-import com.fern.ir.v11.model.commons.AvailabilityStatus;
-import com.fern.ir.v11.model.commons.Name;
-import com.fern.ir.v11.model.commons.NameAndWireValue;
-import com.fern.ir.v11.model.http.InlinedRequestBody;
-import com.fern.ir.v11.model.types.ObjectProperty;
+import com.fern.ir.v12.model.commons.Availability;
+import com.fern.ir.v12.model.commons.AvailabilityStatus;
+import com.fern.ir.v12.model.commons.Name;
+import com.fern.ir.v12.model.commons.NameAndWireValue;
+import com.fern.ir.v12.model.http.InlinedRequestBody;
+import com.fern.ir.v12.model.types.ObjectProperty;
 import java.util.List;
 import java.util.stream.Collectors;
 

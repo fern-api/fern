@@ -16,13 +16,14 @@
 
 package com.fern.java.generators;
 
-import com.fern.ir.v11.model.commons.TypeId;
-import com.fern.ir.v11.model.types.AliasTypeDeclaration;
-import com.fern.ir.v11.model.types.DeclaredTypeName;
-import com.fern.ir.v11.model.types.EnumTypeDeclaration;
-import com.fern.ir.v11.model.types.ObjectTypeDeclaration;
-import com.fern.ir.v11.model.types.Type;
-import com.fern.ir.v11.model.types.UnionTypeDeclaration;
+import com.fern.ir.v12.model.commons.TypeId;
+import com.fern.ir.v12.model.types.AliasTypeDeclaration;
+import com.fern.ir.v12.model.types.DeclaredTypeName;
+import com.fern.ir.v12.model.types.EnumTypeDeclaration;
+import com.fern.ir.v12.model.types.ObjectTypeDeclaration;
+import com.fern.ir.v12.model.types.Type;
+import com.fern.ir.v12.model.types.UndiscriminatedUnionTypeDeclaration;
+import com.fern.ir.v12.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -92,6 +93,14 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
     @Override
     public Optional<GeneratedJavaFile> visitUnion(UnionTypeDeclaration value) {
         UnionGenerator unionGenerator = new UnionGenerator(className, generatorContext, value);
+        return Optional.of(unionGenerator.generateFile());
+    }
+
+    @Override
+    public Optional<GeneratedJavaFile> visitUndiscriminatedUnion(
+            UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+        UndiscriminatedUnionGenerator unionGenerator =
+                new UndiscriminatedUnionGenerator(className, generatorContext, undiscriminatedUnion);
         return Optional.of(unionGenerator.generateFile());
     }
 
