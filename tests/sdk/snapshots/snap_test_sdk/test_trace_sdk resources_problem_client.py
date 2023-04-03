@@ -24,7 +24,7 @@ class ProblemClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):
@@ -118,7 +118,7 @@ class AsyncProblemClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):

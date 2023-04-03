@@ -14,6 +14,7 @@ from fern_python.external_dependencies import (
 )
 
 from ..context.sdk_generator_context import SdkGeneratorContext
+from ..environment_generator.environment_generator import EnvironmentGenerator
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
     InlinedRequestBodyParameters,
@@ -26,6 +27,7 @@ class ConstructorParameter:
     constructor_parameter_name: str
     private_member_name: str
     type_hint: AST.TypeHint
+    initializer: Optional[AST.Expression] = None
 
 
 class ClientGenerator:
@@ -73,7 +75,11 @@ class ClientGenerator:
             constructor=AST.ClassConstructor(
                 signature=AST.FunctionSignature(
                     named_parameters=[
-                        AST.NamedFunctionParameter(name=param.constructor_parameter_name, type_hint=param.type_hint)
+                        AST.NamedFunctionParameter(
+                            name=param.constructor_parameter_name,
+                            type_hint=param.type_hint,
+                            initializer=param.initializer,
+                        )
                         for param in self._get_constructor_parameters()
                     ],
                 ),
@@ -161,6 +167,14 @@ class ClientGenerator:
                 type_hint=AST.TypeHint(self._context.get_reference_to_environments_enum())
                 if self._environment_is_enum()
                 else AST.TypeHint.str_(),
+                initializer=AST.Expression(
+                    EnvironmentGenerator(
+                        context=self._context, environments=self._context.ir.environments.environments
+                    ).get_reference_to_default_environment()
+                )
+                if self._context.ir.environments is not None
+                and self._context.ir.environments.default_environment is not None
+                else None,
             )
         )
 

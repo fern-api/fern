@@ -17,7 +17,7 @@ class SyspropClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):
@@ -70,7 +70,7 @@ class AsyncSyspropClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):

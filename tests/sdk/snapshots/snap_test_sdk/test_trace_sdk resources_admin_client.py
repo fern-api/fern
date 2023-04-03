@@ -26,7 +26,7 @@ class AdminClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):
@@ -234,7 +234,7 @@ class AsyncAdminClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):

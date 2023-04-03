@@ -4,4 +4,4 @@ import enum
 
 
 class FernIrEnvironment(enum.Enum):
-    prod = "https://api.trace.come"
+    PROD = "https://api.trace.come"

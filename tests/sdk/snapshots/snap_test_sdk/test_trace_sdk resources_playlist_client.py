@@ -24,7 +24,7 @@ class PlaylistClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):
@@ -164,7 +164,7 @@ class AsyncPlaylistClient:
     def __init__(
         self,
         *,
-        environment: FernIrEnvironment,
+        environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
     ):
