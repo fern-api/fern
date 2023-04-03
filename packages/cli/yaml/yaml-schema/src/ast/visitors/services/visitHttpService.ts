@@ -148,7 +148,9 @@ async function visitEndpoint({
                                 }
                                 const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                                 for (const extendedType of extendsList) {
-                                    await visitTypeReference(extendedType, [...nodePathForRequestBody, "extends"]);
+                                    const nodePathForExtension = [...nodePathForRequestBody, "extends", extendedType];
+                                    await visitor.extension?.(extendedType, nodePathForExtension);
+                                    await visitTypeReference(extendedType, nodePathForExtension);
                                 }
                             },
                             properties: async (properties) => {
