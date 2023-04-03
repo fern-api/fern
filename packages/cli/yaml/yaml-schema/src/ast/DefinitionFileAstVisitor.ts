@@ -68,6 +68,7 @@ export interface DefinitionFileAstNodeTypes {
     errorDeclaration: { errorName: string; declaration: ErrorDeclarationSchema };
     errorReference: string;
     variableReference: string;
+    extension: string;
 }
 
 export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: "inlinedRequest" };

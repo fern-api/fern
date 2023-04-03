@@ -69,5 +69,6 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("exampleRequest"),
         ...createAstNodeVisitor("exampleResponse"),
         ...createAstNodeVisitor("variableReference"),
+        ...createAstNodeVisitor("extension"),
     };
 }
