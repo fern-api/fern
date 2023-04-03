@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`open api converter vallum simple 1`] = `
+exports[`open api converter buzzshot simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {},
