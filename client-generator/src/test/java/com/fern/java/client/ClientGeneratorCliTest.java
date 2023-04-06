@@ -25,7 +25,8 @@ import org.junit.jupiter.api.Test;
 public class ClientGeneratorCliTest {
 
     @Test
-    public void test_basic() throws IOException {
+    public void test_baosic() throws IOException {
+
         Path currentPath = Paths.get("").toAbsolutePath();
         Path eteTestDirectory = currentPath.endsWith("client-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest"))

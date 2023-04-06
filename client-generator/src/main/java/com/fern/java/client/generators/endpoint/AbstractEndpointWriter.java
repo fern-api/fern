@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.ir.v12.model.environment.EnvironmentBaseUrlId;
 import com.fern.ir.v12.model.http.HttpEndpoint;
 import com.fern.ir.v12.model.http.HttpPathPart;
@@ -132,14 +133,25 @@ public abstract class AbstractEndpointWriter {
                     .getPoetTypeNameMapper()
                     .convertToTypeName(true, httpEndpoint.getResponse().get().getResponseBodyType());
             endpointMethodBuilder.returns(returnType);
-            httpResponseBuilder
-                    .addStatement(
-                            "return $T.$L.readValue($L.body().string(), $T.class)",
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
-                            RESPONSE_NAME,
-                            returnType)
-                    .endControlFlow();
+            if (httpEndpoint.getResponse().get().getResponseBodyType().isContainer()) {
+                httpResponseBuilder
+                        .addStatement(
+                                "return $T.$L.readValue($L.body().string(), new $T() {})",
+                                generatedObjectMapper.getClassName(),
+                                generatedObjectMapper.jsonMapperStaticField().name,
+                                RESPONSE_NAME,
+                                ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType))
+                        .endControlFlow();
+            } else {
+                httpResponseBuilder
+                        .addStatement(
+                                "return $T.$L.readValue($L.body().string(), $T.class)",
+                                generatedObjectMapper.getClassName(),
+                                generatedObjectMapper.jsonMapperStaticField().name,
+                                RESPONSE_NAME,
+                                returnType)
+                        .endControlFlow();
+            }
         } else {
             httpResponseBuilder.addStatement("return").endControlFlow();
         }

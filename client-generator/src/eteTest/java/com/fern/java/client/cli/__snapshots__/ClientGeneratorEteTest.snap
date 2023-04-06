@@ -730,11 +730,14 @@ package com.fern.basic.resources.blog;
 import com.fern.basic.resources.blog.requests.CreatePostRequest;
 import com.fern.basic.resources.blog.requests.GetPostRequest;
 import com.fern.basic.resources.blog.types.BlogPost;
+import java.util.List;
 
 public interface BlogClient {
   void createPost(CreatePostRequest request);
 
   BlogPost getPost(String postId, GetPostRequest request);
+
+  List<BlogPost> getAll();
 }
 
 ]
@@ -743,12 +746,14 @@ public interface BlogClient {
 basic[src/main/java/com/fern/basic/resources/blog/BlogClientImpl.java]=[
 package com.fern.basic.resources.blog;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.blog.requests.CreatePostRequest;
 import com.fern.basic.resources.blog.requests.GetPostRequest;
 import com.fern.basic.resources.blog.types.BlogPost;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -825,6 +830,31 @@ public final class BlogClientImpl implements BlogClient {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
       if (_response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), BlogPost.class);
+      }
+      throw new RuntimeException();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public List<BlogPost> getAll() {
+    HttpUrl _httpUrl =
+        HttpUrl.parse(this.clientOptions.environment().getUrl())
+            .newBuilder()
+            .addPathSegments("posts")
+            .build();
+    Request _request =
+        new Request.Builder()
+            .url(_httpUrl)
+            .method("GET", RequestBody.create("", null))
+            .headers(Headers.of(clientOptions.headers()))
+            .build();
+    try {
+      Response _response = clientOptions.httpClient().newCall(_request).execute();
+      if (_response.isSuccessful()) {
+        return ObjectMappers.JSON_MAPPER.readValue(
+            _response.body().string(), new TypeReference<List<BlogPost>>() {});
       }
       throw new RuntimeException();
     } catch (Exception e) {

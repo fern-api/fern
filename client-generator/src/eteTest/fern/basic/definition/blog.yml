@@ -79,3 +79,7 @@ service:
           dummy:
             type: string
             docs: Dummy query param
+    getAll:
+      method: GET
+      path: ""
+      response: list<BlogPost>
