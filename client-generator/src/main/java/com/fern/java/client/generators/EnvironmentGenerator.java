@@ -91,7 +91,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
                 .javaFile(environmentsFile)
                 .optionsPresent(optionsPresent)
                 .info(environmentClassInfo)
-                .defaultEnvironmentConstant(defaultEnvironmentConstant)
+                .defaultEnvironmentConstant(Optional.ofNullable(defaultEnvironmentConstant))
                 .build();
     }
 
