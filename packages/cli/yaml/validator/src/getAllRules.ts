@@ -22,6 +22,7 @@ import { NoUndefinedExampleReferenceRule } from "./rules/no-undefined-example-re
 import { NoUndefinedPathParametersRule } from "./rules/no-undefined-path-parameters";
 import { NoUndefinedTypeReferenceRule } from "./rules/no-undefined-type-reference";
 import { NoUndefinedVariableReferenceRule } from "./rules/no-undefined-variable-reference";
+import { OnlyObjectExtensionsRule } from "./rules/only-object-extensions";
 import { ValidBasePathRule } from "./rules/valid-base-path";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment";
 import { ValidEndpointPathRule } from "./rules/valid-endpoint-path";
@@ -68,6 +69,7 @@ export function getAllRules(): Rule[] {
         NoExtensionsWithFileUploadRule,
         ValidNavigationRule,
         NoUndefinedVariableReferenceRule,
+        OnlyObjectExtensionsRule,
     ];
 }
 

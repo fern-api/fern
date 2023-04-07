@@ -81,7 +81,9 @@ export async function visitTypeDeclaration({
                     }
                     const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
                     for (const extendedType of extendsList) {
-                        await visitTypeReference(extendedType, [...nodePathForType, "extends"]);
+                        const nodePathForExtension = [...nodePathForType, "extends", extendedType];
+                        await visitor.extension?.(extendedType, nodePathForExtension);
+                        await visitTypeReference(extendedType, nodePathForExtension);
                     }
                 },
                 properties: async (properties) => {
