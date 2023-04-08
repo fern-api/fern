@@ -16,23 +16,14 @@ class ActualResult_Value(pydantic.BaseModel):
     type: typing_extensions.Literal["value"]
     value: VariableValue
 
-    class Config:
-        frozen = True
-
 
 class ActualResult_Exception(ExceptionInfo):
     type: typing_extensions.Literal["exception"]
-
-    class Config:
-        frozen = True
 
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):
     type: typing_extensions.Literal["exceptionV2"]
     value: ExceptionV2
-
-    class Config:
-        frozen = True
 
 
 ActualResult = typing_extensions.Annotated[

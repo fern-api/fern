@@ -7,3 +7,5 @@ class PydanticModelCustomConfig(pydantic.BaseModel):
     wrapped_aliases: bool = False
     skip_formatting: bool = False
     include_union_utils: bool = False
+    frozen: bool = False
+    orm_mode: bool = False

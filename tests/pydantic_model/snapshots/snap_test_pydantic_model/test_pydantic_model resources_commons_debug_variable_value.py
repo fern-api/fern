@@ -19,97 +19,58 @@ class DebugVariableValue_IntegerValue(pydantic.BaseModel):
     type: typing_extensions.Literal["integerValue"]
     value: int
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_BooleanValue(pydantic.BaseModel):
     type: typing_extensions.Literal["booleanValue"]
     value: bool
-
-    class Config:
-        frozen = True
 
 
 class DebugVariableValue_DoubleValue(pydantic.BaseModel):
     type: typing_extensions.Literal["doubleValue"]
     value: float
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_StringValue(pydantic.BaseModel):
     type: typing_extensions.Literal["stringValue"]
     value: str
-
-    class Config:
-        frozen = True
 
 
 class DebugVariableValue_CharValue(pydantic.BaseModel):
     type: typing_extensions.Literal["charValue"]
     value: str
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_MapValue(DebugMapValue):
     type: typing_extensions.Literal["mapValue"]
-
-    class Config:
-        frozen = True
 
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
     type: typing_extensions.Literal["listValue"]
     value: typing.List[DebugVariableValue]
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
     type: typing_extensions.Literal["binaryTreeNodeValue"]
-
-    class Config:
-        frozen = True
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
     type: typing_extensions.Literal["singlyLinkedListNodeValue"]
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
     type: typing_extensions.Literal["doublyLinkedListNodeValue"]
-
-    class Config:
-        frozen = True
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
     type: typing_extensions.Literal["undefinedValue"]
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_NullValue(pydantic.BaseModel):
     type: typing_extensions.Literal["nullValue"]
 
-    class Config:
-        frozen = True
-
 
 class DebugVariableValue_GenericValue(GenericValue):
     type: typing_extensions.Literal["genericValue"]
-
-    class Config:
-        frozen = True
 
 
 DebugVariableValue = typing_extensions.Annotated[

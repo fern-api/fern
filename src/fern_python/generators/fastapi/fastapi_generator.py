@@ -44,6 +44,8 @@ class FastApiGenerator(AbstractGenerator):
             include_validators=custom_config.include_validators,
             skip_formatting=custom_config.skip_formatting,
             include_union_utils=True,
+            frozen=custom_config.pydantic_config.frozen,
+            orm_mode=custom_config.pydantic_config.orm_mode,
         )
 
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)
@@ -84,7 +86,7 @@ class FastApiGenerator(AbstractGenerator):
             generator_exec_wrapper=generator_exec_wrapper,
         )
 
-        FernHTTPExceptionGenerator(context=context).generate(
+        FernHTTPExceptionGenerator(context=context, custom_config=custom_config).generate(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
         )

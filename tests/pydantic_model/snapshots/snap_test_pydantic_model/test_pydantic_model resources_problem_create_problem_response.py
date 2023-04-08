@@ -15,16 +15,10 @@ class CreateProblemResponse_Success(pydantic.BaseModel):
     type: typing_extensions.Literal["success"]
     value: ProblemId
 
-    class Config:
-        frozen = True
-
 
 class CreateProblemResponse_Error(pydantic.BaseModel):
     type: typing_extensions.Literal["error"]
     value: CreateProblemError
-
-    class Config:
-        frozen = True
 
 
 CreateProblemResponse = typing_extensions.Annotated[

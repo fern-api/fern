@@ -16,45 +16,27 @@ from .terminated_response import TerminatedResponse
 class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
     type: typing_extensions.Literal["serverInitialized"]
 
-    class Config:
-        frozen = True
-
 
 class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
     type: typing_extensions.Literal["problemInitialized"]
     value: ProblemId
 
-    class Config:
-        frozen = True
-
 
 class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
     type: typing_extensions.Literal["workspaceInitialized"]
 
-    class Config:
-        frozen = True
-
 
 class SubmissionResponse_ServerErrored(ExceptionInfo):
     type: typing_extensions.Literal["serverErrored"]
-
-    class Config:
-        frozen = True
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
     type: typing_extensions.Literal["codeExecutionUpdate"]
     value: CodeExecutionUpdate
 
-    class Config:
-        frozen = True
-
 
 class SubmissionResponse_Terminated(TerminatedResponse):
     type: typing_extensions.Literal["terminated"]
-
-    class Config:
-        frozen = True
 
 
 SubmissionResponse = typing_extensions.Annotated[

@@ -43,6 +43,8 @@ class SdkGenerator(AbstractGenerator):
             wrapped_aliases=custom_config.wrapped_aliases,
             skip_formatting=custom_config.skip_formatting,
             include_union_utils=custom_config.include_union_utils,
+            orm_mode=False,
+            frozen=True,
         )
 
         context = SdkGeneratorContextImpl(

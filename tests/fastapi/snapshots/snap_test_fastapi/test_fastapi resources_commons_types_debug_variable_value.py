@@ -269,7 +269,6 @@ class DebugVariableValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -283,85 +282,46 @@ class _DebugVariableValue:
         type: typing_extensions.Literal["integerValue"]
         value: int
 
-        class Config:
-            frozen = True
-
     class BooleanValue(pydantic.BaseModel):
         type: typing_extensions.Literal["booleanValue"]
         value: bool
-
-        class Config:
-            frozen = True
 
     class DoubleValue(pydantic.BaseModel):
         type: typing_extensions.Literal["doubleValue"]
         value: float
 
-        class Config:
-            frozen = True
-
     class StringValue(pydantic.BaseModel):
         type: typing_extensions.Literal["stringValue"]
         value: str
-
-        class Config:
-            frozen = True
 
     class CharValue(pydantic.BaseModel):
         type: typing_extensions.Literal["charValue"]
         value: str
 
-        class Config:
-            frozen = True
-
     class MapValue(DebugMapValue):
         type: typing_extensions.Literal["mapValue"]
-
-        class Config:
-            frozen = True
 
     class ListValue(pydantic.BaseModel):
         type: typing_extensions.Literal["listValue"]
         value: typing.List[DebugVariableValue]
 
-        class Config:
-            frozen = True
-
     class BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
         type: typing_extensions.Literal["binaryTreeNodeValue"]
-
-        class Config:
-            frozen = True
 
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["singlyLinkedListNodeValue"]
 
-        class Config:
-            frozen = True
-
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["doublyLinkedListNodeValue"]
-
-        class Config:
-            frozen = True
 
     class UndefinedValue(pydantic.BaseModel):
         type: typing_extensions.Literal["undefinedValue"]
 
-        class Config:
-            frozen = True
-
     class NullValue(pydantic.BaseModel):
         type: typing_extensions.Literal["nullValue"]
 
-        class Config:
-            frozen = True
-
     class GenericValue(resources_commons_types_generic_value_GenericValue):
         type: typing_extensions.Literal["genericValue"]
-
-        class Config:
-            frozen = True
 
 
 _DebugVariableValue.MapValue.update_forward_refs(

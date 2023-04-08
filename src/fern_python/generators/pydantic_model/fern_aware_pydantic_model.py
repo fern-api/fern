@@ -57,6 +57,8 @@ class FernAwarePydanticModel:
             else None,
             docstring=docstring,
             forbid_extra_fields=custom_config.forbid_extra_fields,
+            frozen=custom_config.frozen,
+            orm_mode=custom_config.orm_mode,
         )
         self._pydantic_model.add_json_encoder(
             key=AST.Expression(

@@ -85,6 +85,5 @@ class TerminatedResponse(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

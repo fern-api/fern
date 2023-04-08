@@ -150,7 +150,6 @@ class InvalidRequestCause(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -159,22 +158,13 @@ class _InvalidRequestCause:
     class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
         type: typing_extensions.Literal["submissionIdNotFound"]
 
-        class Config:
-            frozen = True
-
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
         type: typing_extensions.Literal["customTestCasesUnsupported"]
 
-        class Config:
-            frozen = True
-
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing_extensions.Literal["unexpectedLanguage"]
-
-        class Config:
-            frozen = True
 
 
 InvalidRequestCause.update_forward_refs()

@@ -127,7 +127,6 @@ class FunctionSignature(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -136,20 +135,11 @@ class _FunctionSignature:
     class Void(VoidFunctionSignature):
         type: typing_extensions.Literal["void"]
 
-        class Config:
-            frozen = True
-
     class NonVoid(NonVoidFunctionSignature):
         type: typing_extensions.Literal["nonVoid"]
 
-        class Config:
-            frozen = True
-
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing_extensions.Literal["voidThatTakesActualResult"]
-
-        class Config:
-            frozen = True
 
 
 _FunctionSignature.Void.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

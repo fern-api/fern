@@ -98,7 +98,6 @@ class ActualResult(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -108,21 +107,12 @@ class _ActualResult:
         type: typing_extensions.Literal["value"]
         value: VariableValue
 
-        class Config:
-            frozen = True
-
     class Exception(ExceptionInfo):
         type: typing_extensions.Literal["exception"]
-
-        class Config:
-            frozen = True
 
     class ExceptionV2(pydantic.BaseModel):
         type: typing_extensions.Literal["exceptionV2"]
         value: resources_submission_types_exception_v_2_ExceptionV2
-
-        class Config:
-            frozen = True
 
 
 ActualResult.update_forward_refs()

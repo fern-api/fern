@@ -249,7 +249,6 @@ class CodeExecutionUpdate(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -258,68 +257,35 @@ class _CodeExecutionUpdate:
     class BuildingExecutor(BuildingExecutorResponse):
         type: typing_extensions.Literal["buildingExecutor"]
 
-        class Config:
-            frozen = True
-
     class Running(RunningResponse):
         type: typing_extensions.Literal["running"]
-
-        class Config:
-            frozen = True
 
     class Errored(ErroredResponse):
         type: typing_extensions.Literal["errored"]
 
-        class Config:
-            frozen = True
-
     class Stopped(StoppedResponse):
         type: typing_extensions.Literal["stopped"]
-
-        class Config:
-            frozen = True
 
     class Graded(GradedResponse):
         type: typing_extensions.Literal["graded"]
 
-        class Config:
-            frozen = True
-
     class GradedV2(GradedResponseV2):
         type: typing_extensions.Literal["gradedV2"]
-
-        class Config:
-            frozen = True
 
     class WorkspaceRan(WorkspaceRanResponse):
         type: typing_extensions.Literal["workspaceRan"]
 
-        class Config:
-            frozen = True
-
     class Recording(RecordingResponseNotification):
         type: typing_extensions.Literal["recording"]
-
-        class Config:
-            frozen = True
 
     class Recorded(RecordedResponseNotification):
         type: typing_extensions.Literal["recorded"]
 
-        class Config:
-            frozen = True
-
     class InvalidRequest(InvalidRequestResponse):
         type: typing_extensions.Literal["invalidRequest"]
 
-        class Config:
-            frozen = True
-
     class Finished(FinishedResponse):
         type: typing_extensions.Literal["finished"]
-
-        class Config:
-            frozen = True
 
 
 _CodeExecutionUpdate.Graded.update_forward_refs(

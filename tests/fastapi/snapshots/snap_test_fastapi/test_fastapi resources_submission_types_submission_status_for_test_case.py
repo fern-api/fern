@@ -133,7 +133,6 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -142,21 +141,12 @@ class _SubmissionStatusForTestCase:
     class Graded(TestCaseResultWithStdout):
         type: typing_extensions.Literal["graded"]
 
-        class Config:
-            frozen = True
-
     class GradedV2(pydantic.BaseModel):
         type: typing_extensions.Literal["gradedV2"]
         value: TestCaseGrade
 
-        class Config:
-            frozen = True
-
     class Traced(TracedTestCase):
         type: typing_extensions.Literal["traced"]
-
-        class Config:
-            frozen = True
 
 
 _SubmissionStatusForTestCase.Graded.update_forward_refs(

@@ -84,7 +84,6 @@ class ExceptionV2(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -93,14 +92,8 @@ class _ExceptionV2:
     class Generic(ExceptionInfo):
         type: typing_extensions.Literal["generic"]
 
-        class Config:
-            frozen = True
-
     class Timeout(pydantic.BaseModel):
         type: typing_extensions.Literal["timeout"]
-
-        class Config:
-            frozen = True
 
 
 ExceptionV2.update_forward_refs()

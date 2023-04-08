@@ -12,16 +12,10 @@ class Test_And(pydantic.BaseModel):
     type: typing_extensions.Literal["and"]
     value: bool
 
-    class Config:
-        frozen = True
-
 
 class Test_Or(pydantic.BaseModel):
     type: typing_extensions.Literal["or"]
     value: bool
-
-    class Config:
-        frozen = True
 
 
 Test = typing_extensions.Annotated[typing.Union[Test_And, Test_Or], pydantic.Field(discriminator="type")]

@@ -124,7 +124,6 @@ class ProblemDescriptionBoard(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -134,22 +133,13 @@ class _ProblemDescriptionBoard:
         type: typing_extensions.Literal["html"]
         value: str
 
-        class Config:
-            frozen = True
-
     class Variable(pydantic.BaseModel):
         type: typing_extensions.Literal["variable"]
         value: VariableValue
 
-        class Config:
-            frozen = True
-
     class TestCaseId(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseId"]
         value: str
-
-        class Config:
-            frozen = True
 
 
 ProblemDescriptionBoard.update_forward_refs()

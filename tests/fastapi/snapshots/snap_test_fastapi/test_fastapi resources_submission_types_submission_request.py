@@ -169,7 +169,6 @@ class SubmissionRequest(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -178,32 +177,17 @@ class _SubmissionRequest:
     class InitializeProblemRequest(resources_submission_types_initialize_problem_request_InitializeProblemRequest):
         type: typing_extensions.Literal["initializeProblemRequest"]
 
-        class Config:
-            frozen = True
-
     class InitializeWorkspaceRequest(pydantic.BaseModel):
         type: typing_extensions.Literal["initializeWorkspaceRequest"]
-
-        class Config:
-            frozen = True
 
     class SubmitV2(SubmitRequestV2):
         type: typing_extensions.Literal["submitV2"]
 
-        class Config:
-            frozen = True
-
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing_extensions.Literal["workspaceSubmit"]
 
-        class Config:
-            frozen = True
-
     class Stop(StopRequest):
         type: typing_extensions.Literal["stop"]
-
-        class Config:
-            frozen = True
 
 
 SubmissionRequest.update_forward_refs()

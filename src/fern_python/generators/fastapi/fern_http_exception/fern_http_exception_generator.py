@@ -3,6 +3,7 @@ from fern.ir.pydantic import NameAndWireValue
 from fern_python.codegen import AST, LocalClassReference, Project, SourceFile
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.source_file_generator import SourceFileGenerator
 
@@ -12,8 +13,9 @@ from ..context import FastApiGeneratorContext
 class FernHTTPExceptionGenerator:
     _BODY_CLASS_NAME = "Body"
 
-    def __init__(self, context: FastApiGeneratorContext):
+    def __init__(self, context: FastApiGeneratorContext, custom_config: FastAPICustomConfig):
         self._context = context
+        self._custom_config = custom_config
         self.FernHTTPException = context.core_utilities.exceptions.FernHTTPException
 
     def generate(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
@@ -91,6 +93,8 @@ class FernHTTPExceptionGenerator:
             source_file=source_file,
             parent=exception_class,
             name=FernHTTPExceptionGenerator._BODY_CLASS_NAME,
+            frozen=self._custom_config.pydantic_config.frozen,
+            orm_mode=False,
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(

@@ -87,7 +87,6 @@ class CreateProblemResponse(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -97,15 +96,9 @@ class _CreateProblemResponse:
         type: typing_extensions.Literal["success"]
         value: ProblemId
 
-        class Config:
-            frozen = True
-
     class Error(pydantic.BaseModel):
         type: typing_extensions.Literal["error"]
         value: CreateProblemError
-
-        class Config:
-            frozen = True
 
 
 CreateProblemResponse.update_forward_refs()

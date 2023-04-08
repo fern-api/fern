@@ -147,7 +147,6 @@ class TestSubmissionStatus(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -156,29 +155,17 @@ class _TestSubmissionStatus:
     class Stopped(pydantic.BaseModel):
         type: typing_extensions.Literal["stopped"]
 
-        class Config:
-            frozen = True
-
     class Errored(pydantic.BaseModel):
         type: typing_extensions.Literal["errored"]
         value: ErrorInfo
-
-        class Config:
-            frozen = True
 
     class Running(pydantic.BaseModel):
         type: typing_extensions.Literal["running"]
         value: RunningSubmissionState
 
-        class Config:
-            frozen = True
-
     class TestCaseIdToState(pydantic.BaseModel):
         type: typing_extensions.Literal["testCaseIdToState"]
         value: typing.Dict[str, SubmissionStatusForTestCase]
-
-        class Config:
-            frozen = True
 
 
 TestSubmissionStatus.update_forward_refs()

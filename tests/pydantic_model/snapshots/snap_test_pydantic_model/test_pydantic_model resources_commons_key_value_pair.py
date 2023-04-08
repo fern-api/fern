@@ -182,7 +182,6 @@ class KeyValuePair(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         json_encoders = {dt.datetime: serialize_datetime}
 
 

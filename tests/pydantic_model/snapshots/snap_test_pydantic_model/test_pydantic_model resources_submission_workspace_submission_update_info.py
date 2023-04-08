@@ -17,51 +17,30 @@ class WorkspaceSubmissionUpdateInfo_Running(pydantic.BaseModel):
     type: typing_extensions.Literal["running"]
     value: RunningSubmissionState
 
-    class Config:
-        frozen = True
-
 
 class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
     type: typing_extensions.Literal["ran"]
-
-    class Config:
-        frozen = True
 
 
 class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
     type: typing_extensions.Literal["stopped"]
 
-    class Config:
-        frozen = True
-
 
 class WorkspaceSubmissionUpdateInfo_Traced(pydantic.BaseModel):
     type: typing_extensions.Literal["traced"]
 
-    class Config:
-        frozen = True
-
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
     type: typing_extensions.Literal["tracedV2"]
-
-    class Config:
-        frozen = True
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):
     type: typing_extensions.Literal["errored"]
     value: ErrorInfo
 
-    class Config:
-        frozen = True
-
 
 class WorkspaceSubmissionUpdateInfo_Finished(pydantic.BaseModel):
     type: typing_extensions.Literal["finished"]
-
-    class Config:
-        frozen = True
 
 
 WorkspaceSubmissionUpdateInfo = typing_extensions.Annotated[

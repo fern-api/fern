@@ -112,7 +112,6 @@ class TestCaseImplementationReference(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -122,14 +121,8 @@ class _TestCaseImplementationReference:
         type: typing_extensions.Literal["templateId"]
         value: TestCaseTemplateId
 
-        class Config:
-            frozen = True
-
     class Implementation(TestCaseImplementation):
         type: typing_extensions.Literal["implementation"]
-
-        class Config:
-            frozen = True
 
 
 _TestCaseImplementationReference.Implementation.update_forward_refs(

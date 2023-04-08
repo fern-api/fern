@@ -20,44 +20,26 @@ class TestSubmissionUpdateInfo_Running(pydantic.BaseModel):
     type: typing_extensions.Literal["running"]
     value: RunningSubmissionState
 
-    class Config:
-        frozen = True
-
 
 class TestSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
     type: typing_extensions.Literal["stopped"]
-
-    class Config:
-        frozen = True
 
 
 class TestSubmissionUpdateInfo_Errored(pydantic.BaseModel):
     type: typing_extensions.Literal["errored"]
     value: ErrorInfo
 
-    class Config:
-        frozen = True
-
 
 class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
     type: typing_extensions.Literal["gradedTestCase"]
-
-    class Config:
-        frozen = True
 
 
 class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
     type: typing_extensions.Literal["recordedTestCase"]
 
-    class Config:
-        frozen = True
-
 
 class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):
     type: typing_extensions.Literal["finished"]
-
-    class Config:
-        frozen = True
 
 
 TestSubmissionUpdateInfo = typing_extensions.Annotated[

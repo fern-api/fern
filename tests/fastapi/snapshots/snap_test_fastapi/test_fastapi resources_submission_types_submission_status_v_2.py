@@ -95,7 +95,6 @@ class SubmissionStatusV2(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        frozen = True
         extra = pydantic.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
@@ -104,14 +103,8 @@ class _SubmissionStatusV2:
     class Test(TestSubmissionStatusV2):
         type: typing_extensions.Literal["test"]
 
-        class Config:
-            frozen = True
-
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing_extensions.Literal["workspace"]
-
-        class Config:
-            frozen = True
 
 
 _SubmissionStatusV2.Test.update_forward_refs(
