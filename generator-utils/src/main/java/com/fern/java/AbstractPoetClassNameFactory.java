@@ -16,17 +16,12 @@
 
 package com.fern.java;
 
-import com.fern.ir.v12.model.commons.FernFilepath;
-import com.fern.ir.v12.model.commons.Name;
-import com.fern.ir.v12.model.commons.SafeAndUnsafeString;
 import com.fern.ir.v12.model.ir.IntermediateRepresentation;
 import com.fern.ir.v12.model.types.DeclaredTypeName;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public abstract class AbstractPoetClassNameFactory {
 
@@ -67,17 +62,6 @@ public abstract class AbstractPoetClassNameFactory {
 
     public final List<String> getPackagePrefixTokens() {
         return packagePrefixTokens;
-    }
-
-    protected final String getPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
-        List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
-        fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
-                .map(Name::getSnakeCase)
-                .map(SafeAndUnsafeString::getSafeName)
-                .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
-                .collect(Collectors.toList())));
-        suffix.ifPresent(tokens::add);
-        return String.join(".", tokens);
     }
 
     public static List<String> splitOnNonAlphaNumericChar(String value) {

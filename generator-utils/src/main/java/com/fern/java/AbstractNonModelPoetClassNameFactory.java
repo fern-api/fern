@@ -24,9 +24,12 @@ import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetClassNameFactory {
+
+    private static final Pattern STARTS_WITH_NUMBER = Pattern.compile("^\\d");
 
     public AbstractNonModelPoetClassNameFactory(List<String> packagePrefixTokens) {
         super(packagePrefixTokens);
@@ -50,16 +53,8 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
         return getResourcesPackage(Optional.of(fernFilepath), Optional.of("types"));
     }
 
-    protected final String getEndpointsPackageName(FernFilepath fernFilepath) {
-        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("endpoints"));
-    }
-
     protected final String getErrorsPackageName(FernFilepath fernFilepath) {
         return getResourcesPackage(Optional.of(fernFilepath), Optional.of("errors"));
-    }
-
-    protected final String getExceptionsPackageName(FernFilepath fernFilepath) {
-        return getResourcesPackage(Optional.of(fernFilepath), Optional.of("exceptions"));
     }
 
     protected final String getResourcesPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
@@ -71,6 +66,18 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
                 .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
                 .collect(Collectors.toList())));
         suffix.ifPresent(tokens::add);
-        return String.join(".", tokens);
+        List<String> sanitizedTokens = new ArrayList<>();
+        for (String token : tokens) {
+            if (startsWithNumber(token)) {
+                sanitizedTokens.add("_" + token);
+            } else {
+                sanitizedTokens.add(token);
+            }
+        }
+        return String.join(".", sanitizedTokens);
+    }
+
+    private static boolean startsWithNumber(String str) {
+        return STARTS_WITH_NUMBER.matcher(str).find();
     }
 }
