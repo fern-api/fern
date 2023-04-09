@@ -286,7 +286,7 @@ package com.fern.basic;
 import com.fern.basic.core.Environment;
 import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.blog.BlogClient;
-import com.fern.basic.resources.dummy.service.DummyServiceClient;
+import com.fern.basic.resources.dummyservice.DummyServiceClient;
 import com.fern.basic.resources.raven.RavenClient;
 
 public interface FernFernClient {
@@ -328,8 +328,8 @@ import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.auth.AuthClientImpl;
 import com.fern.basic.resources.blog.BlogClient;
 import com.fern.basic.resources.blog.BlogClientImpl;
-import com.fern.basic.resources.dummy.service.DummyServiceClient;
-import com.fern.basic.resources.dummy.service.DummyServiceClientImpl;
+import com.fern.basic.resources.dummyservice.DummyServiceClient;
+import com.fern.basic.resources.dummyservice.DummyServiceClientImpl;
 import com.fern.basic.resources.raven.RavenClient;
 import com.fern.basic.resources.raven.RavenClientImpl;
 import java.util.function.Supplier;
@@ -2030,8 +2030,8 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceClient.java]=[
-package com.fern.basic.resources.dummy.service;
+basic[src/main/java/com/fern/basic/resources/dummyservice/DummyServiceClient.java]=[
+package com.fern.basic.resources.dummyservice;
 
 public interface DummyServiceClient {
   void getDummy(String request);
@@ -2042,8 +2042,8 @@ public interface DummyServiceClient {
 ]
 
 
-basic[src/main/java/com/fern/basic/resources/dummy/service/DummyServiceClientImpl.java]=[
-package com.fern.basic.resources.dummy.service;
+basic[src/main/java/com/fern/basic/resources/dummyservice/DummyServiceClientImpl.java]=[
+package com.fern.basic.resources.dummyservice;
 
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;

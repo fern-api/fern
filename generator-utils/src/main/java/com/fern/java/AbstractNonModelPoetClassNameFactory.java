@@ -61,9 +61,10 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
         tokens.add("resources");
         fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
-                .map(Name::getSnakeCase)
+                .map(Name::getCamelCase)
                 .map(SafeAndUnsafeString::getSafeName)
-                .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
+                // names should be lower case
+                .map(String::toLowerCase)
                 .collect(Collectors.toList())));
         suffix.ifPresent(tokens::add);
         List<String> sanitizedTokens = new ArrayList<>();

@@ -1195,10 +1195,10 @@ public final class UnauthorizedErrorBody {
 ]
 
 
-basic[resources/dummy/service/DummyServiceService.java]=[
-package com.fern.resources.dummy.service;
+basic[resources/dummyservice/DummyServiceService.java]=[
+package com.fern.resources.dummyservice;
 
-import com.fern.resources.dummy.service.types.DummyId;
+import com.fern.resources.dummyservice.types.DummyId;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -1220,8 +1220,8 @@ public interface DummyServiceService {
 ]
 
 
-basic[resources/dummy/service/types/DummyId.java]=[
-package com.fern.resources.dummy.service.types;
+basic[resources/dummyservice/types/DummyId.java]=[
+package com.fern.resources.dummyservice.types;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
