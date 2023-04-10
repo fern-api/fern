@@ -18,10 +18,12 @@ from .playlist_id import PlaylistId
 class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
     owner_id: UserId = pydantic.Field(alias="owner-id")
+    schema_: str = pydantic.Field(alias="schema")
 
     class Partial(PlaylistCreateRequest.Partial):
         playlist_id: typing_extensions.NotRequired[PlaylistId]
         owner_id: typing_extensions.NotRequired[UserId]
+        schema_: typing_extensions.NotRequired[str]
 
     class Validators:
         """
@@ -39,6 +41,10 @@ class Playlist(PlaylistCreateRequest):
             def validate_owner_id(owner_id: UserId, values: Playlist.Partial) -> UserId:
                 ...
 
+            @Playlist.Validators.field("schema_")
+            def validate_schema_(schema_: str, values: Playlist.Partial) -> str:
+                ...
+
             @Playlist.Validators.field("name")
             def validate_name(name: str, values: Playlist.Partial) -> str:
                 ...
@@ -54,6 +60,8 @@ class Playlist(PlaylistCreateRequest):
         _playlist_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.PlaylistIdValidator]] = []
         _owner_id_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreOwnerIdValidator]] = []
         _owner_id_post_validators: typing.ClassVar[typing.List[Playlist.Validators.OwnerIdValidator]] = []
+        _schema__pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreSchemaValidator]] = []
+        _schema__post_validators: typing.ClassVar[typing.List[Playlist.Validators.SchemaValidator]] = []
         _name_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreNameValidator]] = []
         _name_post_validators: typing.ClassVar[typing.List[Playlist.Validators.NameValidator]] = []
         _problems_pre_validators: typing.ClassVar[typing.List[Playlist.Validators.PreProblemsValidator]] = []
@@ -115,6 +123,20 @@ class Playlist(PlaylistCreateRequest):
         @typing.overload
         @classmethod
         def field(
+            cls, field_name: typing_extensions.Literal["schema_"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Playlist.Validators.PreSchemaValidator], Playlist.Validators.PreSchemaValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["schema_"], *, pre: typing_extensions.Literal[False] = False
+        ) -> typing.Callable[[Playlist.Validators.SchemaValidator], Playlist.Validators.SchemaValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
             cls, field_name: typing_extensions.Literal["name"], *, pre: typing_extensions.Literal[True]
         ) -> typing.Callable[[Playlist.Validators.PreNameValidator], Playlist.Validators.PreNameValidator]:
             ...
@@ -153,6 +175,11 @@ class Playlist(PlaylistCreateRequest):
                         cls._owner_id_pre_validators.append(validator)
                     else:
                         cls._owner_id_post_validators.append(validator)
+                if field_name == "schema_":
+                    if pre:
+                        cls._schema__pre_validators.append(validator)
+                    else:
+                        cls._schema__post_validators.append(validator)
                 if field_name == "name":
                     if pre:
                         cls._name_pre_validators.append(validator)
@@ -181,6 +208,14 @@ class Playlist(PlaylistCreateRequest):
 
         class OwnerIdValidator(typing_extensions.Protocol):
             def __call__(self, __v: UserId, __values: Playlist.Partial) -> UserId:
+                ...
+
+        class PreSchemaValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Playlist.Partial) -> typing.Any:
+                ...
+
+        class SchemaValidator(typing_extensions.Protocol):
+            def __call__(self, __v: str, __values: Playlist.Partial) -> str:
                 ...
 
         class PreNameValidator(typing_extensions.Protocol):
@@ -240,6 +275,18 @@ class Playlist(PlaylistCreateRequest):
     @pydantic.validator("owner_id", pre=False)
     def _post_validate_owner_id(cls, v: UserId, values: Playlist.Partial) -> UserId:
         for validator in Playlist.Validators._owner_id_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("schema_", pre=True)
+    def _pre_validate_schema_(cls, v: str, values: Playlist.Partial) -> str:
+        for validator in Playlist.Validators._schema__pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("schema_", pre=False)
+    def _post_validate_schema_(cls, v: str, values: Playlist.Partial) -> str:
+        for validator in Playlist.Validators._schema__post_validators:
             v = validator(v, values)
         return v
 

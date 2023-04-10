@@ -4,10 +4,15 @@ import dataclasses
 from types import TracebackType
 from typing import Iterable, List, Optional, Sequence, Tuple, Type, Union
 
+from pydantic import BaseModel
+
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
 
 from .pydantic_field import PydanticField
+
+# these are the properties that BaseModel already has
+BASE_MODEL_PROPERTIES = set(dir(BaseModel))
 
 
 class PydanticModel:
@@ -48,7 +53,13 @@ class PydanticModel:
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
 
-    def add_field(self, field: PydanticField) -> None:
+    def add_field(self, unsanitized_field: PydanticField) -> None:
+
+        field = (
+            dataclasses.replace(unsanitized_field, name=f"{unsanitized_field.name}_")
+            if unsanitized_field.name in BASE_MODEL_PROPERTIES
+            else unsanitized_field
+        )
 
         is_aliased = field.json_field_name != field.name
         self._has_aliases |= is_aliased

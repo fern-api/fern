@@ -7,6 +7,8 @@ types:
     properties:
       playlist_id: PlaylistId
       owner-id: commons.UserId
+      # conflicts with pydantic BaseModel's schema property
+      schema: string
 
   PlaylistCreateRequest:
     properties:
