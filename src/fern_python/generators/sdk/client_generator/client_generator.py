@@ -333,10 +333,7 @@ class ClientGenerator:
                         delete=lambda: "DELETE",
                     ),
                     query_parameters=[
-                        (
-                            query_parameter.name.wire_value,
-                            AST.Expression(self._get_query_parameter_name(query_parameter)),
-                        )
+                        (query_parameter.name.wire_value, self._get_reference_to_query_parameter(query_parameter))
                         for query_parameter in endpoint.query_parameters
                     ],
                     request_body=(
@@ -363,6 +360,24 @@ class ClientGenerator:
             )
 
         return AST.CodeWriter(write)
+
+    def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
+        reference = AST.Expression(self._get_query_parameter_name(query_parameter))
+
+        if is_datetime(unwrap_optional_type(query_parameter.value_type)):
+            reference = self._context.core_utilities.serialize_datetime(reference)
+
+            if is_optional(query_parameter.value_type):
+                # needed to prevent infinite recursion when writing the reference to file
+                existing_reference = reference
+
+                def write(writer: AST.NodeWriter) -> None:
+                    writer.write_node(existing_reference)
+                    writer.write(f" if {self._get_query_parameter_name(query_parameter)} is not None else None")
+
+                reference = AST.Expression(AST.CodeWriter(write))
+
+        return reference
 
     def _get_environment_as_str(self) -> AST.Expression:
         if self._environment_is_enum():
@@ -725,3 +740,13 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
+
+
+def is_optional(type_reference: ir_types.TypeReference) -> bool:
+    type_as_union = type_reference.get_as_union()
+    return type_as_union.type == "container" and type_as_union.container.get_as_union().type == "optional"
+
+
+def is_datetime(type_reference: ir_types.TypeReference) -> bool:
+    type_as_union = type_reference.get_as_union()
+    return type_as_union.type == "primitive" and type_as_union.primitive == ir_types.PrimitiveType.DATE_TIME

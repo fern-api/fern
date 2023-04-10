@@ -138,3 +138,16 @@ class CoreUtilities:
                 args=[obj],
             )
         )
+
+    def serialize_datetime(self, datetime: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
+                    ),
+                ),
+                args=[datetime],
+            )
+        )
