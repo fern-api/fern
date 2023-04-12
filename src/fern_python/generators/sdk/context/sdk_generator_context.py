@@ -45,7 +45,7 @@ class SdkGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_class_name_of_environments_enum(self) -> str:
+    def get_class_name_of_environments(self) -> str:
         ...
 
     @abstractmethod
@@ -53,7 +53,7 @@ class SdkGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_reference_to_environments_enum(self) -> AST.ClassReference:
+    def get_reference_to_environments_class(self) -> AST.ClassReference:
         ...
 
     @abstractmethod

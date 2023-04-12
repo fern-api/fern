@@ -17,7 +17,10 @@ from fern_python.utils import pascal_case
 
 from .client_generator.client_generator import ClientGenerator
 from .custom_config import SDKCustomConfig
-from .environment_generator.environment_generator import EnvironmentGenerator
+from .environment_generators import (
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
 from .error_generator.error_generator import ErrorGenerator
 
 
@@ -113,7 +116,14 @@ class SdkGenerator(AbstractGenerator):
         with SourceFileGenerator.generate(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         ) as source_file:
-            EnvironmentGenerator(context=context, environments=environments).generate(source_file=source_file)
+            environments.visit(
+                single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                    context=context, environments=single_base_url_environments
+                ).generate(source_file=source_file),
+                multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                    context=context, environments=multiple_base_urls_environments
+                ).generate(source_file=source_file),
+            )
 
     def _generate_root_client(
         self,

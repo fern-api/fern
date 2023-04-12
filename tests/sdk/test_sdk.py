@@ -89,3 +89,9 @@ def test_github_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
             ),
         ),
     )
+
+
+def test_multiple_urls_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot, fixture_name="multiple-urls", tmpdir=tmpdir, cli=cli, filename_of_test=__file__
+    )

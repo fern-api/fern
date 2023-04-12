@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /movie
+  url: ServerA
+  endpoints:
+    getMovie:
+      method: GET
+      path: /movie/{movieId}
+      path-parameters:
+        movieId: commons.MovieId
+      response: commons.Movie
+      errors:
+        - commons.MovieNotFoundError
+    getAllMovies:
+      method: GET
+      path: /all-movies
+      response: list<commons.Movie>
+    createMovie:
+      method: POST
+      path: /movie
+      request:
+        body: commons.Movie
+      errors:
+        - commons.MovieAlreadyExistsError
+        - commons.InvalidMovieError
+    deleteMovie:
+      method: DELETE
+      path: /{movieId}
+      path-parameters:
+        movieId: commons.MovieId
+      errors:
+        - commons.MovieNotFoundError

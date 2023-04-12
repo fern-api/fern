@@ -65,6 +65,75 @@ snapshots['test_github_sdk src_fern_api_resources_movie_types_movie'] = FileSnap
 
 snapshots['test_github_sdk src_fern_api_resources_movie_types_movie_id'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_api_resources_movie_types_movie_id.py')
 
+snapshots['test_multiple_urls_sdk __init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk __init__.py')
+
+snapshots['test_multiple_urls_sdk client'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk client.py')
+
+snapshots['test_multiple_urls_sdk core___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core___init__.py')
+
+snapshots['test_multiple_urls_sdk core_api_error'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_api_error.py')
+
+snapshots['test_multiple_urls_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_datetime_utils.py')
+
+snapshots['test_multiple_urls_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_jsonable_encoder.py')
+
+snapshots['test_multiple_urls_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_remove_none_from_headers.py')
+
+snapshots['test_multiple_urls_sdk environment'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk environment.py')
+
+snapshots['test_multiple_urls_sdk filepaths'] = [
+    '__init__.py',
+    'client.py',
+    'core/__init__.py',
+    'core/api_error.py',
+    'core/datetime_utils.py',
+    'core/jsonable_encoder.py',
+    'core/remove_none_from_headers.py',
+    'environment.py',
+    'resources/__init__.py',
+    'resources/a/__init__.py',
+    'resources/a/client.py',
+    'resources/b/__init__.py',
+    'resources/b/client.py',
+    'resources/commons/__init__.py',
+    'resources/commons/client.py',
+    'resources/commons/errors/__init__.py',
+    'resources/commons/errors/invalid_movie_error.py',
+    'resources/commons/errors/movie_already_exists_error.py',
+    'resources/commons/errors/movie_not_found_error.py',
+    'resources/commons/types/__init__.py',
+    'resources/commons/types/movie.py',
+    'resources/commons/types/movie_id.py'
+]
+
+snapshots['test_multiple_urls_sdk resources___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources___init__.py')
+
+snapshots['test_multiple_urls_sdk resources_a___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_a___init__.py')
+
+snapshots['test_multiple_urls_sdk resources_a_client'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_a_client.py')
+
+snapshots['test_multiple_urls_sdk resources_b___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_b___init__.py')
+
+snapshots['test_multiple_urls_sdk resources_b_client'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_b_client.py')
+
+snapshots['test_multiple_urls_sdk resources_commons___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons___init__.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_client'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_client.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_errors___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_errors___init__.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_errors_invalid_movie_error'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_errors_invalid_movie_error.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_errors_movie_already_exists_error'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_errors_movie_already_exists_error.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_errors_movie_not_found_error'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_errors_movie_not_found_error.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_types___init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_types___init__.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_types_movie'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_types_movie.py')
+
+snapshots['test_multiple_urls_sdk resources_commons_types_movie_id'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_types_movie_id.py')
+
 snapshots['test_publish_sdk filepaths'] = [
     'src/fern/__init__.py',
     'src/fern/api/__init__.py',

@@ -1,0 +1,14 @@
+name: api
+error-discrimination:
+  strategy: status-code
+
+environments:
+  Production:
+    urls:
+      ServerA: https://a.api.com
+      ServerB: https://b.api.com
+  Staging:
+    urls:
+      ServerA: https://a.staging.com
+      ServerB: https://b.staging.com
+default-environment: Production

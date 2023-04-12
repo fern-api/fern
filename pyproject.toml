@@ -33,6 +33,10 @@ url = "https://pypi.buildwithfern.com/"
 default = false
 secondary = true
 
+
+[tool.poetry.group.dev.dependencies]
+pytest-only = "^2.0.0"
+
 [tool.black]
 line-length = 120
 target-version = ['py38']

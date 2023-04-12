@@ -45,13 +45,13 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_class_name_for_error(self, error_name: ir_types.DeclaredErrorName) -> str:
         return self._error_declaration_referencer.get_class_name(name=error_name)
 
-    def get_class_name_of_environments_enum(self) -> str:
+    def get_class_name_of_environments(self) -> str:
         return self._environments_enum_declaration_referencer.get_class_name(name=None)
 
     def get_filepath_for_environments_enum(self) -> Filepath:
         return self._environments_enum_declaration_referencer.get_filepath(name=None)
 
-    def get_reference_to_environments_enum(self) -> AST.ClassReference:
+    def get_reference_to_environments_class(self) -> AST.ClassReference:
         return self._environments_enum_declaration_referencer.get_class_reference(name=None)
 
     def get_filepath_for_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> Filepath:

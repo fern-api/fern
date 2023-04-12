@@ -447,6 +447,17 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-only"
+version = "2.0.0"
+description = "Use @pytest.mark.only to run a single test"
+category = "dev"
+optional = false
+python-versions = ">=3.6.2,<4"
+
+[package.dependencies]
+pytest = {version = ">=7.1", markers = "python_version >= \"3.7\" and python_version < \"4.0\""}
+
+[[package]]
 name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
@@ -630,7 +641,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "28f015a275cfe23bc119471a03a229d564f926b0f3256d88d37f22106356bb94"
+content-hash = "d5088d9c7c3fc8b7e05237b22be6bdd448165995cc82af8b1e338eed3d1cb737"
 
 [metadata.files]
 anyio = [
@@ -845,6 +856,10 @@ pygments = [
 pytest = [
     {file = "pytest-7.2.2-py3-none-any.whl", hash = "sha256:130328f552dcfac0b1cec75c12e3f005619dc5f874f0a06e8ff7263f0ee6225e"},
     {file = "pytest-7.2.2.tar.gz", hash = "sha256:c99ab0c73aceb050f68929bc93af19ab6db0558791c6a0715723abe9d0ade9d4"},
+]
+pytest-only = [
+    {file = "pytest-only-2.0.0.tar.gz", hash = "sha256:0467eefac714a920b2df2e3c1d2fbf61cf2cd65583ccd2e3233f107862a5fc77"},
+    {file = "pytest_only-2.0.0-py3-none-any.whl", hash = "sha256:1f344d15d6495ca108b341ca12ca90eb1695bebb3bd3978c8efd4a0e121bdb8f"},
 ]
 pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},

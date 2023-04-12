@@ -44,7 +44,6 @@ class PydanticModel:
         self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._forbid_extra_fields = forbid_extra_fields
-        self._serialize_datetime = False
         self._frozen = frozen
         self._orm_mode = orm_mode
         self.name = name
@@ -122,7 +121,7 @@ class PydanticModel:
             else root_type
         )
 
-        self._class_declaration.add_class_var(
+        self._class_declaration.add_statement(
             AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
         )
 
@@ -309,7 +308,7 @@ class PydanticModel:
                 )
             )
 
-        if len(config.statements) > 0:
+        if len(config.class_vars) > 0:
             self._class_declaration.add_class(declaration=config)
 
     def __enter__(self) -> PydanticModel:

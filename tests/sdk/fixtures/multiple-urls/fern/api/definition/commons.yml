@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /movie
+  url: ServerA
+  endpoints:
+    getMovie:
+      method: GET
+      path: /movie/{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: Movie
+      errors:
+        - MovieNotFoundError
+    getAllMovies:
+      method: GET
+      path: /all-movies
+      response: list<Movie>
+    createMovie:
+      method: POST
+      path: /movie
+      request:
+        body: Movie
+      errors:
+        - MovieAlreadyExistsError
+        - InvalidMovieError
+    deleteMovie:
+      method: DELETE
+      path: /{movieId}
+      path-parameters:
+        movieId: MovieId
+      errors:
+        - MovieNotFoundError
+
+types:
+  MovieId: string
+
+  Movie:
+    properties:
+      id: MovieId
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
+errors:
+  MovieNotFoundError:
+    status-code: 404
+    type: MovieId
+  InvalidMovieError:
+    status-code: 400
+    type: MovieId
+  MovieAlreadyExistsError:
+    status-code: 429

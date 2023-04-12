@@ -35,11 +35,12 @@ class ClassDeclaration(AstNode):
             )
         self.constructor = constructor
         self.docstring = docstring
+        self.class_vars: List[VariableDeclaration] = []
         self.statements: List[AstNode] = []
         self.ghost_references: Set[Reference] = set()
 
     def add_class_var(self, variable_declaration: VariableDeclaration) -> None:
-        self.statements.append(variable_declaration)
+        self.class_vars.append(variable_declaration)
 
     def add_method(
         self,
@@ -111,6 +112,9 @@ class ClassDeclaration(AstNode):
     def add_class(self, declaration: ClassDeclaration) -> None:
         self.statements.append(declaration)
 
+    def add_statement(self, statement: AstNode) -> None:
+        self.statements.append(statement)
+
     def add_ghost_reference(self, reference: Reference) -> None:
         self.ghost_references.add(reference)
 
@@ -120,6 +124,8 @@ class ClassDeclaration(AstNode):
         metadata.references.update({*self.extends, *self.ghost_references})
         if self.constructor is not None:
             metadata.update(self.constructor.get_metadata())
+        for class_var in self.class_vars:
+            metadata.update(class_var.get_metadata())
         for statement in self.statements:
             metadata.update(statement.get_metadata())
         if self.docstring is not None:
@@ -151,6 +157,10 @@ class ClassDeclaration(AstNode):
                 writer.write_line('"""')
 
             did_write_statement = False
+            for class_var in self.class_vars:
+                writer.write_node(class_var)
+                writer.write_newline_if_last_line_not()
+                did_write_statement = True
             if self.constructor is not None:
                 writer.write_node(self.constructor)
                 writer.write_newline_if_last_line_not()

@@ -14,7 +14,10 @@ from fern_python.external_dependencies import (
 )
 
 from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generator.environment_generator import EnvironmentGenerator
+from ..environment_generators import (
+    MultipleBaseUrlsEnvironmentGenerator,
+    SingleBaseUrlEnvironmentGenerator,
+)
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
     InlinedRequestBodyParameters,
@@ -164,13 +167,18 @@ class ClientGenerator:
             ConstructorParameter(
                 constructor_parameter_name=ClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
                 private_member_name=ClientGenerator.ENVIRONMENT_MEMBER_NAME,
-                type_hint=AST.TypeHint(self._context.get_reference_to_environments_enum())
+                type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
                 if self._environment_is_enum()
                 else AST.TypeHint.str_(),
                 initializer=AST.Expression(
-                    EnvironmentGenerator(
-                        context=self._context, environments=self._context.ir.environments.environments
-                    ).get_reference_to_default_environment()
+                    self._context.ir.environments.environments.visit(
+                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                            context=self._context, environments=single_base_url_environments
+                        ).get_reference_to_default_environment(),
+                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                            context=self._context, environments=multiple_base_urls_environments
+                        ).get_reference_to_default_environment(),
+                    )
                 )
                 if self._context.ir.environments is not None
                 and self._context.ir.environments.default_environment is not None
@@ -319,10 +327,10 @@ class ClientGenerator:
             writer.write_node(
                 HttpX.make_request(
                     is_async=is_async,
-                    url=self._get_environment_as_str()
+                    url=self._get_environment_as_str(service=service)
                     if is_endpoint_path_empty(endpoint)
                     else UrlLibParse.urljoin(
-                        self._get_environment_as_str(),
+                        self._get_environment_as_str(service=service),
                         self._get_path_for_endpoint(endpoint),
                     ),
                     method=endpoint.method.visit(
@@ -379,7 +387,18 @@ class ClientGenerator:
 
         return reference
 
-    def _get_environment_as_str(self) -> AST.Expression:
+    def _get_environment_as_str(self, *, service: ir_types.HttpService) -> AST.Expression:
+        if self._context.ir.environments is not None:
+            environments_as_union = self._context.ir.environments.environments.get_as_union()
+            if environments_as_union.type == "multipleBaseUrls":
+                if service.base_url is None:
+                    raise RuntimeError("Service is missing base_url")
+                return MultipleBaseUrlsEnvironmentGenerator(
+                    context=self._context, environments=environments_as_union
+                ).get_reference_to_base_url(
+                    reference_to_environments=AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}"),
+                    base_url_id=service.base_url,
+                )
         if self._environment_is_enum():
             return AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}.value")
         else:
