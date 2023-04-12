@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /movie
+  endpoints:
+    uploadMovie:
+      method: POST
+      path: /movie/{movieId}
+      path-parameters:
+        movieId: MovieId
+      request:
+        name: UploadMovieRequest
+        body:
+          properties:
+            name: string
+            contents: file
+
+types:
+  MovieId: string

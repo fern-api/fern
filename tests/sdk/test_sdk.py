@@ -102,3 +102,14 @@ def test_multiple_urls_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(
         snapshot=snapshot, fixture_name="multiple-urls", tmpdir=tmpdir, cli=cli, filename_of_test=__file__
     )
+
+
+def test_file_upload_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="file-upload",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        custom_config={"use_api_name_in_package": True},
+    )

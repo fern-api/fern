@@ -22,6 +22,7 @@ class HttpX:
         query_parameters: List[Tuple[str, AST.Expression]],
         request_body: Optional[AST.Expression],
         headers: Optional[AST.Expression],
+        files: Optional[AST.Expression],
         auth: Optional[AST.Expression],
         response_variable_name: str,
         is_async: bool,
@@ -47,8 +48,13 @@ class HttpX:
                     writer.write_line("},")
 
                 if request_body is not None:
-                    writer.write("json=")
+                    writer.write("data=" if files is not None else "json=")
                     writer.write_node(request_body)
+                    writer.write_line(",")
+
+                if files is not None:
+                    writer.write("files=")
+                    writer.write_node(files)
                     writer.write_line(",")
 
                 if headers is not None:

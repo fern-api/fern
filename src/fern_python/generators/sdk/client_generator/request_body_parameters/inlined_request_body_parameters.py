@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 import fern.ir.pydantic as ir_types
 
@@ -19,11 +19,11 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         self._request_body = request_body
         self._context = context
 
-    def get_parameters(self) -> List[AST.FunctionParameter]:
-        parameters: List[AST.FunctionParameter] = []
+    def get_parameters(self) -> List[AST.NamedFunctionParameter]:
+        parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
             parameters.append(
-                AST.FunctionParameter(
+                AST.NamedFunctionParameter(
                     name=self._get_property_name(property),
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         property.value_type
@@ -61,3 +61,6 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
+
+    def get_files(self) -> Optional[AST.Expression]:
+        return None

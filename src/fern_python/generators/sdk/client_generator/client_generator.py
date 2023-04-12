@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
 import fern.ir.pydantic as ir_types
-from typing_extensions import Never
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.external_dependencies import (
@@ -20,6 +19,7 @@ from ..environment_generators import (
 )
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
+    FileUploadRequestBodyParameters,
     InlinedRequestBodyParameters,
     ReferencedRequestBodyParameters,
 )
@@ -105,7 +105,9 @@ class ClientGenerator:
                             request_body=referenced_request_body,
                             context=self._context,
                         ),
-                        file_upload=raise_file_upload_not_supported,
+                        file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
+                            endpoint=endpoint, request=file_upload_request, context=self._context
+                        ),
                     )
                     if endpoint.request_body is not None
                     else None
@@ -124,7 +126,11 @@ class ClientGenerator:
                                 )
                                 for path_parameter in endpoint.all_path_parameters
                             ],
-                            named_parameters=self._get_endpoint_named_parameters(service=service, endpoint=endpoint),
+                            named_parameters=self._get_endpoint_named_parameters(
+                                service=service,
+                                endpoint=endpoint,
+                                request_body_parameters=request_body_parameters,
+                            ),
                             return_type=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                 endpoint.response.response_body_type
                             )
@@ -247,6 +253,7 @@ class ClientGenerator:
         *,
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
+        request_body_parameters: Optional[AbstractRequestBodyParameters],
     ) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
 
@@ -270,17 +277,8 @@ class ClientGenerator:
                 ),
             )
 
-        if endpoint.request_body is not None:
-            parameters.extend(
-                endpoint.request_body.visit(
-                    inlined_request_body=self._get_parameters_for_inlined_request_body,
-                    reference=lambda reference: self._get_parameters_for_referenced_request_body(
-                        endpoint=endpoint,
-                        referenced_request_body=reference,
-                    ),
-                    file_upload=raise_file_upload_not_supported,
-                )
-            )
+        if request_body_parameters is not None:
+            parameters.extend(request_body_parameters.get_parameters())
 
         for header in service.headers + endpoint.headers:
             parameters.append(
@@ -324,6 +322,10 @@ class ClientGenerator:
         is_async: bool,
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
+            reference_to_request_body = (
+                request_body_parameters.get_reference_to_request_body() if request_body_parameters is not None else None
+            )
+
             writer.write_node(
                 HttpX.make_request(
                     is_async=is_async,
@@ -345,12 +347,11 @@ class ClientGenerator:
                         for query_parameter in endpoint.query_parameters
                     ],
                     request_body=(
-                        self._context.core_utilities.jsonable_encoder(
-                            request_body_parameters.get_reference_to_request_body()
-                        )
-                        if request_body_parameters is not None
+                        self._context.core_utilities.jsonable_encoder(reference_to_request_body)
+                        if reference_to_request_body is not None
                         else None
                     ),
+                    files=request_body_parameters.get_files() if request_body_parameters is not None else None,
                     response_variable_name=ClientGenerator.RESPONSE_VARIABLE,
                     headers=self._get_headers_for_endpoint(service=service, endpoint=endpoint),
                     auth=self._get_httpx_auth_for_request(),
@@ -545,57 +546,6 @@ class ClientGenerator:
         )
         writer.write_newline_if_last_line_not()
 
-    def _get_parameters_for_inlined_request_body(
-        self, inlined_request_body: ir_types.InlinedRequestBody
-    ) -> List[AST.NamedFunctionParameter]:
-        parameters: List[AST.NamedFunctionParameter] = []
-        for property in self._get_all_properties_for_inlined_request_body(inlined_request_body):
-            parameters.append(
-                AST.NamedFunctionParameter(
-                    name=property.name.name.snake_case.unsafe_name,
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        property.value_type
-                    ),
-                ),
-            )
-        return parameters
-
-    def _get_all_properties_for_inlined_request_body(
-        self, inlined_request_body: ir_types.InlinedRequestBody
-    ) -> List[ir_types.InlinedRequestBodyProperty]:
-        properties = inlined_request_body.properties.copy()
-        for extension in inlined_request_body.extends:
-            properties.extend(
-                [
-                    ir_types.InlinedRequestBodyProperty(
-                        name=extended_property.name,
-                        value_type=extended_property.value_type,
-                        docs=extended_property.docs,
-                    )
-                    for extended_property in (
-                        self._context.pydantic_generator_context.get_all_properties_including_extensions(extension)
-                    )
-                ]
-            )
-        return properties
-
-    def _get_parameters_for_referenced_request_body(
-        self,
-        *,
-        endpoint: ir_types.HttpEndpoint,
-        referenced_request_body: ir_types.HttpRequestBodyReference,
-    ) -> List[AST.NamedFunctionParameter]:
-        if endpoint.sdk_request is None:
-            raise RuntimeError("Request body is referenced by SDKRequestBody is not defined")
-        return [
-            AST.NamedFunctionParameter(
-                name=endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name,
-                type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    referenced_request_body.request_body_type
-                ),
-            )
-        ]
-
     def _get_path_for_endpoint(self, endpoint: ir_types.HttpEndpoint) -> AST.Expression:
         # remove leading slash so that urljoin concatenates
         head = endpoint.full_path.head.lstrip("/")
@@ -742,10 +692,6 @@ class ClientGenerator:
             writer.write_line()
 
         return AST.CodeWriter(write)
-
-
-def raise_file_upload_not_supported(request: ir_types.FileUploadRequest) -> Never:
-    raise RuntimeError("File upload is not supported")
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:

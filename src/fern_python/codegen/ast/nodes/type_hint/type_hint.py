@@ -113,6 +113,10 @@ class TypeHint(AstNode):
         return TypeHint(type=get_reference_to_typing_import("Any"))
 
     @staticmethod
+    def IO() -> TypeHint:
+        return TypeHint(type=get_reference_to_typing_import("IO"))
+
+    @staticmethod
     def generic(generic: GenericTypeVar) -> TypeHint:
         return TypeHint(type=generic)
 
