@@ -13,6 +13,10 @@ All of our generators are [open source](https://github.com/fern-api).
 The TypeScript SDK generator outputs a fully functional TypeScript/JavaScript
 SDK. It can publish the SDK to npmjs.org (or any other npm repository).
 
+### Config options
+
+- `namespaceExport`: Allows you to control the name of the generated namespace export and client class.
+
 ```yaml generators.yml
 - name: fernapi/fern-typescript-sdk
   version: 0.0.255
@@ -20,6 +24,8 @@ SDK. It can publish the SDK to npmjs.org (or any other npm repository).
     location: npm
     package-name: "@fern-api/plantstore"
     token: ${NPM_TOKEN}
+  config: # Optional
+    namespaceExport: PlantStore
   github:
     repository: fern-api/plantstore-node
 ```
