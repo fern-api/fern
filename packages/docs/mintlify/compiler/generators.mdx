@@ -24,6 +24,24 @@ SDK. It can publish the SDK to npmjs.org (or any other npm repository).
     repository: fern-api/plantstore-node
 ```
 
+## `fern-typescript-express`
+
+[Source code](https://github.com/fern-api/express-starter)
+
+The Express starter allows you to generate a complete skeleton for your Express server. It lets you create
+strictly-typed request handlers, which allows you to safely access well-typed parameters, and prevents you
+from sending incorrect responses to the client.
+
+⚠️ Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` before using this starter
+
+```yaml generators.yml
+- name: fernapi/fern-typescript-express
+  version: 0.5.0
+  output:
+    location: local-file-system
+    path: ../../generated/express
+```
+
 ## `fern-python-sdk`
 
 [Source code](https://github.com/fern-api/fern-python)
