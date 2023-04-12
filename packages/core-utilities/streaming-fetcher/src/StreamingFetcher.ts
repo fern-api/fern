@@ -25,10 +25,10 @@ export declare namespace StreamingFetcher {
 const DATA_EVENT_REGEX = /data: (.*)/;
 
 export const streamingFetcher: StreamingFetchFunction = async (args) => {
-    const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-    };
-
+    const headers: Record<string, string> = {};
+    if (args.body !== undefined) {
+        headers["Content-Type"] = "application/json";
+    }
     if (args.headers != null) {
         for (const [key, value] of Object.entries(args.headers)) {
             if (value != null) {
