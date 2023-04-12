@@ -3,7 +3,9 @@ from fern.generator_exec.sdk.resources import GeneratorConfig
 
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
+from fern_python.utils import pascal_case
 
+from ..custom_config import SDKCustomConfig
 from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
@@ -20,9 +22,12 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         *,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
-        client_class_name: str,
+        custom_config: SDKCustomConfig,
     ):
-        super().__init__(ir=ir, generator_config=generator_config)
+        super().__init__(ir=ir, generator_config=generator_config, custom_config=custom_config)
+        client_class_name = custom_config.client_class_name or (
+            pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)
+        )
         self._error_declaration_referencer = ErrorDeclarationReferencer(filepath_creator=self.filepath_creator)
         self._environments_enum_declaration_referencer = EnvironmentsEnumDeclarationReferencer(
             filepath_creator=self.filepath_creator,
@@ -38,6 +43,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             filepath_creator=self.filepath_creator,
             root_class_name=client_class_name,
         )
+        self._custom_config = custom_config
 
     def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:
         return self._error_declaration_referencer.get_filepath(name=error_name)

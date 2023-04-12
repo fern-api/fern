@@ -8,6 +8,7 @@ from fern_python.codegen.filepath import Filepath
 from fern_python.generators.pydantic_model import PydanticGeneratorContextImpl
 
 from ..core_utilities.core_utilities import CoreUtilities
+from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (
     TypeDeclarationReferencer,
 )
@@ -20,10 +21,15 @@ class SdkGeneratorContext(ABC):
         *,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
+        custom_config: SDKCustomConfig,
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.filepath_creator = SdkFilepathCreator(ir=ir, generator_config=generator_config)
+        self.filepath_creator = SdkFilepathCreator(
+            ir=ir,
+            generator_config=generator_config,
+            custom_config=custom_config,
+        )
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(filepath_creator=self.filepath_creator),

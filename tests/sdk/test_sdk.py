@@ -9,7 +9,14 @@ from ..snapshot_helpers import run_snapshot_test
 
 
 def test_trace_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
-    run_snapshot_test(snapshot=snapshot, fixture_name="trace", tmpdir=tmpdir, cli=cli, filename_of_test=__file__)
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="trace",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        custom_config={"use_api_name_in_package": True},
+    )
 
 
 def test_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
