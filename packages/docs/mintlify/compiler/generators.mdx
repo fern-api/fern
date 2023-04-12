@@ -24,7 +24,7 @@ SDK. It can publish the SDK to npmjs.org (or any other npm repository).
     location: npm
     package-name: "@fern-api/plantstore"
     token: ${NPM_TOKEN}
-  config: # Optional
+  config: # optional
     namespaceExport: PlantStore
   github:
     repository: fern-api/plantstore-node
@@ -34,11 +34,10 @@ SDK. It can publish the SDK to npmjs.org (or any other npm repository).
 
 [Source code](https://github.com/fern-api/express-starter)
 
-The Express starter allows you to generate a complete skeleton for your Express server. It lets you create
-strictly-typed request handlers, which allows you to safely access well-typed parameters, and prevents you
-from sending incorrect responses to the client.
+The Express generator generates types and networking logic for your Express server. This saves you time
+and add compile-time safety that you are serving the exact API that you specified in your Fern Definition.
 
-⚠️ Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` before using this starter
+⚠️ Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.
 
 ```yaml generators.yml
 - name: fernapi/fern-typescript-express
@@ -151,12 +150,12 @@ it into any OpenAPI-compatible tools, like documentation providers.
 
 ### Config options
 
-- `format`: Either `"yaml"` or `"json"`. Defaults to `"yaml".
+- `format`: Either `"yaml"` or `"json"`. Defaults to `"yaml"`.
 
 ```yaml generators.yml
 - name: fernapi/fern-openapi
   version: 0.0.14
-  config: # Optional
+  config: # optional
     format: yaml
   github:
     repository: fern-api/plantstore-openapi
