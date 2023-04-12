@@ -29,6 +29,7 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Directory, Project, SourceFile } from "ts-morph";
 import { ExpressEndpointTypeSchemasContextImpl } from "./contexts/express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
+import { ExpressErrorSchemaContextImpl } from "./contexts/express-error-schema/ExpressErrorSchemaContextImpl";
 import { ExpressErrorContextImpl } from "./contexts/express-error/ExpressErrorContextImpl";
 import { ExpressInlinedRequestBodySchemaContextImpl } from "./contexts/express-inlined-request-body-schema/ExpressInlinedRequestBodySchemaContextImpl";
 import { ExpressInlinedRequestBodyContextImpl } from "./contexts/express-inlined-request-body/ExpressInlinedRequestBodyContextImpl";
@@ -216,6 +217,7 @@ export class ExpressGenerator {
         this.generateExpressRegister();
         this.generateGenericApiExpressGenerator();
         this.generateErrorDeclarations();
+        this.generateErrorSchemas();
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
@@ -306,6 +308,39 @@ export class ExpressGenerator {
                         typeSchemaGenerator: this.typeSchemaGenerator,
                     });
                     errorContext.expressError.getGeneratedExpressError(errorDeclaration.name).writeToFile(errorContext);
+                },
+            });
+        }
+    }
+
+    private generateErrorSchemas() {
+        for (const errorDeclaration of Object.values(this.intermediateRepresentation.errors)) {
+            this.withSourceFile({
+                filepath: this.expressErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
+                run: ({ sourceFile, importsManager }) => {
+                    const errorContext = new ExpressErrorSchemaContextImpl({
+                        sourceFile,
+                        coreUtilitiesManager: this.coreUtilitiesManager,
+                        dependencyManager: this.dependencyManager,
+                        fernConstants: this.intermediateRepresentation.constants,
+                        importsManager,
+                        typeResolver: this.typeResolver,
+                        typeDeclarationReferencer: this.typeDeclarationReferencer,
+                        typeGenerator: this.typeGenerator,
+                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        expressErrorGenerator: this.expressErrorGenerator,
+                        errorDeclarationReferencer: this.expressErrorDeclarationReferencer,
+                        errorResolver: this.errorResolver,
+                        genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
+                        genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
+                        expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
+                        expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
+                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                        typeSchemaGenerator: this.typeSchemaGenerator,
+                    });
+                    errorContext.expressErrorSchema
+                        .getGeneratedExpressErrorSchema(errorDeclaration.name)
+                        ?.writeToFile(errorContext);
                 },
             });
         }

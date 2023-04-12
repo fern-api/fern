@@ -17,6 +17,7 @@ interface FixtureInfo {
     outputMode: "github" | "publish" | "local";
     apiName: string;
     customConfig?: ExpressCustomConfigSchema;
+    only?: true;
 }
 
 const FIXTURES: FixtureInfo[] = [
@@ -49,7 +50,7 @@ describe("runGenerator", () => {
     process.env.GENERATOR_VERSION = "0.0.0";
 
     for (const fixture of FIXTURES) {
-        it(
+        (fixture.only ? it.only : it)(
             // eslint-disable-next-line jest/valid-title
             fixture.path,
             async () => {
@@ -109,6 +110,7 @@ describe("runGenerator", () => {
                 const directoryContents = (await getDirectoryContents(unzippedDirectory)).filter(
                     (item) => !FILENAMES_TO_IGNORE_FOR_SNAPSHOT.has(item.name)
                 );
+                // eslint-disable-next-line jest/no-standalone-expect
                 expect(directoryContents).toMatchSnapshot();
             },
             180_000
