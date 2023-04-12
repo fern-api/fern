@@ -126,7 +126,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             }
         }
         httpUrlBuilder.addStatement(
-                "$T $L = $L.build()",
+                "$T $L = $L.build()\n",
                 HttpUrl.class,
                 AbstractEndpointWriter.HTTP_URL_NAME,
                 AbstractEndpointWriter.HTTP_URL_BUILDER_NAME);
@@ -184,11 +184,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     .endControlFlow();
         } else {
             requestInitializerBuilder.addStatement(
-                    "$T $L = $T.create($S, null)",
-                    RequestBody.class,
-                    AbstractEndpointWriter.REQUEST_BODY_NAME,
-                    RequestBody.class,
-                    "");
+                    "$T $L = null", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME);
         }
         requestInitializerBuilder
                 .add(

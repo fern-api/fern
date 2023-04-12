@@ -30,7 +30,6 @@ import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 
 public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
 
@@ -85,11 +84,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 .add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
                 .indent()
                 .add(".url($L)\n", AbstractEndpointWriter.HTTP_URL_NAME)
-                .add(
-                        ".method($S, $T.create($S, null))\n",
-                        httpEndpoint.getMethod().toString(),
-                        RequestBody.class,
-                        "")
+                .add(".method($S, null)\n", httpEndpoint.getMethod().toString())
                 .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers())
                 .add(".build();\n")
                 .unindent()

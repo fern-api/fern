@@ -563,7 +563,6 @@ import com.fern.basic.core.ClientOptions;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public final class AuthClientImpl implements AuthClient {
@@ -583,7 +582,7 @@ public final class AuthClientImpl implements AuthClient {
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
-            .method("GET", RequestBody.create("", null))
+            .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
     try {
@@ -819,7 +818,7 @@ public final class BlogClientImpl implements BlogClient {
             .addPathSegment(postId);
     _httpUrlBuilder.addQueryParameter("dummy", request.getDummy());
     HttpUrl _httpUrl = _httpUrlBuilder.build();
-    RequestBody _requestBody = RequestBody.create("", null);
+    RequestBody _requestBody = null;
     Request.Builder _requestBuilder =
         new Request.Builder()
             .url(_httpUrl)
@@ -847,7 +846,7 @@ public final class BlogClientImpl implements BlogClient {
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
-            .method("GET", RequestBody.create("", null))
+            .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
     try {
@@ -2104,7 +2103,7 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
-            .method("GET", RequestBody.create("", null))
+            .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
     try {
@@ -2316,7 +2315,7 @@ public final class DeviceClientImpl implements DeviceClient {
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
-            .method("DELETE", RequestBody.create("", null))
+            .method("DELETE", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
     try {
@@ -2345,7 +2344,7 @@ public final class DeviceClientImpl implements DeviceClient {
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
-            .method("GET", RequestBody.create("", null))
+            .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
     try {
@@ -6819,7 +6818,7 @@ public final class UserClientImpl implements UserClient {
     Request _request =
         new Request.Builder()
             .url(_httpUrl)
-            .method("GET", RequestBody.create("", null))
+            .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
     try {
