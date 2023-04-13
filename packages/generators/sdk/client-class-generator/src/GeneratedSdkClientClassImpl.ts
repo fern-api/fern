@@ -350,12 +350,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getApiHeaders(context: SdkClientClassContext): GeneratedHeader[] {
-        return this.intermediateRepresentation.headers.map((header) => ({
-            header: header.name.wireValue,
-            value: context.base.coreUtilities.fetcher.Supplier.get(
-                this.getReferenceToOption(this.getOptionKeyForGlobalHeader(header))
-            ),
-        }));
+        return (
+            this.intermediateRepresentation.headers
+                // auth headers are handled separately
+                .filter((header) => !this.isAuthorizationHeader(header))
+                .map((header) => ({
+                    header: header.name.wireValue,
+                    value: context.base.coreUtilities.fetcher.Supplier.get(
+                        this.getReferenceToOption(this.getOptionKeyForGlobalHeader(header))
+                    ),
+                }))
+        );
     }
 
     /***********
@@ -662,18 +667,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const headers: CustomHeader[] = [];
 
         for (const header of this.intermediateRepresentation.headers) {
-            if (header.name.wireValue.toLowerCase() === "authorization") {
+            if (this.isAuthorizationHeader(header)) {
                 headers.push({ type: "global", header });
             }
         }
 
         for (const header of this.authHeaders) {
-            if (header.name.wireValue.toLowerCase() === "authorization") {
+            if (this.isAuthorizationHeader(header)) {
                 headers.push({ type: "authScheme", header });
             }
         }
 
         return headers;
+    }
+
+    private isAuthorizationHeader(header: HttpHeader | HeaderAuthScheme): boolean {
+        return header.name.wireValue.toLowerCase() === "authorization";
     }
 
     private getKeyForCustomHeader(header: CustomHeader): string {

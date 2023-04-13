@@ -1,0 +1,10 @@
+name: workspace
+auth: CustomAuth
+auth-schemes:
+  CustomAuth:
+    header: x-api-key
+    name: apiKey
+headers:
+  Authorization:
+    type: optional<string>
+    name: idToken

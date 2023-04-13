@@ -22,6 +22,12 @@ interface FixtureInfo {
 
 const FIXTURES: FixtureInfo[] = [
     {
+        path: "custom-auth-header",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+    },
+    {
         path: "streaming",
         orgName: "fern",
         outputMode: "github",
