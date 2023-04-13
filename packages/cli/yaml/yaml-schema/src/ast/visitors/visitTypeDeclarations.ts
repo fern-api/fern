@@ -116,6 +116,17 @@ export async function visitTypeDeclaration({
             await visitObject(union, {
                 docs: createDocsVisitor(visitor, nodePathForType),
                 discriminant: noop,
+                extends: async (_extends) => {
+                    if (_extends == null) {
+                        return;
+                    }
+                    const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
+                    for (const extendedType of extendsList) {
+                        const nodePathForExtension = [...nodePathForType, "extends", extendedType];
+                        await visitor.extension?.(extendedType, nodePathForExtension);
+                        await visitTypeReference(extendedType, nodePathForExtension);
+                    }
+                },
                 union: async (unionTypes) => {
                     for (const [discriminantValue, unionType] of Object.entries(unionTypes)) {
                         const nodePathForUnionType = [...nodePathForType, "union", discriminantValue];
