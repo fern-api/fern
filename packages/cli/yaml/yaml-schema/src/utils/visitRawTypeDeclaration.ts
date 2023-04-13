@@ -17,14 +17,14 @@ export function visitRawTypeDeclaration<R>(
     if (isRawAliasDefinition(declaration)) {
         return visitor.alias(declaration);
     }
+    if (isRawDiscriminatedUnionDefinition(declaration)) {
+        return visitor.discriminatedUnion(declaration);
+    }
     if (isRawObjectDefinition(declaration)) {
         return visitor.object(declaration);
     }
     if (isRawUndiscriminatedUnionDefinition(declaration)) {
         return visitor.undiscriminatedUnion(declaration);
-    }
-    if (isRawDiscriminatedUnionDefinition(declaration)) {
-        return visitor.discriminatedUnion(declaration);
     }
     if (isRawEnumDefinition(declaration)) {
         return visitor.enum(declaration);
