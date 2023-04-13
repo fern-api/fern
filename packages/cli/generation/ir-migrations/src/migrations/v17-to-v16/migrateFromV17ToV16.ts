@@ -35,7 +35,7 @@ export const V17_TO_V16_MIGRATION: IrMigration<
                               )}.` +
                               ` If you'd like to use this feature, please upgrade ${targetGenerator.name}` +
                               " to a compatible version."
-                        : "Cannot backwards-migrate IR because this IR contains a root base-path."
+                        : "Cannot backwards-migrate IR because this IR contains union types with extensions."
                 );
             }
         }

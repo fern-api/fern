@@ -15698,6 +15698,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "wireValue": "type"
                 },
+                "extends": [],
                 "baseProperties": [],
                 "types": [
                     {
