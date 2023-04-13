@@ -21,4 +21,4 @@ class TypeDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredTypeNa
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name.original_name
+        return name.name.pascal_case.unsafe_name

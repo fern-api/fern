@@ -34,4 +34,4 @@ class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredT
         ) + super()._get_directories_for_fern_filepath(fern_filepath=fern_filepath)
 
     def get_class_name(self, *, name: ir_types.DeclaredTypeName) -> str:
-        return name.name.original_name
+        return name.name.pascal_case.unsafe_name

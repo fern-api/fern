@@ -39,4 +39,4 @@ class InlinedRequestDeclarationReferencer(FastApiDeclarationReferencer[ServiceNa
         )
 
     def get_class_name(self, *, name: ServiceNameAndInlinedRequestBody) -> str:
-        return name.request.name.original_name
+        return name.request.name.pascal_case.unsafe_name

@@ -120,6 +120,7 @@ class FastApiGenerator(AbstractGenerator):
                     ) as source_file:
                         InlinedRequestGenerator(
                             context=context,
+                            service=service,
                             request=request_body,
                             pydantic_model_custom_config=self._pydantic_model_custom_config,
                         ).generate(

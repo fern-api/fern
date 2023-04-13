@@ -11,10 +11,12 @@ class InlinedRequestGenerator:
         self,
         *,
         context: FastApiGeneratorContext,
+        service: ir_types.HttpService,
         request: ir_types.InlinedRequestBody,
         pydantic_model_custom_config: PydanticModelCustomConfig,
     ):
         self._context = context
+        self._service = service
         self._request = request
         self._pydantic_model_custom_config = pydantic_model_custom_config
 
@@ -24,7 +26,9 @@ class InlinedRequestGenerator:
     ) -> None:
         object_generator = ObjectGenerator(
             name=None,
-            class_name=self._request.name.original_name,
+            class_name=self._context.get_class_name_for_inlined_request(
+                service_name=self._service.name, request=self._request
+            ),
             extends=self._request.extends,
             properties=[
                 ObjectProperty(

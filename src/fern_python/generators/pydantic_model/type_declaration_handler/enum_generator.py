@@ -72,4 +72,4 @@ class EnumGenerator(AbstractTypeGenerator):
         return enum_value.name.name.snake_case.safe_name
 
     def _get_class_name(self) -> str:
-        return self._name.name.original_name
+        return self._name.name.pascal_case.unsafe_name

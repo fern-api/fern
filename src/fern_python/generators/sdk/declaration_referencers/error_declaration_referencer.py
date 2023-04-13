@@ -21,4 +21,4 @@ class ErrorDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredError
         )
 
     def get_class_name(self, *, name: ir_types.DeclaredErrorName) -> str:
-        return name.name.original_name
+        return name.name.pascal_case.unsafe_name
