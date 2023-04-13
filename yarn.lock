@@ -3479,7 +3479,7 @@ __metadata:
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.0
@@ -4042,7 +4042,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -4072,7 +4072,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@fern-fern/ir-v1-model": 0.0.1
     "@fern-fern/ir-v10-model": 0.0.1
     "@fern-fern/ir-v11-model": 0.0.2
@@ -4080,6 +4080,7 @@ __metadata:
     "@fern-fern/ir-v13-model": 0.0.1
     "@fern-fern/ir-v14-model": 0.0.1
     "@fern-fern/ir-v15-model": 0.0.1
+    "@fern-fern/ir-v16-model": 0.0.1
     "@fern-fern/ir-v2-model": 0.0.2
     "@fern-fern/ir-v3-model": 0.0.4
     "@fern-fern/ir-v4-model": 0.0.4
@@ -4442,7 +4443,7 @@ __metadata:
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@fern-fern/registry": 0.0.217
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
@@ -4475,7 +4476,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
@@ -4804,7 +4805,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
@@ -4934,7 +4935,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1374
+    "@fern-fern/ir-model": 0.0.1404
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4983,10 +4984,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.1374":
-  version: 0.0.1374
-  resolution: "@fern-fern/ir-model@npm:0.0.1374"
-  checksum: 7a52e42839470e0d0bb93a0d61d8d6aaf8d91de14f28b59c238274170fc0e77c78666e5b7151399f4c3b6341c4e4bf75fae0bbbe85e3e9d9f41cbdd5e6d570ec
+"@fern-fern/ir-model@npm:0.0.1404":
+  version: 0.0.1404
+  resolution: "@fern-fern/ir-model@npm:0.0.1404"
+  checksum: a63c48777598a6d4f3783cba478c65bc8fcef6a971bb91d2ed6f395d7f2122dfc78d541b1c5ac392ee3565ddec02d5ecdf1e22b7be647e2db924c33bc67ab363
   languageName: node
   linkType: hard
 
@@ -5036,6 +5037,13 @@ __metadata:
   version: 0.0.1
   resolution: "@fern-fern/ir-v15-model@npm:0.0.1"
   checksum: 8b05054d3f425b909fb74e9d027720aec2036bc20a6e448bcbfa9a859497605db2a0e0a7186fcd07662a94b5f2f604a2c012772704bcab6bac265abe592ff774
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-v16-model@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v16-model@npm:0.0.1"
+  checksum: 2394662f4213384d0f5fde69847fa3ce430a333d799be1aa31cea42d4ea478c52f02381496b342f1e054d7f1017c4724c61bb6d093d570d190f387f436759ac3
   languageName: node
   linkType: hard
 

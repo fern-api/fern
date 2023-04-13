@@ -127,6 +127,7 @@
                       "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                     }
                   },
+                  "extends": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends" },
                   "union": {
                     "type": "object",
                     "additionalProperties": {

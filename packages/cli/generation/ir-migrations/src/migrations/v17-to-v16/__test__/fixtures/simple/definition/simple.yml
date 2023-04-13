@@ -1,0 +1,11 @@
+types:
+  MyBase:
+    properties:
+      a: string
+      b: integer
+
+  MyUnion:
+    extends: MyBase
+    union:
+      a: {}
+      b: string
