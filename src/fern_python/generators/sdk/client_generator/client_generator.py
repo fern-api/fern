@@ -219,7 +219,9 @@ class ClientGenerator:
                 ConstructorParameter(
                     constructor_parameter_name=ClientGenerator.TOKEN_CONSTRUCTOR_PARAMETER_NAME,
                     private_member_name=ClientGenerator.TOKEN_MEMBER_NAME,
-                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                    type_hint=AST.TypeHint.str_()
+                    if self._context.ir.sdk_config.is_auth_mandatory
+                    else AST.TypeHint.optional(AST.TypeHint.str_()),
                 )
             )
 
@@ -229,12 +231,16 @@ class ClientGenerator:
                     ConstructorParameter(
                         constructor_parameter_name=ClientGenerator.USERNAME_CONSTRUCTOR_PARAMETER_NAME,
                         private_member_name=ClientGenerator.USERNAME_MEMBER_NAME,
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        type_hint=AST.TypeHint.str_()
+                        if self._context.ir.sdk_config.is_auth_mandatory
+                        else AST.TypeHint.optional(AST.TypeHint.str_()),
                     ),
                     ConstructorParameter(
                         constructor_parameter_name=ClientGenerator.PASSWORD_CONSTRUCTOR_PARAMETER_NAME,
                         private_member_name=ClientGenerator.PASSWORD_MEMBER_NAME,
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        type_hint=AST.TypeHint.str_()
+                        if self._context.ir.sdk_config.is_auth_mandatory
+                        else AST.TypeHint.optional(AST.TypeHint.str_()),
                     ),
                 ]
             )
