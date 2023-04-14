@@ -576,7 +576,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ts.factory.createVariableDeclarationList(
                         [
                             ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier("bearer"),
+                                CREDENTIALS_VARIABLE_NAME,
                                 undefined,
                                 undefined,
                                 context.base.coreUtilities.fetcher.Supplier.get(
