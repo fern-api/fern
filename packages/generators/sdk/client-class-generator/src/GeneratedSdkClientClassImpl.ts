@@ -350,8 +350,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getApiHeaders(context: SdkClientClassContext): GeneratedHeader[] {
-        return (
-            this.intermediateRepresentation.headers
+        return [
+            ...this.intermediateRepresentation.headers
                 // auth headers are handled separately
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => ({
@@ -359,8 +359,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     value: context.base.coreUtilities.fetcher.Supplier.get(
                         this.getReferenceToOption(this.getOptionKeyForGlobalHeader(header))
                     ),
-                }))
-        );
+                })),
+            ...this.authHeaders
+                .filter((header) => !this.isAuthorizationHeader(header))
+                .map((header) => ({
+                    header: header.name.wireValue,
+                    value: context.base.coreUtilities.fetcher.Supplier.get(
+                        this.getReferenceToOption(this.getOptionKeyForAuthHeader(header))
+                    ),
+                })),
+        ];
     }
 
     /***********
