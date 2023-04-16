@@ -21,6 +21,8 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.v12.core.ObjectMappers;
+import com.fern.ir.v12.model.commons.ErrorId;
+import com.fern.ir.v12.model.ir.ErrorDiscriminationByPropertyStrategy;
 import com.fern.ir.v12.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
@@ -29,11 +31,17 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.spring.generators.ApiExceptionGenerator;
+import com.fern.java.spring.generators.ErrorBodyGenerator;
+import com.fern.java.spring.generators.ExceptionGenerator;
 import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
+import com.palantir.common.streams.KeyedStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -90,6 +98,13 @@ public final class SpringGeneratorCli
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
 
+        ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
+        GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();
+        this.addGeneratedFile(apiException);
+
+        Optional<GeneratedJavaFile> errorBodyFile = getErrorBody(context);
+        errorBodyFile.ifPresent(this::addGeneratedFile);
+
         // auth
         AuthGenerator authGenerator = new AuthGenerator(context);
         Optional<GeneratedAuthFiles> maybeAuth = authGenerator.generate();
@@ -101,11 +116,24 @@ public final class SpringGeneratorCli
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
+        // errors
+        Map<ErrorId, GeneratedSpringException> generatedErrors = KeyedStream.stream(
+                        context.getIr().getErrors())
+                .map(errorDeclaration -> {
+                    ExceptionGenerator exceptionGenerator =
+                            new ExceptionGenerator(context, apiException, errorBodyFile, errorDeclaration);
+                    GeneratedSpringException springException = exceptionGenerator.generateFile();
+                    this.addGeneratedFile(springException);
+                    this.addGeneratedFile(springException.controllerAdvice());
+                    return springException;
+                })
+                .collectToMap();
+
         // services
         List<GeneratedSpringServerInterface> generatedSpringServerInterfaces = ir.getServices().values().stream()
                 .map(httpService -> {
                     SpringServerInterfaceGenerator httpServiceClientGenerator = new SpringServerInterfaceGenerator(
-                            context, maybeAuth, generatedTypes.getInterfaces(), httpService);
+                            context, maybeAuth, generatedTypes.getInterfaces(), generatedErrors, httpService);
                     return httpServiceClientGenerator.generateFile();
                 })
                 .collect(Collectors.toList());
@@ -143,6 +171,19 @@ public final class SpringGeneratorCli
             return ObjectMappers.JSON_MAPPER.convertValue(node, SpringCustomConfig.class);
         }
         return SpringCustomConfig.builder().build();
+    }
+
+    private Optional<GeneratedJavaFile> getErrorBody(SpringGeneratorContext context) {
+        if (context.getIr().getErrorDiscriminationStrategy().isProperty()) {
+            ErrorDiscriminationByPropertyStrategy errorDiscriminationByPropertyStrategy = context.getIr()
+                    .getErrorDiscriminationStrategy()
+                    .getProperty()
+                    .get();
+            ErrorBodyGenerator errorBodyGenerator =
+                    new ErrorBodyGenerator(errorDiscriminationByPropertyStrategy, context);
+            return Optional.of(errorBodyGenerator.generateFile());
+        }
+        return Optional.empty();
     }
 
     public static void main(String... args) {

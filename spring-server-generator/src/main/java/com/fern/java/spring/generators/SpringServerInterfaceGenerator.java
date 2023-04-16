@@ -15,6 +15,7 @@
  */
 package com.fern.java.spring.generators;
 
+import com.fern.ir.v12.model.commons.ErrorId;
 import com.fern.ir.v12.model.commons.TypeId;
 import com.fern.ir.v12.model.http.EndpointName;
 import com.fern.ir.v12.model.http.FileUploadRequest;
@@ -28,6 +29,7 @@ import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaInterface;
+import com.fern.java.spring.GeneratedSpringException;
 import com.fern.java.spring.GeneratedSpringServerInterface;
 import com.fern.java.spring.SpringGeneratorContext;
 import com.fern.java.spring.generators.spring.AuthToSpringParameterSpecConverter;
@@ -57,7 +59,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
     private final Optional<GeneratedAuthFiles> maybeAuth;
     private final SpringParameterSpecFactory springParameterSpecFactory;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
-
+    private final Map<ErrorId, GeneratedSpringException> exceptions;
     private final List<AbstractGeneratedJavaFile> generatedRequestBodyFiles = new ArrayList<>();
     private final SpringGeneratorContext springGeneratorContext;
 
@@ -65,6 +67,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
             SpringGeneratorContext springGeneratorContext,
             Optional<GeneratedAuthFiles> maybeAuth,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            Map<ErrorId, GeneratedSpringException> exceptions,
             HttpService httpService) {
         super(
                 springGeneratorContext.getPoetClassNameFactory().getServiceInterfaceClassName(httpService),
@@ -74,6 +77,7 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
         this.maybeAuth = maybeAuth;
         this.springParameterSpecFactory = new SpringParameterSpecFactory(springGeneratorContext);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.exceptions = exceptions;
     }
 
     @Override
@@ -116,6 +120,13 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                     .convertToTypeName(true, httpResponse.get().getResponseBodyType());
             endpointMethodBuilder.returns(responseTypeName);
         }
+
+        httpEndpoint.getErrors().get().stream()
+                .map(responseError -> responseError.getError().getErrorId())
+                .map(exceptions::get)
+                .forEach(springException -> {
+                    endpointMethodBuilder.addException(springException.getClassName());
+                });
 
         return endpointMethodBuilder.build();
     }
