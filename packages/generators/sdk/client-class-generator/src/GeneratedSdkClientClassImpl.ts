@@ -242,7 +242,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
                     isReadonly: true,
-                    scope: Scope.Private,
+                    scope: Scope.Protected,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -289,7 +289,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
             serviceClass.addMethod({
-                scope: Scope.Private,
+                scope: Scope.Protected,
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
                 statements: this.getAuthorizationHeaderStatements(context).map(getTextOfTsNode),

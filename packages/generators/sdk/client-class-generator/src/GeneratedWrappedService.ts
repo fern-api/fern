@@ -33,7 +33,7 @@ export class GeneratedWrappedService {
 
         class_.addProperty({
             name: this.getCachedMemberName(),
-            scope: Scope.Private,
+            scope: Scope.Protected,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
                     referenceToWrapped.getTypeNode(),
