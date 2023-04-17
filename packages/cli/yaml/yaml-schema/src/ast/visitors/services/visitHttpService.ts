@@ -21,7 +21,9 @@ export async function visitHttpService({
     await visitor.httpService?.(service, nodePath);
 
     await visitObject(service, {
-        url: noop,
+        url: async (url) => {
+            await visitor.serviceBaseUrl?.(url, [...nodePath, "url"]);
+        },
         "base-path": noop,
         "display-name": noop,
         availability: noop,
@@ -71,6 +73,9 @@ async function visitEndpoint({
         "display-name": noop,
         availability: noop,
         path: noop,
+        url: async (baseUrl) => {
+            await visitor.endpointBaseUrl?.({ baseUrl, service }, [...nodePathForEndpoint, "url"]);
+        },
         "path-parameters": async (pathParameters) => {
             await visitPathParameters({
                 pathParameters,

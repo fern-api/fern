@@ -31,6 +31,8 @@ export interface DefinitionFileAstNodeTypes {
     typeName: string;
     httpService: HttpServiceSchema;
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
+    serviceBaseUrl: string | undefined;
+    endpointBaseUrl: { baseUrl: string | undefined; service: HttpServiceSchema };
     streamCondition: { streamCondition: string | undefined; endpoint: HttpEndpointSchema };
     exampleHttpEndpointCall: {
         example: ExampleEndpointCallSchema;
