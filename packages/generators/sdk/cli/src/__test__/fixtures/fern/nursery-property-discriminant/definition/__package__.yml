@@ -1,11 +1,11 @@
 types:
   RootString: string
 service:
-  url: ServerA
   base-path: /
   auth: false
   endpoints:
     getString:
+      url: ServerA
       method: GET
       path: ""
       response: RootString

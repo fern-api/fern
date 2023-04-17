@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpHeader, HttpService, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpHeader, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { VariableDeclaration, VariableId } from "@fern-fern/ir-model/variables";
 import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
@@ -49,7 +49,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private authHeaders: HeaderAuthScheme[];
     private serviceClassName: string;
     private package_: Package;
-    private service: HttpService | undefined;
     private generatedEndpointImplementations: GeneratedEndpointImplementation[];
     private generatedWrappedServices: GeneratedWrappedService[];
     private allowCustomFetcher: boolean;
@@ -77,7 +76,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.package_ = package_;
 
         const service = packageResolver.getServiceDeclaration(packageId);
-        this.service = service;
 
         if (service == null) {
             this.generatedEndpointImplementations = [];
@@ -304,7 +302,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.hasBearerAuth || this.hasBasicAuth || this.getCustomAuthorizationHeaders().length > 0;
     }
 
-    public getEnvironment(context: SdkClientClassContext): ts.Expression {
+    public getEnvironment(endpoint: HttpEndpoint, context: SdkClientClassContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment();
 
         const defaultEnvironment = context.environments
@@ -328,7 +326,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         return context.environments.getGeneratedEnvironments().getReferenceToEnvironmentUrl({
             referenceToEnvironmentValue,
-            baseUrlId: this.service?.baseUrl ?? undefined,
+            baseUrlId: endpoint.baseUrl ?? undefined,
         });
     }
 

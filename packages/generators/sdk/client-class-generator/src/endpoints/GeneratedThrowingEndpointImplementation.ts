@@ -160,7 +160,7 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
         return [...this.invokeFetcher(context), ...this.getReturnResponseStatements(context)];
     }
     private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
-        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(context);
+        const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
         const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
         if (url != null) {
             return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
