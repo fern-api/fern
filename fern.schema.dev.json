@@ -330,6 +330,7 @@
                   "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                   "display-name": { "type": "string" },
                   "path": { "type": "string" },
+                  "url": { "type": "string" },
                   "path-parameters": {
                     "type": "object",
                     "additionalProperties": {
