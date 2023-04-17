@@ -11,6 +11,7 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     method: z.optional(z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"])),
     "display-name": z.optional(z.string()),
     path: z.string(),
+    url: z.optional(z.string()),
     ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
     auth: z.optional(z.boolean()),
     request: z.optional(z.union([z.string(), HttpRequestSchema])),

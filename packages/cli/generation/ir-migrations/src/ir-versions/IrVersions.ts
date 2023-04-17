@@ -1,4 +1,4 @@
-export * as V17 from "@fern-fern/ir-model";
+export * as V18 from "@fern-fern/ir-model";
 export * as V1 from "@fern-fern/ir-v1-model";
 export * as V10 from "@fern-fern/ir-v10-model";
 export * as V11 from "@fern-fern/ir-v11-model";
@@ -7,6 +7,7 @@ export * as V13 from "@fern-fern/ir-v13-model";
 export * as V14 from "@fern-fern/ir-v14-model";
 export * as V15 from "@fern-fern/ir-v15-model";
 export * as V16 from "@fern-fern/ir-v16-model";
+export * as V17 from "@fern-fern/ir-v17-model";
 export * as V2 from "@fern-fern/ir-v2-model";
 export * as V3 from "@fern-fern/ir-v3-model";
 export * as V4 from "@fern-fern/ir-v4-model";

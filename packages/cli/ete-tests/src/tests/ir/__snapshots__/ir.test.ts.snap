@@ -7791,7 +7791,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     "types": {},
     "errors": {},
     "services": {
-        "service_app": {
+        "service_endpoint-urls": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
@@ -7799,55 +7799,236 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "app",
+                            "originalName": "endpoint-urls",
                             "camelCase": {
-                                "unsafeName": "app",
-                                "safeName": "app"
+                                "unsafeName": "endpointUrls",
+                                "safeName": "endpointUrls"
                             },
                             "snakeCase": {
-                                "unsafeName": "app",
-                                "safeName": "app"
+                                "unsafeName": "endpoint_urls",
+                                "safeName": "endpoint_urls"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "APP",
-                                "safeName": "APP"
+                                "unsafeName": "ENDPOINT_URLS",
+                                "safeName": "ENDPOINT_URLS"
                             },
                             "pascalCase": {
-                                "unsafeName": "App",
-                                "safeName": "App"
+                                "unsafeName": "EndpointUrls",
+                                "safeName": "EndpointUrls"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "app",
+                        "originalName": "endpoint-urls",
                         "camelCase": {
-                            "unsafeName": "app",
-                            "safeName": "app"
+                            "unsafeName": "endpointUrls",
+                            "safeName": "endpointUrls"
                         },
                         "snakeCase": {
-                            "unsafeName": "app",
-                            "safeName": "app"
+                            "unsafeName": "endpoint_urls",
+                            "safeName": "endpoint_urls"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "APP",
-                            "safeName": "APP"
+                            "unsafeName": "ENDPOINT_URLS",
+                            "safeName": "ENDPOINT_URLS"
                         },
                         "pascalCase": {
-                            "unsafeName": "App",
-                            "safeName": "App"
+                            "unsafeName": "EndpointUrls",
+                            "safeName": "EndpointUrls"
                         }
                     }
                 }
             },
-            "baseUrl": "ServerA",
             "basePath": {
                 "head": "/",
                 "parts": []
             },
             "headers": [],
             "pathParameters": [],
-            "endpoints": []
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "test1",
+                        "camelCase": {
+                            "unsafeName": "test1",
+                            "safeName": "test1"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_1",
+                            "safeName": "test_1"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_1",
+                            "safeName": "TEST_1"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Test1",
+                            "safeName": "Test1"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "ServerA",
+                    "method": "GET",
+                    "path": {
+                        "head": "/a",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/a",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "test2",
+                        "camelCase": {
+                            "unsafeName": "test2",
+                            "safeName": "test2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test_2",
+                            "safeName": "test_2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST_2",
+                            "safeName": "TEST_2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Test2",
+                            "safeName": "Test2"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "ServerB",
+                    "method": "POST",
+                    "path": {
+                        "head": "/b",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/b",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        },
+        "service_service-url": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service-url",
+                            "camelCase": {
+                                "unsafeName": "serviceUrl",
+                                "safeName": "serviceUrl"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service_url",
+                                "safeName": "service_url"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE_URL",
+                                "safeName": "SERVICE_URL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ServiceUrl",
+                                "safeName": "ServiceUrl"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service-url",
+                        "camelCase": {
+                            "unsafeName": "serviceUrl",
+                            "safeName": "serviceUrl"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service_url",
+                            "safeName": "service_url"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE_URL",
+                            "safeName": "SERVICE_URL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ServiceUrl",
+                            "safeName": "ServiceUrl"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "test",
+                        "camelCase": {
+                            "unsafeName": "test",
+                            "safeName": "test"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "test",
+                            "safeName": "test"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TEST",
+                            "safeName": "TEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Test",
+                            "safeName": "Test"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "ServerA",
+                    "method": "GET",
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "errors": [],
+                    "examples": []
+                }
+            ]
         }
     },
     "constants": {
@@ -7986,70 +8167,139 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     "pathParameters": [],
     "variables": [],
     "subpackages": {
-        "subpackage_app": {
+        "subpackage_endpoint-urls": {
             "fernFilepath": {
                 "allParts": [
                     {
-                        "originalName": "app",
+                        "originalName": "endpoint-urls",
                         "camelCase": {
-                            "unsafeName": "app",
-                            "safeName": "app"
+                            "unsafeName": "endpointUrls",
+                            "safeName": "endpointUrls"
                         },
                         "snakeCase": {
-                            "unsafeName": "app",
-                            "safeName": "app"
+                            "unsafeName": "endpoint_urls",
+                            "safeName": "endpoint_urls"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "APP",
-                            "safeName": "APP"
+                            "unsafeName": "ENDPOINT_URLS",
+                            "safeName": "ENDPOINT_URLS"
                         },
                         "pascalCase": {
-                            "unsafeName": "App",
-                            "safeName": "App"
+                            "unsafeName": "EndpointUrls",
+                            "safeName": "EndpointUrls"
                         }
                     }
                 ],
                 "packagePath": [],
                 "file": {
-                    "originalName": "app",
+                    "originalName": "endpoint-urls",
                     "camelCase": {
-                        "unsafeName": "app",
-                        "safeName": "app"
+                        "unsafeName": "endpointUrls",
+                        "safeName": "endpointUrls"
                     },
                     "snakeCase": {
-                        "unsafeName": "app",
-                        "safeName": "app"
+                        "unsafeName": "endpoint_urls",
+                        "safeName": "endpoint_urls"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "APP",
-                        "safeName": "APP"
+                        "unsafeName": "ENDPOINT_URLS",
+                        "safeName": "ENDPOINT_URLS"
                     },
                     "pascalCase": {
-                        "unsafeName": "App",
-                        "safeName": "App"
+                        "unsafeName": "EndpointUrls",
+                        "safeName": "EndpointUrls"
                     }
                 }
             },
             "name": {
-                "originalName": "app",
+                "originalName": "endpoint-urls",
                 "camelCase": {
-                    "unsafeName": "app",
-                    "safeName": "app"
+                    "unsafeName": "endpointUrls",
+                    "safeName": "endpointUrls"
                 },
                 "snakeCase": {
-                    "unsafeName": "app",
-                    "safeName": "app"
+                    "unsafeName": "endpoint_urls",
+                    "safeName": "endpoint_urls"
                 },
                 "screamingSnakeCase": {
-                    "unsafeName": "APP",
-                    "safeName": "APP"
+                    "unsafeName": "ENDPOINT_URLS",
+                    "safeName": "ENDPOINT_URLS"
                 },
                 "pascalCase": {
-                    "unsafeName": "App",
-                    "safeName": "App"
+                    "unsafeName": "EndpointUrls",
+                    "safeName": "EndpointUrls"
                 }
             },
-            "service": "service_app",
+            "service": "service_endpoint-urls",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        },
+        "subpackage_service-url": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "service-url",
+                        "camelCase": {
+                            "unsafeName": "serviceUrl",
+                            "safeName": "serviceUrl"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service_url",
+                            "safeName": "service_url"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE_URL",
+                            "safeName": "SERVICE_URL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ServiceUrl",
+                            "safeName": "ServiceUrl"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "service-url",
+                    "camelCase": {
+                        "unsafeName": "serviceUrl",
+                        "safeName": "serviceUrl"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service_url",
+                        "safeName": "service_url"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE_URL",
+                        "safeName": "SERVICE_URL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ServiceUrl",
+                        "safeName": "ServiceUrl"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "service-url",
+                "camelCase": {
+                    "unsafeName": "serviceUrl",
+                    "safeName": "serviceUrl"
+                },
+                "snakeCase": {
+                    "unsafeName": "service_url",
+                    "safeName": "service_url"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE_URL",
+                    "safeName": "SERVICE_URL"
+                },
+                "pascalCase": {
+                    "unsafeName": "ServiceUrl",
+                    "safeName": "ServiceUrl"
+                }
+            },
+            "service": "service_service-url",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -8064,7 +8314,8 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_app"
+            "subpackage_endpoint-urls",
+            "subpackage_service-url"
         ],
         "hasEndpointsInTree": true
     },
