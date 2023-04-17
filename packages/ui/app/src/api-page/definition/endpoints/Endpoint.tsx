@@ -1,6 +1,10 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { MonospaceText } from "../../../commons/MonospaceText";
-import { DefinitionItemPage } from "../DefinitionItemPage";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { Markdown } from "../markdown/Markdown";
+import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointPathParameter } from "./EndpointPathParameter";
 import { EndpointSection } from "./EndpointSection";
 import { EndpointTitle } from "./EndpointTitle";
@@ -15,51 +19,75 @@ export declare namespace Endpoint {
 }
 
 export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
+    const { urlPathResolver } = useApiDefinitionContext();
+
+    const hash = urlPathResolver.getHashForEndpoint(endpoint.id);
+    const htmlId = urlPathResolver.getHtmlIdForEndpoint(endpoint.id);
+    const ref = useRef<HTMLDivElement | null>(null);
+    const currentHash = useLocation().hash;
+    useEffect(() => {
+        if (currentHash === hash) {
+            ref.current?.scrollIntoView();
+        }
+    }, [currentHash, hash]);
+
     return (
-        <DefinitionItemPage
-            title={<EndpointTitle endpoint={endpoint} />}
-            subtitle={
-                <div className="flex items-center gap-2 text-gray-500">
-                    <div className="font-bold text-base">GET</div>
-                    <div className="flex">
-                        {endpoint.path.parts.map((part, index) => (
-                            <MonospaceText key={index}>
-                                {part._visit<JSX.Element | string | null>({
-                                    literal: (literal) => literal,
-                                    pathParameter: (pathParameter) => (
-                                        <EndpointPathParameter pathParameter={pathParameter} />
-                                    ),
-                                    _other: () => null,
-                                })}
-                            </MonospaceText>
-                        ))}
+        <div className="flex-1 flex gap-24 px-24 min-w-0" id={htmlId} ref={ref}>
+            <div className="flex-1 flex flex-col">
+                <div className="pt-10 text-3xl font-bold">
+                    <EndpointTitle endpoint={endpoint} />
+                </div>
+                <div className="mt-2">
+                    <div className="flex items-center gap-2 text-gray-500">
+                        <div className="font-bold text-base">GET</div>
+                        <div className="flex">
+                            {endpoint.path.parts.map((part, index) => (
+                                <MonospaceText key={index}>
+                                    {part._visit<JSX.Element | string | null>({
+                                        literal: (literal) => literal,
+                                        pathParameter: (pathParameter) => (
+                                            <EndpointPathParameter pathParameter={pathParameter} />
+                                        ),
+                                        _other: () => null,
+                                    })}
+                                </MonospaceText>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            }
-            description={endpoint.description}
-        >
-            <div className="flex flex-1 flex-col gap-12">
-                {endpoint.path.pathParameters.length > 0 && (
-                    <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                {endpoint.description != null && (
+                    <div className="mt-4">
+                        <Markdown>{endpoint.description}</Markdown>
+                    </div>
                 )}
-                {endpoint.queryParameters.length > 0 && (
-                    <QueryParametersSection queryParameters={endpoint.queryParameters} />
-                )}
-                <EndpointSection title="Request">
-                    {endpoint.request != null ? (
-                        <EndpointTypeSection httpBody={endpoint.request} preamble="The request for this endpoint is" />
-                    ) : (
-                        <div>This endpoint does not expect a request body.</div>
-                    )}
-                </EndpointSection>
-                <EndpointSection title="Response">
-                    {endpoint.response != null ? (
-                        <EndpointTypeSection httpBody={endpoint.response} preamble="This endpoint returns" />
-                    ) : (
-                        <div>This endpoint does not return a response.</div>
-                    )}
-                </EndpointSection>
+                <div className="flex mt-8">
+                    <div className="flex flex-1 flex-col gap-12">
+                        {endpoint.path.pathParameters.length > 0 && (
+                            <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                        )}
+                        {endpoint.queryParameters.length > 0 && (
+                            <QueryParametersSection queryParameters={endpoint.queryParameters} />
+                        )}
+                        <EndpointSection title="Request">
+                            {endpoint.request != null ? (
+                                <EndpointTypeSection httpBody={endpoint.request} />
+                            ) : (
+                                <div>This endpoint does not expect a request body.</div>
+                            )}
+                        </EndpointSection>
+                        <EndpointSection title="Response">
+                            {endpoint.response != null ? (
+                                <EndpointTypeSection httpBody={endpoint.response} />
+                            ) : (
+                                <div>This endpoint does not return a response.</div>
+                            )}
+                        </EndpointSection>
+                    </div>
+                </div>
             </div>
-        </DefinitionItemPage>
+            <div className="flex basis-2/5 sticky self-start top-0 h-[calc(100vh-20px)] min-w-0">
+                <EndpointExamples endpoint={endpoint} />
+            </div>
+        </div>
     );
 };

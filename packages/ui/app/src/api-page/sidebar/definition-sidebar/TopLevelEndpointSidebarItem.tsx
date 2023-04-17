@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { generatePath, useLocation } from "react-router-dom";
+import { generatePath } from "react-router-dom";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
@@ -9,32 +9,28 @@ import { useCurrentApiIdOrThrow } from "../../routes/useCurrentApiId";
 import { useCurrentPathname } from "../../routes/useCurrentPathname";
 import { ClickableSidebarItem } from "./ClickableSidebarItem";
 
-export declare namespace EndpointSidebarItem {
+export declare namespace TopLevelEndpointSidebarItem {
     export interface Props {
-        subpackageId: FernRegistry.SubpackageId;
         endpoint: FernRegistry.EndpointDefinition;
     }
 }
 
-export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint, subpackageId }) => {
+export const TopLevelEndpointSidebarItem: React.FC<TopLevelEndpointSidebarItem.Props> = ({ endpoint }) => {
     const { urlPathResolver } = useApiDefinitionContext();
 
     const endpointPath = useMemo(
-        () => urlPathResolver.getUrlPathForEndpoint(subpackageId, endpoint.id),
-        [endpoint.id, subpackageId, urlPathResolver]
+        () => urlPathResolver.getUrlPathForTopLevelEndpoint(endpoint.id),
+        [endpoint.id, urlPathResolver]
     );
 
     const currentPathname = useCurrentPathname();
-    const location = useLocation();
     const isSelected = useMemo(
         () =>
-            urlPathResolver.isEndpointSelected({
-                subpackageId,
+            urlPathResolver.isTopLevelEndpointSelected({
                 endpointId: endpoint.id,
                 pathname: currentPathname,
-                hash: location.hash,
             }),
-        [currentPathname, endpoint.id, location.hash, subpackageId, urlPathResolver]
+        [currentPathname, endpoint.id, urlPathResolver]
     );
 
     const organizationId = useCurrentOrganizationIdOrThrow();

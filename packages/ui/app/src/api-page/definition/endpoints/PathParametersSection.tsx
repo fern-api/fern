@@ -1,7 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointParametersSection } from "./EndpointParametersSection";
+import { EndpointPathParameter } from "./EndpointPathParameter";
 
 export declare namespace PathParametersSection {
     export interface Props {
@@ -18,5 +19,9 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({ p
         }));
     }, [pathParameters]);
 
-    return <EndpointParametersSection title="Path parameters" parameters={convertedParameters} />;
+    const renderName = useCallback((name: string) => <EndpointPathParameter pathParameter={name} />, []);
+
+    return (
+        <EndpointParametersSection title="Path parameters" parameters={convertedParameters} renderName={renderName} />
+    );
 };

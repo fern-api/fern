@@ -1,5 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { ReferencedTypePreviewPart } from "../type-preview/ReferencedTypePreviewPart";
+import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
     export interface Props {
@@ -24,13 +24,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type }) => {
                         _other: () => "<unknown>",
                     });
                 },
-                optional: ({ itemType }) => (
-                    <>
-                        {"optional<"}
-                        <TypeShorthand type={itemType} />
-                        {">"}
-                    </>
-                ),
+                optional: ({ itemType }) => <TypeShorthand type={itemType} />,
                 list: ({ itemType }) => {
                     return (
                         <>

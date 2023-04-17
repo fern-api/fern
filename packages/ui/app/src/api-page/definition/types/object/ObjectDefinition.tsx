@@ -1,8 +1,10 @@
-import { Icon } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
 import { FernRegistry } from "@fern-fern/registry";
+import classNames from "classnames";
+import { useContext } from "react";
+import { MonospaceText } from "../../../../commons/MonospaceText";
 import { Markdown } from "../../markdown/Markdown";
 import { AllReferencedTypes } from "../AllReferencedTypes";
+import { TypeDefinitionContext } from "../context/TypeDefinitionContext";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectDefinition {
@@ -12,32 +14,30 @@ export declare namespace ObjectDefinition {
 }
 
 export const ObjectDefinition: React.FC<ObjectDefinition.Props> = ({ object }) => {
+    const { isRootTypeDefinition } = useContext(TypeDefinitionContext);
+
     return (
         <div className="flex flex-col">
             {object.properties.map((property) => (
                 <div
-                    className="grid grid-cols-[auto_1fr] gap-x-2 items-center border-t border-gray-200 px-2 py-4"
+                    className={classNames("flex flex-col border-t py-4", "border-gray-200", "dark:border-gray-700", {
+                        "px-2": !isRootTypeDefinition,
+                    })}
                     key={property.key}
                 >
-                    <Icon className="transform scale-x-[-1] text-gray-400" icon={IconNames.KEY_ENTER} />
                     <div className="flex items-center gap-2">
-                        <div className="rounded bg-white border border-gray-300 px-1 font-bold">{property.key}</div>
-                        <div>
+                        <MonospaceText>{property.key}</MonospaceText>
+                        <div className={classNames("text-gray-500", "dark:text-gray-500")}>
                             <TypeShorthand type={property.valueType} />
                         </div>
                     </div>
-                    <div />
                     <div className="flex flex-col">
                         {property.description != null && (
-                            <div className="text-gray-500 mt-3">
+                            <div className={classNames("mt-3", "text-gray-500", "dark:text-gray-400")}>
                                 <Markdown>{property.description}</Markdown>
                             </div>
                         )}
-                        <AllReferencedTypes
-                            className={property.description != null ? "mt-2" : "mt-3"}
-                            type={property.valueType}
-                            defaultIsCollapsed
-                        />
+                        <AllReferencedTypes type={property.valueType} isCollapsible />
                     </div>
                 </div>
             ))}

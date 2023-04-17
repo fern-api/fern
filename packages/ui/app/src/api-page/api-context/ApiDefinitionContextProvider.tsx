@@ -1,57 +1,30 @@
 import { FernRegistry } from "@fern-fern/registry";
 import React, { useCallback, useMemo } from "react";
-import { useParams } from "react-router-dom";
 import { PackagePath } from "../../commons/PackagePath";
-import { useApiDefinition } from "../../queries/useApiDefinition";
-import { DefinitionRoutes } from "../routes";
-import { ParsedEnvironmentId } from "../routes/useCurrentEnvironment";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 import { TypeIdToPackagePathCache } from "./TypeIdToPackagePathCache";
+import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
-        environmentId: ParsedEnvironmentId;
+        api: FernRegistry.ApiDefinition;
     }>;
 }
 
-export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider.Props> = ({
-    environmentId,
-    children,
-}) => {
-    /**
-     * api definition
-     */
-
-    const { [DefinitionRoutes.API_DEFINITION.parameters.API_ID]: apiId } = useParams();
-
-    if (apiId == null) {
-        throw new Error("Api ID is not defined.");
-    }
-    const api = useApiDefinition({
-        apiId: FernRegistry.ApiId(apiId),
-        environmentId,
-    });
-
-    const getApiOrThrow = useCallback(() => {
-        if (api.type !== "loaded") {
-            throw new Error("API is not loaded");
-        }
-        return api.value;
-    }, [api]);
-
+export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider.Props> = ({ api, children }) => {
     /**
      * subpackages
      */
 
     const resolveSubpackageById = useCallback(
         (subpackageId: FernRegistry.SubpackageId): FernRegistry.ApiDefinitionSubpackage => {
-            const subpackage = getApiOrThrow().subpackages[subpackageId];
+            const subpackage = api.subpackages[subpackageId];
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist");
             }
             return subpackage;
         },
-        [getApiOrThrow]
+        [api]
     );
 
     /**
@@ -60,19 +33,19 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 
     const resolveTypeById = useCallback(
         (typeId: FernRegistry.TypeId): FernRegistry.TypeDefinition => {
-            const type = getApiOrThrow().types[typeId];
+            const type = api.types[typeId];
             if (type == null) {
                 throw new Error("Type does not exist");
             }
             return type;
         },
-        [getApiOrThrow]
+        [api]
     );
 
     const resolveTypeByName = useCallback(
         (packagePath: PackagePath, typeName: string): FernRegistry.TypeDefinition | undefined => {
             return resolvePackageItem({
-                package_: getApiOrThrow().rootPackage,
+                package_: api.rootPackage,
                 packagePath,
                 resolveSubpackageById,
                 getItem: (package_) =>
@@ -83,19 +56,16 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
                     }),
             });
         },
-        [getApiOrThrow, resolveSubpackageById, resolveTypeById]
+        [api, resolveSubpackageById, resolveTypeById]
     );
 
     const typeIdToPackagePathCache = useMemo(
-        () => (api.type === "loaded" ? new TypeIdToPackagePathCache(api.value, resolveSubpackageById) : undefined),
+        () => new TypeIdToPackagePathCache(api, resolveSubpackageById),
         [api, resolveSubpackageById]
     );
 
     const getPackagePathForTypeId = useCallback(
         (typeId: FernRegistry.TypeId) => {
-            if (typeIdToPackagePathCache == null) {
-                throw new Error("TypeIdToPackagePathCache has not been constructed");
-            }
             return typeIdToPackagePathCache.get(typeId);
         },
         [typeIdToPackagePathCache]
@@ -108,14 +78,20 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     const resolveEndpointById = useCallback(
         (packagePath: PackagePath, endpointId: string): FernRegistry.EndpointDefinition | undefined => {
             return resolvePackageItem({
-                package_: getApiOrThrow().rootPackage,
+                package_: api.rootPackage,
                 packagePath,
                 resolveSubpackageById,
                 getItem: (package_) => package_.endpoints.find((endpoint) => endpoint.id === endpointId),
             });
         },
-        [getApiOrThrow, resolveSubpackageById]
+        [api, resolveSubpackageById]
     );
+
+    /**
+     * url path
+     */
+
+    const urlPathResolver = useMemo(() => new UrlPathResolverImpl(api), [api]);
 
     /**
      * context
@@ -129,8 +105,17 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
             getPackagePathForTypeId,
             resolveEndpointById,
             resolveSubpackageById,
+            urlPathResolver,
         }),
-        [api, getPackagePathForTypeId, resolveEndpointById, resolveSubpackageById, resolveTypeById, resolveTypeByName]
+        [
+            api,
+            getPackagePathForTypeId,
+            resolveEndpointById,
+            resolveSubpackageById,
+            resolveTypeById,
+            resolveTypeByName,
+            urlPathResolver,
+        ]
     );
 
     return <ApiDefinitionContext.Provider value={contextValue}>{children}</ApiDefinitionContext.Provider>;

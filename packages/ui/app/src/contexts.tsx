@@ -14,7 +14,7 @@ const AUTH0_DOMAIN = import.meta.env.VITE_AUTH0_DOMAIN ?? "fern-prod.us.auth0.co
 const AUTH0_CLIENT_ID = import.meta.env.VITE_AUTH0_CLIENT_ID ?? "rTDcpFMWvsv9U36EZ81TsDPofuPCylCg";
 
 export const CONTEXTS = [
-    ({ children }: PropsWithChildren): JSX.Element => <ThemeProvider theme="light">{children}</ThemeProvider>,
+    ({ children }: PropsWithChildren): JSX.Element => <ThemeProvider>{children}</ThemeProvider>,
     BrowserRouter,
     ({ children }: PropsWithChildren): JSX.Element => (
         <Auth0ProviderWithHistory domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENT_ID} loginPath="/" logoutPath="/">

@@ -1,28 +1,21 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
-import { useLocation } from "react-router-dom";
-import { Endpoint } from "./definition/endpoints/Endpoint";
-import { TypePage } from "./definition/types/TypePage";
-import { useParsedDefinitionPath } from "./routes/useParsedDefinitionPath";
+import { Subpackage } from "./definition/subpackages/Subpackage";
+import { useResolvedUrlPath } from "./routes/useResolvedUrlPath";
 
 export const ApiPageMainContent: React.FC = () => {
-    const location = useLocation();
-    const parsedPath = useParsedDefinitionPath(location.pathname);
+    const resolvedPath = useResolvedUrlPath();
 
-    if (parsedPath.type !== "loaded") {
-        return null;
+    if (resolvedPath == null) {
+        return <NonIdealState title="404" />;
     }
 
-    if (parsedPath.value == null) {
-        return <NonIdealState title="Page not found" />;
-    }
-
-    switch (parsedPath.value.type) {
-        case "endpoint":
-            return <Endpoint endpoint={parsedPath.value.endpoint} />;
-        case "type":
-            return <TypePage type={parsedPath.value.typeDefinition} />;
+    switch (resolvedPath.type) {
+        case "top-level-endpoint":
+            return <NonIdealState title="Top-level endpoint" />;
+        case "subpackage":
+            return <Subpackage key={resolvedPath.subpackageId} subpackage={resolvedPath.subpackage} />;
         default:
-            assertNever(parsedPath.value);
+            assertNever(resolvedPath);
     }
 };

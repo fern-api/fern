@@ -1,26 +1,28 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { PackagePath } from "../../../commons/PackagePath";
 import { EndpointSidebarItem } from "./EndpointSidebarItem";
 import { PackageSidebarSection } from "./PackageSidebarSection";
 
 export declare namespace PackageSidebarSectionContents {
     export interface Props {
         package: FernRegistry.ApiDefinitionPackage;
-        packagePath: PackagePath;
+        subpackageId: FernRegistry.SubpackageId;
+        shouldShowEndpoints: boolean;
     }
 }
 
 export const PackageSidebarSectionContents: React.FC<PackageSidebarSectionContents.Props> = ({
     package: package_,
-    packagePath,
+    subpackageId,
+    shouldShowEndpoints,
 }) => {
     return (
         <div className="flex flex-col">
-            {package_.endpoints.map((endpoint, endpointIndex) => (
-                <EndpointSidebarItem key={endpointIndex} endpoint={endpoint} packagePath={packagePath} />
-            ))}
+            {shouldShowEndpoints &&
+                package_.endpoints.map((endpoint, endpointIndex) => (
+                    <EndpointSidebarItem key={endpointIndex} endpoint={endpoint} subpackageId={subpackageId} />
+                ))}
             {package_.subpackages.map((subpackageId) => (
-                <PackageSidebarSection key={subpackageId} subpackageId={subpackageId} packagePath={packagePath} />
+                <PackageSidebarSection key={subpackageId} subpackageId={subpackageId} />
             ))}
         </div>
     );

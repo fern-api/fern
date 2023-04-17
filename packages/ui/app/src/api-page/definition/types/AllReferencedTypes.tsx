@@ -7,12 +7,12 @@ import { TypeDefinition } from "./TypeDefinition";
 export declare namespace AllReferencedTypes {
     export interface Props {
         type: FernRegistry.TypeReference;
-        defaultIsCollapsed: boolean;
+        isCollapsible: boolean;
         className?: string;
     }
 }
 
-export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, defaultIsCollapsed, className }) => {
+export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, isCollapsible, className }) => {
     const allReferencedTypes = useMemo(() => getAllReferencedTypes(type), [type]);
 
     if (allReferencedTypes.length === 0) {
@@ -22,7 +22,7 @@ export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, d
     return (
         <div className={classNames("flex flex-col gap-5", className)}>
             {allReferencedTypes.map((typeId) => (
-                <TypeDefinition key={typeId} typeId={typeId} defaultIsCollapsed={defaultIsCollapsed} />
+                <TypeDefinition key={typeId} typeId={typeId} isCollapsible={isCollapsible} />
             ))}
         </div>
     );

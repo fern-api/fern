@@ -7,13 +7,18 @@ export declare namespace EndpointParameter {
         name: string;
         description?: string;
         type: FernRegistry.TypeReference;
+        renderName?: (name: string) => JSX.Element;
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description }) => {
+export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
+    name,
+    description,
+    renderName = (name) => <>{name}</>,
+}) => {
     return (
         <div className={styles.container}>
-            <div>{name}</div>
+            <div>{renderName(name)}</div>
             {description != null && <Markdown>{description}</Markdown>}
         </div>
     );

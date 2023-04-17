@@ -9,12 +9,12 @@ export declare namespace TitledExample {
 
 export const TitledExample: React.FC<TitledExample.Props> = ({ title, rightLabel, children }) => {
     return (
-        <div className="flex flex-col rounded overflow-hidden bg-neutral-300">
+        <div className="flex flex-col min-h-0 rounded border border-white/10 overflow-hidden">
             <div className="flex items-center justify-between p-2">
                 <div className="flex items-center gap-2 font-bold">{title}</div>
                 {rightLabel != null && <div>{rightLabel}</div>}
             </div>
-            <div className="relative border border-gray-300">{children}</div>
+            <div className="relative overflow-y-auto">{children}</div>
         </div>
     );
 };

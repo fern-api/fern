@@ -36,7 +36,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                             className={classNames(
                                 "font-bold",
                                 example.responseStatusCode >= 200 && example.responseStatusCode < 300
-                                    ? "text-green-700"
+                                    ? "text-green-700 dark:text-green-500"
                                     : "text-rose-500"
                             )}
                         >
