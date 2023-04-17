@@ -17,13 +17,13 @@ export const V18_TO_V17_MIGRATION: IrMigration<
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
         [GeneratorName.JAVA_SPRING]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
+        [GeneratorName.PYTHON_FASTAPI]: "0.3.0-3-ge125e311",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.3.0-3-ge125e311",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: AlwaysRunMigration,
+        [GeneratorName.PYTHON_SDK]: "0.3.0-3-ge125e311",
     },
     migrateBackwards: (v18, { taskContext, targetGenerator }): IrVersions.V17.ir.IntermediateRepresentation => {
         return {
