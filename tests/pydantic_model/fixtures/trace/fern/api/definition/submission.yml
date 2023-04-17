@@ -1,3 +1,4 @@
+docs: Responsible for spinning up and spinning down execution.
 imports:
   commons: commons.yml
   problemV2: ./v2/problem.yml
@@ -436,7 +437,6 @@ types:
       submissionTypeState: SubmissionTypeState
 
 service:
-  docs: Responsible for spinning up and spinning down execution.
   base-path: /sessions
   auth: false
   endpoints:

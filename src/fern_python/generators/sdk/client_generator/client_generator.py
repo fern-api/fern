@@ -335,10 +335,10 @@ class ClientGenerator:
             writer.write_node(
                 HttpX.make_request(
                     is_async=is_async,
-                    url=self._get_environment_as_str(service=service)
+                    url=self._get_environment_as_str(endpoint=endpoint)
                     if is_endpoint_path_empty(endpoint)
                     else UrlLibParse.urljoin(
-                        self._get_environment_as_str(service=service),
+                        self._get_environment_as_str(endpoint=endpoint),
                         self._get_path_for_endpoint(endpoint),
                     ),
                     method=endpoint.method.visit(
@@ -394,17 +394,17 @@ class ClientGenerator:
 
         return reference
 
-    def _get_environment_as_str(self, *, service: ir_types.HttpService) -> AST.Expression:
+    def _get_environment_as_str(self, *, endpoint: ir_types.HttpEndpoint) -> AST.Expression:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
-                if service.base_url is None:
+                if endpoint.base_url is None:
                     raise RuntimeError("Service is missing base_url")
                 return MultipleBaseUrlsEnvironmentGenerator(
                     context=self._context, environments=environments_as_union
                 ).get_reference_to_base_url(
                     reference_to_environments=AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}"),
-                    base_url_id=service.base_url,
+                    base_url_id=endpoint.base_url,
                 )
         if self._environment_is_enum():
             return AST.Expression(f"self.{ClientGenerator.ENVIRONMENT_MEMBER_NAME}.value")

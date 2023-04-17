@@ -6,9 +6,9 @@ imports:
 service:
   auth: false
   base-path: /movie
-  url: ServerA
   endpoints:
     getMovie:
+      url: ServerA
       method: GET
       path: /movie/{movieId}
       path-parameters:
@@ -17,10 +17,12 @@ service:
       errors:
         - commons.MovieNotFoundError
     getAllMovies:
+      url: ServerB
       method: GET
       path: /all-movies
       response: list<commons.Movie>
     createMovie:
+      url: ServerA
       method: POST
       path: /movie
       request:
@@ -29,6 +31,7 @@ service:
         - commons.MovieAlreadyExistsError
         - commons.InvalidMovieError
     deleteMovie:
+      url: ServerA
       method: DELETE
       path: /{movieId}
       path-parameters:

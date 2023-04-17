@@ -36,7 +36,7 @@ class AClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all_movies(self) -> typing.List[Movie]:
-        _response = httpx.request("GET", urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/all-movies"))
+        _response = httpx.request("GET", urllib.parse.urljoin(f"{self._environment.server_b}/", "movie/all-movies"))
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
         try:
@@ -98,7 +98,7 @@ class AsyncAClient:
     async def get_all_movies(self) -> typing.List[Movie]:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
-                "GET", urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/all-movies")
+                "GET", urllib.parse.urljoin(f"{self._environment.server_b}/", "movie/all-movies")
             )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
