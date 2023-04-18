@@ -77,10 +77,13 @@ types:
       headers: list<Header>
       requestName:
         type: optional<string>
-        docs: Populated by `X-Request-Name`
+        docs: |
+          Populated by `X-Request-Name` on a path object
+          or `X-Name` on a request object
       request: optional<Request>
       response: optional<Response>
       errors: list<HttpError>
+      server: list<Server>
 
   HttpMethod:
     enum:
@@ -122,7 +125,9 @@ types:
       schema: Schema
 
   HttpError:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithName
     properties:
       statusCode: integer
       schema: optional<Schema>
@@ -132,10 +137,12 @@ types:
       primitive: PrimitiveSchema
       object: ObjectSchema
       array: ArraySchema
+      map: MapSchema
       optional: OptionalSchema
       enum: EnumSchema
       reference: ReferencedSchema
       oneOf: OneOfSchema
+      unknown: {}
 
   PrimitiveSchema:
     extends: WithDescription
@@ -171,6 +178,12 @@ types:
   ArraySchema:
     extends: WithDescription
     properties:
+      value: Schema
+
+  MapSchema:
+    extends: WithDescription
+    properties:
+      key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:

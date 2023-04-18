@@ -93,6 +93,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/openapi-migrator"\
       },\
       {\
+        "name": "@fern-api/openapi-parser",\
+        "reference": "workspace:packages/cli/openapi-parser"\
+      },\
+      {\
         "name": "@fern-api/openapi-transformer",\
         "reference": "workspace:packages/cli/openapi-transformer"\
       },\
@@ -270,6 +274,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/login", ["workspace:packages/cli/login"]],\
       ["@fern-api/manage-generator", ["workspace:packages/cli/config-management/manage-generator"]],\
       ["@fern-api/openapi-migrator", ["workspace:packages/cli/openapi-migrator"]],\
+      ["@fern-api/openapi-parser", ["workspace:packages/cli/openapi-parser"]],\
       ["@fern-api/openapi-transformer", ["workspace:packages/cli/openapi-transformer"]],\
       ["@fern-api/posthog-manager", ["workspace:packages/cli/posthog-manager"]],\
       ["@fern-api/project-configuration", ["workspace:packages/cli/config-management/project-configuration"]],\
@@ -9119,6 +9124,34 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
+      ["@fern-api/openapi-parser", [\
+        ["workspace:packages/cli/openapi-parser", {\
+          "packageLocation": "./packages/cli/openapi-parser/",\
+          "packageDependencies": [\
+            ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
+            ["@apidevtools/swagger-parser", "virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.26"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.0.3"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["openapi-types", "npm:12.1.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
       ["@fern-api/openapi-transformer", [\
         ["workspace:packages/cli/openapi-transformer", {\
           "packageLocation": "./packages/cli/openapi-transformer/",\
@@ -10025,6 +10058,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-ir-v9-model-npm-0.0.1-47e0ca392e-2ad92a96c7.zip/node_modules/@fern-fern/ir-v9-model/",\
           "packageDependencies": [\
             ["@fern-fern/ir-v9-model", "npm:0.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-fern/openapi-ir-model", [\
+        ["npm:0.0.26", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.26-92140ffc23-82eb3e98bb.zip/node_modules/@fern-fern/openapi-ir-model/",\
+          "packageDependencies": [\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.26"]\
           ],\
           "linkType": "HARD"\
         }]\
