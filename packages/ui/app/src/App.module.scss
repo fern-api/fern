@@ -2,12 +2,12 @@
 
 body {
     overscroll-behavior: none;
-    font-family: "Source Sans Pro";
+    font-family: Inter;
 
     :global {
         code,
         pre {
-            font-family: "IBM Plex Mono";
+            font-family: "Source Code Pro";
         }
     }
 }

@@ -34,10 +34,10 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
     return (
         <div className="flex-1 flex gap-24 px-24 min-w-0" id={htmlId} ref={ref}>
             <div className="flex-1 flex flex-col">
-                <div className="pt-10 text-3xl font-bold">
+                <div className="pt-10 text-2xl font-bold">
                     <EndpointTitle endpoint={endpoint} />
                 </div>
-                <div className="mt-2">
+                <div className="mt-6">
                     <div className="flex items-center gap-2 text-gray-500">
                         <div className="font-bold text-base">GET</div>
                         <div className="flex">
@@ -56,7 +56,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     </div>
                 </div>
                 {endpoint.description != null && (
-                    <div className="mt-4">
+                    <div className="mt-6">
                         <Markdown>{endpoint.description}</Markdown>
                     </div>
                 )}
@@ -85,7 +85,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex basis-2/5 sticky self-start top-0 h-[calc(100vh-20px)] min-w-0">
+            <div className="flex basis-2/5 sticky self-start top-0 max-h-[calc(100vh-20px)] min-w-0">
                 <EndpointExamples endpoint={endpoint} />
             </div>
         </div>

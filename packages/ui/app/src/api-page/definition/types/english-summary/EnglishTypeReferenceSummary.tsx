@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { ReferencedTypePreviewPart } from "../type-shorthand/ReferencedTypePreviewPart";
 import { PrimitivePreviewPart } from "./PrimitivePreviewPart";
 import { TypeString } from "./TypeString";
-import { ReferencedTypePreviewPart } from "../type-shorthand/ReferencedTypePreviewPart";
 
 export declare namespace EnglishTypeReferenceSummary {
     export interface Props {

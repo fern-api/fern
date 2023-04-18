@@ -5,7 +5,7 @@ import { DefinitionSidebar } from "./sidebar/definition-sidebar/DefinitionSideba
 export const ApiPageContents: React.FC = () => {
     return (
         <div className={classNames("flex flex-1 min-h-0", "dark:bg-[#19181C]")}>
-            <div className="flex w-64">
+            <div className="flex w-72">
                 <DefinitionSidebar />
             </div>
             <div className="flex flex-col flex-1 min-w-0">

@@ -21,22 +21,30 @@ export const ClickableSidebarItem: React.FC<ClickableSidebarItem.Props> = ({ tit
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
-                <Text
-                    className={classNames(
-                        "flex flex-1 items-center pr-1",
-                        isSelected ? "text-green-500" : isHovering ? "text-black dark:text-gray-400" : "text-gray-500",
-                        {
-                            "font-bold": isSelected,
-                        }
-                    )}
-                    ellipsize
-                >
-                    {title}
-                </Text>
+                <>
+                    <Text
+                        className={classNames("select-none", {
+                            "text-[#B1BCF1]": isSelected,
+                            "text-black dark:text-gray-400": !isSelected && isHovering,
+                        })}
+                        ellipsize
+                    >
+                        {title}
+                    </Text>
+                    {isSelected && <div className="w-1 bg-[#979de8] absolute top-0 right-0 bottom-0" />}
+                </>
             );
         },
         [isSelected, title]
     );
 
-    return <SidebarItemLayout title={renderTitle} onClick={onClick} />;
+    return (
+        <SidebarItemLayout
+            className={classNames({
+                "bg-[#4435D0]/20 relative": isSelected,
+            })}
+            title={renderTitle}
+            onClick={isSelected ? undefined : onClick}
+        />
+    );
 };

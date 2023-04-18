@@ -8,20 +8,32 @@ export declare namespace SyntaxHighlightedCodeExample {
     export interface Props {
         code: string;
         language: string;
+        alwaysShowClipboard?: boolean;
     }
 }
 
-export const SyntaxHighlightedCodeExample: React.FC<SyntaxHighlightedCodeExample.Props> = ({ code, language }) => {
+export const SyntaxHighlightedCodeExample: React.FC<SyntaxHighlightedCodeExample.Props> = ({
+    code,
+    language,
+    alwaysShowClipboard = false,
+}) => {
     const { isHovering, ...containerCallbacks } = useIsHovering();
+    const shouldShowClipboard = alwaysShowClipboard || isHovering;
 
     const isDarkTheme = useIsDarkTheme();
 
     return (
         <div {...containerCallbacks} className="relative">
-            <SyntaxHighlighter language={language} style={isDarkTheme ? sunburst : routeros}>
+            <SyntaxHighlighter
+                language={language}
+                style={isDarkTheme ? sunburst : routeros}
+                customStyle={{
+                    backgroundColor: "#252529",
+                }}
+            >
                 {code}
             </SyntaxHighlighter>
-            {isHovering && <CopyToClipboardButton contentToCopy={code} />}
+            {shouldShowClipboard && <CopyToClipboardButton contentToCopy={code} />}
         </div>
     );
 };

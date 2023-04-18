@@ -9624,8 +9624,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/registry", "npm:0.0.300"],\
-            ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
-            ["@fontsource/source-sans-pro", "npm:4.5.11"],\
+            ["@fontsource/inter", "npm:4.5.15"],\
+            ["@fontsource/source-code-pro", "npm:4.5.14"],\
             ["@tanstack/react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.24.10"],\
             ["@tanstack/react-query-devtools", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.24.12"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -10062,11 +10062,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@fontsource/ibm-plex-mono", [\
-        ["npm:4.5.13", {\
-          "packageLocation": "./.yarn/cache/@fontsource-ibm-plex-mono-npm-4.5.13-80f69c13fa-f927619557.zip/node_modules/@fontsource/ibm-plex-mono/",\
+      ["@fontsource/inter", [\
+        ["npm:4.5.15", {\
+          "packageLocation": "./.yarn/cache/@fontsource-inter-npm-4.5.15-a518d50eb1-d4330957c0.zip/node_modules/@fontsource/inter/",\
           "packageDependencies": [\
-            ["@fontsource/ibm-plex-mono", "npm:4.5.13"]\
+            ["@fontsource/inter", "npm:4.5.15"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -10080,11 +10080,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["@fontsource/source-sans-pro", [\
-        ["npm:4.5.11", {\
-          "packageLocation": "./.yarn/cache/@fontsource-source-sans-pro-npm-4.5.11-81526b09b1-550d5bdc43.zip/node_modules/@fontsource/source-sans-pro/",\
+      ["@fontsource/source-code-pro", [\
+        ["npm:4.5.14", {\
+          "packageLocation": "./.yarn/cache/@fontsource-source-code-pro-npm-4.5.14-792c07aa96-cee0005c9f.zip/node_modules/@fontsource/source-code-pro/",\
           "packageDependencies": [\
-            ["@fontsource/source-sans-pro", "npm:4.5.11"]\
+            ["@fontsource/source-code-pro", "npm:4.5.14"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -22,6 +22,11 @@ export interface UrlPathResolver {
     getHashForEndpoint(endpointId: string): string;
     getHtmlIdForEndpoint(endpointId: string): string;
     isTopLevelEndpointSelected(args: { endpointId: string; pathname: string }): boolean;
+    isSubpackageEndpointSelected(args: {
+        subpackageId: FernRegistry.SubpackageId;
+        pathname: string;
+        hash: string;
+    }): boolean;
     isSubpackageSelected(args: { subpackageId: FernRegistry.SubpackageId; pathname: string; hash: string }): boolean;
     isEndpointSelected(args: {
         subpackageId: FernRegistry.SubpackageId;
@@ -108,6 +113,19 @@ export class UrlPathResolverImpl implements UrlPathResolver {
     }): boolean {
         const resolvedPath = this.resolvePath(pathname);
         return resolvedPath?.type === "subpackage" && resolvedPath.subpackageId === subpackageId && hash.length === 0;
+    }
+
+    public isSubpackageEndpointSelected({
+        subpackageId,
+        pathname,
+        hash,
+    }: {
+        subpackageId: FernRegistry.SubpackageId;
+        pathname: string;
+        hash: string;
+    }): boolean {
+        const resolvedPath = this.resolvePath(pathname);
+        return resolvedPath?.type === "subpackage" && resolvedPath.subpackageId === subpackageId && hash.length > 0;
     }
 
     public isEndpointSelected({

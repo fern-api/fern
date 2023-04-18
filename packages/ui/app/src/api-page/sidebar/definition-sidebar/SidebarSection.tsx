@@ -14,7 +14,7 @@ export const SidebarSection: React.FC<SidebarSection.Props> = ({ title, path, is
         <div className="flex flex-col">
             <ClickableSidebarItem title={title} path={path} isSelected={isSelected} />
             <div className="flex">
-                <div className="flex flex-1 flex-col min-w-0 ml-2">{children}</div>
+                <div className="flex flex-1 flex-col min-w-0">{children}</div>
             </div>
         </div>
     );

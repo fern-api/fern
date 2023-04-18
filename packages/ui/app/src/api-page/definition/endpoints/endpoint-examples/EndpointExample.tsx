@@ -19,13 +19,13 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                 <TitledExample
                     title="Request"
                     rightLabel={
-                        <div className="flex items-center gap-1">
-                            <div>JSON</div>
+                        <div className="flex items-center gap-2 border border-white/20 px-2 py-1 rounded">
+                            <div>Node.js</div>
                             <Icon icon={IconNames.CHEVRON_DOWN} />
                         </div>
                     }
                 >
-                    <JsonExample json={example.requestBody} />
+                    <JsonExample json={example.requestBody} alwaysShowClipboard />
                 </TitledExample>
             )}
             {example.responseBody != null && (
@@ -44,7 +44,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                         </span>
                     }
                 >
-                    <JsonExample json={example.responseBody} />
+                    <JsonExample json={example.responseBody} alwaysShowClipboard />
                 </TitledExample>
             )}
         </div>
