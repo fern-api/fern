@@ -1,0 +1,12 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript
+        version: 0.5.7
+        output:
+          location: npm
+          package-name: "@fern-fern/openapi-ir"
+        config:
+          useBrandedStringAliases: true
+          includeUtilsOnUnionMembers: true

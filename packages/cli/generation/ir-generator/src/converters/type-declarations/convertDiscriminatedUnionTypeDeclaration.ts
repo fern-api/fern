@@ -3,8 +3,9 @@ import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from 
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getDocs } from "../../utils/getDocs";
+import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
-import { getPropertyName } from "./convertObjectTypeDeclaration";
+import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclaration";
 
 const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
 
@@ -23,6 +24,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name,
         }),
+        extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
             union["base-properties"] != null
                 ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({

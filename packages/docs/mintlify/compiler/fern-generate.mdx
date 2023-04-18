@@ -136,6 +136,21 @@ groups:
         version: 0.0.249 # <---
 ```
 
+## Configuration
+
+Some generators allow for custom configuration, which you can specify using the optional `config` key.
+
+```diff generators.yml
+ groups:
+   external:
+       - name: fernapi/fern-openapi
+         version: 0.0.11-4-g1c29f6c
+         github:
+           repository: fern-api/plantstore-openapi
++        config:
++          format: yaml
+```
+
 ## Output locations
 
 You can optionally specify an location for the generated output. There are currently five supported output locations:
@@ -344,18 +359,3 @@ simlar to `.gitignore`. Any files you list here will be ignored by Fern.
 For an example, check out [Flipt's .fernignore](https://github.com/flipt-io/flipt-node/blob/main/.fernignore).
 
 Tip: it's common to list `README.md` in your `.fernignore` so that Fern doesn't wipe it out.
-
-# Custom configuration
-
-Some generators allow for custom configuration, which you can specify using the `config` key.
-
-```diff generators.yml
- groups:
-   external:
-       - name: fernapi/fern-openapi
-         version: 0.0.11-4-g1c29f6c
-         github:
-           repository: fern-api/plantstore-openapi
-+        config:
-+          format: yaml
-```

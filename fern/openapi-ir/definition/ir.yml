@@ -1,0 +1,221 @@
+types:
+  OpenAPIIntermediateRepresentation:
+    properties:
+      title: optional<string>
+      description: optional<string>
+      servers: list<Server>
+      tags: list<Tag>
+      endpoints: list<Endpoint>
+      schemas: map<SchemaId, Schema>
+      securitySchemes: map<SecuritySchemeId, SecurityScheme>
+
+  WithDescription:
+    properties:
+      description: optional<string>
+
+  WithName:
+    docs: Read from `X-Name`. Used to give inline types names.
+    properties:
+      name: optional<string>
+
+  Server:
+    extends: WithDescription
+    properties:
+      name:
+        type: optional<string>
+        docs: Populated by `X-Server-Name`
+      url: string
+
+  TagId:
+    type: string
+    docs: The name of the tag.
+
+  Tag:
+    extends: WithDescription
+    properties:
+      id: TagId
+
+  SchemaId:
+    type: string
+    docs: The name of the schema.
+
+  SecuritySchemeId:
+    type: string
+    docs: The name of the security scheme.
+
+  SecurityScheme:
+    union:
+      basic: {}
+      bearer: {}
+      header: HeaderSecurityScheme
+      query:
+        type: QuerySecurityScheme
+        docs: parameter sent as a security scheme
+
+  HeaderSecurityScheme:
+    properties:
+      headerName: string
+
+  QuerySecurityScheme:
+    properties:
+      queryParameterName: string
+
+  Endpoint:
+    extends: WithDescription
+    properties:
+      method: HttpMethod
+      path:
+        type: string
+        docs: |
+          This string includes templated path parameters. 
+          For example, `/users/{userId}` is a valid value.
+      summary: optional<string>
+      operationId: optional<string>
+      tags: list<TagId>
+      pathParameters: list<PathParameter>
+      queryParameters: list<QueryParameter>
+      headers: list<Header>
+      requestName:
+        type: optional<string>
+        docs: Populated by `X-Request-Name`
+      request: optional<Request>
+      response: optional<Response>
+      errors: list<HttpError>
+
+  HttpMethod:
+    enum:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - HEAD
+      - OPTIONS
+      - TRACE
+
+  PathParameter:
+    extends: WithDescription
+    properties:
+      name: string
+      schema: Schema
+
+  QueryParameter:
+    extends: WithDescription
+    properties:
+      name: string
+      schema: Schema
+
+  Header:
+    extends: WithDescription
+    properties:
+      name: string
+      schema: Schema
+
+  Request:
+    extends: WithDescription
+    properties:
+      schema: Schema
+
+  Response:
+    extends: WithDescription
+    properties:
+      schema: Schema
+
+  HttpError:
+    extends: WithDescription
+    properties:
+      statusCode: integer
+      schema: optional<Schema>
+
+  Schema:
+    union:
+      primitive: PrimitiveSchema
+      object: ObjectSchema
+      array: ArraySchema
+      optional: OptionalSchema
+      enum: EnumSchema
+      reference: ReferencedSchema
+      oneOf: OneOfSchema
+
+  PrimitiveSchema:
+    extends: WithDescription
+    properties:
+      schema: PrimitiveSchemaValue
+
+  PrimitiveSchemaValue:
+    union:
+      int: {}
+      int64: {}
+      float: {}
+      double: {}
+      string: {}
+      datetime: {}
+      date: {}
+      base64: {}
+      boolean: {}
+
+  ObjectSchema:
+    extends:
+      - WithDescription
+      - WithName
+    properties:
+      allOf: list<ReferencedSchema>
+      properties: list<ObjectProperty>
+
+  ObjectProperty:
+    extends: WithDescription
+    properties:
+      key: string
+      schema: Schema
+
+  ArraySchema:
+    extends: WithDescription
+    properties:
+      value: Schema
+
+  OptionalSchema:
+    extends: WithDescription
+    properties:
+      value: Schema
+
+  EnumSchema:
+    extends:
+      - WithDescription
+      - WithName
+    properties:
+      values: list<EnumValue>
+
+  EnumValue:
+    properties:
+      name:
+        type: optional<string>
+        docs: Codegen friendly name. Read from `X-Enum-Names`
+      value:
+        type: string
+        docs: Value of the enum
+
+  ReferencedSchema:
+    extends:
+      - WithDescription
+    properties:
+      reference: SchemaId
+
+  OneOfSchema:
+    union:
+      discriminated: DiscriminatedOneOfSchema
+      undisciminated: UnDiscriminatedOneOfSchema
+
+  DiscriminatedOneOfSchema:
+    extends:
+      - WithDescription
+      - WithName
+    properties:
+      discriminantProperty: string
+      schemas: map<string, Schema>
+
+  UnDiscriminatedOneOfSchema:
+    extends:
+      - WithDescription
+      - WithName
+    properties:
+      schemas: list<Schema>

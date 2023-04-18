@@ -4,4 +4,7 @@ service:
   url: ServerA
   base-path: /
   auth: false
-  endpoints: {}
+  endpoints:
+    test:
+      method: GET
+      path: ""
