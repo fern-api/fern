@@ -1,4 +1,5 @@
 import { FernRegistry } from "@fern-fern/registry";
+import { startCase } from "lodash-es";
 import { useContext, useMemo } from "react";
 import { generatePath, useLocation } from "react-router-dom";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
@@ -73,7 +74,7 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({ s
 
     return (
         <SidebarSection
-            title={<div className="font-bold">{subpackage.name}</div>}
+            title={<div className="font-bold">{startCase(subpackage.name)}</div>}
             path={targetUrlPath}
             isSelected={isSelected}
         >
