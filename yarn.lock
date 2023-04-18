@@ -3581,6 +3581,7 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
     "@fern-api/openapi-migrator": "workspace:*"
+    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/openapi-transformer": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -4287,7 +4288,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/openapi-parser@workspace:packages/cli/openapi-parser":
+"@fern-api/openapi-parser@workspace:*, @fern-api/openapi-parser@workspace:packages/cli/openapi-parser":
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-parser@workspace:packages/cli/openapi-parser"
   dependencies:

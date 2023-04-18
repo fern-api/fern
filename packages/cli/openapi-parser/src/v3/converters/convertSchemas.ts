@@ -28,6 +28,7 @@ export function convertSchema(schema: OpenAPIV3.SchemaObject | OpenAPIV3.Referen
 }
 
 function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const schemaName = (schema as any)["x-name"] as string | undefined;
     const description = schema.description;
 
@@ -43,6 +44,7 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
         }
         return convertEnum({
             schemaName,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
             enumValues: schema.enum,
             description,
