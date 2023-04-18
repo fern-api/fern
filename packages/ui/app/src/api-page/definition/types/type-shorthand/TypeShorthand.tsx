@@ -54,7 +54,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type }) => {
                         </>
                     );
                 },
-                unknown: () => "unknown",
+                unknown: () => "any",
                 _other: () => "<unknown>",
             })}
         </>

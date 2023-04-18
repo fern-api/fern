@@ -68,20 +68,16 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                         {endpoint.queryParameters.length > 0 && (
                             <QueryParametersSection queryParameters={endpoint.queryParameters} />
                         )}
-                        <EndpointSection title="Request">
-                            {endpoint.request != null ? (
+                        {endpoint.request != null && (
+                            <EndpointSection title="Request">
                                 <EndpointTypeSection httpBody={endpoint.request} />
-                            ) : (
-                                <div>This endpoint does not expect a request body.</div>
-                            )}
-                        </EndpointSection>
-                        <EndpointSection title="Response">
-                            {endpoint.response != null ? (
+                            </EndpointSection>
+                        )}
+                        {endpoint.response != null && (
+                            <EndpointSection title="Response">
                                 <EndpointTypeSection httpBody={endpoint.response} />
-                            ) : (
-                                <div>This endpoint does not return a response.</div>
-                            )}
-                        </EndpointSection>
+                            </EndpointSection>
+                        )}
                     </div>
                 </div>
             </div>
