@@ -4,7 +4,7 @@ import { isReferenceObject } from "../../isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
-const MULTIPART_CONTENT = "multipart/form-data";
+// const MULTIPART_CONTENT = "multipart/form-data";
 
 export function convertRequest({
     requestBody,

@@ -1,1 +1,1 @@
-export { convertOpenApi, type OpenApiConvertedFernDefinition } from "./parse";
+export { parse } from "./parse";
