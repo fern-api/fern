@@ -4,6 +4,24 @@ exports[`open api converter vellum simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "generate": {
+            "method": "POST",
+            "path": "/v1/generate",
+          },
+          "search": {
+            "method": "POST",
+            "path": "/v1/search",
+          },
+          "submit-completion-actuals": {
+            "method": "POST",
+            "path": "/v1/submit-completion-actuals",
+          },
+        },
+      },
       "types": {
         "Document": {
           "docs": undefined,
@@ -588,6 +606,34 @@ exports[`open api converter vellum simple 1`] = `
             "document_id": {
               "type": "string",
             },
+          },
+        },
+      },
+    },
+    "documents": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "list": {
+            "method": "GET",
+            "path": "/v1/documents",
+          },
+          "upload": {
+            "method": "POST",
+            "path": "/v1/upload-document",
+          },
+        },
+      },
+    },
+    "model_versions": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "retrieve": {
+            "method": "GET",
+            "path": "/v1/model-versions/{id}",
           },
         },
       },

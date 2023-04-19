@@ -240,7 +240,7 @@ paths:
           description: ""
   /v1/upload-document:
     post:
-      operationId: upload_document
+      operationId: documents_upload
       description: |-
         <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -248,7 +248,7 @@ paths:
 
         **Note:** Uses a base url of `https://documents.vellum.ai`.
       tags:
-        - upload-document
+        - documents
       requestBody:
         content:
           multipart/form-data:

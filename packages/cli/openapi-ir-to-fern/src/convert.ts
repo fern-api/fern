@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
+import { convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
 
 export interface OpenApiConvertedFernDefinition {
@@ -9,16 +10,19 @@ export interface OpenApiConvertedFernDefinition {
     definitionFiles: Record<RelativeFilePath, DefinitionFileSchema>;
 }
 
+export const PACKAGE_YML = RelativeFilePath.of("__package__.yml");
+
 export function convert({
     openApiIr,
 }: {
     openApiIr: OpenAPIIntermediateRepresentation;
 }): OpenApiConvertedFernDefinition {
-    const packageYmlRelativeFilepath = RelativeFilePath.of("__package__.yml");
+    const services = convertToServices(openApiIr.endpoints);
     return {
         rootApiFile: getRootApiFile(openApiIr),
         definitionFiles: {
-            [packageYmlRelativeFilepath]: getPackageYml(openApiIr),
+            ...Object.fromEntries(Object.entries(services).map(([file, service]) => [file, { service }])),
+            [PACKAGE_YML]: getPackageYml(openApiIr, services),
         },
     };
 }
@@ -35,7 +39,10 @@ function getRootApiFile(ir: OpenAPIIntermediateRepresentation): RootApiFileSchem
     };
 }
 
-function getPackageYml(ir: OpenAPIIntermediateRepresentation): DefinitionFileSchema {
+function getPackageYml(
+    ir: OpenAPIIntermediateRepresentation,
+    services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema>
+): DefinitionFileSchema {
     let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     for (const [schemaId, schema] of Object.entries(ir.schemas)) {
         const typeDeclaration = convertToTypeDeclaration(schema);
@@ -47,5 +54,6 @@ function getPackageYml(ir: OpenAPIIntermediateRepresentation): DefinitionFileSch
     }
     return {
         types,
+        service: services[PACKAGE_YML],
     };
 }
