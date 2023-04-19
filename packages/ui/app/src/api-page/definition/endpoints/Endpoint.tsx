@@ -81,7 +81,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex basis-2/5 sticky self-start top-0 max-h-[calc(100vh-20px)] min-w-0">
+            <div className="flex-1 flex sticky self-start top-0 max-h-[calc(100vh-20px)] min-w-0">
                 <EndpointExamples endpoint={endpoint} />
             </div>
         </div>

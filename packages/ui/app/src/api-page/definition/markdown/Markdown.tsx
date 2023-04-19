@@ -10,5 +10,12 @@ export declare namespace Markdown {
 const REMARK_PLUGINS = [remarkGfm];
 
 export const Markdown: React.FC<Markdown.Props> = ({ children }) => {
-    return <ReactMarkdown remarkPlugins={REMARK_PLUGINS}>{children}</ReactMarkdown>;
+    return (
+        <ReactMarkdown
+            className="prose prose-sm dark:prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-slate-700 prose-code:py-px prose-code:px-1 prose-code:rounded"
+            remarkPlugins={REMARK_PLUGINS}
+        >
+            {children}
+        </ReactMarkdown>
+    );
 };

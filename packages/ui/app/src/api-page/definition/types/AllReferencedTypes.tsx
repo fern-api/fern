@@ -2,6 +2,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { uniq } from "lodash-es";
 import { useMemo } from "react";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { TypeDefinition } from "./TypeDefinition";
 
 export declare namespace AllReferencedTypes {
@@ -13,6 +14,8 @@ export declare namespace AllReferencedTypes {
 }
 
 export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, isCollapsible, className }) => {
+    const { resolveTypeById } = useApiDefinitionContext();
+
     const allReferencedTypes = useMemo(() => getAllReferencedTypes(type), [type]);
 
     if (allReferencedTypes.length === 0) {
@@ -22,7 +25,7 @@ export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, i
     return (
         <div className={classNames("flex flex-col gap-5", className)}>
             {allReferencedTypes.map((typeId) => (
-                <TypeDefinition key={typeId} typeId={typeId} isCollapsible={isCollapsible} />
+                <TypeDefinition key={typeId} typeShape={resolveTypeById(typeId).shape} isCollapsible={isCollapsible} />
             ))}
         </div>
     );

@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { AllReferencedTypes } from "../types/AllReferencedTypes";
-import { ObjectDefinition } from "../types/object/ObjectDefinition";
+import { TypeDefinition } from "../types/TypeDefinition";
 
 export declare namespace EndpointTypeSection {
     export interface Props {
@@ -13,7 +13,9 @@ export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ httpB
         <div className="flex flex-col">
             {httpBody.description != null && <div className="text-gray-500 mb-2">{httpBody.description}</div>}
             {httpBody.type._visit({
-                object: (object) => <ObjectDefinition object={object} />,
+                object: (object) => (
+                    <TypeDefinition typeShape={FernRegistry.TypeShape.object(object)} isCollapsible={false} />
+                ),
                 reference: (type) => <AllReferencedTypes type={type} isCollapsible={false} />,
                 _other: () => null,
             })}

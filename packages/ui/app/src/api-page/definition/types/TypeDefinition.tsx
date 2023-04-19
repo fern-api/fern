@@ -3,60 +3,77 @@ import { IconNames } from "@blueprintjs/icons";
 import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { TypeDefinitionContext, TypeDefinitionContextValue } from "./context/TypeDefinitionContext";
-import { ObjectDefinition } from "./object/ObjectDefinition";
+import { DiscriminatedUnionVariant } from "./discriminated-union/DiscriminatedUnionVariant";
+import { EnumValue } from "./enum/EnumValue";
+import { ObjectProperty } from "./object/ObjectProperty";
 import styles from "./TypeDefinition.module.scss";
+import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace TypeDefinition {
     export interface Props {
-        typeId: FernRegistry.TypeId;
+        typeShape: FernRegistry.TypeShape;
         isCollapsible: boolean;
     }
 }
 
 interface CollapsibleContent {
-    element: JSX.Element;
-    showText: string;
-    hideText: string;
+    elements: JSX.Element[];
+    elementNameSingular: string;
+    elementNamePlural: string;
+    separatorText?: string;
 }
 
 const NESTED_TYPE_DEFINITION_CONTEXT_VALUE: TypeDefinitionContextValue = {
     isRootTypeDefinition: false,
 };
 
-export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeId, isCollapsible }) => {
+export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeShape, isCollapsible }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
-    const typeDefinition = useMemo(() => resolveTypeById(typeId), [resolveTypeById, typeId]);
-
-    const collapsableContent = typeDefinition.shape._visit<CollapsibleContent | undefined>({
-        alias: () => undefined,
-        object: (object) =>
-            object.properties.length > 0
-                ? {
-                      element: <ObjectDefinition object={object} />,
-                      showText:
-                          object.properties.length === 1
-                              ? "Show 1 property"
-                              : `Show ${object.properties.length} properties`,
-                      hideText:
-                          object.properties.length === 1
-                              ? "Hide 1 property"
-                              : `Hide ${object.properties.length} properties`,
-                  }
-                : undefined,
-        undiscriminatedUnion: () => undefined,
-        discriminatedUnion: () => undefined,
-        enum: () => undefined,
-        _other: () => undefined,
-    });
+    const collapsableContent = useMemo(
+        () =>
+            typeShape._visit<CollapsibleContent | undefined>({
+                alias: () => undefined,
+                object: (object) => ({
+                    elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
+                        <ObjectProperty key={property.key} property={property} />
+                    )),
+                    elementNameSingular: "property",
+                    elementNamePlural: "properties",
+                }),
+                undiscriminatedUnion: () => undefined,
+                discriminatedUnion: (union) => ({
+                    elements: union.members.map((variant) => (
+                        <DiscriminatedUnionVariant
+                            key={variant.discriminantValue}
+                            disriminant={union.discriminant}
+                            unionVariant={variant}
+                        />
+                    )),
+                    elementNameSingular: "variant",
+                    elementNamePlural: "variants",
+                    separatorText: "OR",
+                }),
+                enum: (enum_) => ({
+                    elements: enum_.values.map((enumValue) => (
+                        <EnumValue key={enumValue.value} enumValue={enumValue} />
+                    )),
+                    elementNameSingular: "possible value",
+                    elementNamePlural: "possible values",
+                }),
+                _other: () => undefined,
+            }),
+        [resolveTypeById, typeShape]
+    );
 
     const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);
 
     const { isHovering, ...containerCallbacks } = useIsHovering();
 
+    // we need to set a pixel width for the button for the transition to work
     const [originalButtonWidth, setOriginalButtonWidth] = useState<number>();
     const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
     useEffect(() => {
@@ -73,8 +90,22 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeId, isColla
     }
 
     if (!isCollapsible) {
-        return collapsableContent.element;
+        return (
+            <TypeDefinitionDetails
+                elements={collapsableContent.elements}
+                separatorText={collapsableContent.separatorText}
+            />
+        );
     }
+
+    const showText =
+        collapsableContent.elements.length === 1
+            ? `Show ${collapsableContent.elementNameSingular}`
+            : `Show ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
+    const hideText =
+        collapsableContent.elements.length === 1
+            ? `Hide ${collapsableContent.elementNameSingular}`
+            : `Hide ${collapsableContent.elements.length} ${collapsableContent.elementNamePlural}`;
 
     return (
         <div className="flex flex-col">
@@ -106,14 +137,17 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeId, isColla
                         />
                         <div
                             className={classNames(styles.showPropertiesButton, "select-none whitespace-nowrap")}
-                            data-show-text={collapsableContent.showText}
+                            data-show-text={showText}
                         >
-                            {isCollapsed ? collapsableContent.showText : collapsableContent.hideText}
+                            {isCollapsed ? showText : hideText}
                         </div>
                     </div>
                     <Collapse isOpen={!isCollapsed}>
                         <TypeDefinitionContext.Provider value={NESTED_TYPE_DEFINITION_CONTEXT_VALUE}>
-                            {collapsableContent.element}
+                            <TypeDefinitionDetails
+                                elements={collapsableContent.elements}
+                                separatorText={collapsableContent.separatorText}
+                            />
                         </TypeDefinitionContext.Provider>
                     </Collapse>
                 </div>
@@ -121,3 +155,19 @@ export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeId, isColla
         </div>
     );
 };
+
+function getAllObjectProperties(
+    object: FernRegistry.ObjectType,
+    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
+): FernRegistry.ObjectProperty[] {
+    return [
+        ...object.properties,
+        ...object.extends.flatMap((typeId) => {
+            const type = resolveTypeById(typeId);
+            if (type.shape.type !== "object") {
+                throw new Error("Object extends non-object " + typeId);
+            }
+            return getAllObjectProperties(type.shape, resolveTypeById);
+        }),
+    ];
+}
