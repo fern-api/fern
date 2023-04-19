@@ -20,7 +20,6 @@ export function convertSchema(schema: OpenAPIV3.SchemaObject | OpenAPIV3.Referen
     if (isReferenceObject(schema)) {
         return Schema.reference({
             reference: getSchemaIdFromReference(schema),
-            description: undefined,
         });
     } else {
         return convertSchemaObject(schema);
@@ -86,7 +85,12 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
 
     // objects
     if (schema.type === "object") {
-        return convertObject({ properties: schema.properties ?? {}, objectName: schemaName, description });
+        return convertObject({
+            properties: schema.properties ?? {},
+            objectName: schemaName,
+            description,
+            required: schema.required,
+        });
     }
 
     // TODO(dsinghvi): handle oneOf
@@ -96,7 +100,7 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
         return convertSchema(schema.allOf[0]);
     }
 
-    throw new Error(`Failed to convert schema for ${JSON.stringify(schema)}`);
+    throw new Error(`Failed to convert schema value=${JSON.stringify(schema)}`);
 }
 
 function isListOfStrings(x: unknown): x is string[] {

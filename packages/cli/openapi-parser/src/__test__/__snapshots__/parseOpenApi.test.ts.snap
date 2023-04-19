@@ -1,0 +1,2010 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser vellum simple 1`] = `
+{
+  "description": "
+## Vellum API Documentation
+
+### Welcome 👋
+Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you,
+as well as the parameters and responses that they accept and return.
+
+We will be exposing more and more of our APIs over time as they stabilize. If there is some action you can perform
+via the UI that you wish you could perform via API, please let us know and we can expose it here in an unstable state.
+
+### API Stability
+Some of the APIs documented within are undergoing active development. Use the
+<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+and
+<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+tags to differentiate between those that are stable and those that are not.
+
+### Base URLs
+Some endpoints are hosted separately from the main Vellum API and therefore have a different base url. If this is
+the case, they will say so in their description.
+
+Unless otherwise specified, all endpoints use <code>https://api.vellum.ai</code> as their base URL.
+
+### Official API Clients:
+Vellum maintains official API clients for Python and Node/Typescript. We recommend using these clients to interact
+with all stable endpoints. You can find them here:
+- [Python](https://github.com/vocify/vellum-client-python)
+- [Node/Typescript](https://github.com/vocify/vellum-client-node)
+",
+  "endpoints": [
+    {
+      "description": "
+<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to list documents. Optionally filter on supported fields.
+",
+      "errors": [],
+      "headers": [],
+      "method": "GET",
+      "operationId": "documents_list",
+      "path": "/v1/documents",
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": undefined,
+          "name": "document_index_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "name": "limit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "int",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "name": "offset",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "int",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "name": "ordering",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "request": undefined,
+      "requestName": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "reference": "PaginatedSlimDocumentList",
+          "type": "reference",
+        },
+      },
+      "server": [],
+      "summary": undefined,
+      "tags": [
+        "documents",
+      ],
+    },
+    {
+      "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Generate a completion using a previously defined deployment.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+      "errors": [],
+      "headers": [],
+      "method": "POST",
+      "operationId": "generate",
+      "path": "/v1/generate",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "description": undefined,
+        "schema": {
+          "reference": "GenerateRequestBodyRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "requestName": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "reference": "GenerateResponse",
+          "type": "reference",
+        },
+      },
+      "server": [],
+      "summary": undefined,
+      "tags": [
+        "generate",
+      ],
+    },
+    {
+      "description": "
+<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+
+Used to retrieve a model version given its ID.
+",
+      "errors": [],
+      "headers": [],
+      "method": "GET",
+      "operationId": "model_versions_retrieve",
+      "path": "/v1/model-versions/{id}",
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": undefined,
+          "name": "id",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "request": undefined,
+      "requestName": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "reference": "ModelVersionRead",
+          "type": "reference",
+        },
+      },
+      "server": [],
+      "summary": undefined,
+      "tags": [
+        "model-versions",
+      ],
+    },
+    {
+      "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Perform a search against a document index.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+      "errors": [],
+      "headers": [],
+      "method": "POST",
+      "operationId": "search",
+      "path": "/v1/search",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "description": undefined,
+        "schema": {
+          "reference": "SearchRequestBodyRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "requestName": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "reference": "SearchResponse",
+          "type": "reference",
+        },
+      },
+      "server": [],
+      "summary": undefined,
+      "tags": [
+        "search",
+      ],
+    },
+    {
+      "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to submit feedback regarding the quality of previously generated completions.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+      "errors": [],
+      "headers": [],
+      "method": "POST",
+      "operationId": "submit_completion_actuals",
+      "path": "/v1/submit-completion-actuals",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "description": undefined,
+        "schema": {
+          "reference": "SubmitCompletionActualsRequestRequest",
+          "type": "reference",
+        },
+        "type": "json",
+      },
+      "requestName": undefined,
+      "response": undefined,
+      "server": [],
+      "summary": undefined,
+      "tags": [
+        "submit-completion-actuals",
+      ],
+    },
+    {
+      "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Upload a document to be indexed and used for search.
+
+**Note:** Uses a base url of \`https://documents.vellum.ai\`.",
+      "errors": [],
+      "headers": [],
+      "method": "POST",
+      "operationId": "upload_document",
+      "path": "/v1/upload-document",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "description": undefined,
+        "properties": [
+          {
+            "description": undefined,
+            "key": "add_to_index_names",
+            "schema": {
+              "json": {
+                "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "external_id",
+            "schema": {
+              "json": {
+                "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "label",
+            "schema": {
+              "json": {
+                "description": "A human-friendly name for this document. Typically the filename.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": "json",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "contents",
+            "schema": {
+              "type": "file",
+            },
+          },
+          {
+            "description": undefined,
+            "key": "keywords",
+            "schema": {
+              "json": {
+                "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              "type": "json",
+            },
+          },
+        ],
+        "type": "multipart",
+      },
+      "requestName": undefined,
+      "response": {
+        "description": "",
+        "schema": {
+          "reference": "UploadDocumentResponse",
+          "type": "reference",
+        },
+      },
+      "server": [],
+      "summary": undefined,
+      "tags": [
+        "upload-document",
+      ],
+    },
+  ],
+  "schemas": {
+    "Document": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "description": "The ID of the document.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "label",
+          "schema": {
+            "description": "The human-readable name for the document.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "DocumentDocumentToDocumentIndex": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "description": "Vellum-generated ID that uniquely identifies this link.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "document_index_id",
+          "schema": {
+            "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "indexing_state",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "IndexingStateEnum",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "EnrichedNormalizedCompletion": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "description": "The Vellum-generated ID of the completion.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "text",
+          "schema": {
+            "description": "The text generated by the LLM.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "finish_reason",
+          "schema": {
+            "reference": "FinishReasonEnum",
+            "type": "reference",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "logprobs",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "NormalizedLogProbs",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "model_version_id",
+          "schema": {
+            "description": "The ID of the model version used to generate this completion.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "FinishReasonEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "LENGTH",
+        },
+        {
+          "name": undefined,
+          "value": "STOP",
+        },
+        {
+          "name": undefined,
+          "value": "UNKNOWN",
+        },
+      ],
+    },
+    "GenerateErrorResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "detail",
+          "schema": {
+            "description": "Details about why the request failed.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateOptionsRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "logprobs",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "LogprobsEnum",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateRequestBodyRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "deployment_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "deployment_name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "requests",
+          "schema": {
+            "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+            "type": "array",
+            "value": {
+              "reference": "GenerateRequestRequest",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "options",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "GenerateOptionsRequest",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateRequestRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "input_values",
+          "schema": {
+            "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+            "key": {
+              "type": "string",
+            },
+            "type": "map",
+            "value": {
+              "type": "unknown",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_ids",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "results",
+          "schema": {
+            "description": "The results of each generation request.",
+            "type": "array",
+            "value": {
+              "reference": "GenerateResult",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateResult": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "data",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "GenerateResultData",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "error",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "GenerateResultError",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateResultData": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "completions",
+          "schema": {
+            "description": "The generated completions. This will generally be a list of length one.",
+            "type": "array",
+            "value": {
+              "reference": "EnrichedNormalizedCompletion",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "GenerateResultError": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "message",
+          "schema": {
+            "description": "The error message returned by the LLM provider.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "IndexingStateEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "AWAITING_PROCESSING",
+        },
+        {
+          "name": undefined,
+          "value": "QUEUED",
+        },
+        {
+          "name": undefined,
+          "value": "INDEXING",
+        },
+        {
+          "name": undefined,
+          "value": "INDEXED",
+        },
+        {
+          "name": undefined,
+          "value": "FAILED",
+        },
+      ],
+    },
+    "LogprobsEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "ALL",
+        },
+        {
+          "name": undefined,
+          "value": "NONE",
+        },
+      ],
+    },
+    "ModelTypeEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "GENERATE",
+        },
+        {
+          "name": undefined,
+          "value": "CLASSIFY",
+        },
+      ],
+    },
+    "ModelVersionBuildConfig": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "base_model",
+          "schema": {
+            "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "sandbox_snapshot",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ModelVersionSandboxSnapshot",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ModelVersionExecConfigParameters": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "temperature",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "max_tokens",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "stop",
+          "schema": {
+            "description": undefined,
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "top_p",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "top_k",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "frequency_penalty",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "presence_penalty",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "logit_bias",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "key": {
+                "type": "string",
+              },
+              "type": "map",
+              "value": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ModelVersionExecConfigRead": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "prompt_template",
+          "schema": {
+            "description": "The template used to generate prompts for this model version.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "parameters",
+          "schema": {
+            "reference": "ModelVersionExecConfigParameters",
+            "type": "reference",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "input_variables",
+          "schema": {
+            "description": "Names of the template variables specified in the prompt template.",
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ModelVersionRead": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "description": "Vellum-generated ID that uniquely identifies this model version.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "created",
+          "schema": {
+            "description": "Timestamp of when this model version was created.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "label",
+          "schema": {
+            "description": "Human-friendly name for this model version.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "model_type",
+          "schema": {
+            "reference": "ModelTypeEnum",
+            "type": "reference",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "provider",
+          "schema": {
+            "reference": "ProviderEnum",
+            "type": "reference",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_id",
+          "schema": {
+            "description": "The unique id of this model version as it exists in the above provider's system.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "build_config",
+          "schema": {
+            "reference": "ModelVersionBuildConfig",
+            "type": "reference",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "exec_config",
+          "schema": {
+            "reference": "ModelVersionExecConfigRead",
+            "type": "reference",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ModelVersionSandboxSnapshot": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "description": "The ID of the sandbox snapshot.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "prompt_index",
+          "schema": {
+            "description": "The index of the prompt in the sandbox snapshot.",
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "NormalizedLogProbs": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "tokens",
+          "schema": {
+            "description": undefined,
+            "type": "array",
+            "value": {
+              "reference": "NormalizedTokenLogProbs",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "likelihood",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "NormalizedTokenLogProbs": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "token",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "logprob",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "top_logprobs",
+          "schema": {
+            "description": undefined,
+            "key": {
+              "type": "string",
+            },
+            "type": "map",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "text_offset",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "int",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "PaginatedSlimDocumentList": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "count",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "int",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "next",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "previous",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "results",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "reference": "SlimDocument",
+                "type": "reference",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "ProcessingStateEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "QUEUED",
+        },
+        {
+          "name": undefined,
+          "value": "PROCESSING",
+        },
+        {
+          "name": undefined,
+          "value": "PROCESSED",
+        },
+        {
+          "name": undefined,
+          "value": "FAILED",
+        },
+      ],
+    },
+    "ProviderEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "OPENAI",
+        },
+        {
+          "name": undefined,
+          "value": "COHERE",
+        },
+        {
+          "name": undefined,
+          "value": "ANTHROPIC",
+        },
+      ],
+    },
+    "SearchErrorResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "detail",
+          "schema": {
+            "description": "Details about why the request failed.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchFiltersRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "external_ids",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The document external IDs to filter by",
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchRequestBodyRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "index_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The ID of the index to search against. Must provide either this or index_name.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "index_name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The name of the index to search against. Must provide either this or index_id.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "query",
+          "schema": {
+            "description": "The query to search for.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "options",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "SearchRequestOptionsRequest",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchRequestOptionsRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "limit",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The maximum number of results to return.",
+              "schema": {
+                "type": "int",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "weights",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "SearchWeightsRequest",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "result_merging",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "SearchResultMergingRequest",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "filters",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "SearchFiltersRequest",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "results",
+          "schema": {
+            "description": "The results of the search. Each result represents a chunk that matches the search query.",
+            "type": "array",
+            "value": {
+              "reference": "SearchResult",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchResult": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "document",
+          "schema": {
+            "reference": "Document",
+            "type": "reference",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "text",
+          "schema": {
+            "description": "The text of the chunk that matched the search query.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "keywords",
+          "schema": {
+            "description": undefined,
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "score",
+          "schema": {
+            "description": "A score representing how well the chunk matches the search query.",
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchResultMergingRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "enabled",
+          "schema": {
+            "description": "Whether to enable merging results",
+            "schema": {
+              "type": "boolean",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SearchWeightsRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "semantic_similarity",
+          "schema": {
+            "description": "The relative weight to give to semantic similarity",
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "keywords",
+          "schema": {
+            "description": "The relative weight to give to keyword matches",
+            "schema": {
+              "type": "double",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SlimDocument": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "description": "Vellum-generated ID that uniquely identifies this document.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The external ID that was originally provided when uploading the document.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "last_uploaded_at",
+          "schema": {
+            "description": "A timestamp representing when this document was most recently uploaded.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "label",
+          "schema": {
+            "description": "Human-friendly name for this document.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "processing_state",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "ProcessingStateEnum",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "status",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "reference": "StatusEnum",
+              "type": "reference",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "keywords",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "document_to_document_indexes",
+          "schema": {
+            "description": undefined,
+            "type": "array",
+            "value": {
+              "reference": "DocumentDocumentToDocumentIndex",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "StatusEnum": {
+      "description": undefined,
+      "name": undefined,
+      "type": "enum",
+      "values": [
+        {
+          "name": undefined,
+          "value": "ACTIVE",
+        },
+      ],
+    },
+    "SubmitCompletionActualRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "text",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Text representing what the completion _should_ have been.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "quality",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "timestamp",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SubmitCompletionActualsErrorResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "detail",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "SubmitCompletionActualsRequestRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "deployment_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "deployment_name",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "actuals",
+          "schema": {
+            "description": "Feedback regarding the quality of previously generated completions",
+            "type": "array",
+            "value": {
+              "reference": "SubmitCompletionActualRequest",
+              "type": "reference",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UploadDocumentErrorResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "detail",
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UploadDocumentRequestBodyRequest": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "add_to_index_names",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "external_id",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "description": undefined,
+          "key": "label",
+          "schema": {
+            "description": "A human-friendly name for this document. Typically the filename.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "contents",
+          "schema": {
+            "description": "The file contents of the document.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "description": undefined,
+          "key": "keywords",
+          "schema": {
+            "type": "optional",
+            "value": {
+              "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+    "UploadDocumentResponse": {
+      "allOf": [],
+      "description": undefined,
+      "name": undefined,
+      "properties": [
+        {
+          "description": undefined,
+          "key": "document_id",
+          "schema": {
+            "description": "The ID of the newly created document.",
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {
+    "apiKeyAuth": {
+      "headerName": "X_API_KEY",
+      "type": "header",
+    },
+  },
+  "servers": [
+    {
+      "description": "Default Server",
+      "name": undefined,
+      "url": "https://api.vellum.ai",
+    },
+    {
+      "description": "Inference Endpoints",
+      "name": undefined,
+      "url": "https://predict.vellum.ai",
+    },
+    {
+      "description": "Documents Upload Endpoint",
+      "name": undefined,
+      "url": "https://documents.vellum.ai",
+    },
+  ],
+  "tags": [],
+  "title": "Vellum Client API",
+}
+`;

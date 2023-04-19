@@ -29,7 +29,7 @@ export function convertParameters(
 
         const convertedParameter = {
             name: parameter.name,
-            schema: parameter.required ? schema : Schema.optional({ value: schema, description: undefined }),
+            schema: parameter.required ? schema : Schema.optional({ value: schema }),
             description: undefined,
         };
         if (parameter.in === "query") {

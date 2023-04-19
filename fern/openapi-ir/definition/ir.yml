@@ -191,7 +191,6 @@ types:
       properties: list<ObjectProperty>
 
   ObjectProperty:
-    extends: WithDescription
     properties:
       key: string
       schema: Schema
@@ -204,11 +203,10 @@ types:
   MapSchema:
     extends: WithDescription
     properties:
-      key: PrimitiveSchema
+      key: PrimitiveSchemaValue
       value: Schema
 
   OptionalSchema:
-    extends: WithDescription
     properties:
       value: Schema
 
@@ -229,8 +227,6 @@ types:
         docs: Value of the enum
 
   ReferencedSchema:
-    extends:
-      - WithDescription
     properties:
       reference: SchemaId
 

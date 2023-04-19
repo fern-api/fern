@@ -21,7 +21,7 @@ export async function parse({
     taskContext.logger.debug(`Reading ${openApiPath}`);
     const openApiDocument = await SwaggerParser.parse(openApiPath);
     if (isOpenApiV3(openApiDocument)) {
-        return generateIr(openApiDocument);
+        return generateIr(openApiDocument, taskContext);
     }
     return taskContext.failAndThrow(
         `Only OpenAPI V3 Documents are supported. ${isOpenApiV2(openApiDocument) ? "Received V2 instead." : ""}`
