@@ -57,6 +57,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core-utilities/fetcher"\
       },\
       {\
+        "name": "@fern-typescript/form-data-utils",\
+        "reference": "workspace:packages/core-utilities/form-data-utils"\
+      },\
+      {\
         "name": "@fern-typescript/streaming-fetcher",\
         "reference": "workspace:packages/core-utilities/streaming-fetcher"\
       },\
@@ -200,6 +204,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/express-register-generator", ["workspace:packages/generators/express/express-register-generator"]],\
       ["@fern-typescript/express-service-generator", ["workspace:packages/generators/express/express-service-generator"]],\
       ["@fern-typescript/fetcher", ["workspace:packages/core-utilities/fetcher"]],\
+      ["@fern-typescript/form-data-utils", ["workspace:packages/core-utilities/form-data-utils"]],\
       ["@fern-typescript/generic-express-error-generators", ["workspace:packages/generators/express/generic-express-error-generators"]],\
       ["@fern-typescript/generic-sdk-error-generators", ["workspace:packages/generators/sdk/generic-sdk-error-generators"]],\
       ["@fern-typescript/request-wrapper-generator", ["workspace:packages/generators/sdk/request-wrapper-generator"]],\
@@ -3679,6 +3684,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.27.2"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-typescript/form-data-utils", [\
+        ["workspace:packages/core-utilities/form-data-utils", {\
+          "packageLocation": "./packages/core-utilities/form-data-utils/",\
+          "packageDependencies": [\
+            ["@fern-typescript/form-data-utils", "workspace:packages/core-utilities/form-data-utils"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@types/jest", "npm:28.1.6"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.23.1"],\
+            ["form-data", "npm:4.0.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:28.1.3"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=a1c5e5"]\

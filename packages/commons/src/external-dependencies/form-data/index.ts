@@ -1,1 +1,1 @@
-export { type FormData, type FormDataValue } from "./FormData";
+export { type FormData } from "./FormData";

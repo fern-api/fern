@@ -1,11 +1,4 @@
-import {
-    FileProperty,
-    FileUploadRequestProperty,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpService,
-    ResponseError,
-} from "@fern-fern/ir-model/http";
+import { FileProperty, HttpEndpoint, HttpRequestBody, HttpService, ResponseError } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
@@ -15,8 +8,10 @@ import { GeneratedHeader } from "../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { EndpointSignature } from "./GeneratedEndpointImplementation";
+import { appendPropertyToFormData } from "./utils/appendPropertyToFormData";
 import { buildUrl } from "./utils/buildUrl";
 import { GeneratedQueryParams } from "./utils/GeneratedQueryParams";
+import { getParameterNameForFile } from "./utils/getParameterNameForFile";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
@@ -130,7 +125,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
         for (const property of this.requestBody.properties) {
             if (property.type === "file") {
                 parameters.push({
-                    name: this.getParameterNameForFile(property),
+                    name: getParameterNameForFile(property),
                     type: getTextOfTsNode(this.getFileParameterType(property, context)),
                 });
             }
@@ -158,10 +153,6 @@ export class GeneratedThrowingFileUploadEndpointImplementation
         return ts.factory.createUnionTypeNode(types);
     }
 
-    private getParameterNameForFile(file: FileProperty): string {
-        return file.key.name.camelCase.unsafeName;
-    }
-
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
@@ -185,7 +176,16 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             )
         );
         for (const property of this.requestBody.properties) {
-            statements.push(this.addPropertyToFormData(property, context));
+            statements.push(
+                appendPropertyToFormData({
+                    property,
+                    context,
+                    referenceToFormData: ts.factory.createIdentifier(
+                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
+                    ),
+                    requestParameter: this.requestParameter,
+                })
+            );
         }
 
         const fetcherArgs: Fetcher.Args = {
@@ -198,7 +198,15 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             ),
             timeoutMs: undefined,
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            contentType: "multipart/form-data",
+            contentType: ts.factory.createBinaryExpression(
+                ts.factory.createStringLiteral("multipart/form-data; boundary="),
+                ts.factory.createToken(ts.SyntaxKind.PlusToken),
+                context.base.externalDependencies.formData.getBoundary({
+                    referencetoFormData: ts.factory.createIdentifier(
+                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
+                    ),
+                })
+            ),
         };
 
         statements.push(...this.invokeFetcher(fetcherArgs, context));
@@ -216,52 +224,6 @@ export class GeneratedThrowingFileUploadEndpointImplementation
         } else {
             return referenceToEnvironment;
         }
-    }
-
-    private addPropertyToFormData(property: FileUploadRequestProperty, context: SdkClientClassContext): ts.Statement {
-        return FileUploadRequestProperty._visit(property, {
-            file: (property) => {
-                return context.base.externalDependencies.formData.append({
-                    referencetoFormData: ts.factory.createIdentifier(
-                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
-                    ),
-                    key: property.key.wireValue,
-                    value: {
-                        expression: ts.factory.createIdentifier(this.getParameterNameForFile(property)),
-                        nullCheck: property.isOptional
-                            ? {
-                                  expressionToCheck: undefined,
-                              }
-                            : undefined,
-                    },
-                });
-            },
-            bodyProperty: (property) => {
-                return context.base.externalDependencies.formData.append({
-                    referencetoFormData: ts.factory.createIdentifier(
-                        GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
-                    ),
-                    key: property.name.wireValue,
-                    value: {
-                        expression: context.type.stringify(
-                            this.requestParameter.getReferenceToBodyProperty(property, context),
-                            property.valueType
-                        ),
-                        nullCheck: context.type.getReferenceToType(property.valueType).isOptional
-                            ? {
-                                  expressionToCheck: this.requestParameter.getReferenceToBodyProperty(
-                                      property,
-                                      context
-                                  ),
-                              }
-                            : undefined,
-                    },
-                });
-            },
-            _unknown: () => {
-                throw new Error("Unknown addPropertyToFormData: " + property.type);
-            },
-        });
     }
 
     private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
@@ -283,6 +245,15 @@ export class GeneratedThrowingFileUploadEndpointImplementation
                 value: this.requestParameter.getReferenceToHeader(header, context),
             });
         }
+
+        elements.push({
+            header: "Content-Length",
+            value: context.base.coreUtilities.formDataUtils.getFormDataContentLength({
+                referenceToFormData: ts.factory.createIdentifier(
+                    GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
+                ),
+            }),
+        });
 
         return elements.map(({ header, value }) =>
             ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)

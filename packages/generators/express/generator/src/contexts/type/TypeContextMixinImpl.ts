@@ -2,6 +2,7 @@ import {
     DeclaredTypeName,
     ExampleTypeReference,
     ResolvedTypeReference,
+    TypeDeclaration,
     TypeReference,
 } from "@fern-fern/ir-model/types";
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
@@ -63,6 +64,10 @@ export class TypeContextMixinImpl implements TypeContextMixin {
 
     public getReferenceToType(typeReference: TypeReference): TypeReferenceNode {
         return this.typeReferenceToParsedTypeNodeConverter.convert(typeReference);
+    }
+
+    public getTypeDeclaration(typeName: DeclaredTypeName): TypeDeclaration {
+        return this.typeResolver.getTypeDeclarationFromName(typeName);
     }
 
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {

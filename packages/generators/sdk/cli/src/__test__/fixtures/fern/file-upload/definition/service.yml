@@ -9,15 +9,23 @@ service:
         name: MyRequest
         body:
           properties:
-            a: optional<string>
-            b: integer
-            c: file
-            d: optional<file>
-            int: optional<integer>
-      response: MyUnion
+            maybeString: optional<string>
+            integer: integer
+            file: file
+            maybeFile: optional<file>
+            maybeInteger: optional<integer>
+            listOfStrings: list<string>
+            setOfStrings: set<string>
+            optionalListOfStrings: optional<list<string>>
+            optionalSetOfStrings: optional<set<string>>
+            maybeList: MaybeList
+            optionalMaybeList: optional<MaybeList>
+            maybeListOrSet: MaybeListOrSet
+            optionalMaybeListOrSet: optional<MaybeListOrSet>
+            listOfObjects: list<MyObject>
 
 types:
-  MyUnion:
+  MaybeList:
     discriminated: false
     union:
       - string
@@ -25,3 +33,15 @@ types:
       - integer
       - list<integer>
       - list<list<integer>>
+  MaybeListOrSet:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>
+      - set<string>
+  MyObject:
+    properties:
+      foo: string

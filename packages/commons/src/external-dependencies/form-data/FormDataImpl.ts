@@ -1,6 +1,6 @@
 import { ts } from "ts-morph";
 import { ExternalDependency } from "../ExternalDependency";
-import { FormData, FormDataValue } from "./FormData";
+import { FormData } from "./FormData";
 
 export class FormDataImpl extends ExternalDependency implements FormData {
     protected override PACKAGE = { name: "form-data", version: "4.0.0" };
@@ -19,27 +19,22 @@ export class FormDataImpl extends ExternalDependency implements FormData {
     }: {
         referencetoFormData: ts.Expression;
         key: string;
-        value: FormDataValue;
+        value: ts.Expression;
     }): ts.Statement => {
-        let statement: ts.Statement = ts.factory.createExpressionStatement(
+        return ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("append")),
                 undefined,
-                [ts.factory.createStringLiteral(key), value.expression]
+                [ts.factory.createStringLiteral(key), value]
             )
         );
+    };
 
-        if (value.nullCheck != null) {
-            statement = ts.factory.createIfStatement(
-                ts.factory.createBinaryExpression(
-                    value.nullCheck.expressionToCheck ?? value.expression,
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
-                ),
-                ts.factory.createBlock([statement], true)
-            );
-        }
-
-        return statement;
+    public readonly getBoundary = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(referencetoFormData, "getBoundary"),
+            undefined,
+            undefined
+        );
     };
 }
