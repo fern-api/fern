@@ -3,10 +3,9 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript
-        version: 0.5.7
+        version: 0.0.197
+        config:
+          mode: model
         output:
           location: npm
           package-name: "@fern-fern/openapi-ir"
-        config:
-          useBrandedStringAliases: true
-          includeUtilsOnUnionMembers: true
