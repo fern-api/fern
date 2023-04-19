@@ -11,7 +11,6 @@ import {
 } from "@fern-fern/openapi-ir-model/ir";
 import {
     convertArrayToTypeReference,
-    convertEnumToTypeReference,
     convertMapToTypeReference,
     convertOptionalToTypeReference,
     convertPrimitiveToTypeReference,
@@ -108,15 +107,17 @@ function convertPrimitiveToTypeDeclaration(primitiveSchema: PrimitiveSchema): Ty
 }
 
 function convertEnumToTypeDeclaration(enumSchema: EnumSchema): TypeDeclarations {
-    const enumTypeReference = convertEnumToTypeReference(enumSchema);
     return {
         typeDeclaration: {
             docs: enumSchema.description ?? undefined,
-            type: enumTypeReference.typeReference,
+            enum: enumSchema.values.map((enumValue) => {
+                return {
+                    name: enumValue.name ?? enumValue.value,
+                    value: enumValue.value,
+                };
+            }),
         },
-        additionalTypeDeclarations: {
-            ...enumTypeReference.additionalTypeDeclarations,
-        },
+        additionalTypeDeclarations: {},
     };
 }
 

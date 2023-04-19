@@ -1,1 +1,1 @@
-export { parse } from "./convert";
+export { convert } from "./convert";

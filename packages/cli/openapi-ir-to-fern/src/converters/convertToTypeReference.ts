@@ -118,7 +118,7 @@ export function convertEnumToTypeReference(enumSchema: EnumSchema): TypeReferenc
 
 export function convertObjectToTypeReference(objectSchema: ObjectSchema): TypeReference {
     if (objectSchema.name == null) {
-        throw new Error(`Add x-name to object: ${JSON.stringify(schema)}`);
+        throw new Error(`Add x-name to object: ${JSON.stringify(objectSchema)}`);
     }
     return {
         typeReference: objectSchema.name,

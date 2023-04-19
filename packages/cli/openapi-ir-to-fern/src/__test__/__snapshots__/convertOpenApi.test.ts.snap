@@ -1,0 +1,611 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api converter vellum simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "types": {
+        "Document": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "type": "optional<string>",
+            },
+            "id": {
+              "type": "string",
+            },
+            "label": {
+              "type": "string",
+            },
+          },
+        },
+        "DocumentDocumentToDocumentIndex": {
+          "docs": undefined,
+          "properties": {
+            "document_index_id": {
+              "type": "string",
+            },
+            "id": {
+              "type": "string",
+            },
+            "indexing_state": {
+              "type": "optional<IndexingStateEnum>",
+            },
+          },
+        },
+        "EnrichedNormalizedCompletion": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "type": "optional<string>",
+            },
+            "finish_reason": {
+              "type": "FinishReasonEnum",
+            },
+            "id": {
+              "type": "string",
+            },
+            "logprobs": {
+              "type": "optional<NormalizedLogProbs>",
+            },
+            "model_version_id": {
+              "type": "string",
+            },
+            "text": {
+              "type": "string",
+            },
+          },
+        },
+        "FinishReasonEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "LENGTH",
+              "value": "LENGTH",
+            },
+            {
+              "name": "STOP",
+              "value": "STOP",
+            },
+            {
+              "name": "UNKNOWN",
+              "value": "UNKNOWN",
+            },
+          ],
+        },
+        "GenerateErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "type": "string",
+            },
+          },
+        },
+        "GenerateOptionsRequest": {
+          "docs": undefined,
+          "properties": {
+            "logprobs": {
+              "type": "optional<LogprobsEnum>",
+            },
+          },
+        },
+        "GenerateRequestBodyRequest": {
+          "docs": undefined,
+          "properties": {
+            "deployment_id": {
+              "type": "optional<string>",
+            },
+            "deployment_name": {
+              "type": "optional<string>",
+            },
+            "options": {
+              "type": "optional<GenerateOptionsRequest>",
+            },
+            "requests": {
+              "type": "list<GenerateRequestRequest>",
+            },
+          },
+        },
+        "GenerateRequestRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_ids": {
+              "type": "optional<list<string>>",
+            },
+            "input_values": {
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GenerateResponse": {
+          "docs": undefined,
+          "properties": {
+            "results": {
+              "type": "list<GenerateResult>",
+            },
+          },
+        },
+        "GenerateResult": {
+          "docs": undefined,
+          "properties": {
+            "data": {
+              "type": "optional<GenerateResultData>",
+            },
+            "error": {
+              "type": "optional<GenerateResultError>",
+            },
+          },
+        },
+        "GenerateResultData": {
+          "docs": undefined,
+          "properties": {
+            "completions": {
+              "type": "list<EnrichedNormalizedCompletion>",
+            },
+          },
+        },
+        "GenerateResultError": {
+          "docs": undefined,
+          "properties": {
+            "message": {
+              "type": "string",
+            },
+          },
+        },
+        "IndexingStateEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWAITING_PROCESSING",
+              "value": "AWAITING_PROCESSING",
+            },
+            {
+              "name": "QUEUED",
+              "value": "QUEUED",
+            },
+            {
+              "name": "INDEXING",
+              "value": "INDEXING",
+            },
+            {
+              "name": "INDEXED",
+              "value": "INDEXED",
+            },
+            {
+              "name": "FAILED",
+              "value": "FAILED",
+            },
+          ],
+        },
+        "LogprobsEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ALL",
+              "value": "ALL",
+            },
+            {
+              "name": "NONE",
+              "value": "NONE",
+            },
+          ],
+        },
+        "ModelTypeEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "GENERATE",
+              "value": "GENERATE",
+            },
+            {
+              "name": "CLASSIFY",
+              "value": "CLASSIFY",
+            },
+          ],
+        },
+        "ModelVersionBuildConfig": {
+          "docs": undefined,
+          "properties": {
+            "base_model": {
+              "type": "string",
+            },
+            "sandbox_snapshot": {
+              "type": "optional<ModelVersionSandboxSnapshot>",
+            },
+          },
+        },
+        "ModelVersionExecConfigParameters": {
+          "docs": undefined,
+          "properties": {
+            "frequency_penalty": {
+              "type": "double",
+            },
+            "logit_bias": {
+              "type": "optional<map<string, double>>",
+            },
+            "max_tokens": {
+              "type": "integer",
+            },
+            "presence_penalty": {
+              "type": "double",
+            },
+            "stop": {
+              "type": "list<string>",
+            },
+            "temperature": {
+              "type": "double",
+            },
+            "top_k": {
+              "type": "optional<double>",
+            },
+            "top_p": {
+              "type": "double",
+            },
+          },
+        },
+        "ModelVersionExecConfigRead": {
+          "docs": undefined,
+          "properties": {
+            "input_variables": {
+              "type": "list<string>",
+            },
+            "parameters": {
+              "type": "ModelVersionExecConfigParameters",
+            },
+            "prompt_template": {
+              "type": "string",
+            },
+          },
+        },
+        "ModelVersionRead": {
+          "docs": undefined,
+          "properties": {
+            "build_config": {
+              "type": "ModelVersionBuildConfig",
+            },
+            "created": {
+              "type": "string",
+            },
+            "exec_config": {
+              "type": "ModelVersionExecConfigRead",
+            },
+            "external_id": {
+              "type": "string",
+            },
+            "id": {
+              "type": "string",
+            },
+            "label": {
+              "type": "string",
+            },
+            "model_type": {
+              "type": "ModelTypeEnum",
+            },
+            "provider": {
+              "type": "ProviderEnum",
+            },
+          },
+        },
+        "ModelVersionSandboxSnapshot": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "type": "string",
+            },
+            "prompt_index": {
+              "type": "integer",
+            },
+          },
+        },
+        "NormalizedLogProbs": {
+          "docs": undefined,
+          "properties": {
+            "likelihood": {
+              "type": "double",
+            },
+            "tokens": {
+              "type": "list<NormalizedTokenLogProbs>",
+            },
+          },
+        },
+        "NormalizedTokenLogProbs": {
+          "docs": undefined,
+          "properties": {
+            "logprob": {
+              "type": "double",
+            },
+            "text_offset": {
+              "type": "integer",
+            },
+            "token": {
+              "type": "string",
+            },
+            "top_logprobs": {
+              "type": "map<string, double>",
+            },
+          },
+        },
+        "PaginatedSlimDocumentList": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "type": "optional<integer>",
+            },
+            "next": {
+              "type": "optional<string>",
+            },
+            "previous": {
+              "type": "optional<string>",
+            },
+            "results": {
+              "type": "optional<list<SlimDocument>>",
+            },
+          },
+        },
+        "ProcessingStateEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "QUEUED",
+              "value": "QUEUED",
+            },
+            {
+              "name": "PROCESSING",
+              "value": "PROCESSING",
+            },
+            {
+              "name": "PROCESSED",
+              "value": "PROCESSED",
+            },
+            {
+              "name": "FAILED",
+              "value": "FAILED",
+            },
+          ],
+        },
+        "ProviderEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "OPENAI",
+              "value": "OPENAI",
+            },
+            {
+              "name": "COHERE",
+              "value": "COHERE",
+            },
+            {
+              "name": "ANTHROPIC",
+              "value": "ANTHROPIC",
+            },
+          ],
+        },
+        "SearchErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "type": "string",
+            },
+          },
+        },
+        "SearchFiltersRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_ids": {
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "SearchRequestBodyRequest": {
+          "docs": undefined,
+          "properties": {
+            "index_id": {
+              "type": "optional<string>",
+            },
+            "index_name": {
+              "type": "optional<string>",
+            },
+            "options": {
+              "type": "optional<SearchRequestOptionsRequest>",
+            },
+            "query": {
+              "type": "string",
+            },
+          },
+        },
+        "SearchRequestOptionsRequest": {
+          "docs": undefined,
+          "properties": {
+            "filters": {
+              "type": "optional<SearchFiltersRequest>",
+            },
+            "limit": {
+              "type": "optional<integer>",
+            },
+            "result_merging": {
+              "type": "optional<SearchResultMergingRequest>",
+            },
+            "weights": {
+              "type": "optional<SearchWeightsRequest>",
+            },
+          },
+        },
+        "SearchResponse": {
+          "docs": undefined,
+          "properties": {
+            "results": {
+              "type": "list<SearchResult>",
+            },
+          },
+        },
+        "SearchResult": {
+          "docs": undefined,
+          "properties": {
+            "document": {
+              "type": "Document",
+            },
+            "keywords": {
+              "type": "list<string>",
+            },
+            "score": {
+              "type": "double",
+            },
+            "text": {
+              "type": "string",
+            },
+          },
+        },
+        "SearchResultMergingRequest": {
+          "docs": undefined,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+            },
+          },
+        },
+        "SearchWeightsRequest": {
+          "docs": undefined,
+          "properties": {
+            "keywords": {
+              "type": "double",
+            },
+            "semantic_similarity": {
+              "type": "double",
+            },
+          },
+        },
+        "SlimDocument": {
+          "docs": undefined,
+          "properties": {
+            "document_to_document_indexes": {
+              "type": "list<DocumentDocumentToDocumentIndex>",
+            },
+            "external_id": {
+              "type": "optional<string>",
+            },
+            "id": {
+              "type": "string",
+            },
+            "keywords": {
+              "type": "optional<list<string>>",
+            },
+            "label": {
+              "type": "string",
+            },
+            "last_uploaded_at": {
+              "type": "string",
+            },
+            "processing_state": {
+              "type": "optional<ProcessingStateEnum>",
+            },
+            "status": {
+              "type": "optional<StatusEnum>",
+            },
+          },
+        },
+        "StatusEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ACTIVE",
+              "value": "ACTIVE",
+            },
+          ],
+        },
+        "SubmitCompletionActualRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "type": "optional<string>",
+            },
+            "id": {
+              "type": "optional<string>",
+            },
+            "quality": {
+              "type": "optional<double>",
+            },
+            "text": {
+              "type": "optional<string>",
+            },
+            "timestamp": {
+              "type": "optional<string>",
+            },
+          },
+        },
+        "SubmitCompletionActualsErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "type": "string",
+            },
+          },
+        },
+        "SubmitCompletionActualsRequestRequest": {
+          "docs": undefined,
+          "properties": {
+            "actuals": {
+              "type": "list<SubmitCompletionActualRequest>",
+            },
+            "deployment_id": {
+              "type": "optional<string>",
+            },
+            "deployment_name": {
+              "type": "optional<string>",
+            },
+          },
+        },
+        "UploadDocumentErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "type": "string",
+            },
+          },
+        },
+        "UploadDocumentRequestBodyRequest": {
+          "docs": undefined,
+          "properties": {
+            "add_to_index_names": {
+              "type": "optional<list<string>>",
+            },
+            "contents": {
+              "type": "string",
+            },
+            "external_id": {
+              "type": "optional<string>",
+            },
+            "keywords": {
+              "type": "optional<list<string>>",
+            },
+            "label": {
+              "type": "string",
+            },
+          },
+        },
+        "UploadDocumentResponse": {
+          "docs": undefined,
+          "properties": {
+            "document_id": {
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "apiKeyAuth",
+    "authSchemes": {
+      "apiKeyAuth": {
+        "header": "X_API_KEY",
+        "type": "string",
+      },
+    },
+    "display-name": "Vellum Client API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

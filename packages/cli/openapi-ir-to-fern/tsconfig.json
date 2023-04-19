@@ -6,6 +6,7 @@
   "references": [
     { "path": "../../commons/fs-utils" },
     { "path": "../logger" },
+    { "path": "../openapi-parser" },
     { "path": "../task-context" },
     { "path": "../yaml/yaml-schema" }
   ]
