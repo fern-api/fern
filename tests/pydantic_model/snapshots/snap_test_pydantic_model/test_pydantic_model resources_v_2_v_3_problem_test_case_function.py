@@ -17,9 +17,15 @@ from .void_function_definition import VoidFunctionDefinition
 class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
     type: typing_extensions.Literal["withActualResult"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class TestCaseFunction_Custom(VoidFunctionDefinition):
     type: typing_extensions.Literal["custom"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 TestCaseFunction = typing_extensions.Annotated[

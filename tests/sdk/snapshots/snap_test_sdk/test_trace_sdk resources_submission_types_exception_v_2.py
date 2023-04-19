@@ -15,6 +15,7 @@ class ExceptionV2_Generic(ExceptionInfo):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class ExceptionV2_Timeout(pydantic.BaseModel):

@@ -18,13 +18,22 @@ from .void_function_signature_that_takes_actual_result import VoidFunctionSignat
 class FunctionSignature_Void(VoidFunctionSignature):
     type: typing_extensions.Literal["void"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class FunctionSignature_NonVoid(NonVoidFunctionSignature):
     type: typing_extensions.Literal["nonVoid"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
     type: typing_extensions.Literal["voidThatTakesActualResult"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 FunctionSignature = typing_extensions.Annotated[

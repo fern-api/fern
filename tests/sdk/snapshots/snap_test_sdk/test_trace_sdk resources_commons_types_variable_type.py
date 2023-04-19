@@ -51,6 +51,7 @@ class VariableType_ListType(ListType):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class VariableType_MapType(MapType):
@@ -58,6 +59,7 @@ class VariableType_MapType(MapType):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class VariableType_BinaryTreeType(pydantic.BaseModel):

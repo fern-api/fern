@@ -92,6 +92,9 @@ class _ExceptionV2:
     class Generic(ExceptionInfo):
         type: typing_extensions.Literal["generic"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Timeout(pydantic.BaseModel):
         type: typing_extensions.Literal["timeout"]
 

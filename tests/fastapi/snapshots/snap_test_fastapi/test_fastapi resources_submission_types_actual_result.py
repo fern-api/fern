@@ -110,6 +110,9 @@ class _ActualResult:
     class Exception(ExceptionInfo):
         type: typing_extensions.Literal["exception"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class ExceptionV2(pydantic.BaseModel):
         type: typing_extensions.Literal["exceptionV2"]
         value: resources_submission_types_exception_v_2_ExceptionV2

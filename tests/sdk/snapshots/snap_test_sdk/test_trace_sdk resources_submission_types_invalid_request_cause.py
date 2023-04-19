@@ -17,6 +17,7 @@ class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
@@ -24,6 +25,7 @@ class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported)
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
@@ -31,6 +33,7 @@ class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 InvalidRequestCause = typing_extensions.Annotated[

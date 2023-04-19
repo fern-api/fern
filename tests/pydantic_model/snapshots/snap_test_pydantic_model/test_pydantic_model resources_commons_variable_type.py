@@ -34,9 +34,15 @@ class VariableType_CharType(pydantic.BaseModel):
 class VariableType_ListType(ListType):
     type: typing_extensions.Literal["listType"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class VariableType_MapType(MapType):
     type: typing_extensions.Literal["mapType"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class VariableType_BinaryTreeType(pydantic.BaseModel):

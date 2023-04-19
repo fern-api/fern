@@ -290,6 +290,9 @@ class _VariableValue:
     class MapValue(resources_commons_types_map_value_MapValue):
         type: typing_extensions.Literal["mapValue"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class ListValue(pydantic.BaseModel):
         type: typing_extensions.Literal["listValue"]
         value: typing.List[VariableValue]
@@ -297,11 +300,20 @@ class _VariableValue:
     class BinaryTreeValue(resources_commons_types_binary_tree_value_BinaryTreeValue):
         type: typing_extensions.Literal["binaryTreeValue"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class SinglyLinkedListValue(resources_commons_types_singly_linked_list_value_SinglyLinkedListValue):
         type: typing_extensions.Literal["singlyLinkedListValue"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class DoublyLinkedListValue(resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue):
         type: typing_extensions.Literal["doublyLinkedListValue"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class NullValue(pydantic.BaseModel):
         type: typing_extensions.Literal["nullValue"]

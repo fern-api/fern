@@ -29,9 +29,15 @@ class WorkspaceSubmissionStatus_Running(pydantic.BaseModel):
 class WorkspaceSubmissionStatus_Ran(WorkspaceRunDetails):
     type: typing_extensions.Literal["ran"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class WorkspaceSubmissionStatus_Traced(WorkspaceRunDetails):
     type: typing_extensions.Literal["traced"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 WorkspaceSubmissionStatus = typing_extensions.Annotated[

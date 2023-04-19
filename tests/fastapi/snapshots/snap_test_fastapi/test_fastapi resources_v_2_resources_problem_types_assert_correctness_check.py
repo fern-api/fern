@@ -105,8 +105,14 @@ class _AssertCorrectnessCheck:
     class DeepEquality(DeepEqualityCorrectnessCheck):
         type: typing_extensions.Literal["deepEquality"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing_extensions.Literal["custom"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 _AssertCorrectnessCheck.Custom.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

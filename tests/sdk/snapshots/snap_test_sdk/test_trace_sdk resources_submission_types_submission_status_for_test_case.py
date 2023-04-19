@@ -20,6 +20,7 @@ class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
@@ -35,6 +36,7 @@ class SubmissionStatusForTestCase_Traced(TracedTestCase):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 SubmissionStatusForTestCase = typing_extensions.Annotated[

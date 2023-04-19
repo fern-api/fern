@@ -99,6 +99,9 @@ class _CustomFiles:
     class Basic(BasicCustomFiles):
         type: typing_extensions.Literal["basic"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Custom(pydantic.BaseModel):
         type: typing_extensions.Literal["custom"]
         value: typing.Dict[Language, Files]

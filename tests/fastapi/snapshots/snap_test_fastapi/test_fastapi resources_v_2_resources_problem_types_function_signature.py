@@ -137,11 +137,20 @@ class _FunctionSignature:
     class Void(VoidFunctionSignature):
         type: typing_extensions.Literal["void"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class NonVoid(NonVoidFunctionSignature):
         type: typing_extensions.Literal["nonVoid"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing_extensions.Literal["voidThatTakesActualResult"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 _FunctionSignature.Void.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

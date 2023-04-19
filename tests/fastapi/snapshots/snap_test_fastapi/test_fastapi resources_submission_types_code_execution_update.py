@@ -277,35 +277,68 @@ class _CodeExecutionUpdate:
     class BuildingExecutor(BuildingExecutorResponse):
         type: typing_extensions.Literal["buildingExecutor"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Running(RunningResponse):
         type: typing_extensions.Literal["running"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Errored(ErroredResponse):
         type: typing_extensions.Literal["errored"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Stopped(StoppedResponse):
         type: typing_extensions.Literal["stopped"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Graded(GradedResponse):
         type: typing_extensions.Literal["graded"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class GradedV2(GradedResponseV2):
         type: typing_extensions.Literal["gradedV2"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class WorkspaceRan(WorkspaceRanResponse):
         type: typing_extensions.Literal["workspaceRan"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Recording(RecordingResponseNotification):
         type: typing_extensions.Literal["recording"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Recorded(RecordedResponseNotification):
         type: typing_extensions.Literal["recorded"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class InvalidRequest(InvalidRequestResponse):
         type: typing_extensions.Literal["invalidRequest"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Finished(FinishedResponse):
         type: typing_extensions.Literal["finished"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 _CodeExecutionUpdate.Graded.update_forward_refs(

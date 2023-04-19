@@ -21,6 +21,9 @@ class WorkspaceSubmissionUpdateInfo_Running(pydantic.BaseModel):
 class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
     type: typing_extensions.Literal["ran"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
     type: typing_extensions.Literal["stopped"]
@@ -32,6 +35,9 @@ class WorkspaceSubmissionUpdateInfo_Traced(pydantic.BaseModel):
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
     type: typing_extensions.Literal["tracedV2"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):

@@ -98,8 +98,14 @@ class _TestCaseGrade:
     class Hidden(TestCaseHiddenGrade):
         type: typing_extensions.Literal["hidden"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class NonHidden(TestCaseNonHiddenGrade):
         type: typing_extensions.Literal["nonHidden"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 _TestCaseGrade.NonHidden.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

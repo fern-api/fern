@@ -19,6 +19,7 @@ class SubmissionTypeState_Test(TestSubmissionState):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
@@ -26,6 +27,7 @@ class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 SubmissionTypeState = typing_extensions.Annotated[

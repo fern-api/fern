@@ -311,6 +311,9 @@ class _DebugVariableValue:
     class MapValue(DebugMapValue):
         type: typing_extensions.Literal["mapValue"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class ListValue(pydantic.BaseModel):
         type: typing_extensions.Literal["listValue"]
         value: typing.List[DebugVariableValue]
@@ -318,11 +321,20 @@ class _DebugVariableValue:
     class BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
         type: typing_extensions.Literal["binaryTreeNodeValue"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["singlyLinkedListNodeValue"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
         type: typing_extensions.Literal["doublyLinkedListNodeValue"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class UndefinedValue(pydantic.BaseModel):
         type: typing_extensions.Literal["undefinedValue"]
@@ -332,6 +344,9 @@ class _DebugVariableValue:
 
     class GenericValue(resources_commons_types_generic_value_GenericValue):
         type: typing_extensions.Literal["genericValue"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 _DebugVariableValue.MapValue.update_forward_refs(

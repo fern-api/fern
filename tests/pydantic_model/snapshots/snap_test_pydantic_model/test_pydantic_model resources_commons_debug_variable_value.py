@@ -43,6 +43,9 @@ class DebugVariableValue_CharValue(pydantic.BaseModel):
 class DebugVariableValue_MapValue(DebugMapValue):
     type: typing_extensions.Literal["mapValue"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
     type: typing_extensions.Literal["listValue"]
@@ -52,13 +55,22 @@ class DebugVariableValue_ListValue(pydantic.BaseModel):
 class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
     type: typing_extensions.Literal["binaryTreeNodeValue"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
     type: typing_extensions.Literal["singlyLinkedListNodeValue"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
     type: typing_extensions.Literal["doublyLinkedListNodeValue"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
@@ -71,6 +83,9 @@ class DebugVariableValue_NullValue(pydantic.BaseModel):
 
 class DebugVariableValue_GenericValue(GenericValue):
     type: typing_extensions.Literal["genericValue"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 DebugVariableValue = typing_extensions.Annotated[

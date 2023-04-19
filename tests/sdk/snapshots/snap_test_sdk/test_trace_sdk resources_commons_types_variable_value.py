@@ -59,6 +59,7 @@ class VariableValue_MapValue(MapValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class VariableValue_ListValue(pydantic.BaseModel):
@@ -74,6 +75,7 @@ class VariableValue_BinaryTreeValue(BinaryTreeValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
@@ -81,6 +83,7 @@ class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
@@ -88,6 +91,7 @@ class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class VariableValue_NullValue(pydantic.BaseModel):

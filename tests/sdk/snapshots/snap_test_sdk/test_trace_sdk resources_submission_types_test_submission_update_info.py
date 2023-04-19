@@ -44,6 +44,7 @@ class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
@@ -51,6 +52,7 @@ class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):

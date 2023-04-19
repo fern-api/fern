@@ -27,6 +27,7 @@ class TestCaseImplementationReference_Implementation(TestCaseImplementation):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 TestCaseImplementationReference = typing_extensions.Annotated[

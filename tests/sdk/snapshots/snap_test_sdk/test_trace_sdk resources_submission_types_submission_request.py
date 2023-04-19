@@ -18,6 +18,7 @@ class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
@@ -32,6 +33,7 @@ class SubmissionRequest_SubmitV2(SubmitRequestV2):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
@@ -39,6 +41,7 @@ class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionRequest_Stop(StopRequest):
@@ -46,6 +49,7 @@ class SubmissionRequest_Stop(StopRequest):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 SubmissionRequest = typing_extensions.Annotated[

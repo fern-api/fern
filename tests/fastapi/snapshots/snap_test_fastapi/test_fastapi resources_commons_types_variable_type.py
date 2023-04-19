@@ -247,8 +247,14 @@ class _VariableType:
     class ListType(resources_commons_types_list_type_ListType):
         type: typing_extensions.Literal["listType"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class MapType(resources_commons_types_map_type_MapType):
         type: typing_extensions.Literal["mapType"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class BinaryTreeType(pydantic.BaseModel):
         type: typing_extensions.Literal["binaryTreeType"]

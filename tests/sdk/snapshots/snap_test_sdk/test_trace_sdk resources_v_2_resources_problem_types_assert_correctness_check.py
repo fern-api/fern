@@ -19,6 +19,7 @@ class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
@@ -26,6 +27,7 @@ class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult)
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 AssertCorrectnessCheck = typing_extensions.Annotated[

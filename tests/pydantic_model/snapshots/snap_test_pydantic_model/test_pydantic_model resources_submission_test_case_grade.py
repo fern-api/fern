@@ -17,9 +17,15 @@ from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 class TestCaseGrade_Hidden(TestCaseHiddenGrade):
     type: typing_extensions.Literal["hidden"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
     type: typing_extensions.Literal["nonHidden"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 TestCaseGrade = typing_extensions.Annotated[

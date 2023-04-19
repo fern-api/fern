@@ -20,6 +20,9 @@ class ActualResult_Value(pydantic.BaseModel):
 class ActualResult_Exception(ExceptionInfo):
     type: typing_extensions.Literal["exception"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):
     type: typing_extensions.Literal["exceptionV2"]

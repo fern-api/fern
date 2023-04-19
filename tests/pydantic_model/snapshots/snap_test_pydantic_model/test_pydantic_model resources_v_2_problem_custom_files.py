@@ -18,6 +18,9 @@ from .files import Files
 class CustomFiles_Basic(BasicCustomFiles):
     type: typing_extensions.Literal["basic"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CustomFiles_Custom(pydantic.BaseModel):
     type: typing_extensions.Literal["custom"]

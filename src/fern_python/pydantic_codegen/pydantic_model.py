@@ -282,7 +282,7 @@ class PydanticModel:
                 )
             )
 
-        if self._has_aliases:
+        if self._has_aliases or len(self._base_models) > 0:
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="allow_population_by_field_name",

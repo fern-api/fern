@@ -40,6 +40,7 @@ class SubmissionResponse_ServerErrored(ExceptionInfo):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
@@ -55,6 +56,7 @@ class SubmissionResponse_Terminated(TerminatedResponse):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 SubmissionResponse = typing_extensions.Annotated[

@@ -181,8 +181,14 @@ class _WorkspaceSubmissionStatus:
     class Ran(WorkspaceRunDetails):
         type: typing_extensions.Literal["ran"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Traced(WorkspaceRunDetails):
         type: typing_extensions.Literal["traced"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 WorkspaceSubmissionStatus.update_forward_refs()

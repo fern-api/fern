@@ -26,45 +26,78 @@ from .workspace_ran_response import WorkspaceRanResponse
 class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
     type: typing_extensions.Literal["buildingExecutor"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CodeExecutionUpdate_Running(RunningResponse):
     type: typing_extensions.Literal["running"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class CodeExecutionUpdate_Errored(ErroredResponse):
     type: typing_extensions.Literal["errored"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CodeExecutionUpdate_Stopped(StoppedResponse):
     type: typing_extensions.Literal["stopped"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class CodeExecutionUpdate_Graded(GradedResponse):
     type: typing_extensions.Literal["graded"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CodeExecutionUpdate_GradedV2(GradedResponseV2):
     type: typing_extensions.Literal["gradedV2"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
     type: typing_extensions.Literal["workspaceRan"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CodeExecutionUpdate_Recording(RecordingResponseNotification):
     type: typing_extensions.Literal["recording"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
     type: typing_extensions.Literal["recorded"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
     type: typing_extensions.Literal["invalidRequest"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class CodeExecutionUpdate_Finished(FinishedResponse):
     type: typing_extensions.Literal["finished"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 CodeExecutionUpdate = typing_extensions.Annotated[

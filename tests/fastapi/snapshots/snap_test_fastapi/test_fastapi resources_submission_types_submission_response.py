@@ -204,12 +204,18 @@ class _SubmissionResponse:
     class ServerErrored(ExceptionInfo):
         type: typing_extensions.Literal["serverErrored"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class CodeExecutionUpdate(pydantic.BaseModel):
         type: typing_extensions.Literal["codeExecutionUpdate"]
         value: resources_submission_types_code_execution_update_CodeExecutionUpdate
 
     class Terminated(TerminatedResponse):
         type: typing_extensions.Literal["terminated"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 SubmissionResponse.update_forward_refs()

@@ -15,13 +15,22 @@ from .runtime_error import RuntimeError
 class ErrorInfo_CompileError(CompileError):
     type: typing_extensions.Literal["compileError"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class ErrorInfo_RuntimeError(RuntimeError):
     type: typing_extensions.Literal["runtimeError"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class ErrorInfo_InternalError(InternalError):
     type: typing_extensions.Literal["internalError"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 ErrorInfo = typing_extensions.Annotated[

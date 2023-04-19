@@ -29,6 +29,9 @@ class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
 class SubmissionResponse_ServerErrored(ExceptionInfo):
     type: typing_extensions.Literal["serverErrored"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
     type: typing_extensions.Literal["codeExecutionUpdate"]
@@ -37,6 +40,9 @@ class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
 
 class SubmissionResponse_Terminated(TerminatedResponse):
     type: typing_extensions.Literal["terminated"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 SubmissionResponse = typing_extensions.Annotated[

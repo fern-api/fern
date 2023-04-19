@@ -105,8 +105,14 @@ class _SubmissionStatusV2:
     class Test(TestSubmissionStatusV2):
         type: typing_extensions.Literal["test"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing_extensions.Literal["workspace"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 _SubmissionStatusV2.Test.update_forward_refs(

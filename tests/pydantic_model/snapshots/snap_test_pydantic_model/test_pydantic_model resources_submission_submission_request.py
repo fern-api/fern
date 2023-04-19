@@ -16,6 +16,9 @@ from .workspace_submit_request import WorkspaceSubmitRequest
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
     type: typing_extensions.Literal["initializeProblemRequest"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
     type: typing_extensions.Literal["initializeWorkspaceRequest"]
@@ -24,13 +27,22 @@ class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
 class SubmissionRequest_SubmitV2(SubmitRequestV2):
     type: typing_extensions.Literal["submitV2"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
     type: typing_extensions.Literal["workspaceSubmit"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class SubmissionRequest_Stop(StopRequest):
     type: typing_extensions.Literal["stop"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 SubmissionRequest = typing_extensions.Annotated[

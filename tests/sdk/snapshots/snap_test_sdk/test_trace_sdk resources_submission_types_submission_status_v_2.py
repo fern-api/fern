@@ -22,6 +22,7 @@ class SubmissionStatusV2_Test(TestSubmissionStatusV2):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
@@ -29,6 +30,7 @@ class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 SubmissionStatusV2 = typing_extensions.Annotated[

@@ -26,6 +26,7 @@ class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
@@ -47,6 +48,7 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):

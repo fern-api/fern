@@ -200,8 +200,14 @@ class _TestSubmissionUpdateInfo:
     class GradedTestCase(GradedTestCaseUpdate):
         type: typing_extensions.Literal["gradedTestCase"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class RecordedTestCase(RecordedTestCaseUpdate):
         type: typing_extensions.Literal["recordedTestCase"]
+
+        class Config:
+            allow_population_by_field_name = True
 
     class Finished(pydantic.BaseModel):
         type: typing_extensions.Literal["finished"]

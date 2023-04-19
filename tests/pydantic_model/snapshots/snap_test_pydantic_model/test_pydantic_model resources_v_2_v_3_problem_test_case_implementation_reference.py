@@ -22,6 +22,9 @@ class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
 class TestCaseImplementationReference_Implementation(TestCaseImplementation):
     type: typing_extensions.Literal["implementation"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 TestCaseImplementationReference = typing_extensions.Annotated[
     typing.Union[TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation],

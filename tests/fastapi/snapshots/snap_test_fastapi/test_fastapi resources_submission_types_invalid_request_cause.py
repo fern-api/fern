@@ -164,13 +164,22 @@ class _InvalidRequestCause:
     class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
         type: typing_extensions.Literal["submissionIdNotFound"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
         type: typing_extensions.Literal["customTestCasesUnsupported"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing_extensions.Literal["unexpectedLanguage"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 InvalidRequestCause.update_forward_refs()

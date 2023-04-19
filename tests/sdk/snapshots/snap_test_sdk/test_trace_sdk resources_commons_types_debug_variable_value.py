@@ -60,6 +60,7 @@ class DebugVariableValue_MapValue(DebugMapValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class DebugVariableValue_ListValue(pydantic.BaseModel):
@@ -75,6 +76,7 @@ class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
@@ -82,6 +84,7 @@ class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListVa
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
@@ -89,6 +92,7 @@ class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListVa
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
@@ -110,6 +114,7 @@ class DebugVariableValue_GenericValue(GenericValue):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 DebugVariableValue = typing_extensions.Annotated[

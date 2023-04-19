@@ -25,6 +25,7 @@ class ActualResult_Exception(ExceptionInfo):
 
     class Config:
         frozen = True
+        allow_population_by_field_name = True
 
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):

@@ -17,9 +17,15 @@ from .void_function_definition_that_takes_actual_result import VoidFunctionDefin
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
     type: typing_extensions.Literal["deepEquality"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
     type: typing_extensions.Literal["custom"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 AssertCorrectnessCheck = typing_extensions.Annotated[

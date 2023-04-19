@@ -42,6 +42,9 @@ class VariableValue_CharValue(pydantic.BaseModel):
 class VariableValue_MapValue(MapValue):
     type: typing_extensions.Literal["mapValue"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class VariableValue_ListValue(pydantic.BaseModel):
     type: typing_extensions.Literal["listValue"]
@@ -51,13 +54,22 @@ class VariableValue_ListValue(pydantic.BaseModel):
 class VariableValue_BinaryTreeValue(BinaryTreeValue):
     type: typing_extensions.Literal["binaryTreeValue"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
     type: typing_extensions.Literal["singlyLinkedListValue"]
 
+    class Config:
+        allow_population_by_field_name = True
+
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
     type: typing_extensions.Literal["doublyLinkedListValue"]
+
+    class Config:
+        allow_population_by_field_name = True
 
 
 class VariableValue_NullValue(pydantic.BaseModel):

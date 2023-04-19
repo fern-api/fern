@@ -183,17 +183,29 @@ class _SubmissionRequest:
     class InitializeProblemRequest(resources_submission_types_initialize_problem_request_InitializeProblemRequest):
         type: typing_extensions.Literal["initializeProblemRequest"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class InitializeWorkspaceRequest(pydantic.BaseModel):
         type: typing_extensions.Literal["initializeWorkspaceRequest"]
 
     class SubmitV2(SubmitRequestV2):
         type: typing_extensions.Literal["submitV2"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class WorkspaceSubmit(WorkspaceSubmitRequest):
         type: typing_extensions.Literal["workspaceSubmit"]
 
+        class Config:
+            allow_population_by_field_name = True
+
     class Stop(StopRequest):
         type: typing_extensions.Literal["stop"]
+
+        class Config:
+            allow_population_by_field_name = True
 
 
 SubmissionRequest.update_forward_refs()
