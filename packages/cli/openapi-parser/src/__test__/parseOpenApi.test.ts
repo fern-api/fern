@@ -1,8 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import path from "path";
 import { parse } from "../parse";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
