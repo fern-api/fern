@@ -117,7 +117,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 mergeParams: true,
                             }),
                             handlers: [
-                                context.base.externalDependencies.express.json(),
+                                context.base.externalDependencies.express.json({ strict: false }),
                                 ts.factory.createSpreadElement(ts.factory.createIdentifier(middlewareParameterName)),
                             ],
                         })

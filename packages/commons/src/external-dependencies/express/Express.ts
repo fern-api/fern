@@ -45,5 +45,5 @@ export interface Express {
     CookieOptions: {
         _getReferenceToType: () => ts.TypeNode;
     };
-    json: () => ts.Expression;
+    json: (args?: { strict?: boolean }) => ts.Expression;
 }

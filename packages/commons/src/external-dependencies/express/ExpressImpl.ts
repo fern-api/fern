@@ -252,11 +252,17 @@ export class ExpressImpl extends ExternalDependency implements Express {
     };
 
     public readonly json = this.withDefaultImport("express", (withImport, express) =>
-        withImport(() => {
+        withImport(({ strict = true }: { strict?: boolean } = {}) => {
+            const options: ts.ObjectLiteralElementLike[] = [];
+
+            if (!strict) {
+                options.push(ts.factory.createPropertyAssignment("strict", ts.factory.createFalse()));
+            }
+
             return ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(express), "json"),
                 undefined,
-                undefined
+                options.length > 0 ? [ts.factory.createObjectLiteralExpression(options, true)] : undefined
             );
         })
     );

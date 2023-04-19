@@ -276,7 +276,9 @@ class ServiceService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -3091,7 +3093,9 @@ class AdminService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -5012,7 +5016,9 @@ class HomepageService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -5398,7 +5404,9 @@ class MigrationService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -5850,7 +5858,9 @@ class PlaylistService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -6582,7 +6592,9 @@ class ProblemService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -7499,7 +7511,9 @@ class SubmissionService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -11405,7 +11419,9 @@ class SyspropService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -11690,7 +11706,9 @@ class ProblemService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
@@ -13510,7 +13528,9 @@ class ProblemService {
     router;
     constructor(methods, middleware = []) {
         this.methods = methods;
-        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json(), ...middleware);
+        this.router = express_1.default.Router({ mergeParams: true }).use(express_1.default.json({
+            strict: false,
+        }), ...middleware);
     }
     addMiddleware(handler) {
         this.router.use(handler);
