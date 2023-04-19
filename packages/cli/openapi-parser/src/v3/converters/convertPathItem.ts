@@ -4,14 +4,18 @@ import { convertParameters } from "./endpoint/convertParameters";
 import { convertRequest } from "./endpoint/convertRequest";
 import { convertResponse } from "./endpoint/convertResponse";
 
-export function convertPathItem(path: string, pathItemObject: OpenAPIV3.PathItemObject): Endpoint[] {
+export function convertPathItem(
+    path: string,
+    pathItemObject: OpenAPIV3.PathItemObject,
+    document: OpenAPIV3.Document
+): Endpoint[] {
     const endpoints: Endpoint[] = [];
 
     if (pathItemObject.get != null) {
         endpoints.push({
             method: HttpMethod.Get,
             path,
-            ...convertOperation(pathItemObject.get),
+            ...convertOperation(pathItemObject.get, document),
         });
     }
 
@@ -19,7 +23,7 @@ export function convertPathItem(path: string, pathItemObject: OpenAPIV3.PathItem
         endpoints.push({
             method: HttpMethod.Post,
             path,
-            ...convertOperation(pathItemObject.post),
+            ...convertOperation(pathItemObject.post, document),
         });
     }
 
@@ -27,7 +31,7 @@ export function convertPathItem(path: string, pathItemObject: OpenAPIV3.PathItem
         endpoints.push({
             method: HttpMethod.Put,
             path,
-            ...convertOperation(pathItemObject.put),
+            ...convertOperation(pathItemObject.put, document),
         });
     }
 
@@ -35,7 +39,7 @@ export function convertPathItem(path: string, pathItemObject: OpenAPIV3.PathItem
         endpoints.push({
             method: HttpMethod.Patch,
             path,
-            ...convertOperation(pathItemObject.patch),
+            ...convertOperation(pathItemObject.patch, document),
         });
     }
 
@@ -43,14 +47,17 @@ export function convertPathItem(path: string, pathItemObject: OpenAPIV3.PathItem
         endpoints.push({
             method: HttpMethod.Patch,
             path,
-            ...convertOperation(pathItemObject.delete),
+            ...convertOperation(pathItemObject.delete, document),
         });
     }
 
     return endpoints;
 }
 
-function convertOperation(operation: OpenAPIV3.OperationObject): Omit<Endpoint, "path" | "method"> {
+function convertOperation(
+    operation: OpenAPIV3.OperationObject,
+    document: OpenAPIV3.Document
+): Omit<Endpoint, "path" | "method"> {
     const convertedParameters = convertParameters(operation.parameters ?? []);
     return {
         summary: operation.summary,
@@ -64,6 +71,7 @@ function convertOperation(operation: OpenAPIV3.OperationObject): Omit<Endpoint, 
             operation.requestBody != null
                 ? convertRequest({
                       requestBody: operation.requestBody,
+                      document,
                   })
                 : undefined,
         response: convertResponse({ responses: operation.responses }),

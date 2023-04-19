@@ -14,7 +14,7 @@ export function generateIr(openApi: OpenAPIV3.Document): OpenAPIIntermediateRepr
             if (pathItem == null) {
                 return [];
             }
-            return convertPathItem(path, pathItem);
+            return convertPathItem(path, pathItem, openApi);
         }),
         schemas: Object.fromEntries(
             Object.entries(openApi.components?.schemas ?? {}).map(([key, schema]) => [key, convertSchema(schema)])

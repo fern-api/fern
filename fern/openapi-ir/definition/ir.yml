@@ -115,9 +115,30 @@ types:
       schema: Schema
 
   Request:
+    union:
+      multipart: MultipartRequest
+      json: JsonRequest
+
+  JsonRequest:
     extends: WithDescription
     properties:
       schema: Schema
+
+  MultipartRequest:
+    extends: WithDescription
+    properties:
+      properties: list<MultipartRequestProperty>
+
+  MultipartRequestProperty:
+    extends: WithDescription
+    properties:
+      key: string
+      schema: MultipartSchema
+
+  MultipartSchema:
+    union:
+      file: {}
+      json: Schema
 
   Response:
     extends: WithDescription
