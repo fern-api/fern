@@ -1,5 +1,6 @@
 import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { convertServer } from "./convertServer";
 import { convertParameters } from "./endpoint/convertParameters";
 import { convertRequest } from "./endpoint/convertRequest";
 import { convertResponse } from "./endpoint/convertResponse";
@@ -76,7 +77,7 @@ function convertOperation(
                 : undefined,
         response: convertResponse({ responses: operation.responses }),
         errors: [],
-        server: [],
+        server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
     };
 }

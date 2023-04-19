@@ -3,12 +3,13 @@ import { OpenAPIV3 } from "openapi-types";
 import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
+import { convertServer } from "./converters/convertServer";
 
 export function generateIr(openApi: OpenAPIV3.Document): OpenAPIIntermediateRepresentation {
     return {
         title: openApi.info.title,
         description: openApi.info.description,
-        servers: [],
+        servers: (openApi.servers ?? []).map((server) => convertServer(server)),
         tags: [],
         endpoints: Object.entries(openApi.paths).flatMap(([path, pathItem]) => {
             if (pathItem == null) {
