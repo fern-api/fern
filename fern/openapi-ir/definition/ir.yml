@@ -77,10 +77,13 @@ types:
       headers: list<Header>
       requestName:
         type: optional<string>
-        docs: Populated by `X-Request-Name`
+        docs: |
+          Populated by `X-Request-Name` on a path object
+          or `X-Name` on a request object
       request: optional<Request>
       response: optional<Response>
       errors: list<HttpError>
+      server: list<Server>
 
   HttpMethod:
     enum:
@@ -112,9 +115,30 @@ types:
       schema: Schema
 
   Request:
+    union:
+      multipart: MultipartRequest
+      json: JsonRequest
+
+  JsonRequest:
     extends: WithDescription
     properties:
       schema: Schema
+
+  MultipartRequest:
+    extends: WithDescription
+    properties:
+      properties: list<MultipartRequestProperty>
+
+  MultipartRequestProperty:
+    extends: WithDescription
+    properties:
+      key: string
+      schema: MultipartSchema
+
+  MultipartSchema:
+    union:
+      file: {}
+      json: Schema
 
   Response:
     extends: WithDescription
@@ -122,7 +146,9 @@ types:
       schema: Schema
 
   HttpError:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithName
     properties:
       statusCode: integer
       schema: optional<Schema>
@@ -132,10 +158,12 @@ types:
       primitive: PrimitiveSchema
       object: ObjectSchema
       array: ArraySchema
+      map: MapSchema
       optional: OptionalSchema
       enum: EnumSchema
       reference: ReferencedSchema
       oneOf: OneOfSchema
+      unknown: {}
 
   PrimitiveSchema:
     extends: WithDescription
@@ -163,7 +191,6 @@ types:
       properties: list<ObjectProperty>
 
   ObjectProperty:
-    extends: WithDescription
     properties:
       key: string
       schema: Schema
@@ -173,8 +200,13 @@ types:
     properties:
       value: Schema
 
-  OptionalSchema:
+  MapSchema:
     extends: WithDescription
+    properties:
+      key: PrimitiveSchemaValue
+      value: Schema
+
+  OptionalSchema:
     properties:
       value: Schema
 
@@ -195,8 +227,6 @@ types:
         docs: Value of the enum
 
   ReferencedSchema:
-    extends:
-      - WithDescription
     properties:
       reference: SchemaId
 

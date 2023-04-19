@@ -1,0 +1,995 @@
+openapi: 3.0.3
+info:
+  title: Vellum Client API
+  version: 1.0.0 (v1)
+  description: |2
+
+    ## Vellum API Documentation
+
+    ### Welcome 👋
+    Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you,
+    as well as the parameters and responses that they accept and return.
+
+    We will be exposing more and more of our APIs over time as they stabilize. If there is some action you can perform
+    via the UI that you wish you could perform via API, please let us know and we can expose it here in an unstable state.
+
+    ### API Stability
+    Some of the APIs documented within are undergoing active development. Use the
+    <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+    and
+    <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+    tags to differentiate between those that are stable and those that are not.
+
+    ### Base URLs
+    Some endpoints are hosted separately from the main Vellum API and therefore have a different base url. If this is
+    the case, they will say so in their description.
+
+    Unless otherwise specified, all endpoints use <code>https://api.vellum.ai</code> as their base URL.
+
+    ### Official API Clients:
+    Vellum maintains official API clients for Python and Node/Typescript. We recommend using these clients to interact
+    with all stable endpoints. You can find them here:
+    - [Python](https://github.com/vocify/vellum-client-python)
+    - [Node/Typescript](https://github.com/vocify/vellum-client-node)
+  contact:
+    name: devops@vellum.ai
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+paths:
+  /v1/documents:
+    get:
+      operationId: documents_list
+      description: |2
+
+        <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+        Used to list documents. Optionally filter on supported fields.
+      parameters:
+        - in: query
+          name: document_index_id
+          schema:
+            type: string
+            format: uuid
+          description: Filter down to only those documents that are included in the
+            specified index. You may provide either the Vellum-generated ID or the unique
+            name of the index specified upon initial creation.
+        - name: limit
+          required: false
+          in: query
+          description: Number of results to return per page.
+          schema:
+            type: integer
+        - name: offset
+          required: false
+          in: query
+          description: The initial index from which to return the results.
+          schema:
+            type: integer
+        - name: ordering
+          required: false
+          in: query
+          description: Which field to use when ordering the results.
+          schema:
+            type: string
+      tags:
+        - documents
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedSlimDocumentList"
+          description: ""
+  /v1/generate:
+    post:
+      operationId: generate
+      description: |-
+        <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+        Generate a completion using a previously defined deployment.
+
+        **Note:** Uses a base url of `https://predict.vellum.ai`.
+      tags:
+        - generate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateRequestBodyRequest"
+        required: true
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateResponse"
+          description: ""
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+  /v1/model-versions/{id}:
+    get:
+      operationId: model_versions_retrieve
+      description: |2
+
+        <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+
+        Used to retrieve a model version given its ID.
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          description: A UUID string identifying this model version.
+          required: true
+      tags:
+        - model-versions
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelVersionRead"
+          description: ""
+  /v1/search:
+    post:
+      operationId: search
+      description: |-
+        <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+        Perform a search against a document index.
+
+        **Note:** Uses a base url of `https://predict.vellum.ai`.
+      tags:
+        - search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchRequestBodyRequest"
+        required: true
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResponse"
+          description: ""
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchErrorResponse"
+          description: ""
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchErrorResponse"
+          description: ""
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchErrorResponse"
+          description: ""
+  /v1/submit-completion-actuals:
+    post:
+      operationId: submit_completion_actuals
+      description: |-
+        <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+        Used to submit feedback regarding the quality of previously generated completions.
+
+        **Note:** Uses a base url of `https://predict.vellum.ai`.
+      tags:
+        - submit-completion-actuals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitCompletionActualsRequestRequest"
+        required: true
+      security:
+        - apiKeyAuth: []
+      responses:
+        "200":
+          description: No response body
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
+          description: ""
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
+          description: ""
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
+          description: ""
+  /v1/upload-document:
+    post:
+      operationId: upload_document
+      description: |-
+        <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+        Upload a document to be indexed and used for search.
+
+        **Note:** Uses a base url of `https://documents.vellum.ai`.
+      tags:
+        - upload-document
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/UploadDocumentRequestBodyRequest"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadDocumentRequestBodyRequest"
+        required: true
+      security:
+        - apiKeyAuth: []
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadDocumentResponse"
+          description: ""
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadDocumentErrorResponse"
+          description: ""
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadDocumentErrorResponse"
+          description: ""
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadDocumentErrorResponse"
+          description: ""
+components:
+  schemas:
+    Document:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: The ID of the document.
+        label:
+          type: string
+          description: The human-readable name for the document.
+          maxLength: 150
+        external_id:
+          type: string
+          nullable: true
+          description: The unique ID of the document as represented in an external
+            system and specified when it was originally uploaded.
+          maxLength: 250
+      required:
+        - id
+        - label
+    DocumentDocumentToDocumentIndex:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Vellum-generated ID that uniquely identifies this link.
+        document_index_id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Vellum-generated ID that uniquely identifies the index this
+            document is included in.
+        indexing_state:
+          allOf:
+            - $ref: "#/components/schemas/IndexingStateEnum"
+          description: An enum value representing where this document is along its
+            indexing lifecycle for this index.
+      required:
+        - document_index_id
+        - id
+    EnrichedNormalizedCompletion:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The Vellum-generated ID of the completion.
+        external_id:
+          type: string
+          nullable: true
+          description: The external ID that was originally provided along with the
+            generation request, which uniquely identifies this generation in an external
+            system.
+        text:
+          type: string
+          description: The text generated by the LLM.
+        finish_reason:
+          allOf:
+            - $ref: "#/components/schemas/FinishReasonEnum"
+          description: The reason the generation finished.
+        logprobs:
+          allOf:
+            - $ref: "#/components/schemas/NormalizedLogProbs"
+          nullable: true
+          description: The logprobs of the completion. Only present if specified in
+            the original request options.
+        model_version_id:
+          type: string
+          description: The ID of the model version used to generate this completion.
+      required:
+        - finish_reason
+        - id
+        - model_version_id
+        - text
+    FinishReasonEnum:
+      enum:
+        - LENGTH
+        - STOP
+        - UNKNOWN
+      type: string
+    GenerateErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Details about why the request failed.
+      required:
+        - detail
+    GenerateOptionsRequest:
+      type: object
+      properties:
+        logprobs:
+          allOf:
+            - $ref: "#/components/schemas/LogprobsEnum"
+          description: Which logprobs to include, if any. Defaults to NONE.
+    GenerateRequestBodyRequest:
+      type: object
+      properties:
+        deployment_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The ID of the deployment. Must provide either this or deployment_name.
+        deployment_name:
+          type: string
+          nullable: true
+          minLength: 1
+          description: The name of the deployment. Must provide either this or deployment_id.
+        requests:
+          type: array
+          items:
+            $ref: "#/components/schemas/GenerateRequestRequest"
+          description: The generation requests to make. Supplying multiple will perform
+            a bulk request to the LLM provided when possible.
+        options:
+          allOf:
+            - $ref: "#/components/schemas/GenerateOptionsRequest"
+          nullable: true
+          description: Additional configuration that can be used to control what's
+            included in the response.
+      required:
+        - requests
+    GenerateRequestRequest:
+      type: object
+      properties:
+        input_values:
+          type: object
+          additionalProperties: {}
+          description: Key/value pairs for each template variable defined in the deployment's
+            prompt.
+        external_ids:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          nullable: true
+          description: Optionally include a unique identifier for each generation,
+            as represented outside of Vellum. Note that this should generally be a
+            list of length one.
+      required:
+        - input_values
+    GenerateResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/GenerateResult"
+          description: The results of each generation request.
+      required:
+        - results
+    GenerateResult:
+      type: object
+      properties:
+        data:
+          allOf:
+            - $ref: "#/components/schemas/GenerateResultData"
+          description: An object containing the resulting generation. This key will
+            be absent if the LLM provider experienced an error.
+        error:
+          allOf:
+            - $ref: "#/components/schemas/GenerateResultError"
+          description: An object containing details about the error that occurred.
+            This key will be absent if the LLM provider did not experience an error.
+    GenerateResultData:
+      type: object
+      properties:
+        completions:
+          type: array
+          items:
+            $ref: "#/components/schemas/EnrichedNormalizedCompletion"
+          description: The generated completions. This will generally be a list of
+            length one.
+      required:
+        - completions
+    GenerateResultError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The error message returned by the LLM provider.
+      required:
+        - message
+    IndexingStateEnum:
+      enum:
+        - AWAITING_PROCESSING
+        - QUEUED
+        - INDEXING
+        - INDEXED
+        - FAILED
+      type: string
+    LogprobsEnum:
+      enum:
+        - ALL
+        - NONE
+      type: string
+    ModelTypeEnum:
+      enum:
+        - GENERATE
+        - CLASSIFY
+      type: string
+    ModelVersionBuildConfig:
+      type: object
+      properties:
+        base_model:
+          type: string
+          description: The name of the base model used to create this model version,
+            as identified by the LLM provider.
+        sandbox_snapshot:
+          allOf:
+            - $ref: "#/components/schemas/ModelVersionSandboxSnapshot"
+          nullable: true
+          description: Information about the sandbox snapshot that was used to create
+            this model version, if applicable.
+      required:
+        - base_model
+    ModelVersionExecConfigParameters:
+      type: object
+      properties:
+        temperature:
+          type: number
+          format: double
+        max_tokens:
+          type: integer
+        stop:
+          type: array
+          items:
+            type: string
+          nullable: true
+        top_p:
+          type: number
+          format: double
+        top_k:
+          type: number
+          format: double
+        frequency_penalty:
+          type: number
+          format: double
+        presence_penalty:
+          type: number
+          format: double
+        logit_bias:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+          nullable: true
+      required:
+        - frequency_penalty
+        - max_tokens
+        - presence_penalty
+        - stop
+        - temperature
+        - top_p
+    ModelVersionExecConfigRead:
+      type: object
+      properties:
+        prompt_template:
+          type: string
+          description: The template used to generate prompts for this model version.
+        parameters:
+          allOf:
+            - $ref: "#/components/schemas/ModelVersionExecConfigParameters"
+          description: The generation parameters that are passed to the LLM provider
+            at runtime.
+        input_variables:
+          type: array
+          items:
+            type: string
+          description: Names of the template variables specified in the prompt template.
+      required:
+        - input_variables
+        - parameters
+        - prompt_template
+    ModelVersionRead:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Vellum-generated ID that uniquely identifies this model version.
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp of when this model version was created.
+        label:
+          type: string
+          description: Human-friendly name for this model version.
+          maxLength: 150
+        model_type:
+          allOf:
+            - $ref: "#/components/schemas/ModelTypeEnum"
+          description: The type of task this model is used for.
+        provider:
+          allOf:
+            - $ref: "#/components/schemas/ProviderEnum"
+          description: Which LLM provider this model version is associated with.
+        external_id:
+          type: string
+          description: The unique id of this model version as it exists in the above
+            provider's system.
+          maxLength: 250
+        build_config:
+          allOf:
+            - $ref: "#/components/schemas/ModelVersionBuildConfig"
+          description: Configuration used to build this model version.
+        exec_config:
+          allOf:
+            - $ref: "#/components/schemas/ModelVersionExecConfigRead"
+          description: Configuration used to execute this model version.
+      required:
+        - build_config
+        - created
+        - exec_config
+        - external_id
+        - id
+        - label
+        - model_type
+        - provider
+    ModelVersionSandboxSnapshot:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the sandbox snapshot.
+        prompt_index:
+          type: integer
+          minimum: 0
+          description: The index of the prompt in the sandbox snapshot.
+      required:
+        - id
+        - prompt_index
+    NormalizedLogProbs:
+      type: object
+      properties:
+        tokens:
+          type: array
+          items:
+            $ref: "#/components/schemas/NormalizedTokenLogProbs"
+        likelihood:
+          type: number
+          format: double
+      required:
+        - likelihood
+        - tokens
+    NormalizedTokenLogProbs:
+      type: object
+      properties:
+        token:
+          type: string
+        logprob:
+          type: number
+          format: double
+          nullable: true
+        top_logprobs:
+          type: object
+          additionalProperties:
+            type: number
+            format: double
+          nullable: true
+        text_offset:
+          type: integer
+      required:
+        - logprob
+        - text_offset
+        - token
+        - top_logprobs
+    PaginatedSlimDocumentList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SlimDocument"
+    ProcessingStateEnum:
+      enum:
+        - QUEUED
+        - PROCESSING
+        - PROCESSED
+        - FAILED
+      type: string
+    ProviderEnum:
+      enum:
+        - OPENAI
+        - COHERE
+        - ANTHROPIC
+      type: string
+    SearchErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+          description: Details about why the request failed.
+      required:
+        - detail
+    SearchFiltersRequest:
+      type: object
+      properties:
+        external_ids:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          nullable: true
+          description: The document external IDs to filter by
+    SearchRequestBodyRequest:
+      type: object
+      properties:
+        index_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The ID of the index to search against. Must provide either
+            this or index_name.
+        index_name:
+          type: string
+          nullable: true
+          minLength: 1
+          description: The name of the index to search against. Must provide either
+            this or index_id.
+        query:
+          type: string
+          minLength: 1
+          description: The query to search for.
+        options:
+          allOf:
+            - $ref: "#/components/schemas/SearchRequestOptionsRequest"
+          nullable: true
+          description: Configuration options for the search.
+      required:
+        - query
+    SearchRequestOptionsRequest:
+      type: object
+      properties:
+        limit:
+          type: integer
+          nullable: true
+          description: The maximum number of results to return.
+        weights:
+          allOf:
+            - $ref: "#/components/schemas/SearchWeightsRequest"
+          nullable: true
+          description: The weights to use for the search. Must add up to 1.0.
+        result_merging:
+          allOf:
+            - $ref: "#/components/schemas/SearchResultMergingRequest"
+          nullable: true
+          description: The configuration for merging results.
+        filters:
+          allOf:
+            - $ref: "#/components/schemas/SearchFiltersRequest"
+          nullable: true
+          description: The filters to apply to the search.
+    SearchResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/SearchResult"
+          description: The results of the search. Each result represents a chunk that
+            matches the search query.
+      required:
+        - results
+    SearchResult:
+      type: object
+      properties:
+        document:
+          allOf:
+            - $ref: "#/components/schemas/Document"
+          description: The document that contains the chunk that matched the search
+            query.
+        text:
+          type: string
+          description: The text of the chunk that matched the search query.
+        keywords:
+          type: array
+          items:
+            type: string
+        score:
+          type: number
+          format: double
+          description: A score representing how well the chunk matches the search
+            query.
+      required:
+        - document
+        - keywords
+        - score
+        - text
+    SearchResultMergingRequest:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether to enable merging results
+      required:
+        - enabled
+    SearchWeightsRequest:
+      type: object
+      properties:
+        semantic_similarity:
+          type: number
+          format: double
+          description: The relative weight to give to semantic similarity
+        keywords:
+          type: number
+          format: double
+          description: The relative weight to give to keyword matches
+      required:
+        - keywords
+        - semantic_similarity
+    SlimDocument:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+          description: Vellum-generated ID that uniquely identifies this document.
+        external_id:
+          type: string
+          nullable: true
+          description: The external ID that was originally provided when uploading
+            the document.
+          maxLength: 250
+        last_uploaded_at:
+          type: string
+          format: date-time
+          description: A timestamp representing when this document was most recently
+            uploaded.
+        label:
+          type: string
+          description: Human-friendly name for this document.
+          maxLength: 150
+        processing_state:
+          allOf:
+            - $ref: "#/components/schemas/ProcessingStateEnum"
+          description: The current processing state of the document
+        status:
+          allOf:
+            - $ref: "#/components/schemas/StatusEnum"
+          description: The document's current status.
+        keywords:
+          type: array
+          items:
+            type: string
+          description: A list of keywords associated with this document. Originally
+            provided when uploading the document.
+        document_to_document_indexes:
+          type: array
+          items:
+            $ref: "#/components/schemas/DocumentDocumentToDocumentIndex"
+      required:
+        - document_to_document_indexes
+        - id
+        - label
+        - last_uploaded_at
+    StatusEnum:
+      enum:
+        - ACTIVE
+      type: string
+    SubmitCompletionActualRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+          minLength: 1
+          description: The Vellum-generated ID of a previously generated completion.
+            Must provide either this or external_id.
+        external_id:
+          type: string
+          nullable: true
+          minLength: 1
+          description: The external ID that was originally provided when generating
+            the completion that you'd now like to submit actuals for. Must provide
+            either this or id.
+        text:
+          type: string
+          nullable: true
+          description: Text representing what the completion _should_ have been.
+        quality:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+          nullable: true
+          description: A number between 0 and 1 representing the quality of the completion.
+            0 is the worst, 1 is the best.
+        timestamp:
+          type: string
+          format: date-time
+          nullable: true
+          description: Optionally provide the timestamp representing when this feedback
+            was collected. Used for reporting purposes.
+    SubmitCompletionActualsErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+    SubmitCompletionActualsRequestRequest:
+      type: object
+      properties:
+        deployment_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The ID of the deployment. Must provide either this or deployment_name.
+        deployment_name:
+          type: string
+          nullable: true
+          minLength: 1
+          description: The name of the deployment. Must provide either this or deployment_id.
+        actuals:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubmitCompletionActualRequest"
+          description: Feedback regarding the quality of previously generated completions
+      required:
+        - actuals
+    UploadDocumentErrorResponse:
+      type: object
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+    UploadDocumentRequestBodyRequest:
+      type: object
+      properties:
+        add_to_index_names:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          nullable: true
+          description: Optionally include the names of all indexes that you'd like
+            this document to be included in
+        external_id:
+          type: string
+          nullable: true
+          minLength: 1
+          description: Optionally include an external ID for this document. This is
+            useful if you want to re-upload the same document later when its contents
+            change and would like it to be re-indexed.
+        label:
+          type: string
+          minLength: 1
+          description: A human-friendly name for this document. Typically the filename.
+        contents:
+          type: string
+          format: binary
+          description: The file contents of the document.
+        keywords:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          nullable: true
+          description: Optionally include a list of keywords that'll be associated
+            with this document. Used when performing keyword searches.
+      required:
+        - contents
+        - label
+    UploadDocumentResponse:
+      type: object
+      properties:
+        document_id:
+          type: string
+          format: uuid
+          description: The ID of the newly created document.
+      required:
+        - document_id
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X_API_KEY
+      description: API key based authentication
+servers:
+  - url: https://api.vellum.ai
+    description: Default Server
+  - url: https://predict.vellum.ai
+    description: Inference Endpoints
+  - url: https://documents.vellum.ai
+    description: Documents Upload Endpoint
