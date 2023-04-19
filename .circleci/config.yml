@@ -5,7 +5,7 @@ jobs:
   check:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -38,7 +38,7 @@ jobs:
   organize-imports:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -58,7 +58,7 @@ jobs:
   eslint:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -74,7 +74,7 @@ jobs:
   compile:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - node/install-packages:
