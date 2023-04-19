@@ -34,24 +34,32 @@ class _Factory:
         return DebugVariableValue(__root__=_DebugVariableValue.CharValue(type="charValue", value=value))
 
     def map_value(self, value: DebugMapValue) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.MapValue(**dict(value), type="mapValue"))
+        return DebugVariableValue(
+            __root__=_DebugVariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue")
+        )
 
     def list_value(self, value: typing.List[DebugVariableValue]) -> DebugVariableValue:
         return DebugVariableValue(__root__=_DebugVariableValue.ListValue(type="listValue", value=value))
 
     def binary_tree_node_value(self, value: BinaryTreeNodeAndTreeValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.BinaryTreeNodeValue(**dict(value), type="binaryTreeNodeValue")
+            __root__=_DebugVariableValue.BinaryTreeNodeValue(
+                **value.dict(exclude_unset=True), type="binaryTreeNodeValue"
+            )
         )
 
     def singly_linked_list_node_value(self, value: SinglyLinkedListNodeAndListValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.SinglyLinkedListNodeValue(**dict(value), type="singlyLinkedListNodeValue")
+            __root__=_DebugVariableValue.SinglyLinkedListNodeValue(
+                **value.dict(exclude_unset=True), type="singlyLinkedListNodeValue"
+            )
         )
 
     def doubly_linked_list_node_value(self, value: DoublyLinkedListNodeAndListValue) -> DebugVariableValue:
         return DebugVariableValue(
-            __root__=_DebugVariableValue.DoublyLinkedListNodeValue(**dict(value), type="doublyLinkedListNodeValue")
+            __root__=_DebugVariableValue.DoublyLinkedListNodeValue(
+                **value.dict(exclude_unset=True), type="doublyLinkedListNodeValue"
+            )
         )
 
     def undefined_value(self) -> DebugVariableValue:
@@ -61,7 +69,9 @@ class _Factory:
         return DebugVariableValue(__root__=_DebugVariableValue.NullValue(type="nullValue"))
 
     def generic_value(self, value: resources_commons_types_generic_value_GenericValue) -> DebugVariableValue:
-        return DebugVariableValue(__root__=_DebugVariableValue.GenericValue(**dict(value), type="genericValue"))
+        return DebugVariableValue(
+            __root__=_DebugVariableValue.GenericValue(**value.dict(exclude_unset=True), type="genericValue")
+        )
 
 
 class DebugVariableValue(pydantic.BaseModel):

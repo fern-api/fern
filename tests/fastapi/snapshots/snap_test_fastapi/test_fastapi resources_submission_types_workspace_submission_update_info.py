@@ -24,7 +24,9 @@ class _Factory:
         )
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionUpdateInfo:
-        return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Ran(**dict(value), type="ran"))
+        return WorkspaceSubmissionUpdateInfo(
+            __root__=_WorkspaceSubmissionUpdateInfo.Ran(**value.dict(exclude_unset=True), type="ran")
+        )
 
     def stopped(self) -> WorkspaceSubmissionUpdateInfo:
         return WorkspaceSubmissionUpdateInfo(__root__=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped"))
@@ -34,7 +36,7 @@ class _Factory:
 
     def traced_v_2(self, value: WorkspaceTracedUpdate) -> WorkspaceSubmissionUpdateInfo:
         return WorkspaceSubmissionUpdateInfo(
-            __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(**dict(value), type="tracedV2")
+            __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(**value.dict(exclude_unset=True), type="tracedV2")
         )
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionUpdateInfo:

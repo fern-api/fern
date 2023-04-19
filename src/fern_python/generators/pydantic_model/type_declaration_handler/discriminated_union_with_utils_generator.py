@@ -236,8 +236,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     same_properties_as_object=lambda type_name: [
                         AST.Expression(
                             AST.FunctionInvocation(
-                                function_definition=AST.Reference(qualified_name_excluding_import=("dict",)),
-                                args=[AST.Expression(BUILDER_ARGUMENT_NAME)],
+                                function_definition=AST.Reference(
+                                    qualified_name_excluding_import=(f"{BUILDER_ARGUMENT_NAME}.dict",)
+                                ),
+                                args=[AST.Expression("exclude_unset=True")],
                             ),
                             spread=AST.ExpressionSpread.TWO_ASTERISKS,
                         )

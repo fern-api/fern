@@ -27,10 +27,14 @@ class _Factory:
         return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Running(type="running", value=value))
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Ran(**dict(value), type="ran"))
+        return WorkspaceSubmissionStatus(
+            __root__=_WorkspaceSubmissionStatus.Ran(**value.dict(exclude_unset=True), type="ran")
+        )
 
     def traced(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
-        return WorkspaceSubmissionStatus(__root__=_WorkspaceSubmissionStatus.Traced(**dict(value), type="traced"))
+        return WorkspaceSubmissionStatus(
+            __root__=_WorkspaceSubmissionStatus.Traced(**value.dict(exclude_unset=True), type="traced")
+        )
 
 
 class WorkspaceSubmissionStatus(pydantic.BaseModel):

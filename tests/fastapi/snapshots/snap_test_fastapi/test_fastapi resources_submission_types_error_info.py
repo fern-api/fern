@@ -18,13 +18,13 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def compile_error(self, value: resources_submission_types_compile_error_CompileError) -> ErrorInfo:
-        return ErrorInfo(__root__=_ErrorInfo.CompileError(**dict(value), type="compileError"))
+        return ErrorInfo(__root__=_ErrorInfo.CompileError(**value.dict(exclude_unset=True), type="compileError"))
 
     def runtime_error(self, value: resources_submission_types_runtime_error_RuntimeError) -> ErrorInfo:
-        return ErrorInfo(__root__=_ErrorInfo.RuntimeError(**dict(value), type="runtimeError"))
+        return ErrorInfo(__root__=_ErrorInfo.RuntimeError(**value.dict(exclude_unset=True), type="runtimeError"))
 
     def internal_error(self, value: resources_submission_types_internal_error_InternalError) -> ErrorInfo:
-        return ErrorInfo(__root__=_ErrorInfo.InternalError(**dict(value), type="internalError"))
+        return ErrorInfo(__root__=_ErrorInfo.InternalError(**value.dict(exclude_unset=True), type="internalError"))
 
 
 class ErrorInfo(pydantic.BaseModel):

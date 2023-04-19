@@ -37,23 +37,33 @@ class _Factory:
         return VariableValue(__root__=_VariableValue.CharValue(type="charValue", value=value))
 
     def map_value(self, value: resources_commons_types_map_value_MapValue) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.MapValue(**dict(value), type="mapValue"))
+        return VariableValue(__root__=_VariableValue.MapValue(**value.dict(exclude_unset=True), type="mapValue"))
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
         return VariableValue(__root__=_VariableValue.ListValue(type="listValue", value=value))
 
     def binary_tree_value(self, value: resources_commons_types_binary_tree_value_BinaryTreeValue) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.BinaryTreeValue(**dict(value), type="binaryTreeValue"))
+        return VariableValue(
+            __root__=_VariableValue.BinaryTreeValue(**value.dict(exclude_unset=True), type="binaryTreeValue")
+        )
 
     def singly_linked_list_value(
         self, value: resources_commons_types_singly_linked_list_value_SinglyLinkedListValue
     ) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.SinglyLinkedListValue(**dict(value), type="singlyLinkedListValue"))
+        return VariableValue(
+            __root__=_VariableValue.SinglyLinkedListValue(
+                **value.dict(exclude_unset=True), type="singlyLinkedListValue"
+            )
+        )
 
     def doubly_linked_list_value(
         self, value: resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue
     ) -> VariableValue:
-        return VariableValue(__root__=_VariableValue.DoublyLinkedListValue(**dict(value), type="doublyLinkedListValue"))
+        return VariableValue(
+            __root__=_VariableValue.DoublyLinkedListValue(
+                **value.dict(exclude_unset=True), type="doublyLinkedListValue"
+            )
+        )
 
     def null_value(self) -> VariableValue:
         return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))

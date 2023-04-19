@@ -32,7 +32,9 @@ class _Factory:
         return SubmissionResponse(__root__=_SubmissionResponse.WorkspaceInitialized(type="workspaceInitialized"))
 
     def server_errored(self, value: ExceptionInfo) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.ServerErrored(**dict(value), type="serverErrored"))
+        return SubmissionResponse(
+            __root__=_SubmissionResponse.ServerErrored(**value.dict(exclude_unset=True), type="serverErrored")
+        )
 
     def code_execution_update(
         self, value: resources_submission_types_code_execution_update_CodeExecutionUpdate
@@ -42,7 +44,9 @@ class _Factory:
         )
 
     def terminated(self, value: TerminatedResponse) -> SubmissionResponse:
-        return SubmissionResponse(__root__=_SubmissionResponse.Terminated(**dict(value), type="terminated"))
+        return SubmissionResponse(
+            __root__=_SubmissionResponse.Terminated(**value.dict(exclude_unset=True), type="terminated")
+        )
 
 
 class SubmissionResponse(pydantic.BaseModel):

@@ -16,7 +16,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: ExceptionInfo) -> ExceptionV2:
-        return ExceptionV2(__root__=_ExceptionV2.Generic(**dict(value), type="generic"))
+        return ExceptionV2(__root__=_ExceptionV2.Generic(**value.dict(exclude_unset=True), type="generic"))
 
     def timeout(self) -> ExceptionV2:
         return ExceptionV2(__root__=_ExceptionV2.Timeout(type="timeout"))

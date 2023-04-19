@@ -25,19 +25,25 @@ class _Factory:
         self, value: resources_submission_types_submission_id_not_found_SubmissionIdNotFound
     ) -> InvalidRequestCause:
         return InvalidRequestCause(
-            __root__=_InvalidRequestCause.SubmissionIdNotFound(**dict(value), type="submissionIdNotFound")
+            __root__=_InvalidRequestCause.SubmissionIdNotFound(
+                **value.dict(exclude_unset=True), type="submissionIdNotFound"
+            )
         )
 
     def custom_test_cases_unsupported(
         self, value: resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ) -> InvalidRequestCause:
         return InvalidRequestCause(
-            __root__=_InvalidRequestCause.CustomTestCasesUnsupported(**dict(value), type="customTestCasesUnsupported")
+            __root__=_InvalidRequestCause.CustomTestCasesUnsupported(
+                **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
+            )
         )
 
     def unexpected_language(self, value: UnexpectedLanguageError) -> InvalidRequestCause:
         return InvalidRequestCause(
-            __root__=_InvalidRequestCause.UnexpectedLanguage(**dict(value), type="unexpectedLanguage")
+            __root__=_InvalidRequestCause.UnexpectedLanguage(
+                **value.dict(exclude_unset=True), type="unexpectedLanguage"
+            )
         )
 
 

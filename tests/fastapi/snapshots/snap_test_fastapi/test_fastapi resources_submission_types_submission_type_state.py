@@ -20,10 +20,12 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def test(self, value: TestSubmissionState) -> SubmissionTypeState:
-        return SubmissionTypeState(__root__=_SubmissionTypeState.Test(**dict(value), type="test"))
+        return SubmissionTypeState(__root__=_SubmissionTypeState.Test(**value.dict(exclude_unset=True), type="test"))
 
     def workspace(self, value: WorkspaceSubmissionState) -> SubmissionTypeState:
-        return SubmissionTypeState(__root__=_SubmissionTypeState.Workspace(**dict(value), type="workspace"))
+        return SubmissionTypeState(
+            __root__=_SubmissionTypeState.Workspace(**value.dict(exclude_unset=True), type="workspace")
+        )
 
 
 class SubmissionTypeState(pydantic.BaseModel):

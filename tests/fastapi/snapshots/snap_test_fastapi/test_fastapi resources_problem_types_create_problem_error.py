@@ -16,7 +16,9 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def generic(self, value: GenericCreateProblemError) -> CreateProblemError:
-        return CreateProblemError(__root__=_CreateProblemError.Generic(**dict(value), error_type="generic"))
+        return CreateProblemError(
+            __root__=_CreateProblemError.Generic(**value.dict(exclude_unset=True), error_type="generic")
+        )
 
 
 class CreateProblemError(pydantic.BaseModel):

@@ -21,7 +21,7 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def basic(self, value: BasicCustomFiles) -> CustomFiles:
-        return CustomFiles(__root__=_CustomFiles.Basic(**dict(value), type="basic"))
+        return CustomFiles(__root__=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic"))
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
         return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))

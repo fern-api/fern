@@ -21,14 +21,16 @@ T_Result = typing.TypeVar("T_Result")
 
 class _Factory:
     def void(self, value: VoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(__root__=_FunctionSignature.Void(**dict(value), type="void"))
+        return FunctionSignature(__root__=_FunctionSignature.Void(**value.dict(exclude_unset=True), type="void"))
 
     def non_void(self, value: NonVoidFunctionSignature) -> FunctionSignature:
-        return FunctionSignature(__root__=_FunctionSignature.NonVoid(**dict(value), type="nonVoid"))
+        return FunctionSignature(__root__=_FunctionSignature.NonVoid(**value.dict(exclude_unset=True), type="nonVoid"))
 
     def void_that_takes_actual_result(self, value: VoidFunctionSignatureThatTakesActualResult) -> FunctionSignature:
         return FunctionSignature(
-            __root__=_FunctionSignature.VoidThatTakesActualResult(**dict(value), type="voidThatTakesActualResult")
+            __root__=_FunctionSignature.VoidThatTakesActualResult(
+                **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
+            )
         )
 
 

@@ -21,7 +21,7 @@ class _Factory:
         return ActualResult(__root__=_ActualResult.Value(type="value", value=value))
 
     def exception(self, value: ExceptionInfo) -> ActualResult:
-        return ActualResult(__root__=_ActualResult.Exception(**dict(value), type="exception"))
+        return ActualResult(__root__=_ActualResult.Exception(**value.dict(exclude_unset=True), type="exception"))
 
     def exception_v_2(self, value: resources_submission_types_exception_v_2_ExceptionV2) -> ActualResult:
         return ActualResult(__root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value))
