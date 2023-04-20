@@ -149,6 +149,7 @@ jobs:
   publish-dev:
     docker:
       - image: cimg/node:current
+    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -179,6 +180,7 @@ jobs:
   publish-rc:
     docker:
       - image: cimg/node:current
+    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -213,6 +215,7 @@ jobs:
   publish:
     docker:
       - image: cimg/node:current
+    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
