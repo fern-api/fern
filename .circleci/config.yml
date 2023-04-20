@@ -38,7 +38,7 @@ jobs:
   organize-imports:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -58,7 +58,7 @@ jobs:
   eslint:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -69,7 +69,7 @@ jobs:
           command: yarn compile
       - run:
           name: lint:eslint
-          command: yarn workspaces foreach --parallel eslint --max-warnings 0 . --report-unused-disable-directives
+          command: yarn workspaces foreach --parallel run eslint --max-warnings 0 . --report-unused-disable-directives
 
   compile:
     docker:
