@@ -35,9 +35,9 @@ export function convertParameters(
         if (parameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
         } else if (parameter.in === "path") {
-            convertedParameters.queryParameters.push(convertedParameter);
+            convertedParameters.pathParameters.push(convertedParameter);
         } else if (parameter.in === "header") {
-            convertedParameters.queryParameters.push(convertedParameter);
+            convertedParameters.headers.push(convertedParameter);
         } else {
             throw new Error(`Doesn't support converting this path parameters: ${JSON.stringify(parameter)}`);
         }

@@ -78,8 +78,8 @@ types:
       requestName:
         type: optional<string>
         docs: |
-          Populated by `X-Request-Name` on a path object
-          or `X-Name` on a request object
+          Populated by `x-request-name` on a path object
+          or `x-name` on a request object
       request: optional<Request>
       response: optional<Response>
       errors: list<HttpError>
