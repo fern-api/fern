@@ -38,7 +38,7 @@ jobs:
   organize-imports:
     docker:
       - image: cimg/node:current
-    resource_class: 2xlarge
+    resource_class: xlarge
     steps:
       - checkout
       - node/install-packages:
@@ -47,7 +47,7 @@ jobs:
           name: Organize imports
           # not using --list-different because sometimes this removes a trailing
           # comma that prettier adds back
-          command: yarn organize-imports:fix
+          command: yarn workspaces --parallel organize-imports
       - run:
           name: Format
           command: yarn format:fix
