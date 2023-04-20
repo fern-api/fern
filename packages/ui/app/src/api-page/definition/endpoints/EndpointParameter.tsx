@@ -19,3 +19,5 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, doc
         </div>
     );
 };
+
+console.log("test");
