@@ -47,7 +47,7 @@ jobs:
           name: Organize imports
           # not using --list-different because sometimes this removes a trailing
           # comma that prettier adds back
-          command: yarn workspaces foreach --parallel run organize-imports
+          command: yarn workspaces foreach --parallel --verbose --exclude fern run organize-imports
       - run:
           name: Format
           command: yarn format:fix
@@ -69,7 +69,7 @@ jobs:
           command: yarn compile
       - run:
           name: lint:eslint
-          command: yarn workspaces foreach --parallel run lint:eslint
+          command: yarn workspaces foreach --parallel --verbose --exclude fern run lint:eslint
 
   compile:
     docker:
