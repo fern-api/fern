@@ -69,7 +69,7 @@ jobs:
           command: yarn compile
       - run:
           name: lint:eslint
-          command: yarn workspaces foreach --parallel --verbose --exclude fern run lint:eslint
+          command: yarn workspaces foreach --verbose --exclude fern run lint:eslint
 
   compile:
     docker:
