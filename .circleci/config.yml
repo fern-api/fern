@@ -69,7 +69,12 @@ jobs:
           command: yarn compile
       - run:
           name: lint:eslint
-          command: yarn workspaces foreach --parallel --jobs 3 --verbose --exclude fern run lint:eslint
+          command: |
+            if [[ "$CIRLE_BRANCH" == "main" || -n "$CIRCLE_TAG" ]]; then
+              yarn workspaces foreach --parallel --jobs 3 --verbose --exclude fern run lint:eslint
+            else
+              yarn workspaces foreach --parallel --jobs 3 --verbose --exclude fern --since --recursive run lint:eslint
+            fi
 
   compile:
     docker:
