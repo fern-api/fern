@@ -38,7 +38,7 @@ jobs:
   organize-imports:
     docker:
       - image: cimg/node:current
-    resource_class: xlarge
+    resource_class: 2xlarge
     steps:
       - checkout
       - node/install-packages:
