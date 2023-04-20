@@ -69,7 +69,7 @@ jobs:
           command: yarn compile
       - run:
           name: lint:eslint
-          command: yarn workspaces foreach --parallel run eslint --max-warnings 0 . --report-unused-disable-directives
+          command: yarn workspaces foreach --parallel run lint:eslint
 
   compile:
     docker:
