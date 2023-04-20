@@ -11,10 +11,18 @@ exports[`open api converter vellum simple 1`] = `
           "generate": {
             "method": "POST",
             "path": "/v1/generate",
+            "response": {
+              "docs": "",
+              "type": "GenerateResponse",
+            },
           },
           "search": {
             "method": "POST",
             "path": "/v1/search",
+            "response": {
+              "docs": "",
+              "type": "SearchResponse",
+            },
           },
           "submit-completion-actuals": {
             "method": "POST",
@@ -618,10 +626,36 @@ exports[`open api converter vellum simple 1`] = `
           "list": {
             "method": "GET",
             "path": "/v1/documents",
+            "path-parameters": {
+              "document_index_id": {
+                "docs": undefined,
+                "type": "optional<string>",
+              },
+              "limit": {
+                "docs": undefined,
+                "type": "optional<integer>",
+              },
+              "offset": {
+                "docs": undefined,
+                "type": "optional<integer>",
+              },
+              "ordering": {
+                "docs": undefined,
+                "type": "optional<string>",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "PaginatedSlimDocumentList",
+            },
           },
           "upload": {
             "method": "POST",
             "path": "/v1/upload-document",
+            "response": {
+              "docs": "",
+              "type": "UploadDocumentResponse",
+            },
           },
         },
       },
@@ -634,6 +668,16 @@ exports[`open api converter vellum simple 1`] = `
           "retrieve": {
             "method": "GET",
             "path": "/v1/model-versions/{id}",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "ModelVersionRead",
+            },
           },
         },
       },
