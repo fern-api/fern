@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
-import { convertToServices } from "./converters/convertToServices";
+import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
 
 export interface OpenApiConvertedFernDefinition {
@@ -19,12 +19,12 @@ export function convert({
 }: {
     openApiIr: OpenAPIIntermediateRepresentation;
 }): OpenApiConvertedFernDefinition {
-    const services = convertToServices(openApiIr.endpoints);
+    const convertedServices = convertToServices(openApiIr.endpoints, openApiIr.schemas);
     return {
         rootApiFile: getRootApiFile(openApiIr),
         definitionFiles: {
             ...Object.fromEntries(
-                Object.entries(services).map(([file, service]) => [
+                Object.entries(convertedServices.services).map(([file, service]) => [
                     file,
                     {
                         imports: {
@@ -34,7 +34,7 @@ export function convert({
                     },
                 ])
             ),
-            [PACKAGE_YML]: getPackageYml(openApiIr, services),
+            [PACKAGE_YML]: getPackageYml(openApiIr, convertedServices),
         },
     };
 }
@@ -53,10 +53,13 @@ function getRootApiFile(ir: OpenAPIIntermediateRepresentation): RootApiFileSchem
 
 function getPackageYml(
     ir: OpenAPIIntermediateRepresentation,
-    services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema>
+    convertedServices: ConvertedServices
 ): DefinitionFileSchema {
     let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     for (const [schemaId, schema] of Object.entries(ir.schemas)) {
+        if (convertedServices.schemaIdsToExclude.includes(schemaId)) {
+            continue;
+        }
         const typeDeclaration = convertToTypeDeclaration(schema);
         types = {
             ...types,
@@ -66,6 +69,6 @@ function getPackageYml(
     }
     return {
         types,
-        service: services[PACKAGE_YML],
+        service: convertedServices.services[PACKAGE_YML],
     };
 }

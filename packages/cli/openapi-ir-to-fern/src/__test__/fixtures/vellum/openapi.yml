@@ -45,6 +45,7 @@ paths:
         <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
         Used to list documents. Optionally filter on supported fields.
+      x-request-name: ListDocumentsRequest
       parameters:
         - in: query
           name: document_index_id

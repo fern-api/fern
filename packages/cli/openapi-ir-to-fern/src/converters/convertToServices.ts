@@ -1,11 +1,17 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { PACKAGE_YML } from "../convert";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
-export function convertToServices(endpoints: Endpoint[]): Record<RelativeFilePath, RawSchemas.HttpServiceSchema> {
+export interface ConvertedServices {
+    services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema>;
+    schemaIdsToExclude: string[];
+}
+
+export function convertToServices(endpoints: Endpoint[], schemas: Record<SchemaId, Schema>): ConvertedServices {
+    let schemaIdsToExclude: string[] = [];
     const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
     for (const endpoint of endpoints) {
         const { endpointId, file } = getEndpointLocation(endpoint);
@@ -17,13 +23,19 @@ export function convertToServices(endpoints: Endpoint[]): Record<RelativeFilePat
             if (endpointId in service.endpoints) {
                 throw new Error(`Encountered duplicate endpoint id ${endpointId} in file ${file}`);
             }
-            service.endpoints[endpointId] = convertEndpoint({
+            const convertedEndpoint = convertEndpoint({
                 endpoint,
                 isPackageYml: file === PACKAGE_YML,
+                schemas,
             });
+            schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
+            service.endpoints[endpointId] = convertedEndpoint.value;
         }
     }
-    return services;
+    return {
+        services,
+        schemaIdsToExclude,
+    };
 }
 
 function getEmptyService(): RawSchemas.HttpServiceSchema {

@@ -11,6 +11,18 @@ exports[`open api converter vellum simple 1`] = `
           "generate": {
             "method": "POST",
             "path": "/v1/generate",
+            "request": {
+              "body": {
+                "properties": {
+                  "deployment_id": "optional<string>",
+                  "deployment_name": "optional<string>",
+                  "options": "optional<GenerateOptionsRequest>",
+                  "requests": "list<GenerateRequestRequest>",
+                },
+              },
+              "name": "GenerateRequestBodyRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "GenerateResponse",
@@ -19,6 +31,18 @@ exports[`open api converter vellum simple 1`] = `
           "search": {
             "method": "POST",
             "path": "/v1/search",
+            "request": {
+              "body": {
+                "properties": {
+                  "index_id": "optional<string>",
+                  "index_name": "optional<string>",
+                  "options": "optional<SearchRequestOptionsRequest>",
+                  "query": "string",
+                },
+              },
+              "name": "SearchRequestBodyRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "SearchResponse",
@@ -27,6 +51,17 @@ exports[`open api converter vellum simple 1`] = `
           "submit-completion-actuals": {
             "method": "POST",
             "path": "/v1/submit-completion-actuals",
+            "request": {
+              "body": {
+                "properties": {
+                  "actuals": "list<SubmitCompletionActualRequest>",
+                  "deployment_id": "optional<string>",
+                  "deployment_name": "optional<string>",
+                },
+              },
+              "name": "SubmitCompletionActualsRequestRequest",
+              "query-parameters": undefined,
+            },
           },
         },
       },
@@ -112,23 +147,6 @@ exports[`open api converter vellum simple 1`] = `
           "properties": {
             "logprobs": {
               "type": "optional<LogprobsEnum>",
-            },
-          },
-        },
-        "GenerateRequestBodyRequest": {
-          "docs": undefined,
-          "properties": {
-            "deployment_id": {
-              "type": "optional<string>",
-            },
-            "deployment_name": {
-              "type": "optional<string>",
-            },
-            "options": {
-              "type": "optional<GenerateOptionsRequest>",
-            },
-            "requests": {
-              "type": "list<GenerateRequestRequest>",
             },
           },
         },
@@ -422,23 +440,6 @@ exports[`open api converter vellum simple 1`] = `
             },
           },
         },
-        "SearchRequestBodyRequest": {
-          "docs": undefined,
-          "properties": {
-            "index_id": {
-              "type": "optional<string>",
-            },
-            "index_name": {
-              "type": "optional<string>",
-            },
-            "options": {
-              "type": "optional<SearchRequestOptionsRequest>",
-            },
-            "query": {
-              "type": "string",
-            },
-          },
-        },
         "SearchRequestOptionsRequest": {
           "docs": undefined,
           "properties": {
@@ -566,44 +567,10 @@ exports[`open api converter vellum simple 1`] = `
             },
           },
         },
-        "SubmitCompletionActualsRequestRequest": {
-          "docs": undefined,
-          "properties": {
-            "actuals": {
-              "type": "list<SubmitCompletionActualRequest>",
-            },
-            "deployment_id": {
-              "type": "optional<string>",
-            },
-            "deployment_name": {
-              "type": "optional<string>",
-            },
-          },
-        },
         "UploadDocumentErrorResponse": {
           "docs": undefined,
           "properties": {
             "detail": {
-              "type": "string",
-            },
-          },
-        },
-        "UploadDocumentRequestBodyRequest": {
-          "docs": undefined,
-          "properties": {
-            "add_to_index_names": {
-              "type": "optional<list<string>>",
-            },
-            "contents": {
-              "type": "string",
-            },
-            "external_id": {
-              "type": "optional<string>",
-            },
-            "keywords": {
-              "type": "optional<list<string>>",
-            },
-            "label": {
               "type": "string",
             },
           },
@@ -629,22 +596,25 @@ exports[`open api converter vellum simple 1`] = `
           "list": {
             "method": "GET",
             "path": "/v1/documents",
-            "path-parameters": {
-              "document_index_id": {
-                "docs": undefined,
-                "type": "optional<string>",
-              },
-              "limit": {
-                "docs": undefined,
-                "type": "optional<integer>",
-              },
-              "offset": {
-                "docs": undefined,
-                "type": "optional<integer>",
-              },
-              "ordering": {
-                "docs": undefined,
-                "type": "optional<string>",
+            "request": {
+              "name": "ListDocumentsRequest",
+              "query-parameters": {
+                "document_index_id": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "ordering": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
               },
             },
             "response": {
@@ -655,6 +625,19 @@ exports[`open api converter vellum simple 1`] = `
           "upload": {
             "method": "POST",
             "path": "/v1/upload-document",
+            "request": {
+              "body": {
+                "properties": {
+                  "add_to_index_names": "list<string>",
+                  "contents": "file",
+                  "external_id": "string",
+                  "keywords": "list<string>",
+                  "label": "string",
+                },
+              },
+              "name": "UploadDocumentRequestBodyRequest",
+              "query-parameters": undefined,
+            },
             "response": {
               "docs": "",
               "type": "root.UploadDocumentResponse",
