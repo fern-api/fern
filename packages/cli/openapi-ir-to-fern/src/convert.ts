@@ -12,6 +12,8 @@ export interface OpenApiConvertedFernDefinition {
 
 export const PACKAGE_YML = RelativeFilePath.of("__package__.yml");
 
+export const ROOT_PREFIX = "root";
+
 export function convert({
     openApiIr,
 }: {
@@ -21,7 +23,17 @@ export function convert({
     return {
         rootApiFile: getRootApiFile(openApiIr),
         definitionFiles: {
-            ...Object.fromEntries(Object.entries(services).map(([file, service]) => [file, { service }])),
+            ...Object.fromEntries(
+                Object.entries(services).map(([file, service]) => [
+                    file,
+                    {
+                        imports: {
+                            [ROOT_PREFIX]: PACKAGE_YML.toString(),
+                        },
+                        service,
+                    },
+                ])
+            ),
             [PACKAGE_YML]: getPackageYml(openApiIr, services),
         },
     };

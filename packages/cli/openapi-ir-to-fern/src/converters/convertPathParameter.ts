@@ -8,7 +8,9 @@ export interface ConvertedPathParameter {
 }
 
 export function convertPathParameter(pathParameter: PathParameter): ConvertedPathParameter {
-    const typeReference = convertToTypeReference(pathParameter.schema);
+    const typeReference = convertToTypeReference({
+        schema: pathParameter.schema,
+    });
     return {
         value: {
             docs: pathParameter.description ?? undefined,

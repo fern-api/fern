@@ -8,7 +8,9 @@ export interface ConvertedQueryParameter {
 }
 
 export function convertQueryParameter(queryParameter: QueryParameter): ConvertedQueryParameter {
-    const typeReference = convertToTypeReference(queryParameter.schema);
+    const typeReference = convertToTypeReference({
+        schema: queryParameter.schema,
+    });
     return {
         value: {
             docs: queryParameter.description ?? undefined,

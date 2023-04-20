@@ -619,6 +619,9 @@ exports[`open api converter vellum simple 1`] = `
       },
     },
     "documents": {
+      "imports": {
+        "root": "__package__.yml",
+      },
       "service": {
         "auth": false,
         "base-path": "",
@@ -646,7 +649,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "PaginatedSlimDocumentList",
+              "type": "root.PaginatedSlimDocumentList",
             },
           },
           "upload": {
@@ -654,13 +657,16 @@ exports[`open api converter vellum simple 1`] = `
             "path": "/v1/upload-document",
             "response": {
               "docs": "",
-              "type": "UploadDocumentResponse",
+              "type": "root.UploadDocumentResponse",
             },
           },
         },
       },
     },
     "model_versions": {
+      "imports": {
+        "root": "__package__.yml",
+      },
       "service": {
         "auth": false,
         "base-path": "",
@@ -676,7 +682,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "ModelVersionRead",
+              "type": "root.ModelVersionRead",
             },
           },
         },

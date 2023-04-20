@@ -46,11 +46,11 @@ export function convertToTypeDeclaration(schema: Schema): TypeDeclarations {
     throw new Error(`Failed to convert to type declaration: ${JSON.stringify(schema)}`);
 }
 
-function convertObjectToTypeDeclaration(objectSchema: ObjectSchema): TypeDeclarations {
+function convertObjectToTypeDeclaration(schema: ObjectSchema): TypeDeclarations {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
-    for (const property of objectSchema.properties) {
-        const propertyTypeReference = convertToTypeReference(property.schema);
+    for (const property of schema.properties) {
+        const propertyTypeReference = convertToTypeReference({ schema: property.schema });
         properties[property.key] = {
             type: propertyTypeReference.typeReference,
         };
@@ -60,20 +60,20 @@ function convertObjectToTypeDeclaration(objectSchema: ObjectSchema): TypeDeclara
         };
     }
     return {
-        name: objectSchema.name ?? undefined,
+        name: schema.name ?? undefined,
         typeDeclaration: {
-            docs: objectSchema.description ?? undefined,
+            docs: schema.description ?? undefined,
             properties,
         },
         additionalTypeDeclarations,
     };
 }
 
-function convertArrayToTypeDeclaration(arraySchema: ArraySchema): TypeDeclarations {
-    const arrayTypeReference = convertArrayToTypeReference(arraySchema);
+function convertArrayToTypeDeclaration(schema: ArraySchema): TypeDeclarations {
+    const arrayTypeReference = convertArrayToTypeReference({ schema });
     return {
         typeDeclaration: {
-            docs: arraySchema.description ?? undefined,
+            docs: schema.description ?? undefined,
             type: arrayTypeReference.typeReference,
         },
         additionalTypeDeclarations: {
@@ -82,11 +82,11 @@ function convertArrayToTypeDeclaration(arraySchema: ArraySchema): TypeDeclaratio
     };
 }
 
-function convertMapToTypeDeclaration(mapSchema: MapSchema): TypeDeclarations {
-    const mapTypeReference = convertMapToTypeReference(mapSchema);
+function convertMapToTypeDeclaration(schema: MapSchema): TypeDeclarations {
+    const mapTypeReference = convertMapToTypeReference({ schema });
     return {
         typeDeclaration: {
-            docs: mapSchema.description ?? undefined,
+            docs: schema.description ?? undefined,
             type: mapTypeReference.typeReference,
         },
         additionalTypeDeclarations: {
@@ -95,22 +95,22 @@ function convertMapToTypeDeclaration(mapSchema: MapSchema): TypeDeclarations {
     };
 }
 
-function convertPrimitiveToTypeDeclaration(primitiveSchema: PrimitiveSchema): TypeDeclarations {
-    const primitiveTypeReference = convertPrimitiveToTypeReference(primitiveSchema);
+function convertPrimitiveToTypeDeclaration(schema: PrimitiveSchema): TypeDeclarations {
+    const primitiveTypeReference = convertPrimitiveToTypeReference(schema);
     return {
         typeDeclaration: {
-            docs: primitiveSchema.description ?? undefined,
+            docs: schema.description ?? undefined,
             type: primitiveTypeReference.typeReference,
         },
         additionalTypeDeclarations: {},
     };
 }
 
-function convertEnumToTypeDeclaration(enumSchema: EnumSchema): TypeDeclarations {
+function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclarations {
     return {
         typeDeclaration: {
-            docs: enumSchema.description ?? undefined,
-            enum: enumSchema.values.map((enumValue) => {
+            docs: schema.description ?? undefined,
+            enum: schema.values.map((enumValue) => {
                 return {
                     name: enumValue.name ?? enumValue.value,
                     value: enumValue.value,
@@ -121,8 +121,8 @@ function convertEnumToTypeDeclaration(enumSchema: EnumSchema): TypeDeclarations 
     };
 }
 
-function convertReferenceToTypeDeclaration(referenceSchema: ReferencedSchema): TypeDeclarations {
-    const referenceTypeReference = convertReferenceToTypeReference(referenceSchema);
+function convertReferenceToTypeDeclaration(schema: ReferencedSchema): TypeDeclarations {
+    const referenceTypeReference = convertReferenceToTypeReference({ schema });
     return {
         typeDeclaration: {
             docs: undefined,
@@ -134,8 +134,8 @@ function convertReferenceToTypeDeclaration(referenceSchema: ReferencedSchema): T
     };
 }
 
-function convertOptionalToTypeDeclaration(optionalSchema: OptionalSchema): TypeDeclarations {
-    const optionalTypeReference = convertOptionalToTypeReference(optionalSchema);
+function convertOptionalToTypeDeclaration(schema: OptionalSchema): TypeDeclarations {
+    const optionalTypeReference = convertOptionalToTypeReference({ schema });
     return {
         typeDeclaration: {
             docs: undefined,
