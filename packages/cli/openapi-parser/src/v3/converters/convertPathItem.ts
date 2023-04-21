@@ -60,6 +60,15 @@ function convertOperation(
     document: OpenAPIV3.Document
 ): Omit<Endpoint, "path" | "method"> {
     const convertedParameters = convertParameters(operation.parameters ?? []);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const requestName = (operation as any)["x-request-name"] as string | undefined;
+    const convertedRequest =
+        operation.requestBody != null
+            ? convertRequest({
+                  requestBody: operation.requestBody,
+                  document,
+              })
+            : undefined;
     return {
         summary: operation.summary,
         operationId: operation.operationId,
@@ -67,14 +76,8 @@ function convertOperation(
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
-        requestName: undefined,
-        request:
-            operation.requestBody != null
-                ? convertRequest({
-                      requestBody: operation.requestBody,
-                      document,
-                  })
-                : undefined,
+        requestName: requestName ?? convertedRequest?.name,
+        request: convertedRequest?.value,
         response: convertResponse({ responses: operation.responses }),
         errors: [],
         server: (operation.servers ?? []).map((server) => convertServer(server)),
