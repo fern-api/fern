@@ -8254,8 +8254,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
-            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
-            ["@fern-api/openapi-transformer", "workspace:packages/cli/openapi-transformer"],\
+            ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
+            ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
             ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
@@ -11235,7 +11235,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@octokit/request-error", "npm:3.0.3"],\
             ["@octokit/types", "npm:9.0.0"],\
             ["is-plain-object", "npm:5.0.0"],\
-            ["node-fetch", "virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8"],\
+            ["node-fetch", "virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8"],\
             ["universal-user-agent", "npm:6.0.0"]\
           ],\
           "linkType": "HARD"\
@@ -11629,7 +11629,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@stoplight/types", "npm:12.5.0"],\
             ["abort-controller", "npm:3.0.0"],\
             ["lodash", "npm:4.17.21"],\
-            ["node-fetch", "virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8"],\
+            ["node-fetch", "virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8"],\
             ["tslib", "npm:2.4.0"]\
           ],\
           "linkType": "HARD"\
@@ -24789,10 +24789,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8", {\
-          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-b983be5a3c/0/cache/node-fetch-npm-2.6.8-ddb8bfc274-91f57be68e.zip/node_modules/node-fetch/",\
+        ["virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8", {\
+          "packageLocation": "./.yarn/__virtual__/node-fetch-virtual-dc5609492f/0/cache/node-fetch-npm-2.6.8-ddb8bfc274-91f57be68e.zip/node_modules/node-fetch/",\
           "packageDependencies": [\
-            ["node-fetch", "virtual:76319b00e12ffc1f4d99c0bf0aea184b8e2b6b1243ab869ea2741d0506f8bf8652ccd4ecbde694d7e656826a9ef6f56f01b83dc29fc2f81dbcdc167e06684a3e#npm:2.6.8"],\
+            ["node-fetch", "virtual:1b72fec7bb0f7f65631883ba39976a89b23a387bb935170eee37fef528f0caab0bcc7663f8211ff33a22ee11d361aa1b8f34bec752dd83d1882c9de3d3bc1fbf#npm:2.6.8"],\
             ["@types/encoding", null],\
             ["encoding", null],\
             ["whatwg-url", "npm:5.0.0"]\

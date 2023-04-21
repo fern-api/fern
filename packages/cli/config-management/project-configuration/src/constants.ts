@@ -1,5 +1,6 @@
 export const FERN_DIRECTORY = "fern";
 export const DEFINITION_DIRECTORY = "definition";
+export const OPENAPI_DIRECTORY = "openapi";
 export const ROOT_API_FILENAME = "api.yml";
 export const FERN_PACKAGE_MARKER_FILENAME = "__package__.yml";
 export const DEPENDENCIES_FILENAME = "dependencies.yml";
