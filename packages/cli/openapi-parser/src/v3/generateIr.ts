@@ -22,7 +22,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         schemas: Object.fromEntries(
             Object.entries(openApi.components?.schemas ?? {}).map(([key, schema]) => {
                 taskContext.logger.debug(`Converting component key=${key}`);
-                return [key, convertSchema(schema)];
+                return [key, convertSchema(schema, false)];
             })
         ),
         securitySchemes: Object.fromEntries(

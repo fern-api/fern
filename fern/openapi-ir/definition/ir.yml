@@ -207,6 +207,7 @@ types:
       value: Schema
 
   OptionalSchema:
+    extends: WithDescription
     properties:
       value: Schema
 
@@ -227,6 +228,8 @@ types:
         docs: Value of the enum
 
   ReferencedSchema:
+    extends:
+      - WithDescription
     properties:
       reference: SchemaId
 

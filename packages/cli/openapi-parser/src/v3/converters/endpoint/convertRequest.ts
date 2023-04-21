@@ -50,7 +50,7 @@ export function convertRequest({
                     }
                     return {
                         key,
-                        schema: MultipartSchema.json(convertSchema(definition)),
+                        schema: MultipartSchema.json(convertSchema(definition, false)),
                         description: undefined,
                     };
                 }),
@@ -63,7 +63,7 @@ export function convertRequest({
     if (requestBodySchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema);
+    const requestSchema = convertSchema(requestBodySchema, false);
     return {
         value: Request.json({
             description: undefined,
