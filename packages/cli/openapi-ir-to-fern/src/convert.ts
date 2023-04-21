@@ -52,11 +52,18 @@ function getRootApiFile(
     const rootApiFile: RootApiFileSchema = {
         name: "api",
         "display-name": ir.title ?? undefined,
-        ...authSchemes,
         "error-discrimination": {
             strategy: "status-code",
         },
     };
+
+    if (authSchemes.auth != null) {
+        rootApiFile.auth = authSchemes.auth;
+    }
+
+    if (authSchemes.authSchemes != null) {
+        rootApiFile["auth-schemes"] = authSchemes.authSchemes;
+    }
 
     if (environment?.type === "multi") {
         rootApiFile["default-environment"] = PRODUCTION_ENVIRONMENT;
