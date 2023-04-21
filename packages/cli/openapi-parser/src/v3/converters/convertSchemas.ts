@@ -1,7 +1,7 @@
 import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject } from "../isReferenceObject";
-import { convertAdditionalProperties } from "./schema/convertAdditionalProperties";
+import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
 import { convertEnum } from "./schema/convertEnum";
 import { convertNumber } from "./schema/convertNumber";
@@ -106,6 +106,18 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
 
     // objects
     if (schema.type === "object") {
+        if (
+            (schema.properties == null || Object.keys(schema.properties).length === 0) &&
+            (schema.allOf == null || Object.keys(schema.allOf).length === 0)
+        ) {
+            return wrapMap({
+                description,
+                wrapAsOptional,
+                keySchema: PrimitiveSchemaValue.string(),
+                valueSchema: Schema.unknown(),
+            });
+        }
+
         return convertObject({
             properties: schema.properties ?? {},
             objectName: schemaName,
