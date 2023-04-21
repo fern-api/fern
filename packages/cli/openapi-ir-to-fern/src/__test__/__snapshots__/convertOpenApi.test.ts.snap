@@ -812,6 +812,7 @@ exports[`open api converter vellum simple 1`] = `
     "authSchemes": {
       "apiKeyAuth": {
         "header": "X_API_KEY",
+        "name": "apiKey",
         "type": "string",
       },
     },
