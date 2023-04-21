@@ -809,7 +809,7 @@ exports[`open api converter vellum simple 1`] = `
   },
   "rootApiFile": {
     "auth": "apiKeyAuth",
-    "authSchemes": {
+    "auth-schemes": {
       "apiKeyAuth": {
         "header": "X_API_KEY",
         "name": "apiKey",
