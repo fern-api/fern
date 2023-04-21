@@ -49,6 +49,7 @@ Used to list documents. Optionally filter on supported fields.
           "description": undefined,
           "name": "document_index_id",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -63,6 +64,7 @@ Used to list documents. Optionally filter on supported fields.
           "description": undefined,
           "name": "limit",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -77,6 +79,7 @@ Used to list documents. Optionally filter on supported fields.
           "description": undefined,
           "name": "offset",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -91,6 +94,7 @@ Used to list documents. Optionally filter on supported fields.
           "description": undefined,
           "name": "ordering",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -107,6 +111,7 @@ Used to list documents. Optionally filter on supported fields.
       "response": {
         "description": "",
         "schema": {
+          "description": undefined,
           "reference": "PaginatedSlimDocumentList",
           "type": "reference",
         },
@@ -133,6 +138,7 @@ Generate a completion using a previously defined deployment.
       "request": {
         "description": undefined,
         "schema": {
+          "description": undefined,
           "reference": "GenerateRequestBodyRequest",
           "type": "reference",
         },
@@ -142,6 +148,7 @@ Generate a completion using a previously defined deployment.
       "response": {
         "description": "",
         "schema": {
+          "description": undefined,
           "reference": "GenerateResponse",
           "type": "reference",
         },
@@ -182,6 +189,7 @@ Used to retrieve a model version given its ID.
       "response": {
         "description": "",
         "schema": {
+          "description": undefined,
           "reference": "ModelVersionRead",
           "type": "reference",
         },
@@ -208,6 +216,7 @@ Perform a search against a document index.
       "request": {
         "description": undefined,
         "schema": {
+          "description": undefined,
           "reference": "SearchRequestBodyRequest",
           "type": "reference",
         },
@@ -217,6 +226,7 @@ Perform a search against a document index.
       "response": {
         "description": "",
         "schema": {
+          "description": undefined,
           "reference": "SearchResponse",
           "type": "reference",
         },
@@ -243,6 +253,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "request": {
         "description": undefined,
         "schema": {
+          "description": undefined,
           "reference": "SubmitCompletionActualsRequestRequest",
           "type": "reference",
         },
@@ -350,6 +361,7 @@ Upload a document to be indexed and used for search.
       "response": {
         "description": "",
         "schema": {
+          "description": undefined,
           "reference": "UploadDocumentResponse",
           "type": "reference",
         },
@@ -368,7 +380,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
             "description": "The ID of the document.",
@@ -379,7 +390,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "label",
           "schema": {
             "description": "The human-readable name for the document.",
@@ -390,12 +400,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "external_id",
           "schema": {
+            "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
             "type": "optional",
             "value": {
-              "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -412,7 +422,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this link.",
@@ -423,7 +432,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "document_index_id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
@@ -434,11 +442,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "indexing_state",
           "schema": {
+            "description": "An enum value representing where this document is along its indexing lifecycle for this index.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "IndexingStateEnum",
               "type": "reference",
             },
@@ -453,7 +462,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
             "description": "The Vellum-generated ID of the completion.",
@@ -464,12 +472,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "external_id",
           "schema": {
+            "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
             "type": "optional",
             "value": {
-              "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -478,7 +486,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "text",
           "schema": {
             "description": "The text generated by the LLM.",
@@ -489,26 +496,26 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "finish_reason",
           "schema": {
+            "description": "The reason the generation finished.",
             "reference": "FinishReasonEnum",
             "type": "reference",
           },
         },
         {
-          "description": undefined,
           "key": "logprobs",
           "schema": {
+            "description": "The logprobs of the completion. Only present if specified in the original request options.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "NormalizedLogProbs",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "model_version_id",
           "schema": {
             "description": "The ID of the model version used to generate this completion.",
@@ -546,7 +553,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
@@ -565,11 +571,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "logprobs",
           "schema": {
+            "description": "Which logprobs to include, if any. Defaults to NONE.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "LogprobsEnum",
               "type": "reference",
             },
@@ -584,12 +591,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "deployment_id",
           "schema": {
+            "description": "The ID of the deployment. Must provide either this or deployment_name.",
             "type": "optional",
             "value": {
-              "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -598,12 +605,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "deployment_name",
           "schema": {
+            "description": "The name of the deployment. Must provide either this or deployment_id.",
             "type": "optional",
             "value": {
-              "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -612,23 +619,24 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "requests",
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "GenerateRequestRequest",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "options",
           "schema": {
+            "description": "Additional configuration that can be used to control what's included in the response.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "GenerateOptionsRequest",
               "type": "reference",
             },
@@ -643,7 +651,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "input_values",
           "schema": {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
@@ -657,12 +664,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "external_ids",
           "schema": {
+            "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
             "type": "optional",
             "value": {
-              "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+              "description": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -683,12 +690,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "results",
           "schema": {
             "description": "The results of each generation request.",
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "GenerateResult",
               "type": "reference",
             },
@@ -703,22 +710,24 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "data",
           "schema": {
+            "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "GenerateResultData",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "error",
           "schema": {
+            "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "GenerateResultError",
               "type": "reference",
             },
@@ -733,12 +742,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "completions",
           "schema": {
             "description": "The generated completions. This will generally be a list of length one.",
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "EnrichedNormalizedCompletion",
               "type": "reference",
             },
@@ -753,7 +762,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "message",
           "schema": {
             "description": "The error message returned by the LLM provider.",
@@ -829,7 +837,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "base_model",
           "schema": {
             "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
@@ -840,11 +847,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "sandbox_snapshot",
           "schema": {
+            "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "ModelVersionSandboxSnapshot",
               "type": "reference",
             },
@@ -859,7 +867,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "temperature",
           "schema": {
             "description": undefined,
@@ -870,7 +877,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "max_tokens",
           "schema": {
             "description": undefined,
@@ -881,7 +887,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "stop",
           "schema": {
             "description": undefined,
@@ -896,7 +901,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "top_p",
           "schema": {
             "description": undefined,
@@ -907,9 +911,9 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "top_k",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -921,7 +925,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "frequency_penalty",
           "schema": {
             "description": undefined,
@@ -932,7 +935,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "presence_penalty",
           "schema": {
             "description": undefined,
@@ -943,9 +945,9 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "logit_bias",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -955,10 +957,14 @@ Upload a document to be indexed and used for search.
               "type": "map",
               "value": {
                 "description": undefined,
-                "schema": {
-                  "type": "double",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
                 },
-                "type": "primitive",
               },
             },
           },
@@ -972,7 +978,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "prompt_template",
           "schema": {
             "description": "The template used to generate prompts for this model version.",
@@ -983,15 +988,14 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "parameters",
           "schema": {
+            "description": "The generation parameters that are passed to the LLM provider at runtime.",
             "reference": "ModelVersionExecConfigParameters",
             "type": "reference",
           },
         },
         {
-          "description": undefined,
           "key": "input_variables",
           "schema": {
             "description": "Names of the template variables specified in the prompt template.",
@@ -1014,7 +1018,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this model version.",
@@ -1025,7 +1028,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "created",
           "schema": {
             "description": "Timestamp of when this model version was created.",
@@ -1036,7 +1038,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "label",
           "schema": {
             "description": "Human-friendly name for this model version.",
@@ -1047,23 +1048,22 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "model_type",
           "schema": {
+            "description": "The type of task this model is used for.",
             "reference": "ModelTypeEnum",
             "type": "reference",
           },
         },
         {
-          "description": undefined,
           "key": "provider",
           "schema": {
+            "description": "Which LLM provider this model version is associated with.",
             "reference": "ProviderEnum",
             "type": "reference",
           },
         },
         {
-          "description": undefined,
           "key": "external_id",
           "schema": {
             "description": "The unique id of this model version as it exists in the above provider's system.",
@@ -1074,17 +1074,17 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "build_config",
           "schema": {
+            "description": "Configuration used to build this model version.",
             "reference": "ModelVersionBuildConfig",
             "type": "reference",
           },
         },
         {
-          "description": undefined,
           "key": "exec_config",
           "schema": {
+            "description": "Configuration used to execute this model version.",
             "reference": "ModelVersionExecConfigRead",
             "type": "reference",
           },
@@ -1098,7 +1098,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
             "description": "The ID of the sandbox snapshot.",
@@ -1109,7 +1108,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "prompt_index",
           "schema": {
             "description": "The index of the prompt in the sandbox snapshot.",
@@ -1128,19 +1126,18 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "tokens",
           "schema": {
             "description": undefined,
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "NormalizedTokenLogProbs",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "likelihood",
           "schema": {
             "description": undefined,
@@ -1159,7 +1156,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "token",
           "schema": {
             "description": undefined,
@@ -1170,7 +1166,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "logprob",
           "schema": {
             "description": undefined,
@@ -1181,7 +1176,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "top_logprobs",
           "schema": {
             "description": undefined,
@@ -1199,7 +1193,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "text_offset",
           "schema": {
             "description": undefined,
@@ -1218,9 +1211,9 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "count",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -1232,9 +1225,9 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "next",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -1246,9 +1239,9 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "previous",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -1260,14 +1253,15 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "results",
           "schema": {
+            "description": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
               "value": {
+                "description": undefined,
                 "reference": "SlimDocument",
                 "type": "reference",
               },
@@ -1325,7 +1319,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "detail",
           "schema": {
             "description": "Details about why the request failed.",
@@ -1344,12 +1337,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "external_ids",
           "schema": {
+            "description": "The document external IDs to filter by",
             "type": "optional",
             "value": {
-              "description": "The document external IDs to filter by",
+              "description": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1370,12 +1363,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "index_id",
           "schema": {
+            "description": "The ID of the index to search against. Must provide either this or index_name.",
             "type": "optional",
             "value": {
-              "description": "The ID of the index to search against. Must provide either this or index_name.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1384,12 +1377,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "index_name",
           "schema": {
+            "description": "The name of the index to search against. Must provide either this or index_id.",
             "type": "optional",
             "value": {
-              "description": "The name of the index to search against. Must provide either this or index_id.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1398,7 +1391,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "query",
           "schema": {
             "description": "The query to search for.",
@@ -1409,11 +1401,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "options",
           "schema": {
+            "description": "Configuration options for the search.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "SearchRequestOptionsRequest",
               "type": "reference",
             },
@@ -1428,12 +1421,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "limit",
           "schema": {
+            "description": "The maximum number of results to return.",
             "type": "optional",
             "value": {
-              "description": "The maximum number of results to return.",
+              "description": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1442,33 +1435,36 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "weights",
           "schema": {
+            "description": "The weights to use for the search. Must add up to 1.0.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "SearchWeightsRequest",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "result_merging",
           "schema": {
+            "description": "The configuration for merging results.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "SearchResultMergingRequest",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "filters",
           "schema": {
+            "description": "The filters to apply to the search.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "SearchFiltersRequest",
               "type": "reference",
             },
@@ -1483,12 +1479,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "results",
           "schema": {
             "description": "The results of the search. Each result represents a chunk that matches the search query.",
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "SearchResult",
               "type": "reference",
             },
@@ -1503,15 +1499,14 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "document",
           "schema": {
+            "description": "The document that contains the chunk that matched the search query.",
             "reference": "Document",
             "type": "reference",
           },
         },
         {
-          "description": undefined,
           "key": "text",
           "schema": {
             "description": "The text of the chunk that matched the search query.",
@@ -1522,7 +1517,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "keywords",
           "schema": {
             "description": undefined,
@@ -1537,7 +1531,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "score",
           "schema": {
             "description": "A score representing how well the chunk matches the search query.",
@@ -1556,7 +1549,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "enabled",
           "schema": {
             "description": "Whether to enable merging results",
@@ -1575,7 +1567,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "semantic_similarity",
           "schema": {
             "description": "The relative weight to give to semantic similarity",
@@ -1586,7 +1577,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "keywords",
           "schema": {
             "description": "The relative weight to give to keyword matches",
@@ -1605,7 +1595,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this document.",
@@ -1616,12 +1605,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "external_id",
           "schema": {
+            "description": "The external ID that was originally provided when uploading the document.",
             "type": "optional",
             "value": {
-              "description": "The external ID that was originally provided when uploading the document.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1630,7 +1619,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "last_uploaded_at",
           "schema": {
             "description": "A timestamp representing when this document was most recently uploaded.",
@@ -1641,7 +1629,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "label",
           "schema": {
             "description": "Human-friendly name for this document.",
@@ -1652,34 +1639,36 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "processing_state",
           "schema": {
+            "description": "The current processing state of the document",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "ProcessingStateEnum",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "status",
           "schema": {
+            "description": "The document's current status.",
             "type": "optional",
             "value": {
+              "description": undefined,
               "reference": "StatusEnum",
               "type": "reference",
             },
           },
         },
         {
-          "description": undefined,
           "key": "keywords",
           "schema": {
+            "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
             "type": "optional",
             "value": {
-              "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
+              "description": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1692,12 +1681,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "document_to_document_indexes",
           "schema": {
             "description": undefined,
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "DocumentDocumentToDocumentIndex",
               "type": "reference",
             },
@@ -1723,12 +1712,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "id",
           "schema": {
+            "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
             "type": "optional",
             "value": {
-              "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1737,12 +1726,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "external_id",
           "schema": {
+            "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
             "type": "optional",
             "value": {
-              "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1751,12 +1740,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "text",
           "schema": {
+            "description": "Text representing what the completion _should_ have been.",
             "type": "optional",
             "value": {
-              "description": "Text representing what the completion _should_ have been.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1765,12 +1754,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "quality",
           "schema": {
+            "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
             "type": "optional",
             "value": {
-              "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+              "description": undefined,
               "schema": {
                 "type": "double",
               },
@@ -1779,12 +1768,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "timestamp",
           "schema": {
+            "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
             "type": "optional",
             "value": {
-              "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1801,7 +1790,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "detail",
           "schema": {
             "description": undefined,
@@ -1820,12 +1808,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "deployment_id",
           "schema": {
+            "description": "The ID of the deployment. Must provide either this or deployment_name.",
             "type": "optional",
             "value": {
-              "description": "The ID of the deployment. Must provide either this or deployment_name.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1834,12 +1822,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "deployment_name",
           "schema": {
+            "description": "The name of the deployment. Must provide either this or deployment_id.",
             "type": "optional",
             "value": {
-              "description": "The name of the deployment. Must provide either this or deployment_id.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1848,12 +1836,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "actuals",
           "schema": {
             "description": "Feedback regarding the quality of previously generated completions",
             "type": "array",
             "value": {
+              "description": undefined,
               "reference": "SubmitCompletionActualRequest",
               "type": "reference",
             },
@@ -1868,7 +1856,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "detail",
           "schema": {
             "description": undefined,
@@ -1887,12 +1874,12 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "add_to_index_names",
           "schema": {
+            "description": "Optionally include the names of all indexes that you'd like this document to be included in",
             "type": "optional",
             "value": {
-              "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+              "description": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1905,12 +1892,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "external_id",
           "schema": {
+            "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
             "type": "optional",
             "value": {
-              "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+              "description": undefined,
               "schema": {
                 "type": "string",
               },
@@ -1919,7 +1906,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "label",
           "schema": {
             "description": "A human-friendly name for this document. Typically the filename.",
@@ -1930,7 +1916,6 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "contents",
           "schema": {
             "description": "The file contents of the document.",
@@ -1941,12 +1926,12 @@ Upload a document to be indexed and used for search.
           },
         },
         {
-          "description": undefined,
           "key": "keywords",
           "schema": {
+            "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
             "type": "optional",
             "value": {
-              "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+              "description": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1967,7 +1952,6 @@ Upload a document to be indexed and used for search.
       "name": undefined,
       "properties": [
         {
-          "description": undefined,
           "key": "document_id",
           "schema": {
             "description": "The ID of the newly created document.",

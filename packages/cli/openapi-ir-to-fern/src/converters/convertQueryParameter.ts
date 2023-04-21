@@ -1,6 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { QueryParameter } from "@fern-fern/openapi-ir-model/ir";
 import { convertToTypeReference } from "./convertToTypeReference";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedQueryParameter {
     value: RawSchemas.HttpQueryParameterSchema;
@@ -14,7 +15,7 @@ export function convertQueryParameter(queryParameter: QueryParameter): Converted
     return {
         value: {
             docs: queryParameter.description ?? undefined,
-            type: typeReference.typeReference,
+            type: getTypeFromTypeReference(typeReference.typeReference),
         },
         additionalTypeDeclarations: typeReference.additionalTypeDeclarations,
     };

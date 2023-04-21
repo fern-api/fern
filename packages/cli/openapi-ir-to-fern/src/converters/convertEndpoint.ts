@@ -5,6 +5,7 @@ import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertToHttpMethod } from "./convertToHttpMethod";
 import { convertToTypeReference } from "./convertToTypeReference";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -82,7 +83,7 @@ export function convertEndpoint({
         };
         convertedEndpoint.response = {
             docs: endpoint.response.description ?? undefined,
-            type: responseTypeReference.typeReference,
+            type: getTypeFromTypeReference(responseTypeReference.typeReference),
         };
     }
     return {

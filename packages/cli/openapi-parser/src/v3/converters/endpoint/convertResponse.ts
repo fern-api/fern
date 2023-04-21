@@ -27,7 +27,7 @@ export function convertResponse({ responses }: { responses: OpenAPIV3.ResponsesO
 
         return {
             description: response.description,
-            schema: convertSchema(responsSchema),
+            schema: convertSchema(responsSchema, false),
         };
     }
     return undefined;
