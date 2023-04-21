@@ -5,7 +5,7 @@ exports[`open api converter vellum simple 1`] = `
   "definitionFiles": {
     "__package__.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "",
         "endpoints": {
           "generate": {
@@ -39,6 +39,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "GenerateResponse",
             },
+            "url": "Default",
           },
           "search": {
             "method": "POST",
@@ -71,6 +72,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "SearchResponse",
             },
+            "url": "Predict",
           },
           "submit-completion-actuals": {
             "method": "POST",
@@ -95,6 +97,7 @@ exports[`open api converter vellum simple 1`] = `
               "name": "SubmitCompletionActualsRequestRequest",
               "query-parameters": undefined,
             },
+            "url": "Predict",
           },
         },
       },
@@ -707,7 +710,7 @@ exports[`open api converter vellum simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "",
         "endpoints": {
           "list": {
@@ -738,6 +741,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "root.PaginatedSlimDocumentList",
             },
+            "url": "Default",
           },
           "upload": {
             "method": "POST",
@@ -771,6 +775,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "root.UploadDocumentResponse",
             },
+            "url": "Documents",
           },
         },
       },
@@ -780,7 +785,7 @@ exports[`open api converter vellum simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "",
         "endpoints": {
           "retrieve": {
@@ -796,6 +801,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "root.ModelVersionRead",
             },
+            "url": "Default",
           },
         },
       },
@@ -806,10 +812,21 @@ exports[`open api converter vellum simple 1`] = `
     "authSchemes": {
       "apiKeyAuth": {
         "header": "X_API_KEY",
+        "name": "apiKey",
         "type": "string",
       },
     },
+    "default-environment": "Production",
     "display-name": "Vellum Client API",
+    "environments": {
+      "Production": {
+        "urls": {
+          "Default": "https://api.vellum.ai",
+          "Documents": "https://documents.vellum.ai",
+          "Predict": "https://predict.vellum.ai",
+        },
+      },
+    },
     "error-discrimination": {
       "strategy": "status-code",
     },

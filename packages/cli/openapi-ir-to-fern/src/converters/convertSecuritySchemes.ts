@@ -20,6 +20,7 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
         if (securityScheme.type === "header") {
             authSchemes[id] = {
                 header: securityScheme.headerName,
+                name: "apiKey",
                 type: "string",
             };
             if (auth == null) {

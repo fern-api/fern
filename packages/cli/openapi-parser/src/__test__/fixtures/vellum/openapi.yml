@@ -128,6 +128,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/GenerateErrorResponse"
           description: ""
+    servers:
+      - url: https://predict.vellum.ai
+        x-name: Predict
   /v1/model-versions/{id}:
     get:
       operationId: model_versions_retrieve
@@ -199,6 +202,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/SearchErrorResponse"
           description: ""
+      servers:
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/submit-completion-actuals:
     post:
       operationId: submit_completion_actuals
@@ -239,6 +245,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/SubmitCompletionActualsErrorResponse"
           description: ""
+      servers:
+        - url: https://predict.vellum.ai
+          x-name: Predict
   /v1/upload-document:
     post:
       operationId: documents_upload
@@ -286,6 +295,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/UploadDocumentErrorResponse"
           description: ""
+      servers:
+        - url: https://documents.vellum.ai
+          x-name: Documents
 components:
   schemas:
     Document:
@@ -990,7 +1002,4 @@ components:
 servers:
   - url: https://api.vellum.ai
     description: Default Server
-  - url: https://predict.vellum.ai
-    description: Inference Endpoints
-  - url: https://documents.vellum.ai
-    description: Documents Upload Endpoint
+    x-name: Default
