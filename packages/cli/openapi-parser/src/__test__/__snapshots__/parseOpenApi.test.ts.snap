@@ -231,7 +231,13 @@ Perform a search against a document index.
           "type": "reference",
         },
       },
-      "server": [],
+      "server": [
+        {
+          "description": undefined,
+          "name": "Predict",
+          "url": "https://predict.vellum.ai",
+        },
+      ],
       "summary": undefined,
       "tags": [
         "search",
@@ -261,7 +267,13 @@ Used to submit feedback regarding the quality of previously generated completion
       },
       "requestName": undefined,
       "response": undefined,
-      "server": [],
+      "server": [
+        {
+          "description": undefined,
+          "name": "Predict",
+          "url": "https://predict.vellum.ai",
+        },
+      ],
       "summary": undefined,
       "tags": [
         "submit-completion-actuals",
@@ -366,7 +378,13 @@ Upload a document to be indexed and used for search.
           "type": "reference",
         },
       },
-      "server": [],
+      "server": [
+        {
+          "description": undefined,
+          "name": "Documents",
+          "url": "https://documents.vellum.ai",
+        },
+      ],
       "summary": undefined,
       "tags": [
         "documents",
@@ -1974,18 +1992,8 @@ Upload a document to be indexed and used for search.
   "servers": [
     {
       "description": "Default Server",
-      "name": undefined,
+      "name": "Default",
       "url": "https://api.vellum.ai",
-    },
-    {
-      "description": "Inference Endpoints",
-      "name": undefined,
-      "url": "https://predict.vellum.ai",
-    },
-    {
-      "description": "Documents Upload Endpoint",
-      "name": undefined,
-      "url": "https://documents.vellum.ai",
     },
   ],
   "tags": [],
