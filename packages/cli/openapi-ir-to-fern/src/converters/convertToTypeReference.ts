@@ -10,6 +10,7 @@ import {
     ReferencedSchema,
     Schema,
 } from "@fern-fern/openapi-ir-model/ir";
+import { convertObjectToTypeDeclaration } from "./convertToTypeDeclaration";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeReference {
@@ -171,11 +172,16 @@ export function convertObjectToTypeReference({
     if (schema.name == null) {
         throw new Error(`Add x-name to object: ${JSON.stringify(schema)}`);
     }
+    const objectTypeDeclaration = convertObjectToTypeDeclaration(schema);
+    objectTypeDeclaration.additionalTypeDeclarations;
     return {
         typeReference: {
             type: prefix != null ? `${prefix}.${schema.name}` : schema.name,
             docs: schema.description ?? undefined,
         },
-        additionalTypeDeclarations: {},
+        additionalTypeDeclarations: {
+            [schema.name]: objectTypeDeclaration.typeDeclaration,
+            ...objectTypeDeclaration.additionalTypeDeclarations,
+        },
     };
 }

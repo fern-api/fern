@@ -50,7 +50,11 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
             if (tagElement != null && tagElement === operationIdTokens[i]) {
                 file.push(tagElement);
             } else {
-                throw new Error(`Cannot get file for endpoint ${JSON.stringify(endpoint)}`);
+                // tag and operation id don't overlap, so just return operation id
+                return {
+                    file: RelativeFilePath.of("__package__.yml"),
+                    endpointId: operationId,
+                };
             }
         }
 

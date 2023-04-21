@@ -1,5 +1,725 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`open api converter buzzshot simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "listAccounts": {
+            "method": "GET",
+            "path": "/api/v2/accounts/",
+            "request": {
+              "name": "listAccountsRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "AccountsPage",
+            },
+          },
+          "listGames": {
+            "method": "GET",
+            "path": "/api/v2/games/",
+            "request": {
+              "name": "listGamesRequest",
+              "query-parameters": {
+                "after": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "GamesPage",
+            },
+          },
+          "listGroups": {
+            "method": "GET",
+            "path": "/api/v2/groups/",
+            "request": {
+              "name": "listGroupsRequest",
+              "query-parameters": {
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "GroupsPage",
+            },
+          },
+          "listLocations": {
+            "method": "GET",
+            "path": "/api/v2/rooms/",
+            "request": {
+              "name": "listLocationsRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "RoomsPage",
+            },
+          },
+          "listPhotos": {
+            "method": "GET",
+            "path": "/api/v2/photos/",
+            "request": {
+              "name": "listPhotosRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "PhotosPage",
+            },
+          },
+          "listPlayers": {
+            "method": "GET",
+            "path": "/api/v2/players/",
+            "request": {
+              "name": "listPlayersRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "PlayersPage",
+            },
+          },
+          "retrieveAccount": {
+            "method": "GET",
+            "path": "/api/v2/accounts/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Room",
+            },
+          },
+          "retrieveGame": {
+            "method": "GET",
+            "path": "/api/v2/games/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "retrieveGameRequest",
+              "query-parameters": {
+                "after": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Game",
+            },
+          },
+          "retrieveGroup": {
+            "method": "GET",
+            "path": "/api/v2/groups/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "retrieveGroupRequest",
+              "query-parameters": {
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Group",
+            },
+          },
+          "retrieveLocation": {
+            "method": "GET",
+            "path": "/api/v2/rooms/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Room",
+            },
+          },
+          "retrievePhoto": {
+            "method": "GET",
+            "path": "/api/v2/photos/{photo_id}/",
+            "path-parameters": {
+              "photo_id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Photo",
+            },
+          },
+          "retrievePlayer": {
+            "method": "GET",
+            "path": "/api/v2/players/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Player",
+            },
+          },
+        },
+      },
+      "types": {
+        "Game": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "complete": {
+              "docs": undefined,
+              "type": "GameCompletionInfo",
+            },
+            "date": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<GameExtraField>",
+            },
+            "group": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photos": {
+              "docs": undefined,
+              "type": "optional<list<GamePhoto>>",
+            },
+            "room": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "start_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "time": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GameCompletionInfo": {
+          "docs": undefined,
+          "properties": {
+            "completed_at": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "completion_time": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "did_win": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "hints": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "score": {
+              "docs": undefined,
+              "type": "integer",
+            },
+          },
+        },
+        "GameExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GamePhoto": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "Group": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "date": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "games": {
+              "docs": undefined,
+              "type": "optional<list<GroupGamesItem>>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "is_event": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photos": {
+              "docs": undefined,
+              "type": "optional<list<GroupPhoto>>",
+            },
+            "players": {
+              "docs": undefined,
+              "type": "list<GroupPlayer>",
+            },
+            "start_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "time": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupGameExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GroupGamesItem": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "complete": {
+              "docs": undefined,
+              "type": "GameCompletionInfo",
+            },
+            "date": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<GroupGameExtraField>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "room": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "start_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "time": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupPhoto": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "game": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupPlayer": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "email": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<GroupPlayerExtraField>",
+            },
+            "first_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "last_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "phone": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "player": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "signature": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupPlayerExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "Photo": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "original_image": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed": {
+              "docs": undefined,
+              "type": "list<ProcessedPhoto>",
+            },
+          },
+        },
+        "Player": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "email": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<PlayerExtraField>",
+            },
+            "first_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "last_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "marketing_email_allowed": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "phone": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "PlayerExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "ProcessedPhoto": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "game": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "group": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "Room": {
+          "docs": undefined,
+          "properties": {
+            "hidden": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "bearer",
+    "display-name": "",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`open api converter vellum simple 1`] = `
 {
   "definitionFiles": {

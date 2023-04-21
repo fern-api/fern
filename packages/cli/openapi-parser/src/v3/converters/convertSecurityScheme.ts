@@ -16,6 +16,8 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
         return SecurityScheme.header({
             headerName: securityScheme.name,
         });
+    } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
+        return SecurityScheme.bearer();
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
 }
