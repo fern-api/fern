@@ -1,45 +1,36 @@
 import { FernRegistry } from "@fern-fern/registry";
-import classNames from "classnames";
-import { uniq } from "lodash-es";
-import { useMemo } from "react";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { TypeDefinition } from "./TypeDefinition";
+import { useCallback } from "react";
+import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { TypeDefinitionContext, TypeDefinitionContextValue } from "./context/TypeDefinitionContext";
+import { InternalAllReferencedTypes } from "./InternalAllReferencedTypes";
 
 export declare namespace AllReferencedTypes {
     export interface Props {
         type: FernRegistry.TypeReference;
         isCollapsible: boolean;
+        onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         className?: string;
     }
 }
 
-export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({ type, isCollapsible, className }) => {
-    const { resolveTypeById } = useApiDefinitionContext();
-
-    const allReferencedTypes = useMemo(() => getAllReferencedTypes(type), [type]);
-
-    if (allReferencedTypes.length === 0) {
-        return null;
-    }
+export const AllReferencedTypes: React.FC<AllReferencedTypes.Props> = ({
+    type,
+    isCollapsible,
+    onHoverProperty,
+    className,
+}) => {
+    const contextValue = useCallback(
+        (): TypeDefinitionContextValue => ({
+            isRootTypeDefinition: true,
+            jsonPropertyPath: [],
+            onHoverProperty,
+        }),
+        [onHoverProperty]
+    );
 
     return (
-        <div className={classNames("flex flex-col gap-5", className)}>
-            {allReferencedTypes.map((typeId) => (
-                <TypeDefinition key={typeId} typeShape={resolveTypeById(typeId).shape} isCollapsible={isCollapsible} />
-            ))}
-        </div>
+        <TypeDefinitionContext.Provider value={contextValue}>
+            <InternalAllReferencedTypes type={type} isCollapsible={isCollapsible} className={className} />
+        </TypeDefinitionContext.Provider>
     );
 };
-
-function getAllReferencedTypes(type: FernRegistry.TypeReference): FernRegistry.TypeId[] {
-    return type._visit({
-        id: (id) => [id],
-        primitive: () => [],
-        optional: ({ itemType }) => getAllReferencedTypes(itemType),
-        list: ({ itemType }) => getAllReferencedTypes(itemType),
-        set: ({ itemType }) => getAllReferencedTypes(itemType),
-        map: ({ keyType, valueType }) => uniq([...getAllReferencedTypes(keyType), ...getAllReferencedTypes(valueType)]),
-        unknown: () => [],
-        _other: () => [],
-    });
-}

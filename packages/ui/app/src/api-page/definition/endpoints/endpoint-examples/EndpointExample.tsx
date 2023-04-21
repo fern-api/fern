@@ -2,8 +2,9 @@ import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
-import { JsonExample } from "../../examples/JsonExample";
+import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
+import { useEndpointContext } from "../context/useEndpointContext";
 
 export declare namespace EndpointExample {
     export interface Props {
@@ -13,6 +14,8 @@ export declare namespace EndpointExample {
 }
 
 export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) => {
+    const { hoveredResponsePropertyPath } = useEndpointContext();
+
     return (
         <div className="flex-1 flex flex-col gap-6 min-h-0">
             {example.requestBody != null && (
@@ -25,7 +28,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                         </div>
                     }
                 >
-                    <JsonExample json={example.requestBody} alwaysShowClipboard />
+                    <JsonExample json={example.requestBody} selectedProperty={undefined} />
                 </TitledExample>
             )}
             {example.responseBody != null && (
@@ -44,7 +47,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                         </span>
                     }
                 >
-                    <JsonExample json={example.responseBody} alwaysShowClipboard />
+                    <JsonExample json={example.responseBody} selectedProperty={hoveredResponsePropertyPath} />
                 </TitledExample>
             )}
         </div>

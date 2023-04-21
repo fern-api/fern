@@ -1,10 +1,15 @@
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
-import { useContext } from "react";
+import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../../commons/MonospaceText";
+import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../../markdown/Markdown";
-import { AllReferencedTypes } from "../AllReferencedTypes";
-import { TypeDefinitionContext } from "../context/TypeDefinitionContext";
+import {
+    TypeDefinitionContext,
+    TypeDefinitionContextValue,
+    useTypeDefinitionContext,
+} from "../context/TypeDefinitionContext";
+import { InternalAllReferencedTypes } from "../InternalAllReferencedTypes";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
@@ -14,16 +19,55 @@ export declare namespace ObjectProperty {
 }
 
 export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => {
-    const { isRootTypeDefinition } = useContext(TypeDefinitionContext);
+    const contextValue = useTypeDefinitionContext();
+    const jsonPropertyPath = useMemo(
+        (): JsonPropertyPath => [
+            ...contextValue.jsonPropertyPath,
+            {
+                type: "objectProperty",
+                propertyName: property.key,
+            },
+        ],
+        [contextValue.jsonPropertyPath, property.key]
+    );
+    const newContextValue = useCallback(
+        (): TypeDefinitionContextValue => ({
+            ...contextValue,
+            jsonPropertyPath,
+        }),
+        [contextValue, jsonPropertyPath]
+    );
+
+    const onMouseEnterPropertyName = useMemo(() => {
+        if (contextValue.onHoverProperty == null) {
+            return undefined;
+        }
+        const { onHoverProperty } = contextValue;
+        return () => {
+            onHoverProperty(jsonPropertyPath, { isHovering: true });
+        };
+    }, [contextValue, jsonPropertyPath]);
+
+    const onMouseOutPropertyName = useMemo(() => {
+        if (contextValue.onHoverProperty == null) {
+            return undefined;
+        }
+        const { onHoverProperty } = contextValue;
+        return () => {
+            onHoverProperty(jsonPropertyPath, { isHovering: false });
+        };
+    }, [contextValue, jsonPropertyPath]);
 
     return (
         <div
             className={classNames("flex flex-col py-4", {
-                "px-2": !isRootTypeDefinition,
+                "px-2": !contextValue.isRootTypeDefinition,
             })}
         >
             <div className="flex items-baseline gap-2">
-                <MonospaceText>{property.key}</MonospaceText>
+                <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
+                    <MonospaceText>{property.key}</MonospaceText>
+                </div>
                 <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
                     <TypeShorthand type={property.valueType} />
                 </div>
@@ -34,7 +78,9 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                         <Markdown>{property.description}</Markdown>
                     </div>
                 )}
-                <AllReferencedTypes type={property.valueType} isCollapsible />
+                <TypeDefinitionContext.Provider value={newContextValue}>
+                    <InternalAllReferencedTypes type={property.valueType} isCollapsible />
+                </TypeDefinitionContext.Provider>
             </div>
         </div>
     );
