@@ -24,7 +24,10 @@ import com.fern.java.CustomConfig;
 public final class ClientGeneratorContext extends AbstractGeneratorContext<ClientPoetClassNameFactory> {
 
     public ClientGeneratorContext(
-            IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {
-        super(ir, generatorConfig, customConfig, new ClientPoetClassNameFactory(ir, generatorConfig.getOrganization()));
+            IntermediateRepresentation ir,
+            GeneratorConfig generatorConfig,
+            CustomConfig customConfig,
+            ClientPoetClassNameFactory clientPoetClassNameFactory) {
+        super(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
     }
 }

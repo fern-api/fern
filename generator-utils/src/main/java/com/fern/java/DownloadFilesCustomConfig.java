@@ -24,7 +24,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @StagedBuilderImmutablesStyle
-@JsonDeserialize(as = ImmutableCustomConfig.class)
+@JsonDeserialize(as = ImmutableDownloadFilesCustomConfig.class)
 public interface DownloadFilesCustomConfig {
 
     @Value.Default

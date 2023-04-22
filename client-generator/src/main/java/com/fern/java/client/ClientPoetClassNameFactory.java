@@ -20,17 +20,16 @@ import com.fern.ir.v12.model.commons.FernFilepath;
 import com.fern.ir.v12.model.errors.ErrorDeclaration;
 import com.fern.ir.v12.model.http.HttpService;
 import com.fern.ir.v12.model.http.SdkRequestWrapper;
-import com.fern.ir.v12.model.ir.IntermediateRepresentation;
 import com.fern.ir.v12.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
-import com.fern.java.AbstractPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
+import java.util.List;
 import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
-    public ClientPoetClassNameFactory(IntermediateRepresentation ir, String organization) {
-        super(AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, organization));
+    public ClientPoetClassNameFactory(List<String> packagePrefixTokens) {
+        super(packagePrefixTokens);
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {

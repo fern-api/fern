@@ -23,6 +23,7 @@ import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.v12.core.ObjectMappers;
 import com.fern.ir.v12.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
+import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
@@ -40,6 +41,7 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
 import com.fern.java.output.gradle.GradleDependency;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +58,17 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             DownloadFilesCustomConfig customConfig) {
-        throw new RuntimeException("Download files mode is unsupported!");
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList));
+        ClientGeneratorContext context = new ClientGeneratorContext(
+                ir,
+                generatorConfig,
+                CustomConfig.builder()
+                        .unknownAsOptional(customConfig.unknownAsOptional())
+                        .wrappedAliases(customConfig.wrappedAliases())
+                        .build(),
+                clientPoetClassNameFactory);
+        generateClient(context, ir);
     }
 
     @Override
@@ -66,7 +78,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
             IntermediateRepresentation ir,
             CustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
-        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig, customConfig);
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
+        ClientGeneratorContext context =
+                new ClientGeneratorContext(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
         GeneratedClient generatedClientWrapper = generateClient(context, ir);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
@@ -80,7 +95,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
             IntermediateRepresentation ir,
             CustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
-        ClientGeneratorContext context = new ClientGeneratorContext(ir, generatorConfig, customConfig);
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
+        ClientGeneratorContext context =
+                new ClientGeneratorContext(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
         generateClient(context, ir);
     }
 
