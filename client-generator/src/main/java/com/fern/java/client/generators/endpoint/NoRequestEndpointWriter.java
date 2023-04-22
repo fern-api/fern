@@ -79,15 +79,20 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint httpEndpoint,
-            GeneratedObjectMapper generatedObjectMapper) {
-        return CodeBlock.builder()
+            GeneratedObjectMapper generatedObjectMapper,
+            boolean sendContentType) {
+        CodeBlock.Builder builder = CodeBlock.builder()
                 .add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
                 .indent()
                 .add(".url($L)\n", AbstractEndpointWriter.HTTP_URL_NAME)
                 .add(".method($S, null)\n", httpEndpoint.getMethod().toString())
-                .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers())
-                .add(".build();\n")
-                .unindent()
-                .build();
+                .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers());
+        if (sendContentType) {
+            builder.add(
+                    ".addHeader($S, $S)\n",
+                    AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                    AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+        }
+        return builder.add(".build();\n").unindent().build();
     }
 }

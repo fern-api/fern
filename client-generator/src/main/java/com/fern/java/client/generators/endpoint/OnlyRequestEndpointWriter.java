@@ -91,8 +91,9 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint endpoint,
-            GeneratedObjectMapper generatedObjectMapper) {
-        return CodeBlock.builder()
+            GeneratedObjectMapper generatedObjectMapper,
+            boolean sendContentType) {
+        CodeBlock.Builder builder = CodeBlock.builder()
                 .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
                 .beginControlFlow("try")
                 .addStatement(
@@ -112,13 +113,13 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 .indent()
                 .add(".url($L)\n", AbstractEndpointWriter.HTTP_URL_NAME)
                 .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), AbstractEndpointWriter.REQUEST_BODY_NAME)
-                .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers())
-                .add(
-                        ".addHeader($S, $S)\n",
-                        AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                        AbstractEndpointWriter.APPLICATION_JSON_HEADER)
-                .add(".build();\n")
-                .unindent()
-                .build();
+                .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers());
+        if (sendContentType) {
+            builder.add(
+                    ".addHeader($S, $S)\n",
+                    AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                    AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+        }
+        return builder.add(".build();\n").unindent().build();
     }
 }

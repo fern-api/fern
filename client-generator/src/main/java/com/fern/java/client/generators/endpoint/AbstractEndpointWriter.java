@@ -99,8 +99,10 @@ public abstract class AbstractEndpointWriter {
         endpointMethodBuilder.addCode(httpClientInitializer);
 
         // Step 4: Get request initializer
+        boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
+                || httpEndpoint.getResponse().isPresent();
         CodeBlock requestInitializer = getInitializeRequestCodeBlock(
-                clientOptionsField, generatedClientOptions, httpEndpoint, generatedObjectMapper);
+                clientOptionsField, generatedClientOptions, httpEndpoint, generatedObjectMapper, sendContentType);
         endpointMethodBuilder.addCode(requestInitializer);
 
         // Step 5: Make http request and handle responses
@@ -118,7 +120,8 @@ public abstract class AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint endpoint,
-            GeneratedObjectMapper objectMapper);
+            GeneratedObjectMapper objectMapper,
+            boolean sendContentType);
 
     public final CodeBlock getResponseParserCodeBlock() {
         CodeBlock.Builder httpResponseBuilder = CodeBlock.builder()

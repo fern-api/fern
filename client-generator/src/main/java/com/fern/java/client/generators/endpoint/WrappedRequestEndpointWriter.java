@@ -138,7 +138,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint httpEndpoint,
-            GeneratedObjectMapper generatedObjectMapper) {
+            GeneratedObjectMapper generatedObjectMapper,
+            boolean sendContentType) {
         CodeBlock.Builder requestInitializerBuilder = CodeBlock.builder();
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
             String requestBodyArgument = "";
@@ -194,13 +195,22 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         Request.class)
                 .indent()
                 .add(".url($L)\n", AbstractEndpointWriter.HTTP_URL_NAME)
-                .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), AbstractEndpointWriter.REQUEST_BODY_NAME)
-                .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers())
                 .add(
-                        ".addHeader($S, $S);\n",
-                        AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                        AbstractEndpointWriter.APPLICATION_JSON_HEADER)
-                .unindent();
+                        ".method($S, $L)\n",
+                        httpEndpoint.getMethod().toString(),
+                        AbstractEndpointWriter.REQUEST_BODY_NAME);
+        if (sendContentType) {
+            requestInitializerBuilder
+                    .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers())
+                    .add(
+                            ".addHeader($S, $S);\n",
+                            AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                            AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+        } else {
+            requestInitializerBuilder.add(
+                    ".headers($T.of($L.$N()));\n", Headers.class, clientOptionsMember.name, clientOptions.headers());
+        }
+        requestInitializerBuilder.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestInitializerBuilder

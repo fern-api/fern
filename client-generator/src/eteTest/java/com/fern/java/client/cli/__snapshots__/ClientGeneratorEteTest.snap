@@ -850,6 +850,7 @@ public final class BlogClientImpl implements BlogClient {
             .url(_httpUrl)
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json")
             .build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -2351,6 +2352,7 @@ public final class DeviceClientImpl implements DeviceClient {
             .url(_httpUrl)
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json")
             .build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -6828,6 +6830,7 @@ public final class UserClientImpl implements UserClient {
             .url(_httpUrl)
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json")
             .build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
