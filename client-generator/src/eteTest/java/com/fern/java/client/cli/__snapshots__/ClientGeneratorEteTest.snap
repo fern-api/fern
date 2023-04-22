@@ -796,7 +796,8 @@ public final class BlogClientImpl implements BlogClient {
         new Request.Builder()
             .url(_httpUrl)
             .method("POST", _requestBody)
-            .headers(Headers.of(clientOptions.headers()));
+            .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json");
     Request _request = _requestBuilder.build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -823,7 +824,8 @@ public final class BlogClientImpl implements BlogClient {
         new Request.Builder()
             .url(_httpUrl)
             .method("GET", _requestBody)
-            .headers(Headers.of(clientOptions.headers()));
+            .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json");
     Request _request = _requestBuilder.build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -2081,6 +2083,7 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
             .url(_httpUrl)
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json")
             .build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -2250,6 +2253,7 @@ public final class DeviceClientImpl implements DeviceClient {
             .url(_httpUrl)
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json")
             .build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -2288,6 +2292,7 @@ public final class DeviceClientImpl implements DeviceClient {
             .url(_httpUrl)
             .method("PUT", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json")
             .build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -2960,7 +2965,8 @@ public final class EventClientImpl implements EventClient {
         new Request.Builder()
             .url(_httpUrl)
             .method("POST", _requestBody)
-            .headers(Headers.of(clientOptions.headers()));
+            .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json");
     if (request.getIdempotencyKey().isPresent()) {
       _requestBuilder.addHeader("Idempotency-Key", request.getIdempotencyKey().get());
     }
@@ -3002,7 +3008,8 @@ public final class EventClientImpl implements EventClient {
         new Request.Builder()
             .url(_httpUrl)
             .method("POST", _requestBody)
-            .headers(Headers.of(clientOptions.headers()));
+            .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json");
     if (request.getIdempotencyKey().isPresent()) {
       _requestBuilder.addHeader("Idempotency-Key", request.getIdempotencyKey().get());
     }
@@ -6792,7 +6799,8 @@ public final class UserClientImpl implements UserClient {
         new Request.Builder()
             .url(_httpUrl)
             .method("POST", _requestBody)
-            .headers(Headers.of(clientOptions.headers()));
+            .headers(Headers.of(clientOptions.headers()))
+            .addHeader("Content-Type", "application/json");
     Request _request = _requestBuilder.build();
     try {
       Response _response = clientOptions.httpClient().newCall(_request).execute();

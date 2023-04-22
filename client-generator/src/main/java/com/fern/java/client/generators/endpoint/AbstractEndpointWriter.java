@@ -45,6 +45,9 @@ import okhttp3.Response;
 
 public abstract class AbstractEndpointWriter {
 
+    public static final String CONTENT_TYPE_HEADER = "Content-Type";
+    public static final String APPLICATION_JSON_HEADER = "application/json";
+
     public static final String HTTP_URL_NAME = "_httpUrl";
     public static final String HTTP_URL_BUILDER_NAME = "_httpUrlBuilder";
     public static final String REQUEST_NAME = "_request";
