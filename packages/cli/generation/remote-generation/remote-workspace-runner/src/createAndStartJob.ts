@@ -151,6 +151,7 @@ async function startJob({
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
+        context.logger.debug(`POST ${url} failed with ${JSON.stringify(error)}`);
         context.failAndThrow("Failed to start job", errorBody);
     }
 }
