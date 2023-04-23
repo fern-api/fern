@@ -260,14 +260,14 @@ jobs:
 
   check-release-is-allowed:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
-      # - run:
-      #     name: Check release blockers
-      #     command: yarn check-release-blockers
+      - run:
+          name: Check release blockers
+          command: yarn check-release-blockers
       - run:
           name: Ensure JSON schema is up to date
           command: |
