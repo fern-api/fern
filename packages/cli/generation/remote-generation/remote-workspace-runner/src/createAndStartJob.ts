@@ -148,6 +148,8 @@ async function startJob({
     try {
         await axios.post(url, formData, {
             headers: formData.getHeaders(),
+            // HACK: the IR should be more compact and scale linearly with API size
+            maxBodyLength: Infinity,
         });
     } catch (error) {
         const errorBody = error instanceof AxiosError ? error.response?.data : error;
