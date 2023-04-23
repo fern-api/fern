@@ -1,6 +1,12 @@
 types:
   OpenAPIIntermediateRepresentation:
     properties:
+      files: map<FileId, OpenAPIFile>
+      packages:
+
+  OpenAPIFile:
+    properties:
+      filepath: FilePath
       title: optional<string>
       description: optional<string>
       servers: list<Server>
@@ -8,6 +14,11 @@ types:
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
       securitySchemes: map<SecuritySchemeId, SecurityScheme>
+
+  FilePath:
+    properties:
+      folders: list<string>
+      filename: string
 
   WithDescription:
     properties:
