@@ -40,7 +40,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         return generatedRequestWrapper.withQueryParameter({
             queryParameter,
             referenceToQueryParameterProperty: this.getReferenceToProperty(
-                generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter)
+                generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).propertyName
             ),
             context,
             callback,
@@ -55,11 +55,15 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        return this.getReferenceToProperty(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter));
+        return this.getReferenceToProperty(
+            generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).propertyName
+        );
     }
 
     public getReferenceToHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
-        return this.getReferenceToProperty(this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header));
+        return this.getReferenceToProperty(
+            this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header).propertyName
+        );
     }
 
     public getReferenceToBodyProperty(

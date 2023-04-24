@@ -85,7 +85,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                 referenceToRequestWrapper,
                 ts.factory.createUnionTypeNode(
                     nonBodyKeys.map((nonBodyKey) =>
-                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(nonBodyKey))
+                        ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(nonBodyKey.propertyName))
                     )
                 ),
             ]);

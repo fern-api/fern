@@ -2,3 +2,18 @@ types:
   Package:
     properties:
       name: string
+  Record:
+    properties:
+      foo: map<string, string>
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    test:
+      method: POST
+      path: ""
+      request:
+        name: TestRequest
+        query-parameters:
+          for: string

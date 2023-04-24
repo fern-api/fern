@@ -28,7 +28,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         }
 
         const bindingElements: ts.BindingElement[] = nonBodyKeys.map((nonBodyKey) =>
-            ts.factory.createBindingElement(undefined, undefined, ts.factory.createIdentifier(nonBodyKey))
+            ts.factory.createBindingElement(
+                undefined,
+                nonBodyKey.safeName !== nonBodyKey.propertyName
+                    ? ts.factory.createIdentifier(nonBodyKey.propertyName)
+                    : undefined,
+                ts.factory.createIdentifier(nonBodyKey.safeName)
+            )
         );
 
         if (this.endpoint.requestBody != null) {
@@ -93,7 +99,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return generatedRequestWrapper.withQueryParameter({
             queryParameter,
             referenceToQueryParameterProperty: ts.factory.createIdentifier(
-                generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter)
+                generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).safeName
             ),
             context,
             callback,
@@ -108,11 +114,15 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             throw new Error("Query parameter does not exist: " + queryParameterKey);
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        return ts.factory.createIdentifier(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter));
+        return ts.factory.createIdentifier(
+            generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).safeName
+        );
     }
 
     public getReferenceToHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
-        return ts.factory.createIdentifier(this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header));
+        return ts.factory.createIdentifier(
+            this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header).safeName
+        );
     }
 
     private getGeneratedRequestWrapper(context: SdkClientClassContext): GeneratedRequestWrapper {

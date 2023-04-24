@@ -10,7 +10,11 @@ import {
 } from "@fern-fern/ir-model/http";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
+import {
+    GeneratedRequestWrapper,
+    RequestWrapperContext,
+    RequestWrapperNonBodyProperty,
+} from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -44,7 +48,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const property = requestInterface.addProperty({
-                name: this.getPropertyNameOfQueryParameter(queryParameter),
+                name: this.getPropertyNameOfQueryParameter(queryParameter).propertyName,
                 type: getTextOfTsNode(
                     queryParameter.allowMultiple
                         ? ts.factory.createUnionTypeNode([
@@ -60,7 +64,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const header of this.getAllHeaders()) {
             const type = context.type.getReferenceToType(header.valueType);
             const property = requestInterface.addProperty({
-                name: this.getPropertyNameOfHeader(header),
+                name: this.getPropertyNameOfHeader(header).propertyName,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
             });
@@ -204,7 +208,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.#areBodyPropertiesOptional;
     }
 
-    public getNonBodyKeys(): string[] {
+    public getNonBodyKeys(): RequestWrapperNonBodyProperty[] {
         return [
             ...this.getAllQueryParameters().map((queryParameter) =>
                 this.getPropertyNameOfQueryParameter(queryParameter)
@@ -285,12 +289,18 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return resolvedType._type === "container" && resolvedType.container._type === "optional";
     }
 
-    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): string {
-        return queryParameter.name.name.camelCase.unsafeName;
+    public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
+        return {
+            safeName: queryParameter.name.name.camelCase.safeName,
+            propertyName: queryParameter.name.name.camelCase.unsafeName,
+        };
     }
 
-    public getPropertyNameOfHeader(header: HttpHeader): string {
-        return header.name.name.camelCase.unsafeName;
+    public getPropertyNameOfHeader(header: HttpHeader): RequestWrapperNonBodyProperty {
+        return {
+            safeName: header.name.name.camelCase.safeName,
+            propertyName: header.name.name.camelCase.unsafeName,
+        };
     }
 
     public getAllQueryParameters(): QueryParameter[] {

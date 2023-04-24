@@ -3602,9 +3602,9 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 /**
  * ISO 8601 date; formatted YYYY-MM-DD (i.e. 2012-02-01)
  */
-export declare type Date = string;
+export declare type Date_ = string;
 ",
-                    "name": "Date.d.ts",
+                    "name": "Date_.d.ts",
                     "type": "file",
                   },
                   Object {
@@ -3614,7 +3614,7 @@ export declare type Date = string;
  */
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 ",
-                    "name": "Date.js",
+                    "name": "Date_.js",
                     "type": "file",
                   },
                   Object {
@@ -4852,7 +4852,7 @@ export * from \\"./TestCaseWithExpectedResult\\";
 export * from \\"./FileInfo\\";
 export * from \\"./Language\\";
 export * from \\"./RandomUnknownType\\";
-export * from \\"./Date\\";
+export * from \\"./Date_\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -4901,7 +4901,7 @@ __exportStar(require(\\"./TestCaseWithExpectedResult\\"), exports);
 __exportStar(require(\\"./FileInfo\\"), exports);
 __exportStar(require(\\"./Language\\"), exports);
 __exportStar(require(\\"./RandomUnknownType\\"), exports);
-__exportStar(require(\\"./Date\\"), exports);
+__exportStar(require(\\"./Date_\\"), exports);
 ",
                     "name": "index.js",
                     "type": "file",
@@ -6093,7 +6093,7 @@ export declare type DateUnion = TraceApi.DateUnion.Date_ | TraceApi.DateUnion.Da
 export declare namespace DateUnion {
     interface Date_ extends _Utils {
         type: \\"date\\";
-        value: TraceApi.Date;
+        value: TraceApi.Date_;
     }
     interface Datetime extends _Utils {
         type: \\"datetime\\";
@@ -6106,7 +6106,7 @@ export declare namespace DateUnion {
         _visit: <_Result>(visitor: TraceApi.DateUnion._Visitor<_Result>) => _Result;
     }
     interface _Visitor<_Result> {
-        date: (value: TraceApi.Date) => _Result;
+        date: (value: TraceApi.Date_) => _Result;
         datetime: (value: Date) => _Result;
         _other: (value: {
             type: string;
@@ -6114,7 +6114,7 @@ export declare namespace DateUnion {
     }
 }
 export declare const DateUnion: {
-    readonly date: (value: TraceApi.Date) => TraceApi.DateUnion.Date_;
+    readonly date: (value: TraceApi.Date_) => TraceApi.DateUnion.Date_;
     readonly datetime: (value: Date) => TraceApi.DateUnion.Datetime;
     readonly _unknown: (value: {
         type: string;
@@ -18110,12 +18110,12 @@ exports.BinaryTreeValue = core.serialization.object({
 import * as serializers from \\"../../..\\";
 import { TraceApi } from \\"../../../..\\";
 import * as core from \\"../../../../core\\";
-export declare const Date: core.serialization.Schema<serializers.Date.Raw, TraceApi.Date>;
-export declare namespace Date {
+export declare const Date_: core.serialization.Schema<serializers.Date_.Raw, TraceApi.Date_>;
+export declare namespace Date_ {
     type Raw = string;
 }
 ",
-                    "name": "Date.d.ts",
+                    "name": "Date_.d.ts",
                     "type": "file",
                   },
                   Object {
@@ -18147,11 +18147,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.Date = void 0;
+exports.Date_ = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
-exports.Date = core.serialization.string();
+exports.Date_ = core.serialization.string();
 ",
-                    "name": "Date.js",
+                    "name": "Date_.js",
                     "type": "file",
                   },
                   Object {
@@ -19780,7 +19780,7 @@ export * from \\"./TestCaseWithExpectedResult\\";
 export * from \\"./FileInfo\\";
 export * from \\"./Language\\";
 export * from \\"./RandomUnknownType\\";
-export * from \\"./Date\\";
+export * from \\"./Date_\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -19829,7 +19829,7 @@ __exportStar(require(\\"./TestCaseWithExpectedResult\\"), exports);
 __exportStar(require(\\"./FileInfo\\"), exports);
 __exportStar(require(\\"./Language\\"), exports);
 __exportStar(require(\\"./RandomUnknownType\\"), exports);
-__exportStar(require(\\"./Date\\"), exports);
+__exportStar(require(\\"./Date_\\"), exports);
 ",
                     "name": "index.js",
                     "type": "file",
@@ -20807,7 +20807,7 @@ export declare namespace DateUnion {
     type Raw = DateUnion.Date | DateUnion.Datetime;
     interface Date {
         type: \\"date\\";
-        value: serializers.Date.Raw;
+        value: serializers.Date_.Raw;
     }
     interface Datetime {
         type: \\"datetime\\";
@@ -20853,7 +20853,7 @@ const core = __importStar(require(\\"../../../../core\\"));
 exports.DateUnion = core.serialization
     .union(\\"type\\", {
     date: core.serialization.object({
-        value: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).Date),
+        value: core.serialization.lazy(async () => (await Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).Date_),
     }),
     datetime: core.serialization.object({
         value: core.serialization.date(),

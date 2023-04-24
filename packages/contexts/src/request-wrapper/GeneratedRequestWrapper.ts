@@ -2,6 +2,7 @@ import { HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fe
 import { ts } from "ts-morph";
 import { GeneratedFile } from "../commons/GeneratedFile";
 import { RequestWrapperContext } from "./RequestWrapperContext";
+import { RequestWrapperNonBodyProperty } from "./types";
 
 export interface GeneratedRequestWrapper extends GeneratedFile<RequestWrapperContext> {
     areAllPropertiesOptional: (context: RequestWrapperContext) => boolean;
@@ -9,10 +10,10 @@ export interface GeneratedRequestWrapper extends GeneratedFile<RequestWrapperCon
     getReferencedBodyPropertyName: () => string;
     getAllQueryParameters: () => QueryParameter[];
     getAllHeaders: () => HttpHeader[];
-    getNonBodyKeys: () => string[];
+    getNonBodyKeys: () => RequestWrapperNonBodyProperty[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
-    getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => string;
-    getPropertyNameOfHeader: (header: HttpHeader) => string;
+    getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
