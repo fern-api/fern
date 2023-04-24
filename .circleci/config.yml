@@ -5,7 +5,7 @@ jobs:
   check:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -38,7 +38,7 @@ jobs:
   organize-imports:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -58,7 +58,7 @@ jobs:
   eslint:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -74,7 +74,7 @@ jobs:
   compile:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -144,7 +144,7 @@ jobs:
   publish-dev:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -175,7 +175,7 @@ jobs:
   publish-rc:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -210,7 +210,7 @@ jobs:
   publish:
     docker:
       - image: cimg/node:lts
-    resource_class: xlarge
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
