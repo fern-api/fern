@@ -66,6 +66,7 @@ export const RESERVED_KEYWORDS: Record<GenerationLanguage, Set<string>> = {
         "Error",
         "File",
         "Object",
+        "Record",
     ]),
     [GenerationLanguage.JAVA]: new Set([
         "abstract",

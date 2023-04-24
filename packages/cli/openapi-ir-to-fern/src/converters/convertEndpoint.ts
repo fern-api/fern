@@ -1,10 +1,12 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, Request, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convert";
+import { Environment } from "../getEnvironment";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertToHttpMethod } from "./convertToHttpMethod";
 import { convertToTypeReference } from "./convertToTypeReference";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -15,10 +17,12 @@ export function convertEndpoint({
     endpoint,
     isPackageYml,
     schemas,
+    environment,
 }: {
     endpoint: Endpoint;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
+    environment: Environment | undefined;
 }): ConvertedEndpoint {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
@@ -82,8 +86,21 @@ export function convertEndpoint({
         };
         convertedEndpoint.response = {
             docs: endpoint.response.description ?? undefined,
-            type: responseTypeReference.typeReference,
+            type: getTypeFromTypeReference(responseTypeReference.typeReference),
         };
+    }
+
+    if (environment?.type === "multi") {
+        const serverOverride = endpoint.server[0];
+        if (endpoint.server.length === 0) {
+            convertedEndpoint.url = environment.defaultUrl;
+        } else if (serverOverride != null) {
+            convertedEndpoint.url = serverOverride.name ?? undefined;
+        } else {
+            throw new Error(
+                `${endpoint.method} ${endpoint.path} can only have a single server override, but has more.`
+            );
+        }
     }
     return {
         value: convertedEndpoint,

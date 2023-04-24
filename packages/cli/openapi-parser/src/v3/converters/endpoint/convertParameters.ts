@@ -22,14 +22,20 @@ export function convertParameters(
             throw new Error(`Converting referenced parameters is unsupported: ${JSON.stringify(parameter)}`);
         }
 
+        const isRequired = parameter.required ?? false;
         const schema =
             parameter.schema != null
-                ? convertSchema(parameter.schema)
-                : Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: undefined });
+                ? convertSchema(parameter.schema, !isRequired)
+                : isRequired
+                ? Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: parameter.description })
+                : Schema.optional({
+                      value: Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: undefined }),
+                      description: parameter.description,
+                  });
 
         const convertedParameter = {
             name: parameter.name,
-            schema: parameter.required ? schema : Schema.optional({ value: schema }),
+            schema,
             description: undefined,
         };
         if (parameter.in === "query") {

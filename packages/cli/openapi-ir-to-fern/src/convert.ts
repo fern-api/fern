@@ -4,6 +4,7 @@ import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/i
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
+import { Environment, getEnvironments } from "./getEnvironment";
 
 export interface OpenApiConvertedFernDefinition {
     rootApiFile: RootApiFileSchema;
@@ -14,14 +15,17 @@ export const PACKAGE_YML = RelativeFilePath.of("__package__.yml");
 
 export const ROOT_PREFIX = "root";
 
+export const PRODUCTION_ENVIRONMENT = "Production";
+
 export function convert({
     openApiIr,
 }: {
     openApiIr: OpenAPIIntermediateRepresentation;
 }): OpenApiConvertedFernDefinition {
-    const convertedServices = convertToServices(openApiIr.endpoints, openApiIr.schemas);
+    const environments = getEnvironments(openApiIr);
+    const convertedServices = convertToServices(openApiIr.endpoints, openApiIr.schemas, environments);
     return {
-        rootApiFile: getRootApiFile(openApiIr),
+        rootApiFile: getRootApiFile(openApiIr, environments),
         definitionFiles: {
             ...Object.fromEntries(
                 Object.entries(convertedServices.services).map(([file, service]) => [
@@ -39,16 +43,41 @@ export function convert({
     };
 }
 
-function getRootApiFile(ir: OpenAPIIntermediateRepresentation): RootApiFileSchema {
+function getRootApiFile(
+    ir: OpenAPIIntermediateRepresentation,
+    environment: Environment | undefined
+): RootApiFileSchema {
     const authSchemes = convertSecuritySchemes(ir.securitySchemes);
-    return {
+
+    const rootApiFile: RootApiFileSchema = {
         name: "api",
         "display-name": ir.title ?? undefined,
-        ...authSchemes,
         "error-discrimination": {
             strategy: "status-code",
         },
     };
+
+    if (authSchemes.auth != null) {
+        rootApiFile.auth = authSchemes.auth;
+    }
+
+    if (authSchemes.authSchemes != null) {
+        rootApiFile["auth-schemes"] = authSchemes.authSchemes;
+    }
+
+    if (environment?.type === "multi") {
+        rootApiFile["default-environment"] = PRODUCTION_ENVIRONMENT;
+        rootApiFile.environments = {
+            [PRODUCTION_ENVIRONMENT]: { urls: environment.serviceToUrl },
+        };
+    }
+
+    if (environment?.type === "single") {
+        rootApiFile["default-environment"] = null;
+        rootApiFile.environments = environment.environmentToUrl;
+    }
+
+    return rootApiFile;
 }
 
 function getPackageYml(

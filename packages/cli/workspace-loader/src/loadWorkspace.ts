@@ -1,7 +1,7 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
-import { AbsoluteFilePath, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY } from "@fern-api/project-configuration";
+import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
@@ -19,34 +19,43 @@ export async function loadWorkspace({
     cliVersion: string;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
 
-    const definitionDirectoryContents = await getDirectoryContents(absolutePathToDefinition, {
-        fileExtensions: ["yml", "yaml", "json"],
-    });
-    if (
-        definitionDirectoryContents.length === 1 &&
-        definitionDirectoryContents[0] != null &&
-        definitionDirectoryContents[0].type === "file" &&
-        definitionDirectoryContents[0].name.startsWith("openapi")
-    ) {
-        const openApiSpec = definitionDirectoryContents[0];
-        return {
-            didSucceed: true,
-            workspace: {
-                type: "openapi",
-                name: "api",
-                absolutePathToWorkspace,
-                absolutePathToDefinition,
-                generatorsConfiguration,
-                definition: {
-                    path: RelativeFilePath.of(openApiSpec.name),
-                    contents: openApiSpec.contents,
-                    format: "yaml",
+    const absolutePathToOpenAPIDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
+    const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
+
+    if (openApiDirectoryExists) {
+        const openApiDirectoryContents = await getDirectoryContents(absolutePathToOpenAPIDefinition, {
+            fileExtensions: ["yml", "yaml", "json"],
+        });
+        if (
+            openApiDirectoryContents.length === 1 &&
+            openApiDirectoryContents[0] != null &&
+            openApiDirectoryContents[0].type === "file"
+        ) {
+            const openApiSpec = openApiDirectoryContents[0];
+            return {
+                didSucceed: true,
+                workspace: {
+                    type: "openapi",
+                    name: "api",
+                    absolutePathToWorkspace,
+                    absolutePathToDefinition: absolutePathToOpenAPIDefinition,
+                    generatorsConfiguration,
+                    definition: {
+                        path: RelativeFilePath.of(openApiSpec.name),
+                        contents: openApiSpec.contents,
+                        format: "yaml",
+                    },
                 },
-            },
-        };
+            };
+        } else {
+            return context.failAndThrow(
+                "The openapi directory must contain a single file with your OpenAPI definition."
+            );
+        }
     }
+
+    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
 
     const dependenciesConfiguration = await loadDependenciesConfiguration({ absolutePathToWorkspace, context });
     const yamlFiles = await listYamlFilesForWorkspace(absolutePathToDefinition);

@@ -1,7 +1,7 @@
 import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject } from "../isReferenceObject";
-import { convertAdditionalProperties } from "./schema/convertAdditionalProperties";
+import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
 import { convertEnum } from "./schema/convertEnum";
 import { convertNumber } from "./schema/convertNumber";
@@ -16,17 +16,29 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
     return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
 }
 
-export function convertSchema(schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject): Schema {
+export function convertSchema(
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+    wrapAsOptional: boolean
+): Schema {
     if (isReferenceObject(schema)) {
-        return Schema.reference({
+        const referenceSchema = Schema.reference({
             reference: getSchemaIdFromReference(schema),
+            description: undefined,
         });
+        if (wrapAsOptional) {
+            return Schema.optional({
+                value: referenceSchema,
+                description: undefined,
+            });
+        } else {
+            return referenceSchema;
+        }
     } else {
-        return convertSchemaObject(schema);
+        return convertSchemaObject(schema, wrapAsOptional);
     }
 }
 
-function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
+function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boolean): Schema {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const schemaName = (schema as any)["x-name"] as string | undefined;
     const description = schema.description;
@@ -36,8 +48,9 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
         if (!isListOfStrings(schema.enum)) {
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
-            return Schema.primitive({
-                schema: PrimitiveSchemaValue.string(),
+            return wrapPrimitive({
+                primitive: PrimitiveSchemaValue.string(),
+                wrapAsOptional,
                 description,
             });
         }
@@ -47,49 +60,70 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
             enumValues: schema.enum,
             description,
+            wrapAsOptional,
         });
     }
 
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
-        return Schema.primitive({
-            schema: PrimitiveSchemaValue.boolean(),
+        return wrapPrimitive({
+            primitive: PrimitiveSchemaValue.boolean(),
+            wrapAsOptional,
             description,
         });
     }
     if (schema === "number" || schema.type === "number") {
-        return convertNumber({ format: schema.format, description });
+        return convertNumber({ format: schema.format, description, wrapAsOptional });
     }
     if (schema === "integer" || schema.type === "integer") {
-        return Schema.primitive({
-            schema: PrimitiveSchemaValue.int(),
+        return wrapPrimitive({
+            primitive: PrimitiveSchemaValue.int(),
+            wrapAsOptional,
             description,
         });
     }
     if (schema === "string" || schema.type === "string") {
-        return Schema.primitive({
-            schema: PrimitiveSchemaValue.string(),
+        return wrapPrimitive({
+            primitive: PrimitiveSchemaValue.string(),
+            wrapAsOptional,
             description,
         });
     }
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ item: schema.items, description });
+        return convertArray({ item: schema.items, description, wrapAsOptional });
     }
 
     // maps
     if (schema.additionalProperties != null) {
-        return convertAdditionalProperties({ additionalProperties: schema.additionalProperties, description });
+        return convertAdditionalProperties({
+            additionalProperties: schema.additionalProperties,
+            description,
+            wrapAsOptional,
+        });
     }
 
     // objects
     if (schema.type === "object") {
+        if (
+            (schema.properties == null || Object.keys(schema.properties).length === 0) &&
+            (schema.allOf == null || Object.keys(schema.allOf).length === 0)
+        ) {
+            return wrapMap({
+                description,
+                wrapAsOptional,
+                keySchema: PrimitiveSchemaValue.string(),
+                valueSchema: Schema.unknown(),
+            });
+        }
+
         return convertObject({
             properties: schema.properties ?? {},
             objectName: schemaName,
             description,
             required: schema.required,
+            wrapAsOptional,
         });
     }
 
@@ -97,7 +131,22 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
 
     // handle singular allOfs
     if (schema.allOf != null && schema.allOf.length === 1 && schema.allOf[0] != null) {
-        return convertSchema(schema.allOf[0]);
+        const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional);
+        if (convertedSchema.type === "reference") {
+            return Schema.reference({
+                reference: convertedSchema.reference,
+                description,
+            });
+        } else if (convertedSchema.type === "optional" && convertedSchema.value.type === "reference") {
+            return Schema.optional({
+                value: Schema.reference({
+                    reference: convertedSchema.value.reference,
+                    description: undefined,
+                }),
+                description,
+            });
+        }
+        return convertedSchema;
     }
 
     throw new Error(`Failed to convert schema value=${JSON.stringify(schema)}`);
@@ -105,4 +154,28 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject): Schema {
 
 function isListOfStrings(x: unknown): x is string[] {
     return Array.isArray(x) && x.every((item) => typeof item === "string");
+}
+
+export function wrapPrimitive({
+    primitive,
+    wrapAsOptional,
+    description,
+}: {
+    primitive: PrimitiveSchemaValue;
+    wrapAsOptional: boolean;
+    description: string | undefined;
+}): Schema {
+    if (wrapAsOptional) {
+        return Schema.optional({
+            value: Schema.primitive({
+                schema: primitive,
+                description: undefined,
+            }),
+            description,
+        });
+    }
+    return Schema.primitive({
+        schema: primitive,
+        description,
+    });
 }

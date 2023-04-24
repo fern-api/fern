@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { PACKAGE_YML } from "../convert";
+import { Environment } from "../getEnvironment";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
@@ -10,7 +11,11 @@ export interface ConvertedServices {
     schemaIdsToExclude: string[];
 }
 
-export function convertToServices(endpoints: Endpoint[], schemas: Record<SchemaId, Schema>): ConvertedServices {
+export function convertToServices(
+    endpoints: Endpoint[],
+    schemas: Record<SchemaId, Schema>,
+    environment: Environment | undefined
+): ConvertedServices {
     let schemaIdsToExclude: string[] = [];
     const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
     for (const endpoint of endpoints) {
@@ -27,6 +32,7 @@ export function convertToServices(endpoints: Endpoint[], schemas: Record<SchemaI
                 endpoint,
                 isPackageYml: file === PACKAGE_YML,
                 schemas,
+                environment,
             });
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
             service.endpoints[endpointId] = convertedEndpoint.value;
@@ -40,7 +46,7 @@ export function convertToServices(endpoints: Endpoint[], schemas: Record<SchemaI
 
 function getEmptyService(): RawSchemas.HttpServiceSchema {
     return {
-        auth: false,
+        auth: true,
         "base-path": "",
         endpoints: {},
     };

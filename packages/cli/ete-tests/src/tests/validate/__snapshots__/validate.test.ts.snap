@@ -1,35 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`validate openapi 1`] = `
-"[api]: fern/api/definition/openapi.yml:2:4
-       servers -> 0
-       Please specify a name for the server on /v3. Use the property x-server-name.
-[api]: fern/api/definition/openapi.yml:36:9
-       paths -> /pet -> post
-       Endpoint is missing operationId.
-[api]: fern/api/definition/openapi.yml:110:8
-       paths -> /pet/findByStatus -> get
-       x-request-name is required because this request has query parameters
-[api]: fern/api/definition/openapi.yml:150:8
-       paths -> /pet/findByTags -> get
-       x-request-name is required because this request has query parameters
-[api]: fern/api/definition/openapi.yml:222:9
-       paths -> /pet/{petId} -> post
-       x-request-name is required because this request has query parameters
-[api]: fern/api/definition/openapi.yml:281:9
-       paths -> /pet/{petId}/uploadImage -> post
-       x-request-name is required because this request has query parameters
-[api]: fern/api/definition/openapi.yml:477:8
-       paths -> /user/login -> get
-       x-request-name is required because this request has query parameters
-[api]: fern/api/definition/openapi.yml:631:15
-       components -> schemas -> Order -> properties -> status -> enum
-       Enum is inlined. Please refactor as a $ref.
-[api]: fern/api/definition/openapi.yml:768:15
-       components -> schemas -> Pet -> properties -> status -> enum
-       Enum is inlined. Please refactor as a $ref."
-`;
-
 exports[`validate simple 1`] = `
 "[simple-api]: api.yml -> error-discrimination
               error-discrimination is required because this API has declared errors.

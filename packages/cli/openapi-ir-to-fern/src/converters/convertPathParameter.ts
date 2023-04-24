@@ -1,6 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { PathParameter } from "@fern-fern/openapi-ir-model/ir";
 import { convertToTypeReference } from "./convertToTypeReference";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedPathParameter {
     value: RawSchemas.HttpPathParameterSchema;
@@ -14,7 +15,7 @@ export function convertPathParameter(pathParameter: PathParameter): ConvertedPat
     return {
         value: {
             docs: pathParameter.description ?? undefined,
-            type: typeReference.typeReference,
+            type: getTypeFromTypeReference(typeReference.typeReference),
         },
         additionalTypeDeclarations: typeReference.additionalTypeDeclarations,
     };

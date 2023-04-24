@@ -3464,8 +3464,8 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
-    "@fern-api/openapi-migrator": "workspace:*"
-    "@fern-api/openapi-transformer": "workspace:*"
+    "@fern-api/openapi-ir-to-fern": "workspace:*"
+    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
@@ -4304,7 +4304,7 @@ __metadata:
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.28
+    "@fern-fern/openapi-ir-model": 0.0.30
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4354,7 +4354,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.28
+    "@fern-fern/openapi-ir-model": 0.0.30
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5214,10 +5214,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/openapi-ir-model@npm:0.0.28":
-  version: 0.0.28
-  resolution: "@fern-fern/openapi-ir-model@npm:0.0.28"
-  checksum: b6c535363cea736ca7e31545eeadd0203123d67302ec5ac507f54e42fbda239c9f3682d8a0daceb3cf7a4f45386b3db3b189291c0a50805dfbefcbe7df927041
+"@fern-fern/openapi-ir-model@npm:0.0.30":
+  version: 0.0.30
+  resolution: "@fern-fern/openapi-ir-model@npm:0.0.30"
+  checksum: 3a429e18f055f47fec500ecef2d49477f9c68ff3de68cfc049abe9b119982ce4601c68fc39e0e5466de8e5e2980722d8c4561f164b008ec462395ad533c8f39f
   languageName: node
   linkType: hard
 

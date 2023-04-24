@@ -1,11 +1,731 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`open api converter buzzshot simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "listAccounts": {
+            "method": "GET",
+            "path": "/api/v2/accounts/",
+            "request": {
+              "name": "listAccountsRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "AccountsPage",
+            },
+          },
+          "listGames": {
+            "method": "GET",
+            "path": "/api/v2/games/",
+            "request": {
+              "name": "listGamesRequest",
+              "query-parameters": {
+                "after": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "GamesPage",
+            },
+          },
+          "listGroups": {
+            "method": "GET",
+            "path": "/api/v2/groups/",
+            "request": {
+              "name": "listGroupsRequest",
+              "query-parameters": {
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "GroupsPage",
+            },
+          },
+          "listLocations": {
+            "method": "GET",
+            "path": "/api/v2/rooms/",
+            "request": {
+              "name": "listLocationsRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "RoomsPage",
+            },
+          },
+          "listPhotos": {
+            "method": "GET",
+            "path": "/api/v2/photos/",
+            "request": {
+              "name": "listPhotosRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "PhotosPage",
+            },
+          },
+          "listPlayers": {
+            "method": "GET",
+            "path": "/api/v2/players/",
+            "request": {
+              "name": "listPlayersRequest",
+              "query-parameters": {
+                "page": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "PlayersPage",
+            },
+          },
+          "retrieveAccount": {
+            "method": "GET",
+            "path": "/api/v2/accounts/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Room",
+            },
+          },
+          "retrieveGame": {
+            "method": "GET",
+            "path": "/api/v2/games/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "retrieveGameRequest",
+              "query-parameters": {
+                "after": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Game",
+            },
+          },
+          "retrieveGroup": {
+            "method": "GET",
+            "path": "/api/v2/groups/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "retrieveGroupRequest",
+              "query-parameters": {
+                "complete": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Group",
+            },
+          },
+          "retrieveLocation": {
+            "method": "GET",
+            "path": "/api/v2/rooms/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Room",
+            },
+          },
+          "retrievePhoto": {
+            "method": "GET",
+            "path": "/api/v2/photos/{photo_id}/",
+            "path-parameters": {
+              "photo_id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Photo",
+            },
+          },
+          "retrievePlayer": {
+            "method": "GET",
+            "path": "/api/v2/players/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "Player",
+            },
+          },
+        },
+      },
+      "types": {
+        "Game": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "complete": {
+              "docs": undefined,
+              "type": "GameCompletionInfo",
+            },
+            "date": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<GameExtraField>",
+            },
+            "group": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photos": {
+              "docs": undefined,
+              "type": "optional<list<GamePhoto>>",
+            },
+            "room": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "start_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "time": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GameCompletionInfo": {
+          "docs": undefined,
+          "properties": {
+            "completed_at": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "completion_time": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "did_win": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "hints": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "score": {
+              "docs": undefined,
+              "type": "integer",
+            },
+          },
+        },
+        "GameExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GamePhoto": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "Group": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "date": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "games": {
+              "docs": undefined,
+              "type": "optional<list<GroupGamesItem>>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "is_event": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photos": {
+              "docs": undefined,
+              "type": "optional<list<GroupPhoto>>",
+            },
+            "players": {
+              "docs": undefined,
+              "type": "list<GroupPlayer>",
+            },
+            "start_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "time": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupGameExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GroupGamesItem": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "complete": {
+              "docs": undefined,
+              "type": "GameCompletionInfo",
+            },
+            "date": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<GroupGameExtraField>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "room": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "start_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "time": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupPhoto": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "game": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupPlayer": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "email": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<GroupPlayerExtraField>",
+            },
+            "first_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "last_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "phone": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "player": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "signature": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "GroupPlayerExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "Photo": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "original_image": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed": {
+              "docs": undefined,
+              "type": "list<ProcessedPhoto>",
+            },
+          },
+        },
+        "Player": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "email": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "extra_fields": {
+              "docs": undefined,
+              "type": "list<PlayerExtraField>",
+            },
+            "first_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "last_name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "marketing_email_allowed": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "phone": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "PlayerExtraField": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "ProcessedPhoto": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "game": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "group": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "Room": {
+          "docs": undefined,
+          "properties": {
+            "hidden": {
+              "docs": undefined,
+              "type": "optional<boolean>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "bearer",
+    "display-name": "",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`open api converter vellum simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "",
         "endpoints": {
           "generate": {
@@ -14,10 +734,22 @@ exports[`open api converter vellum simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "deployment_id": "optional<string>",
-                  "deployment_name": "optional<string>",
-                  "options": "optional<GenerateOptionsRequest>",
-                  "requests": "list<GenerateRequestRequest>",
+                  "deployment_id": {
+                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "type": "optional<string>",
+                  },
+                  "deployment_name": {
+                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "type": "optional<string>",
+                  },
+                  "options": {
+                    "docs": "Additional configuration that can be used to control what's included in the response.",
+                    "type": "optional<GenerateOptionsRequest>",
+                  },
+                  "requests": {
+                    "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                    "type": "list<GenerateRequestRequest>",
+                  },
                 },
               },
               "name": "GenerateRequestBodyRequest",
@@ -27,6 +759,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "GenerateResponse",
             },
+            "url": "Default",
           },
           "search": {
             "method": "POST",
@@ -34,10 +767,22 @@ exports[`open api converter vellum simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "index_id": "optional<string>",
-                  "index_name": "optional<string>",
-                  "options": "optional<SearchRequestOptionsRequest>",
-                  "query": "string",
+                  "index_id": {
+                    "docs": "The ID of the index to search against. Must provide either this or index_name.",
+                    "type": "optional<string>",
+                  },
+                  "index_name": {
+                    "docs": "The name of the index to search against. Must provide either this or index_id.",
+                    "type": "optional<string>",
+                  },
+                  "options": {
+                    "docs": "Configuration options for the search.",
+                    "type": "optional<SearchRequestOptionsRequest>",
+                  },
+                  "query": {
+                    "docs": "The query to search for.",
+                    "type": "string",
+                  },
                 },
               },
               "name": "SearchRequestBodyRequest",
@@ -47,6 +792,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "SearchResponse",
             },
+            "url": "Predict",
           },
           "submit-completion-actuals": {
             "method": "POST",
@@ -54,14 +800,24 @@ exports[`open api converter vellum simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "actuals": "list<SubmitCompletionActualRequest>",
-                  "deployment_id": "optional<string>",
-                  "deployment_name": "optional<string>",
+                  "actuals": {
+                    "docs": "Feedback regarding the quality of previously generated completions",
+                    "type": "list<SubmitCompletionActualRequest>",
+                  },
+                  "deployment_id": {
+                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "type": "optional<string>",
+                  },
+                  "deployment_name": {
+                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "type": "optional<string>",
+                  },
                 },
               },
               "name": "SubmitCompletionActualsRequestRequest",
               "query-parameters": undefined,
             },
+            "url": "Predict",
           },
         },
       },
@@ -70,12 +826,15 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "external_id": {
+              "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
               "type": "optional<string>",
             },
             "id": {
+              "docs": "The ID of the document.",
               "type": "string",
             },
             "label": {
+              "docs": "The human-readable name for the document.",
               "type": "string",
             },
           },
@@ -84,12 +843,15 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "document_index_id": {
+              "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
               "type": "string",
             },
             "id": {
+              "docs": "Vellum-generated ID that uniquely identifies this link.",
               "type": "string",
             },
             "indexing_state": {
+              "docs": "An enum value representing where this document is along its indexing lifecycle for this index.",
               "type": "optional<IndexingStateEnum>",
             },
           },
@@ -98,21 +860,27 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "external_id": {
+              "docs": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
               "type": "optional<string>",
             },
             "finish_reason": {
+              "docs": "The reason the generation finished.",
               "type": "FinishReasonEnum",
             },
             "id": {
+              "docs": "The Vellum-generated ID of the completion.",
               "type": "string",
             },
             "logprobs": {
+              "docs": "The logprobs of the completion. Only present if specified in the original request options.",
               "type": "optional<NormalizedLogProbs>",
             },
             "model_version_id": {
+              "docs": "The ID of the model version used to generate this completion.",
               "type": "string",
             },
             "text": {
+              "docs": "The text generated by the LLM.",
               "type": "string",
             },
           },
@@ -138,6 +906,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "detail": {
+              "docs": "Details about why the request failed.",
               "type": "string",
             },
           },
@@ -146,6 +915,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "logprobs": {
+              "docs": "Which logprobs to include, if any. Defaults to NONE.",
               "type": "optional<LogprobsEnum>",
             },
           },
@@ -154,9 +924,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "external_ids": {
+              "docs": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
               "type": "optional<list<string>>",
             },
             "input_values": {
+              "docs": "Key/value pairs for each template variable defined in the deployment's prompt.",
               "type": "map<string, unknown>",
             },
           },
@@ -165,6 +937,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "results": {
+              "docs": "The results of each generation request.",
               "type": "list<GenerateResult>",
             },
           },
@@ -173,9 +946,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "data": {
+              "docs": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
               "type": "optional<GenerateResultData>",
             },
             "error": {
+              "docs": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
               "type": "optional<GenerateResultError>",
             },
           },
@@ -184,6 +959,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "completions": {
+              "docs": "The generated completions. This will generally be a list of length one.",
               "type": "list<EnrichedNormalizedCompletion>",
             },
           },
@@ -192,6 +968,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "message": {
+              "docs": "The error message returned by the LLM provider.",
               "type": "string",
             },
           },
@@ -251,9 +1028,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "base_model": {
+              "docs": "The name of the base model used to create this model version, as identified by the LLM provider.",
               "type": "string",
             },
             "sandbox_snapshot": {
+              "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
               "type": "optional<ModelVersionSandboxSnapshot>",
             },
           },
@@ -262,27 +1041,35 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "frequency_penalty": {
+              "docs": undefined,
               "type": "double",
             },
             "logit_bias": {
-              "type": "optional<map<string, double>>",
+              "docs": undefined,
+              "type": "optional<map<string, optional<double>>>",
             },
             "max_tokens": {
+              "docs": undefined,
               "type": "integer",
             },
             "presence_penalty": {
+              "docs": undefined,
               "type": "double",
             },
             "stop": {
+              "docs": undefined,
               "type": "list<string>",
             },
             "temperature": {
+              "docs": undefined,
               "type": "double",
             },
             "top_k": {
+              "docs": undefined,
               "type": "optional<double>",
             },
             "top_p": {
+              "docs": undefined,
               "type": "double",
             },
           },
@@ -291,12 +1078,15 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "input_variables": {
+              "docs": "Names of the template variables specified in the prompt template.",
               "type": "list<string>",
             },
             "parameters": {
+              "docs": "The generation parameters that are passed to the LLM provider at runtime.",
               "type": "ModelVersionExecConfigParameters",
             },
             "prompt_template": {
+              "docs": "The template used to generate prompts for this model version.",
               "type": "string",
             },
           },
@@ -305,27 +1095,35 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "build_config": {
+              "docs": "Configuration used to build this model version.",
               "type": "ModelVersionBuildConfig",
             },
             "created": {
+              "docs": "Timestamp of when this model version was created.",
               "type": "string",
             },
             "exec_config": {
+              "docs": "Configuration used to execute this model version.",
               "type": "ModelVersionExecConfigRead",
             },
             "external_id": {
+              "docs": "The unique id of this model version as it exists in the above provider's system.",
               "type": "string",
             },
             "id": {
+              "docs": "Vellum-generated ID that uniquely identifies this model version.",
               "type": "string",
             },
             "label": {
+              "docs": "Human-friendly name for this model version.",
               "type": "string",
             },
             "model_type": {
+              "docs": "The type of task this model is used for.",
               "type": "ModelTypeEnum",
             },
             "provider": {
+              "docs": "Which LLM provider this model version is associated with.",
               "type": "ProviderEnum",
             },
           },
@@ -334,9 +1132,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
+              "docs": "The ID of the sandbox snapshot.",
               "type": "string",
             },
             "prompt_index": {
+              "docs": "The index of the prompt in the sandbox snapshot.",
               "type": "integer",
             },
           },
@@ -345,9 +1145,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "likelihood": {
+              "docs": undefined,
               "type": "double",
             },
             "tokens": {
+              "docs": undefined,
               "type": "list<NormalizedTokenLogProbs>",
             },
           },
@@ -356,15 +1158,19 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "logprob": {
+              "docs": undefined,
               "type": "double",
             },
             "text_offset": {
+              "docs": undefined,
               "type": "integer",
             },
             "token": {
+              "docs": undefined,
               "type": "string",
             },
             "top_logprobs": {
+              "docs": undefined,
               "type": "map<string, double>",
             },
           },
@@ -373,15 +1179,19 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": {
+              "docs": undefined,
               "type": "optional<integer>",
             },
             "next": {
+              "docs": undefined,
               "type": "optional<string>",
             },
             "previous": {
+              "docs": undefined,
               "type": "optional<string>",
             },
             "results": {
+              "docs": undefined,
               "type": "optional<list<SlimDocument>>",
             },
           },
@@ -428,6 +1238,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "detail": {
+              "docs": "Details about why the request failed.",
               "type": "string",
             },
           },
@@ -436,6 +1247,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "external_ids": {
+              "docs": "The document external IDs to filter by",
               "type": "optional<list<string>>",
             },
           },
@@ -444,15 +1256,19 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "filters": {
+              "docs": "The filters to apply to the search.",
               "type": "optional<SearchFiltersRequest>",
             },
             "limit": {
+              "docs": "The maximum number of results to return.",
               "type": "optional<integer>",
             },
             "result_merging": {
+              "docs": "The configuration for merging results.",
               "type": "optional<SearchResultMergingRequest>",
             },
             "weights": {
+              "docs": "The weights to use for the search. Must add up to 1.0.",
               "type": "optional<SearchWeightsRequest>",
             },
           },
@@ -461,6 +1277,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "results": {
+              "docs": "The results of the search. Each result represents a chunk that matches the search query.",
               "type": "list<SearchResult>",
             },
           },
@@ -469,15 +1286,19 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "document": {
+              "docs": "The document that contains the chunk that matched the search query.",
               "type": "Document",
             },
             "keywords": {
+              "docs": undefined,
               "type": "list<string>",
             },
             "score": {
+              "docs": "A score representing how well the chunk matches the search query.",
               "type": "double",
             },
             "text": {
+              "docs": "The text of the chunk that matched the search query.",
               "type": "string",
             },
           },
@@ -486,6 +1307,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "enabled": {
+              "docs": "Whether to enable merging results",
               "type": "boolean",
             },
           },
@@ -494,9 +1316,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "keywords": {
+              "docs": "The relative weight to give to keyword matches",
               "type": "double",
             },
             "semantic_similarity": {
+              "docs": "The relative weight to give to semantic similarity",
               "type": "double",
             },
           },
@@ -505,27 +1329,35 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "document_to_document_indexes": {
+              "docs": undefined,
               "type": "list<DocumentDocumentToDocumentIndex>",
             },
             "external_id": {
+              "docs": "The external ID that was originally provided when uploading the document.",
               "type": "optional<string>",
             },
             "id": {
+              "docs": "Vellum-generated ID that uniquely identifies this document.",
               "type": "string",
             },
             "keywords": {
+              "docs": "A list of keywords associated with this document. Originally provided when uploading the document.",
               "type": "optional<list<string>>",
             },
             "label": {
+              "docs": "Human-friendly name for this document.",
               "type": "string",
             },
             "last_uploaded_at": {
+              "docs": "A timestamp representing when this document was most recently uploaded.",
               "type": "string",
             },
             "processing_state": {
+              "docs": "The current processing state of the document",
               "type": "optional<ProcessingStateEnum>",
             },
             "status": {
+              "docs": "The document's current status.",
               "type": "optional<StatusEnum>",
             },
           },
@@ -543,18 +1375,23 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "external_id": {
+              "docs": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
               "type": "optional<string>",
             },
             "id": {
+              "docs": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
               "type": "optional<string>",
             },
             "quality": {
+              "docs": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
               "type": "optional<double>",
             },
             "text": {
+              "docs": "Text representing what the completion _should_ have been.",
               "type": "optional<string>",
             },
             "timestamp": {
+              "docs": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
               "type": "optional<string>",
             },
           },
@@ -563,6 +1400,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "detail": {
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -571,6 +1409,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "detail": {
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -579,6 +1418,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "properties": {
             "document_id": {
+              "docs": "The ID of the newly created document.",
               "type": "string",
             },
           },
@@ -590,7 +1430,7 @@ exports[`open api converter vellum simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "",
         "endpoints": {
           "list": {
@@ -621,6 +1461,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "root.PaginatedSlimDocumentList",
             },
+            "url": "Default",
           },
           "upload": {
             "method": "POST",
@@ -628,11 +1469,23 @@ exports[`open api converter vellum simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "add_to_index_names": "list<string>",
+                  "add_to_index_names": {
+                    "docs": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "type": "list<string>",
+                  },
                   "contents": "file",
-                  "external_id": "string",
-                  "keywords": "list<string>",
-                  "label": "string",
+                  "external_id": {
+                    "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "type": "string",
+                  },
+                  "keywords": {
+                    "docs": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "type": "list<string>",
+                  },
+                  "label": {
+                    "docs": "A human-friendly name for this document. Typically the filename.",
+                    "type": "string",
+                  },
                 },
               },
               "name": "UploadDocumentRequestBodyRequest",
@@ -642,6 +1495,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "root.UploadDocumentResponse",
             },
+            "url": "Documents",
           },
         },
       },
@@ -651,7 +1505,7 @@ exports[`open api converter vellum simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": false,
+        "auth": true,
         "base-path": "",
         "endpoints": {
           "retrieve": {
@@ -667,6 +1521,7 @@ exports[`open api converter vellum simple 1`] = `
               "docs": "",
               "type": "root.ModelVersionRead",
             },
+            "url": "Default",
           },
         },
       },
@@ -674,13 +1529,24 @@ exports[`open api converter vellum simple 1`] = `
   },
   "rootApiFile": {
     "auth": "apiKeyAuth",
-    "authSchemes": {
+    "auth-schemes": {
       "apiKeyAuth": {
         "header": "X_API_KEY",
+        "name": "apiKey",
         "type": "string",
       },
     },
+    "default-environment": "Production",
     "display-name": "Vellum Client API",
+    "environments": {
+      "Production": {
+        "urls": {
+          "Default": "https://api.vellum.ai",
+          "Documents": "https://documents.vellum.ai",
+          "Predict": "https://predict.vellum.ai",
+        },
+      },
+    },
     "error-discrimination": {
       "strategy": "status-code",
     },

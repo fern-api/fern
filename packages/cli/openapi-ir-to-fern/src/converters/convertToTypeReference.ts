@@ -10,9 +10,11 @@ import {
     ReferencedSchema,
     Schema,
 } from "@fern-fern/openapi-ir-model/ir";
+import { convertObjectToTypeDeclaration } from "./convertToTypeDeclaration";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeReference {
-    typeReference: string;
+    typeReference: RawSchemas.TypeReferenceWithDocsSchema;
     additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
@@ -51,7 +53,10 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         _unknown: () => "unknown",
     });
     return {
-        typeReference,
+        typeReference: {
+            type: typeReference,
+            docs: primitiveSchema.description ?? undefined,
+        },
         additionalTypeDeclarations: {},
     };
 }
@@ -64,7 +69,10 @@ export function convertReferenceToTypeReference({
     prefix?: string;
 }): TypeReference {
     return {
-        typeReference: prefix != null ? `${prefix}.${schema.reference}` : schema.reference,
+        typeReference: {
+            type: prefix != null ? `${prefix}.${schema.reference}` : schema.reference,
+            docs: schema.description ?? undefined,
+        },
         additionalTypeDeclarations: {},
     };
 }
@@ -78,7 +86,10 @@ export function convertArrayToTypeReference({
 }): TypeReference {
     const elementTypeReference = convertToTypeReference({ schema: schema.value, prefix });
     return {
-        typeReference: `list<${elementTypeReference.typeReference}>`,
+        typeReference: {
+            docs: schema.description ?? undefined,
+            type: `list<${getTypeFromTypeReference(elementTypeReference.typeReference)}>`,
+        },
         additionalTypeDeclarations: {
             ...elementTypeReference.additionalTypeDeclarations,
         },
@@ -97,7 +108,12 @@ export function convertMapToTypeReference({ schema, prefix }: { schema: MapSchem
         prefix,
     });
     return {
-        typeReference: `map<${keyTypeReference.typeReference}, ${valueTypeReference.typeReference}>`,
+        typeReference: {
+            docs: schema.description ?? undefined,
+            type: `map<${getTypeFromTypeReference(keyTypeReference.typeReference)}, ${getTypeFromTypeReference(
+                valueTypeReference.typeReference
+            )}>`,
+        },
         additionalTypeDeclarations: {
             ...valueTypeReference.additionalTypeDeclarations,
         },
@@ -116,7 +132,10 @@ export function convertOptionalToTypeReference({
         prefix,
     });
     return {
-        typeReference: `optional<${valueTypeReference.typeReference}>`,
+        typeReference: {
+            docs: schema.description ?? undefined,
+            type: `optional<${getTypeFromTypeReference(valueTypeReference.typeReference)}>`,
+        },
         additionalTypeDeclarations: {
             ...valueTypeReference.additionalTypeDeclarations,
         },
@@ -135,7 +154,10 @@ export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSch
         throw new Error(`Add x-name to enum: ${JSON.stringify(schema)}`);
     }
     return {
-        typeReference: prefix != null ? `${prefix}.${schema.name}` : schema.name,
+        typeReference: {
+            type: prefix != null ? `${prefix}.${schema.name}` : schema.name,
+            docs: schema.description ?? undefined,
+        },
         additionalTypeDeclarations: {},
     };
 }
@@ -150,8 +172,16 @@ export function convertObjectToTypeReference({
     if (schema.name == null) {
         throw new Error(`Add x-name to object: ${JSON.stringify(schema)}`);
     }
+    const objectTypeDeclaration = convertObjectToTypeDeclaration(schema);
+    objectTypeDeclaration.additionalTypeDeclarations;
     return {
-        typeReference: prefix != null ? `${prefix}.${schema.name}` : schema.name,
-        additionalTypeDeclarations: {},
+        typeReference: {
+            type: prefix != null ? `${prefix}.${schema.name}` : schema.name,
+            docs: schema.description ?? undefined,
+        },
+        additionalTypeDeclarations: {
+            [schema.name]: objectTypeDeclaration.typeDeclaration,
+            ...objectTypeDeclaration.additionalTypeDeclarations,
+        },
     };
 }

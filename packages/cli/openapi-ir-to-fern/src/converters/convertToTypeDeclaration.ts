@@ -46,14 +46,12 @@ export function convertToTypeDeclaration(schema: Schema): TypeDeclarations {
     throw new Error(`Failed to convert to type declaration: ${JSON.stringify(schema)}`);
 }
 
-function convertObjectToTypeDeclaration(schema: ObjectSchema): TypeDeclarations {
+export function convertObjectToTypeDeclaration(schema: ObjectSchema): TypeDeclarations {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     for (const property of schema.properties) {
         const propertyTypeReference = convertToTypeReference({ schema: property.schema });
-        properties[property.key] = {
-            type: propertyTypeReference.typeReference,
-        };
+        properties[property.key] = propertyTypeReference.typeReference;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
             ...propertyTypeReference.additionalTypeDeclarations,
@@ -69,44 +67,35 @@ function convertObjectToTypeDeclaration(schema: ObjectSchema): TypeDeclarations 
     };
 }
 
-function convertArrayToTypeDeclaration(schema: ArraySchema): TypeDeclarations {
+export function convertArrayToTypeDeclaration(schema: ArraySchema): TypeDeclarations {
     const arrayTypeReference = convertArrayToTypeReference({ schema });
     return {
-        typeDeclaration: {
-            docs: schema.description ?? undefined,
-            type: arrayTypeReference.typeReference,
-        },
+        typeDeclaration: arrayTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...arrayTypeReference.additionalTypeDeclarations,
         },
     };
 }
 
-function convertMapToTypeDeclaration(schema: MapSchema): TypeDeclarations {
+export function convertMapToTypeDeclaration(schema: MapSchema): TypeDeclarations {
     const mapTypeReference = convertMapToTypeReference({ schema });
     return {
-        typeDeclaration: {
-            docs: schema.description ?? undefined,
-            type: mapTypeReference.typeReference,
-        },
+        typeDeclaration: mapTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...mapTypeReference.additionalTypeDeclarations,
         },
     };
 }
 
-function convertPrimitiveToTypeDeclaration(schema: PrimitiveSchema): TypeDeclarations {
+export function convertPrimitiveToTypeDeclaration(schema: PrimitiveSchema): TypeDeclarations {
     const primitiveTypeReference = convertPrimitiveToTypeReference(schema);
     return {
-        typeDeclaration: {
-            docs: schema.description ?? undefined,
-            type: primitiveTypeReference.typeReference,
-        },
+        typeDeclaration: primitiveTypeReference.typeReference,
         additionalTypeDeclarations: {},
     };
 }
 
-function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclarations {
+export function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclarations {
     return {
         typeDeclaration: {
             docs: schema.description ?? undefined,
@@ -121,39 +110,30 @@ function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclarations {
     };
 }
 
-function convertReferenceToTypeDeclaration(schema: ReferencedSchema): TypeDeclarations {
+export function convertReferenceToTypeDeclaration(schema: ReferencedSchema): TypeDeclarations {
     const referenceTypeReference = convertReferenceToTypeReference({ schema });
     return {
-        typeDeclaration: {
-            docs: undefined,
-            type: referenceTypeReference.typeReference,
-        },
+        typeDeclaration: referenceTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...referenceTypeReference.additionalTypeDeclarations,
         },
     };
 }
 
-function convertOptionalToTypeDeclaration(schema: OptionalSchema): TypeDeclarations {
+export function convertOptionalToTypeDeclaration(schema: OptionalSchema): TypeDeclarations {
     const optionalTypeReference = convertOptionalToTypeReference({ schema });
     return {
-        typeDeclaration: {
-            docs: undefined,
-            type: optionalTypeReference.typeReference,
-        },
+        typeDeclaration: optionalTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...optionalTypeReference.additionalTypeDeclarations,
         },
     };
 }
 
-function convertUnknownToTypeDeclaration(): TypeDeclarations {
+export function convertUnknownToTypeDeclaration(): TypeDeclarations {
     const unknownTypeReference = convertUnknownToTypeReference();
     return {
-        typeDeclaration: {
-            docs: undefined,
-            type: unknownTypeReference.typeReference,
-        },
+        typeDeclaration: unknownTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...unknownTypeReference.additionalTypeDeclarations,
         },
