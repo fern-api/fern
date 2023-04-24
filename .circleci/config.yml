@@ -4,8 +4,8 @@ orbs:
 jobs:
   check:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -37,8 +37,8 @@ jobs:
 
   organize-imports:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -47,7 +47,7 @@ jobs:
           name: Organize imports
           # not using --list-different because sometimes this removes a trailing
           # comma that prettier adds back
-          command: yarn workspaces foreach --parallel --verbose --exclude fern run organize-imports
+          command: yarn organize-imports
       - run:
           name: Format
           command: yarn format:fix
@@ -57,8 +57,8 @@ jobs:
 
   eslint:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -69,17 +69,12 @@ jobs:
           command: yarn compile
       - run:
           name: lint:eslint
-          command: |
-            if [[ "$CIRCLE_BRANCH" == "main" || -n "$CIRCLE_TAG" ]]; then
-              yarn workspaces foreach --parallel --jobs 3 --verbose --exclude fern run lint:eslint
-            else
-              yarn workspaces foreach --parallel --jobs 3 --verbose --exclude fern --since --recursive run lint:eslint
-            fi
+          command: yarn lint:eslint
 
   compile:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -120,7 +115,7 @@ jobs:
 
   live-test-dev:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:
@@ -134,7 +129,7 @@ jobs:
 
   live-test:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:
@@ -148,8 +143,8 @@ jobs:
 
   publish-dev:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -179,8 +174,8 @@ jobs:
 
   publish-rc:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -214,8 +209,8 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/node:current
-    resource_class: xlarge
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -249,7 +244,7 @@ jobs:
 
   publish-ir-sdk:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - run:
