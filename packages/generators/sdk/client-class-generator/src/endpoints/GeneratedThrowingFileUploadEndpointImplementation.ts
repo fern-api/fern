@@ -25,6 +25,7 @@ export declare namespace GeneratedThrowingFileUploadEndpointImplementation {
         includeCredentialsOnCrossOriginRequests: boolean;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        timeoutInSeconds: number | "infinity" | undefined;
     }
 }
 
@@ -44,6 +45,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
     private includeCredentialsOnCrossOriginRequests: boolean;
     private errorResolver: ErrorResolver;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private timeoutInSeconds: number | "infinity" | undefined;
 
     constructor({
         packageId,
@@ -54,6 +56,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
         includeCredentialsOnCrossOriginRequests,
         errorDiscriminationStrategy,
         errorResolver,
+        timeoutInSeconds,
     }: GeneratedThrowingFileUploadEndpointImplementation.Init) {
         this.packageId = packageId;
         this.service = service;
@@ -63,6 +66,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
         this.errorResolver = errorResolver;
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.requestBody = requestBody;
+        this.timeoutInSeconds = timeoutInSeconds;
 
         if (this.endpoint.sdkRequest == null) {
             throw new Error("SdkRequest is not defined for file upload endpoint");
@@ -196,7 +200,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             body: ts.factory.createIdentifier(
                 GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
             ),
-            timeoutMs: undefined,
+            timeoutInSeconds: this.timeoutInSeconds,
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             contentType: ts.factory.createBinaryExpression(
                 ts.factory.createStringLiteral("multipart/form-data; boundary="),

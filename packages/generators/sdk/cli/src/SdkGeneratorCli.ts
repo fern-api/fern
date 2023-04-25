@@ -23,6 +23,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeUtilsOnUnionMembers: parsed?.includeUtilsOnUnionMembers ?? false,
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
+            timeoutInSeconds: parsed?.timeoutInSeconds,
         };
     }
 
@@ -60,6 +61,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
+                timeoutInSeconds: customConfig.timeoutInSeconds,
             },
         });
 

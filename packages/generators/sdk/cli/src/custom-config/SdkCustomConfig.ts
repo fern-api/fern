@@ -10,4 +10,5 @@ export interface SdkCustomConfig {
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
     requireDefaultEnvironment: boolean;
+    timeoutInSeconds: number | "infinity" | undefined;
 }

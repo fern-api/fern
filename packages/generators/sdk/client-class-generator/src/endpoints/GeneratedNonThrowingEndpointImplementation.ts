@@ -30,6 +30,7 @@ export declare namespace GeneratedNonThrowingEndpointImplementation {
         includeCredentialsOnCrossOriginRequests: boolean;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        timeoutInSeconds: number | "infinity" | undefined;
     }
 }
 
@@ -46,6 +47,7 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
     private includeCredentialsOnCrossOriginRequests: boolean;
     private errorResolver: ErrorResolver;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private timeoutInSeconds: number | "infinity" | undefined;
 
     constructor({
         packageId,
@@ -56,6 +58,7 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
         includeCredentialsOnCrossOriginRequests,
         errorDiscriminationStrategy,
         errorResolver,
+        timeoutInSeconds,
     }: GeneratedNonThrowingEndpointImplementation.Init) {
         this.packageId = packageId;
         this.service = service;
@@ -65,6 +68,7 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
         this.errorResolver = errorResolver;
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.requestBody = requestBody;
+        this.timeoutInSeconds = timeoutInSeconds;
 
         const sdkRequest = this.endpoint.sdkRequest;
         const requestParameter =
@@ -254,7 +258,7 @@ export class GeneratedNonThrowingEndpointImplementation implements GeneratedEndp
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBody(context),
-            timeoutMs: undefined,
+            timeoutInSeconds: this.timeoutInSeconds,
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             contentType: "application/json",
         };

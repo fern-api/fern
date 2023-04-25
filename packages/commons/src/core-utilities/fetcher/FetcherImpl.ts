@@ -94,9 +94,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             if (args.body != null) {
                 properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.body, args.body));
             }
-            if (args.timeoutMs != null) {
+            if (args.timeoutInSeconds !== "infinity") {
                 properties.push(
-                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.timeoutMs, args.timeoutMs)
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.timeoutMs,
+                        ts.factory.createNumericLiteral(
+                            args.timeoutInSeconds != null ? args.timeoutInSeconds * 1000 : 60000
+                        )
+                    )
                 );
             }
             if (args.withCredentials) {

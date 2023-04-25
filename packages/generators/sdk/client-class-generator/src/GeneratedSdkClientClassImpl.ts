@@ -30,6 +30,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
+        timeoutInSeconds: number | "infinity" | undefined;
     }
 }
 
@@ -65,6 +66,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
         requireDefaultEnvironment,
+        timeoutInSeconds,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -94,6 +96,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
+                            timeoutInSeconds,
                         });
                     } else {
                         return new GeneratedThrowingFileUploadEndpointImplementation({
@@ -105,6 +108,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
+                            timeoutInSeconds,
                         });
                     }
                 }
@@ -120,6 +124,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
+                            timeoutInSeconds,
                         });
                     } else {
                         return new GeneratedThrowingEndpointImplementation({
@@ -131,6 +136,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             includeCredentialsOnCrossOriginRequests,
                             requestBody,
+                            timeoutInSeconds,
                         });
                     }
                 };
@@ -144,6 +150,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         includeCredentialsOnCrossOriginRequests,
                         response: streamingResponse,
                         requestBody,
+                        timeoutInSeconds,
                     });
 
                 if (endpoint.sdkResponse == null) {

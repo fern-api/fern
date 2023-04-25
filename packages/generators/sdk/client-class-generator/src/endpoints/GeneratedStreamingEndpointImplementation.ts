@@ -29,6 +29,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         response: StreamingResponse;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
+        timeoutInSeconds: number | "infinity" | undefined;
     }
 }
 
@@ -47,6 +48,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private queryParams: GeneratedQueryParams;
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private includeCredentialsOnCrossOriginRequests: boolean;
+    private timeoutInSeconds: number | "infinity" | undefined;
 
     constructor({
         packageId,
@@ -56,6 +58,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
         response,
+        timeoutInSeconds,
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.packageId = packageId;
         this.service = service;
@@ -64,6 +67,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.requestBody = requestBody;
         this.response = response;
+        this.timeoutInSeconds = timeoutInSeconds;
 
         const sdkRequest = this.endpoint.sdkRequest;
         const requestParameter =
@@ -286,7 +290,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBody(context),
-            timeoutMs: undefined,
+            timeoutInSeconds: this.timeoutInSeconds,
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             contentType: "application/json",
         };

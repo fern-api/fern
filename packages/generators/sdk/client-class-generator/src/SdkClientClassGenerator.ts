@@ -13,6 +13,7 @@ export declare namespace SdkClientClassGenerator {
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
+        timeoutInSeconds: number | "infinity" | undefined;
     }
 
     export namespace generateService {
@@ -31,6 +32,7 @@ export class SdkClientClassGenerator {
     private includeCredentialsOnCrossOriginRequests: boolean;
     private allowCustomFetcher: boolean;
     private requireDefaultEnvironment: boolean;
+    private timeoutInSeconds: number | "infinity" | undefined;
 
     constructor({
         intermediateRepresentation,
@@ -40,6 +42,7 @@ export class SdkClientClassGenerator {
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
         requireDefaultEnvironment,
+        timeoutInSeconds,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -48,6 +51,7 @@ export class SdkClientClassGenerator {
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.timeoutInSeconds = timeoutInSeconds;
     }
 
     public generateService({
@@ -64,6 +68,7 @@ export class SdkClientClassGenerator {
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
+            timeoutInSeconds: this.timeoutInSeconds,
         });
     }
 }

@@ -35,6 +35,7 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             requireDefaultEnvironment: true,
             allowCustomFetcher: true,
+            timeoutInSeconds: 2,
         },
     },
     {
@@ -48,6 +49,7 @@ const FIXTURES: FixtureInfo[] = [
             includeCredentialsOnCrossOriginRequests: true,
             includeUtilsOnUnionMembers: true,
             includeOtherInUnionTypes: true,
+            timeoutInSeconds: "infinity",
         },
     },
     {

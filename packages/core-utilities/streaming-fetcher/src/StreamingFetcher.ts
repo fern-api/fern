@@ -45,7 +45,10 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
             method: args.method,
             headers,
             data: args.body,
-            timeout: args.timeoutMs ?? 60_000,
+            timeout: args.timeoutMs,
+            transitional: {
+                clarifyTimeoutError: true,
+            },
             withCredentials: args.withCredentials,
             signal: args.abortController?.signal,
             responseType: "stream",

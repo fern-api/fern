@@ -78,7 +78,7 @@ export declare namespace Fetcher {
         contentType: string | ts.Expression;
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
-        timeoutMs: ts.Expression | undefined;
         withCredentials: boolean;
+        timeoutInSeconds: number | "infinity" | undefined;
     }
 }
