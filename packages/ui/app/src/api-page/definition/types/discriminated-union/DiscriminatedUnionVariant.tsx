@@ -9,7 +9,7 @@ import {
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
-import { InternalTypeDefinition } from "../InternalTypeDefinition";
+import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {

@@ -9,7 +9,7 @@ import {
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
-import { InternalAllReferencedTypes } from "../InternalAllReferencedTypes";
+import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
@@ -79,7 +79,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                     </div>
                 )}
                 <TypeDefinitionContext.Provider value={newContextValue}>
-                    <InternalAllReferencedTypes type={property.valueType} isCollapsible />
+                    <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>
             </div>
         </div>

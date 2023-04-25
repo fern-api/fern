@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
-import React, { useCallback } from "react";
-import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { TypeDefinitionContext, TypeDefinitionContextValue } from "./context/TypeDefinitionContext";
+import React from "react";
+import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
+import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeDefinition } from "./InternalTypeDefinition";
 
 export declare namespace TypeDefinition {
@@ -13,18 +13,9 @@ export declare namespace TypeDefinition {
 }
 
 export const TypeDefinition: React.FC<TypeDefinition.Props> = ({ typeShape, isCollapsible, onHoverProperty }) => {
-    const contextValue = useCallback(
-        (): TypeDefinitionContextValue => ({
-            isRootTypeDefinition: true,
-            jsonPropertyPath: [],
-            onHoverProperty,
-        }),
-        [onHoverProperty]
-    );
-
     return (
-        <TypeDefinitionContext.Provider value={contextValue}>
+        <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
             <InternalTypeDefinition typeShape={typeShape} isCollapsible={isCollapsible} />
-        </TypeDefinitionContext.Provider>
+        </TypeDefinitionContextProvider>
     );
 };

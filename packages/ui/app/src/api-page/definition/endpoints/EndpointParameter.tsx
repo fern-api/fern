@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { MonospaceText } from "../../../commons/MonospaceText";
 import { Markdown } from "../markdown/Markdown";
-import { AllReferencedTypes } from "../types/AllReferencedTypes";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointParameter {
@@ -29,7 +29,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
                 </div>
             </div>
             {description != null && <Markdown>{description}</Markdown>}
-            <AllReferencedTypes type={type} isCollapsible />
+            <TypeReferenceDefinitions type={type} isCollapsible />
         </div>
     );
 };

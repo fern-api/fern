@@ -4,16 +4,17 @@ import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
-} from "./context/TypeDefinitionContext";
-import { DiscriminatedUnionVariant } from "./discriminated-union/DiscriminatedUnionVariant";
-import { EnumValue } from "./enum/EnumValue";
+} from "../context/TypeDefinitionContext";
+import { DiscriminatedUnionVariant } from "../discriminated-union/DiscriminatedUnionVariant";
+import { EnumValue } from "../enum/EnumValue";
+import { ObjectProperty } from "../object/ObjectProperty";
 import styles from "./InternalTypeDefinition.module.scss";
-import { ObjectProperty } from "./object/ObjectProperty";
 import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
@@ -164,19 +165,3 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         </div>
     );
 };
-
-function getAllObjectProperties(
-    object: FernRegistry.ObjectType,
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
-): FernRegistry.ObjectProperty[] {
-    return [
-        ...object.properties,
-        ...object.extends.flatMap((typeId) => {
-            const type = resolveTypeById(typeId);
-            if (type.shape.type !== "object") {
-                throw new Error("Object extends non-object " + typeId);
-            }
-            return getAllObjectProperties(type.shape, resolveTypeById);
-        }),
-    ];
-}

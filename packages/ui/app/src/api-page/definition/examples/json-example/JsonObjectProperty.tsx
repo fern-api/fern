@@ -66,16 +66,16 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
 
     return (
         <div
-            className={classNames("border rounded", {
-                "border-transparent": !isSelected,
-                "bg-[#716FEC]/25 border-[#716FEC]": isSelected,
-            })}
+            className={classNames(
+                "border rounded transition",
+                isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
+            )}
             ref={ref}
         >
             <JsonExampleLine>
                 <div className="flex">
                     <div className="flex">
-                        <div>{propertyKey}</div>
+                        <div className="text-[#aadafa]">{propertyKey}</div>
                         <div>:</div>
                     </div>
                     &nbsp;
@@ -126,17 +126,36 @@ function doBreadcrumbsMatchJsonPath({
         }
 
         case "objectProperty": {
+            if (firstBreadcrumb.type !== "objectProperty") {
+                return false;
+            }
+
             if (
-                firstBreadcrumb.type !== "objectProperty" ||
-                firstBreadcrumb.propertyName !== firstJsonPropertyPathPart.propertyName
+                firstJsonPropertyPathPart.propertyName != null &&
+                firstJsonPropertyPathPart.propertyName !== firstBreadcrumb.propertyName
             ) {
                 return false;
             }
+
             return doBreadcrumbsMatchJsonPath({
                 breadcrumbs: remainingBreadcrumbs,
                 jsonPropertyPath: remainingJsonPropertyPathParts,
             });
         }
+
+        case "listItem":
+            if (firstBreadcrumb.type !== "listItem") {
+                return false;
+            }
+
+            if (firstJsonPropertyPathPart.index != null && firstJsonPropertyPathPart.index !== firstBreadcrumb.index) {
+                return false;
+            }
+
+            return doBreadcrumbsMatchJsonPath({
+                breadcrumbs: remainingBreadcrumbs,
+                jsonPropertyPath: remainingJsonPropertyPathParts,
+            });
 
         default:
             assertNever(firstJsonPropertyPathPart);

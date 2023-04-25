@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { AllReferencedTypes } from "../types/AllReferencedTypes";
-import { TypeDefinition } from "../types/TypeDefinition";
+import { TypeDefinition } from "../types/type-definition/TypeDefinition";
+import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export declare namespace EndpointTypeSection {
     export interface Props {
@@ -23,7 +23,7 @@ export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ httpB
                     />
                 ),
                 reference: (type) => (
-                    <AllReferencedTypes type={type} isCollapsible={false} onHoverProperty={onHoverProperty} />
+                    <TypeReferenceDefinitions type={type} isCollapsible={false} onHoverProperty={onHoverProperty} />
                 ),
                 _other: () => null,
             })}

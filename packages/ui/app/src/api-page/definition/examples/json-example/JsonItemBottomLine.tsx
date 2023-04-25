@@ -11,8 +11,8 @@ export declare namespace JsonItemBottomLine {
 
 export const JsonItemBottomLine: React.FC<JsonItemBottomLine.Props> = ({ value, isNonLastItemInCollection }) => {
     const element = visitJsonItem(value, {
-        object: (object) => <div>{size(object) === 0 ? undefined : "}"}</div>,
-        list: (list) => <div>{list.length === 0 ? undefined : "]"}</div>,
+        object: (object) => (size(object) === 0 ? undefined : <div>{"}"}</div>),
+        list: (list) => (list.length === 0 ? undefined : <div>{"]"}</div>),
         string: () => undefined,
         number: () => undefined,
         boolean: () => undefined,
@@ -24,7 +24,7 @@ export const JsonItemBottomLine: React.FC<JsonItemBottomLine.Props> = ({ value, 
     }
 
     return (
-        <JsonExampleLine>
+        <JsonExampleLine className="flex">
             {element}
             {isNonLastItemInCollection && <div>,</div>}
         </JsonExampleLine>
