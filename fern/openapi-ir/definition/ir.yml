@@ -5,11 +5,25 @@ types:
 
   OpenAPIIntermediateRepresentation:
     properties:
+      rootPackage:
+        type: OpenAPIRootPackage
+        docs: |
+          Represents the directory structure of multiple OpenAPI yamls.
       files: map<FileId, OpenAPIFile>
+
+  OpenAPIRootPackage:
+    properties:
+      subpackages: list<OpenAPISubPackage>
+      file: optional<FileId>
+
+  OpenAPISubPackage:
+    properties:
+      name: string
+      subpackages: list<OpenAPISubPackage>
+      file: optional<FileId>
 
   OpenAPIFile:
     properties:
-      filepath: FilePath
       title: optional<string>
       description: optional<string>
       servers: list<Server>
@@ -20,11 +34,6 @@ types:
       dependencies:
         type: set<FileId>
         docs: The other specs that this OpenAPI file depends on
-
-  FilePath:
-    properties:
-      folders: list<string>
-      filename: string
 
   WithDescription:
     properties:

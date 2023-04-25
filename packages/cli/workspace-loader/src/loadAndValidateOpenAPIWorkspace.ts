@@ -1,12 +1,13 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { lstat, readdir, readFile } from "fs/promises";
+import { OpenAPIDefinition, OpenAPIFile } from "./types/Workspace";
 
 export declare namespace validateStructureOfOpenAPIFiles {
     export type Return = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
         didSucceed: true;
-        root: OpenAPIDirectory;
+        root: OpenAPIDefinition;
     }
 
     export interface FailedResult {
@@ -14,30 +15,18 @@ export declare namespace validateStructureOfOpenAPIFiles {
     }
 }
 
-export interface OpenAPIDirectory {
-    file: OpenAPIFile | undefined;
-    subDirectories: OpenAPIDirectory[];
-}
-
-export interface OpenAPIFile {
-    absoluteFilepath: AbsoluteFilePath;
-    /* relative file path from the root of the definition */
-    relativeFilepath: RelativeFilePath;
-    contents: string;
-}
-
-export async function loadAndValidateOpenAPIDirectory(
+export async function loadAndValidateOpenAPIDefinition(
     absolutePathToOpenAPI: AbsoluteFilePath,
     parentFolders: RelativeFilePath[] = []
-): Promise<OpenAPIDirectory> {
+): Promise<OpenAPIDefinition> {
     let openAPIFile: undefined | OpenAPIFile = undefined;
-    const subDirectories: OpenAPIDirectory[] = [];
+    const subDirectories: OpenAPIDefinition[] = [];
     const files = await readdir(absolutePathToOpenAPI);
     for (const file of files) {
         const absoluteFilepath = join(absolutePathToOpenAPI, ...parentFolders, RelativeFilePath.of(file));
         const stats = await lstat(absoluteFilepath);
         if (stats.isDirectory()) {
-            const subDirectory = await loadAndValidateOpenAPIDirectory(absoluteFilepath, [
+            const subDirectory = await loadAndValidateOpenAPIDefinition(absoluteFilepath, [
                 ...parentFolders,
                 RelativeFilePath.of(file),
             ]);

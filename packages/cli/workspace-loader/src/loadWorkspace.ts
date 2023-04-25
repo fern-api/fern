@@ -26,27 +26,17 @@ export async function loadWorkspace({
 
     if (openApiDirectoryExists) {
         const openApiDirectory = await loadAndValidateOpenAPIDirectory(absolutePathToOpenAPIDefinition);
-        if (openApiDirectory.file != null) {
-            return {
-                didSucceed: true,
-                workspace: {
-                    type: "openapi",
-                    name: "api",
-                    absolutePathToWorkspace,
-                    absolutePathToDefinition: absolutePathToOpenAPIDefinition,
-                    generatorsConfiguration,
-                    definition: {
-                        path: openApiDirectory.file.relativeFilepath,
-                        contents: openApiDirectory.file.contents,
-                        format: "yaml",
-                    },
-                },
-            };
-        } else {
-            return context.failAndThrow(
-                "The openapi directory must contain a single file with your OpenAPI definition."
-            );
-        }
+        return {
+            didSucceed: true,
+            workspace: {
+                type: "openapi",
+                name: "api",
+                absolutePathToWorkspace,
+                absolutePathToDefinition: absolutePathToOpenAPIDefinition,
+                generatorsConfiguration,
+                definition: openApiDirectory,
+            },
+        };
     }
 
     const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
