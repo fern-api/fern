@@ -31,7 +31,6 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/openapi-ir-model": "0.0.30",
     "openapi-types": "^12.0.0"
   },

@@ -1,9 +1,10 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
-import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
+import { loadAndValidateOpenAPIDirectory } from "./loadAndValidateOpenAPIWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
@@ -24,15 +25,8 @@ export async function loadWorkspace({
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
 
     if (openApiDirectoryExists) {
-        const openApiDirectoryContents = await getDirectoryContents(absolutePathToOpenAPIDefinition, {
-            fileExtensions: ["yml", "yaml", "json"],
-        });
-        if (
-            openApiDirectoryContents.length === 1 &&
-            openApiDirectoryContents[0] != null &&
-            openApiDirectoryContents[0].type === "file"
-        ) {
-            const openApiSpec = openApiDirectoryContents[0];
+        const openApiDirectory = await loadAndValidateOpenAPIDirectory(absolutePathToOpenAPIDefinition);
+        if (openApiDirectory.file != null) {
             return {
                 didSucceed: true,
                 workspace: {
@@ -42,8 +36,8 @@ export async function loadWorkspace({
                     absolutePathToDefinition: absolutePathToOpenAPIDefinition,
                     generatorsConfiguration,
                     definition: {
-                        path: RelativeFilePath.of(openApiSpec.name),
-                        contents: openApiSpec.contents,
+                        path: openApiDirectory.file.relativeFilepath,
+                        contents: openApiDirectory.file.contents,
                         format: "yaml",
                     },
                 },
