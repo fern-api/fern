@@ -185,9 +185,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 endpoint.queryParameters.length > 0
                                     ? ts.factory.createTypeLiteralNode(
                                           endpoint.queryParameters.map((queryParameter) => {
-                                              const type = context.typeSchema.getReferenceToRawType(
-                                                  queryParameter.valueType
-                                              );
+                                              const type = context.type.getReferenceToType(queryParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
                                                   ts.factory.createStringLiteral(queryParameter.name.wireValue),

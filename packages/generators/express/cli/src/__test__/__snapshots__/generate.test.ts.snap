@@ -3012,7 +3012,7 @@ export interface AdminServiceMethods {
         submissionId: serializers.SubmissionId.Raw;
         testCaseId: string;
     }, never, TraceApi.StoreTracedTestCaseRequest, {
-        \\"some-query-param\\"?: string | null;
+        \\"some-query-param\\"?: string;
     }>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -5765,7 +5765,7 @@ export interface PlaylistServiceMethods {
         serviceParam: number;
     }, TraceApi.Playlist, TraceApi.PlaylistCreateRequest, {
         multiple: number;
-        multipleOptional?: boolean | null;
+        multipleOptional?: boolean;
     }>, res: {
         send: (responseBody: TraceApi.Playlist) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -5774,7 +5774,7 @@ export interface PlaylistServiceMethods {
     getPlaylists(req: express.Request<{
         serviceParam: number;
     }, TraceApi.Playlist[], never, {
-        limit?: number | null;
+        limit?: number;
         otherField: string;
     }>, res: {
         send: (responseBody: TraceApi.Playlist[]) => Promise<void>;
