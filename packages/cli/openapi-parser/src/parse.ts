@@ -6,10 +6,10 @@ import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { generateIr } from "./v3/generateIr";
 
 export async function parse({
-    openApiDirectory,
+    openApiPath,
     taskContext,
 }: {
-    openApiDirectory: AbsoluteFilePath;
+    openApiPath: AbsoluteFilePath;
     taskContext: TaskContext;
 }): Promise<OpenAPIIntermediateRepresentation> {
     taskContext.logger.debug(`Reading ${openApiPath}`);
