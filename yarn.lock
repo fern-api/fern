@@ -4353,7 +4353,6 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.30
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
