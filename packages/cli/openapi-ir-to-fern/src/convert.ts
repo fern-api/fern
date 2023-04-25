@@ -20,9 +20,7 @@ export function convert({
         const openApiFile = openApiIr.files[openApiIr.rootPackage.file];
         if (openApiFile != null) {
             const convertedPackage = convertPackage({ openApiFile });
-            if (rootApiFile == null) {
-                rootApiFile = convertedPackage.rootApiFile;
-            }
+            rootApiFile = convertedPackage.rootApiFile;
             definitionFiles = {
                 ...definitionFiles,
                 ...convertedPackage.definitionFiles,
