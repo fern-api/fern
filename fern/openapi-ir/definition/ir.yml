@@ -1,8 +1,11 @@
 types:
+  FileId:
+    docs: ID uniquely identifying an OpenAPI file.
+    type: string
+
   OpenAPIIntermediateRepresentation:
     properties:
       files: map<FileId, OpenAPIFile>
-      packages:
 
   OpenAPIFile:
     properties:
@@ -14,6 +17,9 @@ types:
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
       securitySchemes: map<SecuritySchemeId, SecurityScheme>
+      dependencies:
+        type: set<FileId>
+        docs: The other specs that this OpenAPI file depends on
 
   FilePath:
     properties:
@@ -242,7 +248,10 @@ types:
     extends:
       - WithDescription
     properties:
-      reference: SchemaId
+      file:
+        type: optional<FileId>
+        docs: If empty, means it's in the existing file.
+      schema: SchemaId
 
   OneOfSchema:
     union:
