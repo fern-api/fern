@@ -4,7 +4,7 @@ import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration"
 import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
-import { loadAndValidateOpenAPIDirectory } from "./loadAndValidateOpenAPIWorkspace";
+import { loadAndValidateOpenAPIDefinition } from "./loadAndValidateOpenAPIWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
@@ -25,7 +25,7 @@ export async function loadWorkspace({
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
 
     if (openApiDirectoryExists) {
-        const openApiDirectory = await loadAndValidateOpenAPIDirectory(absolutePathToOpenAPIDefinition);
+        const openApiDirectory = await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition);
         return {
             didSucceed: true,
             workspace: {

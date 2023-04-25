@@ -8,7 +8,6 @@ import { convertServer } from "./converters/convertServer";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
     return {
-        filepath: {},
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
@@ -32,5 +31,6 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 convertSecurityScheme(securityScheme),
             ])
         ),
+        dependencies: [],
     };
 }

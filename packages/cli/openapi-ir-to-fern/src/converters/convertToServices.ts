@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
-import { PACKAGE_YML } from "../convert";
+import { PACKAGE_YML } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";

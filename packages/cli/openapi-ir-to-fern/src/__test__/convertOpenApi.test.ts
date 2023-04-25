@@ -18,7 +18,14 @@ function testFixture(fixtureName: string, filename: string) {
         it("simple", async () => {
             const openApiPath = path.join(FIXTURES_PATH, fixtureName, filename);
             const openApiIr = await parse({
-                openApiPath: AbsoluteFilePath.of(openApiPath),
+                root: {
+                    file: {
+                        absoluteFilepath: AbsoluteFilePath.of(openApiPath),
+                        contents: "",
+                        relativeFilepath: RelativeFilePath.of(filename),
+                    },
+                    subDirectories: [],
+                },
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
             });
             const fernDefinition = convert({ openApiIr });

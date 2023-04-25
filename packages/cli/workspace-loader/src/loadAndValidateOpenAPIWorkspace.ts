@@ -2,19 +2,6 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { lstat, readdir, readFile } from "fs/promises";
 import { OpenAPIDefinition, OpenAPIFile } from "./types/Workspace";
 
-export declare namespace validateStructureOfOpenAPIFiles {
-    export type Return = SuccessfulResult | FailedResult;
-
-    export interface SuccessfulResult {
-        didSucceed: true;
-        root: OpenAPIDefinition;
-    }
-
-    export interface FailedResult {
-        didSucceed: false;
-    }
-}
-
 export async function loadAndValidateOpenAPIDefinition(
     absolutePathToOpenAPI: AbsoluteFilePath,
     parentFolders: RelativeFilePath[] = []
