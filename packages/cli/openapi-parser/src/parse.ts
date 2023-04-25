@@ -1,21 +1,15 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { generateIr } from "./v3/generateIr";
 
-export interface OpenApiConvertedFernDefinition {
-    rootApiFile: RootApiFileSchema;
-    definitionFiles: Record<RelativeFilePath, DefinitionFileSchema>;
-}
-
 export async function parse({
-    openApiPath,
+    openApiDirectory,
     taskContext,
 }: {
-    openApiPath: AbsoluteFilePath;
+    openApiDirectory: AbsoluteFilePath;
     taskContext: TaskContext;
 }): Promise<OpenAPIIntermediateRepresentation> {
     taskContext.logger.debug(`Reading ${openApiPath}`);
