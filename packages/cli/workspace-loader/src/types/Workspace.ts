@@ -16,9 +16,15 @@ export interface OpenAPIWorkspace {
 }
 
 export interface OpenAPIDefinition {
-    path: RelativeFilePath;
+    file: OpenAPIFile | undefined;
+    subDirectories: OpenAPIDefinition[];
+}
+
+export interface OpenAPIFile {
+    absoluteFilepath: AbsoluteFilePath;
+    /* relative filepath from the root of the definition */
+    relativeFilepath: RelativeFilePath;
     contents: string;
-    format: "json" | "yaml";
 }
 
 export interface FernWorkspace {

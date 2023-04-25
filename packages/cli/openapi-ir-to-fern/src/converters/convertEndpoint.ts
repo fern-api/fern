@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, Request, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
-import { ROOT_PREFIX } from "../convert";
+import { ROOT_PREFIX } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -128,17 +128,17 @@ function getRequest({
         if (request.schema.type !== "reference") {
             throw Error("Only request references are currently supported");
         }
-        const schema = schemas[request.schema.reference];
+        const schema = schemas[request.schema.schema];
         if (schema == null) {
-            throw Error(`Failed to resolve schema reference ${request.schema.reference}`);
+            throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            throw Error(`Request ${request.schema.reference} must be object ${JSON.stringify(schema)}`);
+            throw Error(`Request ${request.schema.schema} must be object ${JSON.stringify(schema)}`);
         }
         return {
-            schemaIdsToExclude: [request.schema.reference],
+            schemaIdsToExclude: [request.schema.schema],
             value: {
-                name: requestName ?? request.schema.reference,
+                name: requestName ?? request.schema.schema,
                 "query-parameters": queryParameters,
                 body: {
                     properties: Object.fromEntries(

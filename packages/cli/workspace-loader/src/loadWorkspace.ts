@@ -4,7 +4,7 @@ import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration"
 import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
-import { loadAndValidateOpenAPIDirectory } from "./loadAndValidateOpenAPIWorkspace";
+import { loadAndValidateOpenAPIDefinition } from "./loadAndValidateOpenAPIWorkspace";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
@@ -25,28 +25,18 @@ export async function loadWorkspace({
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
 
     if (openApiDirectoryExists) {
-        const openApiDirectory = await loadAndValidateOpenAPIDirectory(absolutePathToOpenAPIDefinition);
-        if (openApiDirectory.file != null) {
-            return {
-                didSucceed: true,
-                workspace: {
-                    type: "openapi",
-                    name: "api",
-                    absolutePathToWorkspace,
-                    absolutePathToDefinition: absolutePathToOpenAPIDefinition,
-                    generatorsConfiguration,
-                    definition: {
-                        path: openApiDirectory.file.relativeFilepath,
-                        contents: openApiDirectory.file.contents,
-                        format: "yaml",
-                    },
-                },
-            };
-        } else {
-            return context.failAndThrow(
-                "The openapi directory must contain a single file with your OpenAPI definition."
-            );
-        }
+        const openApiDirectory = await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition);
+        return {
+            didSucceed: true,
+            workspace: {
+                type: "openapi",
+                name: "api",
+                absolutePathToWorkspace,
+                absolutePathToDefinition: absolutePathToOpenAPIDefinition,
+                generatorsConfiguration,
+                definition: openApiDirectory,
+            },
+        };
     }
 
     const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));

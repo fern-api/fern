@@ -70,7 +70,7 @@ export function convertReferenceToTypeReference({
 }): TypeReference {
     return {
         typeReference: {
-            type: prefix != null ? `${prefix}.${schema.reference}` : schema.reference,
+            type: prefix != null ? `${prefix}.${schema.schema}` : schema.schema,
             docs: schema.description ?? undefined,
         },
         additionalTypeDeclarations: {},

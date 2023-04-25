@@ -1,5 +1,28 @@
 types:
+  FileId:
+    docs: ID uniquely identifying an OpenAPI file.
+    type: string
+
   OpenAPIIntermediateRepresentation:
+    properties:
+      rootPackage:
+        type: OpenAPIRootPackage
+        docs: |
+          Represents the directory structure of multiple OpenAPI yamls.
+      files: map<FileId, OpenAPIFile>
+
+  OpenAPIRootPackage:
+    properties:
+      subpackages: list<OpenAPISubPackage>
+      file: optional<FileId>
+
+  OpenAPISubPackage:
+    properties:
+      name: string
+      subpackages: list<OpenAPISubPackage>
+      file: optional<FileId>
+
+  OpenAPIFile:
     properties:
       title: optional<string>
       description: optional<string>
@@ -8,6 +31,9 @@ types:
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
       securitySchemes: map<SecuritySchemeId, SecurityScheme>
+      dependencies:
+        type: set<FileId>
+        docs: The other specs that this OpenAPI file depends on
 
   WithDescription:
     properties:
@@ -231,7 +257,10 @@ types:
     extends:
       - WithDescription
     properties:
-      reference: SchemaId
+      file:
+        type: optional<FileId>
+        docs: If empty, means it's in the existing file.
+      schema: SchemaId
 
   OneOfSchema:
     union:

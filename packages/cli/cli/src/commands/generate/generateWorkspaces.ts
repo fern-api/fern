@@ -1,5 +1,5 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
@@ -96,7 +96,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
     context: TaskContext
 ): Promise<FernWorkspace> {
     const openApiIr = await parse({
-        openApiPath: join(openapiWorkspace.absolutePathToDefinition, openapiWorkspace.definition.path),
+        root: openapiWorkspace.definition,
         taskContext: context,
     });
     const definition = convert({

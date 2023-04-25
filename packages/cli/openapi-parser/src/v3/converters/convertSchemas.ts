@@ -22,7 +22,9 @@ export function convertSchema(
 ): Schema {
     if (isReferenceObject(schema)) {
         const referenceSchema = Schema.reference({
-            reference: getSchemaIdFromReference(schema),
+            // TODO(dsinghvi): references may contain files
+            file: undefined,
+            schema: getSchemaIdFromReference(schema),
             description: undefined,
         });
         if (wrapAsOptional) {
@@ -134,13 +136,15 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
         const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional);
         if (convertedSchema.type === "reference") {
             return Schema.reference({
-                reference: convertedSchema.reference,
+                file: convertedSchema.file,
+                schema: convertedSchema.schema,
                 description,
             });
         } else if (convertedSchema.type === "optional" && convertedSchema.value.type === "reference") {
             return Schema.optional({
                 value: Schema.reference({
-                    reference: convertedSchema.value.reference,
+                    file: convertedSchema.value.file,
+                    schema: convertedSchema.value.schema,
                     description: undefined,
                 }),
                 description,

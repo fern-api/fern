@@ -22,7 +22,6 @@
     { "path": "../cli/openapi-ir-to-fern" },
     { "path": "../cli/openapi-migrator" },
     { "path": "../cli/openapi-parser" },
-    { "path": "../cli/openapi-transformer" },
     { "path": "../cli/posthog-manager" },
     { "path": "../cli/project-loader" },
     { "path": "../cli/register" },

@@ -1,12 +1,12 @@
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir/_types";
+import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir/_types";
 import { OpenAPIV3 } from "openapi-types";
 import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 
-export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
+export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
     return {
         title: openApi.info.title,
         description: openApi.info.description,
@@ -31,5 +31,6 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 convertSecurityScheme(securityScheme),
             ])
         ),
+        dependencies: [],
     };
 }
