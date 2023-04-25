@@ -56,6 +56,7 @@ class PlaylistClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -91,6 +92,7 @@ class PlaylistClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -110,6 +112,7 @@ class PlaylistClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -139,6 +142,7 @@ class PlaylistClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -163,6 +167,7 @@ class PlaylistClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -210,6 +215,7 @@ class AsyncPlaylistClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -246,6 +252,7 @@ class AsyncPlaylistClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -266,6 +273,7 @@ class AsyncPlaylistClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -296,6 +304,7 @@ class AsyncPlaylistClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -321,6 +330,7 @@ class AsyncPlaylistClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         if 200 <= _response.status_code < 300:
             return

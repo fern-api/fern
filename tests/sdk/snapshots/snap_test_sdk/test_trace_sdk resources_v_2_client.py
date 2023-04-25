@@ -35,6 +35,7 @@ class V2Client:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -76,6 +77,7 @@ class AsyncV2Client:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         if 200 <= _response.status_code < 300:
             return

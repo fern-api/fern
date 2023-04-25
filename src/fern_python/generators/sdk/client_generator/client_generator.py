@@ -361,6 +361,11 @@ class ClientGenerator:
                     response_variable_name=ClientGenerator.RESPONSE_VARIABLE,
                     headers=self._get_headers_for_endpoint(service=service, endpoint=endpoint),
                     auth=self._get_httpx_auth_for_request(),
+                    timeout=AST.Expression(
+                        "None"
+                        if self._context.custom_config.timeout_in_seconds == "infinity"
+                        else f"{self._context.custom_config.timeout_in_seconds}"
+                    ),
                 )
             )
 

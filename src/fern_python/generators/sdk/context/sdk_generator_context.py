@@ -37,6 +37,7 @@ class SdkGeneratorContext(ABC):
             filepath_creator=self.filepath_creator,
         )
         self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
+        self.custom_config = custom_config
 
     @abstractmethod
     def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:

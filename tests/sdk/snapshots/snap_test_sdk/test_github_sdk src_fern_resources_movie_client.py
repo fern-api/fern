@@ -21,7 +21,9 @@ class MovieClient:
         self._environment = environment
 
     def get_movie(self, movie_id: MovieId) -> Movie:
-        _response = httpx.request("GET", urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"))
+        _response = httpx.request(
+            "GET", urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"), timeout=60
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
         if _response.status_code == 404:
@@ -33,7 +35,7 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all_movies(self) -> typing.List[Movie]:
-        _response = httpx.request("GET", urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"))
+        _response = httpx.request("GET", urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"), timeout=60)
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
         try:
@@ -44,7 +46,10 @@ class MovieClient:
 
     def create_movie(self, *, request: Movie) -> None:
         _response = httpx.request(
-            "POST", urllib.parse.urljoin(f"{self._environment}/", "movie/movie"), json=jsonable_encoder(request)
+            "POST",
+            urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
+            json=jsonable_encoder(request),
+            timeout=60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -59,7 +64,9 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_movie(self, movie_id: MovieId) -> None:
-        _response = httpx.request("DELETE", urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"))
+        _response = httpx.request(
+            "DELETE", urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"), timeout=60
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 404:
@@ -78,7 +85,7 @@ class AsyncMovieClient:
     async def get_movie(self, movie_id: MovieId) -> Movie:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
-                "GET", urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}")
+                "GET", urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"), timeout=60
             )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
@@ -92,7 +99,9 @@ class AsyncMovieClient:
 
     async def get_all_movies(self) -> typing.List[Movie]:
         async with httpx.AsyncClient() as _client:
-            _response = await _client.request("GET", urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"))
+            _response = await _client.request(
+                "GET", urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"), timeout=60
+            )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
         try:
@@ -104,7 +113,10 @@ class AsyncMovieClient:
     async def create_movie(self, *, request: Movie) -> None:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
-                "POST", urllib.parse.urljoin(f"{self._environment}/", "movie/movie"), json=jsonable_encoder(request)
+                "POST",
+                urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
+                json=jsonable_encoder(request),
+                timeout=60,
             )
         if 200 <= _response.status_code < 300:
             return
@@ -121,7 +133,7 @@ class AsyncMovieClient:
     async def delete_movie(self, movie_id: MovieId) -> None:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
-                "DELETE", urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}")
+                "DELETE", urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"), timeout=60
             )
         if 200 <= _response.status_code < 300:
             return

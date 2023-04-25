@@ -24,6 +24,7 @@ class HttpX:
         headers: Optional[AST.Expression],
         files: Optional[AST.Expression],
         auth: Optional[AST.Expression],
+        timeout: AST.Expression,
         response_variable_name: str,
         is_async: bool,
     ) -> AST.Expression:
@@ -66,6 +67,10 @@ class HttpX:
                     writer.write("auth=")
                     writer.write_node(auth)
                     writer.write_line(",")
+
+                writer.write("timeout=")
+                writer.write_node(timeout)
+                writer.write_line(",")
 
             writer.write_line(")")
 

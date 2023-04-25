@@ -15,7 +15,10 @@ def test_trace_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
         tmpdir=tmpdir,
         cli=cli,
         filename_of_test=__file__,
-        custom_config={"use_api_name_in_package": True},
+        custom_config={
+            "use_api_name_in_package": True,
+            "timeout_in_seconds": "infinity",
+        },
     )
 
 
@@ -26,6 +29,9 @@ def test_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
         tmpdir=tmpdir,
         cli=cli,
         filename_of_test=__file__,
+        custom_config={
+            "timeout_in_seconds": 5,
+        },
         output_mode=config.OutputMode.factory.publish(
             config.GeneratorPublishConfig(
                 registries=config.GeneratorRegistriesConfig(

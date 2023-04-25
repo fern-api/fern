@@ -37,6 +37,7 @@ class ProblemClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -56,6 +57,7 @@ class ProblemClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -75,6 +77,7 @@ class ProblemClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -96,6 +99,7 @@ class ProblemClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -129,6 +133,7 @@ class AsyncProblemClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -149,6 +154,7 @@ class AsyncProblemClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -169,6 +175,7 @@ class AsyncProblemClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -191,6 +198,7 @@ class AsyncProblemClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()

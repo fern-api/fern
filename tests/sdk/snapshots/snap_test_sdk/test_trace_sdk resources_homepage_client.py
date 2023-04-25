@@ -36,6 +36,7 @@ class HomepageClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         try:
             _response_json = _response.json()
@@ -56,6 +57,7 @@ class HomepageClient:
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
+            timeout=None,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -89,6 +91,7 @@ class AsyncHomepageClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         try:
             _response_json = _response.json()
@@ -110,6 +113,7 @@ class AsyncHomepageClient:
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
+                timeout=None,
             )
         if 200 <= _response.status_code < 300:
             return
