@@ -4361,7 +4361,6 @@ __metadata:
     openapi-types: ^12.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    queue-typescript: ^1.0.1
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -15182,13 +15181,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"linked-list-typescript@npm:^1.0.11":
-  version: 1.0.15
-  resolution: "linked-list-typescript@npm:1.0.15"
-  checksum: c88488f3b27ae2cb26b6aedd9cc4ffa4a07f3e97957f96c99e312ce825dc095b41f3d9e5a2e5f0ac324c13ae2053b3003589e4cac62cdeb4cc12be0dc10515aa
-  languageName: node
-  linkType: hard
-
 "lint-staged@npm:^13.0.3":
   version: 13.0.3
   resolution: "lint-staged@npm:13.0.3"
@@ -18487,15 +18479,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
-  languageName: node
-  linkType: hard
-
-"queue-typescript@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "queue-typescript@npm:1.0.1"
-  dependencies:
-    linked-list-typescript: ^1.0.11
-  checksum: 52db58a1e5b29927f94e97aaac1ae2951fa089571021250e728a209da8160c9471b86239cc7e277d6a85fd6a2bcb1f89cc2f8e0962816692e3cd98e86504eb3e
   languageName: node
   linkType: hard
 

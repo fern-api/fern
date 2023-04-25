@@ -9201,7 +9201,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["openapi-types", "npm:12.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["queue-typescript", "npm:1.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
@@ -22391,15 +22390,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["linked-list-typescript", [\
-        ["npm:1.0.15", {\
-          "packageLocation": "./.yarn/cache/linked-list-typescript-npm-1.0.15-58f04136fb-c88488f3b2.zip/node_modules/linked-list-typescript/",\
-          "packageDependencies": [\
-            ["linked-list-typescript", "npm:1.0.15"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["lint-staged", [\
         ["npm:13.0.3", {\
           "packageLocation": "./.yarn/cache/lint-staged-npm-13.0.3-5f9010e5ff-53d585007d.zip/node_modules/lint-staged/",\
@@ -27038,16 +27028,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/queue-microtask-npm-1.2.3-fcc98e4e2d-b676f8c040.zip/node_modules/queue-microtask/",\
           "packageDependencies": [\
             ["queue-microtask", "npm:1.2.3"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["queue-typescript", [\
-        ["npm:1.0.1", {\
-          "packageLocation": "./.yarn/cache/queue-typescript-npm-1.0.1-b291feb596-52db58a1e5.zip/node_modules/queue-typescript/",\
-          "packageDependencies": [\
-            ["queue-typescript", "npm:1.0.1"],\
-            ["linked-list-typescript", "npm:1.0.15"]\
           ],\
           "linkType": "HARD"\
         }]\
