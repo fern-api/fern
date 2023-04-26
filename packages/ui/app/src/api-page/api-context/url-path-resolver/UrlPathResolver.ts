@@ -1,4 +1,4 @@
-import { entries } from "@fern-api/core-utils";
+import { assertNever, entries } from "@fern-api/core-utils";
 import { FernRegistry } from "@fern-fern/registry";
 
 export type ResolvedUrlPath = ResolvedTopLevelEndpointPath | ResolvedSubpackagePath;
@@ -11,17 +11,17 @@ export interface ResolvedTopLevelEndpointPath {
 export interface ResolvedSubpackagePath {
     type: "subpackage";
     subpackageId: FernRegistry.SubpackageId;
-    subpackage: FernRegistry.ApiDefinitionSubpackage;
+    endpointId: string | undefined;
 }
 
 export interface UrlPathResolver {
     getUrlPathForSubpackage(subpackageId: FernRegistry.SubpackageId): string;
     getUrlPathForEndpoint(subpackageId: FernRegistry.SubpackageId, endpointId: string): string;
     getUrlPathForTopLevelEndpoint(endpointId: string): string;
-    resolvePath(path: string): ResolvedUrlPath | undefined;
+    resolvePath(args: { pathname: string; hash: string }): ResolvedUrlPath | undefined;
     getHashForEndpoint(endpointId: string): string;
     getHtmlIdForEndpoint(endpointId: string): string;
-    isTopLevelEndpointSelected(args: { endpointId: string; pathname: string }): boolean;
+    isTopLevelEndpointSelected(args: { endpointId: string; pathname: string; hash: string }): boolean;
     isSubpackageEndpointSelected(args: {
         subpackageId: FernRegistry.SubpackageId;
         pathname: string;
@@ -34,8 +34,15 @@ export interface UrlPathResolver {
         pathname: string;
         hash: string;
     }): boolean;
+    stringifyPath: (resolvedPath: ResolvedUrlPath) => string;
 }
 
+const HASH_PREFIX_REGEX = /^#/;
+
+interface SubpackageWithId {
+    subpackage: FernRegistry.ApiDefinitionSubpackage;
+    subpackageId: FernRegistry.SubpackageId;
+}
 export class UrlPathResolverImpl implements UrlPathResolver {
     private apiDefinition: FernRegistry.ApiDefinition;
     private subpackageIdToParentId: Record<FernRegistry.SubpackageId, FernRegistry.SubpackageId> = {};
@@ -76,7 +83,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         return endpointId;
     }
 
-    public resolvePath(pathname: string): ResolvedUrlPath | undefined {
+    public resolvePath({ pathname, hash }: { pathname: string; hash: string }): ResolvedUrlPath | undefined {
         const parts = pathname.split("/").filter((part) => part.length > 0);
 
         const [firstPart, ...remainingParts] = parts;
@@ -94,11 +101,33 @@ export class UrlPathResolverImpl implements UrlPathResolver {
             }
         }
 
-        return this.resolveSubpackage(this.apiDefinition.rootPackage, parts);
+        const subpackage = this.resolveSubpackage(this.apiDefinition.rootPackage, parts);
+        if (subpackage == null) {
+            return undefined;
+        }
+
+        const hashWithoutPoundSign = hash.replace(HASH_PREFIX_REGEX, "");
+
+        return {
+            type: "subpackage",
+            subpackageId: subpackage.subpackageId,
+            endpointId: hashWithoutPoundSign.length > 0 ? hashWithoutPoundSign : undefined,
+        };
     }
 
-    public isTopLevelEndpointSelected({ endpointId, pathname }: { endpointId: string; pathname: string }): boolean {
-        const resolvedPath = this.resolvePath(pathname);
+    public isTopLevelEndpointSelected({
+        endpointId,
+        pathname,
+        hash,
+    }: {
+        endpointId: string;
+        pathname: string;
+        hash: string;
+    }): boolean {
+        const resolvedPath = this.resolvePath({
+            pathname,
+            hash,
+        });
         return resolvedPath?.type === "top-level-endpoint" && resolvedPath.endpoint.id === endpointId;
     }
 
@@ -111,8 +140,12 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         pathname: string;
         hash: string;
     }): boolean {
-        const resolvedPath = this.resolvePath(pathname);
-        return resolvedPath?.type === "subpackage" && resolvedPath.subpackageId === subpackageId && hash.length === 0;
+        const resolvedPath = this.resolvePath({ pathname, hash });
+        return (
+            resolvedPath?.type === "subpackage" &&
+            resolvedPath.subpackageId === subpackageId &&
+            resolvedPath.endpointId == null
+        );
     }
 
     public isSubpackageEndpointSelected({
@@ -124,8 +157,15 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         pathname: string;
         hash: string;
     }): boolean {
-        const resolvedPath = this.resolvePath(pathname);
-        return resolvedPath?.type === "subpackage" && resolvedPath.subpackageId === subpackageId && hash.length > 0;
+        const resolvedPath = this.resolvePath({
+            pathname,
+            hash,
+        });
+        return (
+            resolvedPath?.type === "subpackage" &&
+            resolvedPath.subpackageId === subpackageId &&
+            resolvedPath.endpointId != null
+        );
     }
 
     public isEndpointSelected({
@@ -139,7 +179,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         pathname: string;
         hash: string;
     }): boolean {
-        const resolvedPath = this.resolvePath(pathname);
+        const resolvedPath = this.resolvePath({ pathname, hash });
         return (
             resolvedPath?.type === "subpackage" &&
             resolvedPath.subpackageId === subpackageId &&
@@ -155,10 +195,27 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         return endpointId;
     }
 
+    public stringifyPath(resolvedPath: ResolvedUrlPath): string {
+        if (Math.random() >= 0) {
+            return `${Math.random()}`;
+        }
+        switch (resolvedPath.type) {
+            case "top-level-endpoint":
+                return resolvedPath.endpoint.id;
+            case "subpackage": {
+                // TODO construct path
+                const subpackagePath = resolvedPath.subpackageId;
+                return subpackagePath;
+            }
+            default:
+                assertNever(resolvedPath);
+        }
+    }
+
     private resolveSubpackage(
         parent: FernRegistry.ApiDefinitionPackage,
         subpackageNamePath: string[]
-    ): ResolvedSubpackagePath | undefined {
+    ): SubpackageWithId | undefined {
         const [nextSubpackageName, ...remainingSubpackageNames] = subpackageNamePath;
         if (nextSubpackageName == null) {
             return undefined;
@@ -176,12 +233,11 @@ export class UrlPathResolverImpl implements UrlPathResolver {
     private getSubpackageByName(
         parent: FernRegistry.ApiDefinitionPackage,
         subpackageName: string
-    ): ResolvedSubpackagePath | undefined {
+    ): SubpackageWithId | undefined {
         for (const subpackageId of parent.subpackages) {
             const subpackage = this.apiDefinition.subpackages[subpackageId];
             if (subpackage?.name === subpackageName) {
                 return {
-                    type: "subpackage",
                     subpackage,
                     subpackageId,
                 };

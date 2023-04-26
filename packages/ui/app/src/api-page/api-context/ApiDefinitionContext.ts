@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import React from "react";
 import { PackagePath } from "../../commons/PackagePath";
-import { UrlPathResolver } from "./url-path-resolver/UrlPathResolver";
+import { ResolvedUrlPath, UrlPathResolver } from "./url-path-resolver/UrlPathResolver";
 
 export const ApiDefinitionContext = React.createContext<() => ApiDefinitionContextValue>(() => {
     throw new Error("ApiDefinitionContextProvider is not present in this tree.");
@@ -15,4 +15,6 @@ export interface ApiDefinitionContextValue {
     resolveEndpointById: (packagePath: PackagePath, endpointId: string) => FernRegistry.EndpointDefinition | undefined;
     resolveSubpackageById: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage;
     urlPathResolver: UrlPathResolver;
+    onClickSidebarItem: (item: ResolvedUrlPath) => void;
+    registerSidebarItemClickListener: (path: ResolvedUrlPath, listener: () => void) => () => void;
 }

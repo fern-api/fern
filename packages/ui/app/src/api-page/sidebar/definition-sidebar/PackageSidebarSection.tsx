@@ -3,6 +3,7 @@ import { startCase } from "lodash-es";
 import { useContext, useMemo } from "react";
 import { generatePath, useLocation } from "react-router-dom";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
+import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { DefinitionRoutes } from "../../routes";
 import { useCurrentApiIdOrThrow } from "../../routes/useCurrentApiId";
@@ -64,6 +65,15 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({ s
     const { depth } = useContext(ApiDefinitionSidebarContext);
     const contextValue = useMemo((): ApiDefinitionSidebarContextValue => ({ depth: depth + 1 }), [depth]);
 
+    const resolvedUrlPath = useMemo(
+        (): ResolvedUrlPath => ({
+            type: "subpackage",
+            subpackageId,
+            endpointId: undefined,
+        }),
+        [subpackageId]
+    );
+
     const hasEndpoints = useMemo(
         () => hasEndpointsRecursive(subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackageId]
@@ -76,6 +86,7 @@ export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({ s
         <SidebarSection
             title={<div className="font-bold">{startCase(subpackage.name)}</div>}
             path={targetUrlPath}
+            resolvedUrlPath={resolvedUrlPath}
             isSelected={isSelected}
         >
             <ApiDefinitionSidebarContext.Provider value={contextValue}>

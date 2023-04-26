@@ -1,7 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { generatePath } from "react-router-dom";
+import { generatePath, useLocation } from "react-router-dom";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
+import { ResolvedTopLevelEndpointPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
 import { DefinitionRoutes } from "../../routes";
@@ -24,13 +25,15 @@ export const TopLevelEndpointSidebarItem: React.FC<TopLevelEndpointSidebarItem.P
     );
 
     const currentPathname = useCurrentPathname();
+    const location = useLocation();
     const isSelected = useMemo(
         () =>
             urlPathResolver.isTopLevelEndpointSelected({
                 endpointId: endpoint.id,
                 pathname: currentPathname,
+                hash: location.hash,
             }),
-        [currentPathname, endpoint.id, urlPathResolver]
+        [currentPathname, endpoint.id, location.hash, urlPathResolver]
     );
 
     const organizationId = useCurrentOrganizationIdOrThrow();
@@ -46,9 +49,18 @@ export const TopLevelEndpointSidebarItem: React.FC<TopLevelEndpointSidebarItem.P
         [apiId, endpointPath, organizationId]
     );
 
+    const resolvedUrlPath = useMemo(
+        (): ResolvedTopLevelEndpointPath => ({
+            type: "top-level-endpoint",
+            endpoint,
+        }),
+        [endpoint]
+    );
+
     return (
         <ClickableSidebarItem
             path={targetUrlPath}
+            resolvedUrlPath={resolvedUrlPath}
             title={<EndpointTitle endpoint={endpoint} />}
             isSelected={isSelected}
         />

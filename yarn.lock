@@ -4879,6 +4879,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-icons: ^4.7.1
+    react-intersection-observer: ^9.4.3
     react-markdown: ^8.0.5
     react-router-dom: ^6.4.3
     react-syntax-highlighter: ^15.5.0
@@ -19228,6 +19229,15 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     react: "*"
   checksum: ed3cbdc5fc0c4d7d2debf78fdc8c4c80aeacf85a506a9a3c11b1d5922de393ac0a6542012b7fb81761e9280c54d0f26827d50a92b54ec8f0c8e52364d89970b5
+  languageName: node
+  linkType: hard
+
+"react-intersection-observer@npm:^9.4.3":
+  version: 9.4.3
+  resolution: "react-intersection-observer@npm:9.4.3"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: ac31c6c76ce72019a1fb50fe6b53ef6429d98b9e9b937f92d16635ef8586392c7058bb61526a8fe6bea6ce36c006015fe2d8893bac43eda6157b9e6b17ad9b68
   languageName: node
   linkType: hard
 

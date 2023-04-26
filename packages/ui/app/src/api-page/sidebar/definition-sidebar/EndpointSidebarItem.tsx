@@ -2,6 +2,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
 import { generatePath, useLocation } from "react-router-dom";
 import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
+import { ResolvedSubpackagePath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { EndpointTitle } from "../../definition/endpoints/EndpointTitle";
 import { DefinitionRoutes } from "../../routes";
@@ -50,11 +51,21 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpo
         [apiId, endpointPath, organizationId]
     );
 
+    const resolvedUrlPath = useMemo(
+        (): ResolvedSubpackagePath => ({
+            type: "subpackage",
+            subpackageId,
+            endpointId: endpoint.id,
+        }),
+        [endpoint.id, subpackageId]
+    );
+
     return (
         <ClickableSidebarItem
             path={targetUrlPath}
             title={<EndpointTitle endpoint={endpoint} />}
             isSelected={isSelected}
+            resolvedUrlPath={resolvedUrlPath}
         />
     );
 };

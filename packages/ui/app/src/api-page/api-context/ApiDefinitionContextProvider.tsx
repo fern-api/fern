@@ -1,9 +1,9 @@
 import { FernRegistry } from "@fern-fern/registry";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { PackagePath } from "../../commons/PackagePath";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 import { TypeIdToPackagePathCache } from "./TypeIdToPackagePathCache";
-import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
+import { ResolvedUrlPath, UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
@@ -94,6 +94,44 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(api), [api]);
 
     /**
+     * sidebar item listeners
+     */
+    const sidebarItemClickListeners = useRef<Record<string, (() => void)[]>>({});
+
+    const registerSidebarItemClickListener = useCallback(
+        (resolvedUrlPath: ResolvedUrlPath, listener: () => void) => {
+            const stringifiedPath = urlPathResolver.stringifyPath(resolvedUrlPath);
+            const listenersForPath = (sidebarItemClickListeners.current[stringifiedPath] ??= []);
+            listenersForPath.push(listener);
+            return () => {
+                const listeners = sidebarItemClickListeners.current[stringifiedPath];
+                if (listeners != null) {
+                    const indexOfListenerToDelete = listeners.indexOf(listener);
+                    if (indexOfListenerToDelete !== -1) {
+                        // eslint-disable-next-line no-console
+                        console.warn("Failed to locate sidebar item click listener for deregistration.");
+                    } else {
+                        listeners.splice(indexOfListenerToDelete, 1);
+                    }
+                }
+            };
+        },
+        [urlPathResolver]
+    );
+
+    const onClickSidebarItem = useCallback(
+        (resolvedUrlPath: ResolvedUrlPath) => {
+            const listeners = sidebarItemClickListeners.current[urlPathResolver.stringifyPath(resolvedUrlPath)];
+            if (listeners != null) {
+                for (const listener of listeners) {
+                    listener();
+                }
+            }
+        },
+        [urlPathResolver]
+    );
+
+    /**
      * context
      */
 
@@ -106,10 +144,14 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
             resolveEndpointById,
             resolveSubpackageById,
             urlPathResolver,
+            onClickSidebarItem,
+            registerSidebarItemClickListener,
         }),
         [
             api,
             getPackagePathForTypeId,
+            onClickSidebarItem,
+            registerSidebarItemClickListener,
             resolveEndpointById,
             resolveSubpackageById,
             resolveTypeById,

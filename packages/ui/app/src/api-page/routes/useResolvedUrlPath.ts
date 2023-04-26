@@ -8,10 +8,15 @@ export function useResolvedUrlPath(): ResolvedUrlPath | undefined {
     const { urlPathResolver } = useApiDefinitionContext();
     const location = useLocation();
 
-    const match = matchPath(DefinitionRoutes.API_PACKAGE.absolutePath, location.pathname);
-    const urlPath = match?.params["*"];
-    return useMemo(
-        () => (urlPath != null ? urlPathResolver.resolvePath(urlPath) : undefined),
-        [urlPath, urlPathResolver]
-    );
+    return useMemo(() => {
+        const match = matchPath(DefinitionRoutes.API_PACKAGE.absolutePath, location.pathname);
+        const urlPath = match?.params["*"];
+        if (urlPath == null) {
+            return undefined;
+        }
+        return urlPathResolver.resolvePath({
+            pathname: urlPath,
+            hash: location.hash,
+        });
+    }, [location.hash, location.pathname, urlPathResolver]);
 }

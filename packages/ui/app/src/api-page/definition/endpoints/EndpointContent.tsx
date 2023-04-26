@@ -1,10 +1,12 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 import { MonospaceText } from "../../../commons/MonospaceText";
+import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
+import { useSubpackageContext } from "../subpackages/context/SubpackageContext";
 import { useEndpointContext } from "./context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointPathParameter } from "./EndpointPathParameter";
@@ -16,22 +18,13 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace EndpointContent {
     export interface Props {
+        resolvedUrlPath: ResolvedUrlPath;
         endpoint: FernRegistry.EndpointDefinition;
     }
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint }) => {
-    const { urlPathResolver } = useApiDefinitionContext();
-
-    const hash = urlPathResolver.getHashForEndpoint(endpoint.id);
-    const htmlId = urlPathResolver.getHtmlIdForEndpoint(endpoint.id);
-    const ref = useRef<HTMLDivElement | null>(null);
-    const currentHash = useLocation().hash;
-    useEffect(() => {
-        if (currentHash === hash) {
-            ref.current?.scrollIntoView();
-        }
-    }, [currentHash, hash]);
+export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPath, endpoint }) => {
+    const { urlPathResolver, registerSidebarItemClickListener } = useApiDefinitionContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverResponseProperty = useCallback(
@@ -41,8 +34,41 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint }) =
         [setHoveredResponsePropertyPath]
     );
 
+    const { setIsEndpointInView } = useSubpackageContext();
+    const onChangeIsInView = useCallback(
+        (isInView: boolean) => {
+            setIsEndpointInView(endpoint.id, isInView);
+        },
+        [endpoint.id, setIsEndpointInView]
+    );
+
+    const { ref: setRefForIntersectionObserver } = useInView({
+        threshold: 0.5,
+        onChange: onChangeIsInView,
+    });
+
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const setContainerRef = useCallback(
+        (ref: HTMLDivElement | null) => {
+            setRefForIntersectionObserver(ref);
+            containerRef.current = ref;
+        },
+        [setRefForIntersectionObserver]
+    );
+
+    useEffect(() => {
+        const unsubscribe = registerSidebarItemClickListener(resolvedUrlPath, () => {
+            containerRef.current?.scrollIntoView();
+        });
+        return unsubscribe;
+    }, [registerSidebarItemClickListener, resolvedUrlPath]);
+
     return (
-        <div className="flex-1 flex gap-24 px-24 min-w-0" id={htmlId} ref={ref}>
+        <div
+            className="flex-1 flex gap-24 px-24 min-w-0"
+            id={urlPathResolver.getHtmlIdForEndpoint(endpoint.id)}
+            ref={setContainerRef}
+        >
             <div className="flex-1 flex flex-col">
                 <div className="pt-10 text-2xl font-bold">
                     <EndpointTitle endpoint={endpoint} />
