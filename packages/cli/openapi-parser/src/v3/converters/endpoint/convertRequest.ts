@@ -1,6 +1,7 @@
 import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject } from "../../isReferenceObject";
+import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
@@ -14,9 +15,11 @@ export interface ConvertedRequest {
 export function convertRequest({
     requestBody,
     document,
+    context,
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
+    context: OpenAPIV3ParserContext;
 }): ConvertedRequest | undefined {
     if (isReferenceObject(requestBody)) {
         throw new Error(`Converting referenced request body is unsupported: ${JSON.stringify(requestBody)}`);
@@ -50,7 +53,7 @@ export function convertRequest({
                     }
                     return {
                         key,
-                        schema: MultipartSchema.json(convertSchema(definition, false)),
+                        schema: MultipartSchema.json(convertSchema(definition, false, context)),
                         description: undefined,
                     };
                 }),
@@ -63,7 +66,7 @@ export function convertRequest({
     if (requestBodySchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema, false);
+    const requestSchema = convertSchema(requestBodySchema, false, context);
     return {
         value: Request.json({
             description: undefined,

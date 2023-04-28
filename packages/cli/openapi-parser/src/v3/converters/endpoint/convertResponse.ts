@@ -1,6 +1,7 @@
 import { Response } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject } from "../../isReferenceObject";
+import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
@@ -9,7 +10,13 @@ const APPLICATION_JSON_CONTENT = "application/json";
 // (i.e. try for 200, then 201, then 204)
 const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
 
-export function convertResponse({ responses }: { responses: OpenAPIV3.ResponsesObject }): Response | undefined {
+export function convertResponse({
+    responses,
+    context,
+}: {
+    responses: OpenAPIV3.ResponsesObject;
+    context: OpenAPIV3ParserContext;
+}): Response | undefined {
     for (const statusCode of SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
 
@@ -27,7 +34,7 @@ export function convertResponse({ responses }: { responses: OpenAPIV3.ResponsesO
 
         return {
             description: response.description,
-            schema: convertSchema(responsSchema, false),
+            schema: convertSchema(responsSchema, false, context),
         };
     }
     return undefined;

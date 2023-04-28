@@ -2791,7 +2791,9 @@ login screen as a login option.
                 },
               },
             ],
-            "description": undefined,
+            "description": "Connection object that specifies the configuration for an
+authentication connection that is set up for a Dev organization.
+",
             "discriminantProperty": "type",
             "name": undefined,
             "schemas": {
@@ -3921,7 +3923,8 @@ it would appear on the login button as 'Log in to abclogin'.
                 },
               },
             ],
-            "description": undefined,
+            "description": "Request to create a new enterprise authentication connection.
+",
             "discriminantProperty": "type",
             "name": undefined,
             "schemas": {
@@ -4138,7 +4141,9 @@ it would appear on the login button as 'Log in to abclogin'.
                 },
               },
             ],
-            "description": undefined,
+            "description": "Request to update an enterprise authentication connection for a Dev
+organization.
+",
             "discriminantProperty": "type",
             "name": undefined,
             "schemas": {
@@ -7321,7 +7326,7 @@ will appear in the response.
                 },
               },
             ],
-            "description": undefined,
+            "description": "The request to create a timeline entry for an object.",
             "discriminantProperty": "type",
             "name": undefined,
             "schemas": {
@@ -7527,7 +7532,7 @@ sort order. If not set, then no prior elements exist.
                 },
               },
             ],
-            "description": undefined,
+            "description": "The request to update a timeline entry.",
             "discriminantProperty": "type",
             "name": undefined,
             "schemas": {
@@ -9860,6 +9865,4039 @@ empty.
   },
   "rootPackage": {
     "file": "openapi.yml",
+    "name": "",
+    "subpackages": [],
+  },
+}
+`;
+
+exports[`open api parser hathora simple 1`] = `
+{
+  "files": {
+    "openapi.json": {
+      "dependencies": [],
+      "description": undefined,
+      "endpoints": [
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetApps",
+          "path": "/apps/v1/list",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ApplicationWithDeployment",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateApp",
+          "path": "/apps/v1/create",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "authConfiguration",
+                  "schema": {
+                    "allOf": [],
+                    "description": undefined,
+                    "name": undefined,
+                    "properties": [
+                      {
+                        "key": "google",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "allOf": [],
+                            "description": undefined,
+                            "name": undefined,
+                            "properties": [
+                              {
+                                "key": "clientId",
+                                "schema": {
+                                  "description": undefined,
+                                  "schema": {
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "object",
+                          },
+                        },
+                      },
+                      {
+                        "key": "nickname",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                      {
+                        "key": "anonymous",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                    ],
+                    "type": "object",
+                  },
+                },
+                {
+                  "key": "appName",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "UpdateApp",
+          "path": "/apps/v1/update/{appId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "authConfiguration",
+                  "schema": {
+                    "allOf": [],
+                    "description": undefined,
+                    "name": undefined,
+                    "properties": [
+                      {
+                        "key": "google",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "allOf": [],
+                            "description": undefined,
+                            "name": undefined,
+                            "properties": [
+                              {
+                                "key": "clientId",
+                                "schema": {
+                                  "description": undefined,
+                                  "schema": {
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "object",
+                          },
+                        },
+                      },
+                      {
+                        "key": "nickname",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                      {
+                        "key": "anonymous",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                    ],
+                    "type": "object",
+                  },
+                },
+                {
+                  "key": "appName",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetAppInfo",
+          "path": "/apps/v1/info/{appId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "PATCH",
+          "operationId": "DeleteApp",
+          "path": "/apps/v1/delete/{appId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "LoginAnonymous",
+          "path": "/auth/v1/{appId}/login/anonymous",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "token",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AuthV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "LoginNickname",
+          "path": "/auth/v1/{appId}/login/nickname",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "nickname",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "token",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AuthV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "LoginGoogle",
+          "path": "/auth/v1/{appId}/login/google",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "idToken",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "token",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AuthV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetBuilds",
+          "path": "/builds/v1/{appId}/list",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Build",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetBuildInfo",
+          "path": "/builds/v1/{appId}/info/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Build",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateBuild",
+          "path": "/builds/v1/{appId}/create",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Build",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "RunBuild",
+          "path": "/builds/v1/{appId}/run/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "properties": [
+              {
+                "description": undefined,
+                "key": "file",
+                "schema": {
+                  "type": "file",
+                },
+              },
+            ],
+            "type": "multipart",
+          },
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "PATCH",
+          "operationId": "DeleteBuild",
+          "path": "/builds/v1/{appId}/delete/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetDeployments",
+          "path": "/deployments/v1/{appId}/list",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Deployment",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DeploymentV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetDeploymentInfo",
+          "path": "/deployments/v1/{appId}/info/{deploymentId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Deployment",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DeploymentV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateDeployment",
+          "path": "/deployments/v1/{appId}/create/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "DeploymentConfig",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Deployment",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DeploymentV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetPingServiceEndpoints",
+          "path": "/discovery/v1/ping",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "DiscoveryResponse",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DiscoveryV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePrivateLobbyDeprecated",
+          "path": "/lobby/v1/{appId}/create/private",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "local",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "RoomId",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePublicLobbyDeprecated",
+          "path": "/lobby/v1/{appId}/create/public",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "local",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "RoomId",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "GET",
+          "operationId": "ListActivePublicLobbiesDeprecated",
+          "path": "/lobby/v1/{appId}/list",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "local",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Lobby",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePrivateLobby",
+          "path": "/lobby/v2/{appId}/create/private",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePublicLobby",
+          "path": "/lobby/v2/{appId}/create/public",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreateLocalLobby",
+          "path": "/lobby/v2/{appId}/create/local",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreateLobby",
+          "path": "/lobby/v2/{appId}/create",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "visibility",
+                  "schema": {
+                    "description": undefined,
+                    "name": undefined,
+                    "type": "enum",
+                    "values": [
+                      {
+                        "name": undefined,
+                        "value": "public",
+                      },
+                      {
+                        "name": undefined,
+                        "value": "private",
+                      },
+                      {
+                        "name": undefined,
+                        "value": "local",
+                      },
+                    ],
+                  },
+                },
+                {
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "ListActivePublicLobbies",
+          "path": "/lobby/v2/{appId}/list/public",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Lobby",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLobbyInfo",
+          "path": "/lobby/v2/{appId}/info/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "SetLobbyState",
+          "path": "/lobby/v2/{appId}/setState/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "state",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLogsForApp",
+          "path": "/logs/v1/{appId}/all",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "follow",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "tailLines",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LogV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLogsForProcess",
+          "path": "/logs/v1/{appId}/process/{processId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "follow",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "tailLines",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LogV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLogsForDeployment",
+          "path": "/logs/v1/{appId}/deployment/{deploymentId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "follow",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "tailLines",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LogV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetMetrics",
+          "path": "/metrics/v1/{appId}/process/{processId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "metrics",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "MetricName",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "end",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "start",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "step",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "MetricsResponse",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "MetricsV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetRunningProcesses",
+          "path": "/processes/v1/{appId}/list/running",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessWithRooms",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "ProcessesV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetStoppedProcesses",
+          "path": "/processes/v1/{appId}/list/stopped",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Process",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "ProcessesV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetProcessInfo",
+          "path": "/processes/v1/{appId}/info/{processId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Process",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "ProcessesV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateRoom",
+          "path": "/rooms/v1/{appId}/create",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "name": undefined,
+              "properties": [
+                {
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestName": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "RoomId",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetRoomInfo",
+          "path": "/rooms/v1/{appId}/info/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Room",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetActiveRoomsForProcess",
+          "path": "/rooms/v1/{appId}/list/{processId}/active",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomWithoutAllocations",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetInactiveRoomsForProcess",
+          "path": "/rooms/v1/{appId}/list/{processId}/inactive",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomWithoutAllocations",
+                "type": "reference",
+              },
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "DestroyRoom",
+          "path": "/rooms/v1/{appId}/destroy/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "POST",
+          "operationId": "SuspendRoom",
+          "path": "/rooms/v1/{appId}/suspend/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "description": undefined,
+          "errors": [],
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetConnectionInfo",
+          "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestName": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "schema": "ConnectionInfo",
+              "type": "reference",
+            },
+          },
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+      ],
+      "schemas": {
+        "ActiveConnectionInfo": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "name": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "name": undefined,
+                    "value": "active",
+                  },
+                ],
+              },
+            },
+            {
+              "key": "transportType",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "TransportType",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "port",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "host",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "AppId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "Application": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "deletedBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "deletedAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "orgId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "OrgId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "authConfiguration",
+              "schema": {
+                "allOf": [],
+                "description": undefined,
+                "name": undefined,
+                "properties": [
+                  {
+                    "key": "google",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "allOf": [],
+                        "description": undefined,
+                        "name": undefined,
+                        "properties": [
+                          {
+                            "key": "clientId",
+                            "schema": {
+                              "description": undefined,
+                              "schema": {
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "object",
+                      },
+                    },
+                  },
+                  {
+                    "key": "nickname",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "file": undefined,
+                        "schema": "Record_string.never_",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                  {
+                    "key": "anonymous",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "file": undefined,
+                        "schema": "Record_string.never_",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            },
+            {
+              "key": "appSecret",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "appName",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ApplicationWithDeployment": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "deployment",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Deployment",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Build": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "regionalContainerTags",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "allOf": [],
+                  "description": undefined,
+                  "name": undefined,
+                  "properties": [
+                    {
+                      "key": "containerTag",
+                      "schema": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    {
+                      "key": "region",
+                      "schema": {
+                        "description": undefined,
+                        "file": undefined,
+                        "schema": "Region",
+                        "type": "reference",
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "imageSize",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "name": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "name": undefined,
+                    "value": "created",
+                  },
+                  {
+                    "name": undefined,
+                    "value": "running",
+                  },
+                  {
+                    "name": undefined,
+                    "value": "succeeded",
+                  },
+                  {
+                    "name": undefined,
+                    "value": "failed",
+                  },
+                ],
+              },
+            },
+            {
+              "key": "deletedAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "finishedAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "startedAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "BuildId": {
+          "description": undefined,
+          "schema": {
+            "type": "double",
+          },
+          "type": "primitive",
+        },
+        "ConnectionInfo": {
+          "oneOf": {
+            "description": undefined,
+            "name": undefined,
+            "schemas": [
+              {
+                "description": undefined,
+                "file": undefined,
+                "schema": "StartingConnectionInfo",
+                "type": "reference",
+              },
+              {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ActiveConnectionInfo",
+                "type": "reference",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "Deployment": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "schema": "DeploymentConfig",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "requestedMemoryMB",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "requestedCPU",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "DeploymentId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "buildId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "BuildId",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "AppId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "DeploymentConfig": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "env",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "allOf": [],
+                  "description": undefined,
+                  "name": undefined,
+                  "properties": [
+                    {
+                      "key": "value",
+                      "schema": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    {
+                      "key": "name",
+                      "schema": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "roomsPerProcess",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "planName",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "PlanName",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "transportType",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "TransportType",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "containerPort",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "DeploymentId": {
+          "description": undefined,
+          "schema": {
+            "type": "double",
+          },
+          "type": "primitive",
+        },
+        "DiscoveryResponse": {
+          "description": undefined,
+          "type": "array",
+          "value": {
+            "allOf": [],
+            "description": undefined,
+            "name": undefined,
+            "properties": [
+              {
+                "key": "port",
+                "schema": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+              {
+                "key": "host",
+                "schema": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              {
+                "key": "region",
+                "schema": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+        "Lobby": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "state",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "key": {
+                    "type": "string",
+                  },
+                  "type": "map",
+                  "value": {
+                    "type": "unknown",
+                  },
+                },
+              },
+            },
+            {
+              "key": "initialConfig",
+              "schema": {
+                "description": undefined,
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+            },
+            {
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "local",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "visibility",
+              "schema": {
+                "description": undefined,
+                "name": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "name": undefined,
+                    "value": "private",
+                  },
+                  {
+                    "name": undefined,
+                    "value": "public",
+                  },
+                  {
+                    "name": undefined,
+                    "value": "local",
+                  },
+                ],
+              },
+            },
+            {
+              "key": "region",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Region",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "MetricName": {
+          "description": undefined,
+          "name": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "name": undefined,
+              "value": "cpu",
+            },
+            {
+              "name": undefined,
+              "value": "memory",
+            },
+            {
+              "name": undefined,
+              "value": "rate_egress",
+            },
+            {
+              "name": undefined,
+              "value": "total_egress",
+            },
+          ],
+        },
+        "MetricValue": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "timestamp",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "MetricsResponse": {
+          "description": undefined,
+          "file": undefined,
+          "schema": "Record_Partial_MetricName_.MetricValue-Array_",
+          "type": "reference",
+        },
+        "Omit_Room.allocations_": {
+          "description": undefined,
+          "file": undefined,
+          "schema": "Pick_Room.Exclude_keyofRoom.allocations__",
+          "type": "reference",
+        },
+        "OrgId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "Pick_Room.Exclude_keyofRoom.allocations__": {
+          "allOf": [],
+          "description": "From T, pick a set of properties whose keys are in the union K",
+          "name": undefined,
+          "properties": [
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomStatus",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "currentAllocation",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomAllocation",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "PlanName": {
+          "description": undefined,
+          "name": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "name": undefined,
+              "value": "tiny",
+            },
+            {
+              "name": undefined,
+              "value": "small",
+            },
+            {
+              "name": undefined,
+              "value": "medium",
+            },
+            {
+              "name": undefined,
+              "value": "large",
+            },
+          ],
+        },
+        "Process": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "egressedBytes",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "idleSince",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "activeConnections",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "roomSlotsAvailable",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "draining",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "terminatedAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "stoppingAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "startedAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "startingAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "roomsPerProcess",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "port",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "host",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "region",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "Region",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ProcessId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "ProcessWithRooms": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "schema": "Process",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "rooms",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "RoomWithoutAllocations",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "key": "totalRooms",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Record_Partial_MetricName_.MetricValue-Array_": {
+          "allOf": [],
+          "description": "Construct a type with a set of properties K of type T",
+          "name": undefined,
+          "properties": [
+            {
+              "key": "cpu",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "key": "memory",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "key": "rate_egress",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "key": "total_egress",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Record_string.never_": {
+          "allOf": [],
+          "description": "Construct a type with a set of properties K of type T",
+          "name": undefined,
+          "properties": [],
+          "type": "object",
+        },
+        "Region": {
+          "description": undefined,
+          "name": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "name": undefined,
+              "value": "Seattle",
+            },
+            {
+              "name": undefined,
+              "value": "Washington_DC",
+            },
+            {
+              "name": undefined,
+              "value": "Chicago",
+            },
+            {
+              "name": undefined,
+              "value": "London",
+            },
+            {
+              "name": undefined,
+              "value": "Frankfurt",
+            },
+            {
+              "name": undefined,
+              "value": "Mumbai",
+            },
+            {
+              "name": undefined,
+              "value": "Singapore",
+            },
+            {
+              "name": undefined,
+              "value": "Tokyo",
+            },
+            {
+              "name": undefined,
+              "value": "Sydney",
+            },
+            {
+              "name": undefined,
+              "value": "Sao_Paulo",
+            },
+          ],
+        },
+        "Room": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "currentAllocation",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomAllocation",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomStatus",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "allocations",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "schema": "RoomAllocation",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "RoomAllocation": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "unscheduledAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "scheduledAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "roomAllocationId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomAllocationId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "RoomAllocationId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "RoomId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "RoomStatus": {
+          "description": undefined,
+          "name": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "name": undefined,
+              "value": "scheduling",
+            },
+            {
+              "name": undefined,
+              "value": "active",
+            },
+            {
+              "name": undefined,
+              "value": "suspended",
+            },
+            {
+              "name": undefined,
+              "value": "destroyed",
+            },
+          ],
+        },
+        "RoomWithoutAllocations": {
+          "description": undefined,
+          "file": undefined,
+          "schema": "Omit_Room.allocations_",
+          "type": "reference",
+        },
+        "StartingConnectionInfo": {
+          "allOf": [],
+          "description": undefined,
+          "name": undefined,
+          "properties": [
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "name": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "name": undefined,
+                    "value": "starting",
+                  },
+                ],
+              },
+            },
+            {
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "TransportType": {
+          "description": undefined,
+          "name": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "name": undefined,
+              "value": "tcp",
+            },
+            {
+              "name": undefined,
+              "value": "udp",
+            },
+            {
+              "name": undefined,
+              "value": "tls",
+            },
+          ],
+        },
+      },
+      "securitySchemes": {
+        "auth0": {
+          "type": "bearer",
+        },
+      },
+      "servers": [
+        {
+          "description": undefined,
+          "name": undefined,
+          "url": "https://api.hathora.dev",
+        },
+        {
+          "description": undefined,
+          "name": undefined,
+          "url": "/",
+        },
+      ],
+      "tags": [],
+      "title": "Hathora Cloud API",
+    },
+  },
+  "rootPackage": {
+    "file": "openapi.json",
     "name": "",
     "subpackages": [],
   },
