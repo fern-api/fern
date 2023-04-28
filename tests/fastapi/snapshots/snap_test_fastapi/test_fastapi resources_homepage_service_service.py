@@ -113,6 +113,7 @@ class AbstractHomepageService(AbstractFernService):
 
         router.post(
             path="/homepage-problems",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractHomepageService.set_homepage_problems.__doc__,
             **get_route_args(cls.set_homepage_problems, default_tag="homepage"),

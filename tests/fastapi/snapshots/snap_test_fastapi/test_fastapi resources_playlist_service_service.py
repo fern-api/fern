@@ -336,6 +336,7 @@ class AbstractPlaylistService(AbstractFernService):
 
         router.delete(
             path="/v2/playlist/{service_param}/{playlist_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractPlaylistService.delete_playlist.__doc__,
             **get_route_args(cls.delete_playlist, default_tag="playlist"),

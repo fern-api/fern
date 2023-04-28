@@ -178,6 +178,7 @@ class AbstractSubmissionService(AbstractFernService):
 
         router.delete(
             path="/sessions/stop/{session_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractSubmissionService.stop_execution_session.__doc__,
             **get_route_args(cls.stop_execution_session, default_tag="submission"),

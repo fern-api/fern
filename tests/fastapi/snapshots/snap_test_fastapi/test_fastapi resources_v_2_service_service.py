@@ -67,6 +67,7 @@ class AbstractV2Service(AbstractFernService):
 
         router.get(
             path="",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractV2Service.test.__doc__,
             **get_route_args(cls.test, default_tag="v_2"),

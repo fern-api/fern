@@ -160,6 +160,7 @@ class AbstractMovieService(AbstractFernService):
 
         router.post(
             path="/movie/movie",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractMovieService.create_movie.__doc__,
             **get_route_args(cls.create_movie, default_tag="movie"),
@@ -198,6 +199,7 @@ class AbstractMovieService(AbstractFernService):
 
         router.delete(
             path="/movie/{movie_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractMovieService.delete_movie.__doc__,
             **get_route_args(cls.delete_movie, default_tag="movie"),

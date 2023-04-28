@@ -168,11 +168,15 @@ class EndpointGenerator:
             writer.write_line("(")
             with writer.indent():
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
+
+                writer.write("response_model=")
                 if self._endpoint.response is not None:
-                    writer.write("response_model=")
                     writer.write_node(self._get_return_type())
-                    writer.write_line(",")
                 else:
+                    writer.write("None")
+                writer.write_line(",")
+
+                if self._endpoint.response is None:
                     writer.write("status_code=")
                     writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
                     writer.write_line(",")

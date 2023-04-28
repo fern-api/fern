@@ -79,6 +79,7 @@ class AbstractSyspropService(AbstractFernService):
 
         router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractSyspropService.set_num_warm_instances.__doc__,
             **get_route_args(cls.set_num_warm_instances, default_tag="sysprop"),

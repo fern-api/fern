@@ -185,6 +185,7 @@ class AbstractProblemService(AbstractFernService):
 
         router.delete(
             path="/problem-crud/delete/{problem_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractProblemService.delete_problem.__doc__,
             **get_route_args(cls.delete_problem, default_tag="problem"),

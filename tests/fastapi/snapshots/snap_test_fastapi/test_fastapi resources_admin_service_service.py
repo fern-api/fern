@@ -150,6 +150,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-submission-status/{submission_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_test_submission_status.__doc__,
             **get_route_args(cls.update_test_submission_status, default_tag="admin"),
@@ -190,6 +191,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-submission-status-v2/{submission_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.send_test_submission_update.__doc__,
             **get_route_args(cls.send_test_submission_update, default_tag="admin"),
@@ -234,6 +236,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-submission-status/{submission_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_workspace_submission_status.__doc__,
             **get_route_args(cls.update_workspace_submission_status, default_tag="admin"),
@@ -276,6 +279,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-submission-status-v2/{submission_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.send_workspace_submission_update.__doc__,
             **get_route_args(cls.send_workspace_submission_update, default_tag="admin"),
@@ -318,6 +322,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_test_case.__doc__,
             **get_route_args(cls.store_traced_test_case, default_tag="admin"),
@@ -360,6 +365,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_test_case_v_2.__doc__,
             **get_route_args(cls.store_traced_test_case_v_2, default_tag="admin"),
@@ -400,6 +406,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-trace/submission/{submission_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_workspace.__doc__,
             **get_route_args(cls.store_traced_workspace, default_tag="admin"),
@@ -440,6 +447,7 @@ class AbstractAdminService(AbstractFernService):
 
         router.post(
             path="/admin/store-workspace-trace-v2/submission/{submission_id}",
+            response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_workspace_v_2.__doc__,
             **get_route_args(cls.store_traced_workspace_v_2, default_tag="admin"),
