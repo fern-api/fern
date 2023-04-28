@@ -1,4 +1,4 @@
-import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject } from "../isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
@@ -6,6 +6,7 @@ import { convertArray } from "./schema/convertArray";
 import { convertEnum } from "./schema/convertEnum";
 import { convertNumber } from "./schema/convertNumber";
 import { convertObject } from "./schema/convertObject";
+import { convertDiscriminatedOneOf } from "./schema/convertOneOf";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 
@@ -16,17 +17,21 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
     return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
 }
 
+export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject): ReferencedSchema {
+    return Schema.reference({
+        // TODO(dsinghvi): references may contain files
+        file: undefined,
+        schema: getSchemaIdFromReference(schema),
+        description: undefined,
+    });
+}
+
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean
 ): Schema {
     if (isReferenceObject(schema)) {
-        const referenceSchema = Schema.reference({
-            // TODO(dsinghvi): references may contain files
-            file: undefined,
-            schema: getSchemaIdFromReference(schema),
-            description: undefined,
-        });
+        const referenceSchema = Schema.reference(convertToReferencedSchema(schema));
         if (wrapAsOptional) {
             return Schema.optional({
                 value: referenceSchema,
@@ -106,58 +111,88 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
         });
     }
 
-    // objects
-    if (schema.type === "object") {
-        if (
-            (schema.properties == null || Object.keys(schema.properties).length === 0) &&
-            (schema.allOf == null || Object.keys(schema.allOf).length === 0)
-        ) {
-            return wrapMap({
-                description,
-                wrapAsOptional,
-                keySchema: PrimitiveSchemaValue.string(),
-                valueSchema: Schema.unknown(),
-            });
-        }
+    // discriminated unions
+    if (
+        schema.oneOf != null &&
+        schema.discriminator != null &&
+        schema.discriminator.mapping != null &&
+        Object.keys(schema.discriminator.mapping).length > 0
+    ) {
+        return convertDiscriminatedOneOf({
+            description,
+            discriminator: schema.discriminator,
+            properties: schema.properties ?? {},
+            required: schema.required,
+            schemaName,
+            wrapAsOptional,
+        });
+    }
 
+    // handle objects
+    if (schema.allOf != null || schema.properties != null) {
+        // convert a singular allOf as a reference or inlined schema
+        if (hasNoProperties(schema) && schema.allOf != null && schema.allOf.length === 1 && schema.allOf[0] != null) {
+            const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional);
+            return maybeInjectDescription(convertedSchema, description);
+        }
+        // otherwise convert as an object
         return convertObject({
             properties: schema.properties ?? {},
             objectName: schemaName,
             description,
             required: schema.required,
             wrapAsOptional,
+            allOf: schema.allOf ?? [],
         });
     }
 
-    // TODO(dsinghvi): handle oneOf
-
-    // handle singular allOfs
-    if (schema.allOf != null && schema.allOf.length === 1 && schema.allOf[0] != null) {
-        const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional);
-        if (convertedSchema.type === "reference") {
-            return Schema.reference({
-                file: convertedSchema.file,
-                schema: convertedSchema.schema,
-                description,
-            });
-        } else if (convertedSchema.type === "optional" && convertedSchema.value.type === "reference") {
-            return Schema.optional({
-                value: Schema.reference({
-                    file: convertedSchema.value.file,
-                    schema: convertedSchema.value.schema,
-                    description: undefined,
-                }),
-                description,
-            });
-        }
-        return convertedSchema;
+    // handle vanilla object
+    if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
+        return wrapMap({
+            description,
+            wrapAsOptional,
+            keySchema: PrimitiveSchemaValue.string(),
+            valueSchema: Schema.unknown(),
+        });
     }
 
     throw new Error(`Failed to convert schema value=${JSON.stringify(schema)}`);
 }
 
+function hasNoOneOf(schema: OpenAPIV3.SchemaObject): boolean {
+    return schema.oneOf == null || schema.oneOf.length === 0;
+}
+
+function hasNoAllOf(schema: OpenAPIV3.SchemaObject): boolean {
+    return schema.allOf == null || schema.allOf.length === 0;
+}
+
+function hasNoProperties(schema: OpenAPIV3.SchemaObject): boolean {
+    return schema.properties == null || schema.properties.length === 0;
+}
+
 function isListOfStrings(x: unknown): x is string[] {
     return Array.isArray(x) && x.every((item) => typeof item === "string");
+}
+
+function maybeInjectDescription(schema: Schema, description: string | undefined): Schema {
+    if (schema.type === "reference") {
+        return Schema.reference({
+            file: schema.file,
+            schema: schema.schema,
+            description,
+        });
+    } else if (schema.type === "optional" && schema.value.type === "reference") {
+        return Schema.optional({
+            value: Schema.reference({
+                file: schema.value.file,
+                schema: schema.value.schema,
+                description: undefined,
+            }),
+            description,
+        });
+    }
+    return schema;
 }
 
 export function wrapPrimitive({
