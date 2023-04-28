@@ -1,6 +1,7 @@
-import { ObjectProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { ObjectProperty, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { convertSchema } from "../convertSchemas";
+import { isReferenceObject } from "../../isReferenceObject";
+import { convertSchema, convertToReferencedSchema } from "../convertSchemas";
 
 export function convertObject({
     properties,
@@ -8,14 +9,28 @@ export function convertObject({
     description,
     required,
     wrapAsOptional,
+    allOf,
 }: {
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     objectName: string | undefined;
     description: string | undefined;
     required: string[] | undefined;
     wrapAsOptional: boolean;
+    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
 }): Schema {
-    const convertedProperties = Object.entries(properties).map(([propertyName, propertySchema]) => {
+    let propertiesToConvert = { ...properties };
+    const referencedAllOf: ReferencedSchema[] = [];
+    for (const allOfElement of allOf) {
+        if (isReferenceObject(allOfElement)) {
+            referencedAllOf.push(convertToReferencedSchema(allOfElement));
+        } else {
+            if (allOfElement.properties != null) {
+                propertiesToConvert = { ...allOfElement.properties, ...propertiesToConvert };
+            }
+        }
+    }
+
+    const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = required != null && required.includes(propertyName);
         const schema = convertSchema(propertySchema, !isRequired);
         return {
@@ -28,6 +43,7 @@ export function convertObject({
         objectName,
         properties: convertedProperties,
         description,
+        allOf: referencedAllOf,
     });
 }
 
@@ -36,11 +52,13 @@ export function wrapObject({
     objectName,
     properties,
     description,
+    allOf,
 }: {
     wrapAsOptional: boolean;
     objectName: string | undefined;
     properties: ObjectProperty[];
     description: string | undefined;
+    allOf: ReferencedSchema[];
 }): Schema {
     if (wrapAsOptional) {
         return Schema.optional({
@@ -48,7 +66,7 @@ export function wrapObject({
                 description: undefined,
                 properties,
                 name: objectName,
-                allOf: [],
+                allOf,
             }),
             description,
         });
@@ -57,6 +75,6 @@ export function wrapObject({
         description,
         properties,
         name: objectName,
-        allOf: [],
+        allOf,
     });
 }

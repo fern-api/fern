@@ -8,6 +8,7 @@ const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("
 
 describe("open api parser", () => {
     testFixture("vellum", "openapi.yml");
+    testFixture("devrev", "openapi.yml");
 });
 
 function testFixture(fixtureName: string, filename: string) {

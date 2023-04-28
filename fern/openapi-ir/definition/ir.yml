@@ -273,6 +273,7 @@ types:
       - WithName
     properties:
       discriminantProperty: string
+      commonProperties: list<ObjectProperty>
       schemas: map<string, Schema>
 
   UnDiscriminatedOneOfSchema:
