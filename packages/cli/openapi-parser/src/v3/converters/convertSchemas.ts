@@ -1,12 +1,14 @@
 import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { isReferenceObject } from "../isReferenceObject";
+import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
+import { convertDiscriminatedOneOf } from "./schema/convertDiscriminatedOneOf";
 import { convertEnum } from "./schema/convertEnum";
 import { convertNumber } from "./schema/convertNumber";
 import { convertObject } from "./schema/convertObject";
-import { convertDiscriminatedOneOf } from "./schema/convertOneOf";
+import { convertUndiscriminatedOneOf } from "./schema/convertUndiscriminatedOneOf";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 
@@ -28,7 +30,8 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject): Re
 
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
-    wrapAsOptional: boolean
+    wrapAsOptional: boolean,
+    context: OpenAPIV3ParserContext
 ): Schema {
     if (isReferenceObject(schema)) {
         const referenceSchema = Schema.reference(convertToReferencedSchema(schema));
@@ -41,11 +44,15 @@ export function convertSchema(
             return referenceSchema;
         }
     } else {
-        return convertSchemaObject(schema, wrapAsOptional);
+        return convertSchemaObject(schema, wrapAsOptional, context);
     }
 }
 
-function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boolean): Schema {
+function convertSchemaObject(
+    schema: OpenAPIV3.SchemaObject,
+    wrapAsOptional: boolean,
+    context: OpenAPIV3ParserContext
+): Schema {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const schemaName = (schema as any)["x-name"] as string | undefined;
     const description = schema.description;
@@ -99,7 +106,7 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ item: schema.items, description, wrapAsOptional });
+        return convertArray({ item: schema.items, description, wrapAsOptional, context });
     }
 
     // maps
@@ -108,6 +115,7 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
             additionalProperties: schema.additionalProperties,
             description,
             wrapAsOptional,
+            context,
         });
     }
 
@@ -125,6 +133,18 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
             required: schema.required,
             schemaName,
             wrapAsOptional,
+            context,
+        });
+    }
+
+    // treat anyOf as undiscrminated unions
+    if (schema.anyOf != null && schema.anyOf.length > 0) {
+        return convertUndiscriminatedOneOf({
+            schemaName,
+            description,
+            wrapAsOptional,
+            context,
+            subtypes: schema.anyOf,
         });
     }
 
@@ -132,7 +152,7 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
     if (schema.allOf != null || schema.properties != null) {
         // convert a singular allOf as a reference or inlined schema
         if (hasNoProperties(schema) && schema.allOf != null && schema.allOf.length === 1 && schema.allOf[0] != null) {
-            const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional);
+            const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional, context);
             return maybeInjectDescription(convertedSchema, description);
         }
         // otherwise convert as an object
@@ -143,6 +163,7 @@ function convertSchemaObject(schema: OpenAPIV3.SchemaObject, wrapAsOptional: boo
             required: schema.required,
             wrapAsOptional,
             allOf: schema.allOf ?? [],
+            context,
         });
     }
 
