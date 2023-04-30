@@ -12,7 +12,7 @@ export const JsonExampleLine: React.FC<JsonExampleLine.Props> = ({ className, ch
     const { depth } = useContext(JsonExampleDepthContext);
 
     return (
-        <div className={classNames("pr-3", className)} style={{ paddingLeft: 5 + 15 * depth }}>
+        <div className={classNames("pr-3 w-fit min-w-full", className)} style={{ paddingLeft: 5 + 15 * depth }}>
             {children}
         </div>
     );

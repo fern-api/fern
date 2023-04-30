@@ -77,7 +77,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
                 </div>
                 <div
                     className={classNames(
-                        "absolute inset-x-px inset-y-0 border rounded transition",
+                        "absolute inset-x-1 inset-y-0 border rounded transition",
                         isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
                     )}
                 />
