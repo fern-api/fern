@@ -4,10 +4,7 @@ import fern.ir.pydantic as ir_types
 from fern.generator_exec.sdk.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
-from fern_python.declaration_referencer import (
-    AbstractDeclarationReferencer,
-    FernFilepathCreator,
-)
+from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
 from .pydantic_generator_context import (
     HashableDeclaredTypeName,
@@ -22,9 +19,8 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         ir: ir_types.IntermediateRepresentation,
         type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName],
         generator_config: GeneratorConfig,
-        filepath_creator: FernFilepathCreator,
     ):
-        super().__init__(ir=ir, generator_config=generator_config, filepath_creator=filepath_creator)
+        super().__init__(ir=ir, generator_config=generator_config)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer,
         )

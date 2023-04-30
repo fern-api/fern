@@ -12,7 +12,6 @@ from ..custom_config import SDKCustomConfig
 from ..declaration_referencers.type_declaration_referencer import (
     TypeDeclarationReferencer,
 )
-from ..sdk_filepath_creator import SdkFilepathCreator
 
 
 class SdkGeneratorContext(ABC):
@@ -25,18 +24,12 @@ class SdkGeneratorContext(ABC):
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.filepath_creator = SdkFilepathCreator(
-            ir=ir,
-            generator_config=generator_config,
-            custom_config=custom_config,
-        )
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(filepath_creator=self.filepath_creator),
+            type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
-            filepath_creator=self.filepath_creator,
         )
-        self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
+        self.core_utilities = CoreUtilities()
         self.custom_config = custom_config
 
     @abstractmethod

@@ -31,6 +31,7 @@ def test_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
         filename_of_test=__file__,
         custom_config={
             "timeout_in_seconds": 5,
+            "use_api_name_in_package": True,
         },
         output_mode=config.OutputMode.factory.publish(
             config.GeneratorPublishConfig(

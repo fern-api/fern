@@ -32,7 +32,7 @@ class RegisterFileGenerator:
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
             filepath=Filepath(
-                directories=(self._context.filepath_creator.generate_filepath_prefix()),
+                directories=(),
                 file=Filepath.FilepathPart(module_name=RegisterFileGenerator._MODULE_NAME),
             ),
         ) as source_file:

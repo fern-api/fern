@@ -47,7 +47,7 @@ class SecurityFileGenerator:
     @staticmethod
     def _get_filepath(context: FastApiGeneratorContext) -> Filepath:
         return Filepath(
-            directories=(context.filepath_creator.generate_filepath_prefix()),
+            directories=(),
             file=Filepath.FilepathPart(module_name=SecurityFileGenerator._MODULE_NAME),
         )
 

@@ -8,7 +8,6 @@ import fern.ir.pydantic as ir_types
 from fern.generator_exec.sdk.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
-from fern_python.declaration_referencer import FernFilepathCreator
 
 from ..core_utilities import CoreUtilities
 
@@ -19,12 +18,10 @@ class PydanticGeneratorContext(ABC):
         *,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
-        filepath_creator: FernFilepathCreator,
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.filepath_creator = filepath_creator
-        self.core_utilities = CoreUtilities(filepath_creator=filepath_creator)
+        self.core_utilities = CoreUtilities()
 
     @abstractmethod
     def get_type_hint_for_type_reference(

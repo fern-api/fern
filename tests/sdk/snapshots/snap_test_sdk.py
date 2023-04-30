@@ -8,6 +8,45 @@ from snapshottest.file import FileSnapshot
 
 snapshots = Snapshot()
 
+snapshots['test_file_upload_sdk __init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk __init__.py')
+
+snapshots['test_file_upload_sdk client'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk client.py')
+
+snapshots['test_file_upload_sdk core___init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core___init__.py')
+
+snapshots['test_file_upload_sdk core_api_error'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_api_error.py')
+
+snapshots['test_file_upload_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_datetime_utils.py')
+
+snapshots['test_file_upload_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_jsonable_encoder.py')
+
+snapshots['test_file_upload_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_remove_none_from_headers.py')
+
+snapshots['test_file_upload_sdk filepaths'] = [
+    '__init__.py',
+    'client.py',
+    'core/__init__.py',
+    'core/api_error.py',
+    'core/datetime_utils.py',
+    'core/jsonable_encoder.py',
+    'core/remove_none_from_headers.py',
+    'resources/__init__.py',
+    'resources/movie/__init__.py',
+    'resources/movie/client.py',
+    'resources/movie/types/__init__.py',
+    'resources/movie/types/movie_id.py'
+]
+
+snapshots['test_file_upload_sdk resources___init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk resources___init__.py')
+
+snapshots['test_file_upload_sdk resources_movie___init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk resources_movie___init__.py')
+
+snapshots['test_file_upload_sdk resources_movie_client'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk resources_movie_client.py')
+
+snapshots['test_file_upload_sdk resources_movie_types___init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk resources_movie_types___init__.py')
+
+snapshots['test_file_upload_sdk resources_movie_types_movie_id'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk resources_movie_types_movie_id.py')
+
 snapshots['test_github_sdk filepaths'] = [
     'src/fern/__init__.py',
     'src/fern/client.py',
@@ -132,58 +171,58 @@ snapshots['test_multiple_urls_sdk resources_commons_types_movie'] = FileSnapshot
 snapshots['test_multiple_urls_sdk resources_commons_types_movie_id'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk resources_commons_types_movie_id.py')
 
 snapshots['test_publish_sdk filepaths'] = [
-    'src/fern/__init__.py',
-    'src/fern/client.py',
-    'src/fern/core/__init__.py',
-    'src/fern/core/api_error.py',
-    'src/fern/core/datetime_utils.py',
-    'src/fern/core/jsonable_encoder.py',
-    'src/fern/core/remove_none_from_headers.py',
-    'src/fern/resources/__init__.py',
-    'src/fern/resources/movie/__init__.py',
-    'src/fern/resources/movie/client.py',
-    'src/fern/resources/movie/errors/__init__.py',
-    'src/fern/resources/movie/errors/invalid_movie_error.py',
-    'src/fern/resources/movie/errors/movie_already_exists_error.py',
-    'src/fern/resources/movie/errors/movie_not_found_error.py',
-    'src/fern/resources/movie/types/__init__.py',
-    'src/fern/resources/movie/types/movie.py',
-    'src/fern/resources/movie/types/movie_id.py'
+    'src/fern/api/__init__.py',
+    'src/fern/api/client.py',
+    'src/fern/api/core/__init__.py',
+    'src/fern/api/core/api_error.py',
+    'src/fern/api/core/datetime_utils.py',
+    'src/fern/api/core/jsonable_encoder.py',
+    'src/fern/api/core/remove_none_from_headers.py',
+    'src/fern/api/resources/__init__.py',
+    'src/fern/api/resources/movie/__init__.py',
+    'src/fern/api/resources/movie/client.py',
+    'src/fern/api/resources/movie/errors/__init__.py',
+    'src/fern/api/resources/movie/errors/invalid_movie_error.py',
+    'src/fern/api/resources/movie/errors/movie_already_exists_error.py',
+    'src/fern/api/resources/movie/errors/movie_not_found_error.py',
+    'src/fern/api/resources/movie/types/__init__.py',
+    'src/fern/api/resources/movie/types/movie.py',
+    'src/fern/api/resources/movie/types/movie_id.py'
 ]
 
-snapshots['test_publish_sdk src_fern___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern___init__.py')
+snapshots['test_publish_sdk src_fern_api___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api___init__.py')
 
-snapshots['test_publish_sdk src_fern_client'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_client.py')
+snapshots['test_publish_sdk src_fern_api_client'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_client.py')
 
-snapshots['test_publish_sdk src_fern_core___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_core___init__.py')
+snapshots['test_publish_sdk src_fern_api_core___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core___init__.py')
 
-snapshots['test_publish_sdk src_fern_core_api_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_core_api_error.py')
+snapshots['test_publish_sdk src_fern_api_core_api_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_api_error.py')
 
-snapshots['test_publish_sdk src_fern_core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_core_datetime_utils.py')
+snapshots['test_publish_sdk src_fern_api_core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_datetime_utils.py')
 
-snapshots['test_publish_sdk src_fern_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_core_jsonable_encoder.py')
+snapshots['test_publish_sdk src_fern_api_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_jsonable_encoder.py')
 
-snapshots['test_publish_sdk src_fern_core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_core_remove_none_from_headers.py')
+snapshots['test_publish_sdk src_fern_api_core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_remove_none_from_headers.py')
 
-snapshots['test_publish_sdk src_fern_resources___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources___init__.py')
+snapshots['test_publish_sdk src_fern_api_resources___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources___init__.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie___init__.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie___init__.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_client'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_client.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_client'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_client.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_errors___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_errors___init__.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_errors___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_errors___init__.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_errors_invalid_movie_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_errors_invalid_movie_error.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_errors_invalid_movie_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_errors_invalid_movie_error.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_errors_movie_already_exists_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_errors_movie_already_exists_error.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_errors_movie_already_exists_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_errors_movie_already_exists_error.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_errors_movie_not_found_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_errors_movie_not_found_error.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_errors_movie_not_found_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_errors_movie_not_found_error.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_types___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_types___init__.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_types___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_types___init__.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_types_movie'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_types_movie.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_types_movie'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_types_movie.py')
 
-snapshots['test_publish_sdk src_fern_resources_movie_types_movie_id'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_resources_movie_types_movie_id.py')
+snapshots['test_publish_sdk src_fern_api_resources_movie_types_movie_id'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources_movie_types_movie_id.py')
 
 snapshots['test_trace_sdk __init__'] = FileSnapshot('snap_test_sdk/test_trace_sdk __init__.py')
 

@@ -8,6 +8,30 @@ from snapshottest.file import FileSnapshot
 
 snapshots = Snapshot()
 
+snapshots['test_publish_pydantic_model filepaths'] = [
+    'src/fern/api/__init__.py',
+    'src/fern/api/core/__init__.py',
+    'src/fern/api/core/datetime_utils.py',
+    'src/fern/api/resources/__init__.py',
+    'src/fern/api/resources/movie/__init__.py',
+    'src/fern/api/resources/movie/movie.py',
+    'src/fern/api/resources/movie/movie_id.py'
+]
+
+snapshots['test_publish_pydantic_model src_fern_api___init__'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api___init__.py')
+
+snapshots['test_publish_pydantic_model src_fern_api_core___init__'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api_core___init__.py')
+
+snapshots['test_publish_pydantic_model src_fern_api_core_datetime_utils'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api_core_datetime_utils.py')
+
+snapshots['test_publish_pydantic_model src_fern_api_resources___init__'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api_resources___init__.py')
+
+snapshots['test_publish_pydantic_model src_fern_api_resources_movie___init__'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api_resources_movie___init__.py')
+
+snapshots['test_publish_pydantic_model src_fern_api_resources_movie_movie'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api_resources_movie_movie.py')
+
+snapshots['test_publish_pydantic_model src_fern_api_resources_movie_movie_id'] = FileSnapshot('snap_test_pydantic_model/test_publish_pydantic_model src_fern_api_resources_movie_movie_id.py')
+
 snapshots['test_pydantic_model __init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model __init__.py')
 
 snapshots['test_pydantic_model core___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model core___init__.py')

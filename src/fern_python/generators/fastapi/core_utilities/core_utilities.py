@@ -4,8 +4,6 @@ from typing import List, Optional, Set, Tuple
 from fern_python.codegen import AST, ExportStrategy, Filepath, Project
 from fern_python.source_file_generator import SourceFileGenerator
 
-from ..fastapi_filepath_creator import FastApiFilepathCreator
-
 
 class FernHTTPException:
     CLASS_NAME = "FernHTTPException"
@@ -93,10 +91,8 @@ class Exceptions:
 
 
 class CoreUtilities:
-    def __init__(self, filepath_creator: FastApiFilepathCreator):
-        self.filepath = filepath_creator.generate_filepath_prefix() + (
-            Filepath.DirectoryFilepathPart(module_name="core"),
-        )
+    def __init__(self) -> None:
+        self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         self.exceptions = Exceptions(filepath=self.filepath)
 

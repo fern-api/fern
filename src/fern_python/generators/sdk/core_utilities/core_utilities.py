@@ -4,14 +4,10 @@ from typing import Optional, Set
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.source_file_generator import SourceFileGenerator
 
-from ..sdk_filepath_creator import SdkFilepathCreator
-
 
 class CoreUtilities:
-    def __init__(self, filepath_creator: SdkFilepathCreator):
-        self.filepath = filepath_creator.generate_filepath_prefix() + (
-            Filepath.DirectoryFilepathPart(module_name="core"),
-        )
+    def __init__(self) -> None:
+        self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
 
     def copy_to_project(self, *, project: Project) -> None:

@@ -19,10 +19,9 @@ class FastApiGeneratorContextImpl(FastApiGeneratorContext):
         generator_config: GeneratorConfig,
     ):
         super().__init__(ir=ir, generator_config=generator_config)
-        self._service_declaration_referencer = ServiceDeclarationReferencer(filepath_creator=self.filepath_creator)
-        self._error_declaration_referencer = ErrorDeclarationReferencer(filepath_creator=self.filepath_creator)
+        self._service_declaration_referencer = ServiceDeclarationReferencer()
+        self._error_declaration_referencer = ErrorDeclarationReferencer()
         self._inlined_request_declaration_referencer = InlinedRequestDeclarationReferencer(
-            filepath_creator=self.filepath_creator,
             service_declaration_handler=self._service_declaration_referencer,
         )
 

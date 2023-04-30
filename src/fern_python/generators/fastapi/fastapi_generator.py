@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import fern.ir.pydantic as ir_types
 from fern.generator_exec.sdk.resources import GeneratorConfig
 
@@ -28,6 +30,17 @@ class FastApiGenerator(AbstractGenerator):
     ) -> bool:
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
         return not custom_config.skip_formatting
+
+    def get_relative_path_to_project_for_publish(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> Tuple[str, ...]:
+        return (
+            generator_config.organization,
+            ir.api_name.snake_case.unsafe_name,
+        )
 
     def run(
         self,

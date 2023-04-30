@@ -8,7 +8,6 @@ from fern_python.generators.pydantic_model import PydanticGeneratorContextImpl
 
 from ..core_utilities import CoreUtilities
 from ..declaration_referencers import TypeDeclarationReferencer
-from ..fastapi_filepath_creator import FastApiFilepathCreator
 
 
 class FastApiGeneratorContext(ABC):
@@ -19,14 +18,12 @@ class FastApiGeneratorContext(ABC):
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.filepath_creator = FastApiFilepathCreator(ir=ir, generator_config=generator_config)
         self.pydantic_generator_context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(filepath_creator=self.filepath_creator),
+            type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
-            filepath_creator=self.filepath_creator,
         )
-        self.core_utilities = CoreUtilities(filepath_creator=self.filepath_creator)
+        self.core_utilities = CoreUtilities()
 
     @abstractmethod
     def get_filepath_for_service(self, service_name: ir_types.DeclaredServiceName) -> Filepath:

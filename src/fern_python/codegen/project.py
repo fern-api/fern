@@ -24,7 +24,7 @@ class PublishConfig:
 
 class Project:
     """
-    with Project("/path/to/project") as project:
+    with Project(...) as project:
         ...
     """
 
@@ -32,15 +32,17 @@ class Project:
         self,
         *,
         filepath: str,
-        project_name: str,
+        relative_path_to_project: str,
         python_version: str = "3.7",
         publish_config: PublishConfig = None,
         generate_py_typed: bool = False,
         should_format_files: bool,
     ) -> None:
-        self._project_filepath = filepath if publish_config is None else os.path.join(filepath, "src", project_name)
+        self._project_filepath = (
+            filepath if publish_config is None else os.path.join(filepath, "src", relative_path_to_project)
+        )
         self._root_filepath = filepath
-        self._project_name = project_name
+        self._relative_path_to_project = relative_path_to_project
         self._publish_config = publish_config
         self._module_manager = ModuleManager(should_format=should_format_files)
         self._python_version = python_version
@@ -100,7 +102,7 @@ class Project:
             py_project_toml = PyProjectToml(
                 name=self._publish_config.package_name,
                 version=self._publish_config.package_version,
-                package=PyProjectTomlPackageConfig(include=self._project_name, _from="src"),
+                package=PyProjectTomlPackageConfig(include=self._relative_path_to_project, _from="src"),
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
                 python_version=self._python_version,

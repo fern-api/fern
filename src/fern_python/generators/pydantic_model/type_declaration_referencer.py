@@ -1,18 +1,12 @@
 from typing import Tuple
 
 import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources import GeneratorConfig
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
-from .pydantic_filepath_creator import PydanticFilepathCreator
-
 
 class TypeDeclarationReferencer(AbstractDeclarationReferencer[ir_types.DeclaredTypeName]):
-    def __init__(self, ir: ir_types.IntermediateRepresentation, generator_config: GeneratorConfig):
-        super().__init__(filepath_creator=PydanticFilepathCreator(ir=ir, generator_config=generator_config))
-
     def get_filepath(self, *, name: ir_types.DeclaredTypeName) -> Filepath:
         return Filepath(
             directories=self._get_directories_for_fern_filepath(

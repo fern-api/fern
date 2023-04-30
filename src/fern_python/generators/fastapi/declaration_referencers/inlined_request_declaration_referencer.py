@@ -4,7 +4,6 @@ import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import ExportStrategy, Filepath
 
-from ..fastapi_filepath_creator import FastApiFilepathCreator
 from .fastapi_declaration_referencer import FastApiDeclarationReferencer
 from .service_declaration_referencer import ServiceDeclarationReferencer
 
@@ -19,10 +18,9 @@ class InlinedRequestDeclarationReferencer(FastApiDeclarationReferencer[ServiceNa
     def __init__(
         self,
         *,
-        filepath_creator: FastApiFilepathCreator,
         service_declaration_handler: ServiceDeclarationReferencer,
     ):
-        super().__init__(filepath_creator=filepath_creator)
+        super().__init__()
         self._service_declaration_referencer = service_declaration_handler
 
     def get_filepath(

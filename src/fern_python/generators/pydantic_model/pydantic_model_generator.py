@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import fern.ir.pydantic as ir_types
 from fern.generator_exec.sdk.resources.config import GeneratorConfig
 
@@ -8,7 +10,6 @@ from fern_python.source_file_generator import SourceFileGenerator
 
 from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
-from .pydantic_filepath_creator import PydanticFilepathCreator
 from .type_declaration_handler import TypeDeclarationHandler
 from .type_declaration_referencer import TypeDeclarationReferencer
 
@@ -22,6 +23,17 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
         return not custom_config.skip_formatting
 
+    def get_relative_path_to_project_for_publish(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> Tuple[str, ...]:
+        return (
+            generator_config.organization,
+            ir.api_name.snake_case.unsafe_name,
+        )
+
     def run(
         self,
         *,
@@ -33,15 +45,8 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
         context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(
-                generator_config=generator_config,
-                ir=ir,
-            ),
+            type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
-            filepath_creator=PydanticFilepathCreator(
-                generator_config=generator_config,
-                ir=ir,
-            ),
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,

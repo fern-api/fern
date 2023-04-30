@@ -28,19 +28,13 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         client_class_name = custom_config.client_class_name or (
             pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)
         )
-        self._error_declaration_referencer = ErrorDeclarationReferencer(filepath_creator=self.filepath_creator)
+        self._error_declaration_referencer = ErrorDeclarationReferencer()
         self._environments_enum_declaration_referencer = EnvironmentsEnumDeclarationReferencer(
-            filepath_creator=self.filepath_creator,
             client_class_name=client_class_name,
         )
-        self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
-            filepath_creator=self.filepath_creator
-        )
-        self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
-            filepath_creator=self.filepath_creator
-        )
+        self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer()
+        self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer()
         self._root_client_declaration_referencer = RootClientDeclarationReferencer(
-            filepath_creator=self.filepath_creator,
             root_class_name=client_class_name,
         )
         self._custom_config = custom_config

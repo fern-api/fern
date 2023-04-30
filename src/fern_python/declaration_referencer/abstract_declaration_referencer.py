@@ -5,16 +5,10 @@ import fern.ir.pydantic as ir_types
 
 from fern_python.codegen import AST, ExportStrategy, Filepath
 
-from .fern_filepath_creator import FernFilepathCreator
-
 T = TypeVar("T")
 
 
 class AbstractDeclarationReferencer(ABC, Generic[T]):
-    def __init__(self, filepath_creator: FernFilepathCreator):
-        super().__init__()
-        self._filepath_creator = filepath_creator
-
     def get_class_reference(
         self,
         *,
@@ -46,7 +40,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         *,
         fern_filepath: ir_types.FernFilepath,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
-        parts = self._filepath_creator.generate_filepath_prefix()
+        parts: Tuple[Filepath.DirectoryFilepathPart, ...] = ()
         for fern_filepath_part in fern_filepath.package_path:
             parts += self._get_directories_for_fern_filepath_part(
                 fern_filepath_part=fern_filepath_part,

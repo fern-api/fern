@@ -5,15 +5,10 @@ import fern.ir.pydantic as ir_types
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 
-from ..sdk_filepath_creator import SdkFilepathCreator
-
 T = TypeVar("T")
 
 
 class SdkDeclarationReferencer(AbstractDeclarationReferencer[T], Generic[T]):
-    def __init__(self, filepath_creator: SdkFilepathCreator):
-        super().__init__(filepath_creator=filepath_creator)
-
     def _get_directories_for_fern_filepath_part(
         self,
         *,

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import os
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Tuple
 
 import fern.ir.pydantic as ir_types
 from fern.generator_exec.sdk.resources import GeneratorConfig
@@ -35,7 +36,14 @@ class AbstractGenerator(ABC):
         )
         with Project(
             filepath=generator_config.output.path,
-            project_name=generator_config.organization,
+            relative_path_to_project=os.path.join(
+                *self.get_relative_path_to_project_for_publish(
+                    generator_config=generator_config,
+                    ir=ir,
+                )
+            )
+            if project_publish_config is not None
+            else generator_config.organization,
             publish_config=project_publish_config,
             should_format_files=self.should_format_files(generator_config=generator_config),
         ) as project:
@@ -169,4 +177,13 @@ jobs:
         *,
         generator_config: GeneratorConfig,
     ) -> bool:
+        ...
+
+    @abstractmethod
+    def get_relative_path_to_project_for_publish(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> Tuple[str, ...]:
         ...
