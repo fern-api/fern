@@ -77,13 +77,13 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
         if self.__root__.type == "running":
             return running(self.__root__.value)
         if self.__root__.type == "ran":
-            return ran(self.__root__)
+            return ran(WorkspaceRunDetails(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "stopped":
             return stopped()
         if self.__root__.type == "traced":
             return traced()
         if self.__root__.type == "tracedV2":
-            return traced_v_2(self.__root__)
+            return traced_v_2(WorkspaceTracedUpdate(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "errored":
             return errored(self.__root__.value)
         if self.__root__.type == "finished":

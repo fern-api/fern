@@ -77,9 +77,9 @@ class TestSubmissionUpdateInfo(pydantic.BaseModel):
         if self.__root__.type == "errored":
             return errored(self.__root__.value)
         if self.__root__.type == "gradedTestCase":
-            return graded_test_case(self.__root__)
+            return graded_test_case(GradedTestCaseUpdate(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "recordedTestCase":
-            return recorded_test_case(self.__root__)
+            return recorded_test_case(RecordedTestCaseUpdate(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "finished":
             return finished()
 

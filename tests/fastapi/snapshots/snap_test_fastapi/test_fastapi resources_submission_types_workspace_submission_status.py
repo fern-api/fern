@@ -66,9 +66,9 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
         if self.__root__.type == "running":
             return running(self.__root__.value)
         if self.__root__.type == "ran":
-            return ran(self.__root__)
+            return ran(WorkspaceRunDetails(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "traced":
-            return traced(self.__root__)
+            return traced(WorkspaceRunDetails(**self.__root__.dict(exclude_unset=True)))
 
     __root__: typing_extensions.Annotated[
         typing.Union[

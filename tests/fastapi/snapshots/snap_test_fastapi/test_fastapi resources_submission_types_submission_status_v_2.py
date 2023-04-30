@@ -43,9 +43,9 @@ class SubmissionStatusV2(pydantic.BaseModel):
         workspace: typing.Callable[[WorkspaceSubmissionStatusV2], T_Result],
     ) -> T_Result:
         if self.__root__.type == "test":
-            return test(self.__root__)
+            return test(TestSubmissionStatusV2(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "workspace":
-            return workspace(self.__root__)
+            return workspace(WorkspaceSubmissionStatusV2(**self.__root__.dict(exclude_unset=True)))
 
     __root__: typing_extensions.Annotated[
         typing.Union[_SubmissionStatusV2.Test, _SubmissionStatusV2.Workspace], pydantic.Field(discriminator="type")

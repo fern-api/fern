@@ -73,15 +73,19 @@ class SubmissionRequest(pydantic.BaseModel):
         stop: typing.Callable[[StopRequest], T_Result],
     ) -> T_Result:
         if self.__root__.type == "initializeProblemRequest":
-            return initialize_problem_request(self.__root__)
+            return initialize_problem_request(
+                resources_submission_types_initialize_problem_request_InitializeProblemRequest(
+                    **self.__root__.dict(exclude_unset=True)
+                )
+            )
         if self.__root__.type == "initializeWorkspaceRequest":
             return initialize_workspace_request()
         if self.__root__.type == "submitV2":
-            return submit_v_2(self.__root__)
+            return submit_v_2(SubmitRequestV2(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "workspaceSubmit":
-            return workspace_submit(self.__root__)
+            return workspace_submit(WorkspaceSubmitRequest(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "stop":
-            return stop(self.__root__)
+            return stop(StopRequest(**self.__root__.dict(exclude_unset=True)))
 
     __root__: typing_extensions.Annotated[
         typing.Union[

@@ -182,7 +182,19 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                             expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
                             visitor_argument=single_union_type.shape.visit(
                                 same_properties_as_object=lambda type_name: VisitorArgument(
-                                    expression=AST.Expression("self.__root__"),
+                                    expression=AST.Expression(
+                                        AST.FunctionInvocation(
+                                            function_definition=self._context.get_class_reference_for_type_name(
+                                                type_name
+                                            ),
+                                            args=[
+                                                AST.Expression(
+                                                    "self.__root__.dict(exclude_unset=True)",
+                                                    spread=AST.ExpressionSpread.TWO_ASTERISKS,
+                                                )
+                                            ],
+                                        )
+                                    ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
                                         ir_types.TypeReference.factory.named(type_name)
                                     ),
@@ -235,12 +247,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 args=single_union_type.shape.visit(
                     same_properties_as_object=lambda type_name: [
                         AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    qualified_name_excluding_import=(f"{BUILDER_ARGUMENT_NAME}.dict",)
-                                ),
-                                args=[AST.Expression("exclude_unset=True")],
-                            ),
+                            f"{BUILDER_ARGUMENT_NAME}.dict(exclude_unset=True)",
                             spread=AST.ExpressionSpread.TWO_ASTERISKS,
                         )
                     ],

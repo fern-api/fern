@@ -32,7 +32,7 @@ class ExceptionV2(pydantic.BaseModel):
         self, generic: typing.Callable[[ExceptionInfo], T_Result], timeout: typing.Callable[[], T_Result]
     ) -> T_Result:
         if self.__root__.type == "generic":
-            return generic(self.__root__)
+            return generic(ExceptionInfo(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "timeout":
             return timeout()
 

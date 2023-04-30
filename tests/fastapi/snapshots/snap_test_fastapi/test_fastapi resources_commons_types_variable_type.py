@@ -88,9 +88,9 @@ class VariableType(pydantic.BaseModel):
         if self.__root__.type == "charType":
             return char_type()
         if self.__root__.type == "listType":
-            return list_type(self.__root__)
+            return list_type(resources_commons_types_list_type_ListType(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "mapType":
-            return map_type(self.__root__)
+            return map_type(resources_commons_types_map_type_MapType(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "binaryTreeType":
             return binary_tree_type()
         if self.__root__.type == "singlyLinkedListType":

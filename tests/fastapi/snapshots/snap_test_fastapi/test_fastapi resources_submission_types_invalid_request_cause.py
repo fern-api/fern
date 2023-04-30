@@ -70,11 +70,19 @@ class InvalidRequestCause(pydantic.BaseModel):
         unexpected_language: typing.Callable[[UnexpectedLanguageError], T_Result],
     ) -> T_Result:
         if self.__root__.type == "submissionIdNotFound":
-            return submission_id_not_found(self.__root__)
+            return submission_id_not_found(
+                resources_submission_types_submission_id_not_found_SubmissionIdNotFound(
+                    **self.__root__.dict(exclude_unset=True)
+                )
+            )
         if self.__root__.type == "customTestCasesUnsupported":
-            return custom_test_cases_unsupported(self.__root__)
+            return custom_test_cases_unsupported(
+                resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported(
+                    **self.__root__.dict(exclude_unset=True)
+                )
+            )
         if self.__root__.type == "unexpectedLanguage":
-            return unexpected_language(self.__root__)
+            return unexpected_language(UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True)))
 
     __root__: typing_extensions.Annotated[
         typing.Union[

@@ -82,11 +82,11 @@ class SubmissionResponse(pydantic.BaseModel):
         if self.__root__.type == "workspaceInitialized":
             return workspace_initialized()
         if self.__root__.type == "serverErrored":
-            return server_errored(self.__root__)
+            return server_errored(ExceptionInfo(**self.__root__.dict(exclude_unset=True)))
         if self.__root__.type == "codeExecutionUpdate":
             return code_execution_update(self.__root__.value)
         if self.__root__.type == "terminated":
-            return terminated(self.__root__)
+            return terminated(TerminatedResponse(**self.__root__.dict(exclude_unset=True)))
 
     __root__: typing_extensions.Annotated[
         typing.Union[

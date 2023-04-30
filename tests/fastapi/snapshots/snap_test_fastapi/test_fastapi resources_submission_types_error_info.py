@@ -40,11 +40,17 @@ class ErrorInfo(pydantic.BaseModel):
         internal_error: typing.Callable[[resources_submission_types_internal_error_InternalError], T_Result],
     ) -> T_Result:
         if self.__root__.type == "compileError":
-            return compile_error(self.__root__)
+            return compile_error(
+                resources_submission_types_compile_error_CompileError(**self.__root__.dict(exclude_unset=True))
+            )
         if self.__root__.type == "runtimeError":
-            return runtime_error(self.__root__)
+            return runtime_error(
+                resources_submission_types_runtime_error_RuntimeError(**self.__root__.dict(exclude_unset=True))
+            )
         if self.__root__.type == "internalError":
-            return internal_error(self.__root__)
+            return internal_error(
+                resources_submission_types_internal_error_InternalError(**self.__root__.dict(exclude_unset=True))
+            )
 
     __root__: typing_extensions.Annotated[
         typing.Union[_ErrorInfo.CompileError, _ErrorInfo.RuntimeError, _ErrorInfo.InternalError],
