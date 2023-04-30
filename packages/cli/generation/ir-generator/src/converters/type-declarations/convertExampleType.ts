@@ -292,7 +292,7 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example));
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
         },
         base64: () => {
             if (typeof example !== "string") {
