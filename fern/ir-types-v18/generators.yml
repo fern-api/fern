@@ -14,7 +14,7 @@ groups:
           wrapped-aliases: true
 
       - name: fernapi/fern-pydantic-model
-        version: 0.3.4-rc0-1-gb687f04d
+        version: 0.3.4-rc0-2-g56fdf75d
         config:
           wrapped_aliases: true
           include_union_utils: true
