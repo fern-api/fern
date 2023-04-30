@@ -18,3 +18,4 @@ groups:
         config:
           wrapped_aliases: true
           include_union_utils: true
+          frozen: true
