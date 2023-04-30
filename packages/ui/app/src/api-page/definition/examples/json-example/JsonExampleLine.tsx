@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { PropsWithChildren, useContext } from "react";
 import { JsonExampleDepthContext } from "./contexts/JsonExampleDepthContext";
 
@@ -11,7 +12,7 @@ export const JsonExampleLine: React.FC<JsonExampleLine.Props> = ({ className, ch
     const { depth } = useContext(JsonExampleDepthContext);
 
     return (
-        <div className={className} style={{ paddingLeft: 5 + 15 * depth }}>
+        <div className={classNames("pr-3", className)} style={{ paddingLeft: 5 + 15 * depth }}>
             {children}
         </div>
     );
