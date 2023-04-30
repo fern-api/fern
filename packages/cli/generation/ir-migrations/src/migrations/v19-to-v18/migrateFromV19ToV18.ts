@@ -18,13 +18,13 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
         [GeneratorName.JAVA_SPRING]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
+        [GeneratorName.PYTHON_FASTAPI]: "0.3.4-rc0-9-ge815162f",
+        [GeneratorName.PYTHON_PYDANTIC]: "0.3.4-rc0-9-ge815162f",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: AlwaysRunMigration,
+        [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
     },
     migrateBackwards: (v19, context): IrVersions.V18.ir.IntermediateRepresentation => {
         return {
