@@ -1,12 +1,11 @@
 import { FernRegistry } from "@fern-fern/registry";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { MonospaceText } from "../../../commons/MonospaceText";
 import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
-import { useSubpackageContext } from "../subpackages/context/SubpackageContext";
 import { useEndpointContext } from "./context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointPathParameter } from "./EndpointPathParameter";
@@ -20,10 +19,11 @@ export declare namespace EndpointContent {
     export interface Props {
         resolvedUrlPath: ResolvedUrlPath;
         endpoint: FernRegistry.EndpointDefinition;
+        setIsInView?: (endpointId: string, isInView: boolean) => void;
     }
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPath, endpoint }) => {
+export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPath, endpoint, setIsInView }) => {
     const { urlPathResolver, registerSidebarItemClickListener } = useApiDefinitionContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
@@ -34,13 +34,15 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPa
         [setHoveredResponsePropertyPath]
     );
 
-    const { setIsEndpointInView } = useSubpackageContext();
-    const onChangeIsInView = useCallback(
-        (isInView: boolean) => {
-            setIsEndpointInView(endpoint.id, isInView);
-        },
-        [endpoint.id, setIsEndpointInView]
-    );
+    const onChangeIsInView = useMemo(() => {
+        if (setIsInView != null) {
+            return (isInView: boolean) => {
+                setIsInView(endpoint.id, isInView);
+            };
+        } else {
+            return undefined;
+        }
+    }, [endpoint.id, setIsInView]);
 
     const { ref: setRefForIntersectionObserver } = useInView({
         threshold: 0.5,

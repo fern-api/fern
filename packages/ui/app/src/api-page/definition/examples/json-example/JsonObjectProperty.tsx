@@ -59,28 +59,28 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             ref.current?.scrollIntoView({
                 behavior: "smooth",
                 block: "nearest",
-                inline: "nearest",
+                inline: "start",
             });
         }
     }, [isSelected]);
 
     return (
-        <div
-            className={classNames(
-                "border rounded transition",
-                isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
-            )}
-            ref={ref}
-        >
-            <JsonExampleLine>
-                <div className="flex">
-                    <div className="flex">
-                        <div className="text-[#aadafa]">{propertyKey}</div>
-                        <div>:</div>
-                    </div>
+        <div ref={ref}>
+            <JsonExampleLine className="relative">
+                <div>
+                    <span>
+                        <span className="text-[#aadafa]">{propertyKey}</span>
+                        <span>:</span>
+                    </span>
                     &nbsp;
                     <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
                 </div>
+                <div
+                    className={classNames(
+                        "absolute inset-x-px inset-y-0 border rounded transition",
+                        isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
+                    )}
+                />
             </JsonExampleLine>
             <JsonExampleBreadcumbsContext.Provider value={contextValue}>
                 <JsonItemMiddleLines value={propertyValue} />

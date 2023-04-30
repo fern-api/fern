@@ -16,7 +16,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({ title, rightLabel
                 <div className="flex items-center gap-2 font-bold">{title}</div>
                 {rightLabel != null && <div>{rightLabel}</div>}
             </div>
-            <div className="relative overflow-y-auto">{children}</div>
+            <div className="flex relative overflow-y-auto">{children}</div>
         </div>
     );
 };

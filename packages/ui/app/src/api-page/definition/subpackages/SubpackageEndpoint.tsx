@@ -4,21 +4,20 @@ import { ResolvedSubpackagePath } from "../../api-context/url-path-resolver/UrlP
 import { Endpoint } from "../endpoints/Endpoint";
 
 export declare namespace SubpackageEndpoint {
-    export interface Props {
+    export interface Props extends Omit<Endpoint.Props, "resolvedUrlPath"> {
         subpackageId: FernRegistry.SubpackageId;
-        endpoint: FernRegistry.EndpointDefinition;
     }
 }
 
-export const SubpackageEndpoint: React.FC<SubpackageEndpoint.Props> = ({ subpackageId, endpoint }) => {
+export const SubpackageEndpoint: React.FC<SubpackageEndpoint.Props> = ({ subpackageId, ...endpointProps }) => {
     const resolvedUrlPath = useMemo(
         (): ResolvedSubpackagePath => ({
             type: "subpackage",
             subpackageId,
-            endpointId: endpoint.id,
+            endpointId: endpointProps.endpoint.id,
         }),
-        [endpoint.id, subpackageId]
+        [endpointProps.endpoint.id, subpackageId]
     );
 
-    return <Endpoint resolvedUrlPath={resolvedUrlPath} endpoint={endpoint} />;
+    return <Endpoint resolvedUrlPath={resolvedUrlPath} {...endpointProps} />;
 };

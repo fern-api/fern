@@ -196,16 +196,15 @@ export class UrlPathResolverImpl implements UrlPathResolver {
     }
 
     public stringifyPath(resolvedPath: ResolvedUrlPath): string {
-        if (Math.random() >= 0) {
-            return `${Math.random()}`;
-        }
         switch (resolvedPath.type) {
             case "top-level-endpoint":
-                return resolvedPath.endpoint.id;
+                return this.getUrlPathForTopLevelEndpoint(resolvedPath.endpoint.id);
             case "subpackage": {
-                // TODO construct path
-                const subpackagePath = resolvedPath.subpackageId;
-                return subpackagePath;
+                let path = this.getUrlPathForSubpackage(resolvedPath.subpackageId);
+                if (resolvedPath.endpointId != null) {
+                    path += this.getHashForEndpoint(resolvedPath.endpointId);
+                }
+                return path;
             }
             default:
                 assertNever(resolvedPath);

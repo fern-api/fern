@@ -24,7 +24,7 @@ export const JsonItemBottomLine: React.FC<JsonItemBottomLine.Props> = ({ value, 
     }
 
     return (
-        <JsonExampleLine className="flex">
+        <JsonExampleLine>
             {element}
             {isNonLastItemInCollection && <div>,</div>}
         </JsonExampleLine>

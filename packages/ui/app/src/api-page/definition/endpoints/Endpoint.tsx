@@ -1,19 +1,14 @@
-import { FernRegistry } from "@fern-fern/registry";
-import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { EndpointContextProvider } from "./context/EndpointContextProvider";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
-    export interface Props {
-        resolvedUrlPath: ResolvedUrlPath;
-        endpoint: FernRegistry.EndpointDefinition;
-    }
+    export type Props = EndpointContent.Props;
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({ resolvedUrlPath, endpoint }) => {
+export const Endpoint: React.FC<Endpoint.Props> = ({ ...endpointProps }) => {
     return (
         <EndpointContextProvider>
-            <EndpointContent resolvedUrlPath={resolvedUrlPath} endpoint={endpoint} />
+            <EndpointContent {...endpointProps} />
         </EndpointContextProvider>
     );
 };
