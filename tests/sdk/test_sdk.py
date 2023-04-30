@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fern.generator_exec.sdk.resources import config
+from fern.generator_exec.resources import EnvironmentVariable, config
 from snapshottest.module import SnapshotTest  # type: ignore
 
 from fern_python.generators.sdk.cli import main as cli
@@ -96,8 +96,8 @@ def test_github_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
                     config.PypiGithubPublishInfo(
                         registry_url="https://pypi.org/",
                         package_name="my-package-name",
-                        username_environment_variable="PYPI_USERNAME",
-                        password_environment_variable="PYPI_PASSWORD",
+                        username_environment_variable=EnvironmentVariable.from_str("PYPI_USERNAME"),
+                        password_environment_variable=EnvironmentVariable.from_str("PYPI_PASSWORD"),
                     )
                 ),
             ),

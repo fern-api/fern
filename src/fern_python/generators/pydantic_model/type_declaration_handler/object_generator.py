@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-import fern.ir.pydantic as ir_types
+import fern.ir.resources as ir_types
 
 from fern_python.codegen import SourceFile
 

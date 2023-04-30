@@ -1,6 +1,6 @@
-import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources.config import GeneratorConfig
-from fern.generator_exec.sdk.resources.logging import (
+import fern.ir.resources as ir_types
+from fern.generator_exec.resources.config import GeneratorConfig
+from fern.generator_exec.resources.logging import (
     ErrorExitStatusUpdate,
     ExitStatusUpdate,
     GeneratorUpdate,

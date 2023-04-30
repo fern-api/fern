@@ -1,11 +1,11 @@
 import typing
 
-from fern.generator_exec.sdk.client.client import FernGeneratorExec
-from fern.generator_exec.sdk.resources.config import (
+from fern.generator_exec.client import FernGeneratorExec
+from fern.generator_exec.resources.config import (
     GeneratorConfig,
     RemoteGeneratorEnvironment,
 )
-from fern.generator_exec.sdk.resources.logging import GeneratorUpdate, TaskId
+from fern.generator_exec.resources.logging import GeneratorUpdate, TaskId
 
 
 class GeneratorExecWrapper:

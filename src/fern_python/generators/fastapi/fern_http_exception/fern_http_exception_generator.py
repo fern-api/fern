@@ -1,4 +1,4 @@
-from fern.ir.pydantic import NameAndWireValue
+from fern.ir.resources import NameAndWireValue
 
 from fern_python.codegen import AST, LocalClassReference, Project, SourceFile
 from fern_python.external_dependencies import FastAPI

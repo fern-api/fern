@@ -1,6 +1,6 @@
 from typing import List
 
-from fern.generator_exec.sdk.resources.logging import GeneratorUpdate, InitUpdateV2
+from fern.generator_exec.resources.logging import GeneratorUpdate, InitUpdateV2
 
 from core_utilities.sdk.jsonable_encoder import jsonable_encoder
 

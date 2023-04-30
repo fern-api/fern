@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from fern.generator_exec.sdk.resources import config
+from fern.generator_exec.resources import config
 from snapshottest.module import SnapshotTest  # type: ignore
 
 from fern_python.generators.pydantic_model.cli import main as cli

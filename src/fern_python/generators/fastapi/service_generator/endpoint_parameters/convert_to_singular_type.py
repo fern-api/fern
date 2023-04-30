@@ -1,4 +1,4 @@
-import fern.ir.pydantic as ir_types
+import fern.ir.resources as ir_types
 from typing_extensions import assert_never
 
 from fern_python.codegen import AST

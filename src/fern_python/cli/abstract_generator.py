@@ -4,9 +4,9 @@ import os
 from abc import ABC, abstractmethod
 from typing import Optional, Tuple
 
-import fern.ir.pydantic as ir_types
-from fern.generator_exec.sdk.resources import GeneratorConfig
-from fern.generator_exec.sdk.resources.config import (
+import fern.ir.resources as ir_types
+from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec.resources.config import (
     GeneratorPublishConfig,
     GithubOutputMode,
 )

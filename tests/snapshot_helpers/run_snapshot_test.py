@@ -5,7 +5,7 @@ from glob import glob
 from pathlib import Path
 from typing import Any, Callable, List, Set
 
-from fern.generator_exec.sdk.resources import config
+from fern.generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
 from snapshottest.module import SnapshotTest  # type: ignore
 

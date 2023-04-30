@@ -1,6 +1,6 @@
 from typing import Tuple
 
-import fern.ir.pydantic as ir_types
+import fern.ir.resources as ir_types
 
 from fern_python.codegen import ExportStrategy, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
