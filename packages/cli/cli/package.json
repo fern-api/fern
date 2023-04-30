@@ -91,7 +91,7 @@
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.5",
     "@types/latest-version": "^4.0.1",
-    "@types/lodash-es": "^4.17.6",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "@types/tar": "^6.1.3",
     "@types/validate-npm-package-name": "^4.0.0",

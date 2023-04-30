@@ -9918,6 +9918,7 @@ exports[`open api parser hathora simple 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "name": "CreateAppRequest"
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9929,7 +9930,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "allOf": [],
                     "description": undefined,
-                    "name": undefined,
+                    "name": "CreateAppRequestAuthConfiguration",
                     "properties": [
                       {
                         "key": "google",
@@ -9939,7 +9940,7 @@ exports[`open api parser hathora simple 1`] = `
                           "value": {
                             "allOf": [],
                             "description": undefined,
-                            "name": undefined,
+                            "name": "CreateAppRequestAuthConfigurationGoogle",
                             "properties": [
                               {
                                 "key": "clientId",

@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
-import { isReferenceObject } from "./isReferenceObject";
+import { isReferenceObject } from "./utils/isReferenceObject";
 
 export class OpenAPIV3ParserContext {
     private document: OpenAPIV3.Document;

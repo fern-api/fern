@@ -1,6 +1,6 @@
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../utils/isReferenceObject";
 
 export interface CandidateDiscriminant {
     discriminant: string;

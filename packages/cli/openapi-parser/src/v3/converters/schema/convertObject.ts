@@ -1,7 +1,7 @@
 import { ObjectProperty, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, convertToReferencedSchema } from "../convertSchemas";
 
 export function convertObject({

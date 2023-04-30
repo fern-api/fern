@@ -1,13 +1,15 @@
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 
 export function convertEnum({
-    schemaName,
+    xSchemaName,
+    autogennedName,
     enumNames,
     enumValues,
     description,
     wrapAsOptional,
 }: {
-    schemaName: string | undefined;
+    xSchemaName: string | undefined;
+    autogennedName: string;
     enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
@@ -21,7 +23,7 @@ export function convertEnum({
     });
     return wrapEnum({
         wrapAsOptional,
-        enumName: schemaName,
+        enumName: xSchemaName,
         values,
         description,
     });

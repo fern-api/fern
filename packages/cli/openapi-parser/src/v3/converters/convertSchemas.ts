@@ -1,7 +1,8 @@
 import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { getSchemaNameFromBreadcrumbs } from "../utils/getSchemaName";
+import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
 import { convertDiscriminatedOneOf } from "./schema/convertDiscriminatedOneOf";
@@ -31,7 +32,8 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject): Re
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
-    context: OpenAPIV3ParserContext
+    context: OpenAPIV3ParserContext,
+    breadcrumbs: string[]
 ): Schema {
     if (isReferenceObject(schema)) {
         const referenceSchema = Schema.reference(convertToReferencedSchema(schema));
@@ -44,17 +46,19 @@ export function convertSchema(
             return referenceSchema;
         }
     } else {
-        return convertSchemaObject(schema, wrapAsOptional, context);
+        return convertSchemaObject(schema, wrapAsOptional, context, breadcrumbs);
     }
 }
 
 function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsOptional: boolean,
-    context: OpenAPIV3ParserContext
+    context: OpenAPIV3ParserContext,
+    breadcrumbs: string[]
 ): Schema {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const schemaName = (schema as any)["x-name"] as string | undefined;
+    const xSchemaName = (schema as any)["x-name"] as string | undefined;
+    const autogennedName = getSchemaNameFromBreadcrumbs(breadcrumbs);
     const description = schema.description;
 
     // enums
@@ -69,7 +73,7 @@ function convertSchemaObject(
             });
         }
         return convertEnum({
-            schemaName,
+            xSchemaName,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
             enumValues: schema.enum,
@@ -131,7 +135,7 @@ function convertSchemaObject(
             discriminator: schema.discriminator,
             properties: schema.properties ?? {},
             required: schema.required,
-            schemaName,
+            schemaName: xSchemaName,
             wrapAsOptional,
             context,
         });
@@ -140,7 +144,7 @@ function convertSchemaObject(
     // treat anyOf as undiscrminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
         return convertUndiscriminatedOneOf({
-            schemaName,
+            schemaName: xSchemaName,
             description,
             wrapAsOptional,
             context,
@@ -158,7 +162,7 @@ function convertSchemaObject(
         // otherwise convert as an object
         return convertObject({
             properties: schema.properties ?? {},
-            objectName: schemaName,
+            objectName: xSchemaName,
             description,
             required: schema.required,
             wrapAsOptional,

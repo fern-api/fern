@@ -46,7 +46,7 @@
     "@types/inquirer": "^9.0.1",
     "@types/jest": "^29.0.3",
     "@types/libsodium-wrappers": "^0.7.10",
-    "@types/lodash-es": "^4.17.6",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.3",
