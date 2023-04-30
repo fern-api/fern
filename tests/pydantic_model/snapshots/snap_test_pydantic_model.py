@@ -155,91 +155,93 @@ snapshots['test_pydantic_model filepaths'] = [
     'resources/submission/workspace_submit_request.py',
     'resources/submission/workspace_traced_update.py',
     'resources/v_2/__init__.py',
-    'resources/v_2/problem/__init__.py',
-    'resources/v_2/problem/assert_correctness_check.py',
-    'resources/v_2/problem/basic_custom_files.py',
-    'resources/v_2/problem/basic_test_case_template.py',
-    'resources/v_2/problem/create_problem_request_v_2.py',
-    'resources/v_2/problem/custom_files.py',
-    'resources/v_2/problem/deep_equality_correctness_check.py',
-    'resources/v_2/problem/default_provided_file.py',
-    'resources/v_2/problem/file_info_v_2.py',
-    'resources/v_2/problem/files.py',
-    'resources/v_2/problem/function_implementation.py',
-    'resources/v_2/problem/function_implementation_for_multiple_languages.py',
-    'resources/v_2/problem/function_signature.py',
-    'resources/v_2/problem/generated_files.py',
-    'resources/v_2/problem/get_basic_solution_file_request.py',
-    'resources/v_2/problem/get_basic_solution_file_response.py',
-    'resources/v_2/problem/get_function_signature_request.py',
-    'resources/v_2/problem/get_function_signature_response.py',
-    'resources/v_2/problem/get_generated_test_case_file_request.py',
-    'resources/v_2/problem/get_generated_test_case_template_file_request.py',
-    'resources/v_2/problem/lightweight_problem_info_v_2.py',
-    'resources/v_2/problem/non_void_function_definition.py',
-    'resources/v_2/problem/non_void_function_signature.py',
-    'resources/v_2/problem/parameter.py',
-    'resources/v_2/problem/parameter_id.py',
-    'resources/v_2/problem/problem_info_v_2.py',
-    'resources/v_2/problem/test_case_expects.py',
-    'resources/v_2/problem/test_case_function.py',
-    'resources/v_2/problem/test_case_id.py',
-    'resources/v_2/problem/test_case_implementation.py',
-    'resources/v_2/problem/test_case_implementation_description.py',
-    'resources/v_2/problem/test_case_implementation_description_board.py',
-    'resources/v_2/problem/test_case_implementation_reference.py',
-    'resources/v_2/problem/test_case_metadata.py',
-    'resources/v_2/problem/test_case_template.py',
-    'resources/v_2/problem/test_case_template_id.py',
-    'resources/v_2/problem/test_case_v_2.py',
-    'resources/v_2/problem/test_case_with_actual_result_implementation.py',
-    'resources/v_2/problem/void_function_definition.py',
-    'resources/v_2/problem/void_function_definition_that_takes_actual_result.py',
-    'resources/v_2/problem/void_function_signature.py',
-    'resources/v_2/problem/void_function_signature_that_takes_actual_result.py',
-    'resources/v_2/v_3/__init__.py',
-    'resources/v_2/v_3/problem/__init__.py',
-    'resources/v_2/v_3/problem/assert_correctness_check.py',
-    'resources/v_2/v_3/problem/basic_custom_files.py',
-    'resources/v_2/v_3/problem/basic_test_case_template.py',
-    'resources/v_2/v_3/problem/create_problem_request_v_2.py',
-    'resources/v_2/v_3/problem/custom_files.py',
-    'resources/v_2/v_3/problem/deep_equality_correctness_check.py',
-    'resources/v_2/v_3/problem/default_provided_file.py',
-    'resources/v_2/v_3/problem/file_info_v_2.py',
-    'resources/v_2/v_3/problem/files.py',
-    'resources/v_2/v_3/problem/function_implementation.py',
-    'resources/v_2/v_3/problem/function_implementation_for_multiple_languages.py',
-    'resources/v_2/v_3/problem/function_signature.py',
-    'resources/v_2/v_3/problem/generated_files.py',
-    'resources/v_2/v_3/problem/get_basic_solution_file_request.py',
-    'resources/v_2/v_3/problem/get_basic_solution_file_response.py',
-    'resources/v_2/v_3/problem/get_function_signature_request.py',
-    'resources/v_2/v_3/problem/get_function_signature_response.py',
-    'resources/v_2/v_3/problem/get_generated_test_case_file_request.py',
-    'resources/v_2/v_3/problem/get_generated_test_case_template_file_request.py',
-    'resources/v_2/v_3/problem/lightweight_problem_info_v_2.py',
-    'resources/v_2/v_3/problem/non_void_function_definition.py',
-    'resources/v_2/v_3/problem/non_void_function_signature.py',
-    'resources/v_2/v_3/problem/parameter.py',
-    'resources/v_2/v_3/problem/parameter_id.py',
-    'resources/v_2/v_3/problem/problem_info_v_2.py',
-    'resources/v_2/v_3/problem/test_case_expects.py',
-    'resources/v_2/v_3/problem/test_case_function.py',
-    'resources/v_2/v_3/problem/test_case_id.py',
-    'resources/v_2/v_3/problem/test_case_implementation.py',
-    'resources/v_2/v_3/problem/test_case_implementation_description.py',
-    'resources/v_2/v_3/problem/test_case_implementation_description_board.py',
-    'resources/v_2/v_3/problem/test_case_implementation_reference.py',
-    'resources/v_2/v_3/problem/test_case_metadata.py',
-    'resources/v_2/v_3/problem/test_case_template.py',
-    'resources/v_2/v_3/problem/test_case_template_id.py',
-    'resources/v_2/v_3/problem/test_case_v_2.py',
-    'resources/v_2/v_3/problem/test_case_with_actual_result_implementation.py',
-    'resources/v_2/v_3/problem/void_function_definition.py',
-    'resources/v_2/v_3/problem/void_function_definition_that_takes_actual_result.py',
-    'resources/v_2/v_3/problem/void_function_signature.py',
-    'resources/v_2/v_3/problem/void_function_signature_that_takes_actual_result.py'
+    'resources/v_2/resources/__init__.py',
+    'resources/v_2/resources/problem/__init__.py',
+    'resources/v_2/resources/problem/assert_correctness_check.py',
+    'resources/v_2/resources/problem/basic_custom_files.py',
+    'resources/v_2/resources/problem/basic_test_case_template.py',
+    'resources/v_2/resources/problem/create_problem_request_v_2.py',
+    'resources/v_2/resources/problem/custom_files.py',
+    'resources/v_2/resources/problem/deep_equality_correctness_check.py',
+    'resources/v_2/resources/problem/default_provided_file.py',
+    'resources/v_2/resources/problem/file_info_v_2.py',
+    'resources/v_2/resources/problem/files.py',
+    'resources/v_2/resources/problem/function_implementation.py',
+    'resources/v_2/resources/problem/function_implementation_for_multiple_languages.py',
+    'resources/v_2/resources/problem/function_signature.py',
+    'resources/v_2/resources/problem/generated_files.py',
+    'resources/v_2/resources/problem/get_basic_solution_file_request.py',
+    'resources/v_2/resources/problem/get_basic_solution_file_response.py',
+    'resources/v_2/resources/problem/get_function_signature_request.py',
+    'resources/v_2/resources/problem/get_function_signature_response.py',
+    'resources/v_2/resources/problem/get_generated_test_case_file_request.py',
+    'resources/v_2/resources/problem/get_generated_test_case_template_file_request.py',
+    'resources/v_2/resources/problem/lightweight_problem_info_v_2.py',
+    'resources/v_2/resources/problem/non_void_function_definition.py',
+    'resources/v_2/resources/problem/non_void_function_signature.py',
+    'resources/v_2/resources/problem/parameter.py',
+    'resources/v_2/resources/problem/parameter_id.py',
+    'resources/v_2/resources/problem/problem_info_v_2.py',
+    'resources/v_2/resources/problem/test_case_expects.py',
+    'resources/v_2/resources/problem/test_case_function.py',
+    'resources/v_2/resources/problem/test_case_id.py',
+    'resources/v_2/resources/problem/test_case_implementation.py',
+    'resources/v_2/resources/problem/test_case_implementation_description.py',
+    'resources/v_2/resources/problem/test_case_implementation_description_board.py',
+    'resources/v_2/resources/problem/test_case_implementation_reference.py',
+    'resources/v_2/resources/problem/test_case_metadata.py',
+    'resources/v_2/resources/problem/test_case_template.py',
+    'resources/v_2/resources/problem/test_case_template_id.py',
+    'resources/v_2/resources/problem/test_case_v_2.py',
+    'resources/v_2/resources/problem/test_case_with_actual_result_implementation.py',
+    'resources/v_2/resources/problem/void_function_definition.py',
+    'resources/v_2/resources/problem/void_function_definition_that_takes_actual_result.py',
+    'resources/v_2/resources/problem/void_function_signature.py',
+    'resources/v_2/resources/problem/void_function_signature_that_takes_actual_result.py',
+    'resources/v_2/resources/v_3/__init__.py',
+    'resources/v_2/resources/v_3/resources/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/__init__.py',
+    'resources/v_2/resources/v_3/resources/problem/assert_correctness_check.py',
+    'resources/v_2/resources/v_3/resources/problem/basic_custom_files.py',
+    'resources/v_2/resources/v_3/resources/problem/basic_test_case_template.py',
+    'resources/v_2/resources/v_3/resources/problem/create_problem_request_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/custom_files.py',
+    'resources/v_2/resources/v_3/resources/problem/deep_equality_correctness_check.py',
+    'resources/v_2/resources/v_3/resources/problem/default_provided_file.py',
+    'resources/v_2/resources/v_3/resources/problem/file_info_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/files.py',
+    'resources/v_2/resources/v_3/resources/problem/function_implementation.py',
+    'resources/v_2/resources/v_3/resources/problem/function_implementation_for_multiple_languages.py',
+    'resources/v_2/resources/v_3/resources/problem/function_signature.py',
+    'resources/v_2/resources/v_3/resources/problem/generated_files.py',
+    'resources/v_2/resources/v_3/resources/problem/get_basic_solution_file_request.py',
+    'resources/v_2/resources/v_3/resources/problem/get_basic_solution_file_response.py',
+    'resources/v_2/resources/v_3/resources/problem/get_function_signature_request.py',
+    'resources/v_2/resources/v_3/resources/problem/get_function_signature_response.py',
+    'resources/v_2/resources/v_3/resources/problem/get_generated_test_case_file_request.py',
+    'resources/v_2/resources/v_3/resources/problem/get_generated_test_case_template_file_request.py',
+    'resources/v_2/resources/v_3/resources/problem/lightweight_problem_info_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/non_void_function_definition.py',
+    'resources/v_2/resources/v_3/resources/problem/non_void_function_signature.py',
+    'resources/v_2/resources/v_3/resources/problem/parameter.py',
+    'resources/v_2/resources/v_3/resources/problem/parameter_id.py',
+    'resources/v_2/resources/v_3/resources/problem/problem_info_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_expects.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_function.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_id.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_implementation.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_implementation_description.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_implementation_description_board.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_implementation_reference.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_metadata.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_template.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_template_id.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_v_2.py',
+    'resources/v_2/resources/v_3/resources/problem/test_case_with_actual_result_implementation.py',
+    'resources/v_2/resources/v_3/resources/problem/void_function_definition.py',
+    'resources/v_2/resources/v_3/resources/problem/void_function_definition_that_takes_actual_result.py',
+    'resources/v_2/resources/v_3/resources/problem/void_function_signature.py',
+    'resources/v_2/resources/v_3/resources/problem/void_function_signature_that_takes_actual_result.py'
 ]
 
 snapshots['test_pydantic_model resources___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources___init__.py')
@@ -516,172 +518,176 @@ snapshots['test_pydantic_model resources_submission_workspace_traced_update'] = 
 
 snapshots['test_pydantic_model resources_v_2___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2___init__.py')
 
-snapshots['test_pydantic_model resources_v_2_problem___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem___init__.py')
+snapshots['test_pydantic_model resources_v_2_resources___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources___init__.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_assert_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_assert_correctness_check.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem___init__.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_basic_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_basic_custom_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_assert_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_assert_correctness_check.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_basic_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_basic_test_case_template.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_basic_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_basic_custom_files.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_create_problem_request_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_create_problem_request_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_basic_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_basic_test_case_template.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_custom_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_create_problem_request_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_create_problem_request_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_deep_equality_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_deep_equality_correctness_check.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_custom_files.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_default_provided_file'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_default_provided_file.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_deep_equality_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_deep_equality_correctness_check.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_file_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_file_info_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_default_provided_file'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_default_provided_file.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_file_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_file_info_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_function_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_function_implementation.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_files.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_function_implementation_for_multiple_languages.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_function_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_function_implementation.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_function_signature.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_function_implementation_for_multiple_languages.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_generated_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_generated_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_function_signature.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_get_basic_solution_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_get_basic_solution_file_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_generated_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_generated_files.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_get_basic_solution_file_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_get_basic_solution_file_response.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_get_basic_solution_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_get_basic_solution_file_request.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_get_function_signature_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_get_function_signature_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_get_basic_solution_file_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_get_basic_solution_file_response.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_get_function_signature_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_get_function_signature_response.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_get_function_signature_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_get_function_signature_request.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_get_generated_test_case_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_get_generated_test_case_file_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_get_function_signature_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_get_function_signature_response.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_get_generated_test_case_template_file_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_get_generated_test_case_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_get_generated_test_case_file_request.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_lightweight_problem_info_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_get_generated_test_case_template_file_request.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_non_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_non_void_function_definition.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_lightweight_problem_info_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_non_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_non_void_function_signature.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_non_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_non_void_function_definition.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_parameter'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_parameter.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_non_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_non_void_function_signature.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_parameter_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_parameter_id.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_parameter'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_parameter.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_problem_info_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_parameter_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_parameter_id.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_expects'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_expects.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_problem_info_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_function'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_function.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_expects'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_expects.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_id.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_function'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_function.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_implementation.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_id.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_implementation_description'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_implementation_description.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_implementation.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_implementation_description_board'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_implementation_description_board.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_implementation_description'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_implementation_description.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_implementation_reference'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_implementation_reference.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_implementation_description_board'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_implementation_description_board.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_metadata'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_metadata.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_implementation_reference'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_implementation_reference.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_template.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_metadata'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_metadata.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_template_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_template_id.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_template.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_template_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_template_id.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_test_case_with_actual_result_implementation.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_void_function_definition.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_test_case_with_actual_result_implementation.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_void_function_definition_that_takes_actual_result.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_void_function_definition.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_void_function_signature.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_void_function_definition_that_takes_actual_result.py')
 
-snapshots['test_pydantic_model resources_v_2_problem_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_problem_void_function_signature_that_takes_actual_result.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_void_function_signature.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3___init__.py')
+snapshots['test_pydantic_model resources_v_2_resources_problem_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_problem_void_function_signature_that_takes_actual_result.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem___init__.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3___init__.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_assert_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_assert_correctness_check.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources___init__.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_basic_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_basic_custom_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem___init__'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem___init__.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_basic_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_basic_test_case_template.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_assert_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_assert_correctness_check.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_create_problem_request_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_create_problem_request_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_basic_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_basic_custom_files.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_custom_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_basic_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_basic_test_case_template.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_deep_equality_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_deep_equality_correctness_check.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_create_problem_request_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_create_problem_request_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_default_provided_file'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_default_provided_file.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_custom_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_custom_files.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_file_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_file_info_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_deep_equality_correctness_check'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_deep_equality_correctness_check.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_default_provided_file'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_default_provided_file.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_function_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_function_implementation.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_file_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_file_info_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_function_implementation_for_multiple_languages.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_files.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_function_signature.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_function_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_function_implementation.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_generated_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_generated_files.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_function_implementation_for_multiple_languages'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_function_implementation_for_multiple_languages.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_get_basic_solution_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_get_basic_solution_file_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_function_signature.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_get_basic_solution_file_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_get_basic_solution_file_response.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_generated_files'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_generated_files.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_get_function_signature_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_get_function_signature_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_basic_solution_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_basic_solution_file_request.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_get_function_signature_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_get_function_signature_response.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_basic_solution_file_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_basic_solution_file_response.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_get_generated_test_case_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_get_generated_test_case_file_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_function_signature_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_function_signature_request.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_get_generated_test_case_template_file_request.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_function_signature_response'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_function_signature_response.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_lightweight_problem_info_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_generated_test_case_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_generated_test_case_file_request.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_non_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_non_void_function_definition.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_generated_test_case_template_file_request'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_get_generated_test_case_template_file_request.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_non_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_non_void_function_signature.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_lightweight_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_lightweight_problem_info_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_parameter'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_parameter.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_non_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_non_void_function_definition.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_parameter_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_parameter_id.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_non_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_non_void_function_signature.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_problem_info_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_parameter'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_parameter.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_expects'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_expects.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_parameter_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_parameter_id.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_function'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_function.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_problem_info_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_problem_info_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_id.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_expects'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_expects.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_implementation.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_function'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_function.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_implementation_description'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_implementation_description.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_id.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_implementation_description_board'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_implementation_description_board.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_implementation_reference'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_implementation_reference.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation_description'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation_description.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_metadata'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_metadata.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation_description_board'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation_description_board.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_template.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation_reference'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_implementation_reference.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_template_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_template_id.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_metadata'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_metadata.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_v_2.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_template'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_template.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_test_case_with_actual_result_implementation.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_template_id'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_template_id.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_void_function_definition.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_v_2'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_v_2.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_void_function_definition_that_takes_actual_result.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_with_actual_result_implementation'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_test_case_with_actual_result_implementation.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_void_function_signature.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_definition'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_definition.py')
 
-snapshots['test_pydantic_model resources_v_2_v_3_problem_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_v_3_problem_void_function_signature_that_takes_actual_result.py')
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_definition_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_definition_that_takes_actual_result.py')
+
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_signature'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_signature.py')
+
+snapshots['test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_signature_that_takes_actual_result'] = FileSnapshot('snap_test_pydantic_model/test_pydantic_model resources_v_2_resources_v_3_resources_problem_void_function_signature_that_takes_actual_result.py')

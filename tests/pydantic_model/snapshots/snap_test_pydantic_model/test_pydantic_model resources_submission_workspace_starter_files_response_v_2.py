@@ -10,7 +10,7 @@ import typing_extensions
 
 from ...core.datetime_utils import serialize_datetime
 from ..commons.language import Language
-from ..v_2.problem.files import Files
+from ..v_2.resources.problem.files import Files
 
 
 class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):

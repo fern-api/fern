@@ -10,7 +10,7 @@ import typing_extensions
 
 from ...core.datetime_utils import serialize_datetime
 from ..commons.problem_id import ProblemId
-from ..v_2.problem.problem_info_v_2 import ProblemInfoV2
+from ..v_2.resources.problem.problem_info_v_2 import ProblemInfoV2
 from .test_submission_update import TestSubmissionUpdate
 
 
