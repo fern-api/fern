@@ -59,7 +59,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             ref.current?.scrollIntoView({
                 behavior: "smooth",
                 block: "nearest",
-                inline: "start",
+                inline: "nearest",
             });
         }
     }, [isSelected]);

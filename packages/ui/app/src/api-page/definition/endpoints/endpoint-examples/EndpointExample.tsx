@@ -34,7 +34,6 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
             {example.responseBody != null && (
                 <TitledExample
                     title="Response"
-                    className="shrink-0"
                     rightLabel={
                         <span
                             className={classNames(
