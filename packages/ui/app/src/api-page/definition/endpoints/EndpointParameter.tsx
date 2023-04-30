@@ -25,7 +25,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
             <div className="flex items-center gap-1">
                 <MonospaceText>{renderName(name)}</MonospaceText>
                 <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
-                    <TypeShorthand type={type} />
+                    <TypeShorthand type={type} plural={false} />
                 </div>
             </div>
             {description != null && <Markdown>{description}</Markdown>}

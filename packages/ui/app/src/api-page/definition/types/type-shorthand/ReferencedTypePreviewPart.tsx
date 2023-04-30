@@ -6,10 +6,11 @@ import { TypeShorthand } from "./TypeShorthand";
 export declare namespace ReferencedTypePreviewPart {
     export interface Props {
         typeId: FernRegistry.TypeId;
+        plural: boolean;
     }
 }
 
-export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({ typeId }) => {
+export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({ typeId, plural }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
     const shape = resolveTypeById(typeId).shape;
@@ -17,12 +18,12 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
     return (
         <>
             {shape._visit<JSX.Element | string>({
-                alias: (typeReference) => <TypeShorthand type={typeReference} />,
-                object: () => "object",
-                undiscriminatedUnion: () => "union",
-                discriminatedUnion: () => "union",
-                enum: () => "enum",
-                _other: () => "_other",
+                alias: (typeReference) => <TypeShorthand type={typeReference} plural={plural} />,
+                object: () => (plural ? "objects" : "object"),
+                undiscriminatedUnion: () => (plural ? "unions" : "union"),
+                discriminatedUnion: () => (plural ? "unions" : "union"),
+                enum: () => (plural ? "enums" : "enum"),
+                _other: () => "<unknown>",
             })}
         </>
     );

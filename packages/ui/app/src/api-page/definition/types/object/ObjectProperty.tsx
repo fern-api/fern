@@ -69,7 +69,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                     <MonospaceText>{property.key}</MonospaceText>
                 </div>
                 <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
-                    <TypeShorthand type={property.valueType} />
+                    <TypeShorthand type={property.valueType} plural={false} />
                 </div>
             </div>
             <div className="flex flex-col">
