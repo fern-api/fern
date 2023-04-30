@@ -199,14 +199,14 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.194"
+version = "0.0.195"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.194-py3-none-any.whl", hash = "sha256:9704dc3dee18220a5c9f84fdcebca1ca76c0688edd8562614e5abdda61539c83"},
-    {file = "fern_fern_generator_exec_sdk-0.0.194.tar.gz", hash = "sha256:e6b70a6dce6c70eaa5563f4be4d46ac61eddf3e5126570d7d0feadb04976ea21"},
+    {file = "fern_fern_generator_exec_sdk-0.0.195-py3-none-any.whl", hash = "sha256:76027ba3200e11cba90e31f7a20054772a8cf6f5315ffcb214e3fa6cf72ed43b"},
+    {file = "fern_fern_generator_exec_sdk-0.0.195.tar.gz", hash = "sha256:d70fe89872dc03a896a5b324c65f3898c3869e411af223a227d1d990cbc4a9df"},
 ]
 
 [package.dependencies]
@@ -986,4 +986,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "86522ff74a8c36c58df7741d0519f30670a1ebb1aa4eb5cd8042c0f3810f4864"
+content-hash = "bc2c773b24f5f5cfbf044c915e2fd68ce9358366b5660b50db457004644796c2"
