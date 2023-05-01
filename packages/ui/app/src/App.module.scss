@@ -7,9 +7,14 @@ body {
     :global {
         code,
         pre {
-            font-family: "Source Code Pro";
+            font-family: "Berkeley Mono Trial";
         }
     }
+}
+
+@font-face {
+    font-family: "Berkeley Mono Trial";
+    src: local("Berkeley Mono Trial"), url("./fonts/BerkeleyMonoTrial-Regular.otf") format("opentype");
 }
 
 .app {

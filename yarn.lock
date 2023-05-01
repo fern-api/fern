@@ -4831,8 +4831,8 @@ __metadata:
     "@fern-api/theme": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/registry": 0.0.300
+    "@fontsource/ibm-plex-mono": ^4.5.13
     "@fontsource/inter": ^4.5.11
-    "@fontsource/source-code-pro": ^4.5.8
     "@tanstack/react-query": ^4.24.10
     "@tanstack/react-query-devtools": ^4.24.12
     "@types/jest": ^29.0.3
@@ -5236,6 +5236,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/ibm-plex-mono@npm:^4.5.13":
+  version: 4.5.13
+  resolution: "@fontsource/ibm-plex-mono@npm:4.5.13"
+  checksum: f9276195578ba8f90f10499c9430e1fee9bd6b101b55fdb3a6f23e57ada8a290f363ec450c1966d0413e9111b2b6e081f58e3428dd764f2a9ccb81648ffbbc85
+  languageName: node
+  linkType: hard
+
 "@fontsource/inter@npm:^4.5.11":
   version: 4.5.15
   resolution: "@fontsource/inter@npm:4.5.15"
@@ -5247,13 +5254,6 @@ __metadata:
   version: 4.5.8
   resolution: "@fontsource/roboto-mono@npm:4.5.8"
   checksum: 0912b468ae5285d992f81f27c1b59dabf7a7a0a6ab050b5af38947985ba7fe776de8050b89361aa7c3c4730def2567cb305e83bd631d1a4c12791dda7faab21e
-  languageName: node
-  linkType: hard
-
-"@fontsource/source-code-pro@npm:^4.5.8":
-  version: 4.5.14
-  resolution: "@fontsource/source-code-pro@npm:4.5.14"
-  checksum: cee0005c9f02323d4c9ce3de15133bfd04bdc70d9e58c846428110cb8eafaf94c6e9bfccfecff3a3e3a471522a14a97b25d8ee318cec83da373aba1a19aad9ef
   languageName: node
   linkType: hard
 

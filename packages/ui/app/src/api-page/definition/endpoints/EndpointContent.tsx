@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { MonospaceText } from "../../../commons/MonospaceText";
+import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";

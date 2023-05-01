@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
-import { MonospaceText } from "../../../../commons/MonospaceText";
+import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
 import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,

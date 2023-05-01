@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
-import { MonospaceText } from "../../../../commons/MonospaceText";
+import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
 import { Markdown } from "../../markdown/Markdown";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 

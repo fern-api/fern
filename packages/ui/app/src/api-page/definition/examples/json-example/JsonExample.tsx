@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { MonospaceText } from "../../../../commons/MonospaceText";
+import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
 import { JsonExampleContext, JsonExampleContextValue } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";

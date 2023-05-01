@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
-import { MonospaceText } from "../../../../commons/MonospaceText";
+import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../../markdown/Markdown";
 import {
