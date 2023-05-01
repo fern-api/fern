@@ -189,7 +189,10 @@ function getRequest({
                             if (property.schema.type === "file") {
                                 return [property.key, "file"];
                             } else {
-                                const propertyTypeReference = convertToTypeReference({ schema: property.schema.json });
+                                const propertyTypeReference = convertToTypeReference({
+                                    schema: property.schema.json,
+                                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                                });
                                 return [property.key, propertyTypeReference.typeReference];
                             }
                         })
