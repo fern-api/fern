@@ -430,7 +430,7 @@ class ClientGenerator:
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
-        elif not self._is_httpx_primitive_data(query_parameter.value_type):
+        elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)
 
         return reference
@@ -764,12 +764,7 @@ class ClientGenerator:
             allow_optional=allow_optional,
         )
 
-    def _is_httpx_primitive_data(
-        self,
-        type_reference: ir_types.TypeReference,
-        *,
-        allow_optional: bool = False,
-    ) -> bool:
+    def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference, expected=HTTPX_PRIMITIVE_DATA_TYPES, allow_optional=allow_optional
         )

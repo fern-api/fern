@@ -53,6 +53,8 @@ class MovieClient:
         datetime: dt.datetime,
         optional_date: typing.Optional[dt.date] = None,
         optional_datetime: typing.Optional[dt.datetime] = None,
+        boolean: bool,
+        optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
         _response = httpx.request(
@@ -63,6 +65,8 @@ class MovieClient:
                 "datetime": serialize_datetime(datetime),
                 "optional_date": str(optional_date) if optional_date is not None else None,
                 "optional_datetime": serialize_datetime(optional_datetime) if optional_datetime is not None else None,
+                "boolean": boolean,
+                "optional_boolean": optional_boolean,
             },
             json=jsonable_encoder(request),
             timeout=60,
@@ -133,6 +137,8 @@ class AsyncMovieClient:
         datetime: dt.datetime,
         optional_date: typing.Optional[dt.date] = None,
         optional_datetime: typing.Optional[dt.datetime] = None,
+        boolean: bool,
+        optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
         async with httpx.AsyncClient() as _client:
@@ -146,6 +152,8 @@ class AsyncMovieClient:
                     "optional_datetime": serialize_datetime(optional_datetime)
                     if optional_datetime is not None
                     else None,
+                    "boolean": boolean,
+                    "optional_boolean": optional_boolean,
                 },
                 json=jsonable_encoder(request),
                 timeout=60,
