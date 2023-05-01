@@ -2499,7 +2499,8 @@ and a logical concept denoted by the tag's name.
         "artifacts-locate-response": {
           "allOf": [],
           "description": "The response to getting an artifact's download URL.",
-          "name": undefined,
+          "generatedName": "ArtifactsLocateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "expires_at",
@@ -2531,7 +2532,8 @@ and a logical concept denoted by the tag's name.
         "artifacts-prepare-request": {
           "allOf": [],
           "description": "The request to prepare a URL to upload a file.",
-          "name": undefined,
+          "generatedName": "ArtifactsPrepareRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "file_name",
@@ -2549,7 +2551,8 @@ and a logical concept denoted by the tag's name.
         "artifacts-prepare-response": {
           "allOf": [],
           "description": "The response to preparing a URL to upload a file.",
-          "name": undefined,
+          "generatedName": "ArtifactsPrepareResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "form_data",
@@ -2590,7 +2593,8 @@ and a logical concept denoted by the tag's name.
         "artifacts-prepare-response-form-data": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ArtifactsPrepareResponseFormData",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "key",
@@ -2618,7 +2622,8 @@ and a logical concept denoted by the tag's name.
         "atom-base": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "AtomBase",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "created_by",
@@ -2704,7 +2709,8 @@ and a logical concept denoted by the tag's name.
         "atom-base-summary": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "AtomBaseSummary",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_id",
@@ -2795,7 +2801,8 @@ login screen as a login option.
 authentication connection that is set up for a Dev organization.
 ",
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "AuthConnection",
+            "nameOverride": undefined,
             "schemas": {
               "google_apps": {
                 "description": undefined,
@@ -2837,7 +2844,8 @@ authentication connection that is set up for a Dev organization.
           "description": "Object encapsulating the configuration parameters for an Azure AD
 authentication connection.
 ",
-          "name": undefined,
+          "generatedName": "AuthConnectionOptionsAzureAd",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "client_id",
@@ -2889,7 +2897,8 @@ authentication connection.
           "description": "Object encapsulating the configuration parameters for a Google Apps
 authentication connection.
 ",
-          "name": undefined,
+          "generatedName": "AuthConnectionOptionsGoogleApps",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "client_id",
@@ -2943,7 +2952,8 @@ authentication connection.
           "description": "Object encapsulating the configuration parameters for an OIDC
 authentication connection.
 ",
-          "name": undefined,
+          "generatedName": "AuthConnectionOptionsOidc",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "client_id",
@@ -2995,7 +3005,8 @@ authentication connection.
           "description": "Object encapsulating the configuration parameters for a SAML
 authentication connection.
 ",
-          "name": undefined,
+          "generatedName": "AuthConnectionOptionsSaml",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "sign_in_endpoint",
@@ -3041,7 +3052,8 @@ authentication connection.
         },
         "auth-connection-toggle": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "AuthConnectionToggle",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3058,7 +3070,8 @@ authentication connection.
           "description": "Defines the type for the authentication connection. The configuration
 for each authentication connection will depend on the type value.
 ",
-          "name": undefined,
+          "generatedName": "AuthConnectionType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3093,7 +3106,8 @@ for each authentication connection will depend on the type value.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "AuthToken",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "client_id",
@@ -3216,7 +3230,8 @@ token. Only applicable for application access tokens.
         },
         "auth-token-grant-type": {
           "description": "Specifies the process of obtaining a token.",
-          "name": undefined,
+          "generatedName": "AuthTokenGrantType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3231,7 +3246,8 @@ token. Only applicable for application access tokens.
         },
         "auth-token-requested-token-type": {
           "description": "The type of the requested token.",
-          "name": undefined,
+          "generatedName": "AuthTokenRequestedTokenType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3274,7 +3290,8 @@ token. Only applicable for application access tokens.
         },
         "auth-token-status": {
           "description": "The status of the token.",
-          "name": undefined,
+          "generatedName": "AuthTokenStatus",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3293,7 +3310,8 @@ token. Only applicable for application access tokens.
         },
         "auth-token-subject-token-type": {
           "description": "The type of the subject token.",
-          "name": undefined,
+          "generatedName": "AuthTokenSubjectTokenType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3329,7 +3347,8 @@ token. Only applicable for application access tokens.
         "auth-token-token-type": {
           "description": "The type of the issued token. Bearer is the only supported token type.
 ",
-          "name": undefined,
+          "generatedName": "AuthTokenTokenType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3343,7 +3362,8 @@ token. Only applicable for application access tokens.
           "description": "A request to create a new token corresponding to the requested token
 type.
 ",
-          "name": undefined,
+          "generatedName": "AuthTokensCreateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "aud",
@@ -3503,7 +3523,8 @@ requesting an application access token (AAT).
           "description": "Response for the request to create a new token corresponding to the
 requested token type.
 ",
-          "name": undefined,
+          "generatedName": "AuthTokensCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "access_token",
@@ -3591,7 +3612,8 @@ of values in which the order of values does not matter.
         "auth-tokens-delete-request": {
           "allOf": [],
           "description": "The request to revoke the token.",
-          "name": undefined,
+          "generatedName": "AuthTokensDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "token_id",
@@ -3616,7 +3638,8 @@ JTI claim of the token in the authorization header.
         "auth-tokens-get-response": {
           "allOf": [],
           "description": "The response to get the token metadata.",
-          "name": undefined,
+          "generatedName": "AuthTokensGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "token",
@@ -3633,7 +3656,8 @@ JTI claim of the token in the authorization header.
         "auth-tokens-list-response": {
           "allOf": [],
           "description": "The response to list the token metadata.",
-          "name": undefined,
+          "generatedName": "AuthTokensListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tokens",
@@ -3654,7 +3678,8 @@ JTI claim of the token in the authorization header.
         "auth-tokens-org-traits": {
           "allOf": [],
           "description": "Carries Rev org info.",
-          "name": undefined,
+          "generatedName": "AuthTokensOrgTraits",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_name",
@@ -3692,7 +3717,8 @@ JTI claim of the token in the authorization header.
           "description": "Carries info corresponding to the Rev user to be provisioned and/or
 issue a Rev session token.
 ",
-          "name": undefined,
+          "generatedName": "AuthTokensRevInfo",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "org_ref",
@@ -3766,7 +3792,8 @@ issue a Rev session token.
           "description": "The request to delete all the tokens created by the authenticated user,
 that match with the provided token type.
 ",
-          "name": undefined,
+          "generatedName": "AuthTokensSelfDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "requested_token_type",
@@ -3787,7 +3814,8 @@ that match with the provided token type.
         "auth-tokens-update-request": {
           "allOf": [],
           "description": "A request to update the token metadata.",
-          "name": undefined,
+          "generatedName": "AuthTokensUpdateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "token_hint",
@@ -3816,7 +3844,8 @@ that match with the provided token type.
         "auth-tokens-update-response": {
           "allOf": [],
           "description": "Response for the request to update the token metadata.",
-          "name": undefined,
+          "generatedName": "AuthTokensUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "token",
@@ -3833,7 +3862,8 @@ that match with the provided token type.
         "auth-tokens-user-traits": {
           "allOf": [],
           "description": "Carries Rev user info.",
-          "name": undefined,
+          "generatedName": "AuthTokensUserTraits",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_name",
@@ -3926,7 +3956,8 @@ it would appear on the login button as 'Log in to abclogin'.
             "description": "Request to create a new enterprise authentication connection.
 ",
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "DevOrgAuthConnectionsCreateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "google_apps": {
                 "description": undefined,
@@ -3961,7 +3992,8 @@ it would appear on the login button as 'Log in to abclogin'.
           "description": "Defines the type for the authentication connection. Different types of
 authentication connections have different configuration parameters.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsCreateRequestType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -3987,7 +4019,8 @@ authentication connections have different configuration parameters.
           "description": "Response for the request to create a new enterprise authentication
 connection.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "auth_connection",
@@ -4007,7 +4040,8 @@ connection.
 organization. A default connection and a connection which is currently
 enabled cannot be deleted.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -4027,7 +4061,8 @@ enabled cannot be deleted.
           "description": "Response object encapsulating the configuration details of an
 authentication connection.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "auth_connection",
@@ -4046,7 +4081,8 @@ authentication connection.
           "description": "Response object for the request to list all the social and enterprise
 authentication connections configured for a Dev organization.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "auth_connections",
@@ -4071,7 +4107,8 @@ a Dev organization.
           "description": "Request to enable or disable an authentication connection for a Dev
 organization.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsToggleRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -4145,7 +4182,8 @@ it would appear on the login button as 'Log in to abclogin'.
 organization.
 ",
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "DevOrgAuthConnectionsUpdateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "google_apps": {
                 "description": undefined,
@@ -4187,7 +4225,8 @@ organization.
 of authentication connections have different configuration parameters
 that can be updated.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsUpdateRequestType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4217,7 +4256,8 @@ that can be updated.
           "description": "Response for the request to update an enterprise authentication
 connection.
 ",
-          "name": undefined,
+          "generatedName": "DevOrgAuthConnectionsUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "auth_connection",
@@ -4241,7 +4281,8 @@ connection.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "DevUser",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "external_identities",
@@ -4272,7 +4313,8 @@ connection.
         "dev-users-list-response": {
           "allOf": [],
           "description": "The response to listing the Dev users.",
-          "name": undefined,
+          "generatedName": "DevUsersListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "dev_users",
@@ -4326,7 +4368,8 @@ sort order. If not set, then no prior elements exist.
           "allOf": [],
           "description": "The response to getting the information for the authenticated user.
 ",
-          "name": undefined,
+          "generatedName": "DevUsersSelfResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "dev_user",
@@ -4360,7 +4403,8 @@ sort order. If not set, then no prior elements exist.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Enhancement",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "target_close_date",
@@ -4395,7 +4439,8 @@ sort order. If not set, then no prior elements exist.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorBadRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "type",
@@ -4426,7 +4471,8 @@ sort order. If not set, then no prior elements exist.
         "error-bad-request-invalid-enum-value": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorBadRequestInvalidEnumValue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "allowed_values",
@@ -4468,7 +4514,8 @@ sort order. If not set, then no prior elements exist.
         "error-bad-request-missing-required-field": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorBadRequestMissingRequiredField",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "field_name",
@@ -4495,7 +4542,8 @@ sort order. If not set, then no prior elements exist.
         },
         "error-bad-request-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorBadRequestType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4523,7 +4571,8 @@ sort order. If not set, then no prior elements exist.
         "error-bad-request-value-not-permitted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorBadRequestValueNotPermitted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "field_name",
@@ -4555,7 +4604,8 @@ sort order. If not set, then no prior elements exist.
         "error-base": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorBase",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "message",
@@ -4584,7 +4634,8 @@ sort order. If not set, then no prior elements exist.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorForbidden",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "type",
@@ -4614,7 +4665,8 @@ sort order. If not set, then no prior elements exist.
         },
         "error-forbidden-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorForbiddenType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4633,7 +4685,8 @@ sort order. If not set, then no prior elements exist.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorInternalServerError",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "reference_id",
@@ -4679,7 +4732,8 @@ inquiry.
         },
         "error-internal-server-error-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorInternalServerErrorType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4698,7 +4752,8 @@ inquiry.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorNotFound",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "type",
@@ -4728,7 +4783,8 @@ inquiry.
         },
         "error-not-found-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorNotFoundType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4747,7 +4803,8 @@ inquiry.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorServiceUnavailable",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "type",
@@ -4777,7 +4834,8 @@ inquiry.
         },
         "error-service-unavailable-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorServiceUnavailableType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4796,7 +4854,8 @@ inquiry.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorTooManyRequests",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "retry_after",
@@ -4841,7 +4900,8 @@ inquiry.
         },
         "error-too-many-requests-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorTooManyRequestsType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4860,7 +4920,8 @@ inquiry.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorUnauthorized",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "type",
@@ -4880,7 +4941,8 @@ inquiry.
         },
         "error-unauthorized-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ErrorUnauthorizedType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -4902,7 +4964,8 @@ inquiry.
         "event-part-created": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventPartCreated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "part",
@@ -4919,7 +4982,8 @@ inquiry.
         "event-part-deleted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventPartDeleted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -4937,7 +5001,8 @@ inquiry.
         "event-part-updated": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventPartUpdated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "part",
@@ -4954,7 +5019,8 @@ inquiry.
         "event-rev-org-created": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventRevOrgCreated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "rev_org",
@@ -4971,7 +5037,8 @@ inquiry.
         "event-rev-org-deleted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventRevOrgDeleted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -4989,7 +5056,8 @@ inquiry.
         "event-rev-org-updated": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventRevOrgUpdated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "rev_org",
@@ -5006,7 +5074,8 @@ inquiry.
         "event-tag-created": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventTagCreated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tag",
@@ -5023,7 +5092,8 @@ inquiry.
         "event-tag-deleted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventTagDeleted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -5041,7 +5111,8 @@ inquiry.
         "event-tag-updated": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventTagUpdated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tag",
@@ -5058,7 +5129,8 @@ inquiry.
         "event-timeline-entry-created": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventTimelineEntryCreated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "entry",
@@ -5075,7 +5147,8 @@ inquiry.
         "event-timeline-entry-deleted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventTimelineEntryDeleted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -5093,7 +5166,8 @@ inquiry.
         "event-timeline-entry-updated": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventTimelineEntryUpdated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "entry",
@@ -5110,7 +5184,8 @@ inquiry.
         "event-webhook-created": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventWebhookCreated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "webhook",
@@ -5127,7 +5202,8 @@ inquiry.
         "event-webhook-deleted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventWebhookDeleted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -5145,7 +5221,8 @@ inquiry.
         "event-webhook-updated": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventWebhookUpdated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "webhook",
@@ -5162,7 +5239,8 @@ inquiry.
         "event-work-created": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventWorkCreated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "work",
@@ -5179,7 +5257,8 @@ inquiry.
         "event-work-deleted": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventWorkDeleted",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -5197,7 +5276,8 @@ inquiry.
         "event-work-updated": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EventWorkUpdated",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "work",
@@ -5249,7 +5329,8 @@ inquiry.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Issue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "priority",
@@ -5269,7 +5350,8 @@ inquiry.
         },
         "issue-priority": {
           "description": "Priority of the work based upon impact and criticality.",
-          "name": undefined,
+          "generatedName": "IssuePriority",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -5297,7 +5379,8 @@ beginning. If "before", then entries before the provided cursor will be
 returned, or if no cursor is provided, then from the end. Entries will
 always be returned in the specified sort-by order.
 ",
-          "name": undefined,
+          "generatedName": "ListMode",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -5320,7 +5403,8 @@ always be returned in the specified sort-by order.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "OrgBase",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_name",
@@ -5349,7 +5433,8 @@ always be returned in the specified sort-by order.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "OrgBaseSummary",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_name",
@@ -5371,7 +5456,8 @@ always be returned in the specified sort-by order.
         "org-environment": {
           "description": "The environment of the Org. Defaults to 'production' if not specified.
 ",
-          "name": undefined,
+          "generatedName": "OrgEnvironment",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -5403,7 +5489,8 @@ always be returned in the specified sort-by order.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "OrgSummary",
+            "nameOverride": undefined,
             "schemas": {
               "rev_org": {
                 "description": undefined,
@@ -5418,7 +5505,8 @@ always be returned in the specified sort-by order.
         },
         "org-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "OrgType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -5442,7 +5530,8 @@ always be returned in the specified sort-by order.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "Part",
+            "nameOverride": undefined,
             "schemas": {
               "capability": {
                 "description": undefined,
@@ -5483,7 +5572,8 @@ always be returned in the specified sort-by order.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartBase",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "artifacts",
@@ -5577,7 +5667,8 @@ always be returned in the specified sort-by order.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartBaseSummary",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "name",
@@ -5611,7 +5702,8 @@ always be returned in the specified sort-by order.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "PartSummary",
+            "nameOverride": undefined,
             "schemas": {
               "capability": {
                 "description": undefined,
@@ -5644,7 +5736,8 @@ always be returned in the specified sort-by order.
         },
         "part-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -5718,7 +5811,8 @@ always be returned in the specified sort-by order.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "PartsCreateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "capability": {
                 "description": undefined,
@@ -5752,7 +5846,8 @@ always be returned in the specified sort-by order.
         "parts-create-request-capability": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsCreateRequestCapability",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "parent_part",
@@ -5774,7 +5869,8 @@ always be returned in the specified sort-by order.
         "parts-create-request-enhancement": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsCreateRequestEnhancement",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "parent_part",
@@ -5812,7 +5908,8 @@ always be returned in the specified sort-by order.
         "parts-create-request-feature": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsCreateRequestFeature",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "parent_part",
@@ -5844,7 +5941,8 @@ always be returned in the specified sort-by order.
         "parts-create-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "part",
@@ -5861,7 +5959,8 @@ always be returned in the specified sort-by order.
         "parts-delete-request": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -5889,7 +5988,8 @@ always be returned in the specified sort-by order.
         "parts-get-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "part",
@@ -5906,7 +6006,8 @@ always be returned in the specified sort-by order.
         "parts-list-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "next_cursor",
@@ -6022,7 +6123,8 @@ sort order. If not set, then no prior elements exist.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "PartsUpdateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "capability": {
                 "description": undefined,
@@ -6072,7 +6174,8 @@ sort order. If not set, then no prior elements exist.
         "parts-update-request-enhancement": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsUpdateRequestEnhancement",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "target_close_date",
@@ -6104,7 +6207,8 @@ sort order. If not set, then no prior elements exist.
         "parts-update-request-owned-by": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsUpdateRequestOwnedBy",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "set",
@@ -6142,7 +6246,8 @@ empty.
         "parts-update-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PartsUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "part",
@@ -6178,7 +6283,8 @@ empty.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "RevOrg",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "description",
@@ -6240,7 +6346,8 @@ organization.
           "description": "Request object to create a new Rev organization in the Dev
 organization.
 ",
-          "name": undefined,
+          "generatedName": "RevOrgsCreateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "description",
@@ -6331,7 +6438,8 @@ records.
           "allOf": [],
           "description": "Response object for request to create a new Rev organization.
 ",
-          "name": undefined,
+          "generatedName": "RevOrgsCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "rev_org",
@@ -6348,7 +6456,8 @@ records.
         "rev-orgs-delete-request": {
           "allOf": [],
           "description": "Request object to delete a Rev organization.",
-          "name": undefined,
+          "generatedName": "RevOrgsDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -6376,7 +6485,8 @@ records.
         "rev-orgs-get-response": {
           "allOf": [],
           "description": "The response to getting a Rev organization's information.",
-          "name": undefined,
+          "generatedName": "RevOrgsGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "rev_org",
@@ -6394,7 +6504,8 @@ records.
           "allOf": [],
           "description": "The response to getting a list of Rev organizations' information.
 ",
-          "name": undefined,
+          "generatedName": "RevOrgsListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "next_cursor",
@@ -6448,7 +6559,8 @@ sort order. If not set, then no prior elements exist.
           "allOf": [],
           "description": "Request object to update information of the Rev organization.
 ",
-          "name": undefined,
+          "generatedName": "RevOrgsUpdateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "description",
@@ -6552,7 +6664,8 @@ records.
         "rev-orgs-update-response": {
           "allOf": [],
           "description": "Response object to updating Rev organization's information.",
-          "name": undefined,
+          "generatedName": "RevOrgsUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "rev_org",
@@ -6576,7 +6689,8 @@ records.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "RevUserSummary",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "external_ref",
@@ -6616,7 +6730,8 @@ system-generated identifier will be assigned to the user.
         "set-tag-with-value": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SetTagWithValue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -6650,7 +6765,8 @@ the value must be one that's specified in the tag's allowed values.
         "stage": {
           "allOf": [],
           "description": "Describes the current stage of a work item.",
-          "name": undefined,
+          "generatedName": "Stage",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "name",
@@ -6668,7 +6784,8 @@ the value must be one that's specified in the tag's allowed values.
         "stage-init": {
           "allOf": [],
           "description": "Sets an object's initial stage.",
-          "name": undefined,
+          "generatedName": "StageInit",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "name",
@@ -6690,7 +6807,8 @@ the value must be one that's specified in the tag's allowed values.
         "stage-update": {
           "allOf": [],
           "description": "Updates an object's stage.",
-          "name": undefined,
+          "generatedName": "StageUpdate",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "name",
@@ -6726,7 +6844,8 @@ the value must be one that's specified in the tag's allowed values.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Tag",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "allowed_values",
@@ -6795,7 +6914,8 @@ unique.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TagSummary",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "name",
@@ -6820,7 +6940,8 @@ unique.
         "tag-with-value": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TagWithValue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tag",
@@ -6851,7 +6972,8 @@ unique.
         "tags-create-request": {
           "allOf": [],
           "description": "The request to create a new tag.",
-          "name": undefined,
+          "generatedName": "TagsCreateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "allowed_values",
@@ -6904,7 +7026,8 @@ permitted.
         "tags-create-response": {
           "allOf": [],
           "description": "The response to creating a new tag.",
-          "name": undefined,
+          "generatedName": "TagsCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tag",
@@ -6921,7 +7044,8 @@ permitted.
         "tags-delete-request": {
           "allOf": [],
           "description": "The request to delete a tag.",
-          "name": undefined,
+          "generatedName": "TagsDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -6949,7 +7073,8 @@ permitted.
         "tags-get-response": {
           "allOf": [],
           "description": "The response to getting a tag's information.",
-          "name": undefined,
+          "generatedName": "TagsGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tag",
@@ -6966,7 +7091,8 @@ permitted.
         "tags-list-response": {
           "allOf": [],
           "description": "The response to listing the tags.",
-          "name": undefined,
+          "generatedName": "TagsListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "next_cursor",
@@ -7019,7 +7145,8 @@ sort order. If not set, then no prior elements exist.
         "tags-update-allowed-values": {
           "allOf": [],
           "description": "Specifies an update to a tag's allowed values.",
-          "name": undefined,
+          "generatedName": "TagsUpdateAllowedValues",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "set",
@@ -7045,7 +7172,8 @@ sort order. If not set, then no prior elements exist.
         "tags-update-request": {
           "allOf": [],
           "description": "The request to update a tag.",
-          "name": undefined,
+          "generatedName": "TagsUpdateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "allowed_values",
@@ -7106,7 +7234,8 @@ tags.
         "tags-update-response": {
           "allOf": [],
           "description": "The response for updating a tag.",
-          "name": undefined,
+          "generatedName": "TagsUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tag",
@@ -7130,7 +7259,8 @@ tags.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Ticket",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "group",
@@ -7176,7 +7306,8 @@ tags.
         },
         "ticket-severity": {
           "description": "Severity of the ticket.",
-          "name": undefined,
+          "generatedName": "TicketSeverity",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7207,7 +7338,8 @@ tags.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineComment",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "artifacts",
@@ -7277,7 +7409,8 @@ will appear in the response.
         },
         "timeline-comment-body-type": {
           "description": "The type of the body to use for the comment.",
-          "name": undefined,
+          "generatedName": "TimelineCommentBodyType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7328,7 +7461,8 @@ will appear in the response.
             ],
             "description": "The request to create a timeline entry for an object.",
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "TimelineEntriesCreateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "timeline_comment": {
                 "description": undefined,
@@ -7344,7 +7478,8 @@ will appear in the response.
         "timeline-entries-create-request-timeline-comment": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineEntriesCreateRequestTimelineComment",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "artifacts",
@@ -7413,7 +7548,8 @@ will appear in the response.
         },
         "timeline-entries-create-request-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineEntriesCreateRequestType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7425,7 +7561,8 @@ will appear in the response.
         "timeline-entries-create-response": {
           "allOf": [],
           "description": "The response to creating a timeline entry for an object.",
-          "name": undefined,
+          "generatedName": "TimelineEntriesCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "timeline_entry",
@@ -7442,7 +7579,8 @@ will appear in the response.
         "timeline-entries-get-response": {
           "allOf": [],
           "description": "The request to getting a timeline entry.",
-          "name": undefined,
+          "generatedName": "TimelineEntriesGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "timeline_entry",
@@ -7459,7 +7597,8 @@ will appear in the response.
         "timeline-entries-list-response": {
           "allOf": [],
           "description": "The response to listing timeline entries for an object.",
-          "name": undefined,
+          "generatedName": "TimelineEntriesListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "next_cursor",
@@ -7534,7 +7673,8 @@ sort order. If not set, then no prior elements exist.
             ],
             "description": "The request to update a timeline entry.",
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "TimelineEntriesUpdateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "timeline_comment": {
                 "description": undefined,
@@ -7550,7 +7690,8 @@ sort order. If not set, then no prior elements exist.
         "timeline-entries-update-request-timeline-comment": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineEntriesUpdateRequestTimelineComment",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "artifacts",
@@ -7615,7 +7756,8 @@ sort order. If not set, then no prior elements exist.
         "timeline-entries-update-request-timeline-comment-artifacts": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "add",
@@ -7681,7 +7823,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "timeline-entries-update-request-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineEntriesUpdateRequestType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7693,7 +7836,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "timeline-entries-update-response": {
           "allOf": [],
           "description": "The response to updating a timeline entry.",
-          "name": undefined,
+          "generatedName": "TimelineEntriesUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "timeline_entry",
@@ -7722,7 +7866,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "TimelineEntry",
+            "nameOverride": undefined,
             "schemas": {
               "timeline_comment": {
                 "description": undefined,
@@ -7743,7 +7888,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "timeline-entry-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TimelineEntryType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7757,7 +7903,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
 visible to the creator, otherwise if not set, then the entry has
 default visibility.
 ",
-          "name": undefined,
+          "generatedName": "TimelineEntryVisibility",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7776,7 +7923,8 @@ default visibility.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "UserBase",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_name",
@@ -7878,7 +8026,8 @@ default visibility.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "UserBaseSummary",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "display_name",
@@ -7954,7 +8103,8 @@ default visibility.
         },
         "user-state": {
           "description": "State of the user.",
-          "name": undefined,
+          "generatedName": "UserState",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -7994,7 +8144,8 @@ default visibility.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "UserSummary",
+            "nameOverride": undefined,
             "schemas": {
               "dev_user": {
                 "description": undefined,
@@ -8021,7 +8172,8 @@ default visibility.
         },
         "user-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "UserType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -8048,7 +8200,8 @@ default visibility.
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Webhook",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "event_types",
@@ -8114,7 +8267,8 @@ default visibility.
         "webhook-event-request": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WebhookEventRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -8420,7 +8574,8 @@ seconds.
         "webhook-event-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WebhookEventResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "challenge",
@@ -8443,7 +8598,8 @@ be set for other request types.
         },
         "webhook-event-type": {
           "description": "The event types that the webhook will receive.",
-          "name": undefined,
+          "generatedName": "WebhookEventType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -8527,7 +8683,8 @@ be set for other request types.
         "webhook-event-verify": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WebhookEventVerify",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "challenge",
@@ -8544,7 +8701,8 @@ be set for other request types.
         },
         "webhook-status": {
           "description": "The status of the webhook.",
-          "name": undefined,
+          "generatedName": "WebhookStatus",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -8564,7 +8722,8 @@ be set for other request types.
         "webhooks-create-request": {
           "allOf": [],
           "description": "The request to create a new webhook.",
-          "name": undefined,
+          "generatedName": "WebhooksCreateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "event_types",
@@ -8617,7 +8776,8 @@ response.
         "webhooks-create-response": {
           "allOf": [],
           "description": "The response to creating a new webhook.",
-          "name": undefined,
+          "generatedName": "WebhooksCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "webhook",
@@ -8634,7 +8794,8 @@ response.
         "webhooks-delete-request": {
           "allOf": [],
           "description": "The request to delete a webhook.",
-          "name": undefined,
+          "generatedName": "WebhooksDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -8662,7 +8823,8 @@ response.
         "webhooks-get-response": {
           "allOf": [],
           "description": "The response to getting the information for the webhook.",
-          "name": undefined,
+          "generatedName": "WebhooksGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "webhook",
@@ -8679,7 +8841,8 @@ response.
         "webhooks-list-response": {
           "allOf": [],
           "description": "The response to listing the webhooks.",
-          "name": undefined,
+          "generatedName": "WebhooksListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "webhooks",
@@ -8699,7 +8862,8 @@ response.
         },
         "webhooks-update-action": {
           "description": "The action to update the webhook's status.",
-          "name": undefined,
+          "generatedName": "WebhooksUpdateAction",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -8715,7 +8879,8 @@ response.
         "webhooks-update-request": {
           "allOf": [],
           "description": "The request to update a webhook.",
-          "name": undefined,
+          "generatedName": "WebhooksUpdateRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "action",
@@ -8795,7 +8960,8 @@ won't receive any object events until successfully verified.
         "webhooks-update-request-event-types": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WebhooksUpdateRequestEventTypes",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "add",
@@ -8863,7 +9029,8 @@ event types. Note this is mutually exclusive with 'add' and
         "webhooks-update-response": {
           "allOf": [],
           "description": "The response to updating the webhook.",
-          "name": undefined,
+          "generatedName": "WebhooksUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "webhook",
@@ -8892,7 +9059,8 @@ event types. Note this is mutually exclusive with 'add' and
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "Work",
+            "nameOverride": undefined,
             "schemas": {
               "issue": {
                 "description": undefined,
@@ -8921,7 +9089,8 @@ event types. Note this is mutually exclusive with 'add' and
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorkBase",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "applies_to_part",
@@ -9064,7 +9233,8 @@ event types. Note this is mutually exclusive with 'add' and
         },
         "work-type": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorkType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -9224,7 +9394,8 @@ issues.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "WorksCreateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "issue": {
                 "description": undefined,
@@ -9246,7 +9417,8 @@ issues.
         "works-create-request-issue": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksCreateRequestIssue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "priority",
@@ -9281,7 +9453,8 @@ issues.
         "works-create-request-ticket": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksCreateRequestTicket",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "group",
@@ -9330,7 +9503,8 @@ issues.
         "works-create-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksCreateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "work",
@@ -9347,7 +9521,8 @@ issues.
         "works-delete-request": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksDeleteRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -9375,7 +9550,8 @@ issues.
         "works-export-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksExportResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "works",
@@ -9396,7 +9572,8 @@ issues.
         "works-get-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksGetResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "work",
@@ -9413,7 +9590,8 @@ issues.
         "works-list-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksListResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "next_cursor",
@@ -9612,7 +9790,8 @@ sort order. If not set, then no prior elements exist.
             ],
             "description": undefined,
             "discriminantProperty": "type",
-            "name": undefined,
+            "generatedName": "WorksUpdateRequest",
+            "nameOverride": undefined,
             "schemas": {
               "issue": {
                 "description": undefined,
@@ -9640,7 +9819,8 @@ sort order. If not set, then no prior elements exist.
         "works-update-request-artifact-ids": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateRequestArtifactIds",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "set",
@@ -9666,7 +9846,8 @@ sort order. If not set, then no prior elements exist.
         "works-update-request-issue": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateRequestIssue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "priority",
@@ -9701,7 +9882,8 @@ sort order. If not set, then no prior elements exist.
         "works-update-request-owned-by": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateRequestOwnedBy",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "set",
@@ -9729,7 +9911,8 @@ empty.
         "works-update-request-reported-by": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateRequestReportedBy",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "set",
@@ -9756,7 +9939,8 @@ empty.
         "works-update-request-tags": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateRequestTags",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "set",
@@ -9781,7 +9965,8 @@ empty.
         "works-update-request-ticket": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateRequestTicket",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "group",
@@ -9831,7 +10016,8 @@ empty.
         "works-update-response": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "WorksUpdateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "work",
@@ -9918,19 +10104,20 @@ exports[`open api parser hathora simple 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "name": "CreateAppRequest"
             "description": undefined,
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "authConfiguration",
                   "schema": {
                     "allOf": [],
                     "description": undefined,
-                    "name": "CreateAppRequestAuthConfiguration",
+                    "generatedName": "AuthConfiguration",
+                    "nameOverride": undefined,
                     "properties": [
                       {
                         "key": "google",
@@ -9940,7 +10127,8 @@ exports[`open api parser hathora simple 1`] = `
                           "value": {
                             "allOf": [],
                             "description": undefined,
-                            "name": "CreateAppRequestAuthConfigurationGoogle",
+                            "generatedName": "AuthConfigurationGoogle",
+                            "nameOverride": undefined,
                             "properties": [
                               {
                                 "key": "clientId",
@@ -10043,14 +10231,16 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "authConfiguration",
                   "schema": {
                     "allOf": [],
                     "description": undefined,
-                    "name": undefined,
+                    "generatedName": "AuthConfiguration",
+                    "nameOverride": undefined,
                     "properties": [
                       {
                         "key": "google",
@@ -10060,7 +10250,8 @@ exports[`open api parser hathora simple 1`] = `
                           "value": {
                             "allOf": [],
                             "description": undefined,
-                            "name": undefined,
+                            "generatedName": "AuthConfigurationGoogle",
+                            "nameOverride": undefined,
                             "properties": [
                               {
                                 "key": "clientId",
@@ -10231,7 +10422,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "token",
@@ -10278,7 +10470,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "nickname",
@@ -10301,7 +10494,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "token",
@@ -10348,7 +10542,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "idToken",
@@ -10371,7 +10566,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "token",
@@ -11071,7 +11267,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "initialConfig",
@@ -11168,7 +11365,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "initialConfig",
@@ -11265,7 +11463,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "initialConfig",
@@ -11362,13 +11561,15 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "visibility",
                   "schema": {
                     "description": undefined,
-                    "name": undefined,
+                    "generatedName": "Visibility",
+                    "nameOverride": undefined,
                     "type": "enum",
                     "values": [
                       {
@@ -11567,7 +11768,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "state",
@@ -12112,7 +12314,8 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "name": undefined,
+              "generatedName": "",
+              "nameOverride": undefined,
               "properties": [
                 {
                   "key": "region",
@@ -12423,13 +12626,15 @@ exports[`open api parser hathora simple 1`] = `
         "ActiveConnectionInfo": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ActiveConnectionInfo",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "status",
               "schema": {
                 "description": undefined,
-                "name": undefined,
+                "generatedName": "ActiveConnectionInfoStatus",
+                "nameOverride": undefined,
                 "type": "enum",
                 "values": [
                   {
@@ -12490,7 +12695,8 @@ exports[`open api parser hathora simple 1`] = `
         "Application": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Application",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "deletedBy",
@@ -12546,7 +12752,8 @@ exports[`open api parser hathora simple 1`] = `
               "schema": {
                 "allOf": [],
                 "description": undefined,
-                "name": undefined,
+                "generatedName": "ApplicationAuthConfiguration",
+                "nameOverride": undefined,
                 "properties": [
                   {
                     "key": "google",
@@ -12556,7 +12763,8 @@ exports[`open api parser hathora simple 1`] = `
                       "value": {
                         "allOf": [],
                         "description": undefined,
-                        "name": undefined,
+                        "generatedName": "ApplicationAuthConfigurationGoogle",
+                        "nameOverride": undefined,
                         "properties": [
                           {
                             "key": "clientId",
@@ -12646,7 +12854,8 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ApplicationWithDeployment",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "deployment",
@@ -12667,7 +12876,8 @@ exports[`open api parser hathora simple 1`] = `
         "Build": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Build",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "regionalContainerTags",
@@ -12677,7 +12887,8 @@ exports[`open api parser hathora simple 1`] = `
                 "value": {
                   "allOf": [],
                   "description": undefined,
-                  "name": undefined,
+                  "generatedName": "BuildRegionalContainerTagsItem",
+                  "nameOverride": undefined,
                   "properties": [
                     {
                       "key": "containerTag",
@@ -12717,7 +12928,8 @@ exports[`open api parser hathora simple 1`] = `
               "key": "status",
               "schema": {
                 "description": undefined,
-                "name": undefined,
+                "generatedName": "BuildStatus",
+                "nameOverride": undefined,
                 "type": "enum",
                 "values": [
                   {
@@ -12820,7 +13032,8 @@ exports[`open api parser hathora simple 1`] = `
         "ConnectionInfo": {
           "oneOf": {
             "description": undefined,
-            "name": undefined,
+            "generatedName": "ConnectionInfo",
+            "nameOverride": undefined,
             "schemas": [
               {
                 "description": undefined,
@@ -12849,7 +13062,8 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Deployment",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "createdAt",
@@ -12952,7 +13166,8 @@ exports[`open api parser hathora simple 1`] = `
         "DeploymentConfig": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "DeploymentConfig",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "env",
@@ -12962,7 +13177,8 @@ exports[`open api parser hathora simple 1`] = `
                 "value": {
                   "allOf": [],
                   "description": undefined,
-                  "name": undefined,
+                  "generatedName": "DeploymentConfigEnvItem",
+                  "nameOverride": undefined,
                   "properties": [
                     {
                       "key": "value",
@@ -13043,7 +13259,8 @@ exports[`open api parser hathora simple 1`] = `
           "value": {
             "allOf": [],
             "description": undefined,
-            "name": undefined,
+            "generatedName": "DiscoveryResponseItem",
+            "nameOverride": undefined,
             "properties": [
               {
                 "key": "port",
@@ -13081,7 +13298,8 @@ exports[`open api parser hathora simple 1`] = `
         "Lobby": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Lobby",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "state",
@@ -13147,7 +13365,8 @@ exports[`open api parser hathora simple 1`] = `
               "key": "visibility",
               "schema": {
                 "description": undefined,
-                "name": undefined,
+                "generatedName": "LobbyVisibility",
+                "nameOverride": undefined,
                 "type": "enum",
                 "values": [
                   {
@@ -13197,7 +13416,8 @@ exports[`open api parser hathora simple 1`] = `
         },
         "MetricName": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "MetricName",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -13221,7 +13441,8 @@ exports[`open api parser hathora simple 1`] = `
         "MetricValue": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "MetricValue",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "value",
@@ -13268,7 +13489,8 @@ exports[`open api parser hathora simple 1`] = `
         "Pick_Room.Exclude_keyofRoom.allocations__": {
           "allOf": [],
           "description": "From T, pick a set of properties whose keys are in the union K",
-          "name": undefined,
+          "generatedName": "PickRoomExcludeKeyofRoomAllocations",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "appId",
@@ -13311,7 +13533,8 @@ exports[`open api parser hathora simple 1`] = `
         },
         "PlanName": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PlanName",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -13335,7 +13558,8 @@ exports[`open api parser hathora simple 1`] = `
         "Process": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Process",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "egressedBytes",
@@ -13513,7 +13737,8 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ProcessWithRooms",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "rooms",
@@ -13552,7 +13777,8 @@ exports[`open api parser hathora simple 1`] = `
         "Record_Partial_MetricName_.MetricValue-Array_": {
           "allOf": [],
           "description": "Construct a type with a set of properties K of type T",
-          "name": undefined,
+          "generatedName": "RecordPartialMetricNameMetricValueArray",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "cpu",
@@ -13628,13 +13854,15 @@ exports[`open api parser hathora simple 1`] = `
         "Record_string.never_": {
           "allOf": [],
           "description": "Construct a type with a set of properties K of type T",
-          "name": undefined,
+          "generatedName": "RecordStringNever",
+          "nameOverride": undefined,
           "properties": [],
           "type": "object",
         },
         "Region": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Region",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -13682,7 +13910,8 @@ exports[`open api parser hathora simple 1`] = `
         "Room": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Room",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "currentAllocation",
@@ -13739,7 +13968,8 @@ exports[`open api parser hathora simple 1`] = `
         "RoomAllocation": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "RoomAllocation",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "unscheduledAt",
@@ -13798,7 +14028,8 @@ exports[`open api parser hathora simple 1`] = `
         },
         "RoomStatus": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "RoomStatus",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -13828,13 +14059,15 @@ exports[`open api parser hathora simple 1`] = `
         "StartingConnectionInfo": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "StartingConnectionInfo",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "status",
               "schema": {
                 "description": undefined,
-                "name": undefined,
+                "generatedName": "StartingConnectionInfoStatus",
+                "nameOverride": undefined,
                 "type": "enum",
                 "values": [
                   {
@@ -13858,7 +14091,8 @@ exports[`open api parser hathora simple 1`] = `
         },
         "TransportType": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "TransportType",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -14311,7 +14545,8 @@ Upload a document to be indexed and used for search.
         "Document": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "Document",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -14353,7 +14588,8 @@ Upload a document to be indexed and used for search.
         "DocumentDocumentToDocumentIndex": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "DocumentDocumentToDocumentIndex",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -14394,7 +14630,8 @@ Upload a document to be indexed and used for search.
         "EnrichedNormalizedCompletion": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "EnrichedNormalizedCompletion",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -14467,7 +14704,8 @@ Upload a document to be indexed and used for search.
         },
         "FinishReasonEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "FinishReasonEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -14487,7 +14725,8 @@ Upload a document to be indexed and used for search.
         "GenerateErrorResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateErrorResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "detail",
@@ -14505,7 +14744,8 @@ Upload a document to be indexed and used for search.
         "GenerateOptionsRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateOptionsRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "logprobs",
@@ -14526,7 +14766,8 @@ Upload a document to be indexed and used for search.
         "GenerateRequestBodyRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateRequestBodyRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "deployment_id",
@@ -14588,7 +14829,8 @@ Upload a document to be indexed and used for search.
         "GenerateRequestRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateRequestRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "input_values",
@@ -14627,7 +14869,8 @@ Upload a document to be indexed and used for search.
         "GenerateResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "results",
@@ -14648,7 +14891,8 @@ Upload a document to be indexed and used for search.
         "GenerateResult": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateResult",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "data",
@@ -14682,7 +14926,8 @@ Upload a document to be indexed and used for search.
         "GenerateResultData": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateResultData",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "completions",
@@ -14703,7 +14948,8 @@ Upload a document to be indexed and used for search.
         "GenerateResultError": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "GenerateResultError",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "message",
@@ -14720,7 +14966,8 @@ Upload a document to be indexed and used for search.
         },
         "IndexingStateEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "IndexingStateEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -14747,7 +14994,8 @@ Upload a document to be indexed and used for search.
         },
         "LogprobsEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "LogprobsEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -14762,7 +15010,8 @@ Upload a document to be indexed and used for search.
         },
         "ModelTypeEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ModelTypeEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -14778,7 +15027,8 @@ Upload a document to be indexed and used for search.
         "ModelVersionBuildConfig": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ModelVersionBuildConfig",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "base_model",
@@ -14809,7 +15059,8 @@ Upload a document to be indexed and used for search.
         "ModelVersionExecConfigParameters": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ModelVersionExecConfigParameters",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "temperature",
@@ -14920,7 +15171,8 @@ Upload a document to be indexed and used for search.
         "ModelVersionExecConfigRead": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ModelVersionExecConfigRead",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "prompt_template",
@@ -14961,7 +15213,8 @@ Upload a document to be indexed and used for search.
         "ModelVersionRead": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ModelVersionRead",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -15045,7 +15298,8 @@ Upload a document to be indexed and used for search.
         "ModelVersionSandboxSnapshot": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ModelVersionSandboxSnapshot",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -15073,7 +15327,8 @@ Upload a document to be indexed and used for search.
         "NormalizedLogProbs": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "NormalizedLogProbs",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "tokens",
@@ -15104,7 +15359,8 @@ Upload a document to be indexed and used for search.
         "NormalizedTokenLogProbs": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "NormalizedTokenLogProbs",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "token",
@@ -15159,7 +15415,8 @@ Upload a document to be indexed and used for search.
         "PaginatedSlimDocumentList": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "PaginatedSlimDocumentList",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "count",
@@ -15225,7 +15482,8 @@ Upload a document to be indexed and used for search.
         },
         "ProcessingStateEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ProcessingStateEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -15248,7 +15506,8 @@ Upload a document to be indexed and used for search.
         },
         "ProviderEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "ProviderEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -15268,7 +15527,8 @@ Upload a document to be indexed and used for search.
         "SearchErrorResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchErrorResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "detail",
@@ -15286,7 +15546,8 @@ Upload a document to be indexed and used for search.
         "SearchFiltersRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchFiltersRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "external_ids",
@@ -15312,7 +15573,8 @@ Upload a document to be indexed and used for search.
         "SearchRequestBodyRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchRequestBodyRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "index_id",
@@ -15371,7 +15633,8 @@ Upload a document to be indexed and used for search.
         "SearchRequestOptionsRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchRequestOptionsRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "limit",
@@ -15432,7 +15695,8 @@ Upload a document to be indexed and used for search.
         "SearchResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "results",
@@ -15453,7 +15717,8 @@ Upload a document to be indexed and used for search.
         "SearchResult": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchResult",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "document",
@@ -15504,7 +15769,8 @@ Upload a document to be indexed and used for search.
         "SearchResultMergingRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchResultMergingRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "enabled",
@@ -15522,7 +15788,8 @@ Upload a document to be indexed and used for search.
         "SearchWeightsRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SearchWeightsRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "semantic_similarity",
@@ -15550,7 +15817,8 @@ Upload a document to be indexed and used for search.
         "SlimDocument": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SlimDocument",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -15658,7 +15926,8 @@ Upload a document to be indexed and used for search.
         },
         "StatusEnum": {
           "description": undefined,
-          "name": undefined,
+          "generatedName": "StatusEnum",
+          "nameOverride": undefined,
           "type": "enum",
           "values": [
             {
@@ -15670,7 +15939,8 @@ Upload a document to be indexed and used for search.
         "SubmitCompletionActualRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SubmitCompletionActualRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "id",
@@ -15748,7 +16018,8 @@ Upload a document to be indexed and used for search.
         "SubmitCompletionActualsErrorResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SubmitCompletionActualsErrorResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "detail",
@@ -15766,7 +16037,8 @@ Upload a document to be indexed and used for search.
         "SubmitCompletionActualsRequestRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "SubmitCompletionActualsRequestRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "deployment_id",
@@ -15815,7 +16087,8 @@ Upload a document to be indexed and used for search.
         "UploadDocumentErrorResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "UploadDocumentErrorResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "detail",
@@ -15833,7 +16106,8 @@ Upload a document to be indexed and used for search.
         "UploadDocumentRequestBodyRequest": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "UploadDocumentRequestBodyRequest",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "add_to_index_names",
@@ -15911,7 +16185,8 @@ Upload a document to be indexed and used for search.
         "UploadDocumentResponse": {
           "allOf": [],
           "description": undefined,
-          "name": undefined,
+          "generatedName": "UploadDocumentResponse",
+          "nameOverride": undefined,
           "properties": [
             {
               "key": "document_id",
