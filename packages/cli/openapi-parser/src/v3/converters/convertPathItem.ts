@@ -87,7 +87,7 @@ function convertOperation(
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
         generatedRequestName: getGeneratedTypeName([operation.operationId, "Request"]),
-        request: convertedRequest?.value,
+        request: convertedRequest,
         response: convertResponse({ responses: operation.responses, context }),
         errors: [],
         server: (operation.servers ?? []).map((server) => convertServer(server)),

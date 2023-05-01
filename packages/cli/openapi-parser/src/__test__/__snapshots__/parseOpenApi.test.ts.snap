@@ -10804,6 +10804,7 @@ exports[`open api parser hathora simple 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
+            "name": undefined,
             "properties": [
               {
                 "description": undefined,
@@ -14536,6 +14537,7 @@ Upload a document to be indexed and used for search.
           "queryParameters": [],
           "request": {
             "description": undefined,
+            "name": "UploadDocumentRequestBodyRequest",
             "properties": [
               {
                 "description": undefined,

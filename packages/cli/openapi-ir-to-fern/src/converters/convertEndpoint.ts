@@ -60,17 +60,15 @@ export function convertEndpoint({
         const convertedRequest = getRequest({
             request: endpoint.request,
             schemas,
-            requestName: endpoint.requestName ?? undefined,
+            generatedRequestName: endpoint.generatedRequestName,
+            requestNameOverride: endpoint.requestNameOverride ?? undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
     } else if (Object.keys(queryParameters).length > 0) {
-        if (endpoint.requestName == null) {
-            throw new Error(`x-request-name is required for endpoint ${JSON.stringify(endpoint)}`);
-        }
         convertedEndpoint.request = {
-            name: endpoint.requestName,
+            name: endpoint.requestNameOverride ?? endpoint.generatedRequestName,
             "query-parameters": queryParameters,
         };
     }
@@ -116,12 +114,14 @@ interface ConvertedRequest {
 function getRequest({
     request,
     schemas,
-    requestName,
+    requestNameOverride,
+    generatedRequestName,
     queryParameters,
 }: {
     request: Request;
     schemas: Record<SchemaId, Schema>;
-    requestName?: string;
+    requestNameOverride?: string;
+    generatedRequestName: string;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
 }): ConvertedRequest {
     if (request.type === "json") {
@@ -138,7 +138,7 @@ function getRequest({
         return {
             schemaIdsToExclude: [request.schema.schema],
             value: {
-                name: requestName ?? request.schema.schema,
+                name: requestNameOverride ?? schema.nameOverride ?? schema.generatedName,
                 "query-parameters": queryParameters,
                 body: {
                     properties: Object.fromEntries(
@@ -152,13 +152,10 @@ function getRequest({
         };
     } else {
         // multipart
-        if (requestName == null) {
-            throw new Error(`x-request-name is required for multipart request ${JSON.stringify(request)}`);
-        }
         return {
-            schemaIdsToExclude: [requestName],
+            schemaIdsToExclude: request.name == null ? [] : [request.name],
             value: {
-                name: requestName,
+                name: requestNameOverride ?? request.name ?? generatedRequestName,
                 "query-parameters": queryParameters,
                 body: {
                     properties: Object.fromEntries(
