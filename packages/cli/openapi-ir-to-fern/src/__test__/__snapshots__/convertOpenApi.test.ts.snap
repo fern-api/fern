@@ -1067,11 +1067,11 @@ authentication connection.
           "docs": undefined,
           "enum": [
             {
-              "name": "Disable",
+              "name": "disable",
               "value": "disable",
             },
             {
-              "name": "Enable",
+              "name": "enable",
               "value": "enable",
             },
           ],
@@ -1082,23 +1082,23 @@ for each authentication connection will depend on the type value.
 ",
           "enum": [
             {
-              "name": "GoogleApps",
+              "name": "google_apps",
               "value": "google_apps",
             },
             {
-              "name": "Oidc",
+              "name": "oidc",
               "value": "oidc",
             },
             {
-              "name": "Samlp",
+              "name": "samlp",
               "value": "samlp",
             },
             {
-              "name": "Social",
+              "name": "social",
               "value": "social",
             },
             {
-              "name": "Waad",
+              "name": "waad",
               "value": "waad",
             },
           ],
@@ -1200,15 +1200,15 @@ token. Only applicable for application access tokens.
           "docs": "The status of the token.",
           "enum": [
             {
-              "name": "Active",
+              "name": "active",
               "value": "active",
             },
             {
-              "name": "Expired",
+              "name": "expired",
               "value": "expired",
             },
             {
-              "name": "Revoked",
+              "name": "revoked",
               "value": "revoked",
             },
           ],
@@ -1251,7 +1251,7 @@ token. Only applicable for application access tokens.
 ",
           "enum": [
             {
-              "name": "Bearer",
+              "name": "bearer",
               "value": "bearer",
             },
           ],
@@ -1394,19 +1394,19 @@ authentication connections have different configuration parameters.
 ",
           "enum": [
             {
-              "name": "GoogleApps",
+              "name": "google_apps",
               "value": "google_apps",
             },
             {
-              "name": "Oidc",
+              "name": "oidc",
               "value": "oidc",
             },
             {
-              "name": "Samlp",
+              "name": "samlp",
               "value": "samlp",
             },
             {
-              "name": "Waad",
+              "name": "waad",
               "value": "waad",
             },
           ],
@@ -1453,23 +1453,23 @@ that can be updated.
 ",
           "enum": [
             {
-              "name": "GoogleApps",
+              "name": "google_apps",
               "value": "google_apps",
             },
             {
-              "name": "None",
+              "name": "none",
               "value": "none",
             },
             {
-              "name": "Oidc",
+              "name": "oidc",
               "value": "oidc",
             },
             {
-              "name": "Samlp",
+              "name": "samlp",
               "value": "samlp",
             },
             {
-              "name": "Waad",
+              "name": "waad",
               "value": "waad",
             },
           ],
@@ -1593,23 +1593,23 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "enum": [
             {
-              "name": "BadRequest",
+              "name": "bad_request",
               "value": "bad_request",
             },
             {
-              "name": "InvalidEnumValue",
+              "name": "invalid_enum_value",
               "value": "invalid_enum_value",
             },
             {
-              "name": "MissingRequiredField",
+              "name": "missing_required_field",
               "value": "missing_required_field",
             },
             {
-              "name": "ParseError",
+              "name": "parse_error",
               "value": "parse_error",
             },
             {
-              "name": "ValueNotPermitted",
+              "name": "value_not_permitted",
               "value": "value_not_permitted",
             },
           ],
@@ -1653,7 +1653,7 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "enum": [
             {
-              "name": "Forbidden",
+              "name": "forbidden",
               "value": "forbidden",
             },
           ],
@@ -1681,7 +1681,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
-              "name": "InternalError",
+              "name": "internal_error",
               "value": "internal_error",
             },
           ],
@@ -1703,7 +1703,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
-              "name": "NotFound",
+              "name": "not_found",
               "value": "not_found",
             },
           ],
@@ -1725,7 +1725,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
-              "name": "ServiceUnavailable",
+              "name": "service_unavailable",
               "value": "service_unavailable",
             },
           ],
@@ -1752,7 +1752,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
-              "name": "TooManyRequests",
+              "name": "too_many_requests",
               "value": "too_many_requests",
             },
           ],
@@ -1770,7 +1770,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
-              "name": "Unauthenticated",
+              "name": "unauthenticated",
               "value": "unauthenticated",
             },
           ],
@@ -1970,19 +1970,19 @@ inquiry.
           "docs": "Priority of the work based upon impact and criticality.",
           "enum": [
             {
-              "name": "P0",
+              "name": "p0",
               "value": "p0",
             },
             {
-              "name": "P1",
+              "name": "p1",
               "value": "p1",
             },
             {
-              "name": "P2",
+              "name": "p2",
               "value": "p2",
             },
             {
-              "name": "P3",
+              "name": "p3",
               "value": "p3",
             },
           ],
@@ -1996,11 +1996,11 @@ always be returned in the specified sort-by order.
 ",
           "enum": [
             {
-              "name": "After",
+              "name": "after",
               "value": "after",
             },
             {
-              "name": "Before",
+              "name": "before",
               "value": "before",
             },
           ],
@@ -2028,15 +2028,15 @@ always be returned in the specified sort-by order.
 ",
           "enum": [
             {
-              "name": "Production",
+              "name": "production",
               "value": "production",
             },
             {
-              "name": "Staging",
+              "name": "staging",
               "value": "staging",
             },
             {
-              "name": "Test",
+              "name": "test",
               "value": "test",
             },
           ],
@@ -2055,7 +2055,7 @@ always be returned in the specified sort-by order.
           "docs": undefined,
           "enum": [
             {
-              "name": "RevOrg",
+              "name": "rev_org",
               "value": "rev_org",
             },
           ],
@@ -2142,19 +2142,19 @@ always be returned in the specified sort-by order.
           "docs": undefined,
           "enum": [
             {
-              "name": "Capability",
+              "name": "capability",
               "value": "capability",
             },
             {
-              "name": "Enhancement",
+              "name": "enhancement",
               "value": "enhancement",
             },
             {
-              "name": "Feature",
+              "name": "feature",
               "value": "feature",
             },
             {
-              "name": "Product",
+              "name": "product",
               "value": "product",
             },
           ],
@@ -2564,19 +2564,19 @@ sort order. If not set, then no prior elements exist.
           "docs": "Severity of the ticket.",
           "enum": [
             {
-              "name": "Blocker",
+              "name": "blocker",
               "value": "blocker",
             },
             {
-              "name": "High",
+              "name": "high",
               "value": "high",
             },
             {
-              "name": "Low",
+              "name": "low",
               "value": "low",
             },
             {
-              "name": "Medium",
+              "name": "medium",
               "value": "medium",
             },
           ],
@@ -2608,11 +2608,11 @@ will appear in the response.
           "docs": "The type of the body to use for the comment.",
           "enum": [
             {
-              "name": "SnapKit",
+              "name": "snap_kit",
               "value": "snap_kit",
             },
             {
-              "name": "Text",
+              "name": "text",
               "value": "text",
             },
           ],
@@ -2642,7 +2642,7 @@ will appear in the response.
           "docs": undefined,
           "enum": [
             {
-              "name": "TimelineComment",
+              "name": "timeline_comment",
               "value": "timeline_comment",
             },
           ],
@@ -2733,7 +2733,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "docs": undefined,
           "enum": [
             {
-              "name": "TimelineComment",
+              "name": "timeline_comment",
               "value": "timeline_comment",
             },
           ],
@@ -2765,7 +2765,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "docs": undefined,
           "enum": [
             {
-              "name": "TimelineComment",
+              "name": "timeline_comment",
               "value": "timeline_comment",
             },
           ],
@@ -2777,7 +2777,7 @@ default visibility.
 ",
           "enum": [
             {
-              "name": "Private",
+              "name": "private",
               "value": "private",
             },
           ],
@@ -2842,23 +2842,23 @@ default visibility.
           "docs": "State of the user.",
           "enum": [
             {
-              "name": "Active",
+              "name": "active",
               "value": "active",
             },
             {
-              "name": "Deactivated",
+              "name": "deactivated",
               "value": "deactivated",
             },
             {
-              "name": "Locked",
+              "name": "locked",
               "value": "locked",
             },
             {
-              "name": "Shadow",
+              "name": "shadow",
               "value": "shadow",
             },
             {
-              "name": "Unassigned",
+              "name": "unassigned",
               "value": "unassigned",
             },
           ],
@@ -2885,15 +2885,15 @@ default visibility.
           "docs": undefined,
           "enum": [
             {
-              "name": "DevUser",
+              "name": "dev_user",
               "value": "dev_user",
             },
             {
-              "name": "RevUser",
+              "name": "rev_user",
               "value": "rev_user",
             },
             {
-              "name": "SysUser",
+              "name": "sys_user",
               "value": "sys_user",
             },
           ],
@@ -3035,79 +3035,79 @@ be set for other request types.
           "docs": "The event types that the webhook will receive.",
           "enum": [
             {
-              "name": "PartCreated",
+              "name": "part_created",
               "value": "part_created",
             },
             {
-              "name": "PartDeleted",
+              "name": "part_deleted",
               "value": "part_deleted",
             },
             {
-              "name": "PartUpdated",
+              "name": "part_updated",
               "value": "part_updated",
             },
             {
-              "name": "RevOrgCreated",
+              "name": "rev_org_created",
               "value": "rev_org_created",
             },
             {
-              "name": "RevOrgDeleted",
+              "name": "rev_org_deleted",
               "value": "rev_org_deleted",
             },
             {
-              "name": "RevOrgUpdated",
+              "name": "rev_org_updated",
               "value": "rev_org_updated",
             },
             {
-              "name": "TagCreated",
+              "name": "tag_created",
               "value": "tag_created",
             },
             {
-              "name": "TagDeleted",
+              "name": "tag_deleted",
               "value": "tag_deleted",
             },
             {
-              "name": "TagUpdated",
+              "name": "tag_updated",
               "value": "tag_updated",
             },
             {
-              "name": "TimelineEntryCreated",
+              "name": "timeline_entry_created",
               "value": "timeline_entry_created",
             },
             {
-              "name": "TimelineEntryDeleted",
+              "name": "timeline_entry_deleted",
               "value": "timeline_entry_deleted",
             },
             {
-              "name": "TimelineEntryUpdated",
+              "name": "timeline_entry_updated",
               "value": "timeline_entry_updated",
             },
             {
-              "name": "Verify",
+              "name": "verify",
               "value": "verify",
             },
             {
-              "name": "WebhookCreated",
+              "name": "webhook_created",
               "value": "webhook_created",
             },
             {
-              "name": "WebhookDeleted",
+              "name": "webhook_deleted",
               "value": "webhook_deleted",
             },
             {
-              "name": "WebhookUpdated",
+              "name": "webhook_updated",
               "value": "webhook_updated",
             },
             {
-              "name": "WorkCreated",
+              "name": "work_created",
               "value": "work_created",
             },
             {
-              "name": "WorkDeleted",
+              "name": "work_deleted",
               "value": "work_deleted",
             },
             {
-              "name": "WorkUpdated",
+              "name": "work_updated",
               "value": "work_updated",
             },
           ],
@@ -3125,15 +3125,15 @@ be set for other request types.
           "docs": "The status of the webhook.",
           "enum": [
             {
-              "name": "Active",
+              "name": "active",
               "value": "active",
             },
             {
-              "name": "Inactive",
+              "name": "inactive",
               "value": "inactive",
             },
             {
-              "name": "Unverified",
+              "name": "unverified",
               "value": "unverified",
             },
           ],
@@ -3173,11 +3173,11 @@ be set for other request types.
           "docs": "The action to update the webhook's status.",
           "enum": [
             {
-              "name": "Activate",
+              "name": "activate",
               "value": "activate",
             },
             {
-              "name": "Deactivate",
+              "name": "deactivate",
               "value": "deactivate",
             },
           ],
@@ -3276,11 +3276,11 @@ event types. Note this is mutually exclusive with 'add' and
           "docs": undefined,
           "enum": [
             {
-              "name": "Issue",
+              "name": "issue",
               "value": "issue",
             },
             {
-              "name": "Ticket",
+              "name": "ticket",
               "value": "ticket",
             },
           ],
@@ -4835,15 +4835,15 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "Length",
+              "name": "LENGTH",
               "value": "LENGTH",
             },
             {
-              "name": "Stop",
+              "name": "STOP",
               "value": "STOP",
             },
             {
-              "name": "Unknown",
+              "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
           ],
@@ -4923,23 +4923,23 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "AwaitingProcessing",
+              "name": "AWAITING_PROCESSING",
               "value": "AWAITING_PROCESSING",
             },
             {
-              "name": "Queued",
+              "name": "QUEUED",
               "value": "QUEUED",
             },
             {
-              "name": "Indexing",
+              "name": "INDEXING",
               "value": "INDEXING",
             },
             {
-              "name": "Indexed",
+              "name": "INDEXED",
               "value": "INDEXED",
             },
             {
-              "name": "Failed",
+              "name": "FAILED",
               "value": "FAILED",
             },
           ],
@@ -4948,11 +4948,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "All",
+              "name": "ALL",
               "value": "ALL",
             },
             {
-              "name": "None",
+              "name": "NONE",
               "value": "NONE",
             },
           ],
@@ -4961,11 +4961,11 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "Generate",
+              "name": "GENERATE",
               "value": "GENERATE",
             },
             {
-              "name": "Classify",
+              "name": "CLASSIFY",
               "value": "CLASSIFY",
             },
           ],
@@ -5146,19 +5146,19 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "Queued",
+              "name": "QUEUED",
               "value": "QUEUED",
             },
             {
-              "name": "Processing",
+              "name": "PROCESSING",
               "value": "PROCESSING",
             },
             {
-              "name": "Processed",
+              "name": "PROCESSED",
               "value": "PROCESSED",
             },
             {
-              "name": "Failed",
+              "name": "FAILED",
               "value": "FAILED",
             },
           ],
@@ -5167,15 +5167,15 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "Openai",
+              "name": "OPENAI",
               "value": "OPENAI",
             },
             {
-              "name": "Cohere",
+              "name": "COHERE",
               "value": "COHERE",
             },
             {
-              "name": "Anthropic",
+              "name": "ANTHROPIC",
               "value": "ANTHROPIC",
             },
           ],
@@ -5312,7 +5312,7 @@ exports[`open api converter vellum simple 1`] = `
           "docs": undefined,
           "enum": [
             {
-              "name": "Active",
+              "name": "ACTIVE",
               "value": "ACTIVE",
             },
           ],
