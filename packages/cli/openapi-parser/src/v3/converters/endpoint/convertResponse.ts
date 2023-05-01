@@ -34,7 +34,7 @@ export function convertResponse({
 
         return {
             description: response.description,
-            schema: convertSchema(responsSchema, false, context),
+            schema: convertSchema(responsSchema, false, context, []),
         };
     }
     return undefined;

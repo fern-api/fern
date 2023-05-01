@@ -4,37 +4,44 @@ import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
 
 export function convertUndiscriminatedOneOf({
-    schemaName,
+    nameOverride,
+    generatedName,
+    breadcrumbs,
     description,
     wrapAsOptional,
     context,
     subtypes,
 }: {
-    schemaName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
+    breadcrumbs: string[];
     description: string | undefined;
     wrapAsOptional: boolean;
     context: OpenAPIV3ParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
 }): Schema {
     const convertedSubtypes = subtypes.map((schema) => {
-        return convertSchema(schema, false, context);
+        return convertSchema(schema, false, context, [...breadcrumbs, nameOverride ?? generatedName]);
     });
     return wrapUndiscriminantedOneOf({
+        nameOverride,
+        generatedName,
         wrapAsOptional,
-        schemaName,
         description,
         subtypes: convertedSubtypes,
     });
 }
 
 export function wrapUndiscriminantedOneOf({
+    nameOverride,
+    generatedName,
     wrapAsOptional,
-    schemaName,
     description,
     subtypes,
 }: {
     wrapAsOptional: boolean;
-    schemaName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
     description: string | undefined;
     subtypes: Schema[];
 }): Schema {
@@ -43,7 +50,8 @@ export function wrapUndiscriminantedOneOf({
             value: Schema.oneOf({
                 type: "undisciminated",
                 description: undefined,
-                name: schemaName,
+                nameOverride,
+                generatedName,
                 schemas: subtypes,
             }),
             description,
@@ -52,7 +60,8 @@ export function wrapUndiscriminantedOneOf({
     return Schema.oneOf({
         type: "undisciminated",
         description,
-        name: schemaName,
+        nameOverride,
+        generatedName,
         schemas: subtypes,
     });
 }

@@ -1,6 +1,6 @@
 import { camelCase, upperFirst } from "lodash-es";
 
-export function getSchemaNameFromBreadcrumbs(breadcrumbs: string[]): string {
+export function getGeneratedTypeName(breadcrumbs: string[]): string {
     if (breadcrumbs.length === 0) {
         throw new Error("Cannot generate name from breadcrumbs");
     }

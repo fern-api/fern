@@ -150,12 +150,12 @@ export function convertUnknownToTypeReference(): TypeReference {
 }
 
 export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSchema; prefix?: string }): TypeReference {
-    if (schema.name == null) {
-        throw new Error(`Add x-name to enum: ${JSON.stringify(schema)}`);
-    }
     return {
         typeReference: {
-            type: prefix != null ? `${prefix}.${schema.name}` : schema.name,
+            type:
+                prefix != null
+                    ? `${prefix}.${schema.nameOverride ?? schema.generatedName}`
+                    : schema.nameOverride ?? schema.generatedName,
             docs: schema.description ?? undefined,
         },
         additionalTypeDeclarations: {},
@@ -169,18 +169,18 @@ export function convertObjectToTypeReference({
     schema: ObjectSchema;
     prefix?: string;
 }): TypeReference {
-    if (schema.name == null) {
-        throw new Error(`Add x-name to object: ${JSON.stringify(schema)}`);
-    }
     const objectTypeDeclaration = convertObjectToTypeDeclaration(schema);
     objectTypeDeclaration.additionalTypeDeclarations;
     return {
         typeReference: {
-            type: prefix != null ? `${prefix}.${schema.name}` : schema.name,
+            type:
+                prefix != null
+                    ? `${prefix}.${schema.nameOverride ?? schema.generatedName}`
+                    : schema.nameOverride ?? schema.generatedName,
             docs: schema.description ?? undefined,
         },
         additionalTypeDeclarations: {
-            [schema.name]: objectTypeDeclaration.typeDeclaration,
+            [schema.nameOverride ?? schema.generatedName]: objectTypeDeclaration.typeDeclaration,
             ...objectTypeDeclaration.additionalTypeDeclarations,
         },
     };

@@ -1,19 +1,23 @@
 import { ObjectProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
-import { convertSchema } from "../convertSchemas";
+import { convertReferenceObject, convertSchema } from "../convertSchemas";
 
 export function convertDiscriminatedOneOf({
+    nameOverride,
+    generatedName,
+    breadcrumbs,
     properties,
-    schemaName,
     description,
     required,
     wrapAsOptional,
     discriminator,
     context,
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
+    breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
-    schemaName: string | undefined;
     description: string | undefined;
     required: string[] | undefined;
     wrapAsOptional: boolean;
@@ -23,27 +27,27 @@ export function convertDiscriminatedOneOf({
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
-            const subtypeReference = convertSchema(
+            const subtypeReference = convertReferenceObject(
                 {
                     $ref: schema,
                 },
-                false,
-                context
+                false
             );
             return [discriminantValue, subtypeReference];
         })
     );
     const convertedProperties = Object.entries(properties).map(([propertyName, propertySchema]) => {
         const isRequired = required != null && required.includes(propertyName);
-        const schema = convertSchema(propertySchema, !isRequired, context);
+        const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
         return {
             key: propertyName,
             schema,
         };
     });
     return wrapDiscriminantedOneOf({
+        nameOverride,
+        generatedName,
         wrapAsOptional,
-        schemaName,
         properties: convertedProperties,
         description,
         discriminant,
@@ -52,15 +56,17 @@ export function convertDiscriminatedOneOf({
 }
 
 export function wrapDiscriminantedOneOf({
+    nameOverride,
+    generatedName,
     wrapAsOptional,
-    schemaName,
     properties,
     description,
     discriminant,
     subtypes,
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     wrapAsOptional: boolean;
-    schemaName: string | undefined;
     properties: ObjectProperty[];
     description: string | undefined;
     discriminant: string;
@@ -72,7 +78,8 @@ export function wrapDiscriminantedOneOf({
                 type: "discriminated",
                 description: undefined,
                 discriminantProperty: discriminant,
-                name: schemaName,
+                nameOverride,
+                generatedName,
                 schemas: subtypes,
                 commonProperties: properties,
             }),
@@ -83,7 +90,8 @@ export function wrapDiscriminantedOneOf({
         type: "discriminated",
         description,
         discriminantProperty: discriminant,
-        name: schemaName,
+        nameOverride,
+        generatedName,
         schemas: subtypes,
         commonProperties: properties,
     });

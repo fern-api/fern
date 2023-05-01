@@ -58,7 +58,7 @@ export function convertObjectToTypeDeclaration(schema: ObjectSchema): TypeDeclar
         };
     }
     return {
-        name: schema.name ?? undefined,
+        name: schema.nameOverride ?? schema.generatedName,
         typeDeclaration: {
             docs: schema.description ?? undefined,
             properties,

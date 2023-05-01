@@ -27,7 +27,7 @@ export function convertParameters(
         const isRequired = parameter.required ?? false;
         const schema =
             parameter.schema != null
-                ? convertSchema(parameter.schema, !isRequired, context)
+                ? convertSchema(parameter.schema, !isRequired, context, [])
                 : isRequired
                 ? Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: parameter.description })
                 : Schema.optional({

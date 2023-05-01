@@ -1,15 +1,15 @@
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 
 export function convertEnum({
-    xSchemaName,
-    autogennedName,
+    nameOverride,
+    generatedName,
     enumNames,
     enumValues,
     description,
     wrapAsOptional,
 }: {
-    xSchemaName: string | undefined;
-    autogennedName: string;
+    nameOverride: string | undefined;
+    generatedName: string;
     enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
@@ -23,7 +23,8 @@ export function convertEnum({
     });
     return wrapEnum({
         wrapAsOptional,
-        enumName: xSchemaName,
+        nameOverride,
+        generatedName,
         values,
         description,
     });
@@ -31,19 +32,22 @@ export function convertEnum({
 
 export function wrapEnum({
     wrapAsOptional,
-    enumName,
+    nameOverride,
+    generatedName,
     values,
     description,
 }: {
     wrapAsOptional: boolean;
-    enumName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
     values: EnumValue[];
     description: string | undefined;
 }): Schema {
     if (wrapAsOptional) {
         return Schema.optional({
             value: Schema.enum({
-                name: enumName,
+                nameOverride,
+                generatedName,
                 values,
                 description: undefined,
             }),
@@ -51,7 +55,8 @@ export function wrapEnum({
         });
     }
     return Schema.enum({
-        name: enumName,
+        nameOverride,
+        generatedName,
         values,
         description,
     });

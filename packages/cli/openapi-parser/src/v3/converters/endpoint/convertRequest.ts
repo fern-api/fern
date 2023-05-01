@@ -53,7 +53,7 @@ export function convertRequest({
                     }
                     return {
                         key,
-                        schema: MultipartSchema.json(convertSchema(definition, false, context)),
+                        schema: MultipartSchema.json(convertSchema(definition, false, context, [])),
                         description: undefined,
                     };
                 }),
@@ -66,7 +66,7 @@ export function convertRequest({
     if (requestBodySchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema, false, context);
+    const requestSchema = convertSchema(requestBodySchema, false, context, []);
     return {
         value: Request.json({
             description: undefined,
