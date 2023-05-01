@@ -775,11 +775,7 @@ exports[`open api converter devrev simple 1`] = `
             "method": "POST",
             "path": "/dev-orgs.auth-connections.create",
             "request": {
-              "body": {
-                "docs": "Request to create a new enterprise authentication connection.
-",
-                "type": "DevOrgAuthConnectionsCreateRequest",
-              },
+              "body": "dev-org-auth-connections-create-request",
             },
             "response": {
               "docs": "Success.",
@@ -852,12 +848,7 @@ exports[`open api converter devrev simple 1`] = `
             "method": "POST",
             "path": "/dev-orgs.auth-connections.update",
             "request": {
-              "body": {
-                "docs": "Request to update an enterprise authentication connection for a Dev
-organization.
-",
-                "type": "DevOrgAuthConnectionsUpdateRequest",
-              },
+              "body": "dev-org-auth-connections-update-request",
             },
             "response": {
               "docs": "Success.",
@@ -3754,10 +3745,7 @@ JTI claim of the token in the authorization header.
             "method": "POST",
             "path": "/parts.create",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.PartsCreateRequest",
-              },
+              "body": "parts-create-request",
             },
             "response": {
               "docs": "Success.",
@@ -3854,10 +3842,7 @@ JTI claim of the token in the authorization header.
             "method": "POST",
             "path": "/parts.update",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.PartsUpdateRequest",
-              },
+              "body": "parts-update-request",
             },
             "response": {
               "docs": "Success.",
@@ -4223,10 +4208,7 @@ tags.
             "method": "POST",
             "path": "/timeline-entries.create",
             "request": {
-              "body": {
-                "docs": "The request to create a timeline entry for an object.",
-                "type": "root.TimelineEntriesCreateRequest",
-              },
+              "body": "timeline-entries-create-request",
             },
             "response": {
               "docs": "Success.",
@@ -4288,10 +4270,7 @@ tags.
             "method": "POST",
             "path": "/timeline-entries.update",
             "request": {
-              "body": {
-                "docs": "The request to update a timeline entry.",
-                "type": "root.TimelineEntriesUpdateRequest",
-              },
+              "body": "timeline-entries-update-request",
             },
             "response": {
               "docs": "Success.",
@@ -4446,10 +4425,7 @@ won't receive any object events until successfully verified.
             "method": "POST",
             "path": "/works.create",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.WorksCreateRequest",
-              },
+              "body": "works-create-request",
             },
             "response": {
               "docs": "Success.",
@@ -4634,10 +4610,7 @@ won't receive any object events until successfully verified.
             "method": "POST",
             "path": "/works.update",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.WorksUpdateRequest",
-              },
+              "body": "works-update-request",
             },
             "response": {
               "docs": "Success.",

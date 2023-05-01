@@ -136,18 +136,17 @@ function getRequest({
             throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            const requestTypeReference = convertToTypeReference({
-                schema,
-                prefix: isPackageYml ? undefined : ROOT_PREFIX,
-            });
-
+            // const requestTypeReference = convertToTypeReference({
+            //     schema,
+            //     prefix: isPackageYml ? undefined : ROOT_PREFIX,
+            // });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [request.schema.schema],
                 value: {
-                    body:
-                        typeof requestTypeReference === "string"
-                            ? requestTypeReference
-                            : requestTypeReference.typeReference,
+                    body: request.schema.schema,
+                    // typeof requestTypeReference === "string"
+                    //     ? requestTypeReference
+                    //     : requestTypeReference.typeReference,
                 },
             };
 
