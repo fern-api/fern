@@ -4,13 +4,14 @@ import {
     EnumSchema,
     MapSchema,
     ObjectSchema,
+    OneOfSchema,
     OptionalSchema,
     PrimitiveSchema,
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
 } from "@fern-fern/openapi-ir-model/ir";
-import { convertObjectToTypeDeclaration } from "./convertToTypeDeclaration";
+import { convertObjectToTypeDeclaration, convertOneOfToTypeDeclaration } from "./convertToTypeDeclaration";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeReference {
@@ -35,6 +36,9 @@ export function convertToTypeReference({ schema, prefix }: { schema: Schema; pre
         return convertEnumToTypeReference({ schema, prefix });
     } else if (schema.type === "object") {
         return convertObjectToTypeReference({ schema, prefix });
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    } else if (schema.type === "oneOf") {
+        return convertOneOfToTypeReference({ schema: schema.oneOf, prefix });
     }
     throw new Error(`Failed to convert to type reference: ${JSON.stringify(schema)}`);
 }
@@ -182,6 +186,29 @@ export function convertObjectToTypeReference({
         additionalTypeDeclarations: {
             [schema.nameOverride ?? schema.generatedName]: objectTypeDeclaration.typeDeclaration,
             ...objectTypeDeclaration.additionalTypeDeclarations,
+        },
+    };
+}
+
+export function convertOneOfToTypeReference({
+    schema,
+    prefix,
+}: {
+    schema: OneOfSchema;
+    prefix?: string;
+}): TypeReference {
+    const unionTypeDeclaration = convertOneOfToTypeDeclaration(schema);
+    return {
+        typeReference: {
+            type:
+                prefix != null
+                    ? `${prefix}.${schema.nameOverride ?? schema.generatedName}`
+                    : schema.nameOverride ?? schema.generatedName,
+            docs: schema.description ?? undefined,
+        },
+        additionalTypeDeclarations: {
+            [schema.nameOverride ?? schema.generatedName]: unionTypeDeclaration.typeDeclaration,
+            ...unionTypeDeclaration.additionalTypeDeclarations,
         },
     };
 }

@@ -745,6 +745,3845 @@ exports[`open api converter buzzshot simple 1`] = `
 }
 `;
 
+exports[`open api converter devrev simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "dev-org-auth-connections-create": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.create",
+            "request": {
+              "body": {
+                "docs": "Request to create a new enterprise authentication connection.
+",
+                "type": "DevOrgAuthConnectionsCreateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "dev-org-auth-connections-create-response",
+            },
+          },
+          "dev-org-auth-connections-delete": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID of the authentication connection to be deleted.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "DevOrgAuthConnectionsDeleteRequest",
+              "query-parameters": undefined,
+            },
+          },
+          "dev-org-auth-connections-get": {
+            "method": "GET",
+            "path": "/dev-orgs.auth-connections.get",
+            "request": {
+              "name": "DevOrgAuthConnectionsGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "dev-org-auth-connections-get-response",
+            },
+          },
+          "dev-org-auth-connections-list": {
+            "method": "GET",
+            "path": "/dev-orgs.auth-connections.list",
+            "response": {
+              "docs": "Success.",
+              "type": "dev-org-auth-connections-list-response",
+            },
+          },
+          "dev-org-auth-connections-toggle": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.toggle",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID of the authentication connection to be toggled.",
+                    "type": "string",
+                  },
+                  "toggle": {
+                    "docs": undefined,
+                    "type": "optional<auth-connection-toggle>",
+                  },
+                },
+              },
+              "name": "DevOrgAuthConnectionsToggleRequest",
+              "query-parameters": undefined,
+            },
+          },
+          "dev-org-auth-connections-update": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.update",
+            "request": {
+              "body": {
+                "docs": "Request to update an enterprise authentication connection for a Dev
+organization.
+",
+                "type": "DevOrgAuthConnectionsUpdateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "dev-org-auth-connections-update-response",
+            },
+          },
+        },
+      },
+      "types": {
+        "artifact-summary": {
+          "docs": undefined,
+          "type": "atom-base-summary",
+        },
+        "artifacts-locate-response": {
+          "docs": "The response to getting an artifact's download URL.",
+          "properties": {
+            "expires_at": {
+              "docs": "The expiration timestamp of the URL.",
+              "type": "optional<string>",
+            },
+            "url": {
+              "docs": "The artifact's download URL.",
+              "type": "string",
+            },
+          },
+        },
+        "artifacts-prepare-response": {
+          "docs": "The response to preparing a URL to upload a file.",
+          "properties": {
+            "form_data": {
+              "docs": "The POST policy form data.",
+              "type": "list<artifacts-prepare-response-form-data>",
+            },
+            "id": {
+              "docs": "The generated artifact's ID.",
+              "type": "string",
+            },
+            "url": {
+              "docs": "The URL that the file's data should be uploaded to.",
+              "type": "string",
+            },
+          },
+        },
+        "artifacts-prepare-response-form-data": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": "Key of the form field.",
+              "type": "string",
+            },
+            "value": {
+              "docs": "Value corresponding to the key.",
+              "type": "string",
+            },
+          },
+        },
+        "atom-base": {
+          "docs": undefined,
+          "properties": {
+            "created_by": {
+              "docs": undefined,
+              "type": "optional<user-summary>",
+            },
+            "created_date": {
+              "docs": "Timestamp when the object was created.",
+              "type": "optional<string>",
+            },
+            "display_id": {
+              "docs": "Human-readable object ID unique to the Dev organization.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "Globally unique object ID.",
+              "type": "string",
+            },
+            "modified_by": {
+              "docs": undefined,
+              "type": "optional<user-summary>",
+            },
+            "modified_date": {
+              "docs": "Timestamp when the object was last modified.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "atom-base-summary": {
+          "docs": undefined,
+          "properties": {
+            "display_id": {
+              "docs": "Human-readable object ID unique to the Dev organization.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "Globally unique object ID.",
+              "type": "string",
+            },
+          },
+        },
+        "auth-connection": {
+          "base-properties": {},
+          "docs": "Connection object that specifies the configuration for an
+authentication connection that is set up for a Dev organization.
+",
+          "union": {
+            "google_apps": {
+              "docs": undefined,
+              "type": "auth-connection-options-google-apps",
+            },
+            "oidc": {
+              "docs": undefined,
+              "type": "auth-connection-options-oidc",
+            },
+            "samlp": {
+              "docs": undefined,
+              "type": "auth-connection-options-saml",
+            },
+            "social": {
+              "docs": undefined,
+              "type": "auth-connection-options-social",
+            },
+            "waad": {
+              "docs": undefined,
+              "type": "auth-connection-options-azure-ad",
+            },
+          },
+        },
+        "auth-connection-options-azure-ad": {
+          "docs": "Object encapsulating the configuration parameters for an Azure AD
+authentication connection.
+",
+          "properties": {
+            "client_id": {
+              "docs": "Client ID for the Azure authentication connection.",
+              "type": "optional<string>",
+            },
+            "client_secret": {
+              "docs": "Client secret for the Azure authentication connection.",
+              "type": "optional<string>",
+            },
+            "domain": {
+              "docs": "Domain URL of the Azure authentication connection.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "auth-connection-options-google-apps": {
+          "docs": "Object encapsulating the configuration parameters for a Google Apps
+authentication connection.
+",
+          "properties": {
+            "client_id": {
+              "docs": "Client ID for the Google Apps authentication connection.",
+              "type": "optional<string>",
+            },
+            "client_secret": {
+              "docs": "Client secret for the Google Apps authentication connection.
+",
+              "type": "optional<string>",
+            },
+            "tenant_domain": {
+              "docs": "Tenant domain URL of the Google Apps authentication connection.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "auth-connection-options-oidc": {
+          "docs": "Object encapsulating the configuration parameters for an OIDC
+authentication connection.
+",
+          "properties": {
+            "client_id": {
+              "docs": "Client ID for the OIDC authentication connection.",
+              "type": "optional<string>",
+            },
+            "client_secret": {
+              "docs": "Client secret for the OIDC authentication connection.",
+              "type": "optional<string>",
+            },
+            "issuer": {
+              "docs": "Issuer URL of the OIDC authentication connection.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "auth-connection-options-saml": {
+          "docs": "Object encapsulating the configuration parameters for a SAML
+authentication connection.
+",
+          "properties": {
+            "sign_in_endpoint": {
+              "docs": "Sign In endpoint for the SAML authentication connection.",
+              "type": "optional<string>",
+            },
+            "signing_cert": {
+              "docs": "Signing certificate for the SAML authentication connection.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "auth-connection-options-social": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "auth-connection-toggle": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "disable",
+              "value": "disable",
+            },
+            {
+              "name": "enable",
+              "value": "enable",
+            },
+          ],
+        },
+        "auth-connection-type": {
+          "docs": "Defines the type for the authentication connection. The configuration
+for each authentication connection will depend on the type value.
+",
+          "enum": [
+            {
+              "name": "google_apps",
+              "value": "google_apps",
+            },
+            {
+              "name": "oidc",
+              "value": "oidc",
+            },
+            {
+              "name": "samlp",
+              "value": "samlp",
+            },
+            {
+              "name": "social",
+              "value": "social",
+            },
+            {
+              "name": "waad",
+              "value": "waad",
+            },
+          ],
+        },
+        "auth-token": {
+          "docs": undefined,
+          "properties": {
+            "client_id": {
+              "docs": "An identifier that represents the application that requested the
+token. Only applicable for application access tokens.
+",
+              "type": "optional<string>",
+            },
+            "expires_at": {
+              "docs": "The time at which the token expires.",
+              "type": "optional<string>",
+            },
+            "issued_at": {
+              "docs": "The time at which the token was issued.",
+              "type": "optional<string>",
+            },
+            "requested_token_type": {
+              "docs": undefined,
+              "type": "optional<auth-token-requested-token-type>",
+            },
+            "scopes": {
+              "docs": "The scopes associated with the issued token.",
+              "type": "optional<list<string>>",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "optional<auth-token-status>",
+            },
+            "subject": {
+              "docs": "The subject of the token.",
+              "type": "optional<string>",
+            },
+            "token_hint": {
+              "docs": "A hint that identifies the token.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "auth-token-grant-type": {
+          "docs": "Specifies the process of obtaining a token.",
+          "enum": [
+            {
+              "name": "urn:devrev:params:oauth:grant-type:token-issue",
+              "value": "urn:devrev:params:oauth:grant-type:token-issue",
+            },
+            {
+              "name": "urn:ietf:params:oauth:grant-type:token-exchange",
+              "value": "urn:ietf:params:oauth:grant-type:token-exchange",
+            },
+          ],
+        },
+        "auth-token-requested-token-type": {
+          "docs": "The type of the requested token.",
+          "enum": [
+            {
+              "name": "urn:devrev:params:oauth:token-type:aat",
+              "value": "urn:devrev:params:oauth:token-type:aat",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:aat:public",
+              "value": "urn:devrev:params:oauth:token-type:aat:public",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:dev",
+              "value": "urn:devrev:params:oauth:token-type:dev",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:pat",
+              "value": "urn:devrev:params:oauth:token-type:pat",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:rev",
+              "value": "urn:devrev:params:oauth:token-type:rev",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:session",
+              "value": "urn:devrev:params:oauth:token-type:session",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:session:dev0",
+              "value": "urn:devrev:params:oauth:token-type:session:dev0",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:sys",
+              "value": "urn:devrev:params:oauth:token-type:sys",
+            },
+            {
+              "name": "urn:ietf:params:oauth:token-type:jwt",
+              "value": "urn:ietf:params:oauth:token-type:jwt",
+            },
+          ],
+        },
+        "auth-token-status": {
+          "docs": "The status of the token.",
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "expired",
+              "value": "expired",
+            },
+            {
+              "name": "revoked",
+              "value": "revoked",
+            },
+          ],
+        },
+        "auth-token-subject-token-type": {
+          "docs": "The type of the subject token.",
+          "enum": [
+            {
+              "name": "urn:devrev:params:oauth:token-type:jwt:auth0",
+              "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:jwt:dev",
+              "value": "urn:devrev:params:oauth:token-type:jwt:dev",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:revinfo",
+              "value": "urn:devrev:params:oauth:token-type:revinfo",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:sysu",
+              "value": "urn:devrev:params:oauth:token-type:sysu",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:userinfo",
+              "value": "urn:devrev:params:oauth:token-type:userinfo",
+            },
+            {
+              "name": "urn:devrev:params:oauth:token-type:userinfo:profile",
+              "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
+            },
+            {
+              "name": "urn:ietf:params:oauth:token-type:jwt",
+              "value": "urn:ietf:params:oauth:token-type:jwt",
+            },
+          ],
+        },
+        "auth-token-token-type": {
+          "docs": "The type of the issued token. Bearer is the only supported token type.
+",
+          "enum": [
+            {
+              "name": "bearer",
+              "value": "bearer",
+            },
+          ],
+        },
+        "auth-tokens-create-response": {
+          "docs": "Response for the request to create a new token corresponding to the
+requested token type.
+",
+          "properties": {
+            "access_token": {
+              "docs": "The issued JSON Web Token (JWT) corresponding to the requested
+token type.
+",
+              "type": "string",
+            },
+            "client_id": {
+              "docs": "An identifier that represents the application which is requesting
+the token. Only present in a response corresponding to an
+application access token (AAT).
+",
+              "type": "optional<string>",
+            },
+            "expires_in": {
+              "docs": "The validity lifetime of the token specified in seconds since Unix
+epoch.
+",
+              "type": "integer",
+            },
+            "refresh_token": {
+              "docs": "A token to refresh the issued token.",
+              "type": "optional<string>",
+            },
+            "scope": {
+              "docs": "The scopes associated with the issued token. A space-delimited list
+of values in which the order of values does not matter.
+",
+              "type": "optional<string>",
+            },
+            "token_type": {
+              "docs": undefined,
+              "type": "auth-token-token-type",
+            },
+          },
+        },
+        "auth-tokens-get-response": {
+          "docs": "The response to get the token metadata.",
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "auth-token",
+            },
+          },
+        },
+        "auth-tokens-list-response": {
+          "docs": "The response to list the token metadata.",
+          "properties": {
+            "tokens": {
+              "docs": "The list of token metadata.",
+              "type": "list<auth-token>",
+            },
+          },
+        },
+        "auth-tokens-org-traits": {
+          "docs": "Carries Rev org info.",
+          "properties": {
+            "display_name": {
+              "docs": "The display name of the Rev org.",
+              "type": "optional<string>",
+            },
+            "domain": {
+              "docs": "The domain of the Rev org.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "auth-tokens-rev-info": {
+          "docs": "Carries info corresponding to the Rev user to be provisioned and/or
+issue a Rev session token.
+",
+          "properties": {
+            "org_ref": {
+              "docs": "An identifier which uniquely identifies a Rev org.",
+              "type": "optional<string>",
+            },
+            "org_traits": {
+              "docs": undefined,
+              "type": "optional<auth-tokens-org-traits>",
+            },
+            "rev_user_id": {
+              "docs": "The unique ID of the Rev user.",
+              "type": "optional<string>",
+            },
+            "user_ref": {
+              "docs": "An identifier which uniquely identifies a Rev user.",
+              "type": "string",
+            },
+            "user_traits": {
+              "docs": undefined,
+              "type": "optional<auth-tokens-user-traits>",
+            },
+          },
+        },
+        "auth-tokens-update-response": {
+          "docs": "Response for the request to update the token metadata.",
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "auth-token",
+            },
+          },
+        },
+        "auth-tokens-user-traits": {
+          "docs": "Carries Rev user info.",
+          "properties": {
+            "display_name": {
+              "docs": "The display name of the Rev user.",
+              "type": "optional<string>",
+            },
+            "email": {
+              "docs": "The email address of the Rev user.",
+              "type": "optional<string>",
+            },
+            "full_name": {
+              "docs": "The full name of the Rev user.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "capability": {
+          "docs": undefined,
+          "type": "part-base",
+        },
+        "capability-summary": {
+          "docs": undefined,
+          "type": "part-base-summary",
+        },
+        "dev-org-auth-connections-create-request-type": {
+          "docs": "Defines the type for the authentication connection. Different types of
+authentication connections have different configuration parameters.
+",
+          "enum": [
+            {
+              "name": "google_apps",
+              "value": "google_apps",
+            },
+            {
+              "name": "oidc",
+              "value": "oidc",
+            },
+            {
+              "name": "samlp",
+              "value": "samlp",
+            },
+            {
+              "name": "waad",
+              "value": "waad",
+            },
+          ],
+        },
+        "dev-org-auth-connections-create-response": {
+          "docs": "Response for the request to create a new enterprise authentication
+connection.
+",
+          "properties": {
+            "auth_connection": {
+              "docs": undefined,
+              "type": "auth-connection",
+            },
+          },
+        },
+        "dev-org-auth-connections-get-response": {
+          "docs": "Response object encapsulating the configuration details of an
+authentication connection.
+",
+          "properties": {
+            "auth_connection": {
+              "docs": undefined,
+              "type": "auth-connection",
+            },
+          },
+        },
+        "dev-org-auth-connections-list-response": {
+          "docs": "Response object for the request to list all the social and enterprise
+authentication connections configured for a Dev organization.
+",
+          "properties": {
+            "auth_connections": {
+              "docs": "List of all the authentication connections currently configured for
+a Dev organization.
+",
+              "type": "list<auth-connection>",
+            },
+          },
+        },
+        "dev-org-auth-connections-update-request-type": {
+          "docs": "Specifies the type for the authentication connection. Different types
+of authentication connections have different configuration parameters
+that can be updated.
+",
+          "enum": [
+            {
+              "name": "google_apps",
+              "value": "google_apps",
+            },
+            {
+              "name": "none",
+              "value": "none",
+            },
+            {
+              "name": "oidc",
+              "value": "oidc",
+            },
+            {
+              "name": "samlp",
+              "value": "samlp",
+            },
+            {
+              "name": "waad",
+              "value": "waad",
+            },
+          ],
+        },
+        "dev-org-auth-connections-update-response": {
+          "docs": "Response for the request to update an enterprise authentication
+connection.
+",
+          "properties": {
+            "auth_connection": {
+              "docs": undefined,
+              "type": "auth-connection",
+            },
+          },
+        },
+        "dev-user": {
+          "docs": undefined,
+          "properties": {
+            "external_identities": {
+              "docs": "IDs of the Dev User outside the DevRev SOR.",
+              "type": "optional<list<external-identity>>",
+            },
+          },
+        },
+        "dev-user-summary": {
+          "docs": undefined,
+          "type": "user-base-summary",
+        },
+        "dev-users-list-response": {
+          "docs": "The response to listing the Dev users.",
+          "properties": {
+            "dev_users": {
+              "docs": "The list of Dev users.",
+              "type": "list<dev-user>",
+            },
+            "next_cursor": {
+              "docs": "The cursor used to iterate subsequent results in accordance to the
+sort order. If not set, then no later elements exist.
+",
+              "type": "optional<string>",
+            },
+            "prev_cursor": {
+              "docs": "The cursor used to iterate preceding results in accordance to the
+sort order. If not set, then no prior elements exist.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "dev-users-self-response": {
+          "docs": "The response to getting the information for the authenticated user.
+",
+          "properties": {
+            "dev_user": {
+              "docs": undefined,
+              "type": "dev-user",
+            },
+          },
+        },
+        "empty": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "enhancement": {
+          "docs": undefined,
+          "properties": {
+            "target_close_date": {
+              "docs": "Timestamp when the enhancement is expected to be closed.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "enhancement-summary": {
+          "docs": undefined,
+          "type": "part-base-summary",
+        },
+        "error-bad-request": {
+          "docs": undefined,
+          "properties": {
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-bad-request-type>",
+            },
+          },
+        },
+        "error-bad-request-bad-request": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-bad-request-invalid-enum-value": {
+          "docs": undefined,
+          "properties": {
+            "allowed_values": {
+              "docs": "The allowed values for the field.",
+              "type": "list<string>",
+            },
+            "field_name": {
+              "docs": "The field whose enum value is invalid.",
+              "type": "string",
+            },
+            "value": {
+              "docs": "The value that was received.",
+              "type": "string",
+            },
+          },
+        },
+        "error-bad-request-missing-required-field": {
+          "docs": undefined,
+          "properties": {
+            "field_name": {
+              "docs": "The missing field's name.",
+              "type": "string",
+            },
+          },
+        },
+        "error-bad-request-parse-error": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-bad-request-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "bad_request",
+              "value": "bad_request",
+            },
+            {
+              "name": "invalid_enum_value",
+              "value": "invalid_enum_value",
+            },
+            {
+              "name": "missing_required_field",
+              "value": "missing_required_field",
+            },
+            {
+              "name": "parse_error",
+              "value": "parse_error",
+            },
+            {
+              "name": "value_not_permitted",
+              "value": "value_not_permitted",
+            },
+          ],
+        },
+        "error-bad-request-value-not-permitted": {
+          "docs": undefined,
+          "properties": {
+            "field_name": {
+              "docs": "The field whose value is not permitted.",
+              "type": "string",
+            },
+            "reason": {
+              "docs": "The reason the value isn't permitted.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "error-base": {
+          "docs": undefined,
+          "properties": {
+            "message": {
+              "docs": "The message associated with the error.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "error-forbidden": {
+          "docs": undefined,
+          "properties": {
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-forbidden-type>",
+            },
+          },
+        },
+        "error-forbidden-forbidden": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-forbidden-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "forbidden",
+              "value": "forbidden",
+            },
+          ],
+        },
+        "error-internal-server-error": {
+          "docs": undefined,
+          "properties": {
+            "reference_id": {
+              "docs": "A unique ID that's generated for the error that can be used for
+inquiry.
+",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-internal-server-error-type>",
+            },
+          },
+        },
+        "error-internal-server-error-internal-error": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-internal-server-error-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "internal_error",
+              "value": "internal_error",
+            },
+          ],
+        },
+        "error-not-found": {
+          "docs": undefined,
+          "properties": {
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-not-found-type>",
+            },
+          },
+        },
+        "error-not-found-not-found": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-not-found-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "not_found",
+              "value": "not_found",
+            },
+          ],
+        },
+        "error-service-unavailable": {
+          "docs": undefined,
+          "properties": {
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-service-unavailable-type>",
+            },
+          },
+        },
+        "error-service-unavailable-service-unavailable": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-service-unavailable-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "service_unavailable",
+              "value": "service_unavailable",
+            },
+          ],
+        },
+        "error-too-many-requests": {
+          "docs": undefined,
+          "properties": {
+            "retry_after": {
+              "docs": "The number of seconds after which the client should retry.
+",
+              "type": "optional<integer>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-too-many-requests-type>",
+            },
+          },
+        },
+        "error-too-many-requests-too-many-requests": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "error-too-many-requests-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "too_many_requests",
+              "value": "too_many_requests",
+            },
+          ],
+        },
+        "error-unauthorized": {
+          "docs": undefined,
+          "properties": {
+            "type": {
+              "docs": undefined,
+              "type": "optional<error-unauthorized-type>",
+            },
+          },
+        },
+        "error-unauthorized-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "unauthenticated",
+              "value": "unauthenticated",
+            },
+          ],
+        },
+        "error-unauthorized-unauthenticated": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "event-part-created": {
+          "docs": undefined,
+          "properties": {
+            "part": {
+              "docs": undefined,
+              "type": "part",
+            },
+          },
+        },
+        "event-part-deleted": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the part that was deleted.",
+              "type": "string",
+            },
+          },
+        },
+        "event-part-updated": {
+          "docs": undefined,
+          "properties": {
+            "part": {
+              "docs": undefined,
+              "type": "part",
+            },
+          },
+        },
+        "event-rev-org-created": {
+          "docs": undefined,
+          "properties": {
+            "rev_org": {
+              "docs": undefined,
+              "type": "rev-org",
+            },
+          },
+        },
+        "event-rev-org-deleted": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the Rev organization that was deleted.",
+              "type": "string",
+            },
+          },
+        },
+        "event-rev-org-updated": {
+          "docs": undefined,
+          "properties": {
+            "rev_org": {
+              "docs": undefined,
+              "type": "rev-org",
+            },
+          },
+        },
+        "event-tag-created": {
+          "docs": undefined,
+          "properties": {
+            "tag": {
+              "docs": undefined,
+              "type": "tag",
+            },
+          },
+        },
+        "event-tag-deleted": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the tag that was deleted.",
+              "type": "string",
+            },
+          },
+        },
+        "event-tag-updated": {
+          "docs": undefined,
+          "properties": {
+            "tag": {
+              "docs": undefined,
+              "type": "tag",
+            },
+          },
+        },
+        "event-timeline-entry-created": {
+          "docs": undefined,
+          "properties": {
+            "entry": {
+              "docs": undefined,
+              "type": "timeline-entry",
+            },
+          },
+        },
+        "event-timeline-entry-deleted": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the timeline entry that was deleted.",
+              "type": "string",
+            },
+          },
+        },
+        "event-timeline-entry-updated": {
+          "docs": undefined,
+          "properties": {
+            "entry": {
+              "docs": undefined,
+              "type": "timeline-entry",
+            },
+          },
+        },
+        "event-webhook-created": {
+          "docs": undefined,
+          "properties": {
+            "webhook": {
+              "docs": undefined,
+              "type": "webhook",
+            },
+          },
+        },
+        "event-webhook-deleted": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the webhook that was deleted.",
+              "type": "string",
+            },
+          },
+        },
+        "event-webhook-updated": {
+          "docs": undefined,
+          "properties": {
+            "webhook": {
+              "docs": undefined,
+              "type": "webhook",
+            },
+          },
+        },
+        "event-work-created": {
+          "docs": undefined,
+          "properties": {
+            "work": {
+              "docs": undefined,
+              "type": "work",
+            },
+          },
+        },
+        "event-work-deleted": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the work that was deleted.",
+              "type": "string",
+            },
+          },
+        },
+        "event-work-updated": {
+          "docs": undefined,
+          "properties": {
+            "work": {
+              "docs": undefined,
+              "type": "work",
+            },
+          },
+        },
+        "external-identity": {
+          "docs": "External identity of a user.",
+          "type": "map<string, unknown>",
+        },
+        "feature": {
+          "docs": undefined,
+          "type": "part-base",
+        },
+        "feature-summary": {
+          "docs": undefined,
+          "type": "part-base-summary",
+        },
+        "group-summary": {
+          "docs": undefined,
+          "type": "atom-base-summary",
+        },
+        "issue": {
+          "docs": undefined,
+          "properties": {
+            "priority": {
+              "docs": undefined,
+              "type": "optional<issue-priority>",
+            },
+          },
+        },
+        "issue-priority": {
+          "docs": "Priority of the work based upon impact and criticality.",
+          "enum": [
+            {
+              "name": "p0",
+              "value": "p0",
+            },
+            {
+              "name": "p1",
+              "value": "p1",
+            },
+            {
+              "name": "p2",
+              "value": "p2",
+            },
+            {
+              "name": "p3",
+              "value": "p3",
+            },
+          ],
+        },
+        "list-mode": {
+          "docs": "The iteration mode to use. If "after", then entries after the provided
+cursor will be returned, or if no cursor is provided, then from the
+beginning. If "before", then entries before the provided cursor will be
+returned, or if no cursor is provided, then from the end. Entries will
+always be returned in the specified sort-by order.
+",
+          "enum": [
+            {
+              "name": "after",
+              "value": "after",
+            },
+            {
+              "name": "before",
+              "value": "before",
+            },
+          ],
+        },
+        "org-base": {
+          "docs": undefined,
+          "properties": {
+            "display_name": {
+              "docs": "Name of the Organization.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "org-base-summary": {
+          "docs": undefined,
+          "properties": {
+            "display_name": {
+              "docs": "Name of the Organization.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "org-environment": {
+          "docs": "The environment of the Org. Defaults to 'production' if not specified.
+",
+          "enum": [
+            {
+              "name": "production",
+              "value": "production",
+            },
+            {
+              "name": "staging",
+              "value": "staging",
+            },
+            {
+              "name": "test",
+              "value": "test",
+            },
+          ],
+        },
+        "org-summary": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "rev_org": {
+              "docs": undefined,
+              "type": "rev-org-summary",
+            },
+          },
+        },
+        "org-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "rev_org",
+              "value": "rev_org",
+            },
+          ],
+        },
+        "part": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "capability": {
+              "docs": undefined,
+              "type": "capability",
+            },
+            "enhancement": {
+              "docs": undefined,
+              "type": "enhancement",
+            },
+            "feature": {
+              "docs": undefined,
+              "type": "feature",
+            },
+            "product": {
+              "docs": undefined,
+              "type": "product",
+            },
+          },
+        },
+        "part-base": {
+          "docs": undefined,
+          "properties": {
+            "artifacts": {
+              "docs": "The attached artifacts.",
+              "type": "optional<list<artifact-summary>>",
+            },
+            "description": {
+              "docs": "Description of the part.",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "Name of the part.",
+              "type": "optional<string>",
+            },
+            "owned_by": {
+              "docs": "The users that own the part.",
+              "type": "optional<list<user-summary>>",
+            },
+            "tags": {
+              "docs": "Tags associated with the object.",
+              "type": "optional<list<tag-with-value>>",
+            },
+          },
+        },
+        "part-base-summary": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": "Name of the part.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "part-summary": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "capability": {
+              "docs": undefined,
+              "type": "capability-summary",
+            },
+            "enhancement": {
+              "docs": undefined,
+              "type": "enhancement-summary",
+            },
+            "feature": {
+              "docs": undefined,
+              "type": "feature-summary",
+            },
+            "product": {
+              "docs": undefined,
+              "type": "product-summary",
+            },
+          },
+        },
+        "part-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "capability",
+              "value": "capability",
+            },
+            {
+              "name": "enhancement",
+              "value": "enhancement",
+            },
+            {
+              "name": "feature",
+              "value": "feature",
+            },
+            {
+              "name": "product",
+              "value": "product",
+            },
+          ],
+        },
+        "parts-create-request-capability": {
+          "docs": undefined,
+          "properties": {
+            "parent_part": {
+              "docs": "ID of the parent product for the capability.",
+              "type": "list<string>",
+            },
+          },
+        },
+        "parts-create-request-enhancement": {
+          "docs": undefined,
+          "properties": {
+            "parent_part": {
+              "docs": "ID of the parent part on which the enhancement is to be created.
+",
+              "type": "list<string>",
+            },
+            "target_close_date": {
+              "docs": "Target close date by which enhancement is expected to be closed.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "parts-create-request-feature": {
+          "docs": undefined,
+          "properties": {
+            "parent_part": {
+              "docs": "ID of the parent capability/feature for the feature.",
+              "type": "list<string>",
+            },
+          },
+        },
+        "parts-create-request-product": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "parts-create-response": {
+          "docs": undefined,
+          "properties": {
+            "part": {
+              "docs": undefined,
+              "type": "part",
+            },
+          },
+        },
+        "parts-delete-response": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "parts-get-response": {
+          "docs": undefined,
+          "properties": {
+            "part": {
+              "docs": undefined,
+              "type": "part",
+            },
+          },
+        },
+        "parts-list-response": {
+          "docs": undefined,
+          "properties": {
+            "next_cursor": {
+              "docs": "The cursor used to iterate subsequent results in accordance to the
+sort order. If not set, then no later elements exist.
+",
+              "type": "optional<string>",
+            },
+            "parts": {
+              "docs": "The list of parts.",
+              "type": "list<part>",
+            },
+            "prev_cursor": {
+              "docs": "The cursor used to iterate preceding results in accordance to the
+sort order. If not set, then no prior elements exist.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "parts-update-request-capability": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "parts-update-request-enhancement": {
+          "docs": undefined,
+          "properties": {
+            "target_close_date": {
+              "docs": "Updates the target close date of the enhancement.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "parts-update-request-feature": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "parts-update-request-owned-by": {
+          "docs": undefined,
+          "properties": {
+            "set": {
+              "docs": "Sets the owner IDs to the provided user IDs. This must not be
+empty.
+",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "parts-update-request-product": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "parts-update-response": {
+          "docs": undefined,
+          "properties": {
+            "part": {
+              "docs": undefined,
+              "type": "part",
+            },
+          },
+        },
+        "product": {
+          "docs": undefined,
+          "type": "part-base",
+        },
+        "product-summary": {
+          "docs": undefined,
+          "type": "part-base-summary",
+        },
+        "rev-org": {
+          "docs": undefined,
+          "properties": {
+            "description": {
+              "docs": "Description of the Rev organization.",
+              "type": "optional<string>",
+            },
+            "domain": {
+              "docs": "Company's domain name. Example - 'devrev.ai'.",
+              "type": "optional<string>",
+            },
+            "external_ref": {
+              "docs": "External ref is a unique identifier for the Rev (customer)
+organization from your primary customer system of records. If none
+is specified, a system-generated identifier will be assigned to the
+organization.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "rev-org-summary": {
+          "docs": undefined,
+          "type": "org-base-summary",
+        },
+        "rev-orgs-create-response": {
+          "docs": "Response object for request to create a new Rev organization.
+",
+          "properties": {
+            "rev_org": {
+              "docs": undefined,
+              "type": "rev-org",
+            },
+          },
+        },
+        "rev-orgs-delete-response": {
+          "docs": "The response to deleting a Rev organization.",
+          "type": "map<string, unknown>",
+        },
+        "rev-orgs-get-response": {
+          "docs": "The response to getting a Rev organization's information.",
+          "properties": {
+            "rev_org": {
+              "docs": undefined,
+              "type": "rev-org",
+            },
+          },
+        },
+        "rev-orgs-list-response": {
+          "docs": "The response to getting a list of Rev organizations' information.
+",
+          "properties": {
+            "next_cursor": {
+              "docs": "The cursor used to iterate subsequent results in accordance to the
+sort order. If not set, then no later elements exist.
+",
+              "type": "optional<string>",
+            },
+            "prev_cursor": {
+              "docs": "The cursor used to iterate preceding results in accordance to the
+sort order. If not set, then no prior elements exist.
+",
+              "type": "optional<string>",
+            },
+            "rev_orgs": {
+              "docs": "List with all of the Rev organizations' information.",
+              "type": "list<rev-org>",
+            },
+          },
+        },
+        "rev-orgs-update-response": {
+          "docs": "Response object to updating Rev organization's information.",
+          "properties": {
+            "rev_org": {
+              "docs": undefined,
+              "type": "rev-org",
+            },
+          },
+        },
+        "rev-user-summary": {
+          "docs": undefined,
+          "properties": {
+            "external_ref": {
+              "docs": "External ref is a mutable unique identifier for a user within the
+Rev organization from your primary customer record. If none is
+available, a good alternative is the email address/phone number
+which could uniquely identify the user. If none is specified, a
+system-generated identifier will be assigned to the user.
+",
+              "type": "optional<string>",
+            },
+            "rev_org": {
+              "docs": undefined,
+              "type": "optional<org-summary>",
+            },
+          },
+        },
+        "set-tag-with-value": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the tag.",
+              "type": "string",
+            },
+            "value": {
+              "docs": "The value for the object's association with the tag. If specified,
+the value must be one that's specified in the tag's allowed values.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "stage": {
+          "docs": "Describes the current stage of a work item.",
+          "properties": {
+            "name": {
+              "docs": "Current stage name of the work item.",
+              "type": "string",
+            },
+          },
+        },
+        "stage-init": {
+          "docs": "Sets an object's initial stage.",
+          "properties": {
+            "name": {
+              "docs": "The name of the stage.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "stage-update": {
+          "docs": "Updates an object's stage.",
+          "properties": {
+            "name": {
+              "docs": "The updated name of the stage, otherwise unchanged if not set.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "sys-user-summary": {
+          "docs": undefined,
+          "type": "user-base-summary",
+        },
+        "tag": {
+          "docs": undefined,
+          "properties": {
+            "allowed_values": {
+              "docs": "The allowed values for the tag, where a value is provided when a
+tag is associated with an object. If empty, then no value should be
+provided when the association is made.
+",
+              "type": "optional<list<string>>",
+            },
+            "description": {
+              "docs": "An informative description for the tag that should provide context
+on the tag's purpose and usage.
+",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "The name of the tag, which denotes the logical concept by which all
+tagged objects will be associated. The name is guaranteed to be
+unique.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "tag-summary": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": "The name of the tag, which denotes the logical concept by which all
+tagged objects will be associated. The name is guaranteed to be
+unique.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "tag-with-value": {
+          "docs": undefined,
+          "properties": {
+            "tag": {
+              "docs": undefined,
+              "type": "tag-summary",
+            },
+            "value": {
+              "docs": "The value for the object's association with the tag.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "tags-create-response": {
+          "docs": "The response to creating a new tag.",
+          "properties": {
+            "tag": {
+              "docs": undefined,
+              "type": "tag",
+            },
+          },
+        },
+        "tags-delete-response": {
+          "docs": "The response for deleting a tag.",
+          "type": "map<string, unknown>",
+        },
+        "tags-get-response": {
+          "docs": "The response to getting a tag's information.",
+          "properties": {
+            "tag": {
+              "docs": undefined,
+              "type": "tag",
+            },
+          },
+        },
+        "tags-list-response": {
+          "docs": "The response to listing the tags.",
+          "properties": {
+            "next_cursor": {
+              "docs": "The cursor used to iterate subsequent results in accordance to the
+sort order. If not set, then no later elements exist.
+",
+              "type": "optional<string>",
+            },
+            "prev_cursor": {
+              "docs": "The cursor used to iterate preceding results in accordance to the
+sort order. If not set, then no prior elements exist.
+",
+              "type": "optional<string>",
+            },
+            "tags": {
+              "docs": "The list of tags.",
+              "type": "list<tag>",
+            },
+          },
+        },
+        "tags-update-allowed-values": {
+          "docs": "Specifies an update to a tag's allowed values.",
+          "properties": {
+            "set": {
+              "docs": "Sets the allowed values for the tag.",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "tags-update-response": {
+          "docs": "The response for updating a tag.",
+          "properties": {
+            "tag": {
+              "docs": undefined,
+              "type": "tag",
+            },
+          },
+        },
+        "ticket": {
+          "docs": undefined,
+          "properties": {
+            "group": {
+              "docs": undefined,
+              "type": "optional<group-summary>",
+            },
+            "rev_org": {
+              "docs": undefined,
+              "type": "optional<org-summary>",
+            },
+            "severity": {
+              "docs": undefined,
+              "type": "optional<ticket-severity>",
+            },
+          },
+        },
+        "ticket-severity": {
+          "docs": "Severity of the ticket.",
+          "enum": [
+            {
+              "name": "blocker",
+              "value": "blocker",
+            },
+            {
+              "name": "high",
+              "value": "high",
+            },
+            {
+              "name": "low",
+              "value": "low",
+            },
+            {
+              "name": "medium",
+              "value": "medium",
+            },
+          ],
+        },
+        "timeline-comment": {
+          "docs": undefined,
+          "properties": {
+            "artifacts": {
+              "docs": "The artifacts for the comment.",
+              "type": "optional<list<artifact-summary>>",
+            },
+            "body": {
+              "docs": "The comment's body. If the comment has been deleted, then no body
+will appear in the response.
+",
+              "type": "optional<string>",
+            },
+            "body_type": {
+              "docs": undefined,
+              "type": "optional<timeline-comment-body-type>",
+            },
+            "snap_kit_body": {
+              "docs": "The SnapKit Body of the comment.",
+              "type": "optional<map<string, unknown>>",
+            },
+          },
+        },
+        "timeline-comment-body-type": {
+          "docs": "The type of the body to use for the comment.",
+          "enum": [
+            {
+              "name": "snap_kit",
+              "value": "snap_kit",
+            },
+            {
+              "name": "text",
+              "value": "text",
+            },
+          ],
+        },
+        "timeline-entries-create-request-timeline-comment": {
+          "docs": undefined,
+          "properties": {
+            "artifacts": {
+              "docs": "The IDs of the artifacts attached to the comment.",
+              "type": "optional<list<string>>",
+            },
+            "body": {
+              "docs": "The comment's body.",
+              "type": "optional<string>",
+            },
+            "body_type": {
+              "docs": undefined,
+              "type": "optional<timeline-comment-body-type>",
+            },
+            "snap_kit_body": {
+              "docs": "The SnapKit body of the comment.",
+              "type": "optional<map<string, unknown>>",
+            },
+          },
+        },
+        "timeline-entries-create-request-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "timeline_comment",
+              "value": "timeline_comment",
+            },
+          ],
+        },
+        "timeline-entries-create-response": {
+          "docs": "The response to creating a timeline entry for an object.",
+          "properties": {
+            "timeline_entry": {
+              "docs": undefined,
+              "type": "timeline-entry",
+            },
+          },
+        },
+        "timeline-entries-get-response": {
+          "docs": "The request to getting a timeline entry.",
+          "properties": {
+            "timeline_entry": {
+              "docs": undefined,
+              "type": "timeline-entry",
+            },
+          },
+        },
+        "timeline-entries-list-response": {
+          "docs": "The response to listing timeline entries for an object.",
+          "properties": {
+            "next_cursor": {
+              "docs": "The cursor used to iterate subsequent results in accordance to the
+sort order. If not set, then no later elements exist.
+",
+              "type": "optional<string>",
+            },
+            "prev_cursor": {
+              "docs": "The cursor used to iterate preceding results in accordance to the
+sort order. If not set, then no prior elements exist.
+",
+              "type": "optional<string>",
+            },
+            "timeline_entries": {
+              "docs": "The timeline entries for the object.",
+              "type": "list<timeline-entry>",
+            },
+          },
+        },
+        "timeline-entries-update-request-timeline-comment": {
+          "docs": undefined,
+          "properties": {
+            "artifacts": {
+              "docs": undefined,
+              "type": "optional<timeline-entries-update-request-timeline-comment-artifacts>",
+            },
+            "body": {
+              "docs": "The updated comment's body.",
+              "type": "optional<string>",
+            },
+            "body_type": {
+              "docs": undefined,
+              "type": "optional<timeline-comment-body-type>",
+            },
+            "snap_kit_body": {
+              "docs": "The SnapKit body of the comment.",
+              "type": "optional<map<string, unknown>>",
+            },
+          },
+        },
+        "timeline-entries-update-request-timeline-comment-artifacts": {
+          "docs": undefined,
+          "properties": {
+            "add": {
+              "docs": "Adds the provided artifacts to the comment. An artifact cannot be
+added more than once, i.e. nothing is done if the artifact is
+already attached. Mutually exclusive with \`set\`.
+",
+              "type": "optional<list<string>>",
+            },
+            "remove": {
+              "docs": "Removes the provided artifacts from the comment. If an artifact is
+not present, then it's ignored. Mututally exclusive with \`set\`.
+",
+              "type": "optional<list<string>>",
+            },
+            "set": {
+              "docs": "Sets the field to the provided artifacts.",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "timeline-entries-update-request-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "timeline_comment",
+              "value": "timeline_comment",
+            },
+          ],
+        },
+        "timeline-entries-update-response": {
+          "docs": "The response to updating a timeline entry.",
+          "properties": {
+            "timeline_entry": {
+              "docs": undefined,
+              "type": "timeline-entry",
+            },
+          },
+        },
+        "timeline-entry": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "timeline_comment": {
+              "docs": undefined,
+              "type": "timeline-comment",
+            },
+          },
+        },
+        "timeline-entry-base": {
+          "docs": undefined,
+          "type": "atom-base",
+        },
+        "timeline-entry-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "timeline_comment",
+              "value": "timeline_comment",
+            },
+          ],
+        },
+        "timeline-entry-visibility": {
+          "docs": "The visibility of the entry. If 'private', then the entry is only
+visible to the creator, otherwise if not set, then the entry has
+default visibility.
+",
+          "enum": [
+            {
+              "name": "private",
+              "value": "private",
+            },
+          ],
+        },
+        "user-base": {
+          "docs": undefined,
+          "properties": {
+            "display_name": {
+              "docs": "The user's display name. The name is non-unique and mutable.
+",
+              "type": "optional<string>",
+            },
+            "display_picture": {
+              "docs": undefined,
+              "type": "optional<artifact-summary>",
+            },
+            "email": {
+              "docs": "Email address of the user.",
+              "type": "optional<string>",
+            },
+            "full_name": {
+              "docs": "Full name of the user.",
+              "type": "optional<string>",
+            },
+            "phone_numbers": {
+              "docs": "Phone numbers of the user.",
+              "type": "optional<list<string>>",
+            },
+            "state": {
+              "docs": undefined,
+              "type": "optional<user-state>",
+            },
+          },
+        },
+        "user-base-summary": {
+          "docs": undefined,
+          "properties": {
+            "display_name": {
+              "docs": "The user's display name. The name is non-unique and mutable.
+",
+              "type": "optional<string>",
+            },
+            "display_picture": {
+              "docs": undefined,
+              "type": "optional<artifact-summary>",
+            },
+            "email": {
+              "docs": "Email address of the user.",
+              "type": "optional<string>",
+            },
+            "full_name": {
+              "docs": "Full name of the user.",
+              "type": "optional<string>",
+            },
+            "state": {
+              "docs": undefined,
+              "type": "optional<user-state>",
+            },
+          },
+        },
+        "user-state": {
+          "docs": "State of the user.",
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "deactivated",
+              "value": "deactivated",
+            },
+            {
+              "name": "locked",
+              "value": "locked",
+            },
+            {
+              "name": "shadow",
+              "value": "shadow",
+            },
+            {
+              "name": "unassigned",
+              "value": "unassigned",
+            },
+          ],
+        },
+        "user-summary": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "dev_user": {
+              "docs": undefined,
+              "type": "dev-user-summary",
+            },
+            "rev_user": {
+              "docs": undefined,
+              "type": "rev-user-summary",
+            },
+            "sys_user": {
+              "docs": undefined,
+              "type": "sys-user-summary",
+            },
+          },
+        },
+        "user-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "dev_user",
+              "value": "dev_user",
+            },
+            {
+              "name": "rev_user",
+              "value": "rev_user",
+            },
+            {
+              "name": "sys_user",
+              "value": "sys_user",
+            },
+          ],
+        },
+        "webhook": {
+          "docs": undefined,
+          "properties": {
+            "event_types": {
+              "docs": "The event types that the webhook will receive.",
+              "type": "optional<list<webhook-event-type>>",
+            },
+            "secret": {
+              "docs": "The secret to use for verifying webhook events.",
+              "type": "optional<string>",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "optional<webhook-status>",
+            },
+            "url": {
+              "docs": "The URL of the webhook endpoint.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "webhook-event-request": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The event's ID.",
+              "type": "string",
+            },
+            "part_created": {
+              "docs": undefined,
+              "type": "optional<event-part-created>",
+            },
+            "part_deleted": {
+              "docs": undefined,
+              "type": "optional<event-part-deleted>",
+            },
+            "part_updated": {
+              "docs": undefined,
+              "type": "optional<event-part-updated>",
+            },
+            "rev_org_created": {
+              "docs": undefined,
+              "type": "optional<event-rev-org-created>",
+            },
+            "rev_org_deleted": {
+              "docs": undefined,
+              "type": "optional<event-rev-org-deleted>",
+            },
+            "rev_org_updated": {
+              "docs": undefined,
+              "type": "optional<event-rev-org-updated>",
+            },
+            "tag_created": {
+              "docs": undefined,
+              "type": "optional<event-tag-created>",
+            },
+            "tag_deleted": {
+              "docs": undefined,
+              "type": "optional<event-tag-deleted>",
+            },
+            "tag_updated": {
+              "docs": undefined,
+              "type": "optional<event-tag-updated>",
+            },
+            "timeline_entry_created": {
+              "docs": undefined,
+              "type": "optional<event-timeline-entry-created>",
+            },
+            "timeline_entry_deleted": {
+              "docs": undefined,
+              "type": "optional<event-timeline-entry-deleted>",
+            },
+            "timeline_entry_updated": {
+              "docs": undefined,
+              "type": "optional<event-timeline-entry-updated>",
+            },
+            "timestamp": {
+              "docs": "Timestamp of the webhook's invocation for the event. Note this
+should be used to protect against replay attacks, where the event
+should only be processed if the timestamp isn't stale by several
+seconds.
+",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "optional<webhook-event-type>",
+            },
+            "verify": {
+              "docs": undefined,
+              "type": "optional<webhook-event-verify>",
+            },
+            "webhook_created": {
+              "docs": undefined,
+              "type": "optional<event-webhook-created>",
+            },
+            "webhook_deleted": {
+              "docs": undefined,
+              "type": "optional<event-webhook-deleted>",
+            },
+            "webhook_id": {
+              "docs": "ID of the webhook for the event.",
+              "type": "string",
+            },
+            "webhook_updated": {
+              "docs": undefined,
+              "type": "optional<event-webhook-updated>",
+            },
+            "work_created": {
+              "docs": undefined,
+              "type": "optional<event-work-created>",
+            },
+            "work_deleted": {
+              "docs": undefined,
+              "type": "optional<event-work-deleted>",
+            },
+            "work_updated": {
+              "docs": undefined,
+              "type": "optional<event-work-updated>",
+            },
+          },
+        },
+        "webhook-event-response": {
+          "docs": undefined,
+          "properties": {
+            "challenge": {
+              "docs": "The challenge from the "verify" request, otherwise this should not
+be set for other request types.
+",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "webhook-event-type": {
+          "docs": "The event types that the webhook will receive.",
+          "enum": [
+            {
+              "name": "part_created",
+              "value": "part_created",
+            },
+            {
+              "name": "part_deleted",
+              "value": "part_deleted",
+            },
+            {
+              "name": "part_updated",
+              "value": "part_updated",
+            },
+            {
+              "name": "rev_org_created",
+              "value": "rev_org_created",
+            },
+            {
+              "name": "rev_org_deleted",
+              "value": "rev_org_deleted",
+            },
+            {
+              "name": "rev_org_updated",
+              "value": "rev_org_updated",
+            },
+            {
+              "name": "tag_created",
+              "value": "tag_created",
+            },
+            {
+              "name": "tag_deleted",
+              "value": "tag_deleted",
+            },
+            {
+              "name": "tag_updated",
+              "value": "tag_updated",
+            },
+            {
+              "name": "timeline_entry_created",
+              "value": "timeline_entry_created",
+            },
+            {
+              "name": "timeline_entry_deleted",
+              "value": "timeline_entry_deleted",
+            },
+            {
+              "name": "timeline_entry_updated",
+              "value": "timeline_entry_updated",
+            },
+            {
+              "name": "verify",
+              "value": "verify",
+            },
+            {
+              "name": "webhook_created",
+              "value": "webhook_created",
+            },
+            {
+              "name": "webhook_deleted",
+              "value": "webhook_deleted",
+            },
+            {
+              "name": "webhook_updated",
+              "value": "webhook_updated",
+            },
+            {
+              "name": "work_created",
+              "value": "work_created",
+            },
+            {
+              "name": "work_deleted",
+              "value": "work_deleted",
+            },
+            {
+              "name": "work_updated",
+              "value": "work_updated",
+            },
+          ],
+        },
+        "webhook-event-verify": {
+          "docs": undefined,
+          "properties": {
+            "challenge": {
+              "docs": "The challenge that must be echoed in the response.",
+              "type": "string",
+            },
+          },
+        },
+        "webhook-status": {
+          "docs": "The status of the webhook.",
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "inactive",
+              "value": "inactive",
+            },
+            {
+              "name": "unverified",
+              "value": "unverified",
+            },
+          ],
+        },
+        "webhooks-create-response": {
+          "docs": "The response to creating a new webhook.",
+          "properties": {
+            "webhook": {
+              "docs": undefined,
+              "type": "webhook",
+            },
+          },
+        },
+        "webhooks-delete-response": {
+          "docs": "The response to deleting the webhook.",
+          "type": "map<string, unknown>",
+        },
+        "webhooks-get-response": {
+          "docs": "The response to getting the information for the webhook.",
+          "properties": {
+            "webhook": {
+              "docs": undefined,
+              "type": "webhook",
+            },
+          },
+        },
+        "webhooks-list-response": {
+          "docs": "The response to listing the webhooks.",
+          "properties": {
+            "webhooks": {
+              "docs": "The list of webhooks.",
+              "type": "list<webhook>",
+            },
+          },
+        },
+        "webhooks-update-action": {
+          "docs": "The action to update the webhook's status.",
+          "enum": [
+            {
+              "name": "activate",
+              "value": "activate",
+            },
+            {
+              "name": "deactivate",
+              "value": "deactivate",
+            },
+          ],
+        },
+        "webhooks-update-request-event-types": {
+          "docs": undefined,
+          "properties": {
+            "add": {
+              "docs": "The event types to add. If a provided event type is already set for
+the webhook, then nothing is done. Note this is mutually exclusive
+with 'set'.
+",
+              "type": "optional<list<webhook-event-type>>",
+            },
+            "remove": {
+              "docs": "The event types to remove. If a provided event type isn't set for
+the webhook, then nothing is done. Note this is mutually exclusive
+with 'set'.
+",
+              "type": "optional<list<webhook-event-type>>",
+            },
+            "set": {
+              "docs": "The updated event types, which will replace the webhook's current
+event types. Note this is mutually exclusive with 'add' and
+'remove'.
+",
+              "type": "optional<list<webhook-event-type>>",
+            },
+          },
+        },
+        "webhooks-update-response": {
+          "docs": "The response to updating the webhook.",
+          "properties": {
+            "webhook": {
+              "docs": undefined,
+              "type": "webhook",
+            },
+          },
+        },
+        "work": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "issue": {
+              "docs": undefined,
+              "type": "issue",
+            },
+            "ticket": {
+              "docs": undefined,
+              "type": "ticket",
+            },
+          },
+        },
+        "work-base": {
+          "docs": undefined,
+          "properties": {
+            "applies_to_part": {
+              "docs": undefined,
+              "type": "optional<part-summary>",
+            },
+            "artifacts": {
+              "docs": "The artifacts attached to the work item.",
+              "type": "optional<list<artifact-summary>>",
+            },
+            "body": {
+              "docs": "Body of the work object.",
+              "type": "optional<string>",
+            },
+            "owned_by": {
+              "docs": "The users that own the work.",
+              "type": "optional<list<user-summary>>",
+            },
+            "reported_by": {
+              "docs": "Users that reported the work.",
+              "type": "optional<list<user-summary>>",
+            },
+            "stage": {
+              "docs": undefined,
+              "type": "optional<stage>",
+            },
+            "tags": {
+              "docs": "Tags associated with the object.",
+              "type": "optional<list<tag-with-value>>",
+            },
+            "target_close_date": {
+              "docs": "Timestamp when the work is expected to be complete.",
+              "type": "optional<string>",
+            },
+            "title": {
+              "docs": "Title of the work object.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "work-type": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "issue",
+              "value": "issue",
+            },
+            {
+              "name": "ticket",
+              "value": "ticket",
+            },
+          ],
+        },
+        "works-create-request-issue": {
+          "docs": undefined,
+          "properties": {
+            "priority": {
+              "docs": undefined,
+              "type": "optional<issue-priority>",
+            },
+            "sprint": {
+              "docs": "The sprint that the issue belongs to.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "works-create-request-ticket": {
+          "docs": undefined,
+          "properties": {
+            "group": {
+              "docs": "The group that the ticket is associated with.",
+              "type": "optional<string>",
+            },
+            "rev_org": {
+              "docs": "The Rev organization that the ticket is associated with.",
+              "type": "optional<string>",
+            },
+            "severity": {
+              "docs": undefined,
+              "type": "optional<ticket-severity>",
+            },
+          },
+        },
+        "works-create-response": {
+          "docs": undefined,
+          "properties": {
+            "work": {
+              "docs": undefined,
+              "type": "work",
+            },
+          },
+        },
+        "works-delete-response": {
+          "docs": undefined,
+          "type": "map<string, unknown>",
+        },
+        "works-export-response": {
+          "docs": undefined,
+          "properties": {
+            "works": {
+              "docs": "The resulting collection of work items.",
+              "type": "list<work>",
+            },
+          },
+        },
+        "works-get-response": {
+          "docs": undefined,
+          "properties": {
+            "work": {
+              "docs": undefined,
+              "type": "work",
+            },
+          },
+        },
+        "works-list-response": {
+          "docs": undefined,
+          "properties": {
+            "next_cursor": {
+              "docs": "The cursor used to iterate subsequent results in accordance to the
+sort order. If not set, then no later elements exist.
+",
+              "type": "optional<string>",
+            },
+            "prev_cursor": {
+              "docs": "The cursor used to iterate preceding results in accordance to the
+sort order. If not set, then no prior elements exist.
+",
+              "type": "optional<string>",
+            },
+            "works": {
+              "docs": "The list of works.",
+              "type": "list<work>",
+            },
+          },
+        },
+        "works-update-request-artifact-ids": {
+          "docs": undefined,
+          "properties": {
+            "set": {
+              "docs": "Sets the IDs to the provided artifact IDs.",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "works-update-request-issue": {
+          "docs": undefined,
+          "properties": {
+            "priority": {
+              "docs": undefined,
+              "type": "optional<issue-priority>",
+            },
+            "sprint": {
+              "docs": "Updates the sprint that the issue belongs to.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "works-update-request-owned-by": {
+          "docs": undefined,
+          "properties": {
+            "set": {
+              "docs": "Sets the owner IDs to the provided user IDs. This must not be
+empty.
+",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "works-update-request-reported-by": {
+          "docs": undefined,
+          "properties": {
+            "set": {
+              "docs": "Sets the users that reported the work to the provided user IDs.
+",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "works-update-request-tags": {
+          "docs": undefined,
+          "properties": {
+            "set": {
+              "docs": "Sets the provided tags on the work item.",
+              "type": "optional<list<set-tag-with-value>>",
+            },
+          },
+        },
+        "works-update-request-ticket": {
+          "docs": undefined,
+          "properties": {
+            "group": {
+              "docs": "The group that the ticket is associated with.",
+              "type": "optional<string>",
+            },
+            "rev_org": {
+              "docs": "Updates the Rev organization that the ticket is associated with.
+",
+              "type": "optional<string>",
+            },
+            "severity": {
+              "docs": undefined,
+              "type": "optional<ticket-severity>",
+            },
+          },
+        },
+        "works-update-response": {
+          "docs": undefined,
+          "properties": {
+            "work": {
+              "docs": undefined,
+              "type": "work",
+            },
+          },
+        },
+      },
+    },
+    "artifacts": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "locate": {
+            "method": "GET",
+            "path": "/artifacts.locate",
+            "request": {
+              "name": "ArtifactsLocateRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.artifacts-locate-response",
+            },
+          },
+          "prepare": {
+            "method": "POST",
+            "path": "/artifacts.prepare",
+            "request": {
+              "body": {
+                "properties": {
+                  "file_name": {
+                    "docs": "The name of the file that's being uploaded.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "ArtifactsPrepareRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.artifacts-prepare-response",
+            },
+          },
+        },
+      },
+    },
+    "auth_tokens": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/auth-tokens.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "aud": {
+                    "docs": "The expected audience values with respect to the token.",
+                    "type": "optional<list<string>>",
+                  },
+                  "client_id": {
+                    "docs": "An identifier that represents the application which is requesting
+the token. If no client_id is present in the request to generate an
+application access token (AAT), DevRev will generate a client_id.
+This client_id is only associated with an AAT.
+",
+                    "type": "optional<string>",
+                  },
+                  "expires_in": {
+                    "docs": "The expected validity lifetime of the token in number of days.
+",
+                    "type": "optional<integer>",
+                  },
+                  "grant_type": {
+                    "docs": undefined,
+                    "type": "optional<auth-token-grant-type>",
+                  },
+                  "requested_token_type": {
+                    "docs": undefined,
+                    "type": "optional<auth-token-requested-token-type>",
+                  },
+                  "rev_info": {
+                    "docs": undefined,
+                    "type": "optional<auth-tokens-rev-info>",
+                  },
+                  "scope": {
+                    "docs": "The requested set of scopes associated with the issued token. A
+space-delimited list of values in which the order of values does
+not matter.
+",
+                    "type": "optional<string>",
+                  },
+                  "subject_token": {
+                    "docs": "Represents the entity that requests the token. Not required when
+requesting an application access token (AAT).
+",
+                    "type": "optional<string>",
+                  },
+                  "subject_token_type": {
+                    "docs": undefined,
+                    "type": "optional<auth-token-subject-token-type>",
+                  },
+                  "token_hint": {
+                    "docs": "A hint that identifies the token.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "AuthTokensCreateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.auth-tokens-create-response",
+            },
+          },
+          "delete": {
+            "method": "POST",
+            "path": "/auth-tokens.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "token_id": {
+                    "docs": "The unique identifier for the token under a given Dev organization.
+If no token ID is provided, then the token ID will be set from the
+JTI claim of the token in the authorization header.
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "AuthTokensDeleteRequest",
+              "query-parameters": undefined,
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/auth-tokens.get",
+            "request": {
+              "name": "AuthTokensGetRequest",
+              "query-parameters": {
+                "token_id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.auth-tokens-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/auth-tokens.list",
+            "request": {
+              "name": "AuthTokensListRequest",
+              "query-parameters": {
+                "client_id": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "requested_token_type": {
+                  "docs": undefined,
+                  "type": "optional<auth-token-requested-token-type>",
+                },
+                "subject": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.auth-tokens-list-response",
+            },
+          },
+          "self_delete": {
+            "method": "POST",
+            "path": "/auth-tokens.self.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "requested_token_type": {
+                    "docs": undefined,
+                    "type": "optional<auth-token-requested-token-type>",
+                  },
+                },
+              },
+              "name": "AuthTokensSelfDeleteRequest",
+              "query-parameters": undefined,
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/auth-tokens.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "token_hint": {
+                    "docs": "A hint that identifies the token.",
+                    "type": "string",
+                  },
+                  "token_id": {
+                    "docs": "The unique identifier of the token under a given Dev organization.
+",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "AuthTokensUpdateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.auth-tokens-update-response",
+            },
+          },
+        },
+      },
+    },
+    "dev_users": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "list": {
+            "method": "GET",
+            "path": "/dev-users.list",
+            "request": {
+              "name": "DevUsersListRequest",
+              "query-parameters": {
+                "cursor": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "email": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "mode": {
+                  "docs": undefined,
+                  "type": "optional<list-mode>",
+                },
+                "sort_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "state": {
+                  "docs": undefined,
+                  "type": "optional<list<user-state>>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.dev-users-list-response",
+            },
+          },
+          "self": {
+            "method": "GET",
+            "path": "/dev-users.self",
+            "response": {
+              "docs": "Success.",
+              "type": "root.dev-users-self-response",
+            },
+          },
+        },
+      },
+    },
+    "parts": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/parts.create",
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "PartsCreateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.parts-create-response",
+            },
+          },
+          "delete": {
+            "method": "POST",
+            "path": "/parts.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of the part to delete.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "PartsDeleteRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.parts-delete-response",
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/parts.get",
+            "request": {
+              "name": "PartsGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.parts-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/parts.list",
+            "request": {
+              "name": "PartsListRequest",
+              "query-parameters": {
+                "created_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "cursor": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "mode": {
+                  "docs": undefined,
+                  "type": "optional<list-mode>",
+                },
+                "name": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "owned_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "type": {
+                  "docs": undefined,
+                  "type": "optional<list<part-type>>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.parts-list-response",
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/parts.update",
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "PartsUpdateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.parts-update-response",
+            },
+          },
+        },
+      },
+    },
+    "rev_orgs": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/rev-orgs.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "description": {
+                    "docs": "Description of the Rev organization.",
+                    "type": "optional<string>",
+                  },
+                  "display_name": {
+                    "docs": "Name of the Rev organization.",
+                    "type": "string",
+                  },
+                  "domain": {
+                    "docs": "Company's domain name. Example - 'devrev.ai'.",
+                    "type": "optional<string>",
+                  },
+                  "environment": {
+                    "docs": undefined,
+                    "type": "optional<org-environment>",
+                  },
+                  "external_ref": {
+                    "docs": "External ref is a custom unique identifier which is a reference to
+an unique id for this organization's data in some system of
+records.
+",
+                    "type": "optional<string>",
+                  },
+                  "tier": {
+                    "docs": "The tier of the RevOrg.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "RevOrgsCreateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.rev-orgs-create-response",
+            },
+          },
+          "delete": {
+            "method": "POST",
+            "path": "/rev-orgs.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of Rev organization to delete.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "RevOrgsDeleteRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.rev-orgs-delete-response",
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/rev-orgs.get",
+            "request": {
+              "name": "RevOrgsGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.rev-orgs-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/rev-orgs.list",
+            "request": {
+              "name": "RevOrgsListRequest",
+              "query-parameters": {
+                "created_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "created_date.after": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "created_date.before": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "cursor": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "external_ref": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "mode": {
+                  "docs": undefined,
+                  "type": "optional<list-mode>",
+                },
+                "modified_date.after": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "modified_date.before": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "sort_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.rev-orgs-list-response",
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/rev-orgs.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "description": {
+                    "docs": "Description of the Rev organization.",
+                    "type": "optional<string>",
+                  },
+                  "display_name": {
+                    "docs": "Customer chosen name for the Rev organization.",
+                    "type": "optional<string>",
+                  },
+                  "domain": {
+                    "docs": "Company's domain name. Example - 'devrev.ai'.",
+                    "type": "optional<string>",
+                  },
+                  "environment": {
+                    "docs": undefined,
+                    "type": "optional<org-environment>",
+                  },
+                  "external_ref": {
+                    "docs": "External ref is a custom unique identifier which is a reference to
+an unique id for this organization's data in some system of
+records.
+",
+                    "type": "optional<string>",
+                  },
+                  "id": {
+                    "docs": "The ID of Rev organization to update.",
+                    "type": "string",
+                  },
+                  "tier": {
+                    "docs": "The tier of the RevOrg.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "RevOrgsUpdateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.rev-orgs-update-response",
+            },
+          },
+        },
+      },
+    },
+    "tags": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/tags.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "allowed_values": {
+                    "docs": "The allowed values for the tag, or empty if no values are
+permitted.
+",
+                    "type": "optional<list<string>>",
+                  },
+                  "description": {
+                    "docs": "The description for the tag.",
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": "The name for the tag, which must be unique across all tags.
+",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "TagsCreateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.tags-create-response",
+            },
+          },
+          "delete": {
+            "method": "POST",
+            "path": "/tags.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of the tag to delete.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "TagsDeleteRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.tags-delete-response",
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/tags.get",
+            "request": {
+              "name": "TagsGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.tags-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/tags.list",
+            "request": {
+              "name": "TagsListRequest",
+              "query-parameters": {
+                "cursor": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "mode": {
+                  "docs": undefined,
+                  "type": "optional<list-mode>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.tags-list-response",
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/tags.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "allowed_values": {
+                    "docs": undefined,
+                    "type": "optional<tags-update-allowed-values>",
+                  },
+                  "description": {
+                    "docs": "The updated description of the tag.",
+                    "type": "optional<string>",
+                  },
+                  "id": {
+                    "docs": "The ID of the tag to update.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The updated name of the tag. The name must be unique across all
+tags.
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "TagsUpdateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.tags-update-response",
+            },
+          },
+        },
+      },
+    },
+    "timeline_entries": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/timeline-entries.create",
+            "request": {
+              "body": {
+                "docs": "The request to create a timeline entry for an object.",
+                "type": "TimelineEntriesCreateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.timeline-entries-create-response",
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/timeline-entries.get",
+            "request": {
+              "name": "TimelineEntriesGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.timeline-entries-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/timeline-entries.list",
+            "request": {
+              "name": "TimelineEntriesListRequest",
+              "query-parameters": {
+                "cursor": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "mode": {
+                  "docs": undefined,
+                  "type": "optional<list-mode>",
+                },
+                "object": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.timeline-entries-list-response",
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/timeline-entries.update",
+            "request": {
+              "body": {
+                "docs": "The request to update a timeline entry.",
+                "type": "TimelineEntriesUpdateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.timeline-entries-update-response",
+            },
+          },
+        },
+      },
+    },
+    "webhooks": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/webhooks.create",
+            "request": {
+              "body": {
+                "properties": {
+                  "event_types": {
+                    "docs": "The event types that the webhook endpoint will receive.",
+                    "type": "optional<list<webhook-event-type>>",
+                  },
+                  "secret": {
+                    "docs": "The secret to use when verifying webhook events. If provided, the
+secret must be between 8 and 32 bytes (inclusive). If not set, a
+secret will be automatically generated and provided in the
+response.
+",
+                    "type": "optional<string>",
+                  },
+                  "url": {
+                    "docs": "The URL of the webhook endpoint.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "WebhooksCreateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.webhooks-create-response",
+            },
+          },
+          "delete": {
+            "method": "POST",
+            "path": "/webhooks.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID for the webhook.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "WebhooksDeleteRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.webhooks-delete-response",
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/webhooks.get",
+            "request": {
+              "name": "WebhooksGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.webhooks-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/webhooks.list",
+            "response": {
+              "docs": "Success.",
+              "type": "root.webhooks-list-response",
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/webhooks.update",
+            "request": {
+              "body": {
+                "properties": {
+                  "action": {
+                    "docs": undefined,
+                    "type": "optional<webhooks-update-action>",
+                  },
+                  "event_types": {
+                    "docs": undefined,
+                    "type": "optional<webhooks-update-request-event-types>",
+                  },
+                  "id": {
+                    "docs": "ID for the webhook.",
+                    "type": "string",
+                  },
+                  "secret": {
+                    "docs": "If provided, updates the secret that's used when verifying webhook
+events, which must be between 8 and 32 bytes (inclusive). Otherwise
+if empty, then a new secret is generated. If the webhook is active,
+then its status will transition to the 'unverified' state and it
+won't receive any object events until successfully verified.
+",
+                    "type": "optional<string>",
+                  },
+                  "url": {
+                    "docs": "The webhook's updated URL. If the webhook is active, then the
+webhook's status will transition to the 'unverified' state and it
+won't receive any object events until successfully verified.
+",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "WebhooksUpdateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.webhooks-update-response",
+            },
+          },
+        },
+      },
+    },
+    "works": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "method": "POST",
+            "path": "/works.create",
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "WorksCreateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.works-create-response",
+            },
+          },
+          "delete": {
+            "method": "POST",
+            "path": "/works.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The work's ID.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "WorksDeleteRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.works-delete-response",
+            },
+          },
+          "export": {
+            "method": "GET",
+            "path": "/works.export",
+            "request": {
+              "name": "WorksExportRequest",
+              "query-parameters": {
+                "applies_to_part": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "created_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "first": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "issue.priority": {
+                  "docs": undefined,
+                  "type": "optional<list<issue-priority>>",
+                },
+                "issue.rev_orgs": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "owned_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "stage.name": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "ticket.rev_org": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "ticket.severity": {
+                  "docs": undefined,
+                  "type": "optional<list<ticket-severity>>",
+                },
+                "type": {
+                  "docs": undefined,
+                  "type": "optional<list<work-type>>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.works-export-response",
+            },
+          },
+          "get": {
+            "method": "GET",
+            "path": "/works.get",
+            "request": {
+              "name": "WorksGetRequest",
+              "query-parameters": {
+                "id": {
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.works-get-response",
+            },
+          },
+          "list": {
+            "method": "GET",
+            "path": "/works.list",
+            "request": {
+              "name": "WorksListRequest",
+              "query-parameters": {
+                "applies_to_part": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "created_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "cursor": {
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "issue.priority": {
+                  "docs": undefined,
+                  "type": "optional<list<issue-priority>>",
+                },
+                "issue.rev_orgs": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "limit": {
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "mode": {
+                  "docs": undefined,
+                  "type": "optional<list-mode>",
+                },
+                "owned_by": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "stage.name": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "ticket.rev_org": {
+                  "docs": undefined,
+                  "type": "optional<list<string>>",
+                },
+                "ticket.severity": {
+                  "docs": undefined,
+                  "type": "optional<list<ticket-severity>>",
+                },
+                "type": {
+                  "docs": undefined,
+                  "type": "optional<list<work-type>>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.works-list-response",
+            },
+          },
+          "update": {
+            "method": "POST",
+            "path": "/works.update",
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "WorksUpdateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.works-update-response",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "auth-token",
+    "auth-schemes": {
+      "auth-token": {
+        "header": "Authorization",
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "display-name": "DevRev REST API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`open api converter vellum simple 1`] = `
 {
   "definitionFiles": {
