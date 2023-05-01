@@ -39,7 +39,7 @@ export function convertEndpoint({
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     for (const queryParameter of endpoint.queryParameters) {
-        const convertedQueryParameter = convertQueryParameter(queryParameter);
+        const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml });
         queryParameters[queryParameter.name] = convertedQueryParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
