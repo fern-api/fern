@@ -10,6 +10,7 @@ exports[`open api parser devrev simple 1`] = `
         {
           "description": "Gets the download URL for the artifact.",
           "errors": [],
+          "generatedRequestName": "ArtifactsLocateRequest",
           "headers": [],
           "method": "GET",
           "operationId": "artifacts-locate",
@@ -29,7 +30,7 @@ exports[`open api parser devrev simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -49,6 +50,7 @@ exports[`open api parser devrev simple 1`] = `
           "description": "Creates an artifact and generates an upload URL for its data.
 ",
           "errors": [],
+          "generatedRequestName": "ArtifactsPrepareRequest",
           "headers": [],
           "method": "POST",
           "operationId": "artifacts-prepare",
@@ -65,7 +67,7 @@ exports[`open api parser devrev simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -86,6 +88,7 @@ exports[`open api parser devrev simple 1`] = `
 authenticated user.
 ",
           "errors": [],
+          "generatedRequestName": "AuthTokensCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "auth-tokens-create",
@@ -102,7 +105,7 @@ authenticated user.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -123,6 +126,7 @@ authenticated user.
 given Dev organization.
 ",
           "errors": [],
+          "generatedRequestName": "AuthTokensDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "auth-tokens-delete",
@@ -139,7 +143,7 @@ given Dev organization.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -152,6 +156,7 @@ given Dev organization.
 given Dev organization.
 ",
           "errors": [],
+          "generatedRequestName": "AuthTokensGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "auth-tokens-get",
@@ -171,7 +176,7 @@ given Dev organization.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -192,6 +197,7 @@ given Dev organization.
 token type issued for a given subject.
 ",
           "errors": [],
+          "generatedRequestName": "AuthTokensListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "auth-tokens-list",
@@ -244,7 +250,7 @@ token type issued for a given subject.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -265,6 +271,7 @@ token type issued for a given subject.
 authenticated user.
 ",
           "errors": [],
+          "generatedRequestName": "AuthTokensSelfDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "auth-tokens-self-delete",
@@ -281,7 +288,7 @@ authenticated user.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -294,6 +301,7 @@ authenticated user.
 organization.
 ",
           "errors": [],
+          "generatedRequestName": "AuthTokensUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "auth-tokens-update",
@@ -310,7 +318,7 @@ organization.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -335,6 +343,7 @@ connection can be enabled for a Dev organization. At present, only 5
 enterprise connections can be created by an organization.
 ",
           "errors": [],
+          "generatedRequestName": "DevOrgAuthConnectionsCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "dev-org-auth-connections-create",
@@ -351,7 +360,7 @@ enterprise connections can be created by an organization.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -374,6 +383,7 @@ are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
 ",
           "errors": [],
+          "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "dev-org-auth-connections-delete",
@@ -390,7 +400,7 @@ connections can not be deleted using this method.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -402,6 +412,7 @@ connections can not be deleted using this method.
         {
           "description": "Retrieves the details for an authentication connection.",
           "errors": [],
+          "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "dev-org-auth-connections-get",
@@ -421,7 +432,7 @@ connections can not be deleted using this method.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -445,6 +456,7 @@ connections which are either available by default or are explicitly
 created by the user.
 ",
           "errors": [],
+          "generatedRequestName": "DevOrgAuthConnectionsListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "dev-org-auth-connections-list",
@@ -452,7 +464,7 @@ created by the user.
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -477,6 +489,7 @@ is currently enabled for the Dev organization is automatically
 disabled.
 ",
           "errors": [],
+          "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
           "headers": [],
           "method": "POST",
           "operationId": "dev-org-auth-connections-toggle",
@@ -493,7 +506,7 @@ disabled.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -505,6 +518,7 @@ disabled.
         {
           "description": "Updates an authentication connection.",
           "errors": [],
+          "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "dev-org-auth-connections-update",
@@ -521,7 +535,7 @@ disabled.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -541,6 +555,7 @@ disabled.
         {
           "description": "Lists users within your organization.",
           "errors": [],
+          "generatedRequestName": "DevUsersListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "dev-users-list",
@@ -649,7 +664,7 @@ disabled.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -668,6 +683,7 @@ disabled.
         {
           "description": "Gets the authenticated user's information.",
           "errors": [],
+          "generatedRequestName": "DevUsersSelfRequest",
           "headers": [],
           "method": "GET",
           "operationId": "dev-users-self",
@@ -675,7 +691,7 @@ disabled.
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -694,6 +710,7 @@ disabled.
         {
           "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
           "errors": [],
+          "generatedRequestName": "PartsCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "parts-create",
@@ -710,7 +727,7 @@ disabled.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -729,6 +746,7 @@ disabled.
         {
           "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
           "errors": [],
+          "generatedRequestName": "PartsDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "parts-delete",
@@ -745,7 +763,7 @@ disabled.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -765,6 +783,7 @@ disabled.
           "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
           "errors": [],
+          "generatedRequestName": "PartsGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "parts-get",
@@ -784,7 +803,7 @@ disabled.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -804,6 +823,7 @@ disabled.
           "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
           "errors": [],
+          "generatedRequestName": "PartsListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "parts-list",
@@ -931,7 +951,7 @@ disabled.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -951,6 +971,7 @@ disabled.
           "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
           "errors": [],
+          "generatedRequestName": "PartsUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "parts-update",
@@ -967,7 +988,7 @@ disabled.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -988,6 +1009,7 @@ disabled.
 organization.
 ",
           "errors": [],
+          "generatedRequestName": "RevOrgsCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "rev-orgs-create",
@@ -1004,7 +1026,7 @@ organization.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1023,6 +1045,7 @@ organization.
         {
           "description": "Deletes the Rev organization.",
           "errors": [],
+          "generatedRequestName": "RevOrgsDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "rev-orgs-delete",
@@ -1039,7 +1062,7 @@ organization.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1058,6 +1081,7 @@ organization.
         {
           "description": "Retrieves the Rev organization's information.",
           "errors": [],
+          "generatedRequestName": "RevOrgsGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "rev-orgs-get",
@@ -1077,7 +1101,7 @@ organization.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1099,6 +1123,7 @@ authenticated user's Dev Organization which the user is also authorized
 to access.
 ",
           "errors": [],
+          "generatedRequestName": "RevOrgsListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "rev-orgs-list",
@@ -1268,7 +1293,7 @@ to access.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1287,6 +1312,7 @@ to access.
         {
           "description": "Updates the Rev organization's information.",
           "errors": [],
+          "generatedRequestName": "RevOrgsUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "rev-orgs-update",
@@ -1303,7 +1329,7 @@ to access.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1324,6 +1350,7 @@ to access.
 and a logical concept denoted by the tag's name.
 ",
           "errors": [],
+          "generatedRequestName": "TagsCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "tags-create",
@@ -1340,7 +1367,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1359,6 +1386,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Deletes a tag.",
           "errors": [],
+          "generatedRequestName": "TagsDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "tags-delete",
@@ -1375,7 +1403,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1394,6 +1422,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Gets a tag's information.",
           "errors": [],
+          "generatedRequestName": "TagsGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "tags-get",
@@ -1413,7 +1442,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1432,6 +1461,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Lists the available tags.",
           "errors": [],
+          "generatedRequestName": "TagsListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "tags-list",
@@ -1484,7 +1514,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1503,6 +1533,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Updates a tag's information.",
           "errors": [],
+          "generatedRequestName": "TagsUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "tags-update",
@@ -1519,7 +1550,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1538,6 +1569,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Creates a new entry on an object's timeline.",
           "errors": [],
+          "generatedRequestName": "TimelineEntriesCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "timeline-entries-create",
@@ -1554,7 +1586,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1573,6 +1605,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Gets an entry on an object's timeline.",
           "errors": [],
+          "generatedRequestName": "TimelineEntriesGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "timeline-entries-get",
@@ -1592,7 +1625,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1611,6 +1644,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Lists the timeline entries for an object.",
           "errors": [],
+          "generatedRequestName": "TimelineEntriesListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "timeline-entries-list",
@@ -1674,7 +1708,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1693,6 +1727,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Updates an entry on an object's timeline.",
           "errors": [],
+          "generatedRequestName": "TimelineEntriesUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "timeline-entries-update",
@@ -1709,7 +1744,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1728,6 +1763,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Creates a new webhook target.",
           "errors": [],
+          "generatedRequestName": "WebhooksCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "webhooks-create",
@@ -1744,7 +1780,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1763,6 +1799,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Deletes the requested webhook.",
           "errors": [],
+          "generatedRequestName": "WebhooksDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "webhooks-delete",
@@ -1779,7 +1816,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1798,6 +1835,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Gets the requested webhook's information.",
           "errors": [],
+          "generatedRequestName": "WebhooksGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "webhooks-get",
@@ -1817,7 +1855,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1836,6 +1874,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Lists the webhooks.",
           "errors": [],
+          "generatedRequestName": "WebhooksListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "webhooks-list",
@@ -1843,7 +1882,7 @@ and a logical concept denoted by the tag's name.
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1862,6 +1901,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Updates the requested webhook.",
           "errors": [],
+          "generatedRequestName": "WebhooksUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "webhooks-update",
@@ -1878,7 +1918,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1899,6 +1939,7 @@ and a logical concept denoted by the tag's name.
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
           "errors": [],
+          "generatedRequestName": "WorksCreateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "works-create",
@@ -1915,7 +1956,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1934,6 +1975,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Deletes a work item.",
           "errors": [],
+          "generatedRequestName": "WorksDeleteRequest",
           "headers": [],
           "method": "POST",
           "operationId": "works-delete",
@@ -1950,7 +1992,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -1969,6 +2011,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Exports a collection of work items.",
           "errors": [],
+          "generatedRequestName": "WorksExportRequest",
           "headers": [],
           "method": "GET",
           "operationId": "works-export",
@@ -2160,7 +2203,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -2179,6 +2222,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Gets a work item's information.",
           "errors": [],
+          "generatedRequestName": "WorksGetRequest",
           "headers": [],
           "method": "GET",
           "operationId": "works-get",
@@ -2198,7 +2242,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -2217,6 +2261,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Lists a collection of work items.",
           "errors": [],
+          "generatedRequestName": "WorksListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "works-list",
@@ -2437,7 +2482,7 @@ and a logical concept denoted by the tag's name.
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -2456,6 +2501,7 @@ and a logical concept denoted by the tag's name.
         {
           "description": "Updates a work item's information.",
           "errors": [],
+          "generatedRequestName": "WorksUpdateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "works-update",
@@ -2472,7 +2518,7 @@ and a logical concept denoted by the tag's name.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Success.",
             "schema": {
@@ -10067,6 +10113,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetAppsRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetApps",
@@ -10074,7 +10121,7 @@ exports[`open api parser hathora simple 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10097,6 +10144,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreateAppRequest",
           "headers": [],
           "method": "POST",
           "operationId": "CreateApp",
@@ -10190,7 +10238,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -10209,6 +10257,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "UpdateAppRequest",
           "headers": [],
           "method": "POST",
           "operationId": "UpdateApp",
@@ -10313,7 +10362,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10332,6 +10381,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetAppInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetAppInfo",
@@ -10350,7 +10400,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10369,6 +10419,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "DeleteAppRequest",
           "headers": [],
           "method": "PATCH",
           "operationId": "DeleteApp",
@@ -10387,7 +10438,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -10398,6 +10449,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "LoginAnonymousRequest",
           "headers": [],
           "method": "POST",
           "operationId": "LoginAnonymous",
@@ -10416,7 +10468,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10448,6 +10500,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "LoginNicknameRequest",
           "headers": [],
           "method": "POST",
           "operationId": "LoginNickname",
@@ -10488,7 +10541,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10520,6 +10573,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "LoginGoogleRequest",
           "headers": [],
           "method": "POST",
           "operationId": "LoginGoogle",
@@ -10560,7 +10614,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10592,6 +10646,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetBuildsRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetBuilds",
@@ -10610,7 +10665,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10633,6 +10688,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetBuildInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetBuildInfo",
@@ -10661,7 +10717,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10680,6 +10736,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreateBuildRequest",
           "headers": [],
           "method": "POST",
           "operationId": "CreateBuild",
@@ -10698,7 +10755,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -10717,6 +10774,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "RunBuildRequest",
           "headers": [],
           "method": "POST",
           "operationId": "RunBuild",
@@ -10746,6 +10804,7 @@ exports[`open api parser hathora simple 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
+            "name": undefined,
             "properties": [
               {
                 "description": undefined,
@@ -10757,7 +10816,7 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "type": "multipart",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -10768,6 +10827,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "DeleteBuildRequest",
           "headers": [],
           "method": "PATCH",
           "operationId": "DeleteBuild",
@@ -10796,7 +10856,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -10807,6 +10867,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetDeploymentsRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetDeployments",
@@ -10825,7 +10886,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10848,6 +10909,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetDeploymentInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetDeploymentInfo",
@@ -10876,7 +10938,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10895,6 +10957,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreateDeploymentRequest",
           "headers": [],
           "method": "POST",
           "operationId": "CreateDeployment",
@@ -10932,7 +10995,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -10951,6 +11014,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetPingServiceEndpointsRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetPingServiceEndpoints",
@@ -10958,7 +11022,7 @@ exports[`open api parser hathora simple 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -10977,6 +11041,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
           "headers": [
             {
               "description": undefined,
@@ -11037,7 +11102,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -11056,6 +11121,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
           "headers": [
             {
               "description": undefined,
@@ -11116,7 +11182,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -11135,6 +11201,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
           "headers": [
             {
               "description": undefined,
@@ -11195,7 +11262,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -11218,6 +11285,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreatePrivateLobbyRequest",
           "headers": [
             {
               "description": undefined,
@@ -11297,7 +11365,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -11316,6 +11384,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreatePublicLobbyRequest",
           "headers": [
             {
               "description": undefined,
@@ -11395,7 +11464,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -11414,6 +11483,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreateLocalLobbyRequest",
           "headers": [
             {
               "description": undefined,
@@ -11493,7 +11563,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -11512,6 +11582,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreateLobbyRequest",
           "headers": [
             {
               "description": undefined,
@@ -11614,7 +11685,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -11633,6 +11704,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "ListActivePublicLobbiesRequest",
           "headers": [],
           "method": "GET",
           "operationId": "ListActivePublicLobbies",
@@ -11666,7 +11738,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -11689,6 +11761,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetLobbyInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetLobbyInfo",
@@ -11717,7 +11790,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -11736,6 +11809,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "SetLobbyStateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "SetLobbyState",
@@ -11789,7 +11863,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -11808,6 +11882,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetLogsForAppRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetLogsForApp",
@@ -11871,7 +11946,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -11882,6 +11957,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetLogsForProcessRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetLogsForProcess",
@@ -11941,7 +12017,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -11952,6 +12028,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetLogsForDeploymentRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetLogsForDeployment",
@@ -12011,7 +12088,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -12022,6 +12099,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetMetricsRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetMetrics",
@@ -12114,7 +12192,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12133,6 +12211,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetRunningProcessesRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetRunningProcesses",
@@ -12166,7 +12245,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12189,6 +12268,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetStoppedProcessesRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetStoppedProcesses",
@@ -12222,7 +12302,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           ],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12245,6 +12325,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetProcessInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetProcessInfo",
@@ -12273,7 +12354,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12292,6 +12373,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "CreateRoomRequest",
           "headers": [],
           "method": "POST",
           "operationId": "CreateRoom",
@@ -12331,7 +12413,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -12350,6 +12432,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetRoomInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetRoomInfo",
@@ -12378,7 +12461,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12397,6 +12480,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetActiveRoomsForProcessRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetActiveRoomsForProcess",
@@ -12425,7 +12509,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12448,6 +12532,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetInactiveRoomsForProcessRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetInactiveRoomsForProcess",
@@ -12476,7 +12561,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -12499,6 +12584,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "DestroyRoomRequest",
           "headers": [],
           "method": "POST",
           "operationId": "DestroyRoom",
@@ -12527,7 +12613,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -12538,6 +12624,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "SuspendRoomRequest",
           "headers": [],
           "method": "POST",
           "operationId": "SuspendRoom",
@@ -12566,7 +12653,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [],
           "summary": undefined,
@@ -12577,6 +12664,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "description": undefined,
           "errors": [],
+          "generatedRequestName": "GetConnectionInfoRequest",
           "headers": [],
           "method": "GET",
           "operationId": "GetConnectionInfo",
@@ -12605,7 +12693,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
             "schema": {
@@ -14181,6 +14269,7 @@ with all stable endpoints. You can find them here:
 Used to list documents. Optionally filter on supported fields.
 ",
           "errors": [],
+          "generatedRequestName": "DocumentsListRequest",
           "headers": [],
           "method": "GET",
           "operationId": "documents_list",
@@ -14249,7 +14338,7 @@ Used to list documents. Optionally filter on supported fields.
             },
           ],
           "request": undefined,
-          "requestName": "ListDocumentsRequest",
+          "requestNameOverride": "ListDocumentsRequest",
           "response": {
             "description": "",
             "schema": {
@@ -14272,6 +14361,7 @@ Generate a completion using a previously defined deployment.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
           "errors": [],
+          "generatedRequestName": "GenerateRequest",
           "headers": [],
           "method": "POST",
           "operationId": "generate",
@@ -14288,7 +14378,7 @@ Generate a completion using a previously defined deployment.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -14311,6 +14401,7 @@ Generate a completion using a previously defined deployment.
 Used to retrieve a model version given its ID.
 ",
           "errors": [],
+          "generatedRequestName": "ModelVersionsRetrieveRequest",
           "headers": [],
           "method": "GET",
           "operationId": "model_versions_retrieve",
@@ -14330,7 +14421,7 @@ Used to retrieve a model version given its ID.
           ],
           "queryParameters": [],
           "request": undefined,
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -14353,6 +14444,7 @@ Perform a search against a document index.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
           "errors": [],
+          "generatedRequestName": "SearchRequest",
           "headers": [],
           "method": "POST",
           "operationId": "search",
@@ -14369,7 +14461,7 @@ Perform a search against a document index.
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {
@@ -14398,6 +14490,7 @@ Used to submit feedback regarding the quality of previously generated completion
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
           "errors": [],
+          "generatedRequestName": "SubmitCompletionActualsRequest",
           "headers": [],
           "method": "POST",
           "operationId": "submit_completion_actuals",
@@ -14414,7 +14507,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "type": "json",
           },
-          "requestName": undefined,
+          "requestNameOverride": undefined,
           "response": undefined,
           "server": [
             {
@@ -14435,6 +14528,7 @@ Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
           "errors": [],
+          "generatedRequestName": "DocumentsUploadRequest",
           "headers": [],
           "method": "POST",
           "operationId": "documents_upload",
@@ -14443,6 +14537,7 @@ Upload a document to be indexed and used for search.
           "queryParameters": [],
           "request": {
             "description": undefined,
+            "name": "UploadDocumentRequestBodyRequest",
             "properties": [
               {
                 "description": undefined,
@@ -14518,7 +14613,7 @@ Upload a document to be indexed and used for search.
             ],
             "type": "multipart",
           },
-          "requestName": "UploadDocumentRequestBodyRequest",
+          "requestNameOverride": undefined,
           "response": {
             "description": "",
             "schema": {

@@ -1,6 +1,7 @@
 import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { convertServer } from "./convertServer";
 import { convertParameters } from "./endpoint/convertParameters";
 import { convertRequest } from "./endpoint/convertRequest";
@@ -62,9 +63,13 @@ function convertOperation(
     document: OpenAPIV3.Document,
     context: OpenAPIV3ParserContext
 ): Omit<Endpoint, "path" | "method"> {
+    if (operation.operationId == null) {
+        throw new Error(`Operation requires operation id: ${JSON.stringify(operation)}`);
+    }
+
     const convertedParameters = convertParameters(operation.parameters ?? [], context);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const requestName = (operation as any)["x-request-name"] as string | undefined;
+    const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
     const convertedRequest =
         operation.requestBody != null
             ? convertRequest({
@@ -80,8 +85,9 @@ function convertOperation(
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
-        requestName: requestName ?? convertedRequest?.name,
-        request: convertedRequest?.value,
+        requestNameOverride: requestNameOverride ?? undefined,
+        generatedRequestName: getGeneratedTypeName([operation.operationId, "Request"]),
+        request: convertedRequest,
         response: convertResponse({ responses: operation.responses, context }),
         errors: [],
         server: (operation.servers ?? []).map((server) => convertServer(server)),

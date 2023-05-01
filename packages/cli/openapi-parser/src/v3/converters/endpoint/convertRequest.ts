@@ -7,11 +7,6 @@ import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from
 const APPLICATION_JSON_CONTENT = "application/json";
 const MULTIPART_CONTENT = "multipart/form-data";
 
-export interface ConvertedRequest {
-    name?: string | undefined;
-    value: Request;
-}
-
 export function convertRequest({
     requestBody,
     document,
@@ -20,7 +15,7 @@ export function convertRequest({
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
     context: OpenAPIV3ParserContext;
-}): ConvertedRequest | undefined {
+}): Request | undefined {
     if (isReferenceObject(requestBody)) {
         throw new Error(`Converting referenced request body is unsupported: ${JSON.stringify(requestBody)}`);
     }
@@ -35,30 +30,24 @@ export function convertRequest({
                   schema: multipartSchema,
               };
 
-        return {
+        return Request.multipart({
             name: resolvedMultipartSchema.id,
-            value: Request.multipart({
-                description: undefined,
-                properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
-                    if (
-                        !isReferenceObject(definition) &&
-                        definition.type === "string" &&
-                        definition.format === "binary"
-                    ) {
-                        return {
-                            key,
-                            schema: MultipartSchema.file(),
-                            description: undefined,
-                        };
-                    }
+            description: undefined,
+            properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
+                if (!isReferenceObject(definition) && definition.type === "string" && definition.format === "binary") {
                     return {
                         key,
-                        schema: MultipartSchema.json(convertSchema(definition, false, context, [])),
+                        schema: MultipartSchema.file(),
                         description: undefined,
                     };
-                }),
+                }
+                return {
+                    key,
+                    schema: MultipartSchema.json(convertSchema(definition, false, context, [])),
+                    description: undefined,
+                };
             }),
-        };
+        });
     }
 
     // otherwise, convert as json request.
@@ -67,12 +56,10 @@ export function convertRequest({
         return undefined;
     }
     const requestSchema = convertSchema(requestBodySchema, false, context, []);
-    return {
-        value: Request.json({
-            description: undefined,
-            schema: requestSchema,
-        }),
-    };
+    return Request.json({
+        description: undefined,
+        schema: requestSchema,
+    });
 }
 
 interface ResolvedSchema {
