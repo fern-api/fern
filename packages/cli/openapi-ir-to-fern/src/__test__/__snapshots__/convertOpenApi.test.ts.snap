@@ -760,7 +760,7 @@ exports[`open api converter devrev simple 1`] = `
               "body": {
                 "docs": "Request to create a new enterprise authentication connection.
 ",
-                "type": "DevOrgAuthConnectionsCreateRequest",
+                "type": "root.DevOrgAuthConnectionsCreateRequest",
               },
             },
             "response": {
@@ -837,7 +837,7 @@ exports[`open api converter devrev simple 1`] = `
                 "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
-                "type": "DevOrgAuthConnectionsUpdateRequest",
+                "type": "root.DevOrgAuthConnectionsUpdateRequest",
               },
             },
             "response": {
@@ -3726,7 +3726,7 @@ JTI claim of the token in the authorization header.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "PartsCreateRequest",
+                "type": "root.PartsCreateRequest",
               },
             },
             "response": {
@@ -3818,7 +3818,7 @@ JTI claim of the token in the authorization header.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "PartsUpdateRequest",
+                "type": "root.PartsUpdateRequest",
               },
             },
             "response": {
@@ -4172,7 +4172,7 @@ tags.
             "request": {
               "body": {
                 "docs": "The request to create a timeline entry for an object.",
-                "type": "TimelineEntriesCreateRequest",
+                "type": "root.TimelineEntriesCreateRequest",
               },
             },
             "response": {
@@ -4232,7 +4232,7 @@ tags.
             "request": {
               "body": {
                 "docs": "The request to update a timeline entry.",
-                "type": "TimelineEntriesUpdateRequest",
+                "type": "root.TimelineEntriesUpdateRequest",
               },
             },
             "response": {
@@ -4389,7 +4389,7 @@ won't receive any object events until successfully verified.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "WorksCreateRequest",
+                "type": "root.WorksCreateRequest",
               },
             },
             "response": {
@@ -4554,7 +4554,7 @@ won't receive any object events until successfully verified.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "WorksUpdateRequest",
+                "type": "root.WorksUpdateRequest",
               },
             },
             "response": {

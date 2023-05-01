@@ -133,7 +133,7 @@ function getRequest({
             throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            const requestTypeReference = convertToTypeReference({ schema });
+            const requestTypeReference = convertToTypeReference({ schema, prefix: ROOT_PREFIX });
 
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [request.schema.schema],
