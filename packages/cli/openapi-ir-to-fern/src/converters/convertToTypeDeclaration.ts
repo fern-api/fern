@@ -120,6 +120,7 @@ export function convertPrimitiveToTypeDeclaration(schema: PrimitiveSchema): Type
 
 export function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclarations {
     return {
+        name: schema.nameOverride ?? schema.generatedName,
         typeDeclaration: {
             docs: schema.description ?? undefined,
             enum: schema.values.map((enumValue) => {

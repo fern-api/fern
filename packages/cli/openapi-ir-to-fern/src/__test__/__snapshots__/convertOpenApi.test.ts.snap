@@ -1055,6 +1055,46 @@ authentication connection.
             },
           },
         },
+        "AuthConnectionToggle": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "disable",
+              "value": "disable",
+            },
+            {
+              "name": "enable",
+              "value": "enable",
+            },
+          ],
+        },
+        "AuthConnectionType": {
+          "docs": "Defines the type for the authentication connection. The configuration
+for each authentication connection will depend on the type value.
+",
+          "enum": [
+            {
+              "name": "google_apps",
+              "value": "google_apps",
+            },
+            {
+              "name": "oidc",
+              "value": "oidc",
+            },
+            {
+              "name": "samlp",
+              "value": "samlp",
+            },
+            {
+              "name": "social",
+              "value": "social",
+            },
+            {
+              "name": "waad",
+              "value": "waad",
+            },
+          ],
+        },
         "AuthToken": {
           "docs": undefined,
           "properties": {
@@ -1093,6 +1133,120 @@ token. Only applicable for application access tokens.
               "type": "optional<string>",
             },
           },
+        },
+        "AuthTokenGrantType": {
+          "docs": "Specifies the process of obtaining a token.",
+          "enum": [
+            {
+              "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
+              "value": "urn:devrev:params:oauth:grant-type:token-issue",
+            },
+            {
+              "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
+              "value": "urn:ietf:params:oauth:grant-type:token-exchange",
+            },
+          ],
+        },
+        "AuthTokenRequestedTokenType": {
+          "docs": "The type of the requested token.",
+          "enum": [
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeAat",
+              "value": "urn:devrev:params:oauth:token-type:aat",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
+              "value": "urn:devrev:params:oauth:token-type:aat:public",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeDev",
+              "value": "urn:devrev:params:oauth:token-type:dev",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypePat",
+              "value": "urn:devrev:params:oauth:token-type:pat",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeRev",
+              "value": "urn:devrev:params:oauth:token-type:rev",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeSession",
+              "value": "urn:devrev:params:oauth:token-type:session",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
+              "value": "urn:devrev:params:oauth:token-type:session:dev0",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeSys",
+              "value": "urn:devrev:params:oauth:token-type:sys",
+            },
+            {
+              "name": "UrnIetfParamsOauthTokenTypeJwt",
+              "value": "urn:ietf:params:oauth:token-type:jwt",
+            },
+          ],
+        },
+        "AuthTokenStatus": {
+          "docs": "The status of the token.",
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "expired",
+              "value": "expired",
+            },
+            {
+              "name": "revoked",
+              "value": "revoked",
+            },
+          ],
+        },
+        "AuthTokenSubjectTokenType": {
+          "docs": "The type of the subject token.",
+          "enum": [
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
+              "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
+              "value": "urn:devrev:params:oauth:token-type:jwt:dev",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
+              "value": "urn:devrev:params:oauth:token-type:revinfo",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeSysu",
+              "value": "urn:devrev:params:oauth:token-type:sysu",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
+              "value": "urn:devrev:params:oauth:token-type:userinfo",
+            },
+            {
+              "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
+              "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
+            },
+            {
+              "name": "UrnIetfParamsOauthTokenTypeJwt",
+              "value": "urn:ietf:params:oauth:token-type:jwt",
+            },
+          ],
+        },
+        "AuthTokenTokenType": {
+          "docs": "The type of the issued token. Bearer is the only supported token type.
+",
+          "enum": [
+            {
+              "name": "bearer",
+              "value": "bearer",
+            },
+          ],
         },
         "AuthTokensCreateResponse": {
           "docs": "Response for the request to create a new token corresponding to the
@@ -1218,6 +1372,29 @@ issue a Rev session token.
             },
           },
         },
+        "DevOrgAuthConnectionsCreateRequestType": {
+          "docs": "Defines the type for the authentication connection. Different types of
+authentication connections have different configuration parameters.
+",
+          "enum": [
+            {
+              "name": "google_apps",
+              "value": "google_apps",
+            },
+            {
+              "name": "oidc",
+              "value": "oidc",
+            },
+            {
+              "name": "samlp",
+              "value": "samlp",
+            },
+            {
+              "name": "waad",
+              "value": "waad",
+            },
+          ],
+        },
         "DevOrgAuthConnectionsCreateResponse": {
           "docs": "Response for the request to create a new enterprise authentication
 connection.
@@ -1252,6 +1429,34 @@ a Dev organization.
               "type": "list<AuthConnection>",
             },
           },
+        },
+        "DevOrgAuthConnectionsUpdateRequestType": {
+          "docs": "Specifies the type for the authentication connection. Different types
+of authentication connections have different configuration parameters
+that can be updated.
+",
+          "enum": [
+            {
+              "name": "google_apps",
+              "value": "google_apps",
+            },
+            {
+              "name": "none",
+              "value": "none",
+            },
+            {
+              "name": "oidc",
+              "value": "oidc",
+            },
+            {
+              "name": "samlp",
+              "value": "samlp",
+            },
+            {
+              "name": "waad",
+              "value": "waad",
+            },
+          ],
         },
         "DevOrgAuthConnectionsUpdateResponse": {
           "docs": "Response for the request to update an enterprise authentication
@@ -1348,6 +1553,31 @@ sort order. If not set, then no prior elements exist.
             },
           },
         },
+        "ErrorBadRequestType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "bad_request",
+              "value": "bad_request",
+            },
+            {
+              "name": "invalid_enum_value",
+              "value": "invalid_enum_value",
+            },
+            {
+              "name": "missing_required_field",
+              "value": "missing_required_field",
+            },
+            {
+              "name": "parse_error",
+              "value": "parse_error",
+            },
+            {
+              "name": "value_not_permitted",
+              "value": "value_not_permitted",
+            },
+          ],
+        },
         "ErrorBadRequestValueNotPermitted": {
           "docs": undefined,
           "properties": {
@@ -1379,6 +1609,15 @@ sort order. If not set, then no prior elements exist.
             },
           },
         },
+        "ErrorForbiddenType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "forbidden",
+              "value": "forbidden",
+            },
+          ],
+        },
         "ErrorInternalServerError": {
           "docs": undefined,
           "properties": {
@@ -1394,6 +1633,15 @@ inquiry.
             },
           },
         },
+        "ErrorInternalServerErrorType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "internal_error",
+              "value": "internal_error",
+            },
+          ],
+        },
         "ErrorNotFound": {
           "docs": undefined,
           "properties": {
@@ -1403,6 +1651,15 @@ inquiry.
             },
           },
         },
+        "ErrorNotFoundType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "not_found",
+              "value": "not_found",
+            },
+          ],
+        },
         "ErrorServiceUnavailable": {
           "docs": undefined,
           "properties": {
@@ -1411,6 +1668,15 @@ inquiry.
               "type": "optional<ErrorServiceUnavailableType>",
             },
           },
+        },
+        "ErrorServiceUnavailableType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "service_unavailable",
+              "value": "service_unavailable",
+            },
+          ],
         },
         "ErrorTooManyRequests": {
           "docs": undefined,
@@ -1426,6 +1692,15 @@ inquiry.
             },
           },
         },
+        "ErrorTooManyRequestsType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "too_many_requests",
+              "value": "too_many_requests",
+            },
+          ],
+        },
         "ErrorUnauthorized": {
           "docs": undefined,
           "properties": {
@@ -1434,6 +1709,15 @@ inquiry.
               "type": "optional<ErrorUnauthorizedType>",
             },
           },
+        },
+        "ErrorUnauthorizedType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "unauthenticated",
+              "value": "unauthenticated",
+            },
+          ],
         },
         "EventPartCreated": {
           "docs": undefined,
@@ -1606,6 +1890,45 @@ inquiry.
             },
           },
         },
+        "IssuePriority": {
+          "docs": "Priority of the work based upon impact and criticality.",
+          "enum": [
+            {
+              "name": "p0",
+              "value": "p0",
+            },
+            {
+              "name": "p1",
+              "value": "p1",
+            },
+            {
+              "name": "p2",
+              "value": "p2",
+            },
+            {
+              "name": "p3",
+              "value": "p3",
+            },
+          ],
+        },
+        "ListMode": {
+          "docs": "The iteration mode to use. If "after", then entries after the provided
+cursor will be returned, or if no cursor is provided, then from the
+beginning. If "before", then entries before the provided cursor will be
+returned, or if no cursor is provided, then from the end. Entries will
+always be returned in the specified sort-by order.
+",
+          "enum": [
+            {
+              "name": "after",
+              "value": "after",
+            },
+            {
+              "name": "before",
+              "value": "before",
+            },
+          ],
+        },
         "OrgBase": {
           "docs": undefined,
           "properties": {
@@ -1624,6 +1947,24 @@ inquiry.
             },
           },
         },
+        "OrgEnvironment": {
+          "docs": "The environment of the Org. Defaults to 'production' if not specified.
+",
+          "enum": [
+            {
+              "name": "production",
+              "value": "production",
+            },
+            {
+              "name": "staging",
+              "value": "staging",
+            },
+            {
+              "name": "test",
+              "value": "test",
+            },
+          ],
+        },
         "OrgSummary": {
           "base-properties": {},
           "docs": undefined,
@@ -1633,6 +1974,15 @@ inquiry.
               "type": "rev-org-summary",
             },
           },
+        },
+        "OrgType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "rev_org",
+              "value": "rev_org",
+            },
+          ],
         },
         "Part": {
           "base-properties": {},
@@ -1711,6 +2061,27 @@ inquiry.
               "type": "product-summary",
             },
           },
+        },
+        "PartType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "capability",
+              "value": "capability",
+            },
+            {
+              "name": "enhancement",
+              "value": "enhancement",
+            },
+            {
+              "name": "feature",
+              "value": "feature",
+            },
+            {
+              "name": "product",
+              "value": "product",
+            },
+          ],
         },
         "PartsCreateRequestCapability": {
           "docs": undefined,
@@ -2069,6 +2440,27 @@ sort order. If not set, then no prior elements exist.
             },
           },
         },
+        "TicketSeverity": {
+          "docs": "Severity of the ticket.",
+          "enum": [
+            {
+              "name": "blocker",
+              "value": "blocker",
+            },
+            {
+              "name": "high",
+              "value": "high",
+            },
+            {
+              "name": "low",
+              "value": "low",
+            },
+            {
+              "name": "medium",
+              "value": "medium",
+            },
+          ],
+        },
         "TimelineComment": {
           "docs": undefined,
           "properties": {
@@ -2092,6 +2484,19 @@ will appear in the response.
             },
           },
         },
+        "TimelineCommentBodyType": {
+          "docs": "The type of the body to use for the comment.",
+          "enum": [
+            {
+              "name": "snap_kit",
+              "value": "snap_kit",
+            },
+            {
+              "name": "text",
+              "value": "text",
+            },
+          ],
+        },
         "TimelineEntriesCreateRequestTimelineComment": {
           "docs": undefined,
           "properties": {
@@ -2112,6 +2517,15 @@ will appear in the response.
               "type": "optional<map<string, unknown>>",
             },
           },
+        },
+        "TimelineEntriesCreateRequestType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "timeline_comment",
+              "value": "timeline_comment",
+            },
+          ],
         },
         "TimelineEntriesCreateResponse": {
           "docs": "The response to creating a timeline entry for an object.",
@@ -2195,6 +2609,15 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             },
           },
         },
+        "TimelineEntriesUpdateRequestType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "timeline_comment",
+              "value": "timeline_comment",
+            },
+          ],
+        },
         "TimelineEntriesUpdateResponse": {
           "docs": "The response to updating a timeline entry.",
           "properties": {
@@ -2213,6 +2636,27 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
               "type": "TimelineComment",
             },
           },
+        },
+        "TimelineEntryType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "timeline_comment",
+              "value": "timeline_comment",
+            },
+          ],
+        },
+        "TimelineEntryVisibility": {
+          "docs": "The visibility of the entry. If 'private', then the entry is only
+visible to the creator, otherwise if not set, then the entry has
+default visibility.
+",
+          "enum": [
+            {
+              "name": "private",
+              "value": "private",
+            },
+          ],
         },
         "UserBase": {
           "docs": undefined,
@@ -2270,6 +2714,31 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             },
           },
         },
+        "UserState": {
+          "docs": "State of the user.",
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "deactivated",
+              "value": "deactivated",
+            },
+            {
+              "name": "locked",
+              "value": "locked",
+            },
+            {
+              "name": "shadow",
+              "value": "shadow",
+            },
+            {
+              "name": "unassigned",
+              "value": "unassigned",
+            },
+          ],
+        },
         "UserSummary": {
           "base-properties": {},
           "docs": undefined,
@@ -2287,6 +2756,23 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
               "type": "sys-user-summary",
             },
           },
+        },
+        "UserType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "dev_user",
+              "value": "dev_user",
+            },
+            {
+              "name": "rev_user",
+              "value": "rev_user",
+            },
+            {
+              "name": "sys_user",
+              "value": "sys_user",
+            },
+          ],
         },
         "Webhook": {
           "docs": undefined,
@@ -2421,6 +2907,87 @@ be set for other request types.
             },
           },
         },
+        "WebhookEventType": {
+          "docs": "The event types that the webhook will receive.",
+          "enum": [
+            {
+              "name": "part_created",
+              "value": "part_created",
+            },
+            {
+              "name": "part_deleted",
+              "value": "part_deleted",
+            },
+            {
+              "name": "part_updated",
+              "value": "part_updated",
+            },
+            {
+              "name": "rev_org_created",
+              "value": "rev_org_created",
+            },
+            {
+              "name": "rev_org_deleted",
+              "value": "rev_org_deleted",
+            },
+            {
+              "name": "rev_org_updated",
+              "value": "rev_org_updated",
+            },
+            {
+              "name": "tag_created",
+              "value": "tag_created",
+            },
+            {
+              "name": "tag_deleted",
+              "value": "tag_deleted",
+            },
+            {
+              "name": "tag_updated",
+              "value": "tag_updated",
+            },
+            {
+              "name": "timeline_entry_created",
+              "value": "timeline_entry_created",
+            },
+            {
+              "name": "timeline_entry_deleted",
+              "value": "timeline_entry_deleted",
+            },
+            {
+              "name": "timeline_entry_updated",
+              "value": "timeline_entry_updated",
+            },
+            {
+              "name": "verify",
+              "value": "verify",
+            },
+            {
+              "name": "webhook_created",
+              "value": "webhook_created",
+            },
+            {
+              "name": "webhook_deleted",
+              "value": "webhook_deleted",
+            },
+            {
+              "name": "webhook_updated",
+              "value": "webhook_updated",
+            },
+            {
+              "name": "work_created",
+              "value": "work_created",
+            },
+            {
+              "name": "work_deleted",
+              "value": "work_deleted",
+            },
+            {
+              "name": "work_updated",
+              "value": "work_updated",
+            },
+          ],
+        },
         "WebhookEventVerify": {
           "docs": undefined,
           "properties": {
@@ -2429,6 +2996,23 @@ be set for other request types.
               "type": "string",
             },
           },
+        },
+        "WebhookStatus": {
+          "docs": "The status of the webhook.",
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "inactive",
+              "value": "inactive",
+            },
+            {
+              "name": "unverified",
+              "value": "unverified",
+            },
+          ],
         },
         "WebhooksCreateResponse": {
           "docs": "The response to creating a new webhook.",
@@ -2456,6 +3040,19 @@ be set for other request types.
               "type": "list<Webhook>",
             },
           },
+        },
+        "WebhooksUpdateAction": {
+          "docs": "The action to update the webhook's status.",
+          "enum": [
+            {
+              "name": "activate",
+              "value": "activate",
+            },
+            {
+              "name": "deactivate",
+              "value": "deactivate",
+            },
+          ],
         },
         "WebhooksUpdateRequestEventTypes": {
           "docs": undefined,
@@ -2546,6 +3143,19 @@ event types. Note this is mutually exclusive with 'add' and
               "type": "optional<string>",
             },
           },
+        },
+        "WorkType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "issue",
+              "value": "issue",
+            },
+            {
+              "name": "ticket",
+              "value": "ticket",
+            },
+          ],
         },
         "WorksCreateRequestIssue": {
           "docs": undefined,
@@ -2712,160 +3322,6 @@ empty.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "auth-connection-toggle": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "disable",
-              "value": "disable",
-            },
-            {
-              "name": "enable",
-              "value": "enable",
-            },
-          ],
-        },
-        "auth-connection-type": {
-          "docs": "Defines the type for the authentication connection. The configuration
-for each authentication connection will depend on the type value.
-",
-          "enum": [
-            {
-              "name": "google_apps",
-              "value": "google_apps",
-            },
-            {
-              "name": "oidc",
-              "value": "oidc",
-            },
-            {
-              "name": "samlp",
-              "value": "samlp",
-            },
-            {
-              "name": "social",
-              "value": "social",
-            },
-            {
-              "name": "waad",
-              "value": "waad",
-            },
-          ],
-        },
-        "auth-token-grant-type": {
-          "docs": "Specifies the process of obtaining a token.",
-          "enum": [
-            {
-              "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
-              "value": "urn:devrev:params:oauth:grant-type:token-issue",
-            },
-            {
-              "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
-              "value": "urn:ietf:params:oauth:grant-type:token-exchange",
-            },
-          ],
-        },
-        "auth-token-requested-token-type": {
-          "docs": "The type of the requested token.",
-          "enum": [
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeAat",
-              "value": "urn:devrev:params:oauth:token-type:aat",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
-              "value": "urn:devrev:params:oauth:token-type:aat:public",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeDev",
-              "value": "urn:devrev:params:oauth:token-type:dev",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypePat",
-              "value": "urn:devrev:params:oauth:token-type:pat",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeRev",
-              "value": "urn:devrev:params:oauth:token-type:rev",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeSession",
-              "value": "urn:devrev:params:oauth:token-type:session",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
-              "value": "urn:devrev:params:oauth:token-type:session:dev0",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeSys",
-              "value": "urn:devrev:params:oauth:token-type:sys",
-            },
-            {
-              "name": "UrnIetfParamsOauthTokenTypeJwt",
-              "value": "urn:ietf:params:oauth:token-type:jwt",
-            },
-          ],
-        },
-        "auth-token-status": {
-          "docs": "The status of the token.",
-          "enum": [
-            {
-              "name": "active",
-              "value": "active",
-            },
-            {
-              "name": "expired",
-              "value": "expired",
-            },
-            {
-              "name": "revoked",
-              "value": "revoked",
-            },
-          ],
-        },
-        "auth-token-subject-token-type": {
-          "docs": "The type of the subject token.",
-          "enum": [
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
-              "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
-              "value": "urn:devrev:params:oauth:token-type:jwt:dev",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
-              "value": "urn:devrev:params:oauth:token-type:revinfo",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeSysu",
-              "value": "urn:devrev:params:oauth:token-type:sysu",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
-              "value": "urn:devrev:params:oauth:token-type:userinfo",
-            },
-            {
-              "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
-              "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
-            },
-            {
-              "name": "UrnIetfParamsOauthTokenTypeJwt",
-              "value": "urn:ietf:params:oauth:token-type:jwt",
-            },
-          ],
-        },
-        "auth-token-token-type": {
-          "docs": "The type of the issued token. Bearer is the only supported token type.
-",
-          "enum": [
-            {
-              "name": "bearer",
-              "value": "bearer",
-            },
-          ],
-        },
         "capability": {
           "docs": undefined,
           "type": "PartBase",
@@ -2873,57 +3329,6 @@ for each authentication connection will depend on the type value.
         "capability-summary": {
           "docs": undefined,
           "type": "PartBaseSummary",
-        },
-        "dev-org-auth-connections-create-request-type": {
-          "docs": "Defines the type for the authentication connection. Different types of
-authentication connections have different configuration parameters.
-",
-          "enum": [
-            {
-              "name": "google_apps",
-              "value": "google_apps",
-            },
-            {
-              "name": "oidc",
-              "value": "oidc",
-            },
-            {
-              "name": "samlp",
-              "value": "samlp",
-            },
-            {
-              "name": "waad",
-              "value": "waad",
-            },
-          ],
-        },
-        "dev-org-auth-connections-update-request-type": {
-          "docs": "Specifies the type for the authentication connection. Different types
-of authentication connections have different configuration parameters
-that can be updated.
-",
-          "enum": [
-            {
-              "name": "google_apps",
-              "value": "google_apps",
-            },
-            {
-              "name": "none",
-              "value": "none",
-            },
-            {
-              "name": "oidc",
-              "value": "oidc",
-            },
-            {
-              "name": "samlp",
-              "value": "samlp",
-            },
-            {
-              "name": "waad",
-              "value": "waad",
-            },
-          ],
         },
         "dev-user-summary": {
           "docs": undefined,
@@ -2945,104 +3350,25 @@ that can be updated.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-bad-request-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "bad_request",
-              "value": "bad_request",
-            },
-            {
-              "name": "invalid_enum_value",
-              "value": "invalid_enum_value",
-            },
-            {
-              "name": "missing_required_field",
-              "value": "missing_required_field",
-            },
-            {
-              "name": "parse_error",
-              "value": "parse_error",
-            },
-            {
-              "name": "value_not_permitted",
-              "value": "value_not_permitted",
-            },
-          ],
-        },
         "error-forbidden-forbidden": {
           "docs": undefined,
           "type": "map<string, unknown>",
-        },
-        "error-forbidden-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "forbidden",
-              "value": "forbidden",
-            },
-          ],
         },
         "error-internal-server-error-internal-error": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-internal-server-error-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "internal_error",
-              "value": "internal_error",
-            },
-          ],
-        },
         "error-not-found-not-found": {
           "docs": undefined,
           "type": "map<string, unknown>",
-        },
-        "error-not-found-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "not_found",
-              "value": "not_found",
-            },
-          ],
         },
         "error-service-unavailable-service-unavailable": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "error-service-unavailable-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "service_unavailable",
-              "value": "service_unavailable",
-            },
-          ],
-        },
         "error-too-many-requests-too-many-requests": {
           "docs": undefined,
           "type": "map<string, unknown>",
-        },
-        "error-too-many-requests-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "too_many_requests",
-              "value": "too_many_requests",
-            },
-          ],
-        },
-        "error-unauthorized-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "unauthenticated",
-              "value": "unauthenticated",
-            },
-          ],
         },
         "error-unauthorized-unauthenticated": {
           "docs": undefined,
@@ -3063,93 +3389,6 @@ that can be updated.
         "group-summary": {
           "docs": undefined,
           "type": "AtomBaseSummary",
-        },
-        "issue-priority": {
-          "docs": "Priority of the work based upon impact and criticality.",
-          "enum": [
-            {
-              "name": "p0",
-              "value": "p0",
-            },
-            {
-              "name": "p1",
-              "value": "p1",
-            },
-            {
-              "name": "p2",
-              "value": "p2",
-            },
-            {
-              "name": "p3",
-              "value": "p3",
-            },
-          ],
-        },
-        "list-mode": {
-          "docs": "The iteration mode to use. If "after", then entries after the provided
-cursor will be returned, or if no cursor is provided, then from the
-beginning. If "before", then entries before the provided cursor will be
-returned, or if no cursor is provided, then from the end. Entries will
-always be returned in the specified sort-by order.
-",
-          "enum": [
-            {
-              "name": "after",
-              "value": "after",
-            },
-            {
-              "name": "before",
-              "value": "before",
-            },
-          ],
-        },
-        "org-environment": {
-          "docs": "The environment of the Org. Defaults to 'production' if not specified.
-",
-          "enum": [
-            {
-              "name": "production",
-              "value": "production",
-            },
-            {
-              "name": "staging",
-              "value": "staging",
-            },
-            {
-              "name": "test",
-              "value": "test",
-            },
-          ],
-        },
-        "org-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "rev_org",
-              "value": "rev_org",
-            },
-          ],
-        },
-        "part-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "capability",
-              "value": "capability",
-            },
-            {
-              "name": "enhancement",
-              "value": "enhancement",
-            },
-            {
-              "name": "feature",
-              "value": "feature",
-            },
-            {
-              "name": "product",
-              "value": "product",
-            },
-          ],
         },
         "parts-create-request-product": {
           "docs": undefined,
@@ -3195,252 +3434,13 @@ always be returned in the specified sort-by order.
           "docs": "The response for deleting a tag.",
           "type": "map<string, unknown>",
         },
-        "ticket-severity": {
-          "docs": "Severity of the ticket.",
-          "enum": [
-            {
-              "name": "blocker",
-              "value": "blocker",
-            },
-            {
-              "name": "high",
-              "value": "high",
-            },
-            {
-              "name": "low",
-              "value": "low",
-            },
-            {
-              "name": "medium",
-              "value": "medium",
-            },
-          ],
-        },
-        "timeline-comment-body-type": {
-          "docs": "The type of the body to use for the comment.",
-          "enum": [
-            {
-              "name": "snap_kit",
-              "value": "snap_kit",
-            },
-            {
-              "name": "text",
-              "value": "text",
-            },
-          ],
-        },
-        "timeline-entries-create-request-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "timeline_comment",
-              "value": "timeline_comment",
-            },
-          ],
-        },
-        "timeline-entries-update-request-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "timeline_comment",
-              "value": "timeline_comment",
-            },
-          ],
-        },
         "timeline-entry-base": {
           "docs": undefined,
           "type": "AtomBase",
         },
-        "timeline-entry-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "timeline_comment",
-              "value": "timeline_comment",
-            },
-          ],
-        },
-        "timeline-entry-visibility": {
-          "docs": "The visibility of the entry. If 'private', then the entry is only
-visible to the creator, otherwise if not set, then the entry has
-default visibility.
-",
-          "enum": [
-            {
-              "name": "private",
-              "value": "private",
-            },
-          ],
-        },
-        "user-state": {
-          "docs": "State of the user.",
-          "enum": [
-            {
-              "name": "active",
-              "value": "active",
-            },
-            {
-              "name": "deactivated",
-              "value": "deactivated",
-            },
-            {
-              "name": "locked",
-              "value": "locked",
-            },
-            {
-              "name": "shadow",
-              "value": "shadow",
-            },
-            {
-              "name": "unassigned",
-              "value": "unassigned",
-            },
-          ],
-        },
-        "user-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "dev_user",
-              "value": "dev_user",
-            },
-            {
-              "name": "rev_user",
-              "value": "rev_user",
-            },
-            {
-              "name": "sys_user",
-              "value": "sys_user",
-            },
-          ],
-        },
-        "webhook-event-type": {
-          "docs": "The event types that the webhook will receive.",
-          "enum": [
-            {
-              "name": "part_created",
-              "value": "part_created",
-            },
-            {
-              "name": "part_deleted",
-              "value": "part_deleted",
-            },
-            {
-              "name": "part_updated",
-              "value": "part_updated",
-            },
-            {
-              "name": "rev_org_created",
-              "value": "rev_org_created",
-            },
-            {
-              "name": "rev_org_deleted",
-              "value": "rev_org_deleted",
-            },
-            {
-              "name": "rev_org_updated",
-              "value": "rev_org_updated",
-            },
-            {
-              "name": "tag_created",
-              "value": "tag_created",
-            },
-            {
-              "name": "tag_deleted",
-              "value": "tag_deleted",
-            },
-            {
-              "name": "tag_updated",
-              "value": "tag_updated",
-            },
-            {
-              "name": "timeline_entry_created",
-              "value": "timeline_entry_created",
-            },
-            {
-              "name": "timeline_entry_deleted",
-              "value": "timeline_entry_deleted",
-            },
-            {
-              "name": "timeline_entry_updated",
-              "value": "timeline_entry_updated",
-            },
-            {
-              "name": "verify",
-              "value": "verify",
-            },
-            {
-              "name": "webhook_created",
-              "value": "webhook_created",
-            },
-            {
-              "name": "webhook_deleted",
-              "value": "webhook_deleted",
-            },
-            {
-              "name": "webhook_updated",
-              "value": "webhook_updated",
-            },
-            {
-              "name": "work_created",
-              "value": "work_created",
-            },
-            {
-              "name": "work_deleted",
-              "value": "work_deleted",
-            },
-            {
-              "name": "work_updated",
-              "value": "work_updated",
-            },
-          ],
-        },
-        "webhook-status": {
-          "docs": "The status of the webhook.",
-          "enum": [
-            {
-              "name": "active",
-              "value": "active",
-            },
-            {
-              "name": "inactive",
-              "value": "inactive",
-            },
-            {
-              "name": "unverified",
-              "value": "unverified",
-            },
-          ],
-        },
         "webhooks-delete-response": {
           "docs": "The response to deleting the webhook.",
           "type": "map<string, unknown>",
-        },
-        "webhooks-update-action": {
-          "docs": "The action to update the webhook's status.",
-          "enum": [
-            {
-              "name": "activate",
-              "value": "activate",
-            },
-            {
-              "name": "deactivate",
-              "value": "deactivate",
-            },
-          ],
-        },
-        "work-type": {
-          "docs": undefined,
-          "enum": [
-            {
-              "name": "issue",
-              "value": "issue",
-            },
-            {
-              "name": "ticket",
-              "value": "ticket",
-            },
-          ],
         },
         "works-delete-response": {
           "docs": undefined,
