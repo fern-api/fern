@@ -1,0 +1,5 @@
+types:
+  MyDate:
+    type: date
+    examples:
+      - value: "2000-01-01"

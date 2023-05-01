@@ -1,4 +1,4 @@
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 
 export type Environment = SingleUrlEnvironment | MultiUrlEnvironment;
 
@@ -13,19 +13,20 @@ export interface MultiUrlEnvironment {
     defaultUrl: string;
 }
 
-export function getEnvironments(ir: OpenAPIIntermediateRepresentation): Environment | undefined {
+export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefined {
     let endpointUrlOverrides = false;
 
     const defaultUrls: Record<string, string> = {};
-    for (const server of ir.servers) {
+    for (const server of openApiFile.servers) {
         if (server.name == null) {
-            throw new Error("All servers must have x-name");
+            // TODO(dsinghvi): log that we are ignoring server because no name
+            continue;
         }
         defaultUrls[server.name] = server.url;
     }
 
     const overrideUrls: Record<string, string> = {};
-    for (const endpoint of ir.endpoints) {
+    for (const endpoint of openApiFile.endpoints) {
         for (const server of endpoint.server) {
             if (!endpointUrlOverrides) {
                 endpointUrlOverrides = true;

@@ -58,7 +58,6 @@
     "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/openapi-migrator": "workspace:*",
     "@fern-api/openapi-parser": "workspace:*",
-    "@fern-api/openapi-transformer": "workspace:*",
     "@fern-api/posthog-manager": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/project-loader": "workspace:*",

@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, Request, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
-import { ROOT_PREFIX } from "../convert";
+import { ROOT_PREFIX } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -29,7 +29,7 @@ export function convertEndpoint({
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        const convertedPathParameter = convertPathParameter(pathParameter);
+        const convertedPathParameter = convertPathParameter({ pathParameter, schemas });
         pathParameters[pathParameter.name] = convertedPathParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -39,7 +39,7 @@ export function convertEndpoint({
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     for (const queryParameter of endpoint.queryParameters) {
-        const convertedQueryParameter = convertQueryParameter(queryParameter);
+        const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml, schemas });
         queryParameters[queryParameter.name] = convertedQueryParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -58,19 +58,18 @@ export function convertEndpoint({
 
     if (endpoint.request != null) {
         const convertedRequest = getRequest({
+            isPackageYml,
             request: endpoint.request,
             schemas,
-            requestName: endpoint.requestName ?? undefined,
+            generatedRequestName: endpoint.generatedRequestName,
+            requestNameOverride: endpoint.requestNameOverride ?? undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
     } else if (Object.keys(queryParameters).length > 0) {
-        if (endpoint.requestName == null) {
-            throw new Error(`x-request-name is required for endpoint ${JSON.stringify(endpoint)}`);
-        }
         convertedEndpoint.request = {
-            name: endpoint.requestName,
+            name: endpoint.requestNameOverride ?? endpoint.generatedRequestName,
             "query-parameters": queryParameters,
         };
     }
@@ -79,6 +78,7 @@ export function convertEndpoint({
         const responseTypeReference = convertToTypeReference({
             schema: endpoint.response.schema,
             prefix: isPackageYml ? undefined : ROOT_PREFIX,
+            schemas,
         });
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -114,36 +114,64 @@ interface ConvertedRequest {
 }
 
 function getRequest({
+    isPackageYml,
     request,
     schemas,
-    requestName,
+    requestNameOverride,
+    generatedRequestName,
     queryParameters,
 }: {
+    isPackageYml: boolean;
     request: Request;
     schemas: Record<SchemaId, Schema>;
-    requestName?: string;
+    requestNameOverride?: string;
+    generatedRequestName: string;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
 }): ConvertedRequest {
     if (request.type === "json") {
         if (request.schema.type !== "reference") {
             throw Error("Only request references are currently supported");
         }
-        const schema = schemas[request.schema.reference];
+        const schema = schemas[request.schema.schema];
         if (schema == null) {
-            throw Error(`Failed to resolve schema reference ${request.schema.reference}`);
+            throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            throw Error(`Request ${request.schema.reference} must be object ${JSON.stringify(schema)}`);
+            const requestTypeReference = convertToTypeReference({
+                schema,
+                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                schemas,
+            });
+            const convertedRequest: ConvertedRequest = {
+                schemaIdsToExclude: [request.schema.schema],
+                value: {
+                    body:
+                        typeof requestTypeReference === "string"
+                            ? requestTypeReference
+                            : requestTypeReference.typeReference,
+                },
+            };
+
+            if (Object.keys(queryParameters ?? {}).length > 0) {
+                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
+                convertedRequest.value["query-parameters"] = queryParameters;
+            }
+
+            return convertedRequest;
         }
         return {
-            schemaIdsToExclude: [request.schema.reference],
+            schemaIdsToExclude: [request.schema.schema],
             value: {
-                name: requestName ?? request.schema.reference,
+                name: requestNameOverride ?? schema.nameOverride ?? schema.generatedName,
                 "query-parameters": queryParameters,
                 body: {
                     properties: Object.fromEntries(
                         schema.properties.map((property) => {
-                            const propertyTypeReference = convertToTypeReference({ schema: property.schema });
+                            const propertyTypeReference = convertToTypeReference({
+                                schema: property.schema,
+                                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                                schemas,
+                            });
                             return [property.key, propertyTypeReference.typeReference];
                         })
                     ),
@@ -152,13 +180,10 @@ function getRequest({
         };
     } else {
         // multipart
-        if (requestName == null) {
-            throw new Error(`x-request-name is required for multipart request ${JSON.stringify(request)}`);
-        }
         return {
-            schemaIdsToExclude: [requestName],
+            schemaIdsToExclude: request.name == null ? [] : [request.name],
             value: {
-                name: requestName,
+                name: requestNameOverride ?? request.name ?? generatedRequestName,
                 "query-parameters": queryParameters,
                 body: {
                     properties: Object.fromEntries(
@@ -166,7 +191,11 @@ function getRequest({
                             if (property.schema.type === "file") {
                                 return [property.key, "file"];
                             } else {
-                                const propertyTypeReference = convertToTypeReference({ schema: property.schema.json });
+                                const propertyTypeReference = convertToTypeReference({
+                                    schema: property.schema.json,
+                                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                                    schemas,
+                                });
                                 return [property.key, propertyTypeReference.typeReference];
                             }
                         })

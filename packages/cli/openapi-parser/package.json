@@ -31,8 +31,9 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/openapi-ir-model": "0.0.30",
+    "@fern-api/validator": "workspace:*",
+    "@fern-fern/openapi-ir-model": "0.0.42",
+    "lodash-es": "^4.17.21",
     "openapi-types": "^12.0.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",

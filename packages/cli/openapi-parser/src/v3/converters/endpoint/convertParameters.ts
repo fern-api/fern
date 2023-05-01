@@ -1,6 +1,7 @@
 import { Header, PathParameter, PrimitiveSchemaValue, QueryParameter, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../../isReferenceObject";
+import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
 export interface ConvertedParameters {
@@ -10,7 +11,8 @@ export interface ConvertedParameters {
 }
 
 export function convertParameters(
-    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[]
+    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[],
+    context: OpenAPIV3ParserContext
 ): ConvertedParameters {
     const convertedParameters: ConvertedParameters = {
         pathParameters: [],
@@ -25,7 +27,7 @@ export function convertParameters(
         const isRequired = parameter.required ?? false;
         const schema =
             parameter.schema != null
-                ? convertSchema(parameter.schema, !isRequired)
+                ? convertSchema(parameter.schema, !isRequired, context, [])
                 : isRequired
                 ? Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: parameter.description })
                 : Schema.optional({

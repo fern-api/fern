@@ -1,6 +1,6 @@
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../isReferenceObject";
+import { isReferenceObject } from "../utils/isReferenceObject";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject

@@ -1,39 +1,31 @@
-import SwaggerParser from "@apidevtools/swagger-parser";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { DefinitionFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
-import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { generateIr } from "./v3/generateIr";
+import { FileId, OpenAPIFile, OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
+import { parseDefinition } from "./parseDefinition";
 
-export interface OpenApiConvertedFernDefinition {
-    rootApiFile: RootApiFileSchema;
-    definitionFiles: Record<RelativeFilePath, DefinitionFileSchema>;
+export interface RawOpenAPIDefinition {
+    file: RawOpenAPIFile | undefined;
+    subDirectories: RawOpenAPIDefinition[];
+}
+
+export interface RawOpenAPIFile {
+    absoluteFilepath: AbsoluteFilePath;
+    /* relative filepath from the root of the definition */
+    relativeFilepath: RelativeFilePath;
+    contents: string;
 }
 
 export async function parse({
-    openApiPath,
+    root,
     taskContext,
 }: {
-    openApiPath: AbsoluteFilePath;
+    root: RawOpenAPIDefinition;
     taskContext: TaskContext;
 }): Promise<OpenAPIIntermediateRepresentation> {
-    taskContext.logger.debug(`Reading ${openApiPath}`);
-    const openApiDocument = await SwaggerParser.parse(openApiPath);
-    if (isOpenApiV3(openApiDocument)) {
-        return generateIr(openApiDocument, taskContext);
-    }
-    return taskContext.failAndThrow(
-        `Only OpenAPI V3 Documents are supported. ${isOpenApiV2(openApiDocument) ? "Received V2 instead." : ""}`
-    );
-}
-
-function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV3.Document).openapi != null;
-}
-
-function isOpenApiV2(openApi: OpenAPI.Document): openApi is OpenAPIV2.Document {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (openApi as OpenAPIV2.Document).swagger != null;
+    const files: Record<FileId, OpenAPIFile> = {};
+    const rootPackage = await parseDefinition({ definition: root, taskContext, files });
+    return {
+        files,
+        rootPackage,
+    };
 }

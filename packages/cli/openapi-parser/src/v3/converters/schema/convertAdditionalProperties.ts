@@ -1,16 +1,21 @@
 import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../../isReferenceObject";
+import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
 export function convertAdditionalProperties({
+    breadcrumbs,
     additionalProperties,
     description,
     wrapAsOptional,
+    context,
 }: {
+    breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
     wrapAsOptional: boolean;
+    context: OpenAPIV3ParserContext;
 }): Schema {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({
@@ -24,7 +29,7 @@ export function convertAdditionalProperties({
         wrapAsOptional,
         description,
         keySchema: PrimitiveSchemaValue.string(),
-        valueSchema: convertSchema(additionalProperties, wrapAsOptional),
+        valueSchema: convertSchema(additionalProperties, wrapAsOptional, context, [...breadcrumbs, "Value"]),
     });
 }
 

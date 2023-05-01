@@ -75,7 +75,7 @@
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.6",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-syntax-highlighter": "^15.5.6",

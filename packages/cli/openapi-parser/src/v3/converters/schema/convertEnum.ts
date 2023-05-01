@@ -1,27 +1,34 @@
+import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase, upperFirst } from "lodash-es";
 
 export function convertEnum({
-    schemaName,
+    nameOverride,
+    generatedName,
     enumNames,
     enumValues,
     description,
     wrapAsOptional,
 }: {
-    schemaName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
     enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
     wrapAsOptional: boolean;
 }): Schema {
     const values = enumValues.map((value) => {
+        const valueIsValidName = VALID_NAME_REGEX.test(value);
         return {
-            name: enumNames != null ? enumNames[value] : undefined,
+            nameOverride: enumNames != null ? enumNames[value] : undefined,
+            generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
         };
     });
     return wrapEnum({
         wrapAsOptional,
-        enumName: schemaName,
+        nameOverride,
+        generatedName,
         values,
         description,
     });
@@ -29,19 +36,22 @@ export function convertEnum({
 
 export function wrapEnum({
     wrapAsOptional,
-    enumName,
+    nameOverride,
+    generatedName,
     values,
     description,
 }: {
     wrapAsOptional: boolean;
-    enumName: string | undefined;
+    nameOverride: string | undefined;
+    generatedName: string;
     values: EnumValue[];
     description: string | undefined;
 }): Schema {
     if (wrapAsOptional) {
         return Schema.optional({
             value: Schema.enum({
-                name: enumName,
+                nameOverride,
+                generatedName,
                 values,
                 description: undefined,
             }),
@@ -49,8 +59,13 @@ export function wrapEnum({
         });
     }
     return Schema.enum({
-        name: enumName,
+        nameOverride,
+        generatedName,
         values,
         description,
     });
+}
+
+function generateEnumNameFromValue(value: string): string {
+    return upperFirst(camelCase(value));
 }
