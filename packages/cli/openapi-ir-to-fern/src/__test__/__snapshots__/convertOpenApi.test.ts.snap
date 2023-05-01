@@ -760,7 +760,7 @@ exports[`open api converter devrev simple 1`] = `
               "body": {
                 "docs": "Request to create a new enterprise authentication connection.
 ",
-                "type": "root.DevOrgAuthConnectionsCreateRequest",
+                "type": "DevOrgAuthConnectionsCreateRequest",
               },
             },
             "response": {
@@ -837,7 +837,7 @@ exports[`open api converter devrev simple 1`] = `
                 "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
-                "type": "root.DevOrgAuthConnectionsUpdateRequest",
+                "type": "DevOrgAuthConnectionsUpdateRequest",
               },
             },
             "response": {
@@ -3510,15 +3510,15 @@ This client_id is only associated with an AAT.
                   },
                   "grant_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-grant-type>",
+                    "type": "optional<root.auth-token-grant-type>",
                   },
                   "requested_token_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-requested-token-type>",
+                    "type": "optional<root.auth-token-requested-token-type>",
                   },
                   "rev_info": {
                     "docs": undefined,
-                    "type": "optional<auth-tokens-rev-info>",
+                    "type": "optional<root.auth-tokens-rev-info>",
                   },
                   "scope": {
                     "docs": "The requested set of scopes associated with the issued token. A
@@ -3535,7 +3535,7 @@ requesting an application access token (AAT).
                   },
                   "subject_token_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-subject-token-type>",
+                    "type": "optional<root.auth-token-subject-token-type>",
                   },
                   "token_hint": {
                     "docs": "A hint that identifies the token.",
@@ -3620,7 +3620,7 @@ JTI claim of the token in the authorization header.
                 "properties": {
                   "requested_token_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-requested-token-type>",
+                    "type": "optional<root.auth-token-requested-token-type>",
                   },
                 },
               },
@@ -3857,7 +3857,7 @@ JTI claim of the token in the authorization header.
                   },
                   "environment": {
                     "docs": undefined,
-                    "type": "optional<org-environment>",
+                    "type": "optional<root.org-environment>",
                   },
                   "external_ref": {
                     "docs": "External ref is a custom unique identifier which is a reference to
@@ -3990,7 +3990,7 @@ records.
                   },
                   "environment": {
                     "docs": undefined,
-                    "type": "optional<org-environment>",
+                    "type": "optional<root.org-environment>",
                   },
                   "external_ref": {
                     "docs": "External ref is a custom unique identifier which is a reference to
@@ -4129,7 +4129,7 @@ permitted.
                 "properties": {
                   "allowed_values": {
                     "docs": undefined,
-                    "type": "optional<tags-update-allowed-values>",
+                    "type": "optional<root.tags-update-allowed-values>",
                   },
                   "description": {
                     "docs": "The updated description of the tag.",
@@ -4259,7 +4259,7 @@ tags.
                 "properties": {
                   "event_types": {
                     "docs": "The event types that the webhook endpoint will receive.",
-                    "type": "optional<list<webhook-event-type>>",
+                    "type": "optional<list<root.webhook-event-type>>",
                   },
                   "secret": {
                     "docs": "The secret to use when verifying webhook events. If provided, the
@@ -4336,11 +4336,11 @@ response.
                 "properties": {
                   "action": {
                     "docs": undefined,
-                    "type": "optional<webhooks-update-action>",
+                    "type": "optional<root.webhooks-update-action>",
                   },
                   "event_types": {
                     "docs": undefined,
-                    "type": "optional<webhooks-update-request-event-types>",
+                    "type": "optional<root.webhooks-update-request-event-types>",
                   },
                   "id": {
                     "docs": "ID for the webhook.",
