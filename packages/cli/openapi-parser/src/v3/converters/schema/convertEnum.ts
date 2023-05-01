@@ -1,4 +1,6 @@
+import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase, upperFirst } from "lodash-es";
 
 export function convertEnum({
     nameOverride,
@@ -16,8 +18,10 @@ export function convertEnum({
     wrapAsOptional: boolean;
 }): Schema {
     const values = enumValues.map((value) => {
+        const valueIsValidName = VALID_NAME_REGEX.test(value);
         return {
-            name: enumNames != null ? enumNames[value] : undefined,
+            nameOverride: enumNames != null ? enumNames[value] : undefined,
+            generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
         };
     });
@@ -60,4 +64,8 @@ export function wrapEnum({
         values,
         description,
     });
+}
+
+function generateEnumNameFromValue(value: string): string {
+    return upperFirst(camelCase(value));
 }
