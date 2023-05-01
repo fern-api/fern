@@ -15,6 +15,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "listAccountsRequest",
               "query-parameters": {
                 "page": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
@@ -32,22 +33,27 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "listGamesRequest",
               "query-parameters": {
                 "after": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "before": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "complete": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "date": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
@@ -65,14 +71,17 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "listGroupsRequest",
               "query-parameters": {
                 "complete": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "is_event": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "page": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
@@ -90,6 +99,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "listLocationsRequest",
               "query-parameters": {
                 "page": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
@@ -107,6 +117,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "listPhotosRequest",
               "query-parameters": {
                 "page": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
@@ -124,6 +135,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "listPlayersRequest",
               "query-parameters": {
                 "page": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
@@ -161,18 +173,22 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "retrieveGameRequest",
               "query-parameters": {
                 "after": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "before": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "complete": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "date": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
@@ -196,10 +212,12 @@ exports[`open api converter buzzshot simple 1`] = `
               "name": "retrieveGroupRequest",
               "query-parameters": {
                 "complete": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "is_event": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
@@ -791,6 +809,7 @@ exports[`open api converter devrev simple 1`] = `
               "name": "DevOrgAuthConnectionsGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -3444,6 +3463,7 @@ empty.
               "name": "ArtifactsLocateRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -3510,15 +3530,15 @@ This client_id is only associated with an AAT.
                   },
                   "grant_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-grant-type>",
+                    "type": "optional<root.auth-token-grant-type>",
                   },
                   "requested_token_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-requested-token-type>",
+                    "type": "optional<root.auth-token-requested-token-type>",
                   },
                   "rev_info": {
                     "docs": undefined,
-                    "type": "optional<auth-tokens-rev-info>",
+                    "type": "optional<root.auth-tokens-rev-info>",
                   },
                   "scope": {
                     "docs": "The requested set of scopes associated with the issued token. A
@@ -3535,7 +3555,7 @@ requesting an application access token (AAT).
                   },
                   "subject_token_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-subject-token-type>",
+                    "type": "optional<root.auth-token-subject-token-type>",
                   },
                   "token_hint": {
                     "docs": "A hint that identifies the token.",
@@ -3577,6 +3597,7 @@ JTI claim of the token in the authorization header.
               "name": "AuthTokensGetRequest",
               "query-parameters": {
                 "token_id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -3594,14 +3615,17 @@ JTI claim of the token in the authorization header.
               "name": "AuthTokensListRequest",
               "query-parameters": {
                 "client_id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "requested_token_type": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<auth-token-requested-token-type>",
+                  "type": "optional<root.auth-token-requested-token-type>",
                 },
                 "subject": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
@@ -3620,7 +3644,7 @@ JTI claim of the token in the authorization header.
                 "properties": {
                   "requested_token_type": {
                     "docs": undefined,
-                    "type": "optional<auth-token-requested-token-type>",
+                    "type": "optional<root.auth-token-requested-token-type>",
                   },
                 },
               },
@@ -3671,28 +3695,34 @@ JTI claim of the token in the authorization header.
               "name": "DevUsersListRequest",
               "query-parameters": {
                 "cursor": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "email": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<list-mode>",
+                  "type": "optional<root.list-mode>",
                 },
                 "sort_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "state": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<user-state>>",
+                  "type": "optional<root.user-state>",
                 },
               },
             },
@@ -3726,7 +3756,7 @@ JTI claim of the token in the authorization header.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "PartsCreateRequest",
+                "type": "root.PartsCreateRequest",
               },
             },
             "response": {
@@ -3761,6 +3791,7 @@ JTI claim of the token in the authorization header.
               "name": "PartsGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -3778,32 +3809,39 @@ JTI claim of the token in the authorization header.
               "name": "PartsListRequest",
               "query-parameters": {
                 "created_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "cursor": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<list-mode>",
+                  "type": "optional<root.list-mode>",
                 },
                 "name": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "owned_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "type": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<part-type>>",
+                  "type": "optional<root.part-type>",
                 },
               },
             },
@@ -3818,7 +3856,7 @@ JTI claim of the token in the authorization header.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "PartsUpdateRequest",
+                "type": "root.PartsUpdateRequest",
               },
             },
             "response": {
@@ -3857,7 +3895,7 @@ JTI claim of the token in the authorization header.
                   },
                   "environment": {
                     "docs": undefined,
-                    "type": "optional<org-environment>",
+                    "type": "optional<root.org-environment>",
                   },
                   "external_ref": {
                     "docs": "External ref is a custom unique identifier which is a reference to
@@ -3907,6 +3945,7 @@ records.
               "name": "RevOrgsGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -3924,44 +3963,54 @@ records.
               "name": "RevOrgsListRequest",
               "query-parameters": {
                 "created_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "created_date.after": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "created_date.before": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "cursor": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "external_ref": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<list-mode>",
+                  "type": "optional<root.list-mode>",
                 },
                 "modified_date.after": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "modified_date.before": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "sort_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
               },
             },
@@ -3990,7 +4039,7 @@ records.
                   },
                   "environment": {
                     "docs": undefined,
-                    "type": "optional<org-environment>",
+                    "type": "optional<root.org-environment>",
                   },
                   "external_ref": {
                     "docs": "External ref is a custom unique identifier which is a reference to
@@ -4086,6 +4135,7 @@ permitted.
               "name": "TagsGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -4103,16 +4153,19 @@ permitted.
               "name": "TagsListRequest",
               "query-parameters": {
                 "cursor": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<list-mode>",
+                  "type": "optional<root.list-mode>",
                 },
               },
             },
@@ -4129,7 +4182,7 @@ permitted.
                 "properties": {
                   "allowed_values": {
                     "docs": undefined,
-                    "type": "optional<tags-update-allowed-values>",
+                    "type": "optional<root.tags-update-allowed-values>",
                   },
                   "description": {
                     "docs": "The updated description of the tag.",
@@ -4172,7 +4225,7 @@ tags.
             "request": {
               "body": {
                 "docs": "The request to create a timeline entry for an object.",
-                "type": "TimelineEntriesCreateRequest",
+                "type": "root.TimelineEntriesCreateRequest",
               },
             },
             "response": {
@@ -4187,6 +4240,7 @@ tags.
               "name": "TimelineEntriesGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -4204,18 +4258,22 @@ tags.
               "name": "TimelineEntriesListRequest",
               "query-parameters": {
                 "cursor": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<list-mode>",
+                  "type": "optional<root.list-mode>",
                 },
                 "object": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -4232,7 +4290,7 @@ tags.
             "request": {
               "body": {
                 "docs": "The request to update a timeline entry.",
-                "type": "TimelineEntriesUpdateRequest",
+                "type": "root.TimelineEntriesUpdateRequest",
               },
             },
             "response": {
@@ -4259,7 +4317,7 @@ tags.
                 "properties": {
                   "event_types": {
                     "docs": "The event types that the webhook endpoint will receive.",
-                    "type": "optional<list<webhook-event-type>>",
+                    "type": "optional<list<root.webhook-event-type>>",
                   },
                   "secret": {
                     "docs": "The secret to use when verifying webhook events. If provided, the
@@ -4310,6 +4368,7 @@ response.
               "name": "WebhooksGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -4336,11 +4395,11 @@ response.
                 "properties": {
                   "action": {
                     "docs": undefined,
-                    "type": "optional<webhooks-update-action>",
+                    "type": "optional<root.webhooks-update-action>",
                   },
                   "event_types": {
                     "docs": undefined,
-                    "type": "optional<webhooks-update-request-event-types>",
+                    "type": "optional<root.webhooks-update-request-event-types>",
                   },
                   "id": {
                     "docs": "ID for the webhook.",
@@ -4389,7 +4448,7 @@ won't receive any object events until successfully verified.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "WorksCreateRequest",
+                "type": "root.WorksCreateRequest",
               },
             },
             "response": {
@@ -4424,44 +4483,54 @@ won't receive any object events until successfully verified.
               "name": "WorksExportRequest",
               "query-parameters": {
                 "applies_to_part": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "created_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "first": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "issue.priority": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<issue-priority>>",
+                  "type": "optional<root.issue-priority>",
                 },
                 "issue.rev_orgs": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "owned_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "stage.name": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.rev_org": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.severity": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<ticket-severity>>",
+                  "type": "optional<root.ticket-severity>",
                 },
                 "type": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<work-type>>",
+                  "type": "optional<root.work-type>",
                 },
               },
             },
@@ -4477,6 +4546,7 @@ won't receive any object events until successfully verified.
               "name": "WorksGetRequest",
               "query-parameters": {
                 "id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "string",
                 },
@@ -4494,52 +4564,64 @@ won't receive any object events until successfully verified.
               "name": "WorksListRequest",
               "query-parameters": {
                 "applies_to_part": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "created_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "cursor": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "issue.priority": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<issue-priority>>",
+                  "type": "optional<root.issue-priority>",
                 },
                 "issue.rev_orgs": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "mode": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<list-mode>",
+                  "type": "optional<root.list-mode>",
                 },
                 "owned_by": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "stage.name": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.rev_org": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.severity": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<ticket-severity>>",
+                  "type": "optional<root.ticket-severity>",
                 },
                 "type": {
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<work-type>>",
+                  "type": "optional<root.work-type>",
                 },
               },
             },
@@ -4554,7 +4636,7 @@ won't receive any object events until successfully verified.
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "WorksUpdateRequest",
+                "type": "root.WorksUpdateRequest",
               },
             },
             "response": {
@@ -5304,18 +5386,22 @@ exports[`open api converter vellum simple 1`] = `
               "name": "ListDocumentsRequest",
               "query-parameters": {
                 "document_index_id": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },
                 "limit": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "offset": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<integer>",
                 },
                 "ordering": {
+                  "allow-multiple": undefined,
                   "docs": undefined,
                   "type": "optional<string>",
                 },

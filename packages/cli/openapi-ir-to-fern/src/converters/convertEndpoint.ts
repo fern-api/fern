@@ -39,7 +39,7 @@ export function convertEndpoint({
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     for (const queryParameter of endpoint.queryParameters) {
-        const convertedQueryParameter = convertQueryParameter(queryParameter);
+        const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml });
         queryParameters[queryParameter.name] = convertedQueryParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -58,6 +58,7 @@ export function convertEndpoint({
 
     if (endpoint.request != null) {
         const convertedRequest = getRequest({
+            isPackageYml,
             request: endpoint.request,
             schemas,
             generatedRequestName: endpoint.generatedRequestName,
@@ -112,12 +113,14 @@ interface ConvertedRequest {
 }
 
 function getRequest({
+    isPackageYml,
     request,
     schemas,
     requestNameOverride,
     generatedRequestName,
     queryParameters,
 }: {
+    isPackageYml: boolean;
     request: Request;
     schemas: Record<SchemaId, Schema>;
     requestNameOverride?: string;
@@ -133,7 +136,10 @@ function getRequest({
             throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            const requestTypeReference = convertToTypeReference({ schema });
+            const requestTypeReference = convertToTypeReference({
+                schema,
+                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+            });
 
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [request.schema.schema],
@@ -160,7 +166,10 @@ function getRequest({
                 body: {
                     properties: Object.fromEntries(
                         schema.properties.map((property) => {
-                            const propertyTypeReference = convertToTypeReference({ schema: property.schema });
+                            const propertyTypeReference = convertToTypeReference({
+                                schema: property.schema,
+                                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                            });
                             return [property.key, propertyTypeReference.typeReference];
                         })
                     ),
@@ -180,7 +189,10 @@ function getRequest({
                             if (property.schema.type === "file") {
                                 return [property.key, "file"];
                             } else {
-                                const propertyTypeReference = convertToTypeReference({ schema: property.schema.json });
+                                const propertyTypeReference = convertToTypeReference({
+                                    schema: property.schema.json,
+                                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                                });
                                 return [property.key, propertyTypeReference.typeReference];
                             }
                         })
