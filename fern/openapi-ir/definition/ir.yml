@@ -104,16 +104,19 @@ types:
           This string includes templated path parameters. 
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
-      operationId: optional<string>
+      operationId: string
       tags: list<TagId>
       pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       headers: list<Header>
-      requestName:
+      generatedRequestName:
+        type: string
+        docs: |
+          Populated as ${operationId}Request
+      requestNameOverride:
         type: optional<string>
         docs: |
-          Populated by `x-request-name` on a path object
-          or `x-name` on a request object
+          Populated by `x-request-name` on a path object.
       request: optional<Request>
       response: optional<Response>
       errors: list<HttpError>
