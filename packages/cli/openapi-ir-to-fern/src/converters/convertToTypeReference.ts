@@ -10,6 +10,7 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
+    SchemaId,
 } from "@fern-fern/openapi-ir-model/ir";
 import { convertObjectToTypeDeclaration, convertOneOfToTypeDeclaration } from "./convertToTypeDeclaration";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -19,26 +20,34 @@ export interface TypeReference {
     additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
-export function convertToTypeReference({ schema, prefix }: { schema: Schema; prefix?: string }): TypeReference {
+export function convertToTypeReference({
+    schema,
+    prefix,
+    schemas,
+}: {
+    schema: Schema;
+    prefix?: string;
+    schemas: Record<SchemaId, Schema>;
+}): TypeReference {
     if (schema.type === "primitive") {
         return convertPrimitiveToTypeReference(schema);
     } else if (schema.type === "array") {
-        return convertArrayToTypeReference({ schema, prefix });
+        return convertArrayToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "map") {
-        return convertMapToTypeReference({ schema, prefix });
+        return convertMapToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "reference") {
-        return convertReferenceToTypeReference({ schema, prefix });
+        return convertReferenceToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "unknown") {
         return convertUnknownToTypeReference();
     } else if (schema.type === "optional") {
-        return convertOptionalToTypeReference({ schema, prefix });
+        return convertOptionalToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "enum") {
         return convertEnumToTypeReference({ schema, prefix });
     } else if (schema.type === "object") {
-        return convertObjectToTypeReference({ schema, prefix });
+        return convertObjectToTypeReference({ schema, prefix, schemas });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     } else if (schema.type === "oneOf") {
-        return convertOneOfToTypeReference({ schema: schema.oneOf, prefix });
+        return convertOneOfToTypeReference({ schema: schema.oneOf, prefix, schemas });
     }
     throw new Error(`Failed to convert to type reference: ${JSON.stringify(schema)}`);
 }
@@ -68,13 +77,20 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
 export function convertReferenceToTypeReference({
     schema,
     prefix,
+    schemas,
 }: {
     schema: ReferencedSchema;
     prefix?: string;
+    schemas: Record<SchemaId, Schema>;
 }): TypeReference {
+    const resolvedSchema = schemas[schema.schema];
+    if (resolvedSchema == null) {
+        throw new Error(`Failed to look up schema with id ${schema.schema}`);
+    }
+    const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     return {
         typeReference: {
-            type: prefix != null ? `${prefix}.${schema.schema}` : schema.schema,
+            type: prefix != null ? `${prefix}.${schemaName}` : schemaName,
             docs: schema.description ?? undefined,
         },
         additionalTypeDeclarations: {},
@@ -84,11 +100,13 @@ export function convertReferenceToTypeReference({
 export function convertArrayToTypeReference({
     schema,
     prefix,
+    schemas,
 }: {
     schema: ArraySchema;
     prefix?: string;
+    schemas: Record<SchemaId, Schema>;
 }): TypeReference {
-    const elementTypeReference = convertToTypeReference({ schema: schema.value, prefix });
+    const elementTypeReference = convertToTypeReference({ schema: schema.value, prefix, schemas });
     return {
         typeReference: {
             docs: schema.description ?? undefined,
@@ -100,7 +118,15 @@ export function convertArrayToTypeReference({
     };
 }
 
-export function convertMapToTypeReference({ schema, prefix }: { schema: MapSchema; prefix?: string }): TypeReference {
+export function convertMapToTypeReference({
+    schema,
+    prefix,
+    schemas,
+}: {
+    schema: MapSchema;
+    prefix?: string;
+    schemas: Record<SchemaId, Schema>;
+}): TypeReference {
     const keyTypeReference = convertPrimitiveToTypeReference(
         Schema.primitive({
             schema: schema.key,
@@ -110,6 +136,7 @@ export function convertMapToTypeReference({ schema, prefix }: { schema: MapSchem
     const valueTypeReference = convertToTypeReference({
         schema: schema.value,
         prefix,
+        schemas,
     });
     return {
         typeReference: {
@@ -127,13 +154,16 @@ export function convertMapToTypeReference({ schema, prefix }: { schema: MapSchem
 export function convertOptionalToTypeReference({
     schema,
     prefix,
+    schemas,
 }: {
     schema: OptionalSchema;
     prefix?: string;
+    schemas: Record<SchemaId, Schema>;
 }): TypeReference {
     const valueTypeReference = convertToTypeReference({
         schema: schema.value,
         prefix,
+        schemas,
     });
     return {
         typeReference: {
@@ -169,11 +199,13 @@ export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSch
 export function convertObjectToTypeReference({
     schema,
     prefix,
+    schemas,
 }: {
     schema: ObjectSchema;
     prefix?: string;
+    schemas: Record<SchemaId, Schema>;
 }): TypeReference {
-    const objectTypeDeclaration = convertObjectToTypeDeclaration(schema);
+    const objectTypeDeclaration = convertObjectToTypeDeclaration({ schema, schemas });
     objectTypeDeclaration.additionalTypeDeclarations;
     return {
         typeReference: {
@@ -193,11 +225,13 @@ export function convertObjectToTypeReference({
 export function convertOneOfToTypeReference({
     schema,
     prefix,
+    schemas,
 }: {
     schema: OneOfSchema;
     prefix?: string;
+    schemas: Record<SchemaId, Schema>;
 }): TypeReference {
-    const unionTypeDeclaration = convertOneOfToTypeDeclaration(schema);
+    const unionTypeDeclaration = convertOneOfToTypeDeclaration({ schema, schemas });
     return {
         typeReference: {
             type:
@@ -211,4 +245,15 @@ export function convertOneOfToTypeReference({
             ...unionTypeDeclaration.additionalTypeDeclarations,
         },
     };
+}
+
+function getSchemaName(schema: Schema) {
+    if (schema.type === "object") {
+        return schema.nameOverride ?? schema.generatedName;
+    } else if (schema.type === "enum") {
+        return schema.nameOverride ?? schema.generatedName;
+    } else if (schema.type === "oneOf") {
+        return schema.oneOf.nameOverride ?? schema.oneOf.generatedName;
+    }
+    return undefined;
 }

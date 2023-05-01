@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { QueryParameter, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { QueryParameter, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
 import { convertToTypeReference, TypeReference } from "./convertToTypeReference";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -12,11 +12,13 @@ export interface ConvertedQueryParameter {
 export function convertQueryParameter({
     queryParameter,
     isPackageYml,
+    schemas,
 }: {
     queryParameter: QueryParameter;
     isPackageYml: boolean;
+    schemas: Record<SchemaId, Schema>;
 }): ConvertedQueryParameter {
-    const typeReference = getQueryParameterTypeReference({ schema: queryParameter.schema, isPackageYml });
+    const typeReference = getQueryParameterTypeReference({ schema: queryParameter.schema, isPackageYml, schemas });
     return {
         value: {
             docs: queryParameter.description ?? undefined,
@@ -37,9 +39,11 @@ interface QueryParameterTypeReference {
 function getQueryParameterTypeReference({
     schema,
     isPackageYml,
+    schemas,
 }: {
     schema: Schema;
     isPackageYml: boolean;
+    schemas: Record<SchemaId, Schema>;
 }): QueryParameterTypeReference {
     const prefix = isPackageYml ? undefined : ROOT_PREFIX;
     if (schema.type === "optional") {
@@ -48,6 +52,7 @@ function getQueryParameterTypeReference({
                 value: convertToTypeReference({
                     schema: Schema.optional({ value: schema.value.value, description: schema.description }),
                     prefix,
+                    schemas,
                 }),
                 allowMultiple: true,
             };
@@ -56,6 +61,7 @@ function getQueryParameterTypeReference({
             value: convertToTypeReference({
                 schema,
                 prefix,
+                schemas,
             }),
             allowMultiple: false,
         };
@@ -66,6 +72,7 @@ function getQueryParameterTypeReference({
             value: convertToTypeReference({
                 schema: Schema.optional({ value: schema.value, description: schema.description }),
                 prefix,
+                schemas,
             }),
             allowMultiple: true,
         };
@@ -74,6 +81,7 @@ function getQueryParameterTypeReference({
             value: convertToTypeReference({
                 schema,
                 prefix,
+                schemas,
             }),
             allowMultiple: false,
         };
