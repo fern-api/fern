@@ -1,7 +1,7 @@
 import { Response } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
@@ -34,7 +34,7 @@ export function convertResponse({
 
         return {
             description: response.description,
-            schema: convertSchema(responsSchema, false, context),
+            schema: convertSchema(responsSchema, false, context, []),
         };
     }
     return undefined;

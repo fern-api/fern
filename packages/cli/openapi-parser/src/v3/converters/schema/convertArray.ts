@@ -4,17 +4,19 @@ import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
 
 export function convertArray({
+    breadcrumbs,
     item,
     description,
     wrapAsOptional,
     context,
 }: {
+    breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
     wrapAsOptional: boolean;
     context: OpenAPIV3ParserContext;
 }): Schema {
-    const itemSchema = item == null ? Schema.unknown() : convertSchema(item, false, context);
+    const itemSchema = item == null ? Schema.unknown() : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
     return wrapArray({
         itemSchema,
         wrapAsOptional,

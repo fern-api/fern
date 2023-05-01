@@ -22,7 +22,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "AccountsPage",
+              "type": "",
             },
           },
           "listGames": {
@@ -55,7 +55,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "GamesPage",
+              "type": "",
             },
           },
           "listGroups": {
@@ -80,7 +80,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "GroupsPage",
+              "type": "",
             },
           },
           "listLocations": {
@@ -97,7 +97,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "RoomsPage",
+              "type": "",
             },
           },
           "listPhotos": {
@@ -114,7 +114,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "PhotosPage",
+              "type": "",
             },
           },
           "listPlayers": {
@@ -131,7 +131,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "PlayersPage",
+              "type": "",
             },
           },
           "retrieveAccount": {
@@ -264,7 +264,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "complete": {
               "docs": undefined,
-              "type": "GameCompletionInfo",
+              "type": "GameComplete",
             },
             "date": {
               "docs": undefined,
@@ -272,7 +272,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "extra_fields": {
               "docs": undefined,
-              "type": "list<GameExtraField>",
+              "type": "list<GameExtraFieldsItem>",
             },
             "group": {
               "docs": undefined,
@@ -288,7 +288,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "photos": {
               "docs": undefined,
-              "type": "optional<list<GamePhoto>>",
+              "type": "optional<list<GamePhotosItem>>",
             },
             "room": {
               "docs": undefined,
@@ -308,7 +308,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GameCompletionInfo": {
+        "GameComplete": {
           "docs": undefined,
           "properties": {
             "completed_at": {
@@ -333,7 +333,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GameExtraField": {
+        "GameExtraFieldsItem": {
           "docs": undefined,
           "properties": {
             "key": {
@@ -354,7 +354,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GamePhoto": {
+        "GamePhotosItem": {
           "docs": undefined,
           "properties": {
             "added_at": {
@@ -404,11 +404,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "photos": {
               "docs": undefined,
-              "type": "optional<list<GroupPhoto>>",
+              "type": "optional<list<GroupPhotosItem>>",
             },
             "players": {
               "docs": undefined,
-              "type": "list<GroupPlayer>",
+              "type": "list<GroupPlayersItem>",
             },
             "start_at": {
               "docs": undefined,
@@ -424,27 +424,6 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GroupGameExtraField": {
-          "docs": undefined,
-          "properties": {
-            "key": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "label": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "present": {
-              "docs": undefined,
-              "type": "boolean",
-            },
-            "value": {
-              "docs": undefined,
-              "type": "map<string, unknown>",
-            },
-          },
-        },
         "GroupGamesItem": {
           "docs": undefined,
           "properties": {
@@ -454,7 +433,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "complete": {
               "docs": undefined,
-              "type": "GameCompletionInfo",
+              "type": "GroupGamesItemComplete",
             },
             "date": {
               "docs": undefined,
@@ -462,7 +441,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "extra_fields": {
               "docs": undefined,
-              "type": "list<GroupGameExtraField>",
+              "type": "list<GroupGamesItemExtraFieldsItem>",
             },
             "id": {
               "docs": undefined,
@@ -490,7 +469,53 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GroupPhoto": {
+        "GroupGamesItemComplete": {
+          "docs": undefined,
+          "properties": {
+            "completed_at": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "completion_time": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "did_win": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "hints": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "score": {
+              "docs": undefined,
+              "type": "integer",
+            },
+          },
+        },
+        "GroupGamesItemExtraFieldsItem": {
+          "docs": undefined,
+          "properties": {
+            "key": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "label": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "present": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GroupPhotosItem": {
           "docs": undefined,
           "properties": {
             "added_at": {
@@ -515,7 +540,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GroupPlayer": {
+        "GroupPlayersItem": {
           "docs": undefined,
           "properties": {
             "added_at": {
@@ -528,7 +553,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "extra_fields": {
               "docs": undefined,
-              "type": "list<GroupPlayerExtraField>",
+              "type": "list<GroupPlayersItemExtraFieldsItem>",
             },
             "first_name": {
               "docs": undefined,
@@ -556,7 +581,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "GroupPlayerExtraField": {
+        "GroupPlayersItemExtraFieldsItem": {
           "docs": undefined,
           "properties": {
             "key": {
@@ -594,7 +619,36 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "processed": {
               "docs": undefined,
-              "type": "list<ProcessedPhoto>",
+              "type": "list<PhotoProcessedItem>",
+            },
+          },
+        },
+        "PhotoProcessedItem": {
+          "docs": undefined,
+          "properties": {
+            "added_at": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "game": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "group": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "photo": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "processed_image": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "ready": {
+              "docs": undefined,
+              "type": "optional<string>",
             },
           },
         },
@@ -611,7 +665,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "extra_fields": {
               "docs": undefined,
-              "type": "list<PlayerExtraField>",
+              "type": "list<PlayerExtraFieldsItem>",
             },
             "first_name": {
               "docs": undefined,
@@ -639,7 +693,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
           },
         },
-        "PlayerExtraField": {
+        "PlayerExtraFieldsItem": {
           "docs": undefined,
           "properties": {
             "key": {
@@ -657,35 +711,6 @@ exports[`open api converter buzzshot simple 1`] = `
             "value": {
               "docs": undefined,
               "type": "map<string, unknown>",
-            },
-          },
-        },
-        "ProcessedPhoto": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "game": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "group": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "photo": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "processed_image": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "ready": {
-              "docs": undefined,
-              "type": "optional<string>",
             },
           },
         },

@@ -1,7 +1,7 @@
 import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
@@ -53,7 +53,7 @@ export function convertRequest({
                     }
                     return {
                         key,
-                        schema: MultipartSchema.json(convertSchema(definition, false, context)),
+                        schema: MultipartSchema.json(convertSchema(definition, false, context, [])),
                         description: undefined,
                     };
                 }),
@@ -66,7 +66,7 @@ export function convertRequest({
     if (requestBodySchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema, false, context);
+    const requestSchema = convertSchema(requestBodySchema, false, context, []);
     return {
         value: Request.json({
             description: undefined,

@@ -1,7 +1,8 @@
 import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { getGeneratedTypeName } from "../utils/getSchemaName";
+import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
 import { convertDiscriminatedOneOf } from "./schema/convertDiscriminatedOneOf";
@@ -12,49 +13,40 @@ import { convertUndiscriminatedOneOf } from "./schema/convertUndiscriminatedOneO
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 
-export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
-    if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-        throw new Error(`Cannot get schema id from reference: ${ref.$ref}`);
-    }
-    return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
-}
-
-export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject): ReferencedSchema {
-    return Schema.reference({
-        // TODO(dsinghvi): references may contain files
-        file: undefined,
-        schema: getSchemaIdFromReference(schema),
-        description: undefined,
-    });
-}
-
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
-    context: OpenAPIV3ParserContext
+    context: OpenAPIV3ParserContext,
+    breadcrumbs: string[]
 ): Schema {
     if (isReferenceObject(schema)) {
-        const referenceSchema = Schema.reference(convertToReferencedSchema(schema));
-        if (wrapAsOptional) {
-            return Schema.optional({
-                value: referenceSchema,
-                description: undefined,
-            });
-        } else {
-            return referenceSchema;
-        }
+        return convertReferenceObject(schema, wrapAsOptional);
     } else {
-        return convertSchemaObject(schema, wrapAsOptional, context);
+        return convertSchemaObject(schema, wrapAsOptional, context, breadcrumbs);
+    }
+}
+
+export function convertReferenceObject(schema: OpenAPIV3.ReferenceObject, wrapAsOptional: boolean): Schema {
+    const referenceSchema = Schema.reference(convertToReferencedSchema(schema));
+    if (wrapAsOptional) {
+        return Schema.optional({
+            value: referenceSchema,
+            description: undefined,
+        });
+    } else {
+        return referenceSchema;
     }
 }
 
 function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsOptional: boolean,
-    context: OpenAPIV3ParserContext
+    context: OpenAPIV3ParserContext,
+    breadcrumbs: string[]
 ): Schema {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const schemaName = (schema as any)["x-name"] as string | undefined;
+    const nameOverride = (schema as any)["x-fern-type-name"] as string | undefined;
+    const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
     // enums
@@ -69,7 +61,8 @@ function convertSchemaObject(
             });
         }
         return convertEnum({
-            schemaName,
+            nameOverride,
+            generatedName,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
             enumValues: schema.enum,
@@ -106,12 +99,13 @@ function convertSchemaObject(
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ item: schema.items, description, wrapAsOptional, context });
+        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsOptional, context });
     }
 
     // maps
     if (schema.additionalProperties != null) {
         return convertAdditionalProperties({
+            breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
             wrapAsOptional,
@@ -127,11 +121,13 @@ function convertSchemaObject(
         Object.keys(schema.discriminator.mapping).length > 0
     ) {
         return convertDiscriminatedOneOf({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
             description,
             discriminator: schema.discriminator,
             properties: schema.properties ?? {},
             required: schema.required,
-            schemaName,
             wrapAsOptional,
             context,
         });
@@ -140,7 +136,9 @@ function convertSchemaObject(
     // treat anyOf as undiscrminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
         return convertUndiscriminatedOneOf({
-            schemaName,
+            nameOverride,
+            generatedName,
+            breadcrumbs,
             description,
             wrapAsOptional,
             context,
@@ -152,13 +150,15 @@ function convertSchemaObject(
     if (schema.allOf != null || schema.properties != null) {
         // convert a singular allOf as a reference or inlined schema
         if (hasNoProperties(schema) && schema.allOf != null && schema.allOf.length === 1 && schema.allOf[0] != null) {
-            const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional, context);
+            const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional, context, breadcrumbs);
             return maybeInjectDescription(convertedSchema, description);
         }
         // otherwise convert as an object
         return convertObject({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
             properties: schema.properties ?? {},
-            objectName: schemaName,
             description,
             required: schema.required,
             wrapAsOptional,
@@ -178,6 +178,22 @@ function convertSchemaObject(
     }
 
     throw new Error(`Failed to convert schema value=${JSON.stringify(schema)}`);
+}
+
+export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
+    if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
+        throw new Error(`Cannot get schema id from reference: ${ref.$ref}`);
+    }
+    return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
+}
+
+export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject): ReferencedSchema {
+    return Schema.reference({
+        // TODO(dsinghvi): references may contain files
+        file: undefined,
+        schema: getSchemaIdFromReference(schema),
+        description: undefined,
+    });
 }
 
 function hasNoOneOf(schema: OpenAPIV3.SchemaObject): boolean {

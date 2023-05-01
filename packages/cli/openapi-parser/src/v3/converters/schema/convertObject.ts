@@ -1,20 +1,24 @@
 import { ObjectProperty, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { isReferenceObject } from "../../isReferenceObject";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, convertToReferencedSchema } from "../convertSchemas";
 
 export function convertObject({
+    nameOverride,
+    generatedName,
+    breadcrumbs,
     properties,
-    objectName,
     description,
     required,
     wrapAsOptional,
     allOf,
     context,
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
+    breadcrumbs: string[];
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
-    objectName: string | undefined;
     description: string | undefined;
     required: string[] | undefined;
     wrapAsOptional: boolean;
@@ -35,15 +39,16 @@ export function convertObject({
 
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = required != null && required.includes(propertyName);
-        const schema = convertSchema(propertySchema, !isRequired, context);
+        const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
         return {
             key: propertyName,
             schema,
         };
     });
     return wrapObject({
+        nameOverride,
+        generatedName,
         wrapAsOptional,
-        objectName,
         properties: convertedProperties,
         description,
         allOf: referencedAllOf,
@@ -51,14 +56,16 @@ export function convertObject({
 }
 
 export function wrapObject({
+    nameOverride,
+    generatedName,
     wrapAsOptional,
-    objectName,
     properties,
     description,
     allOf,
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     wrapAsOptional: boolean;
-    objectName: string | undefined;
     properties: ObjectProperty[];
     description: string | undefined;
     allOf: ReferencedSchema[];
@@ -68,7 +75,8 @@ export function wrapObject({
             value: Schema.object({
                 description: undefined,
                 properties,
-                name: objectName,
+                nameOverride,
+                generatedName,
                 allOf,
             }),
             description,
@@ -77,7 +85,8 @@ export function wrapObject({
     return Schema.object({
         description,
         properties,
-        name: objectName,
+        nameOverride,
+        generatedName,
         allOf,
     });
 }
