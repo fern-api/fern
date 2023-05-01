@@ -4862,6 +4862,16 @@ paths:
         - works
 security:
   - auth-token: []
+servers:
+  - description: DevRev API endpoint.
+    url: "{protocol}://{hostname}"
+    variables:
+      hostname:
+        default: api.devrev.ai
+        description: API hostname.
+      protocol:
+        default: https
+        description: API protocol.
 tags:
   - description: Artifact (file) management APIs.
     name: artifacts

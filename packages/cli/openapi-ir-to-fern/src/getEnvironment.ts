@@ -19,7 +19,8 @@ export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefin
     const defaultUrls: Record<string, string> = {};
     for (const server of openApiFile.servers) {
         if (server.name == null) {
-            throw new Error("All servers must have x-name");
+            // TODO(dsinghvi): log that we are ignoring server because no name
+            continue;
         }
         defaultUrls[server.name] = server.url;
     }
