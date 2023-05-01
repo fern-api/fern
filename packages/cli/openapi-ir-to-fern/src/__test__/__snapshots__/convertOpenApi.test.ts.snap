@@ -1372,6 +1372,29 @@ issue a Rev session token.
             },
           },
         },
+        "DevOrgAuthConnectionsCreateRequest": {
+          "base-properties": {},
+          "docs": "Request to create a new enterprise authentication connection.
+",
+          "union": {
+            "google_apps": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsGoogleApps",
+            },
+            "oidc": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsOidc",
+            },
+            "samlp": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsSaml",
+            },
+            "waad": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsAzureAd",
+            },
+          },
+        },
         "DevOrgAuthConnectionsCreateRequestType": {
           "docs": "Defines the type for the authentication connection. Different types of
 authentication connections have different configuration parameters.
@@ -1427,6 +1450,34 @@ authentication connections configured for a Dev organization.
 a Dev organization.
 ",
               "type": "list<AuthConnection>",
+            },
+          },
+        },
+        "DevOrgAuthConnectionsUpdateRequest": {
+          "base-properties": {},
+          "docs": "Request to update an enterprise authentication connection for a Dev
+organization.
+",
+          "union": {
+            "google_apps": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsGoogleApps",
+            },
+            "none": {
+              "docs": undefined,
+              "type": "empty",
+            },
+            "oidc": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsOidc",
+            },
+            "samlp": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsSaml",
+            },
+            "waad": {
+              "docs": undefined,
+              "type": "AuthConnectionOptionsAzureAd",
             },
           },
         },
@@ -2083,6 +2134,28 @@ always be returned in the specified sort-by order.
             },
           ],
         },
+        "PartsCreateRequest": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "capability": {
+              "docs": undefined,
+              "type": "PartsCreateRequestCapability",
+            },
+            "enhancement": {
+              "docs": undefined,
+              "type": "PartsCreateRequestEnhancement",
+            },
+            "feature": {
+              "docs": undefined,
+              "type": "PartsCreateRequestFeature",
+            },
+            "product": {
+              "docs": undefined,
+              "type": "parts-create-request-product",
+            },
+          },
+        },
         "PartsCreateRequestCapability": {
           "docs": undefined,
           "properties": {
@@ -2152,6 +2225,32 @@ sort order. If not set, then no later elements exist.
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
+            },
+          },
+        },
+        "PartsUpdateRequest": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "capability": {
+              "docs": undefined,
+              "type": "parts-update-request-capability",
+            },
+            "enhancement": {
+              "docs": undefined,
+              "type": "PartsUpdateRequestEnhancement",
+            },
+            "feature": {
+              "docs": undefined,
+              "type": "parts-update-request-feature",
+            },
+            "none": {
+              "docs": undefined,
+              "type": "empty",
+            },
+            "product": {
+              "docs": undefined,
+              "type": "parts-update-request-product",
             },
           },
         },
@@ -2497,6 +2596,16 @@ will appear in the response.
             },
           ],
         },
+        "TimelineEntriesCreateRequest": {
+          "base-properties": {},
+          "docs": "The request to create a timeline entry for an object.",
+          "union": {
+            "timeline_comment": {
+              "docs": undefined,
+              "type": "TimelineEntriesCreateRequestTimelineComment",
+            },
+          },
+        },
         "TimelineEntriesCreateRequestTimelineComment": {
           "docs": undefined,
           "properties": {
@@ -2563,6 +2672,16 @@ sort order. If not set, then no prior elements exist.
             "timeline_entries": {
               "docs": "The timeline entries for the object.",
               "type": "list<TimelineEntry>",
+            },
+          },
+        },
+        "TimelineEntriesUpdateRequest": {
+          "base-properties": {},
+          "docs": "The request to update a timeline entry.",
+          "union": {
+            "timeline_comment": {
+              "docs": undefined,
+              "type": "TimelineEntriesUpdateRequestTimelineComment",
             },
           },
         },
@@ -3157,6 +3276,20 @@ event types. Note this is mutually exclusive with 'add' and
             },
           ],
         },
+        "WorksCreateRequest": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "issue": {
+              "docs": undefined,
+              "type": "WorksCreateRequestIssue",
+            },
+            "ticket": {
+              "docs": undefined,
+              "type": "WorksCreateRequestTicket",
+            },
+          },
+        },
         "WorksCreateRequestIssue": {
           "docs": undefined,
           "properties": {
@@ -3232,6 +3365,24 @@ sort order. If not set, then no prior elements exist.
             "works": {
               "docs": "The list of works.",
               "type": "list<Work>",
+            },
+          },
+        },
+        "WorksUpdateRequest": {
+          "base-properties": {},
+          "docs": undefined,
+          "union": {
+            "issue": {
+              "docs": undefined,
+              "type": "WorksUpdateRequestIssue",
+            },
+            "none": {
+              "docs": undefined,
+              "type": "empty",
+            },
+            "ticket": {
+              "docs": undefined,
+              "type": "WorksUpdateRequestTicket",
             },
           },
         },

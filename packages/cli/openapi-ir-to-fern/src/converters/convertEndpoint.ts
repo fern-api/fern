@@ -143,7 +143,7 @@ function getRequest({
                 schemas,
             });
             const convertedRequest: ConvertedRequest = {
-                schemaIdsToExclude: [request.schema.schema],
+                schemaIdsToExclude: [],
                 value: {
                     body:
                         typeof requestTypeReference === "string"
