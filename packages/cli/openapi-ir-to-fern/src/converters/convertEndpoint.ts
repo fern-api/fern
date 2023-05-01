@@ -133,7 +133,24 @@ function getRequest({
             throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            throw Error(`Request ${request.schema.schema} must be object ${JSON.stringify(schema)}`);
+            const requestTypeReference = convertToTypeReference({ schema });
+
+            const convertedRequest: ConvertedRequest = {
+                schemaIdsToExclude: [request.schema.schema],
+                value: {
+                    body:
+                        typeof requestTypeReference === "string"
+                            ? requestTypeReference
+                            : requestTypeReference.typeReference,
+                },
+            };
+
+            if (Object.keys(queryParameters ?? {}).length > 0) {
+                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
+                convertedRequest.value["query-parameters"] = queryParameters;
+            }
+
+            return convertedRequest;
         }
         return {
             schemaIdsToExclude: [request.schema.schema],

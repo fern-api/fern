@@ -4,6 +4,7 @@ import {
     EnumSchema,
     MapSchema,
     ObjectSchema,
+    OneOfSchema,
     OptionalSchema,
     PrimitiveSchema,
     ReferencedSchema,
@@ -42,6 +43,9 @@ export function convertToTypeDeclaration(schema: Schema): TypeDeclarations {
         return convertOptionalToTypeDeclaration(schema);
     } else if (schema.type === "unknown") {
         return convertUnknownToTypeDeclaration();
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    } else if (schema.type === "oneOf") {
+        return convertOneOfToTypeDeclaration(schema.oneOf);
     }
     throw new Error(`Failed to convert to type declaration: ${JSON.stringify(schema)}`);
 }
@@ -137,5 +141,71 @@ export function convertUnknownToTypeDeclaration(): TypeDeclarations {
         additionalTypeDeclarations: {
             ...unknownTypeReference.additionalTypeDeclarations,
         },
+    };
+}
+
+export function convertOneOfToTypeDeclaration(schema: OneOfSchema): TypeDeclarations {
+    let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
+    if (schema.type === "discriminated") {
+        const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+        for (const property of schema.commonProperties) {
+            const propertyTypeReference = convertToTypeReference({ schema: property.schema });
+            baseProperties[property.key] = propertyTypeReference.typeReference;
+            additionalTypeDeclarations = {
+                ...additionalTypeDeclarations,
+                ...propertyTypeReference.additionalTypeDeclarations,
+            };
+        }
+        const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
+        for (const [discriminantValue, subSchema] of Object.entries(schema.schemas)) {
+            const subSchemaTypeReference = convertToTypeReference({ schema: subSchema });
+            if (typeof subSchemaTypeReference.typeReference === "string") {
+                union[discriminantValue] = subSchemaTypeReference.typeReference;
+            } else {
+                union[discriminantValue] = {
+                    type: subSchemaTypeReference.typeReference.type,
+                    docs: subSchemaTypeReference.typeReference.docs,
+                };
+            }
+            additionalTypeDeclarations = {
+                ...additionalTypeDeclarations,
+                ...subSchemaTypeReference.additionalTypeDeclarations,
+            };
+        }
+        return {
+            name: schema.nameOverride ?? schema.generatedName,
+            typeDeclaration: {
+                "base-properties": {},
+                docs: schema.description ?? undefined,
+                union,
+            },
+            additionalTypeDeclarations,
+        };
+    }
+
+    const union: RawSchemas.TypeReferenceWithDocsSchema[] = [];
+    for (const subSchema of schema.schemas) {
+        const subSchemaTypeReference = convertToTypeReference({ schema: subSchema });
+        if (typeof subSchemaTypeReference.typeReference === "string") {
+            union.push(subSchemaTypeReference.typeReference);
+        } else {
+            union.push({
+                type: subSchemaTypeReference.typeReference.type,
+                docs: subSchemaTypeReference.typeReference.docs,
+            });
+        }
+        additionalTypeDeclarations = {
+            ...additionalTypeDeclarations,
+            ...subSchemaTypeReference.additionalTypeDeclarations,
+        };
+    }
+    return {
+        name: schema.nameOverride ?? schema.generatedName,
+        typeDeclaration: {
+            discriminated: false,
+            docs: schema.description ?? undefined,
+            union,
+        },
+        additionalTypeDeclarations,
     };
 }
