@@ -3,7 +3,8 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
-import { generateIr } from "./v3/generateIr";
+import { generateIr as generateIrFromV2 } from "./v2/generateIr";
+import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 
 export interface ParsedFile {
     id: string;
@@ -24,12 +25,15 @@ export async function parseFile({
     if (isOpenApiV3(openApiDocument)) {
         return {
             id,
-            file: generateIr(openApiDocument, taskContext),
+            file: generateIrFromV3(openApiDocument, taskContext),
+        };
+    } else if (isOpenApiV2(openApiDocument)) {
+        return {
+            id,
+            file: await generateIrFromV2(openApiDocument, taskContext),
         };
     }
-    return taskContext.failAndThrow(
-        `Only OpenAPI V3 Documents are supported. ${isOpenApiV2(openApiDocument) ? "Received V2 instead." : ""}`
-    );
+    return taskContext.failAndThrow("Only OpenAPI V3 and V2 Documents are supported.");
 }
 
 function isOpenApiV3(openApi: OpenAPI.Document): openApi is OpenAPIV3.Document {

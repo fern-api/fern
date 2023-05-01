@@ -10,6 +10,7 @@ describe("open api parser", () => {
     testFixture("vellum", "openapi.yml");
     testFixture("devrev", "openapi.yml");
     testFixture("hathora", "openapi.json");
+    testFixture("suger", "swagger.json");
 });
 
 function testFixture(fixtureName: string, filename: string) {

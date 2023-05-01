@@ -177,7 +177,9 @@ function convertSchemaObject(
         });
     }
 
-    throw new Error(`Failed to convert schema value=${JSON.stringify(schema)}`);
+    context.logger.warn(breadcrumbs.join(" -> "), ": Failed to parse schema, so defaulting to unknown");
+    context.logger.debug(`OpenAPI Schema at ${breadcrumbs.join(" -> ")} is ${JSON.stringify(schema, undefined, 4)}`);
+    return Schema.unknown();
 }
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
