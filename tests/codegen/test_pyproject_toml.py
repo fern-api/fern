@@ -29,6 +29,7 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
 name = "fern-fern-ir-model"
 version = "0.0.0"
 description = ""
+readme = "README.md"
 authors = []
 packages = [
     { include = "ir", from = "src"}

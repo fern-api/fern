@@ -108,8 +108,13 @@ class Project:
                 python_version=self._python_version,
             )
             py_project_toml.write()
+
             # generate py.typed
             with open(os.path.join(self._project_filepath, "py.typed"), "w") as f:
+                f.write("")
+
+            # generate empty README so poetry doesn't fail
+            with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
                 f.write("")
 
     def __enter__(self) -> Project:

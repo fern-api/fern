@@ -63,6 +63,7 @@ class PyProjectToml:
 name = "{self.name}"
 version = "{self.version}"
 description = ""
+readme = "README.md"
 authors = []
 packages = [
     {{ include = "{self.package.include}", from = "{self.package._from}"}}
