@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
+from typing import List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
 
@@ -31,6 +31,16 @@ class ConstructorParameter:
     private_member_name: str
     type_hint: AST.TypeHint
     initializer: Optional[AST.Expression] = None
+
+
+HTTPX_PRIMITIVE_DATA_TYPES = set(
+    [
+        ir_types.PrimitiveType.STRING,
+        ir_types.PrimitiveType.INTEGER,
+        ir_types.PrimitiveType.DOUBLE,
+        ir_types.PrimitiveType.BOOLEAN,
+    ]
+)
 
 
 class ClientGenerator:
@@ -384,18 +394,44 @@ class ClientGenerator:
     def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         reference = AST.Expression(self._get_query_parameter_name(query_parameter))
 
-        if is_datetime(unwrap_optional_type(query_parameter.value_type)):
+        if self._is_datetime(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.serialize_datetime(reference)
 
-            if is_optional(query_parameter.value_type):
+            is_optional = not self._is_datetime(query_parameter.value_type, allow_optional=False)
+            if is_optional:
                 # needed to prevent infinite recursion when writing the reference to file
                 existing_reference = reference
 
-                def write(writer: AST.NodeWriter) -> None:
+                def write_ternary(writer: AST.NodeWriter) -> None:
                     writer.write_node(existing_reference)
                     writer.write(f" if {self._get_query_parameter_name(query_parameter)} is not None else None")
 
-                reference = AST.Expression(AST.CodeWriter(write))
+                reference = AST.Expression(AST.CodeWriter(write_ternary))
+
+        elif self._is_date(query_parameter.value_type, allow_optional=True):
+            # needed to prevent infinite recursion when writing the reference to file
+            existing_reference = reference
+
+            def write_strftime(writer: AST.NodeWriter) -> None:
+                writer.write("str(")
+                writer.write_node(existing_reference)
+                writer.write(")")
+
+            reference = AST.Expression(AST.CodeWriter(write_strftime))
+
+            is_optional = not self._is_date(query_parameter.value_type, allow_optional=False)
+            if is_optional:
+                # needed to prevent infinite recursion when writing the reference to file
+                existing_reference2 = reference
+
+                def write_ternary(writer: AST.NodeWriter) -> None:
+                    writer.write_node(existing_reference2)
+                    writer.write(f" if {self._get_query_parameter_name(query_parameter)} is not None else None")
+
+                reference = AST.Expression(AST.CodeWriter(write_ternary))
+
+        elif not self._is_httpx_primitive_data(query_parameter.value_type):
+            reference = self._context.core_utilities.jsonable_encoder(reference)
 
         return reference
 
@@ -704,6 +740,78 @@ class ClientGenerator:
 
         return AST.CodeWriter(write)
 
+    def _is_datetime(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        allow_optional: bool,
+    ) -> bool:
+        return self._does_type_reference_match_primitives(
+            type_reference,
+            expected=set([ir_types.PrimitiveType.DATE_TIME]),
+            allow_optional=allow_optional,
+        )
+
+    def _is_date(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        allow_optional: bool,
+    ) -> bool:
+        return self._does_type_reference_match_primitives(
+            type_reference,
+            expected=set([ir_types.PrimitiveType.DATE]),
+            allow_optional=allow_optional,
+        )
+
+    def _is_httpx_primitive_data(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        allow_optional: bool = False,
+    ) -> bool:
+        return self._does_type_reference_match_primitives(
+            type_reference, expected=HTTPX_PRIMITIVE_DATA_TYPES, allow_optional=allow_optional
+        )
+
+    def _does_type_reference_match_primitives(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        expected: Set[ir_types.PrimitiveType],
+        allow_optional: bool,
+    ) -> bool:
+        def visit_named_type(type_name: ir_types.DeclaredTypeName) -> bool:
+            type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_name(type_name)
+            return type_declaration.shape.visit(
+                alias=lambda alias: self._does_type_reference_match_primitives(
+                    alias.alias_of, expected=expected, allow_optional=allow_optional
+                ),
+                enum=lambda x: True,
+                object=lambda x: False,
+                union=lambda x: False,
+                undiscriminated_union=lambda union: all(
+                    self._does_type_reference_match_primitives(
+                        member.type, expected=expected, allow_optional=allow_optional
+                    )
+                    for member in union.members
+                ),
+            )
+
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list=lambda x: False,
+                set=lambda x: False,
+                optional=lambda item_type: allow_optional
+                and self._does_type_reference_match_primitives(item_type, expected=expected, allow_optional=True),
+                map=lambda x: False,
+                literal=lambda literal: literal.visit(string=lambda x: ir_types.PrimitiveType.STRING in expected),
+            ),
+            named=visit_named_type,
+            primitive=lambda primitive: primitive in expected,
+            unknown=lambda: False,
+        )
+
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
     return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
@@ -716,13 +824,3 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
-
-
-def is_optional(type_reference: ir_types.TypeReference) -> bool:
-    type_as_union = type_reference.get_as_union()
-    return type_as_union.type == "container" and type_as_union.container.get_as_union().type == "optional"
-
-
-def is_datetime(type_reference: ir_types.TypeReference) -> bool:
-    type_as_union = type_reference.get_as_union()
-    return type_as_union.type == "primitive" and type_as_union.primitive == ir_types.PrimitiveType.DATE_TIME

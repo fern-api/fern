@@ -80,10 +80,10 @@ class PlaylistClient:
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
             params={
-                "limit": limit,
+                "limit": jsonable_encoder(limit),
                 "otherField": other_field,
                 "multiLineDocs": multi_line_docs,
-                "optionalMultipleField": optional_multiple_field,
+                "optionalMultipleField": jsonable_encoder(optional_multiple_field),
                 "multipleField": multiple_field,
             },
             headers=remove_none_from_headers(
@@ -240,10 +240,10 @@ class AsyncPlaylistClient:
                 "GET",
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
                 params={
-                    "limit": limit,
+                    "limit": jsonable_encoder(limit),
                     "otherField": other_field,
                     "multiLineDocs": multi_line_docs,
-                    "optionalMultipleField": optional_multiple_field,
+                    "optionalMultipleField": jsonable_encoder(optional_multiple_field),
                     "multipleField": multiple_field,
                 },
                 headers=remove_none_from_headers(

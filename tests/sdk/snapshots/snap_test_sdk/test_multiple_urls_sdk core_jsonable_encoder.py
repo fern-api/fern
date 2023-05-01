@@ -9,6 +9,7 @@ https://github.com/tiangolo/fastapi/blob/master/fastapi/encoders.py
 """
 
 import dataclasses
+import datetime as dt
 from collections import defaultdict
 from enum import Enum
 from pathlib import PurePath
@@ -17,6 +18,8 @@ from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
 
 from pydantic import BaseModel
 from pydantic.json import ENCODERS_BY_TYPE
+
+from .datetime_utils import serialize_datetime
 
 SetIntStr = Set[Union[int, str]]
 DictIntStrAny = Dict[Union[int, str], Any]
@@ -60,6 +63,10 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
         return str(obj)
     if isinstance(obj, (str, int, float, type(None))):
         return obj
+    if isinstance(obj, dt.date):
+        return str(obj)
+    if isinstance(obj, dt.datetime):
+        return serialize_datetime(obj)
     if isinstance(obj, dict):
         encoded_dict = {}
         allowed_keys = set(obj.keys())

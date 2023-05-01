@@ -20,6 +20,12 @@ service:
       method: POST
       path: /movie
       request:
+        name: CreateMovieRequest
+        query-parameters:
+          date: date
+          datetime: datetime
+          optional_date: optional<date>
+          optional_datetime: optional<datetime>
         body: Movie
       errors:
         - MovieAlreadyExistsError
