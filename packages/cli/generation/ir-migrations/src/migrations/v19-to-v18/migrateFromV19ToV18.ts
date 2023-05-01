@@ -23,7 +23,7 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
-        [GeneratorName.POSTMAN]: AlwaysRunMigration,
+        [GeneratorName.POSTMAN]: "0.0.44-1-gbf4b0f3",
         [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
     },
     migrateBackwards: (v19, context): IrVersions.V18.ir.IntermediateRepresentation => {
