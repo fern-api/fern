@@ -29,7 +29,7 @@ export function convertEndpoint({
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        const convertedPathParameter = convertPathParameter(pathParameter);
+        const convertedPathParameter = convertPathParameter({ pathParameter, schemas });
         pathParameters[pathParameter.name] = convertedPathParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -39,7 +39,7 @@ export function convertEndpoint({
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     for (const queryParameter of endpoint.queryParameters) {
-        const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml });
+        const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml, schemas });
         queryParameters[queryParameter.name] = convertedQueryParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -78,6 +78,7 @@ export function convertEndpoint({
         const responseTypeReference = convertToTypeReference({
             schema: endpoint.response.schema,
             prefix: isPackageYml ? undefined : ROOT_PREFIX,
+            schemas,
         });
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
@@ -136,17 +137,18 @@ function getRequest({
             throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
         if (schema.type !== "object") {
-            // const requestTypeReference = convertToTypeReference({
-            //     schema,
-            //     prefix: isPackageYml ? undefined : ROOT_PREFIX,
-            // });
+            const requestTypeReference = convertToTypeReference({
+                schema,
+                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                schemas,
+            });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [request.schema.schema],
                 value: {
-                    body: request.schema.schema,
-                    // typeof requestTypeReference === "string"
-                    //     ? requestTypeReference
-                    //     : requestTypeReference.typeReference,
+                    body:
+                        typeof requestTypeReference === "string"
+                            ? requestTypeReference
+                            : requestTypeReference.typeReference,
                 },
             };
 
@@ -168,6 +170,7 @@ function getRequest({
                             const propertyTypeReference = convertToTypeReference({
                                 schema: property.schema,
                                 prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                                schemas,
                             });
                             return [property.key, propertyTypeReference.typeReference];
                         })
@@ -191,6 +194,7 @@ function getRequest({
                                 const propertyTypeReference = convertToTypeReference({
                                     schema: property.schema.json,
                                     prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                                    schemas,
                                 });
                                 return [property.key, propertyTypeReference.typeReference];
                             }

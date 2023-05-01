@@ -79,10 +79,10 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
         if (convertedServices.schemaIdsToExclude.includes(schemaId)) {
             continue;
         }
-        const typeDeclaration = convertToTypeDeclaration(schema);
+        const typeDeclaration = convertToTypeDeclaration(schema, openApiFile.schemas);
         types = {
             ...types,
-            [schemaId]: typeDeclaration.typeDeclaration,
+            [typeDeclaration.name ?? schemaId]: typeDeclaration.typeDeclaration,
             ...typeDeclaration.additionalTypeDeclarations,
         };
     }
