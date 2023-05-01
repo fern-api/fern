@@ -105,7 +105,7 @@ export function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclaratio
             docs: schema.description ?? undefined,
             enum: schema.values.map((enumValue) => {
                 return {
-                    name: enumValue.name ?? enumValue.value,
+                    name: enumValue.nameOverride ?? enumValue.generatedName,
                     value: enumValue.value,
                 };
             }),

@@ -1146,11 +1146,11 @@ token. Only applicable for application access tokens.
           "docs": "Specifies the process of obtaining a token.",
           "enum": [
             {
-              "name": "urn:devrev:params:oauth:grant-type:token-issue",
+              "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
               "value": "urn:devrev:params:oauth:grant-type:token-issue",
             },
             {
-              "name": "urn:ietf:params:oauth:grant-type:token-exchange",
+              "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
               "value": "urn:ietf:params:oauth:grant-type:token-exchange",
             },
           ],
@@ -1159,39 +1159,39 @@ token. Only applicable for application access tokens.
           "docs": "The type of the requested token.",
           "enum": [
             {
-              "name": "urn:devrev:params:oauth:token-type:aat",
+              "name": "UrnDevrevParamsOauthTokenTypeAat",
               "value": "urn:devrev:params:oauth:token-type:aat",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:aat:public",
+              "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
               "value": "urn:devrev:params:oauth:token-type:aat:public",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:dev",
+              "name": "UrnDevrevParamsOauthTokenTypeDev",
               "value": "urn:devrev:params:oauth:token-type:dev",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:pat",
+              "name": "UrnDevrevParamsOauthTokenTypePat",
               "value": "urn:devrev:params:oauth:token-type:pat",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:rev",
+              "name": "UrnDevrevParamsOauthTokenTypeRev",
               "value": "urn:devrev:params:oauth:token-type:rev",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:session",
+              "name": "UrnDevrevParamsOauthTokenTypeSession",
               "value": "urn:devrev:params:oauth:token-type:session",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:session:dev0",
+              "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
               "value": "urn:devrev:params:oauth:token-type:session:dev0",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:sys",
+              "name": "UrnDevrevParamsOauthTokenTypeSys",
               "value": "urn:devrev:params:oauth:token-type:sys",
             },
             {
-              "name": "urn:ietf:params:oauth:token-type:jwt",
+              "name": "UrnIetfParamsOauthTokenTypeJwt",
               "value": "urn:ietf:params:oauth:token-type:jwt",
             },
           ],
@@ -1217,31 +1217,31 @@ token. Only applicable for application access tokens.
           "docs": "The type of the subject token.",
           "enum": [
             {
-              "name": "urn:devrev:params:oauth:token-type:jwt:auth0",
+              "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
               "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:jwt:dev",
+              "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
               "value": "urn:devrev:params:oauth:token-type:jwt:dev",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:revinfo",
+              "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
               "value": "urn:devrev:params:oauth:token-type:revinfo",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:sysu",
+              "name": "UrnDevrevParamsOauthTokenTypeSysu",
               "value": "urn:devrev:params:oauth:token-type:sysu",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:userinfo",
+              "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
               "value": "urn:devrev:params:oauth:token-type:userinfo",
             },
             {
-              "name": "urn:devrev:params:oauth:token-type:userinfo:profile",
+              "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
               "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
             },
             {
-              "name": "urn:ietf:params:oauth:token-type:jwt",
+              "name": "UrnIetfParamsOauthTokenTypeJwt",
               "value": "urn:ietf:params:oauth:token-type:jwt",
             },
           ],

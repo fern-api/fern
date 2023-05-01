@@ -3,5 +3,10 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "exclude": ["./src/**/__test__/**/generated"],
-  "references": [{ "path": "../../commons/fs-utils" }, { "path": "../logger" }, { "path": "../task-context" }]
+  "references": [
+    { "path": "../../commons/fs-utils" },
+    { "path": "../logger" },
+    { "path": "../task-context" },
+    { "path": "../yaml/validator" }
+  ]
 }
