@@ -31,7 +31,7 @@ export function convertExampleEndpointCall({
     return {
         ...getNameAndStatus({ example, allErrors }),
         originalRequest: generatedRequest,
-        description: httpEndpoint.response.docs ?? undefined,
+        description: httpEndpoint.response?.docs ?? undefined,
         body:
             example.response.body?.jsonExample != null
                 ? JSON.stringify(example.response.body.jsonExample, undefined, 4)

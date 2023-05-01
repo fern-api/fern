@@ -280,6 +280,102 @@ exports[`convertToPostman test-api 1`] = `
   \\"item\\": [
     {
       \\"_type\\": \\"container\\",
+      \\"description\\": \\"I'm some docs about MyFolder\\",
+      \\"name\\": \\"My Folder\\",
+      \\"item\\": [
+        {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
+          \\"name\\": \\"My Folder\\",
+          \\"item\\": [
+            {
+              \\"_type\\": \\"container\\",
+              \\"description\\": null,
+              \\"name\\": \\"Nested\\",
+              \\"item\\": [
+                {
+                  \\"_type\\": \\"endpoint\\",
+                  \\"name\\": \\"Get\\",
+                  \\"request\\": {
+                    \\"description\\": null,
+                    \\"url\\": {
+                      \\"raw\\": \\"{{baseUrl}}\\",
+                      \\"host\\": [
+                        \\"{{baseUrl}}\\"
+                      ],
+                      \\"path\\": [],
+                      \\"query\\": [],
+                      \\"variable\\": []
+                    },
+                    \\"header\\": [
+                      {
+                        \\"key\\": \\"X-API-Key\\",
+                        \\"value\\": \\"{{apiKey}}\\",
+                        \\"type\\": \\"string\\",
+                        \\"description\\": null
+                      },
+                      {
+                        \\"key\\": \\"x-service-header\\",
+                        \\"description\\": null,
+                        \\"type\\": \\"text\\",
+                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                      }
+                    ],
+                    \\"method\\": \\"GET\\",
+                    \\"auth\\": null,
+                    \\"body\\": null
+                  },
+                  \\"response\\": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
+          \\"name\\": \\"Nested\\",
+          \\"item\\": [
+            {
+              \\"_type\\": \\"endpoint\\",
+              \\"name\\": \\"Get\\",
+              \\"request\\": {
+                \\"description\\": null,
+                \\"url\\": {
+                  \\"raw\\": \\"{{baseUrl}}\\",
+                  \\"host\\": [
+                    \\"{{baseUrl}}\\"
+                  ],
+                  \\"path\\": [],
+                  \\"query\\": [],
+                  \\"variable\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{apiKey}}\\",
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
+                  },
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
+              },
+              \\"response\\": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      \\"_type\\": \\"container\\",
       \\"description\\": null,
       \\"name\\": \\"Blog Service\\",
       \\"item\\": [
@@ -478,102 +574,6 @@ exports[`convertToPostman test-api 1`] = `
               \\"description\\": null,
               \\"body\\": \\"{\\\\n    \\\\\\"id\\\\\\": \\\\\\"123e4567-e89b-12d3-a456-426614174000\\\\\\"\\\\n}\\",
               \\"_postman_previewlanguage\\": \\"json\\"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      \\"_type\\": \\"container\\",
-      \\"description\\": \\"I'm some docs about MyFolder\\",
-      \\"name\\": \\"My Folder\\",
-      \\"item\\": [
-        {
-          \\"_type\\": \\"container\\",
-          \\"description\\": null,
-          \\"name\\": \\"My Folder\\",
-          \\"item\\": [
-            {
-              \\"_type\\": \\"container\\",
-              \\"description\\": null,
-              \\"name\\": \\"Nested\\",
-              \\"item\\": [
-                {
-                  \\"_type\\": \\"endpoint\\",
-                  \\"name\\": \\"Get\\",
-                  \\"request\\": {
-                    \\"description\\": null,
-                    \\"url\\": {
-                      \\"raw\\": \\"{{baseUrl}}\\",
-                      \\"host\\": [
-                        \\"{{baseUrl}}\\"
-                      ],
-                      \\"path\\": [],
-                      \\"query\\": [],
-                      \\"variable\\": []
-                    },
-                    \\"header\\": [
-                      {
-                        \\"key\\": \\"X-API-Key\\",
-                        \\"value\\": \\"{{apiKey}}\\",
-                        \\"type\\": \\"string\\",
-                        \\"description\\": null
-                      },
-                      {
-                        \\"key\\": \\"x-service-header\\",
-                        \\"description\\": null,
-                        \\"type\\": \\"text\\",
-                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                      }
-                    ],
-                    \\"method\\": \\"GET\\",
-                    \\"auth\\": null,
-                    \\"body\\": null
-                  },
-                  \\"response\\": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          \\"_type\\": \\"container\\",
-          \\"description\\": null,
-          \\"name\\": \\"Nested\\",
-          \\"item\\": [
-            {
-              \\"_type\\": \\"endpoint\\",
-              \\"name\\": \\"Get\\",
-              \\"request\\": {
-                \\"description\\": null,
-                \\"url\\": {
-                  \\"raw\\": \\"{{baseUrl}}\\",
-                  \\"host\\": [
-                    \\"{{baseUrl}}\\"
-                  ],
-                  \\"path\\": [],
-                  \\"query\\": [],
-                  \\"variable\\": []
-                },
-                \\"header\\": [
-                  {
-                    \\"key\\": \\"X-API-Key\\",
-                    \\"value\\": \\"{{apiKey}}\\",
-                    \\"type\\": \\"string\\",
-                    \\"description\\": null
-                  },
-                  {
-                    \\"key\\": \\"x-service-header\\",
-                    \\"description\\": null,
-                    \\"type\\": \\"text\\",
-                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
-                  }
-                ],
-                \\"method\\": \\"GET\\",
-                \\"auth\\": null,
-                \\"body\\": null
-              },
-              \\"response\\": []
             }
           ]
         }

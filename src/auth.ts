@@ -45,7 +45,7 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                         },
                         {
                             key: "key",
-                            value: header.header,
+                            value: header.name.wireValue,
                             type: "string",
                         },
                         {
@@ -76,7 +76,7 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
             bearer: () => [],
             header: (header) => [
                 {
-                    key: header.header,
+                    key: header.name.wireValue,
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
                     type: "string",
                     description: header.docs ?? undefined,
@@ -124,5 +124,5 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
 }
 
 function getVariableForAuthHeader(header: HeaderAuthScheme): string {
-    return header.name.camelCase.unsafeName;
+    return header.name.name.camelCase.unsafeName;
 }

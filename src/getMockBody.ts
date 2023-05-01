@@ -1,4 +1,4 @@
-import { HttpRequestBody } from "@fern-fern/ir-model/http";
+import { FileUploadRequestProperty, HttpRequestBody } from "@fern-fern/ir-model/http";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -7,20 +7,23 @@ import {
     SingleUnionTypeProperty,
     Type,
     TypeDeclaration,
-    TypeReference
+    TypeReference,
 } from "@fern-fern/ir-model/types";
+import { noop } from "lodash";
 
-const ISO_DATE = "1994-11-05T13:15:30Z";
+const ISO_DATE = "1994-11-05";
+const ISO_DATETIME = "1994-11-05T13:15:30Z";
 const UUID = "3d20db99-b2d9-4643-8f04-13452707b8e8";
+const BASE_64 = "SGVsbG8gV29ybGQ=";
 
 export function getMockBodyFromTypeReference({
     typeReference,
     allTypes,
-    visitedTypes = new Set()
+    visitedTypes = new Set(),
 }: {
     typeReference: TypeReference;
     allTypes: TypeDeclaration[];
-    visitedTypes?: Set<string>
+    visitedTypes?: Set<string>;
 }): unknown {
     if (typeReference._type === "named") {
         if (visitedTypes.has(typeReference.typeId)) {
@@ -36,8 +39,10 @@ export function getMockBodyFromTypeReference({
                 string: () => "example",
                 boolean: () => true,
                 long: () => 10000000,
-                dateTime: () => ISO_DATE,
+                dateTime: () => ISO_DATETIME,
+                date: () => ISO_DATE,
                 uuid: () => UUID,
+                base64: () => BASE_64,
                 _unknown: () => {
                     throw new Error("Encountered unknown primtiveType: " + primitive);
                 },
@@ -47,10 +52,16 @@ export function getMockBodyFromTypeReference({
                 list: (value) => [getMockBodyFromTypeReference({ typeReference: value, allTypes, visitedTypes })],
                 map: (value) => {
                     const result: Record<string, unknown> = {};
-                    const mockKey = getMockBodyFromTypeReference({ typeReference: value.keyType, allTypes, visitedTypes }) as
-                        | string
-                        | number;
-                    const mockValue = getMockBodyFromTypeReference({ typeReference: value.valueType, allTypes, visitedTypes });
+                    const mockKey = getMockBodyFromTypeReference({
+                        typeReference: value.keyType,
+                        allTypes,
+                        visitedTypes,
+                    }) as string | number;
+                    const mockValue = getMockBodyFromTypeReference({
+                        typeReference: value.valueType,
+                        allTypes,
+                        visitedTypes,
+                    });
                     result[mockKey] = mockValue;
                     return result;
                 },
@@ -73,11 +84,15 @@ export function getMockBodyFromTypeReference({
     });
 }
 
-function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[], visitedTypes: Set<string> | undefined): any {
+function getMockBodyFromType(
+    type: TypeDeclaration,
+    allTypes: TypeDeclaration[],
+    visitedTypes: Set<string> | undefined
+): any {
     if (type.examples[0] != null) {
         return type.examples[0].jsonExample;
     }
-    return Type._visit(type.shape, {
+    return Type._visit<any>(type.shape, {
         object: (objectDeclaration) => {
             return {
                 ...objectDeclaration.properties.reduce<Record<string, any>>(
@@ -85,7 +100,8 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[],
                         ...combined,
                         [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
                             typeReference: objectProperty.valueType,
-                            allTypes, visitedTypes
+                            allTypes,
+                            visitedTypes,
                         }),
                     }),
                     {}
@@ -124,7 +140,8 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[],
                         // TODO this doesn't support named aliases of primitive types
                         ...(getMockBodyFromTypeReference({
                             typeReference: TypeReference.named(value),
-                            allTypes, visitedTypes
+                            allTypes,
+                            visitedTypes,
                         }) as any),
                     };
                 },
@@ -133,7 +150,8 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[],
                         ...discriminantProperties,
                         [value.name.wireValue]: getMockBodyFromTypeReference({
                             typeReference: value.type,
-                            allTypes, visitedTypes
+                            allTypes,
+                            visitedTypes,
                         }),
                     };
                 },
@@ -145,6 +163,18 @@ function getMockBodyFromType(type: TypeDeclaration, allTypes: TypeDeclaration[],
                 _unknown: () => {
                     throw new Error("Encountered unknown typeReference: " + firstUnionType.shape._type);
                 },
+            });
+        },
+        undiscriminatedUnion: (unionDeclaration) => {
+            const firstUnionType = unionDeclaration.members[0];
+            if (firstUnionType == null) {
+                throw new Error("No values for union.");
+            }
+
+            return getMockBodyFromTypeReference({
+                typeReference: firstUnionType.type,
+                allTypes,
+                visitedTypes,
             });
         },
         _unknown: () => {
@@ -164,20 +194,21 @@ function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]
 export function getMockRequestBody({
     requestBody,
     allTypes,
-    visitedTypes = new Set()
+    visitedTypes = new Set(),
 }: {
     requestBody: HttpRequestBody;
     allTypes: TypeDeclaration[];
-    visitedTypes?: Set<string>
+    visitedTypes?: Set<string>;
 }): unknown {
-    return HttpRequestBody._visit(requestBody, {
+    return HttpRequestBody._visit<unknown>(requestBody, {
         inlinedRequestBody: (inlinedRequestBody) => ({
             ...inlinedRequestBody.properties.reduce<Record<string, any>>(
                 (combined, objectProperty) => ({
                     ...combined,
                     [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
                         typeReference: objectProperty.valueType,
-                        allTypes, visitedTypes
+                        allTypes,
+                        visitedTypes,
                     }),
                 }),
                 {}
@@ -190,7 +221,26 @@ export function getMockRequestBody({
                 {}
             ),
         }),
-        reference: ({ requestBodyType }) => getMockBodyFromTypeReference({ typeReference: requestBodyType, allTypes }),
+        reference: ({ requestBodyType }) =>
+            getMockBodyFromTypeReference({ typeReference: requestBodyType, allTypes, visitedTypes }),
+        fileUpload: ({ properties }) => {
+            return properties.reduce<Record<string, unknown>>((obj, property) => {
+                FileUploadRequestProperty._visit(property, {
+                    file: noop,
+                    bodyProperty: (bodyProperty) => {
+                        obj[bodyProperty.name.wireValue] = getMockBodyFromTypeReference({
+                            typeReference: bodyProperty.valueType,
+                            allTypes,
+                            visitedTypes,
+                        });
+                    },
+                    _unknown: () => {
+                        throw new Error("Unknown FileUploadRequestProperty: " + property.type);
+                    },
+                });
+                return obj;
+            }, {});
+        },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody: " + requestBody.type);
         },
