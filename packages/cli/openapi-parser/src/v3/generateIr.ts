@@ -8,7 +8,7 @@ import { convertServer } from "./converters/convertServer";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
-    const context = new OpenAPIV3ParserContext({ document: openApi });
+    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext });
     return {
         title: openApi.info.title,
         description: openApi.info.description,

@@ -17,7 +17,7 @@ export const HttpEndpointSchema = DeclarationSchema.extend({
     request: z.optional(z.union([z.string(), HttpRequestSchema])),
     response: z.optional(HttpResponseSchema),
     "stream-condition": z.optional(z.string()),
-    "response-stream": z.optional(HttpResponseStreamSchema),
+    "response-stream": z.optional(z.union([z.string(), HttpResponseStreamSchema])),
     errors: z.optional(ResponseErrorsSchema),
     examples: z.optional(z.array(ExampleEndpointCallSchema)),
 });

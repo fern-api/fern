@@ -11,10 +11,12 @@ export function convertRequest({
     requestBody,
     document,
     context,
+    requestBreadcrumbs,
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
     context: OpenAPIV3ParserContext;
+    requestBreadcrumbs: string[];
 }): Request | undefined {
     if (isReferenceObject(requestBody)) {
         throw new Error(`Converting referenced request body is unsupported: ${JSON.stringify(requestBody)}`);
@@ -55,7 +57,7 @@ export function convertRequest({
     if (requestBodySchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema, false, context, []);
+    const requestSchema = convertSchema(requestBodySchema, false, context, requestBreadcrumbs);
     return Request.json({
         description: undefined,
         schema: requestSchema,

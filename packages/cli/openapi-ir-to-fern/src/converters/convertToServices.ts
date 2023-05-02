@@ -9,6 +9,7 @@ import { getEndpointLocation } from "./utils/getEndpointLocation";
 export interface ConvertedServices {
     services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema>;
     schemaIdsToExclude: string[];
+    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 export function convertToServices(
@@ -16,6 +17,7 @@ export function convertToServices(
     schemas: Record<SchemaId, Schema>,
     environment: Environment | undefined
 ): ConvertedServices {
+    let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
     const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
     for (const endpoint of endpoints) {
@@ -34,6 +36,10 @@ export function convertToServices(
                 schemas,
                 environment,
             });
+            additionalTypeDeclarations = {
+                ...additionalTypeDeclarations,
+                ...convertedEndpoint.additionalTypeDeclarations,
+            };
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
             service.endpoints[endpointId] = convertedEndpoint.value;
         }
@@ -41,6 +47,7 @@ export function convertToServices(
     return {
         services,
         schemaIdsToExclude,
+        additionalTypeDeclarations,
     };
 }
 

@@ -204,7 +204,11 @@ async function visitEndpoint({
             if (responseStream == null) {
                 return;
             }
-            await visitTypeReference(responseStream.data, [...nodePathForEndpoint, "response-stream"]);
+            if (typeof responseStream === "string") {
+                await visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"]);
+            } else {
+                await visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"]);
+            }
         },
         response: async (response) => {
             if (response == null) {

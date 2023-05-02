@@ -177,7 +177,13 @@ function convertSchemaObject(
         });
     }
 
-    throw new Error(`Failed to convert schema value=${JSON.stringify(schema)}`);
+    if (schema.type == null) {
+        return Schema.unknown();
+    }
+
+    throw new Error(
+        `Failed to convert schema breadcrumbs=${JSON.stringify(breadcrumbs)} value=${JSON.stringify(schema)}`
+    );
 }
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {

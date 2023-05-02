@@ -34,7 +34,8 @@
     "@fern-api/validator": "workspace:*",
     "@fern-fern/openapi-ir-model": "0.0.43",
     "lodash-es": "^4.17.21",
-    "openapi-types": "^12.0.0"
+    "openapi-types": "^12.0.0",
+    "swagger2openapi": "7.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -43,6 +44,7 @@
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
+    "@types/swagger2openapi": "^7.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.0.3",

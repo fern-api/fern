@@ -11,6 +11,7 @@ describe("open api converter", () => {
     testFixture("vellum", "openapi.yml");
     testFixture("buzzshot", "openapi.yml");
     testFixture("devrev", "openapi.yml");
+    testFixture("suger", "swagger.json");
 });
 
 function testFixture(fixtureName: string, filename: string) {
