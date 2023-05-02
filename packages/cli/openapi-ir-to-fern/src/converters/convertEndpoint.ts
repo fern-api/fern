@@ -32,7 +32,7 @@ export function convertEndpoint({
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        const convertedPathParameter = convertPathParameter({ pathParameter, schemas });
+        const convertedPathParameter = convertPathParameter({ pathParameter, schemas, isPackageYml });
         pathParameters[pathParameter.name] = convertedPathParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
