@@ -17,9 +17,13 @@ export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
     context: OpenAPIV3ParserContext,
-    breadcrumbs: string[]
+    breadcrumbs: string[],
+    referencedAsRequest = false
 ): Schema {
     if (isReferenceObject(schema)) {
+        if (!referencedAsRequest) {
+            context.markSchemaAsReferenced(getSchemaIdFromReference(schema));
+        }
         return convertReferenceObject(schema, wrapAsOptional);
     } else {
         return convertSchemaObject(schema, wrapAsOptional, context, breadcrumbs);
