@@ -19,11 +19,13 @@ export function convertEndpoint({
     isPackageYml,
     schemas,
     environment,
+    nonRequestReferencedSchemas,
 }: {
     endpoint: Endpoint;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
     environment: Environment | undefined;
+    nonRequestReferencedSchemas: SchemaId[];
 }): ConvertedEndpoint {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
@@ -65,6 +67,7 @@ export function convertEndpoint({
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
+            nonRequestReferencedSchemas,
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
@@ -127,6 +130,7 @@ function getRequest({
     requestNameOverride,
     generatedRequestName,
     queryParameters,
+    nonRequestReferencedSchemas,
 }: {
     isPackageYml: boolean;
     request: Request;
@@ -134,6 +138,7 @@ function getRequest({
     requestNameOverride?: string;
     generatedRequestName: string;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
+    nonRequestReferencedSchemas: SchemaId[];
 }): ConvertedRequest {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     if (request.type === "json") {
@@ -144,7 +149,10 @@ function getRequest({
         if (schema == null) {
             throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
         }
-        if (schema.type !== "object") {
+
+        // the request body is referenced if it is not an object or if other parts of the spec
+        // refer to the same type
+        if (schema.type !== "object" || nonRequestReferencedSchemas.includes(request.schema.schema)) {
             const requestTypeReference = convertToTypeReference({
                 schema,
                 prefix: isPackageYml ? undefined : ROOT_PREFIX,

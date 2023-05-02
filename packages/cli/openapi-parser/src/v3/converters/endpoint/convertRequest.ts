@@ -57,7 +57,7 @@ export function convertRequest({
     if (requestBodySchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema, false, context, requestBreadcrumbs);
+    const requestSchema = convertSchema(requestBodySchema, false, context, requestBreadcrumbs, true);
     return Request.json({
         description: undefined,
         schema: requestSchema,

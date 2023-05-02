@@ -5060,79 +5060,9 @@ exports[`open api converter suger simple 1`] = `
             },
             "request": {
               "body": {
-                "properties": {
-                  "createdBy": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "creationTime": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "endTime": {
-                    "docs": "nullable",
-                    "type": "optional<string>",
-                  },
-                  "expireTime": {
-                    "docs": "nullable",
-                    "type": "optional<string>",
-                  },
-                  "externalID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "id": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "info": {
-                    "docs": undefined,
-                    "type": "optional<SharedOfferInfo>",
-                  },
-                  "lastUpdateTime": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "lastUpdatedBy": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "metaInfo": {
-                    "docs": undefined,
-                    "type": "optional<SharedOfferMetaInfo>",
-                  },
-                  "name": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "offerType": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferOfferType>",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "partner": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferPartner>",
-                  },
-                  "productID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "service": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferService>",
-                  },
-                  "status": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferStatus>",
-                  },
-                },
+                "docs": undefined,
+                "type": "SharedWorkloadOffer",
               },
-              "name": "SharedWorkloadOffer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -5150,79 +5080,9 @@ exports[`open api converter suger simple 1`] = `
             },
             "request": {
               "body": {
-                "properties": {
-                  "createdBy": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "creationTime": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "endTime": {
-                    "docs": "nullable",
-                    "type": "optional<string>",
-                  },
-                  "expireTime": {
-                    "docs": "nullable",
-                    "type": "optional<string>",
-                  },
-                  "externalID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "id": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "info": {
-                    "docs": undefined,
-                    "type": "optional<SharedOfferInfo>",
-                  },
-                  "lastUpdateTime": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "lastUpdatedBy": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "metaInfo": {
-                    "docs": undefined,
-                    "type": "optional<SharedOfferMetaInfo>",
-                  },
-                  "name": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "offerType": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferOfferType>",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "partner": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferPartner>",
-                  },
-                  "productID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "service": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferService>",
-                  },
-                  "status": {
-                    "docs": undefined,
-                    "type": "optional<SharedWorkloadOfferStatus>",
-                  },
-                },
+                "docs": undefined,
+                "type": "SharedWorkloadOffer",
               },
-              "name": "SharedWorkloadOffer",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "OK",
@@ -12147,6 +12007,79 @@ This field is present only if the product has usage-based billing configured.",
               "value": "MARKETPLACE",
             },
           ],
+        },
+        "SharedWorkloadOffer": {
+          "docs": undefined,
+          "properties": {
+            "createdBy": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "creationTime": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "endTime": {
+              "docs": "nullable",
+              "type": "optional<string>",
+            },
+            "expireTime": {
+              "docs": "nullable",
+              "type": "optional<string>",
+            },
+            "externalID": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "info": {
+              "docs": undefined,
+              "type": "optional<SharedOfferInfo>",
+            },
+            "lastUpdateTime": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "lastUpdatedBy": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "metaInfo": {
+              "docs": undefined,
+              "type": "optional<SharedOfferMetaInfo>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "offerType": {
+              "docs": undefined,
+              "type": "optional<SharedWorkloadOfferOfferType>",
+            },
+            "organizationID": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "partner": {
+              "docs": undefined,
+              "type": "optional<SharedWorkloadOfferPartner>",
+            },
+            "productID": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "service": {
+              "docs": undefined,
+              "type": "optional<SharedWorkloadOfferService>",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "optional<SharedWorkloadOfferStatus>",
+            },
+          },
         },
         "SharedWorkloadOfferOfferType": {
           "docs": undefined,

@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { PACKAGE_YML } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertEndpoint } from "./convertEndpoint";
@@ -12,11 +12,8 @@ export interface ConvertedServices {
     additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
-export function convertToServices(
-    endpoints: Endpoint[],
-    schemas: Record<SchemaId, Schema>,
-    environment: Environment | undefined
-): ConvertedServices {
+export function convertToServices(openApiFile: OpenAPIFile, environment: Environment | undefined): ConvertedServices {
+    const { endpoints, schemas, nonRequestReferencedSchemas } = openApiFile;
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
     const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
@@ -35,6 +32,7 @@ export function convertToServices(
                 isPackageYml: file === PACKAGE_YML,
                 schemas,
                 environment,
+                nonRequestReferencedSchemas,
             });
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,

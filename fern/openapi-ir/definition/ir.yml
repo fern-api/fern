@@ -30,9 +30,9 @@ types:
       tags: list<Tag>
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
-      schemasToReferenced:
-        type: map<SchemaId, boolean>
-        docs: Whether the schema is directly referenced by another schema
+      nonRequestReferencedSchemas:
+        type: set<SchemaId>
+        docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<SecuritySchemeId, SecurityScheme>
       dependencies:
         type: set<FileId>

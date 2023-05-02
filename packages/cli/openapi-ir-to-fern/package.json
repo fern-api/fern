@@ -32,7 +32,7 @@
     "@fern-api/openapi-parser": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/openapi-ir-model": "0.0.43"
+    "@fern-fern/openapi-ir-model": "0.0.45"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

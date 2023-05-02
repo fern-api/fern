@@ -19,7 +19,7 @@ export interface ConvertedPackage {
 
 export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): ConvertedPackage {
     const environments = getEnvironments(openApiFile);
-    const convertedServices = convertToServices(openApiFile.endpoints, openApiFile.schemas, environments);
+    const convertedServices = convertToServices(openApiFile, environments);
     return {
         rootApiFile: getRootApiFile(openApiFile, environments),
         definitionFiles: {
