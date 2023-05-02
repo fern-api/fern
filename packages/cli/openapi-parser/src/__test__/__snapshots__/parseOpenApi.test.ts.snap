@@ -10263,7 +10263,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "CreateAppRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -10271,7 +10271,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "AuthConfiguration",
+                    "generatedName": "CreateAppRequestAuthConfiguration",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -10282,7 +10282,7 @@ exports[`open api parser hathora simple 1`] = `
                           "value": {
                             "allOf": [],
                             "description": undefined,
-                            "generatedName": "AuthConfigurationGoogle",
+                            "generatedName": "CreateAppRequestAuthConfigurationGoogle",
                             "nameOverride": undefined,
                             "properties": [
                               {
@@ -10387,7 +10387,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "UpdateAppRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -10395,7 +10395,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "AuthConfiguration",
+                    "generatedName": "UpdateAppRequestAuthConfiguration",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -10406,7 +10406,7 @@ exports[`open api parser hathora simple 1`] = `
                           "value": {
                             "allOf": [],
                             "description": undefined,
-                            "generatedName": "AuthConfigurationGoogle",
+                            "generatedName": "UpdateAppRequestAuthConfigurationGoogle",
                             "nameOverride": undefined,
                             "properties": [
                               {
@@ -10581,7 +10581,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "LoginAnonymousResponse",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -10630,7 +10630,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "LoginNicknameRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -10654,7 +10654,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "LoginNicknameResponse",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -10703,7 +10703,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "LoginGoogleRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -10727,7 +10727,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "LoginGoogleResponse",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -11442,7 +11442,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "CreatePrivateLobbyRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -11541,7 +11541,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "CreatePublicLobbyRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -11640,7 +11640,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "CreateLocalLobbyRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -11739,14 +11739,14 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "CreateLobbyRequest",
               "nameOverride": undefined,
               "properties": [
                 {
                   "key": "visibility",
                   "schema": {
                     "description": undefined,
-                    "generatedName": "Visibility",
+                    "generatedName": "CreateLobbyRequestVisibility",
                     "nameOverride": undefined,
                     "type": "enum",
                     "values": [
@@ -11952,7 +11952,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "SetLobbyStateRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -12506,7 +12506,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "",
+              "generatedName": "CreateRoomRequest",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -15370,7 +15370,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "GetIntegrationRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15397,7 +15397,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "service",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "GetIntegrationRequestService",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15458,7 +15458,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "UpdateIntegrationRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15485,7 +15485,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "service",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "UpdateIntegrationRequestService",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15555,7 +15555,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "DeleteIntegrationRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15582,7 +15582,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "service",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "DeleteIntegrationRequestService",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15644,7 +15644,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "VerifyIntegrationRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -15671,7 +15671,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "service",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "VerifyIntegrationRequestService",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -16134,7 +16134,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "ListEntitlementsByPartnerRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -16216,7 +16216,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "ListOffersByPartnerRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -16286,7 +16286,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "ListProductsByPartnerRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -16356,7 +16356,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "ListRevenueRecordsRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [
@@ -16528,7 +16528,7 @@ exports[`open api parser suger simple 1`] = `
               "name": "partner",
               "schema": {
                 "description": undefined,
-                "generatedName": "",
+                "generatedName": "ListRevenueRecordDetailsRequestPartner",
                 "nameOverride": undefined,
                 "type": "enum",
                 "values": [

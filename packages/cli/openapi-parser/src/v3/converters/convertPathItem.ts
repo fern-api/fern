@@ -67,17 +67,22 @@ function convertOperation(
         throw new Error(`Operation requires operation id: ${JSON.stringify(operation)}`);
     }
 
-    const convertedParameters = convertParameters(operation.parameters ?? [], context);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
+    const requestBreadcrumbs = [operation.operationId, "Request"];
+
+    const convertedParameters = convertParameters(operation.parameters ?? [], context, requestBreadcrumbs);
     const convertedRequest =
         operation.requestBody != null
             ? convertRequest({
                   requestBody: operation.requestBody,
                   document,
                   context,
+                  requestBreadcrumbs,
               })
             : undefined;
+
+    const responseBreadcrumbs = [operation.operationId, "Response"];
     return {
         summary: operation.summary,
         operationId: operation.operationId,
@@ -86,9 +91,9 @@ function convertOperation(
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
-        generatedRequestName: getGeneratedTypeName([operation.operationId, "Request"]),
+        generatedRequestName: getGeneratedTypeName(requestBreadcrumbs),
         request: convertedRequest,
-        response: convertResponse({ responses: operation.responses, context }),
+        response: convertResponse({ responses: operation.responses, context, responseBreadcrumbs }),
         errors: [],
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,

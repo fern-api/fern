@@ -12,7 +12,11 @@ import {
     Schema,
     SchemaId,
 } from "@fern-fern/openapi-ir-model/ir";
-import { convertObjectToTypeDeclaration, convertOneOfToTypeDeclaration } from "./convertToTypeDeclaration";
+import {
+    convertEnumToTypeDeclaration,
+    convertObjectToTypeDeclaration,
+    convertOneOfToTypeDeclaration,
+} from "./convertToTypeDeclaration";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeReference {
@@ -184,6 +188,7 @@ export function convertUnknownToTypeReference(): TypeReference {
 }
 
 export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSchema; prefix?: string }): TypeReference {
+    const enumTypeDeclaration = convertEnumToTypeDeclaration(schema);
     return {
         typeReference: {
             type:
@@ -192,7 +197,10 @@ export function convertEnumToTypeReference({ schema, prefix }: { schema: EnumSch
                     : schema.nameOverride ?? schema.generatedName,
             docs: schema.description ?? undefined,
         },
-        additionalTypeDeclarations: {},
+        additionalTypeDeclarations: {
+            [schema.nameOverride ?? schema.generatedName]: enumTypeDeclaration.typeDeclaration,
+            ...enumTypeDeclaration.additionalTypeDeclarations,
+        },
     };
 }
 
@@ -206,7 +214,6 @@ export function convertObjectToTypeReference({
     schemas: Record<SchemaId, Schema>;
 }): TypeReference {
     const objectTypeDeclaration = convertObjectToTypeDeclaration({ schema, schemas });
-    objectTypeDeclaration.additionalTypeDeclarations;
     return {
         typeReference: {
             type:

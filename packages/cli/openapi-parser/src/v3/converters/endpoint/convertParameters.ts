@@ -12,7 +12,8 @@ export interface ConvertedParameters {
 
 export function convertParameters(
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[],
-    context: OpenAPIV3ParserContext
+    context: OpenAPIV3ParserContext,
+    requestBreadcrumbs: string[]
 ): ConvertedParameters {
     const convertedParameters: ConvertedParameters = {
         pathParameters: [],
@@ -27,7 +28,7 @@ export function convertParameters(
         const isRequired = parameter.required ?? false;
         const schema =
             parameter.schema != null
-                ? convertSchema(parameter.schema, !isRequired, context, [])
+                ? convertSchema(parameter.schema, !isRequired, context, [...requestBreadcrumbs, parameter.name])
                 : isRequired
                 ? Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: parameter.description })
                 : Schema.optional({
