@@ -72,7 +72,6 @@ export declare namespace SdkGenerator {
         isPackagePrivate: boolean;
         neverThrowErrors: boolean;
         includeCredentialsOnCrossOriginRequests: boolean;
-        aliasOfRoot: string | undefined;
         outputEsm: boolean;
         allowCustomFetcher: boolean;
         includeUtilsOnUnionMembers: boolean;
@@ -130,10 +129,8 @@ export class SdkGenerator {
         this.config = config;
         this.npmPackage = npmPackage;
 
-        const { aliasOfRoot } = config;
-
-        this.exportsManager = new ExportsManager({ aliasOfRoot });
-        this.coreUtilitiesManager = new CoreUtilitiesManager({ aliasOfRoot });
+        this.exportsManager = new ExportsManager();
+        this.coreUtilitiesManager = new CoreUtilitiesManager();
 
         this.project = new Project({
             useInMemoryFileSystem: true,
@@ -158,68 +155,56 @@ export class SdkGenerator {
 
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            aliasOfRoot,
             namespaceExport,
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            aliasOfRoot,
             namespaceExport,
         });
         this.errorDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
-            aliasOfRoot,
             namespaceExport,
         });
         this.sdkErrorSchemaDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            aliasOfRoot,
             namespaceExport,
         });
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
-            aliasOfRoot,
             namespaceExport,
             packageResolver: this.packageResolver,
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
-            aliasOfRoot,
             namespaceExport,
             packageResolver: this.packageResolver,
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
-            aliasOfRoot,
             namespaceExport,
             packageResolver: this.packageResolver,
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            aliasOfRoot,
             namespaceExport,
             packageResolver: this.packageResolver,
         });
         this.sdkEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            aliasOfRoot,
             namespaceExport,
             packageResolver: this.packageResolver,
         });
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
-            aliasOfRoot,
             namespaceExport,
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
-            aliasOfRoot,
             namespaceExport,
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
-            aliasOfRoot,
             namespaceExport,
         });
 

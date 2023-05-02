@@ -100,9 +100,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: SimpleTypescriptProject.SRC_DIRECTORY,
             baseUrl: SimpleTypescriptProject.SRC_DIRECTORY,
-            paths: {
-                [this.npmPackage.packageName]: ["."],
-            },
         };
 
         await this.writeFileToVolume(
@@ -133,7 +130,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             types: "./index.d.ts",
             scripts: {
                 [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
-                [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc && tsc-alias",
+                [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                 prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
             },
         };
@@ -158,7 +155,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
         return {
             "@types/node": "17.0.33",
             prettier: "2.7.1",
-            "tsc-alias": "1.7.1",
             typescript: "4.6.4",
         };
     }

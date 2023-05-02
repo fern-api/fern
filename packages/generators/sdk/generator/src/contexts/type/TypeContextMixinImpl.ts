@@ -73,7 +73,7 @@ export class TypeContextMixinImpl implements TypeContextMixin {
     public getReferenceToNamedType(typeName: DeclaredTypeName): Reference {
         return this.typeDeclarationReferencer.getReferenceToType({
             name: typeName,
-            importStrategy: { type: "fromRoot" },
+            importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
         });

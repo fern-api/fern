@@ -40,7 +40,7 @@ export class ExpressErrorContextMixinImpl implements ExpressErrorContextMixin {
     public getReferenceToError(errorName: DeclaredErrorName): Reference {
         return this.errorDeclarationReferencer.getReferenceToError({
             name: errorName,
-            importStrategy: { type: "fromRoot" },
+            importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
         });

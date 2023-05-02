@@ -17,7 +17,6 @@ axios@0.27.2 \
 esbuild@0.16.15 \
 express@4.18.2 \
 prettier@2.7.1 \
-tsc-alias@1.7.1 \
 typescript@4.6.4 \
 url-join@4.0.1
 

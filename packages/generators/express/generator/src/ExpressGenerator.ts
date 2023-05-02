@@ -111,8 +111,8 @@ export class ExpressGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.npmPackage = npmPackage;
 
-        this.exportsManager = new ExportsManager({ aliasOfRoot: undefined });
-        this.coreUtilitiesManager = new CoreUtilitiesManager({ aliasOfRoot: undefined });
+        this.exportsManager = new ExportsManager();
+        this.coreUtilitiesManager = new CoreUtilitiesManager();
 
         this.project = new Project({
             useInMemoryFileSystem: true,

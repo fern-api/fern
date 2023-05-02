@@ -95,7 +95,6 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             namespaceImport: "environments",
             importsManager,
             referencedIn: sourceFile,
-            aliasOfRoot: this.aliasOfRoot,
         });
     }
 }

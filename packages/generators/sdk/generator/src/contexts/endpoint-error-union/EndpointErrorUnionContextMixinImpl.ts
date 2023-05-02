@@ -67,7 +67,10 @@ export class EndpointErrorUnionContextMixinImpl implements EndpointErrorUnionCon
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            importStrategy: { type: "fromRoot" },
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.endpointErrorUnionDeclarationReferencer.namespaceExport,
+            },
             subImport: typeof export_ === "string" ? [export_] : export_,
         });
     }

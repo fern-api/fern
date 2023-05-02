@@ -11,19 +11,16 @@ import { DeclarationReferencer } from "./DeclarationReferencer";
 export declare namespace AbstractDeclarationReferencer {
     export interface Init {
         namespaceExport: string;
-        aliasOfRoot: string | undefined;
         containingDirectory: ExportedDirectory[];
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
-    protected namespaceExport: string;
-    protected aliasOfRoot: string | undefined;
+    public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
 
-    constructor({ namespaceExport, containingDirectory, aliasOfRoot }: AbstractDeclarationReferencer.Init) {
+    constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
-        this.aliasOfRoot = aliasOfRoot;
         this.containingDirectory = containingDirectory;
     }
 
@@ -53,7 +50,6 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     importsManager,
                     referencedIn,
                     subImport,
-                    aliasOfRoot: this.aliasOfRoot,
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({
@@ -64,7 +60,6 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport,
-                    aliasOfRoot: this.aliasOfRoot,
                 });
             default:
                 assertNever(importStrategy);

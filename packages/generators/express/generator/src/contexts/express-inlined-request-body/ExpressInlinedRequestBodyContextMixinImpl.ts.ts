@@ -71,7 +71,10 @@ export class ExpressInlinedRequestBodyContextMixinImpl implements ExpressInlined
         return this.expressInlinedRequestBodyDeclarationReferencer.getReferenceToInlinedRequestBody({
             name: { packageId, endpoint },
             importsManager: this.importsManager,
-            importStrategy: { type: "fromRoot" },
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.expressInlinedRequestBodyDeclarationReferencer.namespaceExport,
+            },
             referencedIn: this.sourceFile,
         });
     }

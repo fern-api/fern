@@ -110,10 +110,6 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
         entryPoints: [entryPoint],
         outfile,
         bundle: true,
-        alias: {
-            // matches up with tsconfig paths
-            "${this.npmPackage.packageName}": "./${BundledTypescriptProject.SRC_DIRECTORY}",
-        }
     }).catch(() => process.exit(1));
 }
 `;
@@ -192,10 +188,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: BundledTypescriptProject.SRC_DIRECTORY,
             baseUrl: BundledTypescriptProject.SRC_DIRECTORY,
-            paths: {
-                // matches up with esbuild alias
-                [this.npmPackage.packageName]: ["."],
-            },
         };
 
         await this.writeFileToVolume(
@@ -244,7 +236,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
                 [BundledTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${BundledTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
-                [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc && tsc-alias",
+                [BundledTypescriptProject.COMPILE_SCRIPT_NAME]: "tsc",
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
                     `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
@@ -300,7 +292,6 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             "@types/node": "17.0.33",
             esbuild: "0.16.15",
             prettier: "2.7.1",
-            "tsc-alias": "1.7.1",
             typescript: "4.6.4",
         };
     }

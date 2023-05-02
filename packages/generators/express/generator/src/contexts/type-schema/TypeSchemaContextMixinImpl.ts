@@ -87,7 +87,10 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
                         name: typeDeclaration.name,
                         importsManager: this.importsManager,
                         referencedIn: this.sourceFile,
-                        importStrategy: { type: "fromRoot" },
+                        importStrategy: {
+                            type: "fromRoot",
+                            namespaceImport: this.typeDeclarationReferencer.namespaceExport,
+                        },
                     })
                     .getTypeNode(),
             getReferenceToGeneratedTypeSchema: () =>

@@ -66,7 +66,10 @@ export class RequestWrapperContextMixinImpl implements RequestWrapperContextMixi
         return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
             name: { packageId, endpoint },
             importsManager: this.importsManager,
-            importStrategy: { type: "fromRoot" },
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport,
+            },
             referencedIn: this.sourceFile,
         });
     }

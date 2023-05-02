@@ -22,7 +22,6 @@ export declare namespace getReferenceToExportFromRoot {
         namespaceImport?: string;
         useDynamicImport?: boolean;
         subImport?: string[];
-        aliasOfRoot: string | undefined;
     }
 }
 
@@ -34,7 +33,6 @@ export function getReferenceToExportFromRoot({
     namespaceImport,
     useDynamicImport = false,
     subImport = [],
-    aliasOfRoot,
 }: getReferenceToExportFromRoot.Args): Reference {
     let prefix: ts.Identifier | undefined;
     let moduleSpecifier: ModuleSpecifier;
@@ -48,7 +46,6 @@ export function getReferenceToExportFromRoot({
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath([]),
-            aliasOfRoot,
         });
 
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
@@ -61,16 +58,15 @@ export function getReferenceToExportFromRoot({
         directoriesInsideNamespaceExport = remainingDirectories;
     }
 
-    // if the item we're importing has no namespaceExport, but the namespaceImport arg is provided,
-    // just: import * as namespaceImport from <root>;
-    else if (firstDirectory?.exportDeclaration?.namespaceExport == null && namespaceImport != null) {
+    // if the namespaceImport arg is provided,
+    // just: import * as namespaceImport from <first directory>;
+    else if (namespaceImport != null) {
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to:
                 firstDirectory != null
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
                     : convertExportedFilePathToFilePath(exportedFromPath),
-            aliasOfRoot,
         });
 
         addImport = () => {
@@ -86,8 +82,9 @@ export function getReferenceToExportFromRoot({
         const directoryToImportDirectlyFrom: ExportedDirectory[] = [];
 
         // find the first namespace-exported directory
-        for (const directory of exportedFromPath.directories) {
-            if (directory.exportDeclaration?.namespaceExport != null) {
+        for (const [index, directory] of exportedFromPath.directories.entries()) {
+            // never import from root index.ts (to avoid circular dependencies)
+            if (index > 0 && directory.exportDeclaration?.namespaceExport != null) {
                 break;
             }
             directoryToImportDirectlyFrom.push(directory);
@@ -106,14 +103,12 @@ export function getReferenceToExportFromRoot({
                 referencedIn,
                 importAlias: undefined,
                 subImport,
-                aliasOfRoot,
             });
         }
 
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
-            aliasOfRoot,
         });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;

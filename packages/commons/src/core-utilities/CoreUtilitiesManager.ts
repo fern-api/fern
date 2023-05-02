@@ -27,12 +27,7 @@ export declare namespace CoreUtilitiesManager {
 }
 
 export class CoreUtilitiesManager {
-    private aliasOfRoot: string | undefined;
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
-
-    constructor({ aliasOfRoot }: { aliasOfRoot: string | undefined }) {
-        this.aliasOfRoot = aliasOfRoot;
-    }
 
     public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
         const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
@@ -90,7 +85,6 @@ export class CoreUtilitiesManager {
                 namespaceImport: "core",
                 referencedIn: sourceFile,
                 importsManager,
-                aliasOfRoot: this.aliasOfRoot,
             });
         };
     }

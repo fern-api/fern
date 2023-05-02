@@ -4,17 +4,15 @@ import { Directory, SourceFile } from "ts-morph";
 export function getRelativePathAsModuleSpecifierTo({
     from,
     to,
-    aliasOfRoot,
 }: {
     from: Directory | SourceFile | string;
     to: Directory | SourceFile | string;
-    aliasOfRoot: string | undefined;
 }): string {
     const parsedToFilePath = path.parse(getPath(to));
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name);
 
-    if (aliasOfRoot != null && path.normalize(toFilePathWithoutExtension) === "/") {
-        return aliasOfRoot;
+    if (path.normalize(toFilePathWithoutExtension) === "/") {
+        throw new Error("Cannot import from root");
     }
 
     let moduleSpecifier = path.relative(getDirectory(from), toFilePathWithoutExtension);

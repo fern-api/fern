@@ -11,7 +11,6 @@ export function getDirectReferenceToExport({
     referencedIn,
     importAlias,
     subImport = [],
-    aliasOfRoot,
 }: {
     exportedName: string;
     exportedFromPath: ExportedFilePath;
@@ -19,12 +18,10 @@ export function getDirectReferenceToExport({
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
-    aliasOfRoot: string | undefined;
 }): Reference {
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
         to: convertExportedFilePathToFilePath(exportedFromPath),
-        aliasOfRoot,
     });
 
     const addImport = () => {

@@ -18,7 +18,6 @@ export function getReferenceToExportViaNamespaceImport({
     importsManager,
     referencedIn,
     subImport = [],
-    aliasOfRoot,
 }: {
     exportedName: string;
     filepathToNamespaceImport: ExportedFilePath;
@@ -27,14 +26,12 @@ export function getReferenceToExportViaNamespaceImport({
     importsManager: ImportsManager;
     referencedIn: SourceFile;
     subImport?: string[];
-    aliasOfRoot: string | undefined;
 }): Reference {
     const addImport = () => {
         importsManager.addImport(
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
                 to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
-                aliasOfRoot,
             }),
             { namespaceImport }
         );

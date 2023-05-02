@@ -21,12 +21,7 @@ interface CombinedExportDeclarations {
 type PathToDirectory = string;
 
 export class ExportsManager {
-    private aliasOfRoot: string | undefined;
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
-
-    constructor({ aliasOfRoot }: { aliasOfRoot: string | undefined }) {
-        this.aliasOfRoot = aliasOfRoot;
-    }
 
     public addExport(from: SourceFile | string, exportDeclaration: ExportDeclaration | undefined): void {
         const fromPath = typeof from === "string" ? from : from.getFilePath();
@@ -41,7 +36,6 @@ export class ExportsManager {
             moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                 from: pathToDirectory,
                 to: fromPath,
-                aliasOfRoot: this.aliasOfRoot,
             }),
             exportDeclaration,
         });
@@ -61,7 +55,6 @@ export class ExportsManager {
                 moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                     from: directoryFilepath,
                     to: nextDirectoryPath,
-                    aliasOfRoot: this.aliasOfRoot,
                 }),
                 exportDeclaration: part.exportDeclaration,
             });
@@ -73,7 +66,6 @@ export class ExportsManager {
                         moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                             from: directoryFilepath,
                             to: path.join(nextDirectoryPath, relativeFilePath),
-                            aliasOfRoot: this.aliasOfRoot,
                         }),
                         exportDeclaration,
                     });
