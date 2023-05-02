@@ -39,8 +39,8 @@ export class GeneratedThrowingFileUploadEndpointImplementation
     private packageId: PackageId;
     private service: HttpService;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private requestParameter: FileUploadRequestParameter;
-    private queryParams: GeneratedQueryParams;
+    private requestParameter: FileUploadRequestParameter | undefined;
+    private queryParams: GeneratedQueryParams | undefined;
     private requestBody: HttpRequestBody.FileUpload;
     private includeCredentialsOnCrossOriginRequests: boolean;
     private errorResolver: ErrorResolver;
@@ -68,23 +68,25 @@ export class GeneratedThrowingFileUploadEndpointImplementation
         this.requestBody = requestBody;
         this.timeoutInSeconds = timeoutInSeconds;
 
-        if (this.endpoint.sdkRequest == null) {
-            throw new Error("SdkRequest is not defined for file upload endpoint");
-        }
-        if (this.endpoint.sdkRequest.shape.type != "wrapper") {
-            throw new Error("SdkRequest is not a wrapper for file upload endpoint");
-        }
-        const requestParameter = new FileUploadRequestParameter({
-            packageId,
-            service,
-            endpoint,
-            sdkRequest: this.endpoint.sdkRequest,
-        });
+        if (requestBody.properties.some((property) => property.type === "bodyProperty")) {
+            if (this.endpoint.sdkRequest == null) {
+                throw new Error("SdkRequest is not defined for file upload endpoint");
+            }
+            if (this.endpoint.sdkRequest.shape.type != "wrapper") {
+                throw new Error("SdkRequest is not a wrapper for file upload endpoint");
+            }
+            const requestParameter = new FileUploadRequestParameter({
+                packageId,
+                service,
+                endpoint,
+                sdkRequest: this.endpoint.sdkRequest,
+            });
 
-        this.requestParameter = requestParameter;
-        this.queryParams = new GeneratedQueryParams({
-            requestParameter,
-        });
+            this.requestParameter = requestParameter;
+            this.queryParams = new GeneratedQueryParams({
+                requestParameter,
+            });
+        }
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -140,9 +142,12 @@ export class GeneratedThrowingFileUploadEndpointImplementation
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
             });
         }
-        parameters.push(
-            this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
-        );
+
+        if (this.requestParameter != null) {
+            parameters.push(
+                this.requestParameter.getParameterDeclaration(context, { typeIntersection: requestBodyIntersection })
+            );
+        }
         return parameters;
     }
 
@@ -160,8 +165,13 @@ export class GeneratedThrowingFileUploadEndpointImplementation
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        statements.push(...this.requestParameter.getInitialStatements());
-        statements.push(...this.queryParams.getBuildStatements(context));
+        if (this.requestParameter != null) {
+            statements.push(...this.requestParameter.getInitialStatements());
+        }
+
+        if (this.queryParams != null) {
+            statements.push(...this.queryParams.getBuildStatements(context));
+        }
 
         statements.push(
             ts.factory.createVariableStatement(
@@ -196,7 +206,7 @@ export class GeneratedThrowingFileUploadEndpointImplementation
             url: this.getReferenceToEnvironment(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             headers: this.getHeaders(context),
-            queryParameters: this.queryParams.getReferenceTo(context),
+            queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
             body: ts.factory.createIdentifier(
                 GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
             ),
@@ -243,11 +253,13 @@ export class GeneratedThrowingFileUploadEndpointImplementation
 
         elements.push(...this.generatedSdkClientClass.getApiHeaders(context));
 
-        for (const header of this.requestParameter.getAllHeaders(context)) {
-            elements.push({
-                header: header.name.wireValue,
-                value: this.requestParameter.getReferenceToHeader(header, context),
-            });
+        if (this.requestParameter != null) {
+            for (const header of this.requestParameter.getAllHeaders(context)) {
+                elements.push({
+                    header: header.name.wireValue,
+                    value: this.requestParameter.getReferenceToHeader(header, context),
+                });
+            }
         }
 
         elements.push({

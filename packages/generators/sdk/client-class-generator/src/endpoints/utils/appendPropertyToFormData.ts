@@ -14,7 +14,7 @@ export function appendPropertyToFormData({
     property: FileUploadRequestProperty;
     context: SdkClientClassContext;
     referenceToFormData: ts.Expression;
-    requestParameter: FileUploadRequestParameter;
+    requestParameter: FileUploadRequestParameter | undefined;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
@@ -38,6 +38,9 @@ export function appendPropertyToFormData({
             return statement;
         },
         bodyProperty: (property) => {
+            if (requestParameter == null) {
+                throw new Error("Cannot append body property to form data because requestParameter is not defined.");
+            }
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_item";
 
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context);

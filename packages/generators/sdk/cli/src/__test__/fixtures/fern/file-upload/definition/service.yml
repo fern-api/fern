@@ -23,6 +23,14 @@ service:
             maybeListOrSet: MaybeListOrSet
             optionalMaybeListOrSet: optional<MaybeListOrSet>
             listOfObjects: list<MyObject>
+    justFile:
+      path: /just-file
+      method: POST
+      request:
+        name: JustFileRequet
+        body:
+          properties:
+            file: file
 
 types:
   MaybeList:
