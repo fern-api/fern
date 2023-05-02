@@ -4959,6 +4959,1896 @@ won't receive any object events until successfully verified.
 }
 `;
 
+exports[`open api converter hathora simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "service": undefined,
+      "types": {
+        "ActiveConnectionInfo": {
+          "docs": undefined,
+          "properties": {
+            "host": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "port": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "ActiveConnectionInfoStatus",
+            },
+            "transportType": {
+              "docs": undefined,
+              "type": "TransportType",
+            },
+          },
+        },
+        "ActiveConnectionInfoStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "active",
+              "value": "active",
+            },
+          ],
+        },
+        "AppId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "Application": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "appName": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "appSecret": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "authConfiguration": {
+              "docs": undefined,
+              "type": "ApplicationAuthConfiguration",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "deletedAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "deletedBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "orgId": {
+              "docs": undefined,
+              "type": "OrgId",
+            },
+          },
+        },
+        "ApplicationAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+            "google": {
+              "docs": undefined,
+              "type": "optional<ApplicationAuthConfigurationGoogle>",
+            },
+            "nickname": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+          },
+        },
+        "ApplicationAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "ApplicationWithDeployment": {
+          "docs": undefined,
+          "properties": {
+            "deployment": {
+              "docs": undefined,
+              "type": "optional<Deployment>",
+            },
+          },
+        },
+        "Build": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "buildId": {
+              "docs": undefined,
+              "type": "BuildId",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "deletedAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "finishedAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "imageSize": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "regionalContainerTags": {
+              "docs": undefined,
+              "type": "list<BuildRegionalContainerTagsItem>",
+            },
+            "startedAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "BuildStatus",
+            },
+          },
+        },
+        "BuildId": {
+          "docs": undefined,
+          "type": "double",
+        },
+        "BuildRegionalContainerTagsItem": {
+          "docs": undefined,
+          "properties": {
+            "containerTag": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+          },
+        },
+        "BuildStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "created",
+              "value": "created",
+            },
+            {
+              "name": "running",
+              "value": "running",
+            },
+            {
+              "name": "succeeded",
+              "value": "succeeded",
+            },
+            {
+              "name": "failed",
+              "value": "failed",
+            },
+          ],
+        },
+        "ConnectionInfo": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            {
+              "docs": undefined,
+              "type": "StartingConnectionInfo",
+            },
+            {
+              "docs": undefined,
+              "type": "ActiveConnectionInfo",
+            },
+          ],
+        },
+        "CreateAppRequestAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+            "google": {
+              "docs": undefined,
+              "type": "optional<CreateAppRequestAuthConfigurationGoogle>",
+            },
+            "nickname": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+          },
+        },
+        "CreateAppRequestAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "CreateLobbyRequestVisibility": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "public",
+              "value": "public",
+            },
+            {
+              "name": "private",
+              "value": "private",
+            },
+            {
+              "name": "local",
+              "value": "local",
+            },
+          ],
+        },
+        "Deployment": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "optional<AppId>",
+            },
+            "buildId": {
+              "docs": undefined,
+              "type": "optional<BuildId>",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "deploymentId": {
+              "docs": undefined,
+              "type": "optional<DeploymentId>",
+            },
+            "requestedCPU": {
+              "docs": undefined,
+              "type": "optional<double>",
+            },
+            "requestedMemoryMB": {
+              "docs": undefined,
+              "type": "optional<double>",
+            },
+          },
+        },
+        "DeploymentConfigEnvItem": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "DeploymentId": {
+          "docs": undefined,
+          "type": "double",
+        },
+        "DiscoveryResponse": {
+          "docs": undefined,
+          "type": "list<DiscoveryResponseItem>",
+        },
+        "DiscoveryResponseItem": {
+          "docs": undefined,
+          "properties": {
+            "host": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "port": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+          },
+        },
+        "Lobby": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "initialConfig": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+            "local": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "state": {
+              "docs": undefined,
+              "type": "optional<map<string, unknown>>",
+            },
+            "visibility": {
+              "docs": undefined,
+              "type": "LobbyVisibility",
+            },
+          },
+        },
+        "LobbyVisibility": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "private",
+              "value": "private",
+            },
+            {
+              "name": "public",
+              "value": "public",
+            },
+            {
+              "name": "local",
+              "value": "local",
+            },
+          ],
+        },
+        "LoginAnonymousResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "LoginGoogleResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "LoginNicknameResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "MetricName": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "cpu",
+              "value": "cpu",
+            },
+            {
+              "name": "memory",
+              "value": "memory",
+            },
+            {
+              "name": "rate_egress",
+              "value": "rate_egress",
+            },
+            {
+              "name": "total_egress",
+              "value": "total_egress",
+            },
+          ],
+        },
+        "MetricValue": {
+          "docs": undefined,
+          "properties": {
+            "timestamp": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "double",
+            },
+          },
+        },
+        "MetricsResponse": {
+          "docs": undefined,
+          "type": "RecordPartialMetricNameMetricValueArray",
+        },
+        "Omit_Room.allocations_": {
+          "docs": undefined,
+          "type": "PickRoomExcludeKeyofRoomAllocations",
+        },
+        "OrgId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "PickRoomExcludeKeyofRoomAllocations": {
+          "docs": "From T, pick a set of properties whose keys are in the union K",
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "currentAllocation": {
+              "docs": undefined,
+              "type": "RoomAllocation",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "RoomStatus",
+            },
+          },
+        },
+        "PlanName": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "tiny",
+              "value": "tiny",
+            },
+            {
+              "name": "small",
+              "value": "small",
+            },
+            {
+              "name": "medium",
+              "value": "medium",
+            },
+            {
+              "name": "large",
+              "value": "large",
+            },
+          ],
+        },
+        "Process": {
+          "docs": undefined,
+          "properties": {
+            "activeConnections": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "deploymentId": {
+              "docs": undefined,
+              "type": "DeploymentId",
+            },
+            "draining": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "egressedBytes": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "host": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "idleSince": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "port": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "processId": {
+              "docs": undefined,
+              "type": "ProcessId",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+            "roomSlotsAvailable": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "roomsPerProcess": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "startedAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "startingAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "stoppingAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "terminatedAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "ProcessId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "ProcessWithRooms": {
+          "docs": undefined,
+          "properties": {
+            "rooms": {
+              "docs": undefined,
+              "type": "optional<list<RoomWithoutAllocations>>",
+            },
+            "totalRooms": {
+              "docs": undefined,
+              "type": "optional<double>",
+            },
+          },
+        },
+        "RecordPartialMetricNameMetricValueArray": {
+          "docs": "Construct a type with a set of properties K of type T",
+          "properties": {
+            "cpu": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+            "memory": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+            "rate_egress": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+            "total_egress": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+          },
+        },
+        "RecordStringNever": {
+          "docs": "Construct a type with a set of properties K of type T",
+          "properties": {},
+        },
+        "Region": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Seattle",
+              "value": "Seattle",
+            },
+            {
+              "name": "Washington_DC",
+              "value": "Washington_DC",
+            },
+            {
+              "name": "Chicago",
+              "value": "Chicago",
+            },
+            {
+              "name": "London",
+              "value": "London",
+            },
+            {
+              "name": "Frankfurt",
+              "value": "Frankfurt",
+            },
+            {
+              "name": "Mumbai",
+              "value": "Mumbai",
+            },
+            {
+              "name": "Singapore",
+              "value": "Singapore",
+            },
+            {
+              "name": "Tokyo",
+              "value": "Tokyo",
+            },
+            {
+              "name": "Sydney",
+              "value": "Sydney",
+            },
+            {
+              "name": "Sao_Paulo",
+              "value": "Sao_Paulo",
+            },
+          ],
+        },
+        "Room": {
+          "docs": undefined,
+          "properties": {
+            "allocations": {
+              "docs": undefined,
+              "type": "list<RoomAllocation>",
+            },
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "currentAllocation": {
+              "docs": undefined,
+              "type": "RoomAllocation",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "RoomStatus",
+            },
+          },
+        },
+        "RoomAllocation": {
+          "docs": undefined,
+          "properties": {
+            "processId": {
+              "docs": undefined,
+              "type": "ProcessId",
+            },
+            "roomAllocationId": {
+              "docs": undefined,
+              "type": "RoomAllocationId",
+            },
+            "scheduledAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "unscheduledAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "RoomAllocationId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "RoomId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "RoomStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "scheduling",
+              "value": "scheduling",
+            },
+            {
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "name": "suspended",
+              "value": "suspended",
+            },
+            {
+              "name": "destroyed",
+              "value": "destroyed",
+            },
+          ],
+        },
+        "RoomWithoutAllocations": {
+          "docs": undefined,
+          "type": "Omit_Room.allocations_",
+        },
+        "StartingConnectionInfo": {
+          "docs": undefined,
+          "properties": {
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "StartingConnectionInfoStatus",
+            },
+          },
+        },
+        "StartingConnectionInfoStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "starting",
+              "value": "starting",
+            },
+          ],
+        },
+        "TransportType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "tcp",
+              "value": "tcp",
+            },
+            {
+              "name": "udp",
+              "value": "udp",
+            },
+            {
+              "name": "tls",
+              "value": "tls",
+            },
+          ],
+        },
+        "UpdateAppRequestAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+            "google": {
+              "docs": undefined,
+              "type": "optional<UpdateAppRequestAuthConfigurationGoogle>",
+            },
+            "nickname": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+          },
+        },
+        "UpdateAppRequestAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "appV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreateApp": {
+            "method": "POST",
+            "path": "/apps/v1/create",
+            "request": {
+              "body": {
+                "properties": {
+                  "appName": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "authConfiguration": {
+                    "docs": undefined,
+                    "type": "root.CreateAppRequestAuthConfiguration",
+                  },
+                },
+              },
+              "name": "CreateAppRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Application",
+            },
+          },
+          "DeleteApp": {
+            "method": "PATCH",
+            "path": "/apps/v1/delete/{appId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+          },
+          "GetAppInfo": {
+            "method": "GET",
+            "path": "/apps/v1/info/{appId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Application",
+            },
+          },
+          "GetApps": {
+            "method": "GET",
+            "path": "/apps/v1/list",
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.ApplicationWithDeployment>",
+            },
+          },
+          "UpdateApp": {
+            "method": "POST",
+            "path": "/apps/v1/update/{appId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "appName": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "authConfiguration": {
+                    "docs": undefined,
+                    "type": "root.UpdateAppRequestAuthConfiguration",
+                  },
+                },
+              },
+              "name": "UpdateAppRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Application",
+            },
+          },
+        },
+      },
+    },
+    "authV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "LoginAnonymous": {
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/anonymous",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.LoginAnonymousResponse",
+            },
+          },
+          "LoginGoogle": {
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/google",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "idToken": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "LoginGoogleRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.LoginGoogleResponse",
+            },
+          },
+          "LoginNickname": {
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/nickname",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "nickname": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "LoginNicknameRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.LoginNicknameResponse",
+            },
+          },
+        },
+      },
+    },
+    "buildV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreateBuild": {
+            "method": "POST",
+            "path": "/builds/v1/{appId}/create",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Build",
+            },
+          },
+          "DeleteBuild": {
+            "method": "PATCH",
+            "path": "/builds/v1/{appId}/delete/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+          },
+          "GetBuildInfo": {
+            "method": "GET",
+            "path": "/builds/v1/{appId}/info/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Build",
+            },
+          },
+          "GetBuilds": {
+            "method": "GET",
+            "path": "/builds/v1/{appId}/list",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Build>",
+            },
+          },
+          "RunBuild": {
+            "method": "POST",
+            "path": "/builds/v1/{appId}/run/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "file": "file",
+                },
+              },
+              "name": "RunBuildRequest",
+              "query-parameters": undefined,
+            },
+          },
+        },
+      },
+    },
+    "deploymentV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreateDeployment": {
+            "method": "POST",
+            "path": "/deployments/v1/{appId}/create/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "containerPort": {
+                    "docs": undefined,
+                    "type": "double",
+                  },
+                  "env": {
+                    "docs": undefined,
+                    "type": "list<root.DeploymentConfigEnvItem>",
+                  },
+                  "planName": {
+                    "docs": undefined,
+                    "type": "root.PlanName",
+                  },
+                  "roomsPerProcess": {
+                    "docs": undefined,
+                    "type": "double",
+                  },
+                  "transportType": {
+                    "docs": undefined,
+                    "type": "root.TransportType",
+                  },
+                },
+              },
+              "name": "DeploymentConfig",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Deployment",
+            },
+          },
+          "GetDeploymentInfo": {
+            "method": "GET",
+            "path": "/deployments/v1/{appId}/info/{deploymentId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "deploymentId": {
+                "docs": undefined,
+                "type": "root.DeploymentId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Deployment",
+            },
+          },
+          "GetDeployments": {
+            "method": "GET",
+            "path": "/deployments/v1/{appId}/list",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Deployment>",
+            },
+          },
+        },
+      },
+    },
+    "discoveryV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetPingServiceEndpoints": {
+            "method": "GET",
+            "path": "/discovery/v1/ping",
+            "response": {
+              "docs": "Ok",
+              "type": "root.DiscoveryResponse",
+            },
+          },
+        },
+      },
+    },
+    "lobbyV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreatePrivateLobbyDeprecated": {
+            "method": "POST",
+            "path": "/lobby/v1/{appId}/create/private",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "CreatePrivateLobbyDeprecatedRequest",
+              "query-parameters": {
+                "local": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.RoomId",
+            },
+          },
+          "CreatePublicLobbyDeprecated": {
+            "method": "POST",
+            "path": "/lobby/v1/{appId}/create/public",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "CreatePublicLobbyDeprecatedRequest",
+              "query-parameters": {
+                "local": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.RoomId",
+            },
+          },
+          "ListActivePublicLobbiesDeprecated": {
+            "method": "GET",
+            "path": "/lobby/v1/{appId}/list",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "ListActivePublicLobbiesDeprecatedRequest",
+              "query-parameters": {
+                "local": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Lobby>",
+            },
+          },
+        },
+      },
+    },
+    "lobbyV2.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreateLobby": {
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                  "visibility": {
+                    "docs": undefined,
+                    "type": "root.CreateLobbyRequestVisibility",
+                  },
+                },
+              },
+              "name": "CreateLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreateLocalLobby": {
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/local",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "name": "CreateLocalLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreatePrivateLobby": {
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/private",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "name": "CreatePrivateLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreatePublicLobby": {
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/public",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "name": "CreatePublicLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "GetLobbyInfo": {
+            "method": "GET",
+            "path": "/lobby/v2/{appId}/info/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Lobby",
+            },
+          },
+          "ListActivePublicLobbies": {
+            "method": "GET",
+            "path": "/lobby/v2/{appId}/list/public",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "ListActivePublicLobbiesRequest",
+              "query-parameters": {
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Lobby>",
+            },
+          },
+          "SetLobbyState": {
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/setState/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "state": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                },
+              },
+              "name": "SetLobbyStateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Lobby",
+            },
+          },
+        },
+      },
+    },
+    "logV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetLogsForApp": {
+            "method": "GET",
+            "path": "/logs/v1/{appId}/all",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "GetLogsForAppRequest",
+              "query-parameters": {
+                "follow": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+                "tailLines": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<double>",
+                },
+              },
+            },
+          },
+          "GetLogsForDeployment": {
+            "method": "GET",
+            "path": "/logs/v1/{appId}/deployment/{deploymentId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "deploymentId": {
+                "docs": undefined,
+                "type": "root.DeploymentId",
+              },
+            },
+            "request": {
+              "name": "GetLogsForDeploymentRequest",
+              "query-parameters": {
+                "follow": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "tailLines": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<double>",
+                },
+              },
+            },
+          },
+          "GetLogsForProcess": {
+            "method": "GET",
+            "path": "/logs/v1/{appId}/process/{processId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "request": {
+              "name": "GetLogsForProcessRequest",
+              "query-parameters": {
+                "follow": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "tailLines": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<double>",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    "metricsV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetMetrics": {
+            "method": "GET",
+            "path": "/metrics/v1/{appId}/process/{processId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "request": {
+              "name": "GetMetricsRequest",
+              "query-parameters": {
+                "end": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<double>",
+                },
+                "metrics": {
+                  "allow-multiple": true,
+                  "docs": undefined,
+                  "type": "optional<root.MetricName>",
+                },
+                "start": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<double>",
+                },
+                "step": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<double>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.MetricsResponse",
+            },
+          },
+        },
+      },
+    },
+    "processesV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetProcessInfo": {
+            "method": "GET",
+            "path": "/processes/v1/{appId}/info/{processId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Process",
+            },
+          },
+          "GetRunningProcesses": {
+            "method": "GET",
+            "path": "/processes/v1/{appId}/list/running",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "GetRunningProcessesRequest",
+              "query-parameters": {
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.ProcessWithRooms>",
+            },
+          },
+          "GetStoppedProcesses": {
+            "method": "GET",
+            "path": "/processes/v1/{appId}/list/stopped",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "GetStoppedProcessesRequest",
+              "query-parameters": {
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Process>",
+            },
+          },
+        },
+      },
+    },
+    "roomV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreateRoom": {
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/create",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "name": "CreateRoomRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.RoomId",
+            },
+          },
+          "DestroyRoom": {
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/destroy/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+          },
+          "GetActiveRoomsForProcess": {
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/list/{processId}/active",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.RoomWithoutAllocations>",
+            },
+          },
+          "GetConnectionInfo": {
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.ConnectionInfo",
+            },
+          },
+          "GetInactiveRoomsForProcess": {
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/list/{processId}/inactive",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.RoomWithoutAllocations>",
+            },
+          },
+          "GetRoomInfo": {
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/info/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Room",
+            },
+          },
+          "SuspendRoom": {
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/suspend/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "bearer",
+    "display-name": "Hathora Cloud API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`open api converter suger simple 1`] = `
 {
   "definitionFiles": {
