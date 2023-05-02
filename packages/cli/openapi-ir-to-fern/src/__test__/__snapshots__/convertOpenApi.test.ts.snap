@@ -6511,8 +6511,7 @@ exports[`open api converter hathora simple 1`] = `
                 },
               },
             },
-            "response": {
-              "docs": "Ok",
+            "response-stream": {
               "type": "string",
             },
           },

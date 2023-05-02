@@ -2544,6 +2544,7 @@
     },
     "/logs/v1/{appId}/all": {
       "get": {
+        "x-fern-streaming": true,
         "operationId": "GetLogsForApp",
         "responses": {
           "200": {
