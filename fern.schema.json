@@ -453,10 +453,15 @@
                   },
                   "stream-condition": { "type": "string" },
                   "response-stream": {
-                    "type": "object",
-                    "properties": { "data": { "type": "string" }, "terminator": { "type": "string" } },
-                    "required": ["data"],
-                    "additionalProperties": false
+                    "anyOf": [
+                      { "type": "string" },
+                      {
+                        "type": "object",
+                        "properties": { "type": { "type": "string" }, "terminator": { "type": "string" } },
+                        "required": ["type"],
+                        "additionalProperties": false
+                      }
+                    ]
                   },
                   "errors": {
                     "type": "array",
