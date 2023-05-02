@@ -11529,7 +11529,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "ListEntitlementsByPartnerRequestPartner",
+                "type": "root.ListEntitlementsByPartnerRequestPartner",
               },
             },
             "response": {
@@ -11707,11 +11707,11 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "DeleteIntegrationRequestPartner",
+                "type": "root.DeleteIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "DeleteIntegrationRequestService",
+                "type": "root.DeleteIntegrationRequestService",
               },
             },
             "response": {
@@ -11729,11 +11729,11 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "GetIntegrationRequestPartner",
+                "type": "root.GetIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "GetIntegrationRequestService",
+                "type": "root.GetIntegrationRequestService",
               },
             },
             "response": {
@@ -11765,11 +11765,11 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "UpdateIntegrationRequestPartner",
+                "type": "root.UpdateIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "UpdateIntegrationRequestService",
+                "type": "root.UpdateIntegrationRequestService",
               },
             },
             "request": {
@@ -11811,11 +11811,11 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "VerifyIntegrationRequestPartner",
+                "type": "root.VerifyIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "VerifyIntegrationRequestService",
+                "type": "root.VerifyIntegrationRequestService",
               },
             },
             "response": {
@@ -12300,7 +12300,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "ListOffersByPartnerRequestPartner",
+                "type": "root.ListOffersByPartnerRequestPartner",
               },
             },
             "response": {
@@ -12465,7 +12465,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "ListProductsByPartnerRequestPartner",
+                "type": "root.ListProductsByPartnerRequestPartner",
               },
             },
             "response": {
@@ -12612,7 +12612,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "ListRevenueRecordDetailsRequestPartner",
+                "type": "root.ListRevenueRecordDetailsRequestPartner",
               },
             },
             "request": {
@@ -12670,7 +12670,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
               "partner": {
                 "docs": undefined,
-                "type": "ListRevenueRecordsRequestPartner",
+                "type": "root.ListRevenueRecordsRequestPartner",
               },
             },
             "request": {
