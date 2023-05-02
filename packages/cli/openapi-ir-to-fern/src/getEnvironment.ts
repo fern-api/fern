@@ -17,12 +17,13 @@ export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefin
     let endpointUrlOverrides = false;
 
     const defaultUrls: Record<string, string> = {};
+
     for (const server of openApiFile.servers) {
         if (server.name == null) {
             // TODO(dsinghvi): log that we are ignoring server because no name
             continue;
         }
-        defaultUrls[server.name] = server.url;
+        defaultUrls[server.name] = maybeSanitizeUpgradedServerUrl(server.url);
     }
 
     const overrideUrls: Record<string, string> = {};
@@ -34,11 +35,20 @@ export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefin
             if (server.name == null) {
                 throw new Error(`Server must have x-name: ${endpoint.method + " " + endpoint.path}`);
             }
-            overrideUrls[server.name] = server.url;
+            overrideUrls[server.name] = maybeSanitizeUpgradedServerUrl(server.url);
         }
     }
 
     if (Object.keys(defaultUrls).length === 0 && Object.keys(overrideUrls).length === 0) {
+        // if a single url without name then name it default
+        if (openApiFile.servers.length === 1 && openApiFile.servers[0] != null) {
+            return {
+                type: "single",
+                environmentToUrl: {
+                    default: maybeSanitizeUpgradedServerUrl(openApiFile.servers[0].url),
+                },
+            };
+        }
         return undefined;
     }
 
@@ -61,4 +71,8 @@ export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefin
             ...overrideUrls,
         },
     };
+}
+
+function maybeSanitizeUpgradedServerUrl(url: string): string {
+    return url.replace("//https", "https");
 }
