@@ -4,274 +4,7 @@ exports[`open api converter buzzshot simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
-      "service": {
-        "auth": true,
-        "base-path": "",
-        "endpoints": {
-          "listAccounts": {
-            "method": "GET",
-            "path": "/api/v2/accounts/",
-            "request": {
-              "name": "listAccountsRequest",
-              "query-parameters": {
-                "page": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "ListAccountsResponse",
-            },
-          },
-          "listGames": {
-            "method": "GET",
-            "path": "/api/v2/games/",
-            "request": {
-              "name": "listGamesRequest",
-              "query-parameters": {
-                "after": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "before": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "complete": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "date": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "page": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "ListGamesResponse",
-            },
-          },
-          "listGroups": {
-            "method": "GET",
-            "path": "/api/v2/groups/",
-            "request": {
-              "name": "listGroupsRequest",
-              "query-parameters": {
-                "complete": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "is_event": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "page": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "ListGroupsResponse",
-            },
-          },
-          "listLocations": {
-            "method": "GET",
-            "path": "/api/v2/rooms/",
-            "request": {
-              "name": "listLocationsRequest",
-              "query-parameters": {
-                "page": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "ListLocationsResponse",
-            },
-          },
-          "listPhotos": {
-            "method": "GET",
-            "path": "/api/v2/photos/",
-            "request": {
-              "name": "listPhotosRequest",
-              "query-parameters": {
-                "page": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "ListPhotosResponse",
-            },
-          },
-          "listPlayers": {
-            "method": "GET",
-            "path": "/api/v2/players/",
-            "request": {
-              "name": "listPlayersRequest",
-              "query-parameters": {
-                "page": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "ListPlayersResponse",
-            },
-          },
-          "retrieveAccount": {
-            "method": "GET",
-            "path": "/api/v2/accounts/{id}/",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "Room",
-            },
-          },
-          "retrieveGame": {
-            "method": "GET",
-            "path": "/api/v2/games/{id}/",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "retrieveGameRequest",
-              "query-parameters": {
-                "after": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "before": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "complete": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "date": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "Game",
-            },
-          },
-          "retrieveGroup": {
-            "method": "GET",
-            "path": "/api/v2/groups/{id}/",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "retrieveGroupRequest",
-              "query-parameters": {
-                "complete": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "is_event": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "Group",
-            },
-          },
-          "retrieveLocation": {
-            "method": "GET",
-            "path": "/api/v2/rooms/{id}/",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "Room",
-            },
-          },
-          "retrievePhoto": {
-            "method": "GET",
-            "path": "/api/v2/photos/{photo_id}/",
-            "path-parameters": {
-              "photo_id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "Photo",
-            },
-          },
-          "retrievePlayer": {
-            "method": "GET",
-            "path": "/api/v2/players/{id}/",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "Player",
-            },
-          },
-        },
-      },
+      "service": undefined,
       "types": {
         "Game": {
           "docs": undefined,
@@ -877,6 +610,279 @@ exports[`open api converter buzzshot simple 1`] = `
         },
       },
     },
+    "api.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "listAccounts": {
+            "method": "GET",
+            "path": "/api/v2/accounts/",
+            "request": {
+              "name": "listAccountsRequest",
+              "query-parameters": {
+                "page": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ListAccountsResponse",
+            },
+          },
+          "listGames": {
+            "method": "GET",
+            "path": "/api/v2/games/",
+            "request": {
+              "name": "listGamesRequest",
+              "query-parameters": {
+                "after": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ListGamesResponse",
+            },
+          },
+          "listGroups": {
+            "method": "GET",
+            "path": "/api/v2/groups/",
+            "request": {
+              "name": "listGroupsRequest",
+              "query-parameters": {
+                "complete": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "page": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ListGroupsResponse",
+            },
+          },
+          "listLocations": {
+            "method": "GET",
+            "path": "/api/v2/rooms/",
+            "request": {
+              "name": "listLocationsRequest",
+              "query-parameters": {
+                "page": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ListLocationsResponse",
+            },
+          },
+          "listPhotos": {
+            "method": "GET",
+            "path": "/api/v2/photos/",
+            "request": {
+              "name": "listPhotosRequest",
+              "query-parameters": {
+                "page": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ListPhotosResponse",
+            },
+          },
+          "listPlayers": {
+            "method": "GET",
+            "path": "/api/v2/players/",
+            "request": {
+              "name": "listPlayersRequest",
+              "query-parameters": {
+                "page": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ListPlayersResponse",
+            },
+          },
+          "retrieveAccount": {
+            "method": "GET",
+            "path": "/api/v2/accounts/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Room",
+            },
+          },
+          "retrieveGame": {
+            "method": "GET",
+            "path": "/api/v2/games/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "retrieveGameRequest",
+              "query-parameters": {
+                "after": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "before": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "complete": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "date": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Game",
+            },
+          },
+          "retrieveGroup": {
+            "method": "GET",
+            "path": "/api/v2/groups/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "retrieveGroupRequest",
+              "query-parameters": {
+                "complete": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "is_event": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Group",
+            },
+          },
+          "retrieveLocation": {
+            "method": "GET",
+            "path": "/api/v2/rooms/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Room",
+            },
+          },
+          "retrievePhoto": {
+            "method": "GET",
+            "path": "/api/v2/photos/{photo_id}/",
+            "path-parameters": {
+              "photo_id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Photo",
+            },
+          },
+          "retrievePlayer": {
+            "method": "GET",
+            "path": "/api/v2/players/{id}/",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Player",
+            },
+          },
+        },
+      },
+    },
   },
   "rootApiFile": {
     "auth": "bearer",
@@ -893,105 +899,7 @@ exports[`open api converter devrev simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
-      "service": {
-        "auth": true,
-        "base-path": "",
-        "endpoints": {
-          "dev-org-auth-connections-create": {
-            "method": "POST",
-            "path": "/dev-orgs.auth-connections.create",
-            "request": {
-              "body": {
-                "docs": "Request to create a new enterprise authentication connection.
-",
-                "type": "DevOrgAuthConnectionsCreateRequest",
-              },
-            },
-            "response": {
-              "docs": "Success.",
-              "type": "DevOrgAuthConnectionsCreateResponse",
-            },
-          },
-          "dev-org-auth-connections-delete": {
-            "method": "POST",
-            "path": "/dev-orgs.auth-connections.delete",
-            "request": {
-              "body": {
-                "properties": {
-                  "id": {
-                    "docs": "ID of the authentication connection to be deleted.",
-                    "type": "string",
-                  },
-                },
-              },
-              "name": "DevOrgAuthConnectionsDeleteRequest",
-              "query-parameters": undefined,
-            },
-          },
-          "dev-org-auth-connections-get": {
-            "method": "GET",
-            "path": "/dev-orgs.auth-connections.get",
-            "request": {
-              "name": "DevOrgAuthConnectionsGetRequest",
-              "query-parameters": {
-                "id": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
-            },
-            "response": {
-              "docs": "Success.",
-              "type": "DevOrgAuthConnectionsGetResponse",
-            },
-          },
-          "dev-org-auth-connections-list": {
-            "method": "GET",
-            "path": "/dev-orgs.auth-connections.list",
-            "response": {
-              "docs": "Success.",
-              "type": "DevOrgAuthConnectionsListResponse",
-            },
-          },
-          "dev-org-auth-connections-toggle": {
-            "method": "POST",
-            "path": "/dev-orgs.auth-connections.toggle",
-            "request": {
-              "body": {
-                "properties": {
-                  "id": {
-                    "docs": "ID of the authentication connection to be toggled.",
-                    "type": "string",
-                  },
-                  "toggle": {
-                    "docs": undefined,
-                    "type": "optional<AuthConnectionToggle>",
-                  },
-                },
-              },
-              "name": "DevOrgAuthConnectionsToggleRequest",
-              "query-parameters": undefined,
-            },
-          },
-          "dev-org-auth-connections-update": {
-            "method": "POST",
-            "path": "/dev-orgs.auth-connections.update",
-            "request": {
-              "body": {
-                "docs": "Request to update an enterprise authentication connection for a Dev
-organization.
-",
-                "type": "DevOrgAuthConnectionsUpdateRequest",
-              },
-            },
-            "response": {
-              "docs": "Success.",
-              "type": "DevOrgAuthConnectionsUpdateResponse",
-            },
-          },
-        },
-      },
+      "service": undefined,
       "types": {
         "ArtifactsLocateResponse": {
           "docs": "The response to getting an artifact's download URL.",
@@ -3774,6 +3682,110 @@ empty.
         },
       },
     },
+    "authConnection.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "dev-org-auth-connections-create": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.create",
+            "request": {
+              "body": {
+                "docs": "Request to create a new enterprise authentication connection.
+",
+                "type": "root.DevOrgAuthConnectionsCreateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.DevOrgAuthConnectionsCreateResponse",
+            },
+          },
+          "dev-org-auth-connections-delete": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.delete",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID of the authentication connection to be deleted.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "DevOrgAuthConnectionsDeleteRequest",
+              "query-parameters": undefined,
+            },
+          },
+          "dev-org-auth-connections-get": {
+            "method": "GET",
+            "path": "/dev-orgs.auth-connections.get",
+            "request": {
+              "name": "DevOrgAuthConnectionsGetRequest",
+              "query-parameters": {
+                "id": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "string",
+                },
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.DevOrgAuthConnectionsGetResponse",
+            },
+          },
+          "dev-org-auth-connections-list": {
+            "method": "GET",
+            "path": "/dev-orgs.auth-connections.list",
+            "response": {
+              "docs": "Success.",
+              "type": "root.DevOrgAuthConnectionsListResponse",
+            },
+          },
+          "dev-org-auth-connections-toggle": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.toggle",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "ID of the authentication connection to be toggled.",
+                    "type": "string",
+                  },
+                  "toggle": {
+                    "docs": undefined,
+                    "type": "optional<root.AuthConnectionToggle>",
+                  },
+                },
+              },
+              "name": "DevOrgAuthConnectionsToggleRequest",
+              "query-parameters": undefined,
+            },
+          },
+          "dev-org-auth-connections-update": {
+            "method": "POST",
+            "path": "/dev-orgs.auth-connections.update",
+            "request": {
+              "body": {
+                "docs": "Request to update an enterprise authentication connection for a Dev
+organization.
+",
+                "type": "root.DevOrgAuthConnectionsUpdateRequest",
+              },
+            },
+            "response": {
+              "docs": "Success.",
+              "type": "root.DevOrgAuthConnectionsUpdateResponse",
+            },
+          },
+        },
+      },
+    },
     "auth_tokens": {
       "imports": {
         "root": "__package__.yml",
@@ -4947,1342 +4959,7 @@ exports[`open api converter suger simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
-      "service": {
-        "auth": true,
-        "base-path": "",
-        "endpoints": {
-          "AddEntitlementCredit": {
-            "method": "POST",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "creditAmountIncrement": {
-                    "docs": "The amount to be added to the credit amount.",
-                    "type": "double",
-                  },
-                  "entitlementID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                },
-              },
-              "name": "SharedAddEntitlementCreditParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedAddEntitlementCreditResponse",
-            },
-          },
-          "CancelOffer": {
-            "method": "POST",
-            "path": "/org/{orgId}/offer/{offerId}/cancel",
-            "path-parameters": {
-              "offerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Empty string if cancellation is successful",
-              "type": "string",
-            },
-          },
-          "CreateIntegration": {
-            "method": "POST",
-            "path": "/org/{orgId}/integration",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "createdBy": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "info": {
-                    "docs": undefined,
-                    "type": "SharedIntegrationInfo",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "partner": {
-                    "docs": undefined,
-                    "type": "SharedCreateIntegrationParamsPartner",
-                  },
-                  "service": {
-                    "docs": undefined,
-                    "type": "SharedCreateIntegrationParamsService",
-                  },
-                },
-              },
-              "name": "SharedCreateIntegrationParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedIdentityIntegration",
-            },
-          },
-          "CreateOffer": {
-            "method": "POST",
-            "path": "/org/{orgId}/offer",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "SharedWorkloadOffer",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadOffer",
-            },
-          },
-          "CreateOrUpdateDraftOffer": {
-            "method": "POST",
-            "path": "/org/{orgId}/draftOffer",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "SharedWorkloadOffer",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadOffer",
-            },
-          },
-          "DeleteIntegration": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/integration/{partner}/{service}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "DeleteIntegrationRequestPartner",
-              },
-              "service": {
-                "docs": undefined,
-                "type": "DeleteIntegrationRequestService",
-              },
-            },
-            "response": {
-              "docs": "Empty string if deletion is successful",
-              "type": "string",
-            },
-          },
-          "DeleteOffer": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/offer/{offerId}",
-            "path-parameters": {
-              "offerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Empty string if deletion is successful",
-              "type": "string",
-            },
-          },
-          "DeleteProduct": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/product/{productId}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Empty string if deletion is successful",
-              "type": "string",
-            },
-          },
-          "GetApiClientAccessToken": {
-            "method": "POST",
-            "path": "/public/apiClient/accessToken",
-            "request": {
-              "body": {
-                "properties": {
-                  "id": {
-                    "docs": "The ID of the API Client.",
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "secret": {
-                    "docs": "The secret of the API Client.",
-                    "type": "string",
-                  },
-                },
-              },
-              "name": "SharedGetApiClientAccessTokenParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedApiClientAccessToken",
-            },
-          },
-          "GetBuyer": {
-            "method": "GET",
-            "path": "/org/{orgId}/buyer/{buyerId}",
-            "path-parameters": {
-              "buyerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedIdentityBuyer",
-            },
-          },
-          "GetEntitlement": {
-            "method": "GET",
-            "path": "/org/{orgId}/entitlement/{entitlementId}",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadEntitlement",
-            },
-          },
-          "GetEntitlementTerm": {
-            "method": "GET",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "entitlementTermId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadEntitlementTerm",
-            },
-          },
-          "GetIntegration": {
-            "method": "GET",
-            "path": "/org/{orgId}/integration/{partner}/{service}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "GetIntegrationRequestPartner",
-              },
-              "service": {
-                "docs": undefined,
-                "type": "GetIntegrationRequestService",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedIdentityIntegration",
-            },
-          },
-          "GetOffer": {
-            "method": "GET",
-            "path": "/org/{orgId}/offer/{offerId}",
-            "path-parameters": {
-              "offerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadOffer",
-            },
-          },
-          "GetProduct": {
-            "method": "GET",
-            "path": "/org/{orgId}/product/{productId}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadProduct",
-            },
-          },
-          "GetRevenueReport": {
-            "method": "POST",
-            "path": "/org/{orgId}/revenueReport",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "buyerID": {
-                    "docs": "Optional, if available, return the report for the Buyer.",
-                    "type": "optional<string>",
-                  },
-                  "entitlementID": {
-                    "docs": "Optional, if available, return the report for the Entitlement.",
-                    "type": "optional<string>",
-                  },
-                  "organizationID": {
-                    "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
-                    "type": "string",
-                  },
-                  "partner": {
-                    "docs": "Required.",
-                    "type": "SharedGetRevenueReportParamsPartner",
-                  },
-                  "productID": {
-                    "docs": "Optional, if available, return the report for the Product.",
-                    "type": "optional<string>",
-                  },
-                  "reportType": {
-                    "docs": undefined,
-                    "type": "SharedRevenueReportType",
-                  },
-                  "service": {
-                    "docs": "Required.",
-                    "type": "SharedGetRevenueReportParamsService",
-                  },
-                },
-              },
-              "name": "SharedGetRevenueReportParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedRevenueReport",
-            },
-          },
-          "GetUsageRecordGroup": {
-            "method": "GET",
-            "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "usageRecordGroupId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedMeteringUsageRecordGroup",
-            },
-          },
-          "GetUsageRecordReport": {
-            "method": "GET",
-            "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "usageRecordReportId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedMeteringUsageRecordReport",
-            },
-          },
-          "GetUsageReport": {
-            "method": "POST",
-            "path": "/org/{orgId}/usageReport",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "entitlementID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                },
-              },
-              "name": "SharedGetUsageReportParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedUsageReport",
-            },
-          },
-          "ListBuyersByOrganization": {
-            "method": "GET",
-            "path": "/org/{orgId}/buyer",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedIdentityBuyer>",
-            },
-          },
-          "ListEntitlementTerms": {
-            "method": "GET",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadEntitlementTerm>",
-            },
-          },
-          "ListEntitlements": {
-            "method": "GET",
-            "path": "/org/{orgId}/entitlement",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadEntitlement>",
-            },
-          },
-          "ListEntitlementsByBuyer": {
-            "method": "GET",
-            "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
-            "path-parameters": {
-              "buyerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadEntitlement>",
-            },
-          },
-          "ListEntitlementsByOffer": {
-            "method": "GET",
-            "path": "/org/{orgId}/offer/{offerId}/entitlement",
-            "path-parameters": {
-              "offerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadEntitlement>",
-            },
-          },
-          "ListEntitlementsByPartner": {
-            "method": "GET",
-            "path": "/org/{orgId}/partner/{partner}/entitlement",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "ListEntitlementsByPartnerRequestPartner",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadEntitlement>",
-            },
-          },
-          "ListEntitlementsByProduct": {
-            "method": "GET",
-            "path": "/org/{orgId}/product/{productId}/entitlement",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadEntitlement>",
-            },
-          },
-          "ListIntegrationsByOrganization": {
-            "method": "GET",
-            "path": "/org/{orgId}/integration",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedIdentityIntegration>",
-            },
-          },
-          "ListOffersByOrganization": {
-            "method": "GET",
-            "path": "/org/{orgId}/offer",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadOffer>",
-            },
-          },
-          "ListOffersByPartner": {
-            "method": "GET",
-            "path": "/org/{orgId}/partner/{partner}/offer",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "ListOffersByPartnerRequestPartner",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadOffer>",
-            },
-          },
-          "ListOffersByProduct": {
-            "method": "GET",
-            "path": "/org/{orgId}/product/{productId}/offer",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadOffer>",
-            },
-          },
-          "ListOperations": {
-            "method": "GET",
-            "path": "/org/{orgId}/operation",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListOperationsRequest",
-              "query-parameters": {
-                "crmOpportunityId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "entitlementId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "offerId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "partnerOpportunityId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedOperation>",
-            },
-          },
-          "ListProductMeteringDimensions": {
-            "method": "GET",
-            "path": "/org/{orgId}/product/{productId}/dimension",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedAwsSaasProductDimension>",
-            },
-          },
-          "ListProductsByOrganization": {
-            "method": "GET",
-            "path": "/org/{orgId}/product",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadProduct>",
-            },
-          },
-          "ListProductsByPartner": {
-            "method": "GET",
-            "path": "/org/{orgId}/partner/{partner}/product",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "ListProductsByPartnerRequestPartner",
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "list<SharedWorkloadProduct>",
-            },
-          },
-          "ListRevenueRecordDetails": {
-            "method": "GET",
-            "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "ListRevenueRecordDetailsRequestPartner",
-              },
-            },
-            "request": {
-              "name": "ListRevenueRecordDetailsRequest",
-              "query-parameters": {
-                "buyerId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "entitlementId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "productId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListRevenueRecordDetailsResponse",
-            },
-          },
-          "ListRevenueRecords": {
-            "method": "GET",
-            "path": "/org/{orgId}/partner/{partner}/revenueRecord",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "ListRevenueRecordsRequestPartner",
-              },
-            },
-            "request": {
-              "name": "ListRevenueRecordsRequest",
-              "query-parameters": {
-                "buyerId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "entitlementId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "productId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListRevenueRecordsResponse",
-            },
-          },
-          "ListUsageRecordGroupsByEntitlement": {
-            "method": "GET",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListUsageRecordGroupsByEntitlementRequest",
-              "query-parameters": {
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListUsageRecordGroupsResponse",
-            },
-          },
-          "ListUsageRecordGroupsByOrganization": {
-            "method": "GET",
-            "path": "/org/{orgId}/usageRecordGroup",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListUsageRecordGroupsByOrganizationRequest",
-              "query-parameters": {
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListUsageRecordGroupsResponse",
-            },
-          },
-          "ListUsageRecordGroupsByProduct": {
-            "method": "GET",
-            "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListUsageRecordGroupsByProductRequest",
-              "query-parameters": {
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListUsageRecordGroupsResponse",
-            },
-          },
-          "ListUsageRecordReportsByEntitlement": {
-            "method": "GET",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListUsageRecordReportsByEntitlementRequest",
-              "query-parameters": {
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "entitlementTermId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListUsageRecordReportsResponse",
-            },
-          },
-          "ListUsageRecordReportsByOrganization": {
-            "method": "GET",
-            "path": "/org/{orgId}/usageRecordReport",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListUsageRecordReportsByOrganizationRequest",
-              "query-parameters": {
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListUsageRecordReportsResponse",
-            },
-          },
-          "ListUsageRecordReportsByProduct": {
-            "method": "GET",
-            "path": "/org/{orgId}/product/{productId}/usageRecordReport",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "ListUsageRecordReportsByProductRequest",
-              "query-parameters": {
-                "endDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "offset": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "startDate": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                },
-              },
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedListUsageRecordReportsResponse",
-            },
-          },
-          "ReportUsageRecordGroup": {
-            "method": "POST",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "entitlementID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "id": {
-                    "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
-                    "type": "optional<string>",
-                  },
-                  "metaInfo": {
-                    "docs": "read-only, don't set it when reporting the usage record group.",
-                    "type": "optional<SharedMeteringUsageRecordGroupMetaInfo>",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "records": {
-                    "docs": undefined,
-                    "type": "map<string, double>",
-                  },
-                },
-              },
-              "name": "SharedCreateUsageRecordGroupParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedMeteringUsageRecordGroup",
-            },
-          },
-          "UpdateBuyerNameDescription": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/buyer/{buyerId}",
-            "path-parameters": {
-              "buyerId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "description": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "id": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "name": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedIdentityBuyer",
-            },
-          },
-          "UpdateEntitlementName": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
-            "path-parameters": {
-              "entitlementId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "id": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "name": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadEntitlement",
-            },
-          },
-          "UpdateIntegration": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/integration/{partner}/{service}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "UpdateIntegrationRequestPartner",
-              },
-              "service": {
-                "docs": undefined,
-                "type": "UpdateIntegrationRequestService",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "info": {
-                    "docs": undefined,
-                    "type": "SharedIntegrationInfo",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "partner": {
-                    "docs": undefined,
-                    "type": "SharedUpdateIntegrationParamsPartner",
-                  },
-                  "service": {
-                    "docs": undefined,
-                    "type": "SharedUpdateIntegrationParamsService",
-                  },
-                },
-              },
-              "name": "SharedUpdateIntegrationParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedIdentityIntegration",
-            },
-          },
-          "UpdateProduct": {
-            "method": "PATCH",
-            "path": "/org/{orgId}/product/{productId}",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "productId": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "fulfillmentUrl": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "id": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                },
-              },
-              "name": "SharedUpdateProductParams",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "OK",
-              "type": "SharedWorkloadProduct",
-            },
-          },
-          "VerifyIntegration": {
-            "method": "POST",
-            "path": "/org/{orgId}/integration/{partner}/{service}/verify",
-            "path-parameters": {
-              "orgId": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "partner": {
-                "docs": undefined,
-                "type": "VerifyIntegrationRequestPartner",
-              },
-              "service": {
-                "docs": undefined,
-                "type": "VerifyIntegrationRequestService",
-              },
-            },
-            "response": {
-              "docs": "whether it is verified or not",
-              "type": "boolean",
-            },
-          },
-        },
-      },
+      "service": undefined,
       "types": {
         "AzureAudience": {
           "docs": undefined,
@@ -12597,6 +11274,1446 @@ the same customer, dimension, and time, but a different quantity.",
         "middleware.Metadata": {
           "docs": undefined,
           "type": "map<string, unknown>",
+        },
+      },
+    },
+    "api.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetApiClientAccessToken": {
+            "method": "POST",
+            "path": "/public/apiClient/accessToken",
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": "The ID of the API Client.",
+                    "type": "string",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "secret": {
+                    "docs": "The secret of the API Client.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "SharedGetApiClientAccessTokenParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedApiClientAccessToken",
+            },
+          },
+        },
+      },
+    },
+    "buyer.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetBuyer": {
+            "method": "GET",
+            "path": "/org/{orgId}/buyer/{buyerId}",
+            "path-parameters": {
+              "buyerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedIdentityBuyer",
+            },
+          },
+          "ListBuyersByOrganization": {
+            "method": "GET",
+            "path": "/org/{orgId}/buyer",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedIdentityBuyer>",
+            },
+          },
+          "UpdateBuyerNameDescription": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/buyer/{buyerId}",
+            "path-parameters": {
+              "buyerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "description": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "id": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedIdentityBuyer",
+            },
+          },
+        },
+      },
+    },
+    "entitlement.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "AddEntitlementCredit": {
+            "method": "POST",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "creditAmountIncrement": {
+                    "docs": "The amount to be added to the credit amount.",
+                    "type": "double",
+                  },
+                  "entitlementID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "SharedAddEntitlementCreditParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedAddEntitlementCreditResponse",
+            },
+          },
+          "GetEntitlement": {
+            "method": "GET",
+            "path": "/org/{orgId}/entitlement/{entitlementId}",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadEntitlement",
+            },
+          },
+          "ListEntitlements": {
+            "method": "GET",
+            "path": "/org/{orgId}/entitlement",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadEntitlement>",
+            },
+          },
+          "ListEntitlementsByBuyer": {
+            "method": "GET",
+            "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
+            "path-parameters": {
+              "buyerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadEntitlement>",
+            },
+          },
+          "ListEntitlementsByOffer": {
+            "method": "GET",
+            "path": "/org/{orgId}/offer/{offerId}/entitlement",
+            "path-parameters": {
+              "offerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadEntitlement>",
+            },
+          },
+          "ListEntitlementsByPartner": {
+            "method": "GET",
+            "path": "/org/{orgId}/partner/{partner}/entitlement",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "ListEntitlementsByPartnerRequestPartner",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadEntitlement>",
+            },
+          },
+          "ListEntitlementsByProduct": {
+            "method": "GET",
+            "path": "/org/{orgId}/product/{productId}/entitlement",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadEntitlement>",
+            },
+          },
+          "UpdateEntitlementName": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "id": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "GithubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadEntitlement",
+            },
+          },
+        },
+      },
+    },
+    "entitlementTerm.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetEntitlementTerm": {
+            "method": "GET",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "entitlementTermId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadEntitlementTerm",
+            },
+          },
+          "ListEntitlementTerms": {
+            "method": "GET",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadEntitlementTerm>",
+            },
+          },
+        },
+      },
+    },
+    "integration.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CreateIntegration": {
+            "method": "POST",
+            "path": "/org/{orgId}/integration",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "createdBy": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "info": {
+                    "docs": undefined,
+                    "type": "root.SharedIntegrationInfo",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "partner": {
+                    "docs": undefined,
+                    "type": "root.SharedCreateIntegrationParamsPartner",
+                  },
+                  "service": {
+                    "docs": undefined,
+                    "type": "root.SharedCreateIntegrationParamsService",
+                  },
+                },
+              },
+              "name": "SharedCreateIntegrationParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedIdentityIntegration",
+            },
+          },
+          "DeleteIntegration": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/integration/{partner}/{service}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "DeleteIntegrationRequestPartner",
+              },
+              "service": {
+                "docs": undefined,
+                "type": "DeleteIntegrationRequestService",
+              },
+            },
+            "response": {
+              "docs": "Empty string if deletion is successful",
+              "type": "string",
+            },
+          },
+          "GetIntegration": {
+            "method": "GET",
+            "path": "/org/{orgId}/integration/{partner}/{service}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "GetIntegrationRequestPartner",
+              },
+              "service": {
+                "docs": undefined,
+                "type": "GetIntegrationRequestService",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedIdentityIntegration",
+            },
+          },
+          "ListIntegrationsByOrganization": {
+            "method": "GET",
+            "path": "/org/{orgId}/integration",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedIdentityIntegration>",
+            },
+          },
+          "UpdateIntegration": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/integration/{partner}/{service}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "UpdateIntegrationRequestPartner",
+              },
+              "service": {
+                "docs": undefined,
+                "type": "UpdateIntegrationRequestService",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "info": {
+                    "docs": undefined,
+                    "type": "root.SharedIntegrationInfo",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "partner": {
+                    "docs": undefined,
+                    "type": "root.SharedUpdateIntegrationParamsPartner",
+                  },
+                  "service": {
+                    "docs": undefined,
+                    "type": "root.SharedUpdateIntegrationParamsService",
+                  },
+                },
+              },
+              "name": "SharedUpdateIntegrationParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedIdentityIntegration",
+            },
+          },
+          "VerifyIntegration": {
+            "method": "POST",
+            "path": "/org/{orgId}/integration/{partner}/{service}/verify",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "VerifyIntegrationRequestPartner",
+              },
+              "service": {
+                "docs": undefined,
+                "type": "VerifyIntegrationRequestService",
+              },
+            },
+            "response": {
+              "docs": "whether it is verified or not",
+              "type": "boolean",
+            },
+          },
+        },
+      },
+    },
+    "metering.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetUsageRecordGroup": {
+            "method": "GET",
+            "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "usageRecordGroupId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedMeteringUsageRecordGroup",
+            },
+          },
+          "GetUsageRecordReport": {
+            "method": "GET",
+            "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "usageRecordReportId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedMeteringUsageRecordReport",
+            },
+          },
+          "ListUsageRecordGroupsByEntitlement": {
+            "method": "GET",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListUsageRecordGroupsByEntitlementRequest",
+              "query-parameters": {
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListUsageRecordGroupsResponse",
+            },
+          },
+          "ListUsageRecordGroupsByOrganization": {
+            "method": "GET",
+            "path": "/org/{orgId}/usageRecordGroup",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListUsageRecordGroupsByOrganizationRequest",
+              "query-parameters": {
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListUsageRecordGroupsResponse",
+            },
+          },
+          "ListUsageRecordGroupsByProduct": {
+            "method": "GET",
+            "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListUsageRecordGroupsByProductRequest",
+              "query-parameters": {
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListUsageRecordGroupsResponse",
+            },
+          },
+          "ListUsageRecordReportsByEntitlement": {
+            "method": "GET",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListUsageRecordReportsByEntitlementRequest",
+              "query-parameters": {
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "entitlementTermId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListUsageRecordReportsResponse",
+            },
+          },
+          "ListUsageRecordReportsByOrganization": {
+            "method": "GET",
+            "path": "/org/{orgId}/usageRecordReport",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListUsageRecordReportsByOrganizationRequest",
+              "query-parameters": {
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListUsageRecordReportsResponse",
+            },
+          },
+          "ListUsageRecordReportsByProduct": {
+            "method": "GET",
+            "path": "/org/{orgId}/product/{productId}/usageRecordReport",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListUsageRecordReportsByProductRequest",
+              "query-parameters": {
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListUsageRecordReportsResponse",
+            },
+          },
+          "ReportUsageRecordGroup": {
+            "method": "POST",
+            "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
+            "path-parameters": {
+              "entitlementId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "entitlementID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "id": {
+                    "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
+                    "type": "optional<string>",
+                  },
+                  "metaInfo": {
+                    "docs": "read-only, don't set it when reporting the usage record group.",
+                    "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "records": {
+                    "docs": undefined,
+                    "type": "map<string, double>",
+                  },
+                },
+              },
+              "name": "SharedCreateUsageRecordGroupParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedMeteringUsageRecordGroup",
+            },
+          },
+        },
+      },
+    },
+    "offer.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "CancelOffer": {
+            "method": "POST",
+            "path": "/org/{orgId}/offer/{offerId}/cancel",
+            "path-parameters": {
+              "offerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Empty string if cancellation is successful",
+              "type": "string",
+            },
+          },
+          "CreateOffer": {
+            "method": "POST",
+            "path": "/org/{orgId}/offer",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.SharedWorkloadOffer",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadOffer",
+            },
+          },
+          "CreateOrUpdateDraftOffer": {
+            "method": "POST",
+            "path": "/org/{orgId}/draftOffer",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.SharedWorkloadOffer",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadOffer",
+            },
+          },
+          "DeleteOffer": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/offer/{offerId}",
+            "path-parameters": {
+              "offerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Empty string if deletion is successful",
+              "type": "string",
+            },
+          },
+          "GetOffer": {
+            "method": "GET",
+            "path": "/org/{orgId}/offer/{offerId}",
+            "path-parameters": {
+              "offerId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadOffer",
+            },
+          },
+          "ListOffersByOrganization": {
+            "method": "GET",
+            "path": "/org/{orgId}/offer",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadOffer>",
+            },
+          },
+          "ListOffersByPartner": {
+            "method": "GET",
+            "path": "/org/{orgId}/partner/{partner}/offer",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "ListOffersByPartnerRequestPartner",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadOffer>",
+            },
+          },
+          "ListOffersByProduct": {
+            "method": "GET",
+            "path": "/org/{orgId}/product/{productId}/offer",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadOffer>",
+            },
+          },
+        },
+      },
+    },
+    "operation.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "ListOperations": {
+            "method": "GET",
+            "path": "/org/{orgId}/operation",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "ListOperationsRequest",
+              "query-parameters": {
+                "crmOpportunityId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "entitlementId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "offerId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "partnerOpportunityId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedOperation>",
+            },
+          },
+        },
+      },
+    },
+    "product.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "DeleteProduct": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/product/{productId}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Empty string if deletion is successful",
+              "type": "string",
+            },
+          },
+          "GetProduct": {
+            "method": "GET",
+            "path": "/org/{orgId}/product/{productId}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadProduct",
+            },
+          },
+          "ListProductMeteringDimensions": {
+            "method": "GET",
+            "path": "/org/{orgId}/product/{productId}/dimension",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedAwsSaasProductDimension>",
+            },
+          },
+          "ListProductsByOrganization": {
+            "method": "GET",
+            "path": "/org/{orgId}/product",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadProduct>",
+            },
+          },
+          "ListProductsByPartner": {
+            "method": "GET",
+            "path": "/org/{orgId}/partner/{partner}/product",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "ListProductsByPartnerRequestPartner",
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "list<root.SharedWorkloadProduct>",
+            },
+          },
+          "UpdateProduct": {
+            "method": "PATCH",
+            "path": "/org/{orgId}/product/{productId}",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "productId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "fulfillmentUrl": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "id": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "SharedUpdateProductParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedWorkloadProduct",
+            },
+          },
+        },
+      },
+    },
+    "report.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": true,
+        "base-path": "",
+        "endpoints": {
+          "GetRevenueReport": {
+            "method": "POST",
+            "path": "/org/{orgId}/revenueReport",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "buyerID": {
+                    "docs": "Optional, if available, return the report for the Buyer.",
+                    "type": "optional<string>",
+                  },
+                  "entitlementID": {
+                    "docs": "Optional, if available, return the report for the Entitlement.",
+                    "type": "optional<string>",
+                  },
+                  "organizationID": {
+                    "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
+                    "type": "string",
+                  },
+                  "partner": {
+                    "docs": "Required.",
+                    "type": "root.SharedGetRevenueReportParamsPartner",
+                  },
+                  "productID": {
+                    "docs": "Optional, if available, return the report for the Product.",
+                    "type": "optional<string>",
+                  },
+                  "reportType": {
+                    "docs": undefined,
+                    "type": "root.SharedRevenueReportType",
+                  },
+                  "service": {
+                    "docs": "Required.",
+                    "type": "root.SharedGetRevenueReportParamsService",
+                  },
+                },
+              },
+              "name": "SharedGetRevenueReportParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedRevenueReport",
+            },
+          },
+          "GetUsageReport": {
+            "method": "POST",
+            "path": "/org/{orgId}/usageReport",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "entitlementID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "organizationID": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "SharedGetUsageReportParams",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedUsageReport",
+            },
+          },
+          "ListRevenueRecordDetails": {
+            "method": "GET",
+            "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "ListRevenueRecordDetailsRequestPartner",
+              },
+            },
+            "request": {
+              "name": "ListRevenueRecordDetailsRequest",
+              "query-parameters": {
+                "buyerId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "entitlementId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "productId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListRevenueRecordDetailsResponse",
+            },
+          },
+          "ListRevenueRecords": {
+            "method": "GET",
+            "path": "/org/{orgId}/partner/{partner}/revenueRecord",
+            "path-parameters": {
+              "orgId": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "partner": {
+                "docs": undefined,
+                "type": "ListRevenueRecordsRequestPartner",
+              },
+            },
+            "request": {
+              "name": "ListRevenueRecordsRequest",
+              "query-parameters": {
+                "buyerId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "endDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "entitlementId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "productId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+                "startDate": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "OK",
+              "type": "root.SharedListRevenueRecordsResponse",
+            },
+          },
         },
       },
     },
