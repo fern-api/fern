@@ -18,11 +18,10 @@ export declare namespace StreamingFetcher {
         onError?: (err: unknown) => void;
         onFinish?: () => void;
         abortController?: AbortController;
+        responseChunkPrefix?: string;
         terminator?: string;
     }
 }
-
-const DATA_EVENT_REGEX = /data: (.*)/;
 
 export const streamingFetcher: StreamingFetchFunction = async (args) => {
     const headers: Record<string, string> = {};
@@ -61,9 +60,12 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
 
     response.data.on("data", (data: Buffer) => {
         for (const line of data.toString().split("\n")) {
-            const data = line.match(DATA_EVENT_REGEX)?.[1];
-            if (data == null || data === args.terminator) {
-                continue;
+            let data = line;
+            if (args.responseChunkPrefix != null) {
+                if (!data.startsWith(args.responseChunkPrefix)) {
+                    continue;
+                }
+                data = data.substring(args.responseChunkPrefix.length);
             }
 
             try {
