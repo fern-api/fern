@@ -266,7 +266,53 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         });
     }
 
-    public deserializeStreamData(
+    public deserializeStreamDataAndVisitMaybeValid({
+        referenceToRawStreamData,
+        context,
+        visitValid,
+        visitInvalid,
+        parsedDataVariableName,
+    }: {
+        referenceToRawStreamData: ts.Expression;
+        context: SdkEndpointTypeSchemasContext;
+        visitValid: (referenceToValue: ts.Expression) => ts.Statement[];
+        visitInvalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+        parsedDataVariableName: string;
+    }): ts.Statement[] {
+        if (this.endpoint.streamingResponse == null) {
+            throw new Error("Cannot deserialize stream data because it's not defined");
+        }
+
+        if (this.endpoint.streamingResponse.dataEventType._type === "unknown") {
+            return visitValid(referenceToRawStreamData);
+        }
+
+        return [
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            parsedDataVariableName,
+                            undefined,
+                            undefined,
+                            this.deserializeStreamData(referenceToRawStreamData, context)
+                        ),
+                    ],
+                    ts.NodeFlags.Const
+                )
+            ),
+            ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
+                ts.factory.createIdentifier(parsedDataVariableName),
+                {
+                    valid: visitValid,
+                    invalid: visitInvalid,
+                }
+            ),
+        ];
+    }
+
+    private deserializeStreamData(
         referenceToRawStreamData: ts.Expression,
         context: SdkEndpointTypeSchemasContext
     ): ts.Expression {

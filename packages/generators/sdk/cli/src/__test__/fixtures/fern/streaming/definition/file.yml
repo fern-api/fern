@@ -19,6 +19,10 @@ service:
       response-stream:
         type: boolean
         terminator: "[DONE]"
+    streamUnknowns:
+      path: /stream-unknown
+      method: POST
+      response-stream: unknown
     maybeStream:
       path: /maybe-stream
       method: POST

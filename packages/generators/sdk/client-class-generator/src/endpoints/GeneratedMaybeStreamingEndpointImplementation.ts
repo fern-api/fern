@@ -44,7 +44,10 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
             ...this.streamingEndpointImplementation.getRequestBuilderStatements(context),
             ts.factory.createIfStatement(
                 this.getReferenceToStreamConditionVariable(context),
-                ts.factory.createBlock(this.streamingEndpointImplementation.invokeFetcher(context), true),
+                ts.factory.createBlock(
+                    this.streamingEndpointImplementation.invokeFetcher(context, { isCallbackOptional: true }),
+                    true
+                ),
                 ts.factory.createBlock(
                     this.nonStreamingEndpointImplementation.invokeFetcherAndReturnResponse(context),
                     true

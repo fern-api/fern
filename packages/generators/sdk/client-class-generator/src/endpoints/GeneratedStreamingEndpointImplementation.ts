@@ -206,7 +206,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
-        return [...this.getRequestBuilderStatements(context), ...this.invokeFetcher(context)];
+        return [
+            ...this.getRequestBuilderStatements(context),
+            ...this.invokeFetcher(context, { isCallbackOptional: false }),
+        ];
     }
 
     public getRequestBuilderStatements(context: SdkClientClassContext): ts.Statement[] {
@@ -281,7 +284,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
     }
 
-    public invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
+    public invokeFetcher(
+        context: SdkClientClassContext,
+        { isCallbackOptional }: { isCallbackOptional: boolean }
+    ): ts.Statement[] {
         const PARSED_DATA_VARIABLE_NAME = "parsed";
 
         const fetcherArgs: Fetcher.Args = {
@@ -332,59 +338,45 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                 undefined,
                                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                                 ts.factory.createBlock(
-                                    [
-                                        ts.factory.createVariableStatement(
-                                            undefined,
-                                            ts.factory.createVariableDeclarationList(
-                                                [
-                                                    ts.factory.createVariableDeclaration(
-                                                        PARSED_DATA_VARIABLE_NAME,
+                                    context.sdkEndpointTypeSchemas
+                                        .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
+                                        .deserializeStreamDataAndVisitMaybeValid({
+                                            context,
+                                            referenceToRawStreamData: ts.factory.createIdentifier(
+                                                GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
+                                            ),
+                                            parsedDataVariableName: PARSED_DATA_VARIABLE_NAME,
+                                            visitValid: (validData) => [
+                                                ts.factory.createExpressionStatement(
+                                                    isCallbackOptional
+                                                        ? ts.factory.createCallChain(
+                                                              ts.factory.createIdentifier(
+                                                                  GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
+                                                              ),
+                                                              ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                              undefined,
+                                                              [validData]
+                                                          )
+                                                        : ts.factory.createCallExpression(
+                                                              ts.factory.createIdentifier(
+                                                                  GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
+                                                              ),
+                                                              undefined,
+                                                              [validData]
+                                                          )
+                                                ),
+                                            ],
+                                            visitInvalid: (errors) => [
+                                                ts.factory.createExpressionStatement(
+                                                    ts.factory.createCallChain(
+                                                        this.getReferenceToOpt("onError"),
+                                                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                                                         undefined,
-                                                        undefined,
-                                                        context.sdkEndpointTypeSchemas
-                                                            .getGeneratedEndpointTypeSchemas(
-                                                                this.packageId,
-                                                                this.endpoint.name
-                                                            )
-                                                            .deserializeStreamData(
-                                                                ts.factory.createIdentifier(
-                                                                    GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                                ),
-                                                                context
-                                                            )
-                                                    ),
-                                                ],
-                                                ts.NodeFlags.Const
-                                            )
-                                        ),
-                                        ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
-                                            ts.factory.createIdentifier(PARSED_DATA_VARIABLE_NAME),
-                                            {
-                                                valid: (validData) => [
-                                                    ts.factory.createExpressionStatement(
-                                                        ts.factory.createCallChain(
-                                                            ts.factory.createIdentifier(
-                                                                GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
-                                                            ),
-                                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                            undefined,
-                                                            [validData]
-                                                        )
-                                                    ),
-                                                ],
-                                                invalid: (errors) => [
-                                                    ts.factory.createExpressionStatement(
-                                                        ts.factory.createCallChain(
-                                                            this.getReferenceToOpt("onError"),
-                                                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                            undefined,
-                                                            [errors]
-                                                        )
-                                                    ),
-                                                ],
-                                            }
-                                        ),
-                                    ],
+                                                        [errors]
+                                                    )
+                                                ),
+                                            ],
+                                        }),
                                     true
                                 )
                             ),
