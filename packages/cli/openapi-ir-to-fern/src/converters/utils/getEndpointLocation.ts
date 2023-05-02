@@ -1,5 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase } from "lodash-es";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -37,8 +38,9 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
             file.push(tagElement);
         } else {
             // tag and operation id don't overlap, so just return operation id
+            const camelCasedTag = camelCase(tag);
             return {
-                file: RelativeFilePath.of("__package__.yml"),
+                file: RelativeFilePath.of(`${camelCasedTag}.yml`),
                 endpointId: operationId,
             };
         }
