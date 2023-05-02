@@ -11,6 +11,7 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
     schemaIdsToExclude: string[];
+    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 export function convertEndpoint({
@@ -109,6 +110,7 @@ export function convertEndpoint({
     return {
         value: convertedEndpoint,
         schemaIdsToExclude,
+        additionalTypeDeclarations,
     };
 }
 
