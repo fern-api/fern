@@ -13,6 +13,7 @@ types:
     properties:
       name: string
       problems: list<commons.ProblemId>
+      literal: literal<"hello world">
 
   UpdatePlaylistRequest:
     properties:

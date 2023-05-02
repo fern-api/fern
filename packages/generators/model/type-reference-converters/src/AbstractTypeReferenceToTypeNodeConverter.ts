@@ -1,4 +1,4 @@
-import { DeclaredTypeName, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
@@ -84,6 +84,22 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createArrayTypeNode(this.convert(itemType).typeNode)
         );
+    }
+
+    protected override literal(literal: Literal): TypeReferenceNode {
+        return Literal._visit(literal, {
+            string: (value) => {
+                const typeNode = ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value));
+                return {
+                    isOptional: false,
+                    typeNode,
+                    typeNodeWithoutUndefined: typeNode,
+                };
+            },
+            _unknown: () => {
+                throw new Error("Unknown literal: " + literal.type);
+            },
+        });
     }
 
     protected override mapWithEnumKeys(map: MapType): TypeReferenceNode {

@@ -1,4 +1,4 @@
-import { DeclaredTypeName, MapType, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
 
@@ -49,6 +49,15 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
 
     protected override list(itemType: TypeReference): Zurg.Schema {
         return this.zurg.list(this.convert(itemType));
+    }
+
+    protected override literal(literal: Literal): Zurg.Schema {
+        return Literal._visit(literal, {
+            string: (value) => this.zurg.stringLiteral(value),
+            _unknown: () => {
+                throw new Error("Unknown literal: " + literal.type);
+            },
+        });
     }
 
     protected override mapWithEnumKeys(map: MapType): Zurg.Schema {

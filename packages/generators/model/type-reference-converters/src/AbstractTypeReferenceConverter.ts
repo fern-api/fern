@@ -1,6 +1,7 @@
 import {
     ContainerType,
     DeclaredTypeName,
+    Literal,
     MapType,
     PrimitiveType,
     ShapeType,
@@ -41,9 +42,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             list: this.list.bind(this),
             set: this.set.bind(this),
             optional: this.optional.bind(this),
-            literal: () => {
-                throw new Error("Literals are unsupported!");
-            },
+            literal: this.literal.bind(this),
             _unknown: () => {
                 throw new Error("Unexpected container type: " + container._type);
             },
@@ -58,6 +57,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract list(itemType: TypeReference): T;
     protected abstract set(itemType: TypeReference): T;
     protected abstract optional(itemType: TypeReference): T;
+    protected abstract literal(literal: Literal): T;
     protected abstract unknown(): T;
 
     protected primitive(primitive: PrimitiveType): T {

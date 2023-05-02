@@ -1,6 +1,7 @@
 import {
     ContainerType,
     DeclaredTypeName,
+    Literal,
     ResolvedTypeReference,
     ShapeType,
     TypeReference,
@@ -104,6 +105,18 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
 
     protected override list(): (reference: ts.Expression) => ExpressionReferenceNode {
         return this.jsonStringify.bind(this);
+    }
+
+    protected override literal(literal: Literal): (reference: ts.Expression) => ExpressionReferenceNode {
+        return Literal._visit(literal, {
+            string: () => (reference: ts.Expression) => ({
+                expression: reference,
+                isNullable: false,
+            }),
+            _unknown: () => {
+                throw new Error("Unknown literal: " + literal.type);
+            },
+        });
     }
 
     protected override mapWithEnumKeys(): (reference: ts.Expression) => ExpressionReferenceNode {
