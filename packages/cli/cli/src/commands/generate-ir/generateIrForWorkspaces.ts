@@ -7,6 +7,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
+import { convertOpenApiWorkspaceToFernWorkspace } from "../generate/generateWorkspaces";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";
 
 export async function generateIrForWorkspaces({
@@ -27,13 +28,13 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "openapi") {
-                    context.failWithoutThrowing("Generating from OpenAPI not currently supported.");
-                    return;
-                }
+                const fernWorkspace =
+                    workspace.type === "openapi"
+                        ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
+                        : workspace;
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
-                    workspace,
+                    workspace: fernWorkspace,
                     context,
                     generationLanguage,
                     audiences,
