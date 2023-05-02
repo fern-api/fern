@@ -69,6 +69,7 @@ function convertOperation(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isStreaming = (operation as any)["x-fern-streaming"] as boolean | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
     const requestBreadcrumbs = [operation.operationId, "Request"];
 
