@@ -13,9 +13,11 @@ const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
 export function convertResponse({
     responses,
     context,
+    responseBreadcrumbs,
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: OpenAPIV3ParserContext;
+    responseBreadcrumbs: string[];
 }): Response | undefined {
     for (const statusCode of SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
@@ -34,7 +36,7 @@ export function convertResponse({
 
         return {
             description: response.description,
-            schema: convertSchema(responsSchema, false, context, []),
+            schema: convertSchema(responsSchema, false, context, responseBreadcrumbs),
         };
     }
     return undefined;

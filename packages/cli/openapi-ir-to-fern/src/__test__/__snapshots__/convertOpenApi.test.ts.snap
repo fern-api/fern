@@ -23,7 +23,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "",
+              "type": "ListAccountsResponse",
             },
           },
           "listGames": {
@@ -61,7 +61,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "",
+              "type": "ListGamesResponse",
             },
           },
           "listGroups": {
@@ -89,7 +89,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "",
+              "type": "ListGroupsResponse",
             },
           },
           "listLocations": {
@@ -107,7 +107,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "",
+              "type": "ListLocationsResponse",
             },
           },
           "listPhotos": {
@@ -125,7 +125,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "",
+              "type": "ListPhotosResponse",
             },
           },
           "listPlayers": {
@@ -143,7 +143,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "",
+              "type": "ListPlayersResponse",
             },
           },
           "retrieveAccount": {
@@ -273,27 +273,6 @@ exports[`open api converter buzzshot simple 1`] = `
         },
       },
       "types": {
-        "": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Photo>>",
-            },
-          },
-        },
         "Game": {
           "docs": undefined,
           "properties": {
@@ -638,6 +617,132 @@ exports[`open api converter buzzshot simple 1`] = `
             "value": {
               "docs": undefined,
               "type": "map<string, unknown>",
+            },
+          },
+        },
+        "ListAccountsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Room>>",
+            },
+          },
+        },
+        "ListGamesResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Game>>",
+            },
+          },
+        },
+        "ListGroupsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Group>>",
+            },
+          },
+        },
+        "ListLocationsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Room>>",
+            },
+          },
+        },
+        "ListPhotosResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Photo>>",
+            },
+          },
+        },
+        "ListPlayersResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Player>>",
             },
           },
         },
@@ -5134,11 +5239,11 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "DeleteIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "",
+                "type": "DeleteIntegrationRequestService",
               },
             },
             "response": {
@@ -5278,11 +5383,11 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "GetIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "",
+                "type": "GetIntegrationRequestService",
               },
             },
             "response": {
@@ -5534,7 +5639,7 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "ListEntitlementsByPartnerRequestPartner",
               },
             },
             "response": {
@@ -5598,7 +5703,7 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "ListOffersByPartnerRequestPartner",
               },
             },
             "response": {
@@ -5705,7 +5810,7 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "ListProductsByPartnerRequestPartner",
               },
             },
             "response": {
@@ -5723,7 +5828,7 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "ListRevenueRecordDetailsRequestPartner",
               },
             },
             "request": {
@@ -5781,7 +5886,7 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "ListRevenueRecordsRequestPartner",
               },
             },
             "request": {
@@ -6220,11 +6325,11 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "UpdateIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "",
+                "type": "UpdateIntegrationRequestService",
               },
             },
             "request": {
@@ -6304,11 +6409,11 @@ exports[`open api converter suger simple 1`] = `
               },
               "partner": {
                 "docs": undefined,
-                "type": "",
+                "type": "VerifyIntegrationRequestPartner",
               },
               "service": {
                 "docs": undefined,
-                "type": "",
+                "type": "VerifyIntegrationRequestService",
               },
             },
             "response": {
@@ -6366,6 +6471,19 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureIncludedBaseQuantityRecurringUnit": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Monthly",
+              "value": "Monthly",
+            },
+            {
+              "name": "Annual",
+              "value": "Annual",
+            },
+          ],
+        },
         "AzureListingContact": {
           "docs": undefined,
           "properties": {
@@ -6390,6 +6508,23 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<string>",
             },
           },
+        },
+        "AzureListingContactType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "CustomerSupport",
+              "value": "CustomerSupport",
+            },
+            {
+              "name": "Engineering",
+              "value": "Engineering",
+            },
+            {
+              "name": "ChannelManager",
+              "value": "ChannelManager",
+            },
+          ],
         },
         "AzureListingUri": {
           "docs": undefined,
@@ -6463,6 +6598,27 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<AzureMarketStateState>",
             },
           },
+        },
+        "AzureMarketStateState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Disabled",
+              "value": "Disabled",
+            },
+            {
+              "name": "Enabled",
+              "value": "Enabled",
+            },
+            {
+              "name": "StopSelling",
+              "value": "StopSelling",
+            },
+            {
+              "name": "Terminated",
+              "value": "Terminated",
+            },
+          ],
         },
         "AzureMarketplacePrice": {
           "docs": undefined,
@@ -6614,6 +6770,19 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureMarketplacePrivateOfferBeneficiaryRecipientRecipientType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "cspCustomer",
+              "value": "cspCustomer",
+            },
+            {
+              "name": "billingGroup",
+              "value": "billingGroup",
+            },
+          ],
+        },
         "AzureMarketplacePrivateOfferPricing": {
           "docs": undefined,
           "properties": {
@@ -6659,6 +6828,45 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureMarketplacePrivateOfferPricingDiscountType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "percentage",
+              "value": "percentage",
+            },
+            {
+              "name": "absolute",
+              "value": "absolute",
+            },
+          ],
+        },
+        "AzureMarketplacePrivateOfferPricingPlanType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "FLAT_RATE",
+              "value": "FLAT_RATE",
+            },
+            {
+              "name": "PER_USER",
+              "value": "PER_USER",
+            },
+          ],
+        },
+        "AzureMarketplacePrivateOfferPrivateOfferType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "customerPromotion",
+              "value": "customerPromotion",
+            },
+            {
+              "name": "cspPromotion",
+              "value": "cspPromotion",
+            },
+          ],
+        },
         "AzureMarketplacePrivateOfferPromotionReference": {
           "docs": undefined,
           "properties": {
@@ -6672,6 +6880,40 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureMarketplacePrivateOfferState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "draft",
+              "value": "draft",
+            },
+            {
+              "name": "live",
+              "value": "live",
+            },
+            {
+              "name": "withdrawn",
+              "value": "withdrawn",
+            },
+            {
+              "name": "deleted",
+              "value": "deleted",
+            },
+          ],
+        },
+        "AzureMarketplacePrivateOfferSubState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "pendingAcceptance",
+              "value": "pendingAcceptance",
+            },
+            {
+              "name": "accepted",
+              "value": "accepted",
+            },
+          ],
+        },
         "AzureMarketplaceTerm": {
           "docs": undefined,
           "properties": {
@@ -6684,6 +6926,27 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<double>",
             },
           },
+        },
+        "AzureMarketplaceTermType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "day",
+              "value": "day",
+            },
+            {
+              "name": "week",
+              "value": "week",
+            },
+            {
+              "name": "month",
+              "value": "month",
+            },
+            {
+              "name": "year",
+              "value": "year",
+            },
+          ],
         },
         "AzureMarketplaceValidation": {
           "docs": undefined,
@@ -6709,6 +6972,76 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<string>",
             },
           },
+        },
+        "AzureMarketplaceValidationCode": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "businessValidationError",
+              "value": "businessValidationError",
+            },
+            {
+              "name": "collectionLimitExceeded",
+              "value": "collectionLimitExceeded",
+            },
+            {
+              "name": "invalidId",
+              "value": "invalidId",
+            },
+            {
+              "name": "invalidEntityStatus",
+              "value": "invalidEntityStatus",
+            },
+            {
+              "name": "invalidRequest",
+              "value": "invalidRequest",
+            },
+            {
+              "name": "invalidResource",
+              "value": "invalidResource",
+            },
+            {
+              "name": "invalidState",
+              "value": "invalidState",
+            },
+            {
+              "name": "notDeployed",
+              "value": "notDeployed",
+            },
+            {
+              "name": "notSupported",
+              "value": "notSupported",
+            },
+            {
+              "name": "operationCanceled",
+              "value": "operationCanceled",
+            },
+            {
+              "name": "productLocked",
+              "value": "productLocked",
+            },
+            {
+              "name": "resourceNotFound",
+              "value": "resourceNotFound",
+            },
+            {
+              "name": "schemaValidationError",
+              "value": "schemaValidationError",
+            },
+          ],
+        },
+        "AzureMarketplaceValidationLevel": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "informational",
+              "value": "informational",
+            },
+            {
+              "name": "warning",
+              "value": "warning",
+            },
+          ],
         },
         "AzurePendingUpdateInfo": {
           "docs": undefined,
@@ -6749,6 +7082,19 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption>",
             },
           },
+        },
+        "AzurePriceAndAvailabilityPrivateOfferCustomMetersPriceInputOption": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "perMarket",
+              "value": "perMarket",
+            },
+            {
+              "name": "usd",
+              "value": "usd",
+            },
+          ],
         },
         "AzurePriceAndAvailabilityPrivateOfferPlan": {
           "docs": undefined,
@@ -6830,6 +7176,19 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzurePriceAndAvailabilityRecurrentPricePriceInputOption": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "perMarket",
+              "value": "perMarket",
+            },
+            {
+              "name": "usd",
+              "value": "usd",
+            },
+          ],
+        },
         "AzurePriceCadence": {
           "docs": undefined,
           "properties": {
@@ -6842,6 +7201,19 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<integer>",
             },
           },
+        },
+        "AzurePriceCadenceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Month",
+              "value": "Month",
+            },
+            {
+              "name": "Year",
+              "value": "Year",
+            },
+          ],
         },
         "AzurePriceSchedule": {
           "docs": undefined,
@@ -6863,6 +7235,23 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<AzurePrice>",
             },
           },
+        },
+        "AzurePriceSchedulePricingModel": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Flat",
+              "value": "Flat",
+            },
+            {
+              "name": "Recurring",
+              "value": "Recurring",
+            },
+            {
+              "name": "Usage",
+              "value": "Usage",
+            },
+          ],
         },
         "AzurePricingUnit": {
           "docs": undefined,
@@ -6888,6 +7277,19 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<integer>",
             },
           },
+        },
+        "AzurePricingUnitName": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "sharedcore",
+              "value": "sharedcore",
+            },
+            {
+              "name": "transactions",
+              "value": "transactions",
+            },
+          ],
         },
         "AzureProduct": {
           "docs": undefined,
@@ -7061,6 +7463,19 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureProductFeatureAvailabilityVisibility": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Public",
+              "value": "Public",
+            },
+            {
+              "name": "Private",
+              "value": "Private",
+            },
+          ],
+        },
         "AzureProductListing": {
           "docs": undefined,
           "properties": {
@@ -7175,6 +7590,57 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureProductListingAssetResourceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ListingAsset",
+              "value": "ListingAsset",
+            },
+            {
+              "name": "ListingImage",
+              "value": "ListingImage",
+            },
+            {
+              "name": "ListingVideo",
+              "value": "ListingVideo",
+            },
+          ],
+        },
+        "AzureProductListingAssetState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "PendingUpload",
+              "value": "PendingUpload",
+            },
+            {
+              "name": "Uploaded",
+              "value": "Uploaded",
+            },
+            {
+              "name": "InProcessing",
+              "value": "InProcessing",
+            },
+            {
+              "name": "Processed",
+              "value": "Processed",
+            },
+            {
+              "name": "ProcessFailed",
+              "value": "ProcessFailed",
+            },
+          ],
+        },
+        "AzureProductListingResourceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AzureListing",
+              "value": "AzureListing",
+            },
+          ],
+        },
         "AzureProductPackageConfiguration": {
           "docs": undefined,
           "properties": {
@@ -7203,6 +7669,15 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<AzureProductPackageConfigurationResourceType>",
             },
           },
+        },
+        "AzureProductPackageConfigurationResourceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AzureSoftwareAsAServicePackageConfiguration",
+              "value": "AzureSoftwareAsAServicePackageConfiguration",
+            },
+          ],
         },
         "AzureProductProperty": {
           "docs": undefined,
@@ -7314,6 +7789,45 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureProductSetupCallToAction": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "free",
+              "value": "free",
+            },
+            {
+              "name": "FreeTrial",
+              "value": "free-trial",
+            },
+            {
+              "name": "ContactMe",
+              "value": "contact-me",
+            },
+          ],
+        },
+        "AzureProductSetupResourceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AzureProductSetup",
+              "value": "AzureProductSetup",
+            },
+          ],
+        },
+        "AzureProductSetupSellingOption": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ListingOnly",
+              "value": "ListingOnly",
+            },
+            {
+              "name": "ListAndSell",
+              "value": "ListAndSell",
+            },
+          ],
+        },
         "AzureProductSubmission": {
           "docs": undefined,
           "properties": {
@@ -7366,6 +7880,65 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<list<AzureVariantResource>>",
             },
           },
+        },
+        "AzureProductSubmissionResourceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Submission",
+              "value": "Submission",
+            },
+          ],
+        },
+        "AzureProductSubmissionState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Inprogress",
+              "value": "Inprogress",
+            },
+            {
+              "name": "Published",
+              "value": "Published",
+            },
+          ],
+        },
+        "AzureProductSubmissionSubState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "InDraft",
+              "value": "InDraft",
+            },
+            {
+              "name": "Submitted",
+              "value": "Submitted",
+            },
+            {
+              "name": "Failed",
+              "value": "Failed",
+            },
+            {
+              "name": "FailedInCertification",
+              "value": "FailedInCertification",
+            },
+            {
+              "name": "ReadyToPublish",
+              "value": "ReadyToPublish",
+            },
+            {
+              "name": "Publishing",
+              "value": "Publishing",
+            },
+            {
+              "name": "Published",
+              "value": "Published",
+            },
+            {
+              "name": "InStore",
+              "value": "InStore",
+            },
+          ],
         },
         "AzureProductVariant": {
           "docs": undefined,
@@ -7478,6 +8051,32 @@ exports[`open api converter suger simple 1`] = `
             },
           },
         },
+        "AzureProductVariantResourceType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AzureSkuVariant",
+              "value": "AzureSkuVariant",
+            },
+            {
+              "name": "AzureTestDriveVariant",
+              "value": "AzureTestDriveVariant",
+            },
+          ],
+        },
+        "AzureProductVariantState": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "InActive",
+              "value": "InActive",
+            },
+            {
+              "name": "Active",
+              "value": "Active",
+            },
+          ],
+        },
         "AzureProductVariantTrial": {
           "docs": undefined,
           "properties": {
@@ -7498,6 +8097,44 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<AzureProductVariantTrialType>",
             },
           },
+        },
+        "AzureProductVariantTrialDurationType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Minute",
+              "value": "Minute",
+            },
+            {
+              "name": "Days",
+              "value": "Days",
+            },
+            {
+              "name": "Months",
+              "value": "Months",
+            },
+          ],
+        },
+        "AzureProductVariantTrialType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "NoTrial",
+              "value": "NoTrial",
+            },
+            {
+              "name": "TimedAccess",
+              "value": "TimedAccess",
+            },
+            {
+              "name": "TimedUsage",
+              "value": "TimedUsage",
+            },
+            {
+              "name": "Unlimited",
+              "value": "Unlimited",
+            },
+          ],
         },
         "AzureTypeValue": {
           "docs": undefined,
@@ -7537,6 +8174,66 @@ exports[`open api converter suger simple 1`] = `
               "type": "optional<string>",
             },
           },
+        },
+        "DeleteIntegrationRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "DeleteIntegrationRequestService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+            {
+              "name": "CRM",
+              "value": "CRM",
+            },
+          ],
+        },
+        "GetIntegrationRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "GetIntegrationRequestService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+            {
+              "name": "CRM",
+              "value": "CRM",
+            },
+          ],
         },
         "GithubComAwsAwsSdkGoV2ServiceMarketplacemeteringTypesTag": {
           "docs": undefined,
@@ -8025,6 +8722,91 @@ This member is required.",
               "type": "optional<double>",
             },
           },
+        },
+        "ListEntitlementsByPartnerRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "ListOffersByPartnerRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "ListProductsByPartnerRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "ListRevenueRecordDetailsRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "ListRevenueRecordsRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
         },
         "MarketplacemeteringBatchMeterUsageOutput": {
           "docs": undefined,
@@ -8691,6 +9473,49 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
           },
         },
+        "SharedAzureMarketplaceSubscriptionAllowedCustomerOperationsItem": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "Read",
+              "value": "Read",
+            },
+            {
+              "name": "Update",
+              "value": "Update",
+            },
+            {
+              "name": "Delete",
+              "value": "Delete",
+            },
+          ],
+        },
+        "SharedAzureMarketplaceSubscriptionSandboxType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "None",
+              "value": "None",
+            },
+            {
+              "name": "Csp",
+              "value": "Csp",
+            },
+          ],
+        },
+        "SharedAzureMarketplaceSubscriptionSessionMode": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "None",
+              "value": "None",
+            },
+            {
+              "name": "DryRun",
+              "value": "DryRun",
+            },
+          ],
+        },
         "SharedAzureMarketplaceSubscriptionStatus": {
           "docs": undefined,
           "enum": [
@@ -8906,6 +9731,32 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
           },
+        },
+        "SharedCreateIntegrationParamsPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedCreateIntegrationParamsService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
         },
         "SharedEntitlementInfo": {
           "docs": undefined,
@@ -9139,6 +9990,15 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
           },
         },
+        "SharedGcpCommerceProducerListingSpecListingType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "BillingIntegratedManagedService",
+              "value": "BillingIntegratedManagedService",
+            },
+          ],
+        },
         "SharedGcpCommerceProducerMarketingSpec": {
           "docs": undefined,
           "properties": {
@@ -9264,6 +10124,24 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
           },
         },
+        "SharedGcpCommerceProducerPriceSubscriptionPeriod": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ONE_YEAR",
+              "value": "ONE_YEAR",
+            },
+          ],
+        },
+        "SharedGcpCommerceProducerPriceSubscriptionTaxCategoryOverride": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "TAX_CATEGORY_UNSPECIFIED",
+              "value": "TAX_CATEGORY_UNSPECIFIED",
+            },
+          ],
+        },
         "SharedGcpCommerceProducerPriceTier": {
           "docs": undefined,
           "properties": {
@@ -9301,6 +10179,15 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpCommerceProducerPriceUsageTaxCategoryOverride>",
             },
           },
+        },
+        "SharedGcpCommerceProducerPriceUsageTaxCategoryOverride": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "TAX_CATEGORY_UNSPECIFIED",
+              "value": "TAX_CATEGORY_UNSPECIFIED",
+            },
+          ],
         },
         "SharedGcpCommerceProducerPurchaseMetric": {
           "docs": undefined,
@@ -9757,6 +10644,15 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedGcpProductMarketplace": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MarketplacesGoogleCloud",
+              "value": "marketplaces/google-cloud",
+            },
+          ],
+        },
         "SharedGcpPurchasePlan": {
           "docs": undefined,
           "properties": {
@@ -9778,6 +10674,15 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedGcpPurchasePlanPurchaseMode": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "PURCHASE_MODE_PUBLIC",
+              "value": "PURCHASE_MODE_PUBLIC",
+            },
+          ],
+        },
         "SharedGcpUserInfo": {
           "docs": undefined,
           "properties": {
@@ -9790,6 +10695,32 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
           },
+        },
+        "SharedGetRevenueReportParamsPartner": {
+          "docs": "Required.",
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedGetRevenueReportParamsService": {
+          "docs": "Required.",
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
         },
         "SharedHubspotCrmCredential": {
           "docs": undefined,
@@ -9870,6 +10801,23 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedIdentityBuyerPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
         "SharedIdentityIntegration": {
           "docs": undefined,
           "properties": {
@@ -9910,6 +10858,49 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedIdentityIntegrationStatus>",
             },
           },
+        },
+        "SharedIdentityIntegrationPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedIdentityIntegrationService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
+        },
+        "SharedIdentityIntegrationStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "CREATED",
+              "value": "CREATED",
+            },
+            {
+              "name": "VERIFIED",
+              "value": "VERIFIED",
+            },
+            {
+              "name": "NOT_VERIFIED",
+              "value": "NOT_VERIFIED",
+            },
+          ],
         },
         "SharedIntegrationInfo": {
           "docs": undefined,
@@ -10389,6 +11380,19 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedOfferInfoVisibility": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "PRIVATE",
+              "value": "PRIVATE",
+            },
+            {
+              "name": "PUBLIC",
+              "value": "PUBLIC",
+            },
+          ],
+        },
         "SharedOfferMetaInfo": {
           "docs": undefined,
           "properties": {
@@ -10816,6 +11820,32 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedUpdateIntegrationParamsPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedUpdateIntegrationParamsService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
+        },
         "SharedUsageCount": {
           "docs": undefined,
           "properties": {
@@ -10968,6 +11998,57 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedWorkloadEntitlementPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedWorkloadEntitlementService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
+        },
+        "SharedWorkloadEntitlementStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ACTIVE",
+              "value": "ACTIVE",
+            },
+            {
+              "name": "CANCELLED",
+              "value": "CANCELLED",
+            },
+            {
+              "name": "SUSPENDED",
+              "value": "SUSPENDED",
+            },
+            {
+              "name": "PENDING_START",
+              "value": "PENDING_START",
+            },
+            {
+              "name": "UNKNOWN",
+              "value": "UNKNOWN",
+            },
+          ],
+        },
         "SharedWorkloadEntitlementTerm": {
           "docs": undefined,
           "properties": {
@@ -11041,6 +12122,140 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedWorkloadEntitlementTermPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedWorkloadEntitlementTermService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
+        },
+        "SharedWorkloadOfferOfferType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "DEFAULT",
+              "value": "DEFAULT",
+            },
+            {
+              "name": "CONTRACT",
+              "value": "CONTRACT",
+            },
+            {
+              "name": "SUBSCRIPTION",
+              "value": "SUBSCRIPTION",
+            },
+            {
+              "name": "FREE_TRIAL",
+              "value": "FREE_TRIAL",
+            },
+            {
+              "name": "FLAT_RATE",
+              "value": "FLAT_RATE",
+            },
+            {
+              "name": "PER_USER",
+              "value": "PER_USER",
+            },
+            {
+              "name": "PRIVATE",
+              "value": "PRIVATE",
+            },
+            {
+              "name": "UNKNOWN",
+              "value": "UNKNOWN",
+            },
+          ],
+        },
+        "SharedWorkloadOfferPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedWorkloadOfferService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
+        },
+        "SharedWorkloadOfferStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ACCEPTED",
+              "value": "ACCEPTED",
+            },
+            {
+              "name": "PENDING_CREATE",
+              "value": "PENDING_CREATE",
+            },
+            {
+              "name": "CREATE_FAILED",
+              "value": "CREATE_FAILED",
+            },
+            {
+              "name": "CREATE_SUCCESS",
+              "value": "CREATE_SUCCESS",
+            },
+            {
+              "name": "DRAFT",
+              "value": "DRAFT",
+            },
+            {
+              "name": "EXPIRED",
+              "value": "EXPIRED",
+            },
+            {
+              "name": "PENDING_ACCEPTANCE",
+              "value": "PENDING_ACCEPTANCE",
+            },
+            {
+              "name": "PENDING_CANCEL",
+              "value": "PENDING_CANCEL",
+            },
+            {
+              "name": "CANCEL_FAILED",
+              "value": "CANCEL_FAILED",
+            },
+            {
+              "name": "CANCEL_SUCCESS",
+              "value": "CANCEL_SUCCESS",
+            },
+          ],
+        },
         "SharedWorkloadProduct": {
           "docs": undefined,
           "properties": {
@@ -11101,6 +12316,61 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
           },
+        },
+        "SharedWorkloadProductPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "SharedWorkloadProductProductType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "UNKNOWN",
+              "value": "UNKNOWN",
+            },
+            {
+              "name": "SUBSCRIPTION",
+              "value": "SUBSCRIPTION",
+            },
+            {
+              "name": "CONTRACT",
+              "value": "CONTRACT",
+            },
+            {
+              "name": "FLAT_RATE",
+              "value": "FLAT_RATE",
+            },
+            {
+              "name": "PER_USER",
+              "value": "PER_USER",
+            },
+            {
+              "name": "USAGE_BASED",
+              "value": "USAGE_BASED",
+            },
+          ],
+        },
+        "SharedWorkloadProductService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+          ],
         },
         "SlackOAuthResponseIncomingWebhook": {
           "docs": undefined,
@@ -11328,6 +12598,66 @@ the same customer, dimension, and time, but a different quantity.",
             {
               "name": "DuplicateRecord",
               "value": "DuplicateRecord",
+            },
+          ],
+        },
+        "UpdateIntegrationRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "UpdateIntegrationRequestService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+            {
+              "name": "CRM",
+              "value": "CRM",
+            },
+          ],
+        },
+        "VerifyIntegrationRequestPartner": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWS",
+              "value": "AWS",
+            },
+            {
+              "name": "AZURE",
+              "value": "AZURE",
+            },
+            {
+              "name": "GCP",
+              "value": "GCP",
+            },
+          ],
+        },
+        "VerifyIntegrationRequestService": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "MARKETPLACE",
+              "value": "MARKETPLACE",
+            },
+            {
+              "name": "CRM",
+              "value": "CRM",
             },
           ],
         },

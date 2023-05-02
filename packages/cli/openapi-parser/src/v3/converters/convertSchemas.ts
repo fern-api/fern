@@ -177,9 +177,13 @@ function convertSchemaObject(
         });
     }
 
-    context.logger.warn(breadcrumbs.join(" -> "), ": Failed to parse schema, so defaulting to unknown");
-    context.logger.debug(`OpenAPI Schema at ${breadcrumbs.join(" -> ")} is ${JSON.stringify(schema, undefined, 4)}`);
-    return Schema.unknown();
+    if (schema.type == null) {
+        return Schema.unknown();
+    }
+
+    throw new Error(
+        `Failed to convert schema breadcrumbs=${JSON.stringify(breadcrumbs)} value=${JSON.stringify(schema)}`
+    );
 }
 
 export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
