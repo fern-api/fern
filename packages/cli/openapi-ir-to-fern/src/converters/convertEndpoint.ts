@@ -142,19 +142,20 @@ function getRequest({
 }): ConvertedRequest {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     if (request.type === "json") {
-        if (request.schema.type !== "reference") {
-            throw Error("Only request references are currently supported");
-        }
-        const schema = schemas[request.schema.schema];
-        if (schema == null) {
-            throw Error(`Failed to resolve schema reference ${request.schema.schema}`);
+        const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
+        const resolvedSchema = request.schema.type === "reference" ? schemas[request.schema.schema] : request.schema;
+        if (resolvedSchema == null) {
+            throw Error(`Failed to resolve schema ${JSON.stringify(request.schema)}`);
         }
 
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
-        if (schema.type !== "object" || nonRequestReferencedSchemas.includes(request.schema.schema)) {
+        if (
+            resolvedSchema.type !== "object" ||
+            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
+        ) {
             const requestTypeReference = convertToTypeReference({
-                schema,
+                schema: resolvedSchema,
                 prefix: isPackageYml ? undefined : ROOT_PREFIX,
                 schemas,
             });
@@ -180,7 +181,7 @@ function getRequest({
             return convertedRequest;
         }
         const properties = Object.fromEntries(
-            schema.properties.map((property) => {
+            resolvedSchema.properties.map((property) => {
                 const propertyTypeReference = convertToTypeReference({
                     schema: property.schema,
                     prefix: isPackageYml ? undefined : ROOT_PREFIX,
@@ -194,9 +195,9 @@ function getRequest({
             })
         );
         return {
-            schemaIdsToExclude: [request.schema.schema],
+            schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
             value: {
-                name: requestNameOverride ?? schema.nameOverride ?? schema.generatedName,
+                name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
                 "query-parameters": queryParameters,
                 body: {
                     properties,
