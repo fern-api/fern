@@ -92,10 +92,16 @@ export function convertEndpoint({
             ...additionalTypeDeclarations,
             ...responseTypeReference.additionalTypeDeclarations,
         };
-        convertedEndpoint.response = {
-            docs: endpoint.response.description ?? undefined,
-            type: getTypeFromTypeReference(responseTypeReference.typeReference),
-        };
+        if (endpoint.responseIsStreaming) {
+            convertedEndpoint["response-stream"] = {
+                type: getTypeFromTypeReference(responseTypeReference.typeReference),
+            };
+        } else {
+            convertedEndpoint.response = {
+                docs: endpoint.response.description ?? undefined,
+                type: getTypeFromTypeReference(responseTypeReference.typeReference),
+            };
+        }
     }
 
     if (environment?.type === "multi") {

@@ -121,6 +121,9 @@ types:
         docs: |
           Populated by `x-request-name` on a path object.
       request: optional<Request>
+      responseIsStreaming:
+        type: boolean
+        docs: Checks if `x-fern-streaming` is present and is true.
       response: optional<Response>
       errors: list<HttpError>
       server: list<Server>

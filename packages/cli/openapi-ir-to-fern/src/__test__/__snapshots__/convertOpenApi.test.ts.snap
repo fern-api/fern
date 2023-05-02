@@ -6029,6 +6029,10 @@ exports[`open api converter hathora simple 1`] = `
               "name": "RunBuildRequest",
               "query-parameters": undefined,
             },
+            "response": {
+              "docs": "Ok",
+              "type": "string",
+            },
           },
         },
       },
@@ -6507,6 +6511,9 @@ exports[`open api converter hathora simple 1`] = `
                 },
               },
             },
+            "response-stream": {
+              "type": "string",
+            },
           },
           "GetLogsForDeployment": {
             "method": "GET",
@@ -6536,6 +6543,10 @@ exports[`open api converter hathora simple 1`] = `
                 },
               },
             },
+            "response": {
+              "docs": "Ok",
+              "type": "unknown",
+            },
           },
           "GetLogsForProcess": {
             "method": "GET",
@@ -6564,6 +6575,10 @@ exports[`open api converter hathora simple 1`] = `
                   "type": "optional<double>",
                 },
               },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "string",
             },
           },
         },

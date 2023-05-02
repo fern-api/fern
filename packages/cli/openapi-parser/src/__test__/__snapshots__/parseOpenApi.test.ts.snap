@@ -40,6 +40,7 @@ exports[`open api parser devrev simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -77,6 +78,7 @@ exports[`open api parser devrev simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -115,6 +117,7 @@ authenticated user.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -145,6 +148,7 @@ given Dev organization.
           },
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -186,6 +190,7 @@ given Dev organization.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -260,6 +265,7 @@ token type issued for a given subject.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -290,6 +296,7 @@ authenticated user.
           },
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -328,6 +335,7 @@ organization.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -370,6 +378,7 @@ enterprise connections can be created by an organization.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -402,6 +411,7 @@ connections can not be deleted using this method.
           },
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -442,6 +452,7 @@ connections can not be deleted using this method.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -474,6 +485,7 @@ created by the user.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -508,6 +520,7 @@ disabled.
           },
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -545,6 +558,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -674,6 +688,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -701,6 +716,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -737,6 +753,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -773,6 +790,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -813,6 +831,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -961,6 +980,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -998,6 +1018,7 @@ disabled.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1036,6 +1057,7 @@ organization.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1072,6 +1094,7 @@ organization.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1111,6 +1134,7 @@ organization.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1303,6 +1327,7 @@ to access.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1339,6 +1364,7 @@ to access.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1377,6 +1403,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1413,6 +1440,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1452,6 +1480,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1524,6 +1553,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1560,6 +1590,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1596,6 +1627,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1635,6 +1667,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1718,6 +1751,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1754,6 +1788,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1790,6 +1825,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1826,6 +1862,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1865,6 +1902,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1892,6 +1930,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1928,6 +1967,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1966,6 +2006,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2002,6 +2043,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2213,6 +2255,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2252,6 +2295,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2492,6 +2536,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2528,6 +2573,7 @@ and a logical concept denoted by the tag's name.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10377,6 +10423,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10490,6 +10537,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10614,6 +10662,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10652,6 +10701,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10682,6 +10732,7 @@ exports[`open api parser hathora simple 1`] = `
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10733,6 +10784,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "object",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10806,6 +10858,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "object",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10879,6 +10932,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "object",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10921,6 +10975,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -10969,6 +11024,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11007,6 +11063,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11059,7 +11116,17 @@ exports[`open api parser hathora simple 1`] = `
             "type": "multipart",
           },
           "requestNameOverride": undefined,
-          "response": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11100,6 +11167,7 @@ exports[`open api parser hathora simple 1`] = `
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11142,6 +11210,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11190,6 +11259,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11247,6 +11317,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11274,6 +11345,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11354,6 +11426,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11434,6 +11507,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11518,6 +11592,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11617,6 +11692,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11716,6 +11792,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11815,6 +11892,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11940,6 +12018,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11997,6 +12076,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12045,6 +12125,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12118,6 +12199,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12192,7 +12274,17 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "request": undefined,
           "requestNameOverride": undefined,
-          "response": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12263,7 +12355,17 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "request": undefined,
           "requestNameOverride": undefined,
-          "response": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "schema": {
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12334,7 +12436,13 @@ exports[`open api parser hathora simple 1`] = `
           ],
           "request": undefined,
           "requestNameOverride": undefined,
-          "response": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "type": "unknown",
+            },
+          },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12447,6 +12555,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12504,6 +12613,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12561,6 +12671,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12609,6 +12720,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12668,6 +12780,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12716,6 +12829,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12768,6 +12882,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12820,6 +12935,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12860,6 +12976,7 @@ exports[`open api parser hathora simple 1`] = `
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12900,6 +13017,7 @@ exports[`open api parser hathora simple 1`] = `
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12948,6 +13066,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -14584,6 +14703,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list buyers by organization",
           "tags": [
@@ -14634,6 +14754,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get buyer",
           "tags": [
@@ -14693,6 +14814,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "update buyer name and description",
           "tags": [
@@ -14747,6 +14869,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list entitlements by buyer",
           "tags": [
@@ -14795,6 +14918,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "create or update draft offer",
           "tags": [
@@ -14838,6 +14962,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list entitlements",
           "tags": [
@@ -14888,6 +15013,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get entitlement",
           "tags": [
@@ -14947,6 +15073,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "add entitlement credit",
           "tags": [
@@ -15006,6 +15133,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "update entitlement name",
           "tags": [
@@ -15060,6 +15188,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list entitlement terms",
           "tags": [
@@ -15121,6 +15250,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get entitlement term",
           "tags": [
@@ -15232,6 +15362,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list usageRecordGroups by entitlement",
           "tags": [
@@ -15291,6 +15422,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "report usageRecordGroup",
           "tags": [
@@ -15417,6 +15549,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list usageRecordReports by entitlement",
           "tags": [
@@ -15460,6 +15593,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list integrations by organization",
           "tags": [
@@ -15508,6 +15642,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "create integration",
           "tags": [
@@ -15596,6 +15731,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get integration",
           "tags": [
@@ -15693,6 +15829,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "update integration",
           "tags": [
@@ -15782,6 +15919,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "primitive",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "delete integration",
           "tags": [
@@ -15871,6 +16009,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "primitive",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "verify integration",
           "tags": [
@@ -15914,6 +16053,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list offers by organization",
           "tags": [
@@ -15962,6 +16102,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "create offer",
           "tags": [
@@ -16012,6 +16153,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get offer",
           "tags": [
@@ -16063,6 +16205,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "primitive",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "delete offer",
           "tags": [
@@ -16114,6 +16257,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "primitive",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "cancel offer",
           "tags": [
@@ -16168,6 +16312,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list entitlements by offer",
           "tags": [
@@ -16272,6 +16417,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list operations",
           "tags": [
@@ -16342,6 +16488,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list entitlements by partner",
           "tags": [
@@ -16424,6 +16571,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list offers by partner",
           "tags": [
@@ -16494,6 +16642,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list products by partner",
           "tags": [
@@ -16666,6 +16815,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list revenue records",
           "tags": [
@@ -16838,6 +16988,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list revenue record details",
           "tags": [
@@ -16881,6 +17032,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list products by organization",
           "tags": [
@@ -16931,6 +17083,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get product",
           "tags": [
@@ -16990,6 +17143,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "update product",
           "tags": [
@@ -17041,6 +17195,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "primitive",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "delete product",
           "tags": [
@@ -17095,6 +17250,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list metering dimensions of product",
           "tags": [
@@ -17149,6 +17305,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list entitlements by product",
           "tags": [
@@ -17203,6 +17360,7 @@ exports[`open api parser suger simple 1`] = `
               },
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list offers by product",
           "tags": [
@@ -17314,6 +17472,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list usageRecordGroups by product",
           "tags": [
@@ -17425,6 +17584,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list usageRecordReports by product",
           "tags": [
@@ -17473,6 +17633,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get revenue report",
           "tags": [
@@ -17573,6 +17734,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list usageRecordGroups by organization",
           "tags": [
@@ -17623,6 +17785,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get usageRecordGroup",
           "tags": [
@@ -17723,6 +17886,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "list usageRecordReports by organization",
           "tags": [
@@ -17773,6 +17937,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get usageRecordReport",
           "tags": [
@@ -17821,6 +17986,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get usage report",
           "tags": [
@@ -17857,6 +18023,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": "get api access token",
           "tags": [
@@ -35409,6 +35576,7 @@ Used to list documents. Optionally filter on supported fields.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -35449,6 +35617,7 @@ Generate a completion using a previously defined deployment.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -35492,6 +35661,7 @@ Used to retrieve a model version given its ID.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -35532,6 +35702,7 @@ Perform a search against a document index.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [
             {
               "description": undefined,
@@ -35570,6 +35741,7 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "requestNameOverride": undefined,
           "response": undefined,
+          "responseIsStreaming": false,
           "server": [
             {
               "description": undefined,
@@ -35684,6 +35856,7 @@ Upload a document to be indexed and used for search.
               "type": "reference",
             },
           },
+          "responseIsStreaming": false,
           "server": [
             {
               "description": undefined,

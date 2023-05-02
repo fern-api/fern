@@ -5,6 +5,7 @@ import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
+const TEXT_PLAIN_CONTENT = "text/plain";
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 204)
@@ -28,15 +29,16 @@ export function convertResponse({
         if (isReferenceObject(response)) {
             throw new Error(`Converting referenced response is unsupported: ${JSON.stringify(response)}`);
         }
-        const responsSchema = response.content?.[APPLICATION_JSON_CONTENT]?.schema;
+        const responseSchema =
+            response.content?.[APPLICATION_JSON_CONTENT]?.schema ?? response.content?.[TEXT_PLAIN_CONTENT]?.schema;
 
-        if (responsSchema == null) {
+        if (responseSchema == null) {
             continue;
         }
 
         return {
             description: response.description,
-            schema: convertSchema(responsSchema, false, context, responseBreadcrumbs),
+            schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
         };
     }
     return undefined;
