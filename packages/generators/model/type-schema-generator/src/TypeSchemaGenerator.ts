@@ -1,8 +1,8 @@
 import {
+    AliasTypeDeclaration,
     EnumTypeDeclaration,
     ObjectTypeDeclaration,
     Type,
-    TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
@@ -89,7 +89,7 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
             alias: (shape) =>
                 this.generateAlias({
                     typeName,
-                    aliasOf: shape.aliasOf,
+                    shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
                     getReferenceToGeneratedTypeSchema,
@@ -169,20 +169,20 @@ export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaC
 
     private generateAlias({
         typeName,
-        aliasOf,
+        shape,
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema,
     }: {
         typeName: string;
-        aliasOf: TypeReference;
+        shape: AliasTypeDeclaration;
         getGeneratedType: () => GeneratedType<Context>;
         getReferenceToGeneratedType: () => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
     }): GeneratedAliasTypeSchema<Context> {
         return new GeneratedAliasTypeSchemaImpl({
             typeName,
-            shape: aliasOf,
+            shape,
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,

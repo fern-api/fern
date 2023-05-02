@@ -49,6 +49,12 @@ types:
       - RED
       - BLUE
 
+  ObjectAlias: MyObject
+
+  MyObject:
+    properties:
+      foo: string
+
 service:
   availability: in-development
   auth: true

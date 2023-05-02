@@ -12,13 +12,12 @@ service:
         query-parameters:
           query: optional<string>
         body: boolean
-      response-stream:
-        data: StreamPart
+      response-stream: StreamPart
     streamBooleans:
       path: /stream-booleans
       method: POST
       response-stream:
-        data: boolean
+        type: boolean
         terminator: "[DONE]"
     maybeStream:
       path: /maybe-stream
@@ -30,8 +29,7 @@ service:
             foo: string
             stream: optional<boolean>
       response: integer
-      response-stream:
-        data: boolean
+      response-stream: boolean
       stream-condition: $request.stream
     maybeStreamWithQueryParam:
       path: /maybe-stream
@@ -42,8 +40,7 @@ service:
         query-parameters:
           stream: optional<boolean>
       response: integer
-      response-stream:
-        data: boolean
+      response-stream: boolean
       stream-condition: $query.stream
 
 types:
