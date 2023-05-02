@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const HttpResponseStreamSchema = z.strictObject({
-    data: z.string(),
+    type: z.string(),
     terminator: z.optional(z.string()),
 });
 
