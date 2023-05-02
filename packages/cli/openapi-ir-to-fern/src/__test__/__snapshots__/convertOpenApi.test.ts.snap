@@ -273,6 +273,27 @@ exports[`open api converter buzzshot simple 1`] = `
         },
       },
       "types": {
+        "": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<Photo>>",
+            },
+          },
+        },
         "Game": {
           "docs": undefined,
           "properties": {

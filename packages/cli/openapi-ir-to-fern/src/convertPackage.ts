@@ -74,7 +74,7 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
 }
 
 function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedServices): DefinitionFileSchema {
-    let types: Record<string, RawSchemas.TypeDeclarationSchema> = {};
+    let types: Record<string, RawSchemas.TypeDeclarationSchema> = { ...convertedServices.additionalTypeDeclarations };
     for (const [schemaId, schema] of Object.entries(openApiFile.schemas)) {
         if (convertedServices.schemaIdsToExclude.includes(schemaId)) {
             continue;

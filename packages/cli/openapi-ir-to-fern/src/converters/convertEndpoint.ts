@@ -11,6 +11,7 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
     schemaIdsToExclude: string[];
+    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 export function convertEndpoint({
@@ -67,6 +68,10 @@ export function convertEndpoint({
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
+        additionalTypeDeclarations = {
+            ...additionalTypeDeclarations,
+            ...convertedRequest.additionalTypeDeclarations,
+        };
     } else if (Object.keys(queryParameters).length > 0) {
         convertedEndpoint.request = {
             name: endpoint.requestNameOverride ?? endpoint.generatedRequestName,
@@ -105,12 +110,14 @@ export function convertEndpoint({
     return {
         value: convertedEndpoint,
         schemaIdsToExclude,
+        additionalTypeDeclarations,
     };
 }
 
 interface ConvertedRequest {
     value: RawSchemas.HttpRequestSchema;
     schemaIdsToExclude?: string[];
+    additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
 function getRequest({
@@ -128,6 +135,7 @@ function getRequest({
     generatedRequestName: string;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
 }): ConvertedRequest {
+    let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     if (request.type === "json") {
         if (request.schema.type !== "reference") {
             throw Error("Only request references are currently supported");
@@ -150,6 +158,10 @@ function getRequest({
                             ? requestTypeReference
                             : requestTypeReference.typeReference,
                 },
+                additionalTypeDeclarations: {
+                    ...additionalTypeDeclarations,
+                    ...requestTypeReference.additionalTypeDeclarations,
+                },
             };
 
             if (Object.keys(queryParameters ?? {}).length > 0) {
@@ -159,49 +171,61 @@ function getRequest({
 
             return convertedRequest;
         }
+        const properties = Object.fromEntries(
+            schema.properties.map((property) => {
+                const propertyTypeReference = convertToTypeReference({
+                    schema: property.schema,
+                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                    schemas,
+                });
+                additionalTypeDeclarations = {
+                    ...additionalTypeDeclarations,
+                    ...propertyTypeReference.additionalTypeDeclarations,
+                };
+                return [property.key, propertyTypeReference.typeReference];
+            })
+        );
         return {
             schemaIdsToExclude: [request.schema.schema],
             value: {
                 name: requestNameOverride ?? schema.nameOverride ?? schema.generatedName,
                 "query-parameters": queryParameters,
                 body: {
-                    properties: Object.fromEntries(
-                        schema.properties.map((property) => {
-                            const propertyTypeReference = convertToTypeReference({
-                                schema: property.schema,
-                                prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                                schemas,
-                            });
-                            return [property.key, propertyTypeReference.typeReference];
-                        })
-                    ),
+                    properties,
                 },
             },
+            additionalTypeDeclarations,
         };
     } else {
         // multipart
+        const properties = Object.fromEntries(
+            request.properties.map((property) => {
+                if (property.schema.type === "file") {
+                    return [property.key, "file"];
+                } else {
+                    const propertyTypeReference = convertToTypeReference({
+                        schema: property.schema.json,
+                        prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                        schemas,
+                    });
+                    additionalTypeDeclarations = {
+                        ...additionalTypeDeclarations,
+                        ...propertyTypeReference.additionalTypeDeclarations,
+                    };
+                    return [property.key, propertyTypeReference.typeReference];
+                }
+            })
+        );
         return {
             schemaIdsToExclude: request.name == null ? [] : [request.name],
             value: {
                 name: requestNameOverride ?? request.name ?? generatedRequestName,
                 "query-parameters": queryParameters,
                 body: {
-                    properties: Object.fromEntries(
-                        request.properties.map((property) => {
-                            if (property.schema.type === "file") {
-                                return [property.key, "file"];
-                            } else {
-                                const propertyTypeReference = convertToTypeReference({
-                                    schema: property.schema.json,
-                                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                                    schemas,
-                                });
-                                return [property.key, propertyTypeReference.typeReference];
-                            }
-                        })
-                    ),
+                    properties,
                 },
             },
+            additionalTypeDeclarations,
         };
     }
 }
