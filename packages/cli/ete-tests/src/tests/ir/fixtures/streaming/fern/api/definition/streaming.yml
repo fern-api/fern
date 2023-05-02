@@ -5,8 +5,7 @@ service:
     streaming:
       path: /streaming
       method: POST
-      response-stream:
-        data: string
+      response-stream: string
     maybeStreaming:
       path: /maybe-streaming
       method: POST
@@ -18,5 +17,5 @@ service:
       stream-condition: $request.stream
       response: boolean
       response-stream:
-        data: string
+        type: string
         terminator: "[DONE]"
