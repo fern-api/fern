@@ -66,7 +66,7 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
     }
 
     if (environment?.type === "single") {
-        rootApiFile["default-environment"] = Object.keys(environment)[0] ?? null;
+        rootApiFile["default-environment"] = Object.keys(environment.environmentToUrl)[0] ?? null;
         rootApiFile.environments = environment.environmentToUrl;
     }
 

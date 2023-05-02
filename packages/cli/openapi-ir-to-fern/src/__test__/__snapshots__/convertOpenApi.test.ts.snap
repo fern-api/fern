@@ -4946,7 +4946,7 @@ won't receive any object events until successfully verified.
         "type": "string",
       },
     },
-    "default-environment": "type",
+    "default-environment": "default",
     "display-name": "DevRev REST API",
     "environments": {
       "default": "{protocol}://{hostname}",
@@ -12731,7 +12731,7 @@ the same customer, dimension, and time, but a different quantity.",
         "type": "string",
       },
     },
-    "default-environment": "type",
+    "default-environment": "default",
     "display-name": "Suger API",
     "environments": {
       "default": "https://api.suger.cloud",
