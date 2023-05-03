@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Set
+from typing import List, Optional, Set
 
 from fern_python.codegen.ast.dependency.dependency import Dependency
 from fern_python.codegen.dependency_manager import DependencyManager
@@ -20,7 +20,7 @@ class PyProjectToml:
         self,
         *,
         name: str,
-        version: str,
+        version: Optional[str],
         package: PyProjectTomlPackageConfig,
         path: str,
         dependency_manager: DependencyManager,
@@ -54,14 +54,15 @@ class PyProjectToml:
     @dataclass(frozen=True)
     class PoetryBlock(Block):
         name: str
-        version: str
+        version: Optional[str]
         package: PyProjectTomlPackageConfig
 
         def to_string(self) -> str:
-            return f"""
-[tool.poetry]
-name = "{self.name}"
-version = "{self.version}"
+            s = f'''[tool.poetry]
+name = "{self.name}"'''
+            if self.version is not None:
+                s += "\n" + f'version = "{self.version}"'
+            s += f"""
 description = ""
 readme = "README.md"
 authors = []
@@ -69,6 +70,7 @@ packages = [
     {{ include = "{self.package.include}", from = "{self.package._from}"}}
 ]
 """
+            return s
 
     @dataclass(frozen=True)
     class DependenciesBlock(Block):

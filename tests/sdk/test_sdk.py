@@ -81,6 +81,22 @@ def test_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     )
 
 
+def test_github_no_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="imdb-github-no-publish",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        output_mode=config.OutputMode.factory.github(
+            config.GithubOutputMode(
+                repo_url="some-repo-url",
+                version="1.0.0",
+            ),
+        ),
+    )
+
+
 def test_github_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(
         snapshot=snapshot,

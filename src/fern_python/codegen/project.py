@@ -17,7 +17,7 @@ from .writer_impl import WriterImpl
 
 
 @dataclass(frozen=True)
-class PublishConfig:
+class ProjectConfig:
     package_name: str
     package_version: str
 
@@ -34,20 +34,18 @@ class Project:
         filepath: str,
         relative_path_to_project: str,
         python_version: str = "3.7",
-        publish_config: PublishConfig = None,
-        generate_py_typed: bool = False,
+        project_config: ProjectConfig = None,
         should_format_files: bool,
     ) -> None:
         self._project_filepath = (
-            filepath if publish_config is None else os.path.join(filepath, "src", relative_path_to_project)
+            filepath if project_config is None else os.path.join(filepath, "src", relative_path_to_project)
         )
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
-        self._publish_config = publish_config
+        self._project_config = project_config
         self._module_manager = ModuleManager(should_format=should_format_files)
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
-        self._generate_py_typed = generate_py_typed
         self._should_format_files = should_format_files
 
     def source_file(self, filepath: Filepath) -> SourceFile:
@@ -97,11 +95,11 @@ class Project:
 
     def finish(self) -> None:
         self._module_manager.write_modules(filepath=self._project_filepath)
-        if self._publish_config is not None:
+        if self._project_config is not None:
             # generate pyproject.toml
             py_project_toml = PyProjectToml(
-                name=self._publish_config.package_name,
-                version=self._publish_config.package_version,
+                name=self._project_config.package_name,
+                version=self._project_config.package_version,
                 package=PyProjectTomlPackageConfig(include=self._relative_path_to_project, _from="src"),
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,

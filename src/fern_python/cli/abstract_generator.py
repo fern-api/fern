@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from abc import ABC, abstractmethod
-from typing import Optional, Tuple
+from typing import Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -11,7 +11,7 @@ from fern.generator_exec.resources.config import (
     GithubOutputMode,
 )
 
-from fern_python.codegen.project import Project, PublishConfig
+from fern_python.codegen.project import Project, ProjectConfig
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 from .publisher import Publisher
@@ -27,12 +27,12 @@ class AbstractGenerator(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
     ) -> None:
-        project_publish_config = generator_config.output.mode.visit(
+        project_config = generator_config.output.mode.visit(
             download_files=lambda: None,
-            publish=lambda publish: PublishConfig(
+            publish=lambda publish: ProjectConfig(
                 package_name=publish.registries_v_2.pypi.package_name, package_version=publish.version
             ),
-            github=self._get_github_publish_config,
+            github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
         with Project(
             filepath=generator_config.output.path,
@@ -42,9 +42,9 @@ class AbstractGenerator(ABC):
                     ir=ir,
                 )
             )
-            if project_publish_config is not None
+            if project_config is not None
             else generator_config.organization,
-            publish_config=project_publish_config,
+            project_config=project_config,
             should_format_files=self.should_format_files(generator_config=generator_config),
         ) as project:
             self.run(
@@ -69,13 +69,20 @@ class AbstractGenerator(ABC):
             ),
         )
 
-    def _get_github_publish_config(self, output_mode: GithubOutputMode) -> Optional[PublishConfig]:
+    def _get_github_publish_config(
+        self, generator_config: GeneratorConfig, output_mode: GithubOutputMode
+    ) -> ProjectConfig:
+        # when publishing to github, we always need a project config, so that
+        # we generate a pyproject.toml
         if output_mode.publish_info is None:
-            return None
+            return ProjectConfig(
+                package_name=generator_config.organization,
+                package_version="0.0.0",
+            )
         publish_info_union = output_mode.publish_info.get_as_union()
         if publish_info_union.type != "pypi":
             raise RuntimeError("Github publishi info is not pypi")
-        return PublishConfig(
+        return ProjectConfig(
             package_name=publish_info_union.package_name,
             package_version=output_mode.version,
         )
