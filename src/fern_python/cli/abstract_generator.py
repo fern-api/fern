@@ -132,12 +132,17 @@ jobs:
         run: poetry install
       - name: Compile
         run: poetry run mypy .
+"""
+        if output_mode.publish_info is not None:
+            publish_info_union = output_mode.publish_info.get_as_union()
+            if publish_info_union.type != "pypi":
+                raise RuntimeError("Publish info is for " + publish_info_union.type)
 
+            workflow_yaml += f"""
   publish:
     needs: [ compile ]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -149,22 +154,15 @@ jobs:
         run: |
           curl -sSL https://install.python-poetry.org | python - -y
       - name: Install dependencies
-        run: poetry install"""
-
-        if output_mode.publish_info is not None:
-            publish_info_union = output_mode.publish_info.get_as_union()
-            if publish_info_union.type != "pypi":
-                raise RuntimeError("Publish info is for " + publish_info_union.type)
-
-            workflow_yaml += f"""
+        run: poetry install
       - name: Publish to pypi
         run: |
           poetry config repositories.{AbstractGenerator._REMOTE_PYPI_REPO_NAME} {publish_info_union.registry_url}
           poetry --no-interaction -v publish --build --repository {AbstractGenerator._REMOTE_PYPI_REPO_NAME} --username "${publish_info_union.username_environment_variable}" --password "${publish_info_union.password_environment_variable}"
         env:
           {publish_info_union.username_environment_variable}: ${{{{ secrets.{publish_info_union.username_environment_variable} }}}}
-          {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}"""
-
+          {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
+"""
         return workflow_yaml
 
     @abstractmethod
