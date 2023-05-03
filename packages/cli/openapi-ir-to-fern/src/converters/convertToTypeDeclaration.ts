@@ -143,6 +143,7 @@ export function convertReferenceToTypeDeclaration({
 }): TypeDeclarations {
     const referenceTypeReference = convertReferenceToTypeReference({ schema, schemas });
     return {
+        name: schema.nameOverride ?? schema.generatedName,
         typeDeclaration: referenceTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...referenceTypeReference.additionalTypeDeclarations,

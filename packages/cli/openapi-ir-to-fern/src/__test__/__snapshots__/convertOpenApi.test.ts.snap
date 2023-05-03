@@ -901,6 +901,10 @@ exports[`open api converter devrev simple 1`] = `
     "__package__.yml": {
       "service": undefined,
       "types": {
+        "ArtifactSummary": {
+          "docs": undefined,
+          "type": "AtomBaseSummary",
+        },
         "ArtifactsLocateResponse": {
           "docs": "The response to getting an artifact's download URL.",
           "properties": {
@@ -1406,6 +1410,14 @@ issue a Rev session token.
             },
           },
         },
+        "Capability": {
+          "docs": undefined,
+          "type": "PartBase",
+        },
+        "CapabilitySummary": {
+          "docs": undefined,
+          "type": "PartBaseSummary",
+        },
         "DevOrgAuthConnectionsCreateRequest": {
           "base-properties": {},
           "docs": "Request to create a new enterprise authentication connection.
@@ -1563,6 +1575,10 @@ connection.
             },
           },
         },
+        "DevUserSummary": {
+          "docs": undefined,
+          "type": "UserBaseSummary",
+        },
         "DevUsersListResponse": {
           "docs": "The response to listing the Dev users.",
           "properties": {
@@ -1602,6 +1618,10 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<string>",
             },
           },
+        },
+        "EnhancementSummary": {
+          "docs": undefined,
+          "type": "PartBaseSummary",
         },
         "ErrorBadRequest": {
           "docs": undefined,
@@ -1966,6 +1986,18 @@ inquiry.
             },
           },
         },
+        "Feature": {
+          "docs": undefined,
+          "type": "PartBase",
+        },
+        "FeatureSummary": {
+          "docs": undefined,
+          "type": "PartBaseSummary",
+        },
+        "GroupSummary": {
+          "docs": undefined,
+          "type": "AtomBaseSummary",
+        },
         "Issue": {
           "docs": undefined,
           "properties": {
@@ -2317,6 +2349,14 @@ empty.
             },
           },
         },
+        "Product": {
+          "docs": undefined,
+          "type": "PartBase",
+        },
+        "ProductSummary": {
+          "docs": undefined,
+          "type": "PartBaseSummary",
+        },
         "RevOrg": {
           "docs": undefined,
           "properties": {
@@ -2337,6 +2377,10 @@ organization.
               "type": "optional<string>",
             },
           },
+        },
+        "RevOrgSummary": {
+          "docs": undefined,
+          "type": "OrgBaseSummary",
         },
         "RevOrgsCreateResponse": {
           "docs": "Response object for request to create a new Rev organization.
@@ -2448,6 +2492,10 @@ the value must be one that's specified in the tag's allowed values.
               "type": "optional<string>",
             },
           },
+        },
+        "SysUserSummary": {
+          "docs": undefined,
+          "type": "UserBaseSummary",
         },
         "Tag": {
           "docs": undefined,
@@ -2789,6 +2837,10 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
               "type": "TimelineComment",
             },
           },
+        },
+        "TimelineEntryBase": {
+          "docs": undefined,
+          "type": "AtomBase",
         },
         "TimelineEntryType": {
           "docs": undefined,
@@ -3499,33 +3551,13 @@ empty.
             },
           },
         },
-        "artifact-summary": {
-          "docs": undefined,
-          "type": "AtomBaseSummary",
-        },
         "auth-connection-options-social": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "capability": {
-          "docs": undefined,
-          "type": "PartBase",
-        },
-        "capability-summary": {
-          "docs": undefined,
-          "type": "PartBaseSummary",
-        },
-        "dev-user-summary": {
-          "docs": undefined,
-          "type": "UserBaseSummary",
-        },
         "empty": {
           "docs": undefined,
           "type": "map<string, unknown>",
-        },
-        "enhancement-summary": {
-          "docs": undefined,
-          "type": "PartBaseSummary",
         },
         "error-bad-request-bad-request": {
           "docs": undefined,
@@ -3563,18 +3595,6 @@ empty.
           "docs": "External identity of a user.",
           "type": "map<string, unknown>",
         },
-        "feature": {
-          "docs": undefined,
-          "type": "PartBase",
-        },
-        "feature-summary": {
-          "docs": undefined,
-          "type": "PartBaseSummary",
-        },
-        "group-summary": {
-          "docs": undefined,
-          "type": "AtomBaseSummary",
-        },
         "parts-create-request-product": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -3595,33 +3615,13 @@ empty.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
-        "product": {
-          "docs": undefined,
-          "type": "PartBase",
-        },
-        "product-summary": {
-          "docs": undefined,
-          "type": "PartBaseSummary",
-        },
-        "rev-org-summary": {
-          "docs": undefined,
-          "type": "OrgBaseSummary",
-        },
         "rev-orgs-delete-response": {
           "docs": "The response to deleting a Rev organization.",
           "type": "map<string, unknown>",
         },
-        "sys-user-summary": {
-          "docs": undefined,
-          "type": "UserBaseSummary",
-        },
         "tags-delete-response": {
           "docs": "The response for deleting a tag.",
           "type": "map<string, unknown>",
-        },
-        "timeline-entry-base": {
-          "docs": undefined,
-          "type": "AtomBase",
         },
         "webhooks-delete-response": {
           "docs": "The response to deleting the webhook.",
@@ -5413,7 +5413,7 @@ exports[`open api converter hathora simple 1`] = `
           "docs": undefined,
           "type": "RecordPartialMetricNameMetricValueArray",
         },
-        "Omit_Room.allocations_": {
+        "OmitRoomAllocations": {
           "docs": undefined,
           "type": "PickRoomExcludeKeyofRoomAllocations",
         },
