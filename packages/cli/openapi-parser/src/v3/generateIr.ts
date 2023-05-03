@@ -33,7 +33,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 convertSecurityScheme(securityScheme),
             ])
         ),
-        nonRequestReferencedSchemas: Array.from(context.getNonRequestReferencedSchemas()),
+        nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         dependencies: [],
     };
 }

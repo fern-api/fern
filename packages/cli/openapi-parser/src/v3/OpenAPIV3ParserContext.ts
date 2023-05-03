@@ -9,12 +9,14 @@ export class OpenAPIV3ParserContext {
     public logger: Logger;
 
     private document: OpenAPIV3.Document;
-    private referencedSchemas: Set<SchemaId>;
+    private nonRequestReferencedSchemas: Set<SchemaId> = new Set();
+
+    private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
+    private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
 
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
         this.document = document;
         this.logger = taskContext.logger;
-        this.referencedSchemas = new Set();
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -36,11 +38,19 @@ export class OpenAPIV3ParserContext {
         return resolvedSchema;
     }
 
-    public markSchemaAsReferenced(schemaId: SchemaId): void {
-        this.referencedSchemas.add(schemaId);
+    public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {
+        this.nonRequestReferencedSchemas.add(schemaId);
     }
 
-    public getNonRequestReferencedSchemas(): Set<SchemaId> {
-        return this.referencedSchemas;
+    public markSchemaAsReferencedByRequest(schemaId: SchemaId): void {
+        if (this.singleRequestReferencedSchemas.has(schemaId)) {
+            this.twoOrMoreRequestsReferencedSchemas.add(schemaId);
+        } else {
+            this.singleRequestReferencedSchemas.add(schemaId);
+        }
+    }
+
+    public getReferencedSchemas(): Set<SchemaId> {
+        return new Set([...this.nonRequestReferencedSchemas, ...this.twoOrMoreRequestsReferencedSchemas]);
     }
 }
