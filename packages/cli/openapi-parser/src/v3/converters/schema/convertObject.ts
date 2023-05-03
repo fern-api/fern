@@ -2,7 +2,7 @@ import { ObjectProperty, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
-import { convertSchema, convertToReferencedSchema } from "../convertSchemas";
+import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "../convertSchemas";
 
 export function convertObject({
     nameOverride,
@@ -29,7 +29,7 @@ export function convertObject({
     const referencedAllOf: ReferencedSchema[] = [];
     for (const allOfElement of allOf) {
         if (isReferenceObject(allOfElement)) {
-            referencedAllOf.push(convertToReferencedSchema(allOfElement));
+            referencedAllOf.push(convertToReferencedSchema(allOfElement, [getSchemaIdFromReference(allOfElement)]));
         } else {
             if (allOfElement.properties != null) {
                 propertiesToConvert = { ...allOfElement.properties, ...propertiesToConvert };

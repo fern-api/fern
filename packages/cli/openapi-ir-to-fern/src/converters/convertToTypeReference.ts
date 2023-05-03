@@ -261,6 +261,8 @@ function getSchemaName(schema: Schema) {
         return schema.nameOverride ?? schema.generatedName;
     } else if (schema.type === "oneOf") {
         return schema.oneOf.nameOverride ?? schema.oneOf.generatedName;
+    } else if (schema.type === "reference") {
+        return schema.nameOverride ?? schema.generatedName;
     }
     return undefined;
 }

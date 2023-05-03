@@ -31,7 +31,8 @@ export function convertDiscriminatedOneOf({
                 {
                     $ref: schema,
                 },
-                false
+                false,
+                [schema]
             );
             return [discriminantValue, subtypeReference];
         })

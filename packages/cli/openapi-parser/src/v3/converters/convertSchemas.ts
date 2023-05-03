@@ -24,14 +24,18 @@ export function convertSchema(
         if (!referencedAsRequest) {
             context.markSchemaAsReferenced(getSchemaIdFromReference(schema));
         }
-        return convertReferenceObject(schema, wrapAsOptional);
+        return convertReferenceObject(schema, wrapAsOptional, breadcrumbs);
     } else {
         return convertSchemaObject(schema, wrapAsOptional, context, breadcrumbs);
     }
 }
 
-export function convertReferenceObject(schema: OpenAPIV3.ReferenceObject, wrapAsOptional: boolean): Schema {
-    const referenceSchema = Schema.reference(convertToReferencedSchema(schema));
+export function convertReferenceObject(
+    schema: OpenAPIV3.ReferenceObject,
+    wrapAsOptional: boolean,
+    breadcrumbs: string[]
+): Schema {
+    const referenceSchema = Schema.reference(convertToReferencedSchema(schema, breadcrumbs));
     if (wrapAsOptional) {
         return Schema.optional({
             value: referenceSchema,
@@ -197,9 +201,14 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
     return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
 }
 
-export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject): ReferencedSchema {
+export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, breadcrumbs: string[]): ReferencedSchema {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const nameOverride = (schema as any)["x-fern-type-name"] as string | undefined;
+    const generatedName = getGeneratedTypeName(breadcrumbs);
     return Schema.reference({
         // TODO(dsinghvi): references may contain files
+        generatedName,
+        nameOverride,
         file: undefined,
         schema: getSchemaIdFromReference(schema),
         description: undefined,
@@ -225,16 +234,13 @@ function isListOfStrings(x: unknown): x is string[] {
 function maybeInjectDescription(schema: Schema, description: string | undefined): Schema {
     if (schema.type === "reference") {
         return Schema.reference({
-            file: schema.file,
-            schema: schema.schema,
+            ...schema,
             description,
         });
     } else if (schema.type === "optional" && schema.value.type === "reference") {
         return Schema.optional({
             value: Schema.reference({
-                file: schema.value.file,
-                schema: schema.value.schema,
-                description: undefined,
+                ...schema.value,
             }),
             description,
         });
