@@ -38,7 +38,7 @@ export function convert({
                     rootApiFile = convertedPackage.rootApiFile;
                 }
                 const prefixedDefinitionFiles = Object.fromEntries(
-                    Object.entries(convertedPackage.definitionFiles).map((filepath, definitionFile) => {
+                    Object.entries(convertedPackage.definitionFiles).map(([filepath, definitionFile]) => {
                         return [`${subPackage.name}/${filepath}`, definitionFile];
                     })
                 );

@@ -1,6 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { Endpoint } from "@fern-fern/openapi-ir-model/ir";
-import { camelCase } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -14,7 +15,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     // if tag is null and operation is defined, add to __package__.yml
     if (tag == null) {
         return {
-            file: RelativeFilePath.of("__package__.yml"),
+            file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
             endpointId: operationId,
         };
     }
@@ -24,18 +25,18 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const operationIdTokens = operationId.split(/[^a-zA-Z0-9]+/);
 
     // add to __package__.yml if equal
-    if (JSON.stringify(tagTokens) === JSON.stringify(operationIdTokens)) {
+    if (isEqual(tagTokens, operationIdTokens)) {
         return {
             file: RelativeFilePath.of("__package__.yml"),
             endpointId: tag,
         };
     }
 
-    const file: string[] = [];
+    const fileParts: string[] = [];
     for (let i = 0; i < tagTokens.length; ++i) {
         const tagElement = tagTokens[i];
         if (tagElement != null && tagElement === operationIdTokens[i]) {
-            file.push(tagElement);
+            fileParts.push(tagElement);
         } else {
             // tag and operation id don't overlap, so just return operation id
             const camelCasedTag = camelCase(tag);
@@ -46,12 +47,12 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         }
     }
 
-    if (file.length >= operationIdTokens.length) {
+    if (fileParts.length >= operationIdTokens.length) {
         throw new Error(`Cannot get file for endpoint ${JSON.stringify(endpoint)}`);
     }
 
     return {
-        file: RelativeFilePath.of(file.join("_")),
-        endpointId: operationIdTokens.slice(file.length).join("_"),
+        file: RelativeFilePath.of(fileParts.join("_") + ".yml"),
+        endpointId: operationIdTokens.slice(fileParts.length).join("_"),
     };
 }

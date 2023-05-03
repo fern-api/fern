@@ -1,12 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
 import { Environment, getEnvironments } from "./getEnvironment";
-
-export const PACKAGE_YML = RelativeFilePath.of("__package__.yml");
 
 export const ROOT_PREFIX = "root";
 
@@ -28,13 +27,13 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
                     file,
                     {
                         imports: {
-                            [ROOT_PREFIX]: PACKAGE_YML.toString(),
+                            [ROOT_PREFIX]: FERN_PACKAGE_MARKER_FILENAME,
                         },
                         service,
                     },
                 ])
             ),
-            [PACKAGE_YML]: getPackageYml(openApiFile, convertedServices),
+            [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices),
         },
     };
 }
@@ -88,6 +87,6 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
     }
     return {
         types,
-        service: convertedServices.services[PACKAGE_YML],
+        service: convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)],
     };
 }

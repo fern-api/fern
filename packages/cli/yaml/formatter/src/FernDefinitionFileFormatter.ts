@@ -1,5 +1,4 @@
 import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import * as prettier from "prettier";
 
@@ -13,11 +12,9 @@ type FernFileCursorLocation = keyof RawSchemas.DefinitionFileSchema | "endpoint"
 export class FernDefinitionFileFormatter {
     private tabWidth: number | undefined;
     private fileContents: string;
-    private absoluteFilepath: AbsoluteFilePath;
     private formatted: string | undefined;
 
-    constructor({ absoluteFilepath, fileContents }: { absoluteFilepath: AbsoluteFilePath; fileContents: string }) {
-        this.absoluteFilepath = absoluteFilepath;
+    constructor({ fileContents }: { fileContents: string }) {
         this.fileContents = fileContents;
     }
 
@@ -64,7 +61,7 @@ export class FernDefinitionFileFormatter {
 
     private prettierFormat(content: string): string {
         return prettier.format(content, {
-            filepath: this.absoluteFilepath,
+            parser: "yaml",
         });
     }
 
