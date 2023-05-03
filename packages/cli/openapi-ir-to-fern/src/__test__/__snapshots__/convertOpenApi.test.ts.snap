@@ -68,19 +68,19 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "completion_time": {
               "docs": undefined,
-              "type": "integer",
+              "type": "optional<integer>",
             },
             "did_win": {
               "docs": undefined,
-              "type": "boolean",
+              "type": "optional<boolean>",
             },
             "hints": {
               "docs": undefined,
-              "type": "integer",
+              "type": "optional<integer>",
             },
             "score": {
               "docs": undefined,
-              "type": "integer",
+              "type": "optional<integer>",
             },
           },
         },
@@ -101,7 +101,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "value": {
               "docs": undefined,
-              "type": "map<string, unknown>",
+              "type": "optional<map<string, unknown>>",
             },
           },
         },
@@ -229,19 +229,19 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "completion_time": {
               "docs": undefined,
-              "type": "integer",
+              "type": "optional<integer>",
             },
             "did_win": {
               "docs": undefined,
-              "type": "boolean",
+              "type": "optional<boolean>",
             },
             "hints": {
               "docs": undefined,
-              "type": "integer",
+              "type": "optional<integer>",
             },
             "score": {
               "docs": undefined,
-              "type": "integer",
+              "type": "optional<integer>",
             },
           },
         },
@@ -262,7 +262,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "value": {
               "docs": undefined,
-              "type": "map<string, unknown>",
+              "type": "optional<map<string, unknown>>",
             },
           },
         },
@@ -349,7 +349,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "value": {
               "docs": undefined,
-              "type": "map<string, unknown>",
+              "type": "optional<map<string, unknown>>",
             },
           },
         },
@@ -587,7 +587,7 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "value": {
               "docs": undefined,
-              "type": "map<string, unknown>",
+              "type": "optional<map<string, unknown>>",
             },
           },
         },
@@ -5071,11 +5071,11 @@ exports[`open api converter hathora simple 1`] = `
             },
             "deletedAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "deletedBy": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "orgId": {
               "docs": undefined,
@@ -5139,11 +5139,11 @@ exports[`open api converter hathora simple 1`] = `
             },
             "deletedAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "finishedAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "imageSize": {
               "docs": undefined,
@@ -5155,7 +5155,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "startedAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "status": {
               "docs": undefined,
@@ -5443,7 +5443,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "currentAllocation": {
               "docs": undefined,
-              "type": "RoomAllocation",
+              "type": "optional<RoomAllocation>",
             },
             "roomId": {
               "docs": undefined,
@@ -5505,7 +5505,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "idleSince": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "port": {
               "docs": undefined,
@@ -5529,7 +5529,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "startedAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "startingAt": {
               "docs": undefined,
@@ -5537,11 +5537,11 @@ exports[`open api converter hathora simple 1`] = `
             },
             "stoppingAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
             "terminatedAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
           },
         },
@@ -5645,7 +5645,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "currentAllocation": {
               "docs": undefined,
-              "type": "RoomAllocation",
+              "type": "optional<RoomAllocation>",
             },
             "roomId": {
               "docs": undefined,
@@ -5674,7 +5674,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "unscheduledAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "optional<string>",
             },
           },
         },
@@ -14959,7 +14959,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "stop": {
               "docs": undefined,
-              "type": "list<string>",
+              "type": "optional<list<string>>",
             },
             "temperature": {
               "docs": undefined,
@@ -15060,7 +15060,7 @@ exports[`open api converter vellum simple 1`] = `
           "properties": {
             "logprob": {
               "docs": undefined,
-              "type": "double",
+              "type": "optional<double>",
             },
             "text_offset": {
               "docs": undefined,
@@ -15072,7 +15072,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "top_logprobs": {
               "docs": undefined,
-              "type": "map<string, double>",
+              "type": "optional<map<string, optional<double>>>",
             },
           },
         },
@@ -15376,16 +15376,16 @@ exports[`open api converter vellum simple 1`] = `
                 "properties": {
                   "add_to_index_names": {
                     "docs": "Optionally include the names of all indexes that you'd like this document to be included in",
-                    "type": "list<string>",
+                    "type": "optional<list<string>>",
                   },
                   "contents": "file",
                   "external_id": {
                     "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
-                    "type": "string",
+                    "type": "optional<string>",
                   },
                   "keywords": {
                     "docs": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
-                    "type": "list<string>",
+                    "type": "optional<list<string>>",
                   },
                   "label": {
                     "docs": "A human-friendly name for this document. Typically the filename.",

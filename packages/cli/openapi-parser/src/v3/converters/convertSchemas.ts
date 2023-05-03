@@ -50,7 +50,7 @@ export function convertReferenceObject(
 
 function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
-    wrapAsOptional: boolean,
+    wrapAsOptionalParam: boolean,
     context: OpenAPIV3ParserContext,
     breadcrumbs: string[]
 ): Schema {
@@ -58,6 +58,9 @@ function convertSchemaObject(
     const nameOverride = (schema as any)["x-fern-type-name"] as string | undefined;
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
+
+    // nullable parameters should be optional
+    const wrapAsOptional = wrapAsOptionalParam || schema.nullable === true;
 
     // enums
     if (schema.enum != null) {
