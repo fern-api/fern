@@ -4999,6 +4999,19 @@ exports[`open api converter hathora simple 1`] = `
             },
           ],
         },
+        "AppConfig": {
+          "docs": undefined,
+          "properties": {
+            "appName": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "authConfiguration": {
+              "docs": undefined,
+              "type": "AppConfigAuthConfiguration",
+            },
+          },
+        },
         "AppConfigAuthConfiguration": {
           "docs": undefined,
           "properties": {
@@ -5756,19 +5769,9 @@ exports[`open api converter hathora simple 1`] = `
             "path": "/apps/v1/create",
             "request": {
               "body": {
-                "properties": {
-                  "appName": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "authConfiguration": {
-                    "docs": undefined,
-                    "type": "root.AppConfigAuthConfiguration",
-                  },
-                },
+                "docs": undefined,
+                "type": "root.AppConfig",
               },
-              "name": "AppConfig",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "",
@@ -5818,19 +5821,9 @@ exports[`open api converter hathora simple 1`] = `
             },
             "request": {
               "body": {
-                "properties": {
-                  "appName": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "authConfiguration": {
-                    "docs": undefined,
-                    "type": "root.AppConfigAuthConfiguration",
-                  },
-                },
+                "docs": undefined,
+                "type": "root.AppConfig",
               },
-              "name": "AppConfig",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Ok",

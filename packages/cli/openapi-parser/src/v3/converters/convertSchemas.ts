@@ -22,7 +22,9 @@ export function convertSchema(
 ): Schema {
     if (isReferenceObject(schema)) {
         if (!referencedAsRequest) {
-            context.markSchemaAsReferenced(getSchemaIdFromReference(schema));
+            context.markSchemaAsReferencedByNonRequest(getSchemaIdFromReference(schema));
+        } else {
+            context.markSchemaAsReferencedByRequest(getSchemaIdFromReference(schema));
         }
         return convertReferenceObject(schema, wrapAsOptional, breadcrumbs);
     } else {
