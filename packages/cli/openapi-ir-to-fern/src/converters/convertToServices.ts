@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
-import { PACKAGE_YML } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
@@ -29,7 +29,7 @@ export function convertToServices(openApiFile: OpenAPIFile, environment: Environ
             }
             const convertedEndpoint = convertEndpoint({
                 endpoint,
-                isPackageYml: file === PACKAGE_YML,
+                isPackageYml: file === FERN_PACKAGE_MARKER_FILENAME,
                 schemas,
                 environment,
                 nonRequestReferencedSchemas,

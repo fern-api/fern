@@ -24,7 +24,6 @@ describe("formatDefinitionFile", () => {
 async function formatForTest(fixturePath: RelativeFilePath): Promise<string> {
     const absoluteFilepath = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"), fixturePath);
     return formatDefinitionFile({
-        absoluteFilepath,
         fileContents: (await readFile(absoluteFilepath)).toString(),
     });
 }

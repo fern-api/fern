@@ -1,7 +1,6 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { Project } from "@fern-api/project-loader";
-import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import { mkdir, writeFile } from "fs/promises";
@@ -22,14 +21,14 @@ export async function writeDefinitionForWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type === "openapi") {
                     const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
-                    await writeDefinitionForWorkspace(fernWorkspace, context);
+                    await writeDefinitionForWorkspace(fernWorkspace);
                 }
             });
         })
     );
 }
 
-async function writeDefinitionForWorkspace(workspace: FernWorkspace, taskContext: TaskContext) {
+async function writeDefinitionForWorkspace(workspace: FernWorkspace) {
     const directoryOfDefinition = join(workspace.absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await mkdir(directoryOfDefinition);
     await writeFile(
@@ -39,14 +38,9 @@ async function writeDefinitionForWorkspace(workspace: FernWorkspace, taskContext
     for (const [relativePath, definitionFile] of entries(workspace.definition.namedDefinitionFiles)) {
         const absoluteFilepath = join(directoryOfDefinition, RelativeFilePath.of(relativePath));
         let fileContents = yaml.dump(definitionFile.contents);
-        try {
-            fileContents = formatDefinitionFile({
-                fileContents: yaml.dump(definitionFile.contents),
-                absoluteFilepath,
-            });
-        } catch (err) {
-            taskContext.logger.debug(`Failed to format ${relativePath}: ${JSON.stringify(err)}`);
-        }
+        fileContents = formatDefinitionFile({
+            fileContents: yaml.dump(definitionFile.contents),
+        });
         await writeFile(absoluteFilepath, fileContents);
     }
 }

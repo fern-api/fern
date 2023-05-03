@@ -5,6 +5,7 @@
   "exclude": ["./src/**/__test__/**/generated"],
   "references": [
     { "path": "../../commons/fs-utils" },
+    { "path": "../config-management/project-configuration" },
     { "path": "../logger" },
     { "path": "../openapi-parser" },
     { "path": "../task-context" },
