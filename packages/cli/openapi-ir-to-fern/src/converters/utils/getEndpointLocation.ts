@@ -52,7 +52,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     }
 
     return {
-        file: RelativeFilePath.of(fileParts.join("_") + ".yml"),
-        endpointId: operationIdTokens.slice(fileParts.length).join("_"),
+        file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
+        endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
     };
 }

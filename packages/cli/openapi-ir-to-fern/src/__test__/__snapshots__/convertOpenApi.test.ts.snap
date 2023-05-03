@@ -3633,7 +3633,7 @@ empty.
         },
       },
     },
-    "artifacts": {
+    "artifacts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -3786,7 +3786,7 @@ organization.
         },
       },
     },
-    "auth_tokens": {
+    "authTokens.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -3925,7 +3925,7 @@ JTI claim of the token in the authorization header.
               "type": "root.AuthTokensListResponse",
             },
           },
-          "self_delete": {
+          "selfDelete": {
             "method": "POST",
             "path": "/auth-tokens.self.delete",
             "request": {
@@ -3969,7 +3969,7 @@ JTI claim of the token in the authorization header.
         },
       },
     },
-    "dev_users": {
+    "devUsers.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4031,7 +4031,7 @@ JTI claim of the token in the authorization header.
         },
       },
     },
-    "parts": {
+    "parts.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4156,7 +4156,7 @@ JTI claim of the token in the authorization header.
         },
       },
     },
-    "rev_orgs": {
+    "revOrgs.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4358,7 +4358,7 @@ records.
         },
       },
     },
-    "tags": {
+    "tags.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4500,7 +4500,7 @@ tags.
         },
       },
     },
-    "timeline_entries": {
+    "timelineEntries.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4590,7 +4590,7 @@ tags.
         },
       },
     },
-    "webhooks": {
+    "webhooks.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -4723,7 +4723,7 @@ won't receive any object events until successfully verified.
         },
       },
     },
-    "works": {
+    "works.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -15326,7 +15326,7 @@ exports[`open api converter vellum simple 1`] = `
         },
       },
     },
-    "documents": {
+    "documents.yml": {
       "imports": {
         "root": "__package__.yml",
       },
@@ -15405,7 +15405,7 @@ exports[`open api converter vellum simple 1`] = `
         },
       },
     },
-    "model_versions": {
+    "modelVersions.yml": {
       "imports": {
         "root": "__package__.yml",
       },
