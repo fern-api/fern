@@ -2056,7 +2056,7 @@ always be returned in the specified sort-by order.
           "union": {
             "rev_org": {
               "docs": undefined,
-              "type": "rev-org-summary",
+              "type": "RevOrgSummary",
             },
           },
         },
@@ -2075,7 +2075,7 @@ always be returned in the specified sort-by order.
           "union": {
             "capability": {
               "docs": undefined,
-              "type": "capability",
+              "type": "Capability",
             },
             "enhancement": {
               "docs": undefined,
@@ -2083,11 +2083,11 @@ always be returned in the specified sort-by order.
             },
             "feature": {
               "docs": undefined,
-              "type": "feature",
+              "type": "Feature",
             },
             "product": {
               "docs": undefined,
-              "type": "product",
+              "type": "Product",
             },
           },
         },
@@ -2096,7 +2096,7 @@ always be returned in the specified sort-by order.
           "properties": {
             "artifacts": {
               "docs": "The attached artifacts.",
-              "type": "optional<list<artifact-summary>>",
+              "type": "optional<list<ArtifactSummary>>",
             },
             "description": {
               "docs": "Description of the part.",
@@ -2131,19 +2131,19 @@ always be returned in the specified sort-by order.
           "union": {
             "capability": {
               "docs": undefined,
-              "type": "capability-summary",
+              "type": "CapabilitySummary",
             },
             "enhancement": {
               "docs": undefined,
-              "type": "enhancement-summary",
+              "type": "EnhancementSummary",
             },
             "feature": {
               "docs": undefined,
-              "type": "feature-summary",
+              "type": "FeatureSummary",
             },
             "product": {
               "docs": undefined,
-              "type": "product-summary",
+              "type": "ProductSummary",
             },
           },
         },
@@ -2561,7 +2561,7 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "group": {
               "docs": undefined,
-              "type": "optional<group-summary>",
+              "type": "optional<GroupSummary>",
             },
             "rev_org": {
               "docs": undefined,
@@ -2599,7 +2599,7 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "artifacts": {
               "docs": "The artifacts for the comment.",
-              "type": "optional<list<artifact-summary>>",
+              "type": "optional<list<ArtifactSummary>>",
             },
             "body": {
               "docs": "The comment's body. If the comment has been deleted, then no body
@@ -2821,7 +2821,7 @@ default visibility.
             },
             "display_picture": {
               "docs": undefined,
-              "type": "optional<artifact-summary>",
+              "type": "optional<ArtifactSummary>",
             },
             "email": {
               "docs": "Email address of the user.",
@@ -2851,7 +2851,7 @@ default visibility.
             },
             "display_picture": {
               "docs": undefined,
-              "type": "optional<artifact-summary>",
+              "type": "optional<ArtifactSummary>",
             },
             "email": {
               "docs": "Email address of the user.",
@@ -2898,7 +2898,7 @@ default visibility.
           "union": {
             "dev_user": {
               "docs": undefined,
-              "type": "dev-user-summary",
+              "type": "DevUserSummary",
             },
             "rev_user": {
               "docs": undefined,
@@ -2906,7 +2906,7 @@ default visibility.
             },
             "sys_user": {
               "docs": undefined,
-              "type": "sys-user-summary",
+              "type": "SysUserSummary",
             },
           },
         },
@@ -3265,7 +3265,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             "artifacts": {
               "docs": "The artifacts attached to the work item.",
-              "type": "optional<list<artifact-summary>>",
+              "type": "optional<list<ArtifactSummary>>",
             },
             "body": {
               "docs": "Body of the work object.",
@@ -4999,6 +4999,32 @@ exports[`open api converter hathora simple 1`] = `
             },
           ],
         },
+        "AppConfigAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+            "google": {
+              "docs": undefined,
+              "type": "optional<AppConfigAuthConfigurationGoogle>",
+            },
+            "nickname": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+          },
+        },
+        "AppConfigAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
         "AppId": {
           "docs": undefined,
           "type": "string",
@@ -5175,32 +5201,6 @@ exports[`open api converter hathora simple 1`] = `
               "type": "ActiveConnectionInfo",
             },
           ],
-        },
-        "CreateAppRequestAuthConfiguration": {
-          "docs": undefined,
-          "properties": {
-            "anonymous": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-            "google": {
-              "docs": undefined,
-              "type": "optional<CreateAppRequestAuthConfigurationGoogle>",
-            },
-            "nickname": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-          },
-        },
-        "CreateAppRequestAuthConfigurationGoogle": {
-          "docs": undefined,
-          "properties": {
-            "clientId": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
         },
         "CreateLobbyRequestVisibility": {
           "docs": undefined,
@@ -5696,7 +5696,7 @@ exports[`open api converter hathora simple 1`] = `
         },
         "RoomWithoutAllocations": {
           "docs": undefined,
-          "type": "Omit_Room.allocations_",
+          "type": "OmitRoomAllocations",
         },
         "StartingConnectionInfo": {
           "docs": undefined,
@@ -5720,6 +5720,10 @@ exports[`open api converter hathora simple 1`] = `
             },
           ],
         },
+        "TailLines": {
+          "docs": undefined,
+          "type": "integer",
+        },
         "TransportType": {
           "docs": undefined,
           "enum": [
@@ -5736,32 +5740,6 @@ exports[`open api converter hathora simple 1`] = `
               "value": "tls",
             },
           ],
-        },
-        "UpdateAppRequestAuthConfiguration": {
-          "docs": undefined,
-          "properties": {
-            "anonymous": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-            "google": {
-              "docs": undefined,
-              "type": "optional<UpdateAppRequestAuthConfigurationGoogle>",
-            },
-            "nickname": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-          },
-        },
-        "UpdateAppRequestAuthConfigurationGoogle": {
-          "docs": undefined,
-          "properties": {
-            "clientId": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
         },
       },
     },
@@ -5785,11 +5763,11 @@ exports[`open api converter hathora simple 1`] = `
                   },
                   "authConfiguration": {
                     "docs": undefined,
-                    "type": "root.CreateAppRequestAuthConfiguration",
+                    "type": "root.AppConfigAuthConfiguration",
                   },
                 },
               },
-              "name": "CreateAppRequest",
+              "name": "AppConfig",
               "query-parameters": undefined,
             },
             "response": {
@@ -5847,11 +5825,11 @@ exports[`open api converter hathora simple 1`] = `
                   },
                   "authConfiguration": {
                     "docs": undefined,
-                    "type": "root.UpdateAppRequestAuthConfiguration",
+                    "type": "root.AppConfigAuthConfiguration",
                   },
                 },
               },
-              "name": "UpdateAppRequest",
+              "name": "AppConfig",
               "query-parameters": undefined,
             },
             "response": {
@@ -6063,7 +6041,7 @@ exports[`open api converter hathora simple 1`] = `
                 "properties": {
                   "containerPort": {
                     "docs": undefined,
-                    "type": "double",
+                    "type": "integer",
                   },
                   "env": {
                     "docs": undefined,
@@ -6075,7 +6053,7 @@ exports[`open api converter hathora simple 1`] = `
                   },
                   "roomsPerProcess": {
                     "docs": undefined,
-                    "type": "double",
+                    "type": "integer",
                   },
                   "transportType": {
                     "docs": undefined,
@@ -6507,11 +6485,12 @@ exports[`open api converter hathora simple 1`] = `
                 "tailLines": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<double>",
+                  "type": "optional<root.TailLines>",
                 },
               },
             },
-            "response-stream": {
+            "response": {
+              "docs": "Ok",
               "type": "string",
             },
           },
@@ -6539,7 +6518,7 @@ exports[`open api converter hathora simple 1`] = `
                 "tailLines": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<double>",
+                  "type": "optional<root.TailLines>",
                 },
               },
             },
@@ -6572,7 +6551,7 @@ exports[`open api converter hathora simple 1`] = `
                 "tailLines": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<double>",
+                  "type": "optional<root.TailLines>",
                 },
               },
             },
@@ -6611,7 +6590,7 @@ exports[`open api converter hathora simple 1`] = `
                 "end": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<double>",
+                  "type": "optional<integer>",
                 },
                 "metrics": {
                   "allow-multiple": true,
@@ -6621,12 +6600,12 @@ exports[`open api converter hathora simple 1`] = `
                 "start": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<double>",
+                  "type": "optional<integer>",
                 },
                 "step": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<double>",
+                  "type": "optional<integer>",
                 },
               },
             },

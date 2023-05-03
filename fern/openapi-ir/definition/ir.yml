@@ -279,6 +279,7 @@ types:
   ReferencedSchema:
     extends:
       - WithDescription
+      - WithName
     properties:
       file:
         type: optional<FileId>
