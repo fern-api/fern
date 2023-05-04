@@ -5,6 +5,8 @@ import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
+const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
+
 export class OpenAPIV3ParserContext {
     public logger: Logger;
 
@@ -36,6 +38,25 @@ export class OpenAPIV3ParserContext {
             return this.resolveSchemaReference(resolvedSchema);
         }
         return resolvedSchema;
+    }
+
+    public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): OpenAPIV3.ParameterObject {
+        if (
+            this.document.components == null ||
+            this.document.components.parameters == null ||
+            !parameter.$ref.startsWith(PARAMETER_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${parameter.$ref}`);
+        }
+        const parameterKey = parameter.$ref.substring(PARAMETER_REFERENCE_PREFIX.length);
+        const resolvedParameter = this.document.components.parameters[parameterKey];
+        if (resolvedParameter == null) {
+            throw new Error(`${parameter.$ref} is undefined`);
+        }
+        if (isReferenceObject(resolvedParameter)) {
+            return this.resolveParameterReference(resolvedParameter);
+        }
+        return resolvedParameter;
     }
 
     public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {
