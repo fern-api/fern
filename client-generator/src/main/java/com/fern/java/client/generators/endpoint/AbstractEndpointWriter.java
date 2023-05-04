@@ -192,6 +192,10 @@ public abstract class AbstractEndpointWriter {
         Map<String, PathParameter> endpointPathParameters = httpEndpoint.getPathParameters().stream()
                 .collect(Collectors.toMap(
                         pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
+        if (!httpEndpoint.getPath().getHead().isBlank()
+                && !httpEndpoint.getPath().getHead().equals("/")) {
+            builder.add(".addPathSegment($S)\n", httpEndpoint.getPath().getHead());
+        }
         for (HttpPathPart httpPathPart : httpEndpoint.getPath().getParts()) {
             PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
