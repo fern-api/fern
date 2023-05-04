@@ -21,31 +21,37 @@ export function convertParameters(
         headers: [],
     };
     for (const parameter of parameters) {
-        if (isReferenceObject(parameter)) {
-            throw new Error(`Converting referenced parameters is unsupported: ${JSON.stringify(parameter)}`);
-        }
+        const resolvedParameter = isReferenceObject(parameter)
+            ? context.resolveParameterReference(parameter)
+            : parameter;
 
-        const isRequired = parameter.required ?? false;
+        const isRequired = resolvedParameter.required ?? false;
         const schema =
-            parameter.schema != null
-                ? convertSchema(parameter.schema, !isRequired, context, [...requestBreadcrumbs, parameter.name])
+            resolvedParameter.schema != null
+                ? convertSchema(resolvedParameter.schema, !isRequired, context, [
+                      ...requestBreadcrumbs,
+                      resolvedParameter.name,
+                  ])
                 : isRequired
-                ? Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: parameter.description })
+                ? Schema.primitive({
+                      schema: PrimitiveSchemaValue.string(),
+                      description: resolvedParameter.description,
+                  })
                 : Schema.optional({
                       value: Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: undefined }),
-                      description: parameter.description,
+                      description: resolvedParameter.description,
                   });
 
         const convertedParameter = {
-            name: parameter.name,
+            name: resolvedParameter.name,
             schema,
             description: undefined,
         };
-        if (parameter.in === "query") {
+        if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
-        } else if (parameter.in === "path") {
+        } else if (resolvedParameter.in === "path") {
             convertedParameters.pathParameters.push(convertedParameter);
-        } else if (parameter.in === "header") {
+        } else if (resolvedParameter.in === "header") {
             convertedParameters.headers.push(convertedParameter);
         } else {
             throw new Error(`Doesn't support converting this path parameters: ${JSON.stringify(parameter)}`);
