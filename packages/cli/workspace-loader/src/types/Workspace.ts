@@ -1,4 +1,5 @@
 import { DependenciesConfiguration } from "@fern-api/dependencies-configuration";
+import { DocsConfiguration } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
@@ -12,6 +13,7 @@ export interface OpenAPIWorkspace {
     absolutePathToWorkspace: AbsoluteFilePath;
     absolutePathToDefinition: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
+    docsConfiguration: DocsConfiguration | undefined;
     definition: OpenAPIDefinition;
 }
 
@@ -34,6 +36,7 @@ export interface FernWorkspace {
     absolutePathToDefinition: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
     dependenciesConfiguration: DependenciesConfiguration;
+    docsConfiguration: DocsConfiguration | undefined;
     definition: FernDefinition;
 }
 

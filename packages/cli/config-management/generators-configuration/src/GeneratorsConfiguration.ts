@@ -14,6 +14,7 @@ export interface GeneratorGroup {
     groupName: string;
     audiences: GeneratorAudiences;
     generators: GeneratorInvocation[];
+    docs: GeneratorGroupDocsConfiguration | undefined;
 }
 
 export type GeneratorAudiences = AllAudiences | SelectAudiences;
@@ -43,3 +44,7 @@ export const GenerationLanguage = {
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;
+
+export interface GeneratorGroupDocsConfiguration {
+    domain: string;
+}

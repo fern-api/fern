@@ -37,6 +37,7 @@
     "@fern-api/dependencies-configuration": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
     "@fern-api/docs": "workspace:*",
+    "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/editor-app": "workspace:*",
     "@fern-api/editor-fe-bundle": "workspace:*",
     "@fern-api/editor-item-id-generator": "workspace:*",
