@@ -59,7 +59,9 @@ public abstract class AbstractNonModelPoetClassNameFactory extends AbstractPoetC
 
     protected final String getResourcesPackage(Optional<FernFilepath> fernFilepath, Optional<String> suffix) {
         List<String> tokens = new ArrayList<>(getPackagePrefixTokens());
-        tokens.add("resources");
+        if (fernFilepath.isPresent() && !fernFilepath.get().getAllParts().isEmpty()) {
+            tokens.add("resources");
+        }
         fernFilepath.ifPresent(filepath -> tokens.addAll(filepath.getAllParts().stream()
                 .map(Name::getCamelCase)
                 .map(SafeAndUnsafeString::getSafeName)
