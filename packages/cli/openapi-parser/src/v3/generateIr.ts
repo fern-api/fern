@@ -1,11 +1,11 @@
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir/_types";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
+import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
     const context = new OpenAPIV3ParserContext({ document: openApi, taskContext });
@@ -19,7 +19,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return [];
             }
             taskContext.logger.debug(`Converting path ${path}`);
-            const pathWithoutTrailingSlash = path.replace(/\/$/, "")
+            const pathWithoutTrailingSlash = path.replace(/\/$/, "");
             return convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
         }),
         schemas: Object.fromEntries(
