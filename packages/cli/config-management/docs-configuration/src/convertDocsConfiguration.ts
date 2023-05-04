@@ -66,6 +66,7 @@ function convertNavigationItem(
 }
 
 function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.SectionConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as RawDocs.SectionConfiguration).section != null;
 }
 

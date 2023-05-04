@@ -27,14 +27,12 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/docs-config": "0.0.6",
-    "js-yaml": "^4.1.0",
-    "zod": "^3.14.3"
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
