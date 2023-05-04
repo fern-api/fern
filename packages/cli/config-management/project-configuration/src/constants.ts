@@ -6,5 +6,7 @@ export const FERN_PACKAGE_MARKER_FILENAME = "__package__.yml";
 export const DEPENDENCIES_FILENAME = "dependencies.yml";
 export const GENERATORS_CONFIGURATION_FILENAME = "generators.yml";
 export const DEPENDENCIES_CONFIGURATION_FILENAME = "dependencies.yml";
+export const DOCS_DIRECTORY = "docs";
+export const DOCS_CONFIGURATION_FILENAME = "docs.yml";
 export const PROJECT_CONFIG_FILENAME = "fern.config.json";
 export const DEFAULT_WORSPACE_FOLDER_NAME = "api";

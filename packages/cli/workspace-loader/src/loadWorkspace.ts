@@ -1,4 +1,5 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
+import { loadDocsConfiguration } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
@@ -20,6 +21,7 @@ export async function loadWorkspace({
     cliVersion: string;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
+    const docsConfiguration = await loadDocsConfiguration({ absolutePathToWorkspace, context });
 
     const absolutePathToOpenAPIDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
@@ -34,6 +36,7 @@ export async function loadWorkspace({
                 absolutePathToWorkspace,
                 absolutePathToDefinition: absolutePathToOpenAPIDefinition,
                 generatorsConfiguration,
+                docsConfiguration,
                 definition: openApiDirectory,
             },
         };
@@ -76,6 +79,7 @@ export async function loadWorkspace({
             absolutePathToDefinition,
             generatorsConfiguration,
             dependenciesConfiguration,
+            docsConfiguration,
             definition: {
                 rootApiFile: structuralValidationResult.rootApiFile,
                 namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,

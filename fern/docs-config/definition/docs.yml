@@ -1,0 +1,26 @@
+types:
+  DocsConfiguration:
+    properties:
+      navigation: list<NavigationItem>
+      logo: optional<string>
+      colors: ColorsConfiguration
+
+  NavigationItem:
+    discriminated: false
+    union:
+      - string # page
+      - SectionConfiguration
+      - ApiSectionConfiguration
+
+  SectionConfiguration:
+    properties:
+      section: string
+      pages: list<NavigationItem>
+
+  ApiSectionConfiguration:
+    properties:
+      api: string
+      audiences: optional<list<string>>
+
+  ColorsConfiguration:
+    properties: {}
