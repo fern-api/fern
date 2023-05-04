@@ -28,10 +28,13 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
             })
         ),
         securitySchemes: Object.fromEntries(
-            Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => [
-                key,
-                convertSecurityScheme(securityScheme),
-            ])
+            Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
+                const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+                if (convertedSecurityScheme == null) {
+                    return [];
+                }
+                return [key, convertSecurityScheme(securityScheme)];
+            })
         ),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         dependencies: [],
