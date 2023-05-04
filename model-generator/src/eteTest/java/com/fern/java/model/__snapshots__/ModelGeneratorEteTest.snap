@@ -971,94 +971,25 @@ public final class PostNotFoundErrorBody {
 basic[src/main/java/com/fern/basic/model/blog/PostType.java]=[
 package com.fern.basic.model.blog;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
-public final class PostType {
-  public static final PostType LONG = new PostType(Value.LONG, "LONG");
+public enum PostType {
+  LONG("LONG"),
 
-  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+  SHORT("SHORT"),
 
-  public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
+  MEDIUM("med.med");
 
-  private final Value value;
+  private final String value;
 
-  private final String string;
-
-  PostType(Value value, String string) {
+  PostType(String value) {
     this.value = value;
-    this.string = string;
   }
 
-  public Value getEnumValue() {
-    return value;
-  }
-
-  @Override
   @JsonValue
+  @Override
   public String toString() {
-    return this.string;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return (this == other)
-        || (other instanceof PostType && this.string.equals(((PostType) other).string));
-  }
-
-  @Override
-  public int hashCode() {
-    return this.string.hashCode();
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    switch (value) {
-      case LONG:
-        return visitor.visitLong();
-      case SHORT:
-        return visitor.visitShort();
-      case MEDIUM:
-        return visitor.visitMedium();
-      case UNKNOWN:
-      default:
-        return visitor.visitUnknown(string);
-    }
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static PostType valueOf(String value) {
-    String upperCasedValue = value.toUpperCase(Locale.ROOT);
-    switch (upperCasedValue) {
-      case "LONG":
-        return LONG;
-      case "SHORT":
-        return SHORT;
-      case "med.med":
-        return MEDIUM;
-      default:
-        return new PostType(Value.UNKNOWN, upperCasedValue);
-    }
-  }
-
-  public enum Value {
-    LONG,
-
-    SHORT,
-
-    MEDIUM,
-
-    UNKNOWN
-  }
-
-  public interface Visitor<T> {
-    T visitLong();
-
-    T visitShort();
-
-    T visitMedium();
-
-    T visitUnknown(String unknownType);
+    return this.value;
   }
 }
 

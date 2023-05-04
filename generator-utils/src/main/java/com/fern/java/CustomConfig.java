@@ -38,6 +38,12 @@ public interface CustomConfig {
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("enable-forward-compatible-enums")
+    default Boolean enableForwardCompatibleEnum() {
+        return false;
+    }
+
     static ImmutableCustomConfig.Builder builder() {
         return ImmutableCustomConfig.builder();
     }

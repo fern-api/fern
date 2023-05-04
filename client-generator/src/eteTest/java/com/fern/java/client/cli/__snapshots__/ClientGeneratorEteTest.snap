@@ -1848,94 +1848,25 @@ public final class PostNotFoundErrorBody {
 basic[src/main/java/com/fern/basic/resources/blog/types/PostType.java]=[
 package com.fern.basic.resources.blog.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
-public final class PostType {
-  public static final PostType LONG = new PostType(Value.LONG, "LONG");
+public enum PostType {
+  LONG("LONG"),
 
-  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+  SHORT("SHORT"),
 
-  public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
+  MEDIUM("med.med");
 
-  private final Value value;
+  private final String value;
 
-  private final String string;
-
-  PostType(Value value, String string) {
+  PostType(String value) {
     this.value = value;
-    this.string = string;
   }
 
-  public Value getEnumValue() {
-    return value;
-  }
-
-  @Override
   @JsonValue
+  @Override
   public String toString() {
-    return this.string;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return (this == other)
-        || (other instanceof PostType && this.string.equals(((PostType) other).string));
-  }
-
-  @Override
-  public int hashCode() {
-    return this.string.hashCode();
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    switch (value) {
-      case LONG:
-        return visitor.visitLong();
-      case SHORT:
-        return visitor.visitShort();
-      case MEDIUM:
-        return visitor.visitMedium();
-      case UNKNOWN:
-      default:
-        return visitor.visitUnknown(string);
-    }
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static PostType valueOf(String value) {
-    String upperCasedValue = value.toUpperCase(Locale.ROOT);
-    switch (upperCasedValue) {
-      case "LONG":
-        return LONG;
-      case "SHORT":
-        return SHORT;
-      case "med.med":
-        return MEDIUM;
-      default:
-        return new PostType(Value.UNKNOWN, upperCasedValue);
-    }
-  }
-
-  public enum Value {
-    LONG,
-
-    SHORT,
-
-    MEDIUM,
-
-    UNKNOWN
-  }
-
-  public interface Visitor<T> {
-    T visitLong();
-
-    T visitShort();
-
-    T visitMedium();
-
-    T visitUnknown(String unknownType);
+    return this.value;
   }
 }
 
@@ -2805,94 +2736,25 @@ public final class Device {
 basic[src/main/java/com/fern/basic/resources/raven/device/types/Platform.java]=[
 package com.fern.basic.resources.raven.device.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
-public final class Platform {
-  public static final Platform WEB = new Platform(Value.WEB, "web");
+public enum Platform {
+  ANDROID("android"),
 
-  public static final Platform IOS = new Platform(Value.IOS, "ios");
+  WEB("web"),
 
-  public static final Platform ANDROID = new Platform(Value.ANDROID, "android");
+  IOS("ios");
 
-  private final Value value;
+  private final String value;
 
-  private final String string;
-
-  Platform(Value value, String string) {
+  Platform(String value) {
     this.value = value;
-    this.string = string;
   }
 
-  public Value getEnumValue() {
-    return value;
-  }
-
-  @Override
   @JsonValue
+  @Override
   public String toString() {
-    return this.string;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return (this == other)
-        || (other instanceof Platform && this.string.equals(((Platform) other).string));
-  }
-
-  @Override
-  public int hashCode() {
-    return this.string.hashCode();
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    switch (value) {
-      case WEB:
-        return visitor.visitWeb();
-      case IOS:
-        return visitor.visitIos();
-      case ANDROID:
-        return visitor.visitAndroid();
-      case UNKNOWN:
-      default:
-        return visitor.visitUnknown(string);
-    }
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static Platform valueOf(String value) {
-    String upperCasedValue = value.toUpperCase(Locale.ROOT);
-    switch (upperCasedValue) {
-      case "web":
-        return WEB;
-      case "ios":
-        return IOS;
-      case "android":
-        return ANDROID;
-      default:
-        return new Platform(Value.UNKNOWN, upperCasedValue);
-    }
-  }
-
-  public enum Value {
-    ANDROID,
-
-    WEB,
-
-    IOS,
-
-    UNKNOWN
-  }
-
-  public interface Visitor<T> {
-    T visitAndroid();
-
-    T visitWeb();
-
-    T visitIos();
-
-    T visitUnknown(String unknownType);
+    return this.value;
   }
 }
 
@@ -7057,154 +6919,37 @@ public final class CreateUserRequest {
 basic[src/main/java/com/fern/basic/resources/raven/user/types/Channel.java]=[
 package com.fern.basic.resources.raven.user.types;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Locale;
 
-public final class Channel {
-  public static final Channel SMS = new Channel(Value.SMS, "SMS");
+public enum Channel {
+  VOICE("VOICE"),
 
-  public static final Channel IN_APP = new Channel(Value.IN_APP, "IN_APP");
+  PUSH("PUSH"),
 
-  public static final Channel TELEGRAM = new Channel(Value.TELEGRAM, "TELEGRAM");
+  SMS("SMS"),
 
-  public static final Channel PUSH = new Channel(Value.PUSH, "PUSH");
+  EMAIL("EMAIL"),
 
-  public static final Channel WHATSAPP = new Channel(Value.WHATSAPP, "WHATSAPP");
+  WHATSAPP("WHATSAPP"),
 
-  public static final Channel SLACK = new Channel(Value.SLACK, "SLACK");
+  WEBHOOK("WEBHOOK"),
 
-  public static final Channel EMAIL = new Channel(Value.EMAIL, "EMAIL");
+  SLACK("SLACK"),
 
-  public static final Channel WEBHOOK = new Channel(Value.WEBHOOK, "WEBHOOK");
+  IN_APP("IN_APP"),
 
-  public static final Channel VOICE = new Channel(Value.VOICE, "VOICE");
+  TELEGRAM("TELEGRAM");
 
-  private final Value value;
+  private final String value;
 
-  private final String string;
-
-  Channel(Value value, String string) {
+  Channel(String value) {
     this.value = value;
-    this.string = string;
   }
 
-  public Value getEnumValue() {
-    return value;
-  }
-
-  @Override
   @JsonValue
+  @Override
   public String toString() {
-    return this.string;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    return (this == other)
-        || (other instanceof Channel && this.string.equals(((Channel) other).string));
-  }
-
-  @Override
-  public int hashCode() {
-    return this.string.hashCode();
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    switch (value) {
-      case SMS:
-        return visitor.visitSms();
-      case IN_APP:
-        return visitor.visitInApp();
-      case TELEGRAM:
-        return visitor.visitTelegram();
-      case PUSH:
-        return visitor.visitPush();
-      case WHATSAPP:
-        return visitor.visitWhatsapp();
-      case SLACK:
-        return visitor.visitSlack();
-      case EMAIL:
-        return visitor.visitEmail();
-      case WEBHOOK:
-        return visitor.visitWebhook();
-      case VOICE:
-        return visitor.visitVoice();
-      case UNKNOWN:
-      default:
-        return visitor.visitUnknown(string);
-    }
-  }
-
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static Channel valueOf(String value) {
-    String upperCasedValue = value.toUpperCase(Locale.ROOT);
-    switch (upperCasedValue) {
-      case "SMS":
-        return SMS;
-      case "IN_APP":
-        return IN_APP;
-      case "TELEGRAM":
-        return TELEGRAM;
-      case "PUSH":
-        return PUSH;
-      case "WHATSAPP":
-        return WHATSAPP;
-      case "SLACK":
-        return SLACK;
-      case "EMAIL":
-        return EMAIL;
-      case "WEBHOOK":
-        return WEBHOOK;
-      case "VOICE":
-        return VOICE;
-      default:
-        return new Channel(Value.UNKNOWN, upperCasedValue);
-    }
-  }
-
-  public enum Value {
-    VOICE,
-
-    PUSH,
-
-    SMS,
-
-    EMAIL,
-
-    WHATSAPP,
-
-    WEBHOOK,
-
-    SLACK,
-
-    IN_APP,
-
-    TELEGRAM,
-
-    UNKNOWN
-  }
-
-  public interface Visitor<T> {
-    T visitVoice();
-
-    T visitPush();
-
-    T visitSms();
-
-    T visitEmail();
-
-    T visitWhatsapp();
-
-    T visitWebhook();
-
-    T visitSlack();
-
-    T visitInApp();
-
-    T visitTelegram();
-
-    T visitUnknown(String unknownType);
+    return this.value;
   }
 }
 

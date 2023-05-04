@@ -66,8 +66,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
 
     @Override
     public Optional<GeneratedJavaFile> visitEnum(EnumTypeDeclaration value) {
-        EnumGenerator enumGenerator = new EnumGenerator(className, generatorContext, value);
-        return Optional.of(enumGenerator.generateFile());
+        EnumGenerator forwardCompatibleEnumGenerator = new EnumGenerator(className, generatorContext, value);
+        return Optional.of(forwardCompatibleEnumGenerator.generateFile());
     }
 
     @Override
