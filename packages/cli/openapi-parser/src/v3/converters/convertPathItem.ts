@@ -19,7 +19,7 @@ export function convertPathItem(
         endpoints.push({
             method: HttpMethod.Get,
             path,
-            ...convertOperation(pathItemObject.get, document, context),
+            ...convertOperation(pathItemObject.get, pathItemObject.parameters, document, context),
         });
     }
 
@@ -27,7 +27,7 @@ export function convertPathItem(
         endpoints.push({
             method: HttpMethod.Post,
             path,
-            ...convertOperation(pathItemObject.post, document, context),
+            ...convertOperation(pathItemObject.post, pathItemObject.parameters, document, context),
         });
     }
 
@@ -35,7 +35,7 @@ export function convertPathItem(
         endpoints.push({
             method: HttpMethod.Put,
             path,
-            ...convertOperation(pathItemObject.put, document, context),
+            ...convertOperation(pathItemObject.put, pathItemObject.parameters, document, context),
         });
     }
 
@@ -43,7 +43,7 @@ export function convertPathItem(
         endpoints.push({
             method: HttpMethod.Patch,
             path,
-            ...convertOperation(pathItemObject.patch, document, context),
+            ...convertOperation(pathItemObject.patch, pathItemObject.parameters, document, context),
         });
     }
 
@@ -51,7 +51,7 @@ export function convertPathItem(
         endpoints.push({
             method: HttpMethod.Patch,
             path,
-            ...convertOperation(pathItemObject.delete, document, context),
+            ...convertOperation(pathItemObject.delete, pathItemObject.parameters, document, context),
         });
     }
 
@@ -60,6 +60,7 @@ export function convertPathItem(
 
 function convertOperation(
     operation: OpenAPIV3.OperationObject,
+    pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined,
     document: OpenAPIV3.Document,
     context: OpenAPIV3ParserContext
 ): Omit<Endpoint, "path" | "method"> {
@@ -73,7 +74,8 @@ function convertOperation(
     const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
     const requestBreadcrumbs = [operation.operationId, "Request"];
 
-    const convertedParameters = convertParameters(operation.parameters ?? [], context, requestBreadcrumbs);
+    const endpointParameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
+    const convertedParameters = convertParameters(endpointParameters, context, requestBreadcrumbs);
     const convertedRequest =
         operation.requestBody != null
             ? convertRequest({

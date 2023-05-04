@@ -24,7 +24,7 @@ $ fern register
 
 To add a dependency on another API, you simply create a folder in your Fern
 Definition to "house" the dependency. Inside the folder, create a special file
-`__fern__.yml` which specifies the dependency and version you want to add.
+`__package__.yml` which specifies the dependency and version you want to add.
 
 ```yaml
 fern/
@@ -35,14 +35,14 @@ fern/
     ├─ api.yml
     ├─ imdb.yml
     └─ my-folder
-      └─ __fern__.yml
+      └─ __package__.yml
 ```
 
-```yaml __fern__.yml
+```yaml __package__.yml
 export:
   name: @fern/some-dependency
   version: 0.0.1
 ```
 
-When you compile the API with `fern generate`, the `__fern__.yml` file will
+When you compile the API with `fern generate`, the `__package__.yml` file will
 effectively be replaced with the API you're depending on.

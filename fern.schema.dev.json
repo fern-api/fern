@@ -49,6 +49,7 @@
                           "additionalProperties": false
                         }
                       },
+                      "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
                       },
@@ -95,6 +96,7 @@
                       "examples": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
                       },
+                      "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                       },
