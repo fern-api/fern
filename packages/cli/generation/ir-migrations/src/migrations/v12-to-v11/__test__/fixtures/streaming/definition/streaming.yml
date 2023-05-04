@@ -6,4 +6,4 @@ service:
       path: ""
       method: POST
       response-stream:
-        data: string
+        type: string

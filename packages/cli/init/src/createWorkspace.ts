@@ -41,7 +41,6 @@ export async function createWorkspace({
                 absoluteFilepath,
                 formatDefinitionFile({
                     fileContents: yaml.dump(definitionFile),
-                    absoluteFilepath,
                 })
             );
         }
@@ -98,7 +97,6 @@ async function writeSampleApiDefinition({
         absoluteFilepathToImdbYaml,
         formatDefinitionFile({
             fileContents: SAMPLE_IMDB_API,
-            absoluteFilepath: absoluteFilepathToImdbYaml,
         })
     );
 }

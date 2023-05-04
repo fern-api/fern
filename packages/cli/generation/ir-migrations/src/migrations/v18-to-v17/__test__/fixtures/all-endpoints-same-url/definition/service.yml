@@ -1,0 +1,11 @@
+service:
+  base-path: /
+  auth: false
+  url: A
+  endpoints:
+    test:
+      method: GET
+      path: ""
+    test2:
+      method: POST
+      path: ""

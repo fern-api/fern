@@ -4,7 +4,8 @@ orbs:
 jobs:
   check:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -36,7 +37,8 @@ jobs:
 
   organize-imports:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -45,7 +47,7 @@ jobs:
           name: Organize imports
           # not using --list-different because sometimes this removes a trailing
           # comma that prettier adds back
-          command: yarn organize-imports:fix
+          command: yarn organize-imports
       - run:
           name: Format
           command: yarn format:fix
@@ -55,7 +57,8 @@ jobs:
 
   eslint:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -70,7 +73,8 @@ jobs:
 
   compile:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -111,7 +115,7 @@ jobs:
 
   live-test-dev:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:
@@ -125,7 +129,7 @@ jobs:
 
   live-test:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:
@@ -139,7 +143,8 @@ jobs:
 
   publish-dev:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -169,7 +174,8 @@ jobs:
 
   publish-rc:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -203,7 +209,8 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
+    resource_class: large
     steps:
       - checkout
       - node/install-packages:
@@ -237,18 +244,18 @@ jobs:
 
   publish-ir-sdk:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - run:
           name: Publish ir sdks
           command: |
             export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
-            npx fern-api generate --api ir-types-v16 --group sdks
+            npx fern-api generate --api ir-types-v19 --group sdks
 
   check-release-is-allowed:
     docker:
-      - image: cimg/node:current
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:

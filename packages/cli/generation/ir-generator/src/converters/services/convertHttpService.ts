@@ -54,7 +54,6 @@ export function convertHttpService({
         availability: convertAvailability(serviceDefinition.availability),
         name: { fernFilepath: file.fernFilepath },
         displayName: serviceDefinition["display-name"] ?? undefined,
-        baseUrl: serviceDefinition.url,
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
             serviceDefinition.headers != null
@@ -76,6 +75,7 @@ export function convertHttpService({
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
+                baseUrl: endpoint.url ?? serviceDefinition.url,
                 method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                 path: constructHttpPath(endpoint.path),
                 fullPath: constructHttpPath(

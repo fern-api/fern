@@ -24,6 +24,7 @@ import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
+import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 
@@ -128,6 +129,7 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
+    addWriteDefinitionCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -483,6 +485,27 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 shouldFix: !argv.ci,
+            });
+        }
+    );
+}
+
+function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-definition",
+        false, // hide from help message
+        (yargs) =>
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API",
+            }),
+        async (argv) => {
+            await writeDefinitionForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: true,
+                }),
+                cliContext,
             });
         }
     );

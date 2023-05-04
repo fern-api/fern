@@ -1,7 +1,8 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { convertOpenApi } from "@fern-api/openapi-migrator";
+import { convert } from "@fern-api/openapi-ir-to-fern";
+import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, OpenAPIWorkspace } from "@fern-api/workspace-loader";
@@ -94,21 +95,20 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
     openapiWorkspace: OpenAPIWorkspace,
     context: TaskContext
 ): Promise<FernWorkspace> {
-    const definition = await convertOpenApi({
-        openApiPath: join(openapiWorkspace.absolutePathToDefinition, openapiWorkspace.definition.path),
+    const openApiIr = await parse({
+        root: openapiWorkspace.definition,
         taskContext: context,
     });
-
-    if (definition == null) {
-        return context.failAndThrow("Failed to convert OpenAPI");
-    }
+    const definition = convert({
+        openApiIr,
+    });
 
     return {
         type: "fern",
         name: openapiWorkspace.name,
         generatorsConfiguration: openapiWorkspace.generatorsConfiguration,
         absolutePathToDefinition: openapiWorkspace.absolutePathToDefinition,
-        absolutePathToWorkspace: openapiWorkspace.absolutePathToDefinition,
+        absolutePathToWorkspace: openapiWorkspace.absolutePathToWorkspace,
         dependenciesConfiguration: {
             dependencies: {},
         },

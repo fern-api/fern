@@ -49,6 +49,7 @@
                           "additionalProperties": false
                         }
                       },
+                      "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
                       },
@@ -95,6 +96,7 @@
                       "examples": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
                       },
+                      "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                       },
@@ -330,6 +332,7 @@
                   "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                   "display-name": { "type": "string" },
                   "path": { "type": "string" },
+                  "url": { "type": "string" },
                   "path-parameters": {
                     "type": "object",
                     "additionalProperties": {
@@ -452,10 +455,15 @@
                   },
                   "stream-condition": { "type": "string" },
                   "response-stream": {
-                    "type": "object",
-                    "properties": { "data": { "type": "string" }, "terminator": { "type": "string" } },
-                    "required": ["data"],
-                    "additionalProperties": false
+                    "anyOf": [
+                      { "type": "string" },
+                      {
+                        "type": "object",
+                        "properties": { "type": { "type": "string" }, "terminator": { "type": "string" } },
+                        "required": ["type"],
+                        "additionalProperties": false
+                      }
+                    ]
                   },
                   "errors": {
                     "type": "array",

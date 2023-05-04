@@ -1,0 +1,14 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "exclude": ["./src/**/__test__/**/generated"],
+  "references": [
+    { "path": "../../commons/fs-utils" },
+    { "path": "../config-management/project-configuration" },
+    { "path": "../logger" },
+    { "path": "../openapi-parser" },
+    { "path": "../task-context" },
+    { "path": "../yaml/yaml-schema" }
+  ]
+}

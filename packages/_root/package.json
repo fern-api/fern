@@ -23,6 +23,7 @@
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": ":"
   },
   "dependencies": {
@@ -54,8 +55,9 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-api/manage-generator": "workspace:*",
+    "@fern-api/openapi-ir-to-fern": "workspace:*",
     "@fern-api/openapi-migrator": "workspace:*",
-    "@fern-api/openapi-transformer": "workspace:*",
+    "@fern-api/openapi-parser": "workspace:*",
     "@fern-api/posthog-manager": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
@@ -89,6 +91,7 @@
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.0.3",
+    "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "typescript": "4.6.4"
   }

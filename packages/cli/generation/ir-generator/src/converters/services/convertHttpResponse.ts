@@ -15,8 +15,10 @@ export function convertHttpResponse({
     const streamingResponse =
         responseStream != null
             ? {
-                  dataEventType: file.parseTypeReference(responseStream.data),
-                  terminator: responseStream.terminator,
+                  dataEventType: file.parseTypeReference(
+                      typeof responseStream === "string" ? responseStream : responseStream.type
+                  ),
+                  terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
               }
             : undefined;
 
