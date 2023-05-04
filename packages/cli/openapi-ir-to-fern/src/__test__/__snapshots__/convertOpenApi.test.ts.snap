@@ -620,7 +620,7 @@ exports[`open api converter buzzshot simple 1`] = `
         "endpoints": {
           "listAccounts": {
             "method": "GET",
-            "path": "/api/v2/accounts/",
+            "path": "/api/v2/accounts",
             "request": {
               "name": "listAccountsRequest",
               "query-parameters": {
@@ -638,7 +638,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listGames": {
             "method": "GET",
-            "path": "/api/v2/games/",
+            "path": "/api/v2/games",
             "request": {
               "name": "listGamesRequest",
               "query-parameters": {
@@ -676,7 +676,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listGroups": {
             "method": "GET",
-            "path": "/api/v2/groups/",
+            "path": "/api/v2/groups",
             "request": {
               "name": "listGroupsRequest",
               "query-parameters": {
@@ -704,7 +704,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listLocations": {
             "method": "GET",
-            "path": "/api/v2/rooms/",
+            "path": "/api/v2/rooms",
             "request": {
               "name": "listLocationsRequest",
               "query-parameters": {
@@ -722,7 +722,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listPhotos": {
             "method": "GET",
-            "path": "/api/v2/photos/",
+            "path": "/api/v2/photos",
             "request": {
               "name": "listPhotosRequest",
               "query-parameters": {
@@ -740,7 +740,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listPlayers": {
             "method": "GET",
-            "path": "/api/v2/players/",
+            "path": "/api/v2/players",
             "request": {
               "name": "listPlayersRequest",
               "query-parameters": {
@@ -758,7 +758,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveAccount": {
             "method": "GET",
-            "path": "/api/v2/accounts/{id}/",
+            "path": "/api/v2/accounts/{id}",
             "path-parameters": {
               "id": {
                 "docs": undefined,
@@ -772,7 +772,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveGame": {
             "method": "GET",
-            "path": "/api/v2/games/{id}/",
+            "path": "/api/v2/games/{id}",
             "path-parameters": {
               "id": {
                 "docs": undefined,
@@ -811,7 +811,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveGroup": {
             "method": "GET",
-            "path": "/api/v2/groups/{id}/",
+            "path": "/api/v2/groups/{id}",
             "path-parameters": {
               "id": {
                 "docs": undefined,
@@ -840,7 +840,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveLocation": {
             "method": "GET",
-            "path": "/api/v2/rooms/{id}/",
+            "path": "/api/v2/rooms/{id}",
             "path-parameters": {
               "id": {
                 "docs": undefined,
@@ -854,7 +854,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrievePhoto": {
             "method": "GET",
-            "path": "/api/v2/photos/{photo_id}/",
+            "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
               "photo_id": {
                 "docs": undefined,
@@ -868,7 +868,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrievePlayer": {
             "method": "GET",
-            "path": "/api/v2/players/{id}/",
+            "path": "/api/v2/players/{id}",
             "path-parameters": {
               "id": {
                 "docs": undefined,
