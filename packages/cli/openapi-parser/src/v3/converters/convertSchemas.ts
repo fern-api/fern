@@ -173,6 +173,19 @@ function convertSchemaObject(
         });
     }
 
+    //convert undiscriminated unions
+    if (schema.oneOf != null && schema.oneOf.length > 0) {
+        return convertUndiscriminatedOneOf({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
+            description,
+            wrapAsOptional,
+            context,
+            subtypes: schema.oneOf,
+        });
+    }
+
     // handle objects
     if (schema.allOf != null || schema.properties != null) {
         // convert a singular allOf as a reference or inlined schema
