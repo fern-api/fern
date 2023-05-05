@@ -126,24 +126,38 @@ function convertSchemaObject(
         });
     }
 
-    // discriminated unions
-    if (
-        schema.oneOf != null &&
-        schema.discriminator != null &&
-        schema.discriminator.mapping != null &&
-        Object.keys(schema.discriminator.mapping).length > 0
-    ) {
-        return convertDiscriminatedOneOf({
-            nameOverride,
-            generatedName,
-            breadcrumbs,
-            description,
-            discriminator: schema.discriminator,
-            properties: schema.properties ?? {},
-            required: schema.required,
-            wrapAsOptional,
-            context,
-        });
+    // handle oneOf
+    if (schema.oneOf != null && schema.oneOf.length > 0) {
+        if (
+            schema.discriminator != null &&
+            schema.discriminator.mapping != null &&
+            Object.keys(schema.discriminator.mapping).length > 0
+        ) {
+            return convertDiscriminatedOneOf({
+                nameOverride,
+                generatedName,
+                breadcrumbs,
+                description,
+                discriminator: schema.discriminator,
+                properties: schema.properties ?? {},
+                required: schema.required,
+                wrapAsOptional,
+                context,
+            });
+        } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
+            const convertedSchema = convertSchema(schema.oneOf[0], wrapAsOptional, context, breadcrumbs);
+            return maybeInjectDescription(convertedSchema, description);
+        } else if (schema.oneOf.length > 1) {
+            return convertUndiscriminatedOneOf({
+                nameOverride,
+                generatedName,
+                breadcrumbs,
+                description,
+                wrapAsOptional,
+                context,
+                subtypes: schema.oneOf,
+            });
+        }
     }
 
     // treat anyOf as undiscrminated unions
