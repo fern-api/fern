@@ -12380,7 +12380,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "CreatePrivateLobbyRequest",
+              "generatedName": "CreatePrivateLobbyRequestBody",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -12401,7 +12401,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePrivateLobbyRequestRegion",
+                    "generatedName": "CreatePrivateLobbyRequestBodyRegion",
                     "nameOverride": undefined,
                     "schema": "Region",
                     "type": "reference",
@@ -12488,7 +12488,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "CreatePublicLobbyRequest",
+              "generatedName": "CreatePublicLobbyRequestBody",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -12509,7 +12509,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePublicLobbyRequestRegion",
+                    "generatedName": "CreatePublicLobbyRequestBodyRegion",
                     "nameOverride": undefined,
                     "schema": "Region",
                     "type": "reference",
@@ -12596,7 +12596,7 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "CreateLocalLobbyRequest",
+              "generatedName": "CreateLocalLobbyRequestBody",
               "nameOverride": undefined,
               "properties": [
                 {
@@ -12617,7 +12617,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateLocalLobbyRequestRegion",
+                    "generatedName": "CreateLocalLobbyRequestBodyRegion",
                     "nameOverride": undefined,
                     "schema": "Region",
                     "type": "reference",
@@ -12704,14 +12704,14 @@ exports[`open api parser hathora simple 1`] = `
             "schema": {
               "allOf": [],
               "description": undefined,
-              "generatedName": "CreateLobbyRequest",
+              "generatedName": "CreateLobbyRequestBody",
               "nameOverride": undefined,
               "properties": [
                 {
                   "key": "visibility",
                   "schema": {
                     "description": undefined,
-                    "generatedName": "CreateLobbyRequestVisibility",
+                    "generatedName": "CreateLobbyRequestBodyVisibility",
                     "nameOverride": undefined,
                     "type": "enum",
                     "values": [
@@ -12751,7 +12751,7 @@ exports[`open api parser hathora simple 1`] = `
                   "schema": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateLobbyRequestRegion",
+                    "generatedName": "CreateLobbyRequestBodyRegion",
                     "nameOverride": undefined,
                     "schema": "Region",
                     "type": "reference",

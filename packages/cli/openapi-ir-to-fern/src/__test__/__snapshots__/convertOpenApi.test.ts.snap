@@ -5215,7 +5215,7 @@ exports[`open api converter hathora simple 1`] = `
             },
           ],
         },
-        "CreateLobbyRequestVisibility": {
+        "CreateLobbyRequestBodyVisibility": {
           "docs": undefined,
           "enum": [
             {
@@ -6244,11 +6244,11 @@ exports[`open api converter hathora simple 1`] = `
                   },
                   "visibility": {
                     "docs": undefined,
-                    "type": "root.CreateLobbyRequestVisibility",
+                    "type": "root.CreateLobbyRequestBodyVisibility",
                   },
                 },
               },
-              "name": "CreateLobbyRequest",
+              "name": "CreateLobbyRequestBody",
               "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
@@ -6284,7 +6284,7 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "name": "CreateLocalLobbyRequest",
+              "name": "CreateLocalLobbyRequestBody",
               "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
@@ -6320,7 +6320,7 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "name": "CreatePrivateLobbyRequest",
+              "name": "CreatePrivateLobbyRequestBody",
               "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
@@ -6356,7 +6356,7 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "name": "CreatePublicLobbyRequest",
+              "name": "CreatePublicLobbyRequestBody",
               "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,

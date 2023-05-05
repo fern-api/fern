@@ -76,13 +76,14 @@ function convertOperation(
 
     const endpointParameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
     const convertedParameters = convertParameters(endpointParameters, context, requestBreadcrumbs);
+    const hasWrapperObject = convertedParameters.queryParameters.length > 0 || convertedParameters.headers.length > 0;
     const convertedRequest =
         operation.requestBody != null
             ? convertRequest({
                   requestBody: operation.requestBody,
                   document,
                   context,
-                  requestBreadcrumbs,
+                  requestBreadcrumbs: hasWrapperObject ? [...requestBreadcrumbs, "body"] : requestBreadcrumbs,
               })
             : undefined;
 
