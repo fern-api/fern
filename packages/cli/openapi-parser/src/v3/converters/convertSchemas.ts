@@ -127,7 +127,7 @@ function convertSchemaObject(
     }
 
     // handle oneOf
-    if (schema.oneOf != null) {
+    if (schema.oneOf != null && schema.oneOf.length > 0) {
         if (
             schema.discriminator != null &&
             schema.discriminator.mapping != null &&
