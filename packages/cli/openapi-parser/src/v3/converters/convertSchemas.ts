@@ -78,6 +78,8 @@ function convertSchemaObject(
             generatedName,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            enumVarNames: (schema as any)["x-enum-varnames"] as string[] | undefined,
             enumValues: schema.enum,
             description,
             wrapAsOptional,

@@ -8801,39 +8801,39 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
-              "name": "Accepted",
+              "name": "UsageEventStatusEnum",
               "value": "Accepted",
             },
             {
-              "name": "Expired",
+              "name": "UsageEventStatusEnum",
               "value": "Expired",
             },
             {
-              "name": "Duplicate",
+              "name": "UsageEventStatusEnum",
               "value": "Duplicate",
             },
             {
-              "name": "Error",
+              "name": "UsageEventStatusEnum",
               "value": "Error",
             },
             {
-              "name": "ResourceNotFound",
+              "name": "UsageEventStatusEnum",
               "value": "ResourceNotFound",
             },
             {
-              "name": "ResourceNotAuthorized",
+              "name": "UsageEventStatusEnum",
               "value": "ResourceNotAuthorized",
             },
             {
-              "name": "InvalidDimension",
+              "name": "UsageEventStatusEnum",
               "value": "InvalidDimension",
             },
             {
-              "name": "InvalidQuantity",
+              "name": "UsageEventStatusEnum",
               "value": "InvalidQuantity",
             },
             {
-              "name": "BadArgument",
+              "name": "UsageEventStatusEnum",
               "value": "BadArgument",
             },
           ],
@@ -9685,15 +9685,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "UNKNOWN",
+              "name": "AwsSnsSubscriptionStatus_",
               "value": "UNKNOWN",
             },
             {
-              "name": "CONFIRMED",
+              "name": "AwsSnsSubscriptionStatus_",
               "value": "CONFIRMED",
             },
             {
-              "name": "PENDING_CONFIRMATION",
+              "name": "AwsSnsSubscriptionStatus_",
               "value": "PENDING_CONFIRMATION",
             },
           ],
@@ -9938,23 +9938,23 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "NotStarted",
+              "name": "AzureMarketplaceSubscriptionStatus_",
               "value": "NotStarted",
             },
             {
-              "name": "PendingFulfillmentStart",
+              "name": "AzureMarketplaceSubscriptionStatus_",
               "value": "PendingFulfillmentStart",
             },
             {
-              "name": "Subscribed",
+              "name": "AzureMarketplaceSubscriptionStatus_",
               "value": "Subscribed",
             },
             {
-              "name": "Suspended",
+              "name": "AzureMarketplaceSubscriptionStatus_",
               "value": "Suspended",
             },
             {
-              "name": "Unsubscribed",
+              "name": "AzureMarketplaceSubscriptionStatus_",
               "value": "Unsubscribed",
             },
           ],
@@ -10070,15 +10070,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "DAY",
+              "name": "CommitDimensionTimeUnit_",
               "value": "DAY",
             },
             {
-              "name": "MONTH",
+              "name": "CommitDimensionTimeUnit_",
               "value": "MONTH",
             },
             {
-              "name": "YEAR",
+              "name": "CommitDimensionTimeUnit_",
               "value": "YEAR",
             },
           ],
@@ -10087,11 +10087,11 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "FLAT_RATE",
+              "name": "CommitDimensionType_",
               "value": "FLAT_RATE",
             },
             {
-              "name": "PER_USER",
+              "name": "CommitDimensionType_",
               "value": "PER_USER",
             },
           ],
@@ -10266,27 +10266,27 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "EntitlementTermType_",
               "value": "",
             },
             {
-              "name": "AutoRenew",
+              "name": "EntitlementTermType_",
               "value": "AutoRenew",
             },
             {
-              "name": "ManualRenew",
+              "name": "EntitlementTermType_",
               "value": "ManualRenew",
             },
             {
-              "name": "PlanChange",
+              "name": "EntitlementTermType_",
               "value": "PlanChange",
             },
             {
-              "name": "QuantityChange",
+              "name": "EntitlementTermType_",
               "value": "QuantityChange",
             },
             {
-              "name": "Signup",
+              "name": "EntitlementTermType_",
               "value": "Signup",
             },
           ],
@@ -10316,27 +10316,27 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "ORGANIZATION",
+              "name": "EntityType_",
               "value": "ORGANIZATION",
             },
             {
-              "name": "PRODUCT",
+              "name": "EntityType_",
               "value": "PRODUCT",
             },
             {
-              "name": "OFFER",
+              "name": "EntityType_",
               "value": "OFFER",
             },
             {
-              "name": "ENTITLEMENT",
+              "name": "EntityType_",
               "value": "ENTITLEMENT",
             },
             {
-              "name": "ENTITLEMENT_TERM",
+              "name": "EntityType_",
               "value": "ENTITLEMENT_TERM",
             },
             {
-              "name": "INTEGRATION",
+              "name": "EntityType_",
               "value": "INTEGRATION",
             },
           ],
@@ -10345,27 +10345,27 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "EulaType_",
               "value": "",
             },
             {
-              "name": "SCMP",
+              "name": "EulaType_",
               "value": "SCMP",
             },
             {
-              "name": "ECMP",
+              "name": "EulaType_",
               "value": "ECMP",
             },
             {
-              "name": "CUSTOM",
+              "name": "EulaType_",
               "value": "CUSTOM",
             },
             {
-              "name": "ISV",
+              "name": "EulaType_",
               "value": "ISV",
             },
             {
-              "name": "CURRENT",
+              "name": "EulaType_",
               "value": "CURRENT",
             },
           ],
@@ -10508,19 +10508,19 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "FREE",
+              "name": "GcpCommerceProducerPriceModel_",
               "value": "FREE",
             },
             {
-              "name": "SUBSCRIPTION",
+              "name": "GcpCommerceProducerPriceModel_",
               "value": "SUBSCRIPTION",
             },
             {
-              "name": "USAGE",
+              "name": "GcpCommerceProducerPriceModel_",
               "value": "USAGE",
             },
             {
-              "name": "SUBSCRIPTION_PLUS_USAGE",
+              "name": "GcpCommerceProducerPriceModel_",
               "value": "SUBSCRIPTION_PLUS_USAGE",
             },
           ],
@@ -10900,35 +10900,35 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "ENTITLEMENT_STATE_UNSPECIFIED",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_STATE_UNSPECIFIED",
             },
             {
-              "name": "ENTITLEMENT_ACTIVATION_REQUESTED",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_ACTIVATION_REQUESTED",
             },
             {
-              "name": "ENTITLEMENT_ACTIVE",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_ACTIVE",
             },
             {
-              "name": "ENTITLEMENT_PENDING_CANCELLATION",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_PENDING_CANCELLATION",
             },
             {
-              "name": "ENTITLEMENT_CANCELLED",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_CANCELLED",
             },
             {
-              "name": "ENTITLEMENT_PENDING_PLAN_CHANGE",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE",
             },
             {
-              "name": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
             },
             {
-              "name": "ENTITLEMENT_SUSPENDED",
+              "name": "GcpMarketplaceEntitlementState_ENTITLEMENT_",
               "value": "ENTITLEMENT_SUSPENDED",
             },
           ],
@@ -10999,19 +10999,19 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "STATE_UNSPECIFIED",
+              "name": "GcpMarketplaceUserAccountApprovalState_",
               "value": "STATE_UNSPECIFIED",
             },
             {
-              "name": "PENDING",
+              "name": "GcpMarketplaceUserAccountApprovalState_",
               "value": "PENDING",
             },
             {
-              "name": "APPROVED",
+              "name": "GcpMarketplaceUserAccountApprovalState_",
               "value": "APPROVED",
             },
             {
-              "name": "REJECTED",
+              "name": "GcpMarketplaceUserAccountApprovalState_",
               "value": "REJECTED",
             },
           ],
@@ -11020,11 +11020,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "ACCOUNT_STATE_UNSPECIFIED",
+              "name": "GcpMarketplaceUserAccountState_",
               "value": "ACCOUNT_STATE_UNSPECIFIED",
             },
             {
-              "name": "ACCOUNT_ACTIVE",
+              "name": "GcpMarketplaceUserAccountState_",
               "value": "ACCOUNT_ACTIVE",
             },
           ],
@@ -11651,47 +11651,47 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "ACCEPT",
+              "name": "NotificationEventAction_",
               "value": "ACCEPT",
             },
             {
-              "name": "CREATE",
+              "name": "NotificationEventAction_",
               "value": "CREATE",
             },
             {
-              "name": "DELETE",
+              "name": "NotificationEventAction_",
               "value": "DELETE",
             },
             {
-              "name": "CANCEL",
+              "name": "NotificationEventAction_",
               "value": "CANCEL",
             },
             {
-              "name": "PENDING_CANCEL",
+              "name": "NotificationEventAction_",
               "value": "PENDING_CANCEL",
             },
             {
-              "name": "EXPIRE",
+              "name": "NotificationEventAction_",
               "value": "EXPIRE",
             },
             {
-              "name": "REINSTATE",
+              "name": "NotificationEventAction_",
               "value": "REINSTATE",
             },
             {
-              "name": "SUSPEND",
+              "name": "NotificationEventAction_",
               "value": "SUSPEND",
             },
             {
-              "name": "UPDATE",
+              "name": "NotificationEventAction_",
               "value": "UPDATE",
             },
             {
-              "name": "NOTIFY_CONTACTS",
+              "name": "NotificationEventAction_",
               "value": "NOTIFY_CONTACTS",
             },
             {
-              "name": "TEST",
+              "name": "NotificationEventAction_",
               "value": "TEST",
             },
           ],
@@ -11700,23 +11700,23 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "NotificationEventStatus_",
               "value": "",
             },
             {
-              "name": "SCHEDULED",
+              "name": "NotificationEventStatus_",
               "value": "SCHEDULED",
             },
             {
-              "name": "PENDING",
+              "name": "NotificationEventStatus_",
               "value": "PENDING",
             },
             {
-              "name": "DONE",
+              "name": "NotificationEventStatus_",
               "value": "DONE",
             },
             {
-              "name": "FAILED",
+              "name": "NotificationEventStatus_",
               "value": "FAILED",
             },
           ],
@@ -11873,7 +11873,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "TemporalWorkflow",
+              "name": "OperationType_TemporalWorkflow",
               "value": "TemporalWorkflow",
             },
           ],
@@ -12108,15 +12108,15 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "InvoicedAmount",
+              "name": "RevenueReportType_",
               "value": "InvoicedAmount",
             },
             {
-              "name": "CollectableAmount",
+              "name": "RevenueReportType_",
               "value": "CollectableAmount",
             },
             {
-              "name": "DisbursedAmount",
+              "name": "RevenueReportType_",
               "value": "DisbursedAmount",
             },
           ],
@@ -12306,31 +12306,31 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "VALUE_TYPE_UNSPECIFIED",
+              "name": "ValueType_",
               "value": "VALUE_TYPE_UNSPECIFIED",
             },
             {
-              "name": "BOOL",
+              "name": "ValueType_",
               "value": "BOOL",
             },
             {
-              "name": "INT64",
+              "name": "ValueType_",
               "value": "INT64",
             },
             {
-              "name": "DOUBLE",
+              "name": "ValueType_",
               "value": "DOUBLE",
             },
             {
-              "name": "STRING",
+              "name": "ValueType_",
               "value": "STRING",
             },
             {
-              "name": "DISTRIBUTION",
+              "name": "ValueType_",
               "value": "DISTRIBUTION",
             },
             {
-              "name": "MONEY",
+              "name": "ValueType_",
               "value": "MONEY",
             },
           ],
@@ -13079,15 +13079,15 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "enum": [
             {
-              "name": "Success",
+              "name": "UsageRecordResultStatus",
               "value": "Success",
             },
             {
-              "name": "CustomerNotSubscribed",
+              "name": "UsageRecordResultStatus",
               "value": "CustomerNotSubscribed",
             },
             {
-              "name": "DuplicateRecord",
+              "name": "UsageRecordResultStatus",
               "value": "DuplicateRecord",
             },
           ],
