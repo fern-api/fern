@@ -19,7 +19,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return [];
             }
             taskContext.logger.debug(`Converting path ${path}`);
-            const pathWithoutTrailingSlash = path.replace(/\/$/, "")
+            const pathWithoutTrailingSlash = path.replace(/\/$/, "");
             return convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
         }),
         schemas: Object.fromEntries(

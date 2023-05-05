@@ -51,6 +51,12 @@ function convertGroup({
         generators: group.generators.map((generator) =>
             convertGenerator({ absolutePathToGeneratorsConfiguration, generator })
         ),
+        docs:
+            group.docs != null
+                ? {
+                      domain: group.docs.domain,
+                  }
+                : undefined,
     };
 }
 

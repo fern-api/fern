@@ -107,6 +107,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
         type: "fern",
         name: openapiWorkspace.name,
         generatorsConfiguration: openapiWorkspace.generatorsConfiguration,
+        docsConfiguration: openapiWorkspace.docsConfiguration,
         absolutePathToDefinition: openapiWorkspace.absolutePathToDefinition,
         absolutePathToWorkspace: openapiWorkspace.absolutePathToWorkspace,
         dependenciesConfiguration: {
