@@ -89,5 +89,5 @@ function stripCommonPrefix(names: string[]): string[] {
     }
 
     // prefix is the substring from the beginning to the last successfully checked i
-    return names.map((name) => name.substring(0, i));
+    return names.map((name) => name.substring(i + 1));
 }
