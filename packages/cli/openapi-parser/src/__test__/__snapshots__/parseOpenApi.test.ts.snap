@@ -12092,23 +12092,12 @@ For example:
           "request": {
             "description": undefined,
             "schema": {
-              "oneOf": {
-                "description": undefined,
-                "generatedName": "CreatePaymentIntentRequest",
-                "nameOverride": undefined,
-                "schemas": [
-                  {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "CreatePaymentIntentRequestCreatePaymentIntentRequest",
-                    "nameOverride": undefined,
-                    "schema": "CreatePaymentIntentPse",
-                    "type": "reference",
-                  },
-                ],
-                "type": "undisciminated",
-              },
-              "type": "oneOf",
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreatePaymentIntentRequest",
+              "nameOverride": undefined,
+              "schema": "CreatePaymentIntentPse",
+              "type": "reference",
             },
             "type": "json",
           },
@@ -12116,23 +12105,12 @@ For example:
           "response": {
             "description": "OK (Created)",
             "schema": {
-              "oneOf": {
-                "description": undefined,
-                "generatedName": "CreatePaymentIntentResponse",
-                "nameOverride": undefined,
-                "schemas": [
-                  {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "CreatePaymentIntentResponseCreatePaymentIntentResponse",
-                    "nameOverride": undefined,
-                    "schema": "PaymentIntentPse",
-                    "type": "reference",
-                  },
-                ],
-                "type": "undisciminated",
-              },
-              "type": "oneOf",
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreatePaymentIntentResponse",
+              "nameOverride": undefined,
+              "schema": "PaymentIntentPse",
+              "type": "reference",
             },
           },
           "responseIsStreaming": false,
@@ -12169,23 +12147,12 @@ For example:
           "response": {
             "description": "OK",
             "schema": {
-              "oneOf": {
-                "description": undefined,
-                "generatedName": "DetailPaymentIntentResponse",
-                "nameOverride": undefined,
-                "schemas": [
-                  {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "DetailPaymentIntentResponseDetailPaymentIntentResponse",
-                    "nameOverride": undefined,
-                    "schema": "PaymentIntentPse",
-                    "type": "reference",
-                  },
-                ],
-                "type": "undisciminated",
-              },
-              "type": "oneOf",
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "DetailPaymentIntentResponse",
+              "nameOverride": undefined,
+              "schema": "PaymentIntentPse",
+              "type": "reference",
             },
           },
           "responseIsStreaming": false,
@@ -12235,23 +12202,12 @@ During the payment intent flow, you need to fill in the payment intent with requ
           "response": {
             "description": "OK (Created)",
             "schema": {
-              "oneOf": {
-                "description": undefined,
-                "generatedName": "PatchPaymentIntentResponse",
-                "nameOverride": undefined,
-                "schemas": [
-                  {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "PatchPaymentIntentResponsePatchPaymentIntentResponse",
-                    "nameOverride": undefined,
-                    "schema": "PaymentIntentPse",
-                    "type": "reference",
-                  },
-                ],
-                "type": "undisciminated",
-              },
-              "type": "oneOf",
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "PatchPaymentIntentResponse",
+              "nameOverride": undefined,
+              "schema": "PaymentIntentPse",
+              "type": "reference",
             },
           },
           "responseIsStreaming": false,
@@ -15425,23 +15381,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "object",
         },
         "BankAccountPseResponse": {
-          "oneOf": {
-            "description": undefined,
-            "generatedName": "BankAccountPseResponse",
-            "nameOverride": undefined,
-            "schemas": [
-              {
-                "description": undefined,
-                "file": undefined,
-                "generatedName": "BankAccountPseResponseBankAccountPseResponse",
-                "nameOverride": undefined,
-                "schema": "BankAccountBusinessPse",
-                "type": "reference",
-              },
-            ],
-            "type": "undisciminated",
-          },
-          "type": "oneOf",
+          "description": undefined,
+          "file": undefined,
+          "generatedName": "BankAccountPseResponse",
+          "nameOverride": undefined,
+          "schema": "BankAccountBusinessPse",
+          "type": "reference",
         },
         "BeneficiaryBankAccountOfpi": {
           "allOf": [],
@@ -16301,23 +16246,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             {
               "key": "payment_method_information",
               "schema": {
-                "oneOf": {
-                  "description": undefined,
-                  "generatedName": "ChargePaymentMethodInformation",
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "ChargePaymentMethodInformationChargePaymentMethodInformation",
-                      "nameOverride": undefined,
-                      "schema": "PaymentMethodInformationPse",
-                      "type": "reference",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ChargePaymentMethodInformation",
+                "nameOverride": undefined,
+                "schema": "PaymentMethodInformationPse",
+                "type": "reference",
               },
             },
             {
@@ -16512,23 +16446,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             {
               "key": "holder",
               "schema": {
-                "oneOf": {
-                  "description": "Information regarding the individual bank account holder.",
-                  "generatedName": "CreateBankAccountOfpiHolder",
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "CreateBankAccountOfpiHolderCreateBankAccountOfpiHolder",
-                      "nameOverride": undefined,
-                      "schema": "BankAccountHolderRequestOfpi",
-                      "type": "reference",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+                "description": "Information regarding the individual bank account holder.",
+                "file": undefined,
+                "generatedName": "CreateBankAccountOfpiHolder",
+                "nameOverride": undefined,
+                "schema": "BankAccountHolderRequestOfpi",
+                "type": "reference",
               },
             },
             {
@@ -16573,45 +16496,23 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             {
               "key": "holder",
               "schema": {
-                "oneOf": {
-                  "description": "Information regarding the business bank account holder.",
-                  "generatedName": "CreateBankAccountPseHolder",
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "CreateBankAccountPseHolderCreateBankAccountPseHolder",
-                      "nameOverride": undefined,
-                      "schema": "HolderBusinessPse",
-                      "type": "reference",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+                "description": "Information regarding the business bank account holder.",
+                "file": undefined,
+                "generatedName": "CreateBankAccountPseHolder",
+                "nameOverride": undefined,
+                "schema": "HolderBusinessPse",
+                "type": "reference",
               },
             },
             {
               "key": "providers",
               "schema": {
-                "oneOf": {
-                  "description": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
-                  "generatedName": "CreateBankAccountPseProviders",
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "CreateBankAccountPseProvidersCreateBankAccountPseProviders",
-                      "nameOverride": undefined,
-                      "schema": "ProvidersPse",
-                      "type": "reference",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+                "description": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
+                "file": undefined,
+                "generatedName": "CreateBankAccountPseProviders",
+                "nameOverride": undefined,
+                "schema": "ProvidersPse",
+                "type": "reference",
               },
             },
             {
@@ -29705,23 +29606,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             {
               "key": "payment_method_details",
               "schema": {
-                "oneOf": {
-                  "description": undefined,
-                  "generatedName": "PatchPaymentIntentPsePaymentMethodDetails",
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "PatchPaymentIntentPsePaymentMethodDetailsPatchPaymentIntentPsePaymentMethodDetails",
-                      "nameOverride": undefined,
-                      "schema": "PatchPaymentIntentsBodyPse",
-                      "type": "reference",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "PatchPaymentIntentPsePaymentMethodDetails",
+                "nameOverride": undefined,
+                "schema": "PatchPaymentIntentsBodyPse",
+                "type": "reference",
               },
             },
             {
@@ -30063,23 +29953,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             {
               "key": "last_error",
               "schema": {
-                "oneOf": {
-                  "description": undefined,
-                  "generatedName": "PaymentIntentOfpiLastError",
-                  "nameOverride": undefined,
-                  "schemas": [
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "PaymentIntentOfpiLastErrorPaymentIntentOfpiLastError",
-                      "nameOverride": undefined,
-                      "schema": "LastErrorPaymentError",
-                      "type": "reference",
-                    },
-                  ],
-                  "type": "undisciminated",
-                },
-                "type": "oneOf",
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "PaymentIntentOfpiLastError",
+                "nameOverride": undefined,
+                "schema": "LastErrorPaymentError",
+                "type": "reference",
               },
             },
             {
@@ -30255,23 +30134,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "type": "array",
                   "value": {
-                    "oneOf": {
-                      "description": undefined,
-                      "generatedName": "PaymentIntentPaginatedResponseResultsItem",
-                      "nameOverride": undefined,
-                      "schemas": [
-                        {
-                          "description": undefined,
-                          "file": undefined,
-                          "generatedName": "PaymentIntentPaginatedResponseResultsItemPaymentIntentPaginatedResponseResultsItem",
-                          "nameOverride": undefined,
-                          "schema": "PaymentIntentPse",
-                          "type": "reference",
-                        },
-                      ],
-                      "type": "undisciminated",
-                    },
-                    "type": "oneOf",
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "PaymentIntentPaginatedResponseResultsItem",
+                    "nameOverride": undefined,
+                    "schema": "PaymentIntentPse",
+                    "type": "reference",
                   },
                 },
               },
