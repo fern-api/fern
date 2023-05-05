@@ -3,14 +3,14 @@ title: "OpenAPI"
 description: "Already have an OpenAPI? No problem."
 ---
 
-To use an OpenAPI spec with Fern, add it to your API's `definition/` folder.
+To use an OpenAPI spec with Fern, add it to a nested `openapi/` folder.
 
 ```bash
 fern/
 ├─ fern.config.json
 └─ api/
   ├─ generators.yml
-  └─ definition/
+  └─ openapi/
     └─ openapi.json # <--- also supports openapi.yml
 ```
 
