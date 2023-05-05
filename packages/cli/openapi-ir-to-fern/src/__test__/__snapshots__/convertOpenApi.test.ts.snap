@@ -10266,7 +10266,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "Unknown",
               "value": "",
             },
             {
@@ -10345,7 +10345,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "UNKNOWN",
               "value": "",
             },
             {
@@ -10900,35 +10900,35 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "ENTITLEMENT_STATE_UNSPECIFIED",
+              "name": "STATE_UNSPECIFIED",
               "value": "ENTITLEMENT_STATE_UNSPECIFIED",
             },
             {
-              "name": "ENTITLEMENT_ACTIVATION_REQUESTED",
+              "name": "ACTIVATION_REQUESTED",
               "value": "ENTITLEMENT_ACTIVATION_REQUESTED",
             },
             {
-              "name": "ENTITLEMENT_ACTIVE",
+              "name": "ACTIVE",
               "value": "ENTITLEMENT_ACTIVE",
             },
             {
-              "name": "ENTITLEMENT_PENDING_CANCELLATION",
+              "name": "PENDING_CANCELLATION",
               "value": "ENTITLEMENT_PENDING_CANCELLATION",
             },
             {
-              "name": "ENTITLEMENT_CANCELLED",
+              "name": "CANCELLED",
               "value": "ENTITLEMENT_CANCELLED",
             },
             {
-              "name": "ENTITLEMENT_PENDING_PLAN_CHANGE",
+              "name": "PENDING_PLAN_CHANGE",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE",
             },
             {
-              "name": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
+              "name": "PENDING_PLAN_CHANGE_APPROVAL",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
             },
             {
-              "name": "ENTITLEMENT_SUSPENDED",
+              "name": "SUSPENDED",
               "value": "ENTITLEMENT_SUSPENDED",
             },
           ],
@@ -11020,11 +11020,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "ACCOUNT_STATE_UNSPECIFIED",
+              "name": "UNSPECIFIED",
               "value": "ACCOUNT_STATE_UNSPECIFIED",
             },
             {
-              "name": "ACCOUNT_ACTIVE",
+              "name": "ACTIVE",
               "value": "ACCOUNT_ACTIVE",
             },
           ],
@@ -11700,7 +11700,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "UNKNOWN",
               "value": "",
             },
             {
@@ -11873,7 +11873,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "TemporalWorkflow",
+              "name": "",
               "value": "TemporalWorkflow",
             },
           ],
@@ -12306,7 +12306,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "VALUE_TYPE_UNSPECIFIED",
+              "name": "UNSPECIFIED",
               "value": "VALUE_TYPE_UNSPECIFIED",
             },
             {

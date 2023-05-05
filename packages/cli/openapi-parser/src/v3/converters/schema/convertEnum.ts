@@ -5,6 +5,7 @@ import { camelCase, upperFirst } from "lodash-es";
 export function convertEnum({
     nameOverride,
     generatedName,
+    enumVarNames,
     enumNames,
     enumValues,
     description,
@@ -12,15 +13,19 @@ export function convertEnum({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    enumVarNames: string[] | undefined;
     enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
     wrapAsOptional: boolean;
 }): Schema {
-    const values = enumValues.map((value) => {
+    const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
+    const values = enumValues.map((value, index) => {
+        const enumVarName = strippedEnumVarNames[index];
+        const fernEnumName = enumNames?.[value];
         const valueIsValidName = VALID_NAME_REGEX.test(value);
         return {
-            nameOverride: enumNames != null ? enumNames[value] : undefined,
+            nameOverride: fernEnumName ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
         };
@@ -68,4 +73,21 @@ export function wrapEnum({
 
 function generateEnumNameFromValue(value: string): string {
     return upperFirst(camelCase(value));
+}
+
+function stripCommonPrefix(names: string[]): string[] {
+    if (names.length === 0 || names[0] == null) {
+        return names;
+    }
+
+    const nameZero = names[0];
+
+    let i = 0;
+    // while all words have the same character at position i, increment i
+    while (nameZero[i] && names.every((name) => name[i] === nameZero[i])) {
+        i++;
+    }
+
+    // prefix is the substring from the beginning to the last successfully checked i
+    return names.map((name) => name.substring(i));
 }
