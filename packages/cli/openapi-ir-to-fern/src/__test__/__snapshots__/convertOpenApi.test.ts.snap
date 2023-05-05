@@ -11873,7 +11873,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
-              "name": "",
+              "name": "OperationType_TemporalWorkflow",
               "value": "TemporalWorkflow",
             },
           ],

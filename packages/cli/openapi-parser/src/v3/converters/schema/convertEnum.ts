@@ -76,7 +76,7 @@ function generateEnumNameFromValue(value: string): string {
 }
 
 function stripCommonPrefix(names: string[]): string[] {
-    if (names.length === 0 || names[0] == null) {
+    if (names.length <= 1 || names[0] == null) {
         return names;
     }
 
