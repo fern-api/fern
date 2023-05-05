@@ -40,7 +40,6 @@ public class SpringGeneratorEteTest {
     @SnapshotName("basic")
     @Test
     public void test_basic() throws IOException {
-
         Path currentPath = Paths.get("").toAbsolutePath();
         Path eteTestDirectory = currentPath.endsWith("spring-server-generator")
                 ? currentPath.resolve(Paths.get("src/eteTest"))

@@ -41,6 +41,48 @@ public final class BearerAuth {
 ]
 
 
+basic[core/ErrorBody.java]=[
+package com.fern.core;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.lang.String;
+import java.util.UUID;
+
+public final class ErrorBody<T> {
+  private final String errorName;
+
+  private final T body;
+
+  private final UUID errorInstanceId = UUID.randomUUID();
+
+  public ErrorBody(String errorName) {
+    this(errorName, null);
+  }
+
+  public ErrorBody(String errorName, T body) {
+    this.errorName = errorName;
+    this.body = body;
+  }
+
+  @JsonProperty("errorName")
+  public String getErrorName() {
+    return this.errorName;
+  }
+
+  @JsonProperty("content")
+  public T getContent() {
+    return this.body;
+  }
+
+  @JsonProperty("errorInstanceId")
+  public UUID getErrorInstanceId() {
+    return this.errorInstanceId;
+  }
+}
+
+]
+
+
 basic[core/ObjectMappers.java]=[
 package com.fern.core;
 
@@ -119,10 +161,13 @@ package com.fern.resources.blog.exceptions;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.core.APIException;
 import com.fern.resources.blog.types.GeneratorIdAndVersion;
+import java.lang.String;
 import java.util.List;
 
 public final class GeneratorsDoNotExistError extends APIException {
   public static final int STATUS_CODE = 400;
+
+  public static final String ERROR_NAME = "GeneratorsDoNotExistError";
 
   private final List<GeneratorIdAndVersion> body;
 
@@ -145,9 +190,12 @@ package com.fern.resources.blog.exceptions;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.core.APIException;
 import com.fern.resources.blog.types.PostNotFoundErrorBody;
+import java.lang.String;
 
 public final class PostNotFoundError extends APIException {
   public static final int STATUS_CODE = 400;
+
+  public static final String ERROR_NAME = "PostNotFoundError";
 
   private final PostNotFoundErrorBody body;
 
@@ -170,9 +218,12 @@ package com.fern.resources.blog.exceptions;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fern.core.APIException;
 import com.fern.resources.blog.types.UnauthorizedErrorBody;
+import java.lang.String;
 
 public final class UnauthorizedError extends APIException {
   public static final int STATUS_CODE = 403;
+
+  public static final String ERROR_NAME = "UnauthorizedError";
 
   private final UnauthorizedErrorBody body;
 
@@ -192,6 +243,7 @@ public final class UnauthorizedError extends APIException {
 basic[resources/blog/handlers/GeneratorsDoNotExistErrorExceptionHandler.java]=[
 package com.fern.resources.blog.handlers;
 
+import com.fern.core.ErrorBody;
 import com.fern.resources.blog.exceptions.GeneratorsDoNotExistError;
 import java.lang.Object;
 import org.springframework.http.ResponseEntity;
@@ -202,7 +254,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public final class GeneratorsDoNotExistErrorExceptionHandler {
   @ExceptionHandler(GeneratorsDoNotExistError.class)
   ResponseEntity<Object> handle(GeneratorsDoNotExistError generatorsDoNotExistError) {
-    return new ResponseEntity<>(generatorsDoNotExistError.getBody(), null, GeneratorsDoNotExistError.STATUS_CODE);
+    ErrorBody body = new ErrorBody<>(GeneratorsDoNotExistError.ERROR_NAME, generatorsDoNotExistError.getBody());
+    return new ResponseEntity<>(body, null, GeneratorsDoNotExistError.STATUS_CODE);
   }
 }
 
@@ -212,6 +265,7 @@ public final class GeneratorsDoNotExistErrorExceptionHandler {
 basic[resources/blog/handlers/PostNotFoundErrorExceptionHandler.java]=[
 package com.fern.resources.blog.handlers;
 
+import com.fern.core.ErrorBody;
 import com.fern.resources.blog.exceptions.PostNotFoundError;
 import java.lang.Object;
 import org.springframework.http.ResponseEntity;
@@ -222,7 +276,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public final class PostNotFoundErrorExceptionHandler {
   @ExceptionHandler(PostNotFoundError.class)
   ResponseEntity<Object> handle(PostNotFoundError postNotFoundError) {
-    return new ResponseEntity<>(postNotFoundError.getBody(), null, PostNotFoundError.STATUS_CODE);
+    ErrorBody body = new ErrorBody<>(PostNotFoundError.ERROR_NAME, postNotFoundError.getBody());
+    return new ResponseEntity<>(body, null, PostNotFoundError.STATUS_CODE);
   }
 }
 
@@ -232,6 +287,7 @@ public final class PostNotFoundErrorExceptionHandler {
 basic[resources/blog/handlers/UnauthorizedErrorExceptionHandler.java]=[
 package com.fern.resources.blog.handlers;
 
+import com.fern.core.ErrorBody;
 import com.fern.resources.blog.exceptions.UnauthorizedError;
 import java.lang.Object;
 import org.springframework.http.ResponseEntity;
@@ -242,7 +298,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public final class UnauthorizedErrorExceptionHandler {
   @ExceptionHandler(UnauthorizedError.class)
   ResponseEntity<Object> handle(UnauthorizedError unauthorizedError) {
-    return new ResponseEntity<>(unauthorizedError.getBody(), null, UnauthorizedError.STATUS_CODE);
+    ErrorBody body = new ErrorBody<>(UnauthorizedError.ERROR_NAME, unauthorizedError.getBody());
+    return new ResponseEntity<>(body, null, UnauthorizedError.STATUS_CODE);
   }
 }
 
@@ -1291,6 +1348,55 @@ public interface DummyServiceService {
 
   @GetMapping("/health")
   void health();
+}
+
+]
+
+
+basic[resources/dummyservice/exceptions/NotFoundError.java]=[
+package com.fern.resources.dummyservice.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.core.APIException;
+import java.lang.String;
+
+public final class NotFoundError extends APIException {
+  public static final int STATUS_CODE = 404;
+
+  public static final String ERROR_NAME = "NotFoundError";
+
+  private final String body;
+
+  public NotFoundError(String body) {
+    this.body = body;
+  }
+
+  @JsonValue
+  public String getBody() {
+    return this.body;
+  }
+}
+
+]
+
+
+basic[resources/dummyservice/handlers/NotFoundErrorExceptionHandler.java]=[
+package com.fern.resources.dummyservice.handlers;
+
+import com.fern.core.ErrorBody;
+import com.fern.resources.dummyservice.exceptions.NotFoundError;
+import java.lang.Object;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public final class NotFoundErrorExceptionHandler {
+  @ExceptionHandler(NotFoundError.class)
+  ResponseEntity<Object> handle(NotFoundError notFoundError) {
+    ErrorBody body = new ErrorBody<>(NotFoundError.ERROR_NAME, notFoundError.getBody());
+    return new ResponseEntity<>(body, null, NotFoundError.STATUS_CODE);
+  }
 }
 
 ]

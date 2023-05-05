@@ -110,7 +110,7 @@ public final class ErrorBodyGenerator extends AbstractFileGenerator {
                         "get" + property.getName().getPascalCase().getUnsafeName())
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(JsonProperty.class)
-                        .addMember("value", property.getWireValue())
+                        .addMember("value", "$S", property.getWireValue())
                         .build())
                 .returns(fieldSpec.type)
                 .addStatement("return this.$L", fieldSpec.name)

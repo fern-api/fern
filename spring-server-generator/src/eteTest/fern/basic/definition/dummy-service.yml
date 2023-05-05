@@ -13,3 +13,8 @@ service:
     health:
       method: GET
       path: /health
+
+errors:
+  NotFoundError:
+    status-code: 404
+    type: string

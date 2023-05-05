@@ -1,4 +1,5 @@
 name: basic
 auth: bearer
 error-discrimination:
-  strategy: status-code
+  strategy: property
+  property-name: errorName
