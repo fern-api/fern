@@ -7,6 +7,7 @@ import { parse } from "../parse";
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("open api parser", () => {
+    testFixture("belvo", "openapi.yml");
     testFixture("vellum", "openapi.yml");
     testFixture("devrev", "openapi.yml");
     testFixture("hathora", "openapi.json");
