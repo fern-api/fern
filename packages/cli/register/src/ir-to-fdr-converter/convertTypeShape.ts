@@ -8,28 +8,32 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
         },
         enum: (enum_) => {
             return FernRegistry.api.v1.register.TypeShape.enum({
-                values: enum_.values.map((value) => ({
-                    docs: value.docs ?? undefined,
-                    value: value.name.wireValue,
-                })),
+                values: enum_.values.map(
+                    (value): FernRegistry.api.v1.register.EnumValue => ({
+                        description: value.docs ?? undefined,
+                        value: value.name.wireValue,
+                    })
+                ),
             });
         },
         object: (object) => {
             return FernRegistry.api.v1.register.TypeShape.object({
                 extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
-                properties: object.properties.map((property) => ({
-                    docs: property.docs ?? undefined,
-                    key: property.name.wireValue,
-                    valueType: convertTypeReference(property.valueType),
-                })),
+                properties: object.properties.map(
+                    (property): FernRegistry.api.v1.register.ObjectProperty => ({
+                        description: property.docs ?? undefined,
+                        key: property.name.wireValue,
+                        valueType: convertTypeReference(property.valueType),
+                    })
+                ),
             });
         },
         union: (union) => {
             return FernRegistry.api.v1.register.TypeShape.discriminatedUnion({
                 discriminant: union.discriminant.wireValue,
-                variants: union.types.map((variant) => {
+                variants: union.types.map((variant): FernRegistry.api.v1.register.DiscriminatedUnionVariant => {
                     return {
-                        docs: variant.docs ?? undefined,
+                        description: variant.docs ?? undefined,
                         discriminantValue: variant.discriminantValue.wireValue,
                         additionalProperties:
                             Ir.types.SingleUnionTypeProperties._visit<FernRegistry.api.v1.register.ObjectType>(
@@ -61,8 +65,15 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                 }),
             });
         },
-        undiscriminatedUnion: () => {
-            throw new Error("Unsupported union: " + irType._type);
+        undiscriminatedUnion: (union) => {
+            return FernRegistry.api.v1.register.TypeShape.undiscriminatedUnion({
+                variants: union.members.map((variant): FernRegistry.api.v1.register.UndiscriminatedUnionVariant => {
+                    return {
+                        description: variant.docs ?? undefined,
+                        type: convertTypeReference(variant.type),
+                    };
+                }),
+            });
         },
         _unknown: () => {
             throw new Error("Unknown Type shape: " + irType._type);

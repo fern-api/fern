@@ -26,23 +26,29 @@ function convertService(
             id: FernRegistry.api.v1.register.EndpointId(irEndpoint.name.originalName),
             name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path: {
-                pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map((pathParameter) => ({
-                    docs: pathParameter.docs ?? undefined,
-                    key: convertPathParameterKey(pathParameter.name.originalName),
-                    type: convertTypeReference(pathParameter.valueType),
-                })),
+                pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map(
+                    (pathParameter): FernRegistry.api.v1.register.PathParameter => ({
+                        description: pathParameter.docs ?? undefined,
+                        key: convertPathParameterKey(pathParameter.name.originalName),
+                        type: convertTypeReference(pathParameter.valueType),
+                    })
+                ),
                 parts: [...convertHttpPath(irService.basePath), ...convertHttpPath(irEndpoint.path)],
             },
-            queryParameters: irEndpoint.queryParameters.map((queryParameter) => ({
-                docs: queryParameter.docs ?? undefined,
-                key: queryParameter.name.wireValue,
-                type: convertTypeReference(queryParameter.valueType),
-            })),
-            headers: [...irService.headers, ...irEndpoint.headers].map((header) => ({
-                docs: header.docs ?? undefined,
-                key: header.name.wireValue,
-                type: convertTypeReference(header.valueType),
-            })),
+            queryParameters: irEndpoint.queryParameters.map(
+                (queryParameter): FernRegistry.api.v1.register.QueryParameter => ({
+                    description: queryParameter.docs ?? undefined,
+                    key: queryParameter.name.wireValue,
+                    type: convertTypeReference(queryParameter.valueType),
+                })
+            ),
+            headers: [...irService.headers, ...irEndpoint.headers].map(
+                (header): FernRegistry.api.v1.register.Header => ({
+                    description: header.docs ?? undefined,
+                    key: header.name.wireValue,
+                    type: convertTypeReference(header.valueType),
+                })
+            ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response:
                 irEndpoint.response != null ? convertResponseBody(irEndpoint.response.responseBodyType) : undefined,
@@ -84,11 +90,13 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
             inlinedRequestBody: (inlinedRequestBody) => {
                 return FernRegistry.api.v1.register.HttpBodyShape.object({
                     extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
-                    properties: inlinedRequestBody.properties.map((property) => ({
-                        docs: property.docs ?? undefined,
-                        key: property.name.wireValue,
-                        valueType: convertTypeReference(property.valueType),
-                    })),
+                    properties: inlinedRequestBody.properties.map(
+                        (property): FernRegistry.api.v1.register.ObjectProperty => ({
+                            description: property.docs ?? undefined,
+                            key: property.name.wireValue,
+                            valueType: convertTypeReference(property.valueType),
+                        })
+                    ),
                 });
             },
             reference: (reference) => {
