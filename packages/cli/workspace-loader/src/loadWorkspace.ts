@@ -45,7 +45,7 @@ export async function loadWorkspace({
     const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
 
     const dependenciesConfiguration = await loadDependenciesConfiguration({ absolutePathToWorkspace, context });
-    const yamlFiles = await listFiles(absolutePathToDefinition, "yml,yaml");
+    const yamlFiles = await listFiles(absolutePathToDefinition, "{yml,yaml}");
 
     const parseResult = await parseYamlFiles(yamlFiles);
     if (!parseResult.didSucceed) {
