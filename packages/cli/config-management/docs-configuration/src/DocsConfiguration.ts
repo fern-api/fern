@@ -1,3 +1,4 @@
+import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 export interface DocsConfiguration {
@@ -41,20 +42,7 @@ export declare namespace DocsNavigationItem {
     export interface ApiSection {
         type: "apiSection";
         title: string;
-        audiences: ApiSectionAudiences;
-    }
-}
-
-export type ApiSectionAudiences = ApiSectionAudiences.AllAudiences | ApiSectionAudiences.SelectAudiences;
-
-export declare namespace ApiSectionAudiences {
-    export interface AllAudiences {
-        type: "all";
-    }
-
-    export interface SelectAudiences {
-        type: "select";
-        audiences: string[];
+        audiences: Audiences;
     }
 }
 

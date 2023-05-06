@@ -6,7 +6,7 @@ import { convertTypeId, convertTypeReference } from "./convertTypeShape";
 export function convertPackage(
     irPackage: Ir.ir.Package,
     ir: Ir.ir.IntermediateRepresentation
-): FernRegistry.ApiDefinitionPackage {
+): FernRegistry.api.v1.register.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
     return {
         endpoints: service != null ? convertService(service, ir) : [],
@@ -18,11 +18,12 @@ export function convertPackage(
 function convertService(
     irService: Ir.http.HttpService,
     ir: Ir.ir.IntermediateRepresentation
-): FernRegistry.EndpointDefinition[] {
+): FernRegistry.api.v1.register.EndpointDefinition[] {
     return irService.endpoints.map(
-        (irEndpoint): FernRegistry.EndpointDefinition => ({
-            docs: irEndpoint.docs ?? undefined,
-            id: irEndpoint.name.originalName,
+        (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
+            description: irEndpoint.docs ?? undefined,
+            method: convertHttpMethod(irEndpoint.method),
+            id: FernRegistry.api.v1.register.EndpointId(irEndpoint.name.originalName),
             name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path: {
                 pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map((pathParameter) => ({
@@ -44,73 +45,95 @@ function convertService(
             })),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response:
-                irEndpoint.response != null ? convertTypeReference(irEndpoint.response.responseBodyType) : undefined,
+                irEndpoint.response != null ? convertResponseBody(irEndpoint.response.responseBodyType) : undefined,
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
 }
 
-function convertHttpPath(irPath: Ir.http.HttpPath): FernRegistry.EndpointPathPart[] {
+function convertHttpMethod(method: Ir.http.HttpMethod): FernRegistry.api.v1.register.HttpMethod {
+    return Ir.http.HttpMethod._visit<FernRegistry.api.v1.register.HttpMethod>(method, {
+        get: () => FernRegistry.api.v1.register.HttpMethod.Get,
+        post: () => FernRegistry.api.v1.register.HttpMethod.Post,
+        put: () => FernRegistry.api.v1.register.HttpMethod.Put,
+        patch: () => FernRegistry.api.v1.register.HttpMethod.Patch,
+        delete: () => FernRegistry.api.v1.register.HttpMethod.Delete,
+        _unknown: () => {
+            throw new Error("Unknown http method: " + method);
+        },
+    });
+}
+
+function convertHttpPath(irPath: Ir.http.HttpPath): FernRegistry.api.v1.register.EndpointPathPart[] {
     return [
-        FernRegistry.EndpointPathPart.literal(irPath.head),
+        FernRegistry.api.v1.register.EndpointPathPart.literal(irPath.head),
         ...irPath.parts.flatMap((part) => [
-            FernRegistry.EndpointPathPart.pathParameter(convertPathParameterKey(part.pathParameter)),
-            FernRegistry.EndpointPathPart.literal(part.tail),
+            FernRegistry.api.v1.register.EndpointPathPart.pathParameter(convertPathParameterKey(part.pathParameter)),
+            FernRegistry.api.v1.register.EndpointPathPart.literal(part.tail),
         ]),
     ];
 }
 
-function convertPathParameterKey(irPathParameterKey: string): FernRegistry.PathParameterKey {
-    return FernRegistry.PathParameterKey(irPathParameterKey);
+function convertPathParameterKey(irPathParameterKey: string): FernRegistry.api.v1.register.PathParameterKey {
+    return FernRegistry.api.v1.register.PathParameterKey(irPathParameterKey);
 }
 
-function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.Type {
-    return Ir.http.HttpRequestBody._visit<FernRegistry.Type>(irRequest, {
-        inlinedRequestBody: (inlinedRequestBody) => {
-            return FernRegistry.Type.object({
-                extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
-                properties: inlinedRequestBody.properties.map((property) => ({
-                    docs: property.docs ?? undefined,
-                    key: property.name.wireValue,
-                    valueType: convertTypeReference(property.valueType),
-                })),
-            });
-        },
-        reference: (reference) => {
-            return convertTypeReference(reference.requestBodyType);
-        },
-        fileUpload: () => {
-            throw new Error("File upload is not supported: " + irRequest.type);
-        },
-        _unknown: () => {
-            throw new Error("Unknown HttpRequestBody: " + irRequest.type);
-        },
-    });
+function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.api.v1.register.HttpBody {
+    return {
+        type: Ir.http.HttpRequestBody._visit<FernRegistry.api.v1.register.HttpBodyShape>(irRequest, {
+            inlinedRequestBody: (inlinedRequestBody) => {
+                return FernRegistry.api.v1.register.HttpBodyShape.object({
+                    extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
+                    properties: inlinedRequestBody.properties.map((property) => ({
+                        docs: property.docs ?? undefined,
+                        key: property.name.wireValue,
+                        valueType: convertTypeReference(property.valueType),
+                    })),
+                });
+            },
+            reference: (reference) => {
+                return FernRegistry.api.v1.register.HttpBodyShape.reference(
+                    convertTypeReference(reference.requestBodyType)
+                );
+            },
+            fileUpload: () => {
+                throw new Error("File upload is not supported: " + irRequest.type);
+            },
+            _unknown: () => {
+                throw new Error("Unknown HttpRequestBody: " + irRequest.type);
+            },
+        }),
+    };
+}
+
+function convertResponseBody(irResponse: Ir.types.TypeReference): FernRegistry.api.v1.register.HttpBody {
+    return {
+        type: FernRegistry.api.v1.register.HttpBodyShape.reference(convertTypeReference(irResponse)),
+    };
 }
 
 function convertExampleEndpointCall(
     irExample: Ir.http.ExampleEndpointCall,
     ir: Ir.ir.IntermediateRepresentation
-): FernRegistry.ExampleEndpointCall {
+): FernRegistry.api.v1.register.ExampleEndpointCall {
     return {
-        docs: irExample.docs ?? undefined,
-        url: irExample.url,
+        description: irExample.docs ?? undefined,
+        path: irExample.url,
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
-            FernRegistry.ExampleEndpointCall["pathParameters"]
+            FernRegistry.api.v1.register.ExampleEndpointCall["pathParameters"]
         >((pathParameters, irPathParameterExample) => {
             pathParameters[convertPathParameterKey(irPathParameterExample.key)] =
                 irPathParameterExample.value.jsonExample;
             return pathParameters;
         }, {}),
-        queryParameters: irExample.queryParameters.reduce<FernRegistry.ExampleEndpointCall["queryParameters"]>(
-            (queryParameters, irQueryParameterExample) => {
-                queryParameters[irQueryParameterExample.wireKey] = irQueryParameterExample.value.jsonExample;
-                return queryParameters;
-            },
-            {}
-        ),
+        queryParameters: irExample.queryParameters.reduce<
+            FernRegistry.api.v1.register.ExampleEndpointCall["queryParameters"]
+        >((queryParameters, irQueryParameterExample) => {
+            queryParameters[irQueryParameterExample.wireKey] = irQueryParameterExample.value.jsonExample;
+            return queryParameters;
+        }, {}),
         headers: [...irExample.serviceHeaders, ...irExample.endpointHeaders].reduce<
-            FernRegistry.ExampleEndpointCall["headers"]
+            FernRegistry.api.v1.register.ExampleEndpointCall["headers"]
         >((headers, irHeaderExample) => {
             headers[irHeaderExample.wireKey] = irHeaderExample.value.jsonExample;
             return headers;
@@ -133,6 +156,8 @@ function convertExampleEndpointCall(
     };
 }
 
-export function convertSubpackageId(irSubpackageId: Ir.commons.SubpackageId): FernRegistry.SubpackageId {
-    return FernRegistry.SubpackageId(irSubpackageId);
+export function convertSubpackageId(
+    irSubpackageId: Ir.commons.SubpackageId
+): FernRegistry.api.v1.register.SubpackageId {
+    return FernRegistry.api.v1.register.SubpackageId(irSubpackageId);
 }

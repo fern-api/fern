@@ -107,13 +107,14 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
         type: "fern",
         name: openapiWorkspace.name,
         generatorsConfiguration: openapiWorkspace.generatorsConfiguration,
-        docsConfiguration: openapiWorkspace.docsConfiguration,
-        absolutePathToDefinition: openapiWorkspace.absolutePathToDefinition,
-        absolutePathToWorkspace: openapiWorkspace.absolutePathToWorkspace,
+        docsDefinition: openapiWorkspace.docsDefinition,
+        absoluteFilepath: openapiWorkspace.absoluteFilepath,
         dependenciesConfiguration: {
             dependencies: {},
         },
         definition: {
+            // these files doesn't live on disk, so there's no absolute filepath
+            absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile),

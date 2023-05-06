@@ -3,12 +3,12 @@ import { readFile } from "fs/promises";
 import glob from "glob-promise";
 import { FernFile } from "./types/FernFile";
 
-export async function listYamlFilesForWorkspace(absolutePathToDefinition: AbsoluteFilePath): Promise<FernFile[]> {
+export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<FernFile[]> {
     const files: FernFile[] = [];
 
     const filepaths = (
-        await glob("**/*.{yml,yaml}", {
-            cwd: absolutePathToDefinition,
+        await glob(`**/*.${extensionGlob}`, {
+            cwd: root,
         })
     ).map(RelativeFilePath.of);
 
@@ -16,7 +16,7 @@ export async function listYamlFilesForWorkspace(absolutePathToDefinition: Absolu
         files.push(
             await createFernFile({
                 relativeFilepath: filepath,
-                absoluteFilepath: join(absolutePathToDefinition, filepath),
+                absoluteFilepath: join(root, filepath),
             })
         );
     }

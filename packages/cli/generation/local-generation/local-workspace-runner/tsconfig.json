@@ -4,6 +4,7 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../../commons/fs-utils" },
+    { "path": "../../../config-management/commons" },
     { "path": "../../../config-management/generators-configuration" },
     { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },

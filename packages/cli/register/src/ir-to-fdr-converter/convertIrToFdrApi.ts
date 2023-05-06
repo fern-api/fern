@@ -4,8 +4,8 @@ import { FernRegistry } from "@fern-fern/registry";
 import { convertPackage, convertSubpackageId } from "./convertPackage";
 import { convertTypeId, convertTypeShape } from "./convertTypeShape";
 
-export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.ApiDefinition {
-    const fdrApi: FernRegistry.ApiDefinition = {
+export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.api.v1.register.ApiDefinition {
+    const fdrApi: FernRegistry.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
@@ -13,17 +13,16 @@ export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.
 
     for (const [typeId, type] of entries(ir.types)) {
         fdrApi.types[convertTypeId(typeId)] = {
-            docs: type.docs ?? undefined,
+            description: type.docs ?? undefined,
             name: type.name.name.originalName,
             shape: convertTypeShape(type.shape),
-            examples: type.examples.map((example) => ({
-                json: example.jsonExample,
-            })),
         };
     }
 
     for (const [subpackageId, subpackage] of entries(ir.subpackages)) {
-        fdrApi.subpackages[convertSubpackageId(subpackageId)] = {
+        const convertedSubpackageId = convertSubpackageId(subpackageId);
+        fdrApi.subpackages[convertedSubpackageId] = {
+            subpackageId: convertedSubpackageId,
             name: subpackage.name.originalName,
             ...convertPackage(subpackage, ir),
         };

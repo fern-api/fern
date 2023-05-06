@@ -29,7 +29,7 @@ export async function writeDefinitionForWorkspaces({
 }
 
 async function writeDefinitionForWorkspace(workspace: FernWorkspace) {
-    const directoryOfDefinition = join(workspace.absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
+    const directoryOfDefinition = join(workspace.absoluteFilepath, RelativeFilePath.of(DEFINITION_DIRECTORY));
     await mkdir(directoryOfDefinition);
     await writeFile(
         join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)),

@@ -4,6 +4,9 @@
   "rules": {
     "depcheck": {
       "ignores": ["@types/react", "@emotion/react", "@emotion/styled"]
+    },
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/registry"]
     }
   }
 }

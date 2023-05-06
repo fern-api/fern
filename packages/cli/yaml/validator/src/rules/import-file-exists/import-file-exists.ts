@@ -10,7 +10,7 @@ export const ImportFileExistsRule: Rule = {
 
         const absolutePaths = new Set<string>();
         relativePaths.forEach((relativeFilepath) => {
-            const absolutePath = join(workspace.absolutePathToDefinition, RelativeFilePath.of(relativeFilepath));
+            const absolutePath = join(workspace.absoluteFilepath, RelativeFilePath.of(relativeFilepath));
             absolutePaths.add(absolutePath);
         });
 
@@ -19,7 +19,7 @@ export const ImportFileExistsRule: Rule = {
                 import: async ({ importedAs, importPath }, { relativeFilepath }) => {
                     const violations: RuleViolation[] = [];
                     const importAbsoluteFilepath = join(
-                        workspace.absolutePathToDefinition,
+                        workspace.definition.absoluteFilepath,
                         dirname(relativeFilepath),
                         RelativeFilePath.of(importPath)
                     );

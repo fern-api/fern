@@ -7,12 +7,10 @@ export async function registerWorkspacesV2({
     project,
     cliContext,
     token,
-    environment,
 }: {
     project: Project;
     cliContext: CliContext;
     token: FernToken;
-    environment: string | undefined;
 }): Promise<void> {
     await Promise.all(
         project.workspaces.map(async (workspace) => {
@@ -22,10 +20,10 @@ export async function registerWorkspacesV2({
                 } else {
                     await registerApi({
                         organization: project.config.organization,
-                        environment,
                         workspace,
                         context,
                         token,
+                        audiences: { type: "all" },
                     });
                 }
             });

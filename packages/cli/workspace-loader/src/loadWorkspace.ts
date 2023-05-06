@@ -1,11 +1,11 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
-import { loadDocsConfiguration } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
+import { DEFINITION_DIRECTORY, DOCS_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { listYamlFilesForWorkspace } from "./listYamlFilesForWorkspace";
+import { listFiles } from "./listFiles";
 import { loadAndValidateOpenAPIDefinition } from "./loadAndValidateOpenAPIWorkspace";
+import { loadDocsDefinition } from "./loadDocsDefinition";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
@@ -21,23 +21,23 @@ export async function loadWorkspace({
     cliVersion: string;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-    const docsConfiguration = await loadDocsConfiguration({ absolutePathToWorkspace, context });
+
+    const absolutePathToDocsDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DOCS_DIRECTORY));
+    const docsDefinition = await loadDocsDefinition({ absolutePathToDocsDefinition, context });
 
     const absolutePathToOpenAPIDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
 
     if (openApiDirectoryExists) {
-        const openApiDirectory = await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition);
         return {
             didSucceed: true,
             workspace: {
                 type: "openapi",
                 name: "api",
-                absolutePathToWorkspace,
-                absolutePathToDefinition: absolutePathToOpenAPIDefinition,
+                absoluteFilepath: absolutePathToOpenAPIDefinition,
                 generatorsConfiguration,
-                docsConfiguration,
-                definition: openApiDirectory,
+                docsDefinition,
+                definition: await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition),
             },
         };
     }
@@ -45,7 +45,7 @@ export async function loadWorkspace({
     const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
 
     const dependenciesConfiguration = await loadDependenciesConfiguration({ absolutePathToWorkspace, context });
-    const yamlFiles = await listYamlFilesForWorkspace(absolutePathToDefinition);
+    const yamlFiles = await listFiles(absolutePathToDefinition, "yml,yaml");
 
     const parseResult = await parseYamlFiles(yamlFiles);
     if (!parseResult.didSucceed) {
@@ -75,12 +75,12 @@ export async function loadWorkspace({
         workspace: {
             type: "fern",
             name: structuralValidationResult.rootApiFile.contents.name,
-            absolutePathToWorkspace,
-            absolutePathToDefinition,
+            absoluteFilepath: absolutePathToWorkspace,
             generatorsConfiguration,
             dependenciesConfiguration,
-            docsConfiguration,
+            docsDefinition,
             definition: {
+                absoluteFilepath: absolutePathToDefinition,
                 rootApiFile: structuralValidationResult.rootApiFile,
                 namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
                 packageMarkers: processPackageMarkersResult.packageMarkers,

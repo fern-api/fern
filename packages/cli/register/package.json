@@ -28,13 +28,14 @@
   },
   "dependencies": {
     "@fern-api/auth": "workspace:*",
+    "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-model": "0.0.1511",
-    "@fern-fern/registry": "0.0.217",
+    "@fern-fern/registry": "^0.0.328",
     "chalk": "^5.0.1",
     "lodash-es": "^4.17.21"
   },

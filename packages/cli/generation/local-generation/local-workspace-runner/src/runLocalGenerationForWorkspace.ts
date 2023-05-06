@@ -1,5 +1,6 @@
+import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
-import { GeneratorAudiences, GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
+import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
@@ -75,7 +76,7 @@ async function writeFilesToDiskAndRunGenerator({
 }: {
     organization: string;
     workspace: FernWorkspace;
-    audiences: GeneratorAudiences;
+    audiences: Audiences;
     generatorInvocation: GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
     workspaceTempDir: DirectoryResult;
@@ -137,7 +138,7 @@ async function writeIrToFile({
     context,
 }: {
     workspace: FernWorkspace;
-    audiences: GeneratorAudiences;
+    audiences: Audiences;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     context: TaskContext;

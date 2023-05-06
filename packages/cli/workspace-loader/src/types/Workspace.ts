@@ -10,14 +10,14 @@ export type Workspace = FernWorkspace | OpenAPIWorkspace;
 export interface OpenAPIWorkspace {
     type: "openapi";
     name: string;
-    absolutePathToWorkspace: AbsoluteFilePath;
-    absolutePathToDefinition: AbsoluteFilePath;
+    absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
-    docsConfiguration: DocsConfiguration | undefined;
+    docsDefinition: DocsDefinition | undefined;
     definition: OpenAPIDefinition;
 }
 
 export interface OpenAPIDefinition {
+    absolutePath: AbsoluteFilePath;
     file: OpenAPIFile | undefined;
     subDirectories: OpenAPIDefinition[];
 }
@@ -32,15 +32,15 @@ export interface OpenAPIFile {
 export interface FernWorkspace {
     type: "fern";
     name: string;
-    absolutePathToWorkspace: AbsoluteFilePath;
-    absolutePathToDefinition: AbsoluteFilePath;
+    absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
     dependenciesConfiguration: DependenciesConfiguration;
-    docsConfiguration: DocsConfiguration | undefined;
     definition: FernDefinition;
+    docsDefinition: DocsDefinition | undefined;
 }
 
 export interface FernDefinition {
+    absoluteFilepath: AbsoluteFilePath;
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
     namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
@@ -49,4 +49,10 @@ export interface FernDefinition {
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {
     absoluteFilepath: AbsoluteFilePath;
+}
+
+export interface DocsDefinition {
+    absoluteFilepath: AbsoluteFilePath;
+    config: DocsConfiguration;
+    pages: Record<RelativeFilePath, string>;
 }
