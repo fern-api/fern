@@ -36,7 +36,6 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-model": "0.0.1511",
     "@fern-fern/registry": "^0.0.328",
-    "chalk": "^5.0.1",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
