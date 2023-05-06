@@ -7,7 +7,7 @@ import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { entries } from "lodash-es";
 import { CliContext } from "../../cli-context/CliContext";
-import { convertOpenApiWorkspaceToFernWorkspace } from "../generate/generateWorkspaces";
+import { convertOpenApiWorkspaceToFernWorkspace } from "../../utils/convertOpenApiWorkspaceToFernWorkspace";
 
 export async function writeDefinitionForWorkspaces({
     project,
@@ -19,10 +19,12 @@ export async function writeDefinitionForWorkspaces({
     await Promise.all(
         project.workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "openapi") {
-                    const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
-                    await writeDefinitionForWorkspace(fernWorkspace);
+                if (workspace.type !== "openapi") {
+                    context.failAndThrow("Cannot write definition for non-OpenAPI workspace.");
+                    return;
                 }
+                const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+                await writeDefinitionForWorkspace(fernWorkspace);
             });
         })
     );

@@ -8,7 +8,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-import { convertOpenApiWorkspaceToFernWorkspace } from "../generate/generateWorkspaces";
+import { convertOpenApiWorkspaceToFernWorkspace } from "../../utils/convertOpenApiWorkspaceToFernWorkspace";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";
 
 export async function generateIrForWorkspaces({

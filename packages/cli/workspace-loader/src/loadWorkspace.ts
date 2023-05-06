@@ -29,15 +29,16 @@ export async function loadWorkspace({
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
 
     if (openApiDirectoryExists) {
+        const openApiDefinition = await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition);
         return {
             didSucceed: true,
             workspace: {
                 type: "openapi",
                 name: "api",
-                absoluteFilepath: absolutePathToOpenAPIDefinition,
+                absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 docsDefinition,
-                definition: await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition),
+                definition: openApiDefinition,
             },
         };
     }

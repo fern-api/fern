@@ -10,19 +10,19 @@ export async function loadAndValidateOpenAPIDefinition(
     const subDirectories: OpenAPIDefinition[] = [];
     const files = await readdir(join(absolutePathToDefinition, relativeFilePath));
     for (const file of files) {
-        const absoluteFilepath = join(absolutePathToDefinition, relativeFilePath, RelativeFilePath.of(file));
-        const stats = await lstat(absoluteFilepath);
+        const absoluteFilepathToFile = join(absolutePathToDefinition, relativeFilePath, RelativeFilePath.of(file));
+        const stats = await lstat(absoluteFilepathToFile);
         if (stats.isDirectory()) {
             const subDirectory = await loadAndValidateOpenAPIDefinition(
-                absoluteFilepath,
+                absolutePathToDefinition,
                 join(relativeFilePath, RelativeFilePath.of(file))
             );
             subDirectories.push(subDirectory);
         } else if (openAPIFile == null) {
             openAPIFile = {
-                absoluteFilepath,
+                absoluteFilepath: absoluteFilepathToFile,
                 relativeFilepath: join(relativeFilePath, RelativeFilePath.of(file)),
-                contents: (await readFile(absoluteFilepath)).toString(),
+                contents: (await readFile(absoluteFilepathToFile)).toString(),
             };
         } else {
             throw new Error(
