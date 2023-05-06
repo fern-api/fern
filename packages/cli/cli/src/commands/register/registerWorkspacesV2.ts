@@ -1,6 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { Project } from "@fern-api/project-loader";
 import { registerApi } from "@fern-api/register";
+import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function registerWorkspacesV2({
@@ -25,6 +26,7 @@ export async function registerWorkspacesV2({
                         token,
                         audiences: { type: "all" },
                     });
+                    context.logger.info(chalk.green("Registered API"));
                 }
             });
         })

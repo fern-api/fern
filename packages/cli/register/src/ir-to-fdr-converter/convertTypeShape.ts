@@ -108,8 +108,16 @@ export function convertTypeReference(
                         itemType: convertTypeReference(itemType),
                     });
                 },
-                literal: () => {
-                    throw new Error("Literals are not supported");
+                literal: (literal) => {
+                    return Ir.types.Literal._visit(literal, {
+                        string: (stringLiteral) =>
+                            FernRegistry.api.v1.register.TypeReference.literal(
+                                FernRegistry.api.v1.register.LiteralType.stringLiteral(stringLiteral)
+                            ),
+                        _unknown: () => {
+                            throw new Error("Unknown literal type: " + literal.type);
+                        },
+                    });
                 },
                 _unknown: () => {
                     throw new Error("Unknown container reference: " + container._type);

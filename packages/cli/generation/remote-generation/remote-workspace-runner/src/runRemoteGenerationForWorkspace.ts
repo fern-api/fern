@@ -22,7 +22,7 @@ export async function runRemoteGenerationForWorkspace({
     shouldLogS3Url: boolean;
     token: FernToken;
 }): Promise<void> {
-    if (generatorGroup.generators.length === 0) {
+    if (generatorGroup.docs == null && generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
         return;
     }

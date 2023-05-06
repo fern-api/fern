@@ -8,6 +8,7 @@ import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry } from "@fern-fern/registry";
+import chalk from "chalk";
 
 export async function publishDocs({
     token,
@@ -38,6 +39,7 @@ export async function publishDocs({
             audiences,
         })
     );
+    context.logger.info(chalk.green("Published docs to " + domain));
 }
 
 async function constructRegisterDocsRequest({
