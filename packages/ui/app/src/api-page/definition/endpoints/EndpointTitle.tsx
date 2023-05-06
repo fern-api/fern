@@ -8,5 +8,5 @@ export declare namespace EndpointTitle {
 }
 
 export const EndpointTitle: React.FC<EndpointTitle.Props> = ({ endpoint }) => {
-    return <span>{getEndpointTitleAsString(endpoint)}</span>;
+    return <>{getEndpointTitleAsString(endpoint)}</>;
 };

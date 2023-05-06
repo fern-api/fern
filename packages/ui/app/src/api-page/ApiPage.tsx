@@ -1,22 +1,34 @@
-import { generatePath } from "react-router-dom";
-import { useCurrentOrganizationIdOrThrow } from "../routes/useCurrentOrganization";
-import { ApiTabsContextProvider } from "./api-tabs/context/ApiTabsContextProvider";
+import { NonIdealState, Spinner } from "@blueprintjs/core";
+import { FernRegistry } from "@fern-fern/registry";
+import { useMemo } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useApiDefinition } from "../queries/useApiDefinition";
+import { ApiDefinitionContextProvider } from "./api-context/ApiDefinitionContextProvider";
 import { ApiPageContents } from "./ApiPageContents";
 import { DefinitionRoutes } from "./routes";
-import { useCurrentApiIdOrThrow } from "./routes/useCurrentApiId";
+import { parseEnvironmentIdFromPath } from "./routes/useCurrentEnvironment";
 
 export const ApiPage: React.FC = () => {
-    const organiationId = useCurrentOrganizationIdOrThrow();
-    const apiId = useCurrentApiIdOrThrow();
+    const location = useLocation();
+    const environmentId = useMemo(() => parseEnvironmentIdFromPath(location.pathname), [location.pathname]);
+
+    const { [DefinitionRoutes.API_DEFINITION.parameters.API_ID]: apiId } = useParams();
+
+    if (apiId == null) {
+        throw new Error("Api ID is not defined.");
+    }
+    const api = useApiDefinition({
+        apiId: FernRegistry.ApiId(apiId),
+        environmentId,
+    });
+
+    if (api.type !== "loaded") {
+        return <NonIdealState title={<Spinner />} />;
+    }
 
     return (
-        <ApiTabsContextProvider
-            noTabsRedirectPath={generatePath(DefinitionRoutes.API_DEFINITION.absolutePath, {
-                ORGANIZATION_ID: organiationId,
-                API_ID: apiId,
-            })}
-        >
+        <ApiDefinitionContextProvider api={api.value}>
             <ApiPageContents />
-        </ApiTabsContextProvider>
+        </ApiDefinitionContextProvider>
     );
 };

@@ -1,56 +1,112 @@
 import { FernRegistry } from "@fern-fern/registry";
-import classNames from "classnames";
-import { useCallback, useMemo } from "react";
-import { AiFillFolder, AiFillFolderOpen } from "react-icons/ai";
-import { PackagePath } from "../../../commons/PackagePath";
+import { startCase } from "lodash-es";
+import { useContext, useMemo } from "react";
+import { generatePath, useLocation } from "react-router-dom";
+import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
+import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { CollapsibleSidebarSection } from "./CollapsibleSidebarSection";
-import { DefinitionSidebarIconLayout } from "./DefinitionSidebarIconLayout";
+import { DefinitionRoutes } from "../../routes";
+import { useCurrentApiIdOrThrow } from "../../routes/useCurrentApiId";
+import { useCurrentPathname } from "../../routes/useCurrentPathname";
+import { ApiDefinitionSidebarContext, ApiDefinitionSidebarContextValue } from "./context/ApiDefinitionSidebarContext";
 import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
+import { SidebarSection } from "./SidebarSection";
 
 export declare namespace PackageSidebarSection {
     export interface Props {
         subpackageId: FernRegistry.SubpackageId;
-        packagePath: PackagePath;
     }
 }
 
-const FOLDER_COLOR = "#0cac57";
-const FOLDER_SIZE = 20;
-
-export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({ subpackageId, packagePath }) => {
-    const { resolveSubpackageById } = useApiDefinitionContext();
+export const PackageSidebarSection: React.FC<PackageSidebarSection.Props> = ({ subpackageId }) => {
+    const { resolveSubpackageById, urlPathResolver } = useApiDefinitionContext();
     const subpackage = resolveSubpackageById(subpackageId);
 
-    const packageNames = useMemo(() => [...packagePath, subpackage.name], [packagePath, subpackage.name]);
-
-    const renderTitle = useCallback(
-        ({ isCollapsed, isHovering }: { isCollapsed: boolean; isHovering: boolean }) => {
-            return (
-                <div className="flex gap-1 items-center">
-                    <DefinitionSidebarIconLayout>
-                        {isCollapsed ? (
-                            <AiFillFolder color={FOLDER_COLOR} size={FOLDER_SIZE} />
-                        ) : (
-                            <AiFillFolderOpen color={FOLDER_COLOR} size={FOLDER_SIZE} />
-                        )}
-                    </DefinitionSidebarIconLayout>
-                    <div
-                        className={classNames({
-                            "font-bold": isHovering,
-                        })}
-                    >
-                        {subpackage.name}
-                    </div>
-                </div>
-            );
-        },
-        [subpackage.name]
+    const currentPathname = useCurrentPathname();
+    const location = useLocation();
+    const isSelected = useMemo(
+        () =>
+            urlPathResolver.isSubpackageSelected({
+                subpackageId,
+                pathname: currentPathname,
+                hash: location.hash,
+            }),
+        [currentPathname, location.hash, subpackageId, urlPathResolver]
     );
+
+    const isEndpointSelected = useMemo(
+        () =>
+            urlPathResolver.isSubpackageEndpointSelected({
+                subpackageId,
+                pathname: currentPathname,
+                hash: location.hash,
+            }),
+        [currentPathname, location.hash, subpackageId, urlPathResolver]
+    );
+
+    const subpackagePath = useMemo(
+        () => urlPathResolver.getUrlPathForSubpackage(subpackageId),
+        [subpackageId, urlPathResolver]
+    );
+
+    const organizationId = useCurrentOrganizationIdOrThrow();
+    const apiId = useCurrentApiIdOrThrow();
+    const targetUrlPath = useMemo(
+        () =>
+            generatePath(DefinitionRoutes.API_PACKAGE.absolutePath, {
+                ENVIRONMENT_ID: "latest",
+                ORGANIZATION_ID: organizationId,
+                API_ID: apiId,
+                "*": subpackagePath,
+            }),
+        [apiId, organizationId, subpackagePath]
+    );
+
+    const { depth } = useContext(ApiDefinitionSidebarContext);
+    const contextValue = useMemo((): ApiDefinitionSidebarContextValue => ({ depth: depth + 1 }), [depth]);
+
+    const resolvedUrlPath = useMemo(
+        (): ResolvedUrlPath => ({
+            type: "subpackage",
+            subpackageId,
+            endpointId: undefined,
+        }),
+        [subpackageId]
+    );
+
+    const hasEndpoints = useMemo(
+        () => hasEndpointsRecursive(subpackageId, resolveSubpackageById),
+        [resolveSubpackageById, subpackageId]
+    );
+    if (!hasEndpoints) {
+        return null;
+    }
 
     return (
-        <CollapsibleSidebarSection title={renderTitle}>
-            <PackageSidebarSectionContents package={subpackage} packagePath={packageNames} />
-        </CollapsibleSidebarSection>
+        <SidebarSection
+            title={<div className="font-bold">{startCase(subpackage.name)}</div>}
+            path={targetUrlPath}
+            resolvedUrlPath={resolvedUrlPath}
+            isSelected={isSelected}
+        >
+            <ApiDefinitionSidebarContext.Provider value={contextValue}>
+                <PackageSidebarSectionContents
+                    package={subpackage}
+                    shouldShowEndpoints={isSelected || isEndpointSelected}
+                    subpackageId={subpackageId}
+                />
+            </ApiDefinitionSidebarContext.Provider>
+        </SidebarSection>
     );
 };
+
+function hasEndpointsRecursive(
+    subpackageId: FernRegistry.SubpackageId,
+    resolveSubpackageById: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage
+): boolean {
+    const subpackage = resolveSubpackageById(subpackageId);
+    if (subpackage.endpoints.length > 0) {
+        return true;
+    }
+    return subpackage.subpackages.some((s) => hasEndpointsRecursive(s, resolveSubpackageById));
+}

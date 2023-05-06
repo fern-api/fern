@@ -1,60 +1,40 @@
-import { Icon, IconName } from "@blueprintjs/core";
+import { Text } from "@blueprintjs/core";
 import { useIsHovering } from "@fern-api/react-commons";
 import classNames from "classnames";
-import { DefinitionSidebarIconLayout } from "./DefinitionSidebarIconLayout";
-import { SidebarItemSelectionOverlay } from "./SidebarItemSelectionOverlay";
+import { useContext } from "react";
+import { ApiDefinitionSidebarContext } from "./context/ApiDefinitionSidebarContext";
 
 export declare namespace SidebarItemLayout {
     export interface Props {
         title: JSX.Element | string | ((args: { isHovering: boolean }) => JSX.Element | string);
-        icon?: JSX.Element | IconName | ((args: { isHovering: boolean }) => JSX.Element | IconName);
-        overlayClassName?: string | ((args: { isHovering: boolean }) => string | undefined);
+        className?: string;
         onClick?: () => void;
         onDoubleClick?: () => void;
     }
 }
 
-export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
-    title,
-    icon,
-    onClick,
-    onDoubleClick,
-    overlayClassName,
-}) => {
+export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className, title, onClick, onDoubleClick }) => {
     const { isHovering, ...hoveringCallbacks } = useIsHovering();
 
     const isClickable = onClick != null || onDoubleClick != null;
 
-    const maybeOverlayClassName =
-        typeof overlayClassName === "function" ? overlayClassName({ isHovering }) : overlayClassName;
-    const maybeIcon = typeof icon === "function" ? icon({ isHovering }) : icon;
+    const { depth } = useContext(ApiDefinitionSidebarContext);
 
     return (
-        <div
-            className={classNames("relative flex select-none h-[30px] whitespace-nowrap", {
+        <Text
+            ellipsize
+            className={classNames(className, "flex shrink-0 items-center h-[30px] min-w-0 text-gray-500", {
                 "cursor-pointer": isClickable,
             })}
+            style={{
+                paddingLeft: 12 + 15 * depth,
+                paddingRight: 12,
+            }}
             onClick={onClick}
             onDoubleClick={onDoubleClick}
             {...hoveringCallbacks}
         >
-            {maybeOverlayClassName && <SidebarItemSelectionOverlay className={maybeOverlayClassName} />}
-            {maybeIcon != null && (
-                <div
-                    // z index so it renders above the overlay
-                    className="flex z-0"
-                >
-                    <DefinitionSidebarIconLayout>
-                        {typeof maybeIcon === "string" ? <Icon icon={maybeIcon} /> : maybeIcon}
-                    </DefinitionSidebarIconLayout>
-                </div>
-            )}
-            <div
-                // z index so it renders above the overlay
-                className="z-0 min-w-0 flex items-center"
-            >
-                {typeof title === "function" ? title({ isHovering }) : title}
-            </div>
-        </div>
+            {typeof title === "function" ? title({ isHovering }) : title}
+        </Text>
     );
 };

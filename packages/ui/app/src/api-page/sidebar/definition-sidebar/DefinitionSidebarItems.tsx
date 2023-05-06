@@ -1,17 +1,25 @@
-import { EMPTY_ARRAY } from "@fern-api/core-utils";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { PackageSidebarSectionContents } from "./PackageSidebarSectionContents";
+import { ApiDefinitionSidebarContext, ApiDefinitionSidebarContextValue } from "./context/ApiDefinitionSidebarContext";
+import { PackageSidebarSection } from "./PackageSidebarSection";
+import { SidebarItemLayout } from "./SidebarItemLayout";
+import { TopLevelEndpointSidebarItem } from "./TopLevelEndpointSidebarItem";
+
+const CONTEXT_VALUE: ApiDefinitionSidebarContextValue = { depth: 1 };
 
 export const DefinitionSidebarItems: React.FC = () => {
     const { api } = useApiDefinitionContext();
 
-    if (api.type !== "loaded") {
-        return null;
-    }
-
     return (
-        <div className="flex flex-col overflow-auto pl-3">
-            <PackageSidebarSectionContents package={api.value.rootPackage} packagePath={EMPTY_ARRAY} />
+        <div className="flex flex-col overflow-y-auto">
+            <SidebarItemLayout title={<div className="uppercase font-bold text-white">API Reference</div>} />
+            <ApiDefinitionSidebarContext.Provider value={CONTEXT_VALUE}>
+                {api.rootPackage.endpoints.map((endpoint) => (
+                    <TopLevelEndpointSidebarItem key={endpoint.id} endpoint={endpoint} />
+                ))}
+                {api.rootPackage.subpackages.map((subpackageId) => (
+                    <PackageSidebarSection key={subpackageId} subpackageId={subpackageId} />
+                ))}
+            </ApiDefinitionSidebarContext.Provider>
         </div>
     );
 };
