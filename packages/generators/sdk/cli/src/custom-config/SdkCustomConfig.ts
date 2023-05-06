@@ -11,4 +11,5 @@ export interface SdkCustomConfig {
     includeOtherInUnionTypes: boolean;
     requireDefaultEnvironment: boolean;
     timeoutInSeconds: number | "infinity" | undefined;
+    skipResponseValidation: boolean;
 }

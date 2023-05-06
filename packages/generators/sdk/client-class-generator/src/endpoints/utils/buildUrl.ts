@@ -42,6 +42,7 @@ export function buildUrl({
                         unrecognizedObjectKeys: "fail",
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
+                        skipValidation: false,
                     });
             }
 

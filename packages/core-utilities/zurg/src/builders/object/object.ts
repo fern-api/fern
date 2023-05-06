@@ -4,6 +4,7 @@ import { filterObject } from "../../utils/filterObject";
 import { isPlainObject, NOT_AN_OBJECT_ERROR_MESSAGE } from "../../utils/isPlainObject";
 import { keys } from "../../utils/keys";
 import { MaybePromise } from "../../utils/MaybePromise";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { partition } from "../../utils/partition";
 import { getObjectLikeUtils } from "../object-like";
 import { getSchemaUtils } from "../schema-utils";
@@ -77,6 +78,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
+                skipValidation: opts?.skipValidation,
             });
         },
 
@@ -121,6 +123,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
+                skipValidation: opts?.skipValidation,
             });
         },
 
@@ -128,7 +131,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
         ...getObjectLikeUtils(baseSchema),
         ...getObjectUtils(baseSchema),
@@ -140,6 +143,7 @@ async function validateAndTransformObject<Transformed>({
     requiredKeys,
     getProperty,
     unrecognizedObjectKeys = "fail",
+    skipValidation = false,
 }: {
     value: unknown;
     requiredKeys: string[];
@@ -147,6 +151,7 @@ async function validateAndTransformObject<Transformed>({
         preTransformedKey: string
     ) => { transformedKey: string; transform: (propertyValue: unknown) => MaybePromise<MaybeValid<any>> } | undefined;
     unrecognizedObjectKeys: "fail" | "passthrough" | "strip" | undefined;
+    skipValidation: boolean | undefined;
 }): Promise<MaybeValid<Transformed>> {
     if (!isPlainObject(value)) {
         return {
@@ -174,6 +179,7 @@ async function validateAndTransformObject<Transformed>({
             if (value.ok) {
                 transformed[property.transformedKey] = value.value;
             } else {
+                transformed[preTransformedKey] = preTransformedItemValue;
                 errors.push(
                     ...value.errors.map((error) => ({
                         path: [preTransformedKey, ...error.path],
@@ -207,7 +213,7 @@ async function validateAndTransformObject<Transformed>({
             }))
     );
 
-    if (errors.length === 0) {
+    if (errors.length === 0 || skipValidation) {
         return {
             ok: true,
             value: transformed as Transformed,

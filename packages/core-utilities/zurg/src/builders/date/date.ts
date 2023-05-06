@@ -1,4 +1,5 @@
 import { BaseSchema, Schema, SchemaType } from "../../Schema";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils";
 
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
@@ -47,7 +48,7 @@ export function date(): Schema<string, Date> {
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
     };
 }

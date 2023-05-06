@@ -3,6 +3,10 @@ import { GeneratedSdkErrorSchema } from "@fern-typescript/contexts";
 import { GeneratedSdkErrorSchemaImpl } from "./GeneratedSdkErrorSchemaImpl";
 
 export declare namespace SdkErrorSchemaGenerator {
+    export interface Init {
+        skipValidation: boolean;
+    }
+
     export namespace generateError {
         export interface Args {
             errorName: string;
@@ -12,6 +16,12 @@ export declare namespace SdkErrorSchemaGenerator {
 }
 
 export class SdkErrorSchemaGenerator {
+    private skipValidation: boolean;
+
+    constructor({ skipValidation }: SdkErrorSchemaGenerator.Init) {
+        this.skipValidation = skipValidation;
+    }
+
     public generateSdkErrorSchema({
         errorDeclaration,
         errorName,
@@ -23,6 +33,7 @@ export class SdkErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
+            skipValidation: this.skipValidation,
         });
     }
 }

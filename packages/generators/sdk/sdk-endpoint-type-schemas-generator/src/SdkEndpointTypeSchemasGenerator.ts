@@ -10,6 +10,7 @@ export declare namespace SdkEndpointTypeSchemasGenerator {
         errorResolver: ErrorResolver;
         intermediateRepresentation: IntermediateRepresentation;
         shouldGenerateErrors: boolean;
+        skipResponseValidation: boolean;
     }
 
     export namespace generateEndpointTypeSchemas {
@@ -25,15 +26,18 @@ export class SdkEndpointTypeSchemasGenerator {
     private errorResolver: ErrorResolver;
     private intermediateRepresentation: IntermediateRepresentation;
     private shouldGenerateErrors: boolean;
+    private skipResponseValidation: boolean;
 
     constructor({
         errorResolver,
         intermediateRepresentation,
         shouldGenerateErrors,
+        skipResponseValidation,
     }: SdkEndpointTypeSchemasGenerator.Init) {
         this.errorResolver = errorResolver;
         this.intermediateRepresentation = intermediateRepresentation;
         this.shouldGenerateErrors = shouldGenerateErrors;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public generateEndpointTypeSchemas({
@@ -48,6 +52,7 @@ export class SdkEndpointTypeSchemasGenerator {
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             shouldGenerateErrors: this.shouldGenerateErrors,
+            skipResponseValidation: this.skipResponseValidation,
         });
     }
 }

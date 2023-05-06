@@ -103,6 +103,9 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        customConfig: {
+            skipResponseValidation: true,
+        },
     },
     {
         path: "file-upload",

@@ -78,6 +78,7 @@ export declare namespace SdkGenerator {
         includeOtherInUnionTypes: boolean;
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -220,7 +221,9 @@ export class SdkGenerator {
         this.sdkErrorGenerator = new SdkErrorGenerator({
             neverThrowErrors: config.neverThrowErrors,
         });
-        this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator();
+        this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator({
+            skipValidation: config.skipResponseValidation,
+        });
         this.endpointErrorUnionGenerator = new EndpointErrorUnionGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
@@ -229,6 +232,7 @@ export class SdkGenerator {
             errorResolver: this.errorResolver,
             intermediateRepresentation,
             shouldGenerateErrors: config.neverThrowErrors,
+            skipResponseValidation: config.skipResponseValidation,
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();

@@ -59,6 +59,7 @@ export class GeneratedExpressErrorSchemaImpl
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         unrecognizedObjectKeys: "strip",
+                        skipValidation: false,
                     });
             case "unknown":
                 return referenceToBody;
@@ -68,6 +69,7 @@ export class GeneratedExpressErrorSchemaImpl
                     allowUnrecognizedEnumValues: false,
                     allowUnrecognizedUnionMembers: false,
                     unrecognizedObjectKeys: "strip",
+                    skipValidation: false,
                 });
             default:
                 assertNever(this.type);

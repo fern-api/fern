@@ -2,6 +2,7 @@ import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
 import { entries } from "../../utils/entries";
 import { isPlainObject, NOT_AN_OBJECT_ERROR_MESSAGE } from "../../utils/isPlainObject";
 import { MaybePromise } from "../../utils/MaybePromise";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils";
 import { BaseRecordSchema, RecordSchema } from "./types";
 
@@ -30,7 +31,7 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
     };
 }

@@ -11,6 +11,7 @@ export declare namespace GeneratedSdkErrorSchemaImpl {
         errorName: string;
         errorDeclaration: ErrorDeclaration;
         type: TypeReference;
+        skipValidation: boolean;
     }
 }
 
@@ -20,11 +21,13 @@ export class GeneratedSdkErrorSchemaImpl
 {
     private errorDeclaration: ErrorDeclaration;
     private type: TypeReference;
+    private skipValidation: boolean;
 
-    constructor({ errorName, errorDeclaration, type }: GeneratedSdkErrorSchemaImpl.Init) {
+    constructor({ errorName, errorDeclaration, type, skipValidation }: GeneratedSdkErrorSchemaImpl.Init) {
         super({ typeName: errorName });
         this.errorDeclaration = errorDeclaration;
         this.type = type;
+        this.skipValidation = skipValidation;
     }
 
     public writeToFile(context: SdkErrorSchemaContext): void {
@@ -59,6 +62,7 @@ export class GeneratedSdkErrorSchemaImpl
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
+                        skipValidation: this.skipValidation,
                     });
             case "unknown":
                 return referenceToBody;
@@ -68,6 +72,7 @@ export class GeneratedSdkErrorSchemaImpl
                     allowUnrecognizedEnumValues: true,
                     allowUnrecognizedUnionMembers: true,
                     unrecognizedObjectKeys: "passthrough",
+                    skipValidation: this.skipValidation,
                 });
             default:
                 assertNever(this.type);

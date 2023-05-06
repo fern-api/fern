@@ -457,6 +457,14 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 )
             );
         }
+        if (schemaOptions.skipValidation) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("skipValidation"),
+                    ts.factory.createTrue()
+                )
+            );
+        }
 
         if (properties.length > 0) {
             return [ts.factory.createObjectLiteralExpression(properties)];

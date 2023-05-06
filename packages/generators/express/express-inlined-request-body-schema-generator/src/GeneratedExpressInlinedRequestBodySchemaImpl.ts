@@ -47,6 +47,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             unrecognizedObjectKeys: "fail",
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
+            skipValidation: false,
         });
     }
 

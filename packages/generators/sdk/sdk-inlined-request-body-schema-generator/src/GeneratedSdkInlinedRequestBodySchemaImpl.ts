@@ -44,6 +44,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             unrecognizedObjectKeys: "strip",
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
+            skipValidation: false,
         });
     }
 

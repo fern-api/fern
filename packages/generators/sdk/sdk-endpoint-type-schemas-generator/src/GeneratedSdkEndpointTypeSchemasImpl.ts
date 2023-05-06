@@ -19,6 +19,7 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         shouldGenerateErrors: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -32,6 +33,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private generatedStreamDataSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private generatedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
+    private skipResponseValidation: boolean;
 
     constructor({
         packageId,
@@ -40,6 +42,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorResolver,
         errorDiscriminationStrategy,
         shouldGenerateErrors,
+        skipResponseValidation,
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
 
@@ -122,6 +125,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                   errorDiscriminationStrategy,
               })
             : undefined;
+
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     private getGeneratedEndpointErrorSchema({
@@ -201,6 +206,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         unrecognizedObjectKeys: "strip",
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
+                        skipValidation: false,
                     });
             case "primitive":
             case "container":
@@ -213,6 +219,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         unrecognizedObjectKeys: "strip",
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
+                        skipValidation: false,
                     });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -237,6 +244,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
+                        skipValidation: this.skipResponseValidation,
                     });
             case "primitive":
             case "container":
@@ -249,6 +257,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
+                        skipValidation: this.skipResponseValidation,
                     });
             default:
                 assertNever(this.endpoint.response.responseBodyType);
@@ -263,6 +272,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true,
             unrecognizedObjectKeys: "passthrough",
+            skipValidation: this.skipResponseValidation,
         });
     }
 
@@ -330,6 +340,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
+                        skipValidation: this.skipResponseValidation,
                     });
             case "primitive":
             case "container":
@@ -342,6 +353,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
+                        skipValidation: this.skipResponseValidation,
                     });
             default:
                 assertNever(this.endpoint.streamingResponse.dataEventType);

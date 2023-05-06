@@ -1,4 +1,5 @@
 import { BaseSchema, Schema, SchemaType } from "../../Schema";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { list } from "../list";
 import { getSchemaUtils } from "../schema-utils";
 
@@ -35,7 +36,7 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
     };
 }

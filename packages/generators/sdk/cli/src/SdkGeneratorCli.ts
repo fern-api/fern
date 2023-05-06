@@ -24,6 +24,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             timeoutInSeconds: parsed?.timeoutInSeconds,
+            skipResponseValidation: parsed?.skipResponseValidation ?? false,
         };
     }
 
@@ -61,6 +62,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
                 timeoutInSeconds: customConfig.timeoutInSeconds,
+                skipResponseValidation: customConfig.skipResponseValidation,
             },
         });
 

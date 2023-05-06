@@ -70,4 +70,16 @@ export interface SchemaOptions {
      * @default false
      */
     allowUnrecognizedEnumValues?: boolean;
+
+    /**
+     * whether to allow data that doesn't conform to the schema.
+     * invalid data is passed through without transformation.
+     *
+     * when this is enabled, .parse() and .json() will always
+     * return `ok: true`. `.parseOrThrow()` and `.jsonOrThrow()`
+     * will never fail.
+     *
+     * @default false
+     */
+    skipValidation?: boolean;
 }

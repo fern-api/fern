@@ -1,5 +1,6 @@
 import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
 import { MaybePromise } from "../../utils/MaybePromise";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils";
 import { inferParsedUnidiscriminatedUnionSchema, inferRawUnidiscriminatedUnionSchema } from "./types";
 
@@ -26,7 +27,7 @@ export function undiscriminatedUnion<Schemas extends [Schema<any, any>, ...Schem
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
     };
 }

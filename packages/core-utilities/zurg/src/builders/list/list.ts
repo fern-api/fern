@@ -1,5 +1,6 @@
 import { BaseSchema, MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
 import { MaybePromise } from "../../utils/MaybePromise";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils";
 
 export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Parsed[]> {
@@ -10,7 +11,7 @@ export function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Pa
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
     };
 }

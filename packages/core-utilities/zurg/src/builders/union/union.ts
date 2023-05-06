@@ -2,6 +2,7 @@ import { BaseSchema, MaybeValid, SchemaType } from "../../Schema";
 import { isPlainObject, NOT_AN_OBJECT_ERROR_MESSAGE } from "../../utils/isPlainObject";
 import { keys } from "../../utils/keys";
 import { MaybePromise } from "../../utils/MaybePromise";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { enum_ } from "../enum";
 import { ObjectSchema } from "../object";
 import { getObjectLikeUtils, ObjectLikeSchema } from "../object-like";
@@ -57,7 +58,7 @@ export function union<D extends string | Discriminant<any, any>, U extends Union
     };
 
     return {
-        ...baseSchema,
+        ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
         ...getObjectLikeUtils(baseSchema),
     };

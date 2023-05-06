@@ -475,6 +475,17 @@ export interface SchemaOptions {
      * @default false
      */
     allowUnrecognizedEnumValues?: boolean;
+    /**
+     * whether to allow data that doesn't conform to the schema.
+     * invalid data is passed through without transformation.
+     *
+     * when this is enabled, .parse() and .json() will always
+     * return \`ok: true\`. \`.parseOrThrow()\` and \`.jsonOrThrow()\`
+     * will never fail.
+     *
+     * @default false
+     */
+    skipValidation?: boolean;
 }
 ",
             "name": "Schema.d.ts",
@@ -521,6 +532,7 @@ export declare function date(): Schema<string, Date>;
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.date = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX = /^([+-]?\\\\d{4}(?!\\\\d{2}\\\\b))((-?)((0[1-9]|1[0-2])(\\\\3([12]\\\\d|0[1-9]|3[01]))?|W([0-4]\\\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\\\d|[12]\\\\d{2}|3([0-5]\\\\d|6[1-6])))([T\\\\s]((([01]\\\\d|2[0-3])((:?)[0-5]\\\\d)?|24:?00)([.,]\\\\d+(?!:))?)?(\\\\17[0-5]\\\\d([.,]\\\\d+)?)?([zZ]|([+-])([01]\\\\d|2[0-3]):?([0-5]\\\\d)?)?)?)?$/;
@@ -567,7 +579,7 @@ function date() {
         getType: () => Schema_1.SchemaType.DATE,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -843,6 +855,7 @@ export declare function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<R
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.list = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function list(schema) {
     const baseSchema = {
@@ -851,7 +864,7 @@ function list(schema) {
         getType: () => Schema_1.SchemaType.LIST,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -1003,6 +1016,7 @@ const entries_1 = require(\\"../../utils/entries\\");
 const filterObject_1 = require(\\"../../utils/filterObject\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const partition_1 = require(\\"../../utils/partition\\");
 const object_like_1 = require(\\"../object-like\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -1043,6 +1057,7 @@ function object(schemas) {
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
+                skipValidation: opts?.skipValidation,
             });
         },
         json: async (parsed, opts) => {
@@ -1078,19 +1093,20 @@ function object(schemas) {
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
+                skipValidation: opts?.skipValidation,
             });
         },
         getType: () => Schema_1.SchemaType.OBJECT,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
         ...(0, object_like_1.getObjectLikeUtils)(baseSchema),
         ...getObjectUtils(baseSchema),
     };
 }
 exports.object = object;
-async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", }) {
+async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", skipValidation = false, }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
@@ -1114,6 +1130,7 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
                 transformed[property.transformedKey] = value.value;
             }
             else {
+                transformed[preTransformedKey] = preTransformedItemValue;
                 errors.push(...value.errors.map((error) => ({
                     path: [preTransformedKey, ...error.path],
                     message: error.message,
@@ -1142,7 +1159,7 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
         path: [],
         message: \`Missing required key \\"\${key}\\"\`,
     })));
-    if (errors.length === 0) {
+    if (errors.length === 0 || skipValidation) {
         return {
             ok: true,
             value: transformed,
@@ -1643,6 +1660,7 @@ exports.record = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function record(keySchema, valueSchema) {
     const baseSchema = {
@@ -1665,7 +1683,7 @@ function record(keySchema, valueSchema) {
         getType: () => Schema_1.SchemaType.RECORD,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -1999,6 +2017,7 @@ export declare function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Ra
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.set = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const list_1 = require(\\"../list\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function set(schema) {
@@ -2034,7 +2053,7 @@ function set(schema) {
         getType: () => Schema_1.SchemaType.SET,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -2095,6 +2114,7 @@ export declare function undiscriminatedUnion<Schemas extends [Schema<any, any>, 
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.undiscriminatedUnion = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function undiscriminatedUnion(schemas) {
     const baseSchema = {
@@ -2107,7 +2127,7 @@ function undiscriminatedUnion(schemas) {
         getType: () => Schema_1.SchemaType.UNDISCRIMINATED_UNION,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -2224,6 +2244,7 @@ exports.union = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const enum_1 = require(\\"../enum\\");
 const object_like_1 = require(\\"../object-like\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -2263,7 +2284,7 @@ function union(discriminant, union) {
         getType: () => Schema_1.SchemaType.UNION,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
         ...(0, object_like_1.getObjectLikeUtils)(baseSchema),
     };
@@ -2425,6 +2446,7 @@ export declare function createIdentitySchemaCreator<T>(schemaType: SchemaType, v
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.createIdentitySchemaCreator = void 0;
 const schema_utils_1 = require(\\"../builders/schema-utils\\");
+const maybeSkipValidation_1 = require(\\"./maybeSkipValidation\\");
 function createIdentitySchemaCreator(schemaType, validate) {
     return () => {
         const baseSchema = {
@@ -2433,7 +2455,7 @@ function createIdentitySchemaCreator(schemaType, validate) {
             getType: () => schemaType,
         };
         return {
-            ...baseSchema,
+            ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
             ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
         };
     };
@@ -2533,6 +2555,44 @@ function keys(object) {
 exports.keys = keys;
 ",
                 "name": "keys.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { BaseSchema } from \\"../Schema\\";
+export declare function maybeSkipValidation<S extends BaseSchema<Raw, Parsed>, Raw, Parsed>(schema: S): S;
+",
+                "name": "maybeSkipValidation.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.maybeSkipValidation = void 0;
+function maybeSkipValidation(schema) {
+    return {
+        ...schema,
+        json: transformAndMaybeSkipValidation(schema.json),
+        parse: transformAndMaybeSkipValidation(schema.parse),
+    };
+}
+exports.maybeSkipValidation = maybeSkipValidation;
+function transformAndMaybeSkipValidation(transform) {
+    return async (value, opts) => {
+        const transformed = await transform(value, opts);
+        const { skipValidation = false } = opts ?? {};
+        if (!transformed.ok && skipValidation) {
+            return {
+                ok: true,
+                value: value,
+            };
+        }
+        else {
+            return transformed;
+        }
+    };
+}
+",
+                "name": "maybeSkipValidation.js",
                 "type": "file",
               },
               Object {
@@ -16088,6 +16148,17 @@ export interface SchemaOptions {
      * @default false
      */
     allowUnrecognizedEnumValues?: boolean;
+    /**
+     * whether to allow data that doesn't conform to the schema.
+     * invalid data is passed through without transformation.
+     *
+     * when this is enabled, .parse() and .json() will always
+     * return \`ok: true\`. \`.parseOrThrow()\` and \`.jsonOrThrow()\`
+     * will never fail.
+     *
+     * @default false
+     */
+    skipValidation?: boolean;
 }
 ",
             "name": "Schema.d.ts",
@@ -16134,6 +16205,7 @@ export declare function date(): Schema<string, Date>;
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.date = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX = /^([+-]?\\\\d{4}(?!\\\\d{2}\\\\b))((-?)((0[1-9]|1[0-2])(\\\\3([12]\\\\d|0[1-9]|3[01]))?|W([0-4]\\\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\\\d|[12]\\\\d{2}|3([0-5]\\\\d|6[1-6])))([T\\\\s]((([01]\\\\d|2[0-3])((:?)[0-5]\\\\d)?|24:?00)([.,]\\\\d+(?!:))?)?(\\\\17[0-5]\\\\d([.,]\\\\d+)?)?([zZ]|([+-])([01]\\\\d|2[0-3]):?([0-5]\\\\d)?)?)?)?$/;
@@ -16180,7 +16252,7 @@ function date() {
         getType: () => Schema_1.SchemaType.DATE,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -16456,6 +16528,7 @@ export declare function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<R
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.list = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function list(schema) {
     const baseSchema = {
@@ -16464,7 +16537,7 @@ function list(schema) {
         getType: () => Schema_1.SchemaType.LIST,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -16616,6 +16689,7 @@ const entries_1 = require(\\"../../utils/entries\\");
 const filterObject_1 = require(\\"../../utils/filterObject\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const partition_1 = require(\\"../../utils/partition\\");
 const object_like_1 = require(\\"../object-like\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -16656,6 +16730,7 @@ function object(schemas) {
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
+                skipValidation: opts?.skipValidation,
             });
         },
         json: async (parsed, opts) => {
@@ -16691,19 +16766,20 @@ function object(schemas) {
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
+                skipValidation: opts?.skipValidation,
             });
         },
         getType: () => Schema_1.SchemaType.OBJECT,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
         ...(0, object_like_1.getObjectLikeUtils)(baseSchema),
         ...getObjectUtils(baseSchema),
     };
 }
 exports.object = object;
-async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", }) {
+async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", skipValidation = false, }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
@@ -16727,6 +16803,7 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
                 transformed[property.transformedKey] = value.value;
             }
             else {
+                transformed[preTransformedKey] = preTransformedItemValue;
                 errors.push(...value.errors.map((error) => ({
                     path: [preTransformedKey, ...error.path],
                     message: error.message,
@@ -16755,7 +16832,7 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
         path: [],
         message: \`Missing required key \\"\${key}\\"\`,
     })));
-    if (errors.length === 0) {
+    if (errors.length === 0 || skipValidation) {
         return {
             ok: true,
             value: transformed,
@@ -17256,6 +17333,7 @@ exports.record = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function record(keySchema, valueSchema) {
     const baseSchema = {
@@ -17278,7 +17356,7 @@ function record(keySchema, valueSchema) {
         getType: () => Schema_1.SchemaType.RECORD,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -17612,6 +17690,7 @@ export declare function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Ra
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.set = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const list_1 = require(\\"../list\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function set(schema) {
@@ -17647,7 +17726,7 @@ function set(schema) {
         getType: () => Schema_1.SchemaType.SET,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -17708,6 +17787,7 @@ export declare function undiscriminatedUnion<Schemas extends [Schema<any, any>, 
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.undiscriminatedUnion = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function undiscriminatedUnion(schemas) {
     const baseSchema = {
@@ -17720,7 +17800,7 @@ function undiscriminatedUnion(schemas) {
         getType: () => Schema_1.SchemaType.UNDISCRIMINATED_UNION,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
     };
 }
@@ -17837,6 +17917,7 @@ exports.union = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
+const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const enum_1 = require(\\"../enum\\");
 const object_like_1 = require(\\"../object-like\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -17876,7 +17957,7 @@ function union(discriminant, union) {
         getType: () => Schema_1.SchemaType.UNION,
     };
     return {
-        ...baseSchema,
+        ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
         ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
         ...(0, object_like_1.getObjectLikeUtils)(baseSchema),
     };
@@ -18038,6 +18119,7 @@ export declare function createIdentitySchemaCreator<T>(schemaType: SchemaType, v
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.createIdentitySchemaCreator = void 0;
 const schema_utils_1 = require(\\"../builders/schema-utils\\");
+const maybeSkipValidation_1 = require(\\"./maybeSkipValidation\\");
 function createIdentitySchemaCreator(schemaType, validate) {
     return () => {
         const baseSchema = {
@@ -18046,7 +18128,7 @@ function createIdentitySchemaCreator(schemaType, validate) {
             getType: () => schemaType,
         };
         return {
-            ...baseSchema,
+            ...(0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema),
             ...(0, schema_utils_1.getSchemaUtils)(baseSchema),
         };
     };
@@ -18146,6 +18228,44 @@ function keys(object) {
 exports.keys = keys;
 ",
                 "name": "keys.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "import { BaseSchema } from \\"../Schema\\";
+export declare function maybeSkipValidation<S extends BaseSchema<Raw, Parsed>, Raw, Parsed>(schema: S): S;
+",
+                "name": "maybeSkipValidation.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.maybeSkipValidation = void 0;
+function maybeSkipValidation(schema) {
+    return {
+        ...schema,
+        json: transformAndMaybeSkipValidation(schema.json),
+        parse: transformAndMaybeSkipValidation(schema.parse),
+    };
+}
+exports.maybeSkipValidation = maybeSkipValidation;
+function transformAndMaybeSkipValidation(transform) {
+    return async (value, opts) => {
+        const transformed = await transform(value, opts);
+        const { skipValidation = false } = opts ?? {};
+        if (!transformed.ok && skipValidation) {
+            return {
+                ok: true,
+                value: value,
+            };
+        }
+        else {
+            return transformed;
+        }
+    };
+}
+",
+                "name": "maybeSkipValidation.js",
                 "type": "file",
               },
               Object {
