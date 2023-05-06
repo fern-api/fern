@@ -13,7 +13,7 @@ export declare namespace ExampleChevron {
 export const ExampleChevron: React.FC<ExampleChevron.Props> = ({ direction, onClick }) => {
     return (
         <Icon
-            className={classNames(onClick != null ? "text-white" : "text-gray-500", {
+            className={classNames(onClick != null ? "text-black" : "text-gray-500", {
                 ["cursor-pointer"]: onClick != null,
             })}
             icon={getIconForDirection(direction)}

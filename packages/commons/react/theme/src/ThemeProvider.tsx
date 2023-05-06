@@ -65,7 +65,10 @@ export const ThemeProvider: React.FC<ThemeProvider.Props> = ({ children, theme, 
         <ThemeContext.Provider value={contextValueGetter}>
             <div
                 className={classNames(styles.container, {
+                    // blueprint
                     [Classes.DARK]: contextValue.isDarkTheme,
+                    // tailwind
+                    dark: contextValue.isDarkTheme,
                 })}
             >
                 {children}

@@ -5,7 +5,7 @@ import { Loadable } from "@fern-api/loadable";
 import { useBooleanState } from "@fern-api/react-commons";
 import { FernRegistry } from "@fern-fern/registry";
 import { useMemo } from "react";
-import { MonospaceText } from "../../../commons/MonospaceText";
+import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { useDeleteEnvironment } from "../../../queries/useAllEnvironments";
 
 export declare namespace EnvironmentCard {

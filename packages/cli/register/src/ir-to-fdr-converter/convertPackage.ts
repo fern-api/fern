@@ -1,5 +1,6 @@
 import * as Ir from "@fern-fern/ir-model";
 import { FernRegistry } from "@fern-fern/registry";
+import { HttpBodyShape } from "@fern-fern/registry/api";
 import { startCase } from "lodash-es";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
 
@@ -21,30 +22,41 @@ function convertService(
 ): FernRegistry.EndpointDefinition[] {
     return irService.endpoints.map(
         (irEndpoint): FernRegistry.EndpointDefinition => ({
-            docs: irEndpoint.docs ?? undefined,
+            description: irEndpoint.docs ?? undefined,
             id: irEndpoint.name.originalName,
             name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path: {
-                pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map((pathParameter) => ({
-                    docs: pathParameter.docs ?? undefined,
-                    key: convertPathParameterKey(pathParameter.name.originalName),
-                    type: convertTypeReference(pathParameter.valueType),
-                })),
+                pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map(
+                    (pathParameter): FernRegistry.PathParameter => ({
+                        description: pathParameter.docs ?? undefined,
+                        key: convertPathParameterKey(pathParameter.name.originalName),
+                        type: convertTypeReference(pathParameter.valueType),
+                    })
+                ),
                 parts: [...convertHttpPath(irService.basePath), ...convertHttpPath(irEndpoint.path)],
             },
-            queryParameters: irEndpoint.queryParameters.map((queryParameter) => ({
-                docs: queryParameter.docs ?? undefined,
-                key: queryParameter.name.wireValue,
-                type: convertTypeReference(queryParameter.valueType),
-            })),
-            headers: [...irService.headers, ...irEndpoint.headers].map((header) => ({
-                docs: header.docs ?? undefined,
-                key: header.name.wireValue,
-                type: convertTypeReference(header.valueType),
-            })),
+            queryParameters: irEndpoint.queryParameters.map(
+                (queryParameter): FernRegistry.QueryParameter => ({
+                    description: queryParameter.docs ?? undefined,
+                    key: queryParameter.name.wireValue,
+                    type: convertTypeReference(queryParameter.valueType),
+                })
+            ),
+            headers: [...irService.headers, ...irEndpoint.headers].map(
+                (header): FernRegistry.Header => ({
+                    description: header.docs ?? undefined,
+                    key: header.name.wireValue,
+                    type: convertTypeReference(header.valueType),
+                })
+            ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response:
-                irEndpoint.response != null ? convertTypeReference(irEndpoint.response.responseBodyType) : undefined,
+                irEndpoint.response != null
+                    ? {
+                          description: irEndpoint.response.docs ?? undefined,
+                          type: HttpBodyShape.reference(convertTypeReference(irEndpoint.response.responseBodyType)),
+                      }
+                    : undefined,
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -64,20 +76,28 @@ function convertPathParameterKey(irPathParameterKey: string): FernRegistry.PathP
     return FernRegistry.PathParameterKey(irPathParameterKey);
 }
 
-function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.Type {
-    return Ir.http.HttpRequestBody._visit<FernRegistry.Type>(irRequest, {
+function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.HttpBody {
+    return Ir.http.HttpRequestBody._visit<FernRegistry.HttpBody>(irRequest, {
         inlinedRequestBody: (inlinedRequestBody) => {
-            return FernRegistry.Type.object({
-                extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
-                properties: inlinedRequestBody.properties.map((property) => ({
-                    docs: property.docs ?? undefined,
-                    key: property.name.wireValue,
-                    valueType: convertTypeReference(property.valueType),
-                })),
-            });
+            return {
+                description: undefined,
+                type: FernRegistry.HttpBodyShape.object({
+                    extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
+                    properties: inlinedRequestBody.properties.map(
+                        (property): FernRegistry.ObjectProperty => ({
+                            description: property.docs ?? undefined,
+                            key: property.name.wireValue,
+                            valueType: convertTypeReference(property.valueType),
+                        })
+                    ),
+                }),
+            };
         },
         reference: (reference) => {
-            return convertTypeReference(reference.requestBodyType);
+            return {
+                description: reference.docs ?? undefined,
+                type: FernRegistry.HttpBodyShape.reference(convertTypeReference(reference.requestBodyType)),
+            };
         },
         fileUpload: () => {
             throw new Error("File upload is not supported: " + irRequest.type);
@@ -93,7 +113,7 @@ function convertExampleEndpointCall(
     ir: Ir.ir.IntermediateRepresentation
 ): FernRegistry.ExampleEndpointCall {
     return {
-        docs: irExample.docs ?? undefined,
+        description: irExample.docs ?? undefined,
         url: irExample.url,
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
             FernRegistry.ExampleEndpointCall["pathParameters"]

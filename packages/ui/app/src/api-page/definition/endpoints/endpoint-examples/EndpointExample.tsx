@@ -1,8 +1,10 @@
+import { Icon } from "@blueprintjs/core";
+import { IconNames } from "@blueprintjs/icons";
 import { FernRegistry } from "@fern-fern/registry";
-import { size } from "lodash-es";
-import { CollapsibleJsonExample } from "../../examples/CollapsibleJsonExample";
-import { EndpointExampleUrl } from "./EndpointExampleUrl";
-import { ExampleRequestHeaders } from "./ExampleRequestHeaders";
+import classNames from "classnames";
+import { JsonExample } from "../../examples/json-example/JsonExample";
+import { TitledExample } from "../../examples/TitledExample";
+import { useEndpointContext } from "../context/useEndpointContext";
 
 export declare namespace EndpointExample {
     export interface Props {
@@ -11,33 +13,42 @@ export declare namespace EndpointExample {
     }
 }
 
-export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, example }) => {
+export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) => {
+    const { hoveredResponsePropertyPath } = useEndpointContext();
+
     return (
         <div className="flex-1 flex flex-col gap-6 min-h-0">
-            <div className="flex flex-col gap-4">
-                <div className="flex gap-2 bg-[#171718] border border-[#6FCF97] rounded p-2">
-                    <div className="uppercase font-bold text-[#68D4A6]">GET</div>
-                    <EndpointExampleUrl endpoint={endpoint} example={example} />
-                </div>
-                {size(example.headers) > 0 && <ExampleRequestHeaders endpoint={endpoint} example={example} />}
-            </div>
-            {example.requestBody != null && <CollapsibleJsonExample title="Request" json={example.requestBody} />}
+            {example.requestBody != null && (
+                <TitledExample
+                    title="Request"
+                    rightLabel={
+                        <div className="flex items-center gap-2 border border-white/20 px-2 py-1 rounded">
+                            <div>Node.js</div>
+                            <Icon icon={IconNames.CHEVRON_DOWN} />
+                        </div>
+                    }
+                >
+                    <JsonExample json={example.requestBody} selectedProperty={undefined} />
+                </TitledExample>
+            )}
             {example.responseBody != null && (
-                <CollapsibleJsonExample
+                <TitledExample
                     title="Response"
                     rightLabel={
                         <span
-                            className={
+                            className={classNames(
+                                "font-bold",
                                 example.responseStatusCode >= 200 && example.responseStatusCode < 300
-                                    ? "text-green-500"
+                                    ? "text-green-700 dark:text-green-500"
                                     : "text-rose-500"
-                            }
+                            )}
                         >
                             {example.responseStatusCode}
                         </span>
                     }
-                    json={example.responseBody}
-                />
+                >
+                    <JsonExample json={example.responseBody} selectedProperty={hoveredResponsePropertyPath} />
+                </TitledExample>
             )}
         </div>
     );
