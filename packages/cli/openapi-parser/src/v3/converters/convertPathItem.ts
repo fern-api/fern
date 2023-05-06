@@ -76,7 +76,7 @@ function convertOperation(
 
     const endpointParameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
     const convertedParameters = convertParameters(endpointParameters, context, requestBreadcrumbs);
-    const convertedRequest =
+    let convertedRequest =
         operation.requestBody != null
             ? convertRequest({
                   requestBody: operation.requestBody,
@@ -85,6 +85,22 @@ function convertOperation(
                   requestBreadcrumbs,
               })
             : undefined;
+
+    // if request has query params and body is not an object, then use `Body`
+    if (
+        convertedParameters.queryParameters.length > 0 &&
+        convertedRequest != null &&
+        convertedRequest.type === "json" &&
+        convertedRequest.schema.type !== "object" &&
+        operation.requestBody != null
+    ) {
+        convertedRequest = convertRequest({
+            requestBody: operation.requestBody,
+            document,
+            context,
+            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+        });
+    }
 
     const responseBreadcrumbs = [operation.operationId, "Response"];
     return {
