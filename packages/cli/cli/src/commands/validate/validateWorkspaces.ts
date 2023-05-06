@@ -1,6 +1,6 @@
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { convertOpenApiWorkspaceToFernWorkspace } from "../generate/generateWorkspaces";
+import { convertOpenApiWorkspaceToFernWorkspace } from "../../utils/convertOpenApiWorkspaceToFernWorkspace";
 import { validateFernWorkspaceAndLogIssues } from "./validateFernWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({

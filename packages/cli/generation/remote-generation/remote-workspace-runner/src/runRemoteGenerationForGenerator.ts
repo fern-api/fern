@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
-import { GeneratorAudiences, GeneratorInvocation } from "@fern-api/generators-configuration";
+import { Audiences } from "@fern-api/config-management-commons";
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -22,7 +23,7 @@ export async function runRemoteGenerationForGenerator({
     interactiveTaskContext: InteractiveTaskContext;
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
-    audiences: GeneratorAudiences;
+    audiences: Audiences;
     shouldLogS3Url: boolean;
     token: FernToken;
 }): Promise<void> {

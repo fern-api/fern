@@ -1,3 +1,4 @@
+import { Audiences } from "@fern-api/config-management-commons";
 import { Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -12,20 +13,9 @@ export interface GeneratorsConfiguration {
 
 export interface GeneratorGroup {
     groupName: string;
-    audiences: GeneratorAudiences;
+    audiences: Audiences;
     generators: GeneratorInvocation[];
     docs: GeneratorGroupDocsConfiguration | undefined;
-}
-
-export type GeneratorAudiences = AllAudiences | SelectAudiences;
-
-export interface AllAudiences {
-    type: "all";
-}
-
-export interface SelectAudiences {
-    type: "select";
-    audiences: string[];
 }
 
 export interface GeneratorInvocation {

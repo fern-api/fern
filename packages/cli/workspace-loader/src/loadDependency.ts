@@ -61,14 +61,17 @@ export async function loadDependency({
             dependencyName,
         };
     } else {
-        await context.runInteractiveTask({ name: stringifyDependency(dependency) }, async (contextForDependency) => {
-            definition = await validateDependencyAndGetDefinition({
-                context: contextForDependency,
-                rootApiFile,
-                dependency,
-                cliVersion,
-            });
-        });
+        await context.runInteractiveTask(
+            { name: `Download ${stringifyDependency(dependency)}` },
+            async (contextForDependency) => {
+                definition = await validateDependencyAndGetDefinition({
+                    context: contextForDependency,
+                    rootApiFile,
+                    dependency,
+                    cliVersion,
+                });
+            }
+        );
     }
 
     if (definition != null) {

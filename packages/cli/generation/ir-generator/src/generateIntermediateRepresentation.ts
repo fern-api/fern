@@ -1,6 +1,7 @@
+import { Audiences } from "@fern-api/config-management-commons";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage, GeneratorAudiences } from "@fern-api/generators-configuration";
+import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { HttpEndpoint, PathParameterLocation, ResponseErrors } from "@fern-fern/ir-model/http";
@@ -35,7 +36,7 @@ export async function generateIntermediateRepresentation({
 }: {
     workspace: FernWorkspace;
     generationLanguage: GenerationLanguage | undefined;
-    audiences: GeneratorAudiences;
+    audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
 

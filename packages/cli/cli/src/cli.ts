@@ -355,15 +355,10 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
         ["register-v2"],
         false, // hide from help message
         (yargs) =>
-            yargs
-                .option("environment", {
-                    type: "string",
-                    description: "The environment this API is being deployed to",
-                })
-                .option("api", {
-                    string: true,
-                    description: "Only run the command on the provided API",
-                }),
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API",
+            }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                 commandLineWorkspace: argv.api,
@@ -377,7 +372,6 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 project,
                 cliContext,
                 token,
-                environment: argv.environment,
             });
         }
     );
