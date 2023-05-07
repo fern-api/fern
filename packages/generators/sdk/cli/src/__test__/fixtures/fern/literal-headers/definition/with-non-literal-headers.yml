@@ -1,0 +1,15 @@
+service:
+  auth: false
+  base-path: /with-non-literal-headers
+  headers:
+    nonLiteralServiceHeader: string
+    literalServiceHeader: literal<"service header">
+  endpoints:
+    get:
+      path: ""
+      method: POST
+      request:
+        name: WithNonLiteralHeadersRequest
+        headers:
+          nonLiteralEndpointHeader: string
+          literalEndpointHeader: literal<"endpoint header">

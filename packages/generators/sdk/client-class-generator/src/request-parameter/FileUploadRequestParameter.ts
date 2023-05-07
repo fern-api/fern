@@ -27,10 +27,6 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
-    public getAllHeaders(context: SdkClientClassContext): HttpHeader[] {
-        return this.getGeneratedRequestWrapper(context).getAllHeaders();
-    }
-
     public withQueryParameter(
         queryParameter: QueryParameter,
         context: SdkClientClassContext,
@@ -60,9 +56,9 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
         return this.getReferenceToProperty(
-            this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header).propertyName
+            this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header).propertyName
         );
     }
 

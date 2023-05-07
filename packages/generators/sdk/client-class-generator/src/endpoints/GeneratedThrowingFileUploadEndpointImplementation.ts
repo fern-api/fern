@@ -4,13 +4,13 @@ import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedHeader } from "../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
 import { EndpointSignature } from "./GeneratedEndpointImplementation";
 import { appendPropertyToFormData } from "./utils/appendPropertyToFormData";
 import { buildUrl } from "./utils/buildUrl";
 import { GeneratedQueryParams } from "./utils/GeneratedQueryParams";
+import { generateHeaders } from "./utils/generateHeaders";
 import { getParameterNameForFile } from "./utils/getParameterNameForFile";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
@@ -241,39 +241,23 @@ export class GeneratedThrowingFileUploadEndpointImplementation
     }
 
     private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
-        const elements: GeneratedHeader[] = [];
-
-        const authorizationHederValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
-        if (authorizationHederValue != null) {
-            elements.push({
-                header: "Authorization",
-                value: authorizationHederValue,
-            });
-        }
-
-        elements.push(...this.generatedSdkClientClass.getHeaders(context));
-
-        if (this.requestParameter != null) {
-            for (const header of this.requestParameter.getAllHeaders(context)) {
-                elements.push({
-                    header: header.name.wireValue,
-                    value: this.requestParameter.getReferenceToHeader(header, context),
-                });
-            }
-        }
-
-        elements.push({
-            header: "Content-Length",
-            value: context.base.coreUtilities.formDataUtils.getFormDataContentLength({
-                referenceToFormData: ts.factory.createIdentifier(
-                    GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
-                ),
-            }),
+        return generateHeaders({
+            context,
+            requestParameter: this.requestParameter,
+            generatedSdkClientClass: this.generatedSdkClientClass,
+            service: this.service,
+            endpoint: this.endpoint,
+            additionalHeaders: [
+                {
+                    header: "Content-Length",
+                    value: context.base.coreUtilities.formDataUtils.getFormDataContentLength({
+                        referenceToFormData: ts.factory.createIdentifier(
+                            GeneratedThrowingFileUploadEndpointImplementation.FORM_DATA_VARIABLE_NAME
+                        ),
+                    }),
+                },
+            ],
         });
-
-        return elements.map(({ header, value }) =>
-            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
-        );
     }
 
     private getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[] {

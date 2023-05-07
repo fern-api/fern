@@ -495,12 +495,7 @@ export class SdkGenerator {
                                 typeDeclarationReferencer: this.typeDeclarationReferencer,
                                 typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
                                 typeGenerator: this.typeGenerator,
-                                errorDeclarationReferencer: this.errorDeclarationReferencer,
-                                sdkErrorGenerator: this.sdkErrorGenerator,
-                                errorResolver: this.errorResolver,
                                 packageResolver: this.packageResolver,
-                                endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
-                                endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
                                 requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                                 requestWrapperGenerator: this.requestWrapperGenerator,
                             });

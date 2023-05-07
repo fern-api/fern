@@ -1,4 +1,4 @@
-import { HttpHeader, HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-model/http";
+import { HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-model/http";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
@@ -25,15 +25,11 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         return ts.factory.createIdentifier(this.getRequestParameterName());
     }
 
-    public getReferenceToHeader(): ts.Expression {
+    public getReferenceToNonLiteralHeader(): ts.Expression {
         throw new Error("Cannot get reference to header because request is not wrapped");
     }
 
     public getAllQueryParameters(): QueryParameter[] {
-        return [];
-    }
-
-    public getAllHeaders(): HttpHeader[] {
         return [];
     }
 

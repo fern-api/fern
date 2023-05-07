@@ -9,7 +9,6 @@ import {
 import { Fetcher, getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedHeader } from "../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { RequestBodyParameter } from "../request-parameter/RequestBodyParameter";
 import { RequestParameter } from "../request-parameter/RequestParameter";
@@ -17,6 +16,7 @@ import { RequestWrapperParameter } from "../request-parameter/RequestWrapperPara
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
 import { GeneratedQueryParams } from "./utils/GeneratedQueryParams";
+import { generateHeaders } from "./utils/generateHeaders";
 import { getParameterNameForPathParameter } from "./utils/getParameterNameForPathParameter";
 import { getPathParametersForEndpointSignature } from "./utils/getPathParametersForEndpointSignature";
 
@@ -235,30 +235,13 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
-        const elements: GeneratedHeader[] = [];
-
-        const authorizationHederValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
-        if (authorizationHederValue != null) {
-            elements.push({
-                header: "Authorization",
-                value: authorizationHederValue,
-            });
-        }
-
-        elements.push(...this.generatedSdkClientClass.getHeaders(context));
-
-        if (this.requestParameter != null) {
-            for (const header of this.requestParameter.getAllHeaders(context)) {
-                elements.push({
-                    header: header.name.wireValue,
-                    value: this.requestParameter.getReferenceToHeader(header, context),
-                });
-            }
-        }
-
-        return elements.map(({ header, value }) =>
-            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
-        );
+        return generateHeaders({
+            context,
+            requestParameter: this.requestParameter,
+            generatedSdkClientClass: this.generatedSdkClientClass,
+            service: this.service,
+            endpoint: this.endpoint,
+        });
     }
 
     private getSerializedRequestBody(context: SdkClientClassContext): ts.Expression | undefined {

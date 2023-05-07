@@ -78,7 +78,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             this.packageId,
             this.endpoint.name
         );
-        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys();
+        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys(context);
         if (nonBodyKeys.length === 0) {
             return referenceToRequestWrapper;
         } else {

@@ -21,7 +21,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     public getInitialStatements(context: SdkClientClassContext): ts.Statement[] {
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
-        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys();
+        const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys(context);
 
         if (nonBodyKeys.length === 0) {
             return [];
@@ -75,7 +75,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
-        if (this.getGeneratedRequestWrapper(context).getNonBodyKeys().length > 0) {
+        if (this.getGeneratedRequestWrapper(context).getNonBodyKeys(context).length > 0) {
             return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
         } else {
             return ts.factory.createIdentifier(this.getRequestParameterName());
@@ -84,10 +84,6 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     public getAllQueryParameters(context: SdkClientClassContext): QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
-    }
-
-    public getAllHeaders(context: SdkClientClassContext): HttpHeader[] {
-        return this.getGeneratedRequestWrapper(context).getAllHeaders();
     }
 
     public withQueryParameter(
@@ -119,9 +115,9 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
         return ts.factory.createIdentifier(
-            this.getGeneratedRequestWrapper(context).getPropertyNameOfHeader(header).safeName
+            this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header).safeName
         );
     }
 

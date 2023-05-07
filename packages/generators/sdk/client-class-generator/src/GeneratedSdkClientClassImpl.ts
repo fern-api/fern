@@ -16,6 +16,7 @@ import { GeneratedThrowingEndpointImplementation } from "./endpoints/GeneratedTh
 import { GeneratedThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedThrowingFileUploadEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
+import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
@@ -363,12 +364,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ...this.intermediateRepresentation.headers
                 // auth headers are handled separately
                 .filter((header) => !this.isAuthorizationHeader(header))
-                .map((header) => ({
-                    header: header.name.wireValue,
-                    value: context.base.coreUtilities.fetcher.Supplier.get(
-                        this.getReferenceToOption(this.getOptionKeyForGlobalHeader(header))
-                    ),
-                })),
+                .map((header) => {
+                    const literalValue = getLiteralValueForHeader(header, context);
+                    return {
+                        header: header.name.wireValue,
+                        value:
+                            literalValue != null
+                                ? ts.factory.createStringLiteral(literalValue)
+                                : context.base.coreUtilities.fetcher.Supplier.get(
+                                      this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))
+                                  ),
+                    };
+                }),
             ...this.authHeaders
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => ({
@@ -481,12 +488,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         for (const header of this.intermediateRepresentation.headers) {
-            const type = context.type.getReferenceToType(header.valueType);
-            properties.push({
-                name: this.getOptionKeyForGlobalHeader(header),
-                type: getTextOfTsNode(context.base.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
-                hasQuestionToken: type.isOptional,
-            });
+            if (!isLiteralHeader(header, context)) {
+                const type = context.type.getReferenceToType(header.valueType);
+                properties.push({
+                    name: this.getOptionKeyForNonLiteralGlobalHeader(header),
+                    type: getTextOfTsNode(
+                        context.base.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)
+                    ),
+                    hasQuestionToken: type.isOptional,
+                });
+            }
         }
 
         if (this.allowCustomFetcher) {
@@ -551,7 +562,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createPropertyAccessExpression(this.getReferenceToOptions(), option);
     }
 
-    private getOptionKeyForGlobalHeader(header: HttpHeader): string {
+    private getOptionKeyForNonLiteralGlobalHeader(header: HttpHeader): string {
         return header.name.name.camelCase.unsafeName;
     }
 
@@ -726,7 +737,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             case "authScheme":
                 return this.getOptionKeyForAuthHeader(header.header);
             case "global":
-                return this.getOptionKeyForGlobalHeader(header.header);
+                return this.getOptionKeyForNonLiteralGlobalHeader(header.header);
             default:
                 assertNever(header);
         }

@@ -9,11 +9,10 @@ export interface GeneratedRequestWrapper extends GeneratedFile<RequestWrapperCon
     areBodyPropertiesInlined: () => boolean;
     getReferencedBodyPropertyName: () => string;
     getAllQueryParameters: () => QueryParameter[];
-    getAllHeaders: () => HttpHeader[];
-    getNonBodyKeys: () => RequestWrapperNonBodyProperty[];
+    getNonBodyKeys: (context: RequestWrapperContext) => RequestWrapperNonBodyProperty[];
     getInlinedRequestBodyPropertyKey: (property: InlinedRequestBodyProperty) => string;
     getPropertyNameOfQueryParameter: (queryParameter: QueryParameter) => RequestWrapperNonBodyProperty;
-    getPropertyNameOfHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;
+    getPropertyNameOfNonLiteralHeader: (header: HttpHeader) => RequestWrapperNonBodyProperty;
     withQueryParameter: (args: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;

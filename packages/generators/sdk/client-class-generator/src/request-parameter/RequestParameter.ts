@@ -11,8 +11,7 @@ export interface RequestParameter {
     getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkClientClassContext) => ts.Expression;
     getAllQueryParameters: (context: SdkClientClassContext) => QueryParameter[];
-    getAllHeaders: (context: SdkClientClassContext) => HttpHeader[];
-    getReferenceToHeader: (header: HttpHeader, context: SdkClientClassContext) => ts.Expression;
+    getReferenceToNonLiteralHeader: (header: HttpHeader, context: SdkClientClassContext) => ts.Expression;
     withQueryParameter: (
         queryParameter: QueryParameter,
         context: SdkClientClassContext,

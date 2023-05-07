@@ -61,10 +61,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             });
             maybeAddDocs(property, queryParameter.docs);
         }
-        for (const header of this.getAllHeaders()) {
+        for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
             const property = requestInterface.addProperty({
-                name: this.getPropertyNameOfHeader(header).propertyName,
+                name: this.getPropertyNameOfNonLiteralHeader(header).propertyName,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional,
             });
@@ -208,12 +208,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.#areBodyPropertiesOptional;
     }
 
-    public getNonBodyKeys(): RequestWrapperNonBodyProperty[] {
+    public getNonBodyKeys(context: RequestWrapperContext): RequestWrapperNonBodyProperty[] {
         return [
             ...this.getAllQueryParameters().map((queryParameter) =>
                 this.getPropertyNameOfQueryParameter(queryParameter)
             ),
-            ...this.getAllHeaders().map((header) => this.getPropertyNameOfHeader(header)),
+            ...this.getAllNonLiteralHeaders(context).map((header) => this.getPropertyNameOfNonLiteralHeader(header)),
         ];
     }
 
@@ -227,7 +227,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 return false;
             }
         }
-        for (const header of this.getAllHeaders()) {
+        for (const header of this.getAllNonLiteralHeaders(context)) {
             if (!this.isTypeOptional(header.valueType, context)) {
                 return false;
             }
@@ -296,7 +296,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         };
     }
 
-    public getPropertyNameOfHeader(header: HttpHeader): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfNonLiteralHeader(header: HttpHeader): RequestWrapperNonBodyProperty {
         return {
             safeName: header.name.name.camelCase.safeName,
             propertyName: header.name.name.camelCase.unsafeName,
@@ -307,8 +307,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.endpoint.queryParameters;
     }
 
-    public getAllHeaders(): HttpHeader[] {
-        return [...this.service.headers, ...this.endpoint.headers];
+    private getAllNonLiteralHeaders(context: RequestWrapperContext): HttpHeader[] {
+        return [...this.service.headers, ...this.endpoint.headers].filter((header) => {
+            const resolvedType = context.type.resolveTypeReference(header.valueType);
+            const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal";
+            return !isLiteral;
+        });
     }
 
     public getReferencedBodyPropertyName(): string {
