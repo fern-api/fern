@@ -718,7 +718,12 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "sdkConfig": {
         "isAuthMandatory": false,
-        "hasStreamingEndpoints": false
+        "hasStreamingEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-SDK-Name",
+            "sdkVersion": "X-SDK-Version"
+        }
     }
 }"
 `;
