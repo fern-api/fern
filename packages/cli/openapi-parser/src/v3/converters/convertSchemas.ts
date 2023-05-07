@@ -264,7 +264,7 @@ function hasNoAllOf(schema: OpenAPIV3.SchemaObject): boolean {
 }
 
 function hasNoProperties(schema: OpenAPIV3.SchemaObject): boolean {
-    return schema.properties == null || schema.properties.length === 0;
+    return schema.properties == null || Object.keys(schema.properties).length === 0;
 }
 
 function isListOfStrings(x: unknown): x is string[] {
