@@ -53,6 +53,7 @@ export function convertEndpoint({
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
         path: endpoint.path,
         method: convertToHttpMethod(endpoint.method),
+        auth: endpoint.authed,
     };
 
     if (Object.keys(pathParameters).length > 0) {

@@ -119,6 +119,7 @@ function convertOperation(
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
         responseIsStreaming: isStreaming ?? false,
+        authed: isEndpointAuthed(operation, document),
     };
 }
 
@@ -134,4 +135,14 @@ function maybeGetSdkName(operation: OpenAPIV3.OperationObject): EndpointSdkName 
         };
     }
     return undefined;
+}
+
+function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {
+    if (operation.security != null) {
+        return Object.keys(operation.security).length >= 0;
+    }
+    if (document.security != null) {
+        return Object.keys(document.security).length >= 0;
+    }
+    return false;
 }

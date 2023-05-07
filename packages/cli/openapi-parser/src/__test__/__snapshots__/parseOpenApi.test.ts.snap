@@ -8,6 +8,7 @@ exports[`open api parser devrev simple 1`] = `
       "description": "DevRev's REST API.",
       "endpoints": [
         {
+          "authed": true,
           "description": "Gets the download URL for the artifact.",
           "errors": [],
           "generatedRequestName": "ArtifactsLocateRequest",
@@ -51,6 +52,7 @@ exports[`open api parser devrev simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Creates an artifact and generates an upload URL for its data.
 ",
           "errors": [],
@@ -94,6 +96,7 @@ exports[`open api parser devrev simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
 ",
@@ -138,6 +141,7 @@ authenticated user.
           ],
         },
         {
+          "authed": true,
           "description": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
 ",
@@ -172,6 +176,7 @@ given Dev organization.
           ],
         },
         {
+          "authed": true,
           "description": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
 ",
@@ -217,6 +222,7 @@ given Dev organization.
           ],
         },
         {
+          "authed": true,
           "description": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
 ",
@@ -297,6 +303,7 @@ token type issued for a given subject.
           ],
         },
         {
+          "authed": true,
           "description": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
 ",
@@ -331,6 +338,7 @@ authenticated user.
           ],
         },
         {
+          "authed": true,
           "description": "Updates token metadata of a token issued under a given Dev
 organization.
 ",
@@ -375,6 +383,7 @@ organization.
           ],
         },
         {
+          "authed": true,
           "description": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
 default for the organization and the user will need to explicitly
@@ -424,6 +433,7 @@ enterprise connections can be created by an organization.
           ],
         },
         {
+          "authed": true,
           "description": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
@@ -460,6 +470,7 @@ connections can not be deleted using this method.
           ],
         },
         {
+          "authed": true,
           "description": "Retrieves the details for an authentication connection.",
           "errors": [],
           "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
@@ -504,6 +515,7 @@ connections can not be deleted using this method.
           ],
         },
         {
+          "authed": true,
           "description": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
@@ -540,6 +552,7 @@ created by the user.
           ],
         },
         {
+          "authed": true,
           "description": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
 When a new authentication connection is enabled, the connection which
@@ -578,6 +591,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Updates an authentication connection.",
           "errors": [],
           "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
@@ -621,6 +635,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Lists users within your organization.",
           "errors": [],
           "generatedRequestName": "DevUsersListRequest",
@@ -757,6 +772,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Gets the authenticated user's information.",
           "errors": [],
           "generatedRequestName": "DevUsersSelfRequest",
@@ -788,6 +804,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
           "errors": [],
           "generatedRequestName": "PartsCreateRequest",
@@ -830,6 +847,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
           "errors": [],
           "generatedRequestName": "PartsDeleteRequest",
@@ -872,6 +890,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
           "errors": [],
@@ -916,6 +935,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
           "errors": [],
@@ -1072,6 +1092,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
           "errors": [],
@@ -1115,6 +1136,7 @@ disabled.
           ],
         },
         {
+          "authed": true,
           "description": "Creates a Rev organization in the authenticated user's Dev
 organization.
 ",
@@ -1159,6 +1181,7 @@ organization.
           ],
         },
         {
+          "authed": true,
           "description": "Deletes the Rev organization.",
           "errors": [],
           "generatedRequestName": "RevOrgsDeleteRequest",
@@ -1201,6 +1224,7 @@ organization.
           ],
         },
         {
+          "authed": true,
           "description": "Retrieves the Rev organization's information.",
           "errors": [],
           "generatedRequestName": "RevOrgsGetRequest",
@@ -1244,6 +1268,7 @@ organization.
           ],
         },
         {
+          "authed": true,
           "description": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
 to access.
@@ -1442,6 +1467,7 @@ to access.
           ],
         },
         {
+          "authed": true,
           "description": "Updates the Rev organization's information.",
           "errors": [],
           "generatedRequestName": "RevOrgsUpdateRequest",
@@ -1484,6 +1510,7 @@ to access.
           ],
         },
         {
+          "authed": true,
           "description": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
 ",
@@ -1528,6 +1555,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Deletes a tag.",
           "errors": [],
           "generatedRequestName": "TagsDeleteRequest",
@@ -1570,6 +1598,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Gets a tag's information.",
           "errors": [],
           "generatedRequestName": "TagsGetRequest",
@@ -1613,6 +1642,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Lists the available tags.",
           "errors": [],
           "generatedRequestName": "TagsListRequest",
@@ -1691,6 +1721,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Updates a tag's information.",
           "errors": [],
           "generatedRequestName": "TagsUpdateRequest",
@@ -1733,6 +1764,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Creates a new entry on an object's timeline.",
           "errors": [],
           "generatedRequestName": "TimelineEntriesCreateRequest",
@@ -1775,6 +1807,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Gets an entry on an object's timeline.",
           "errors": [],
           "generatedRequestName": "TimelineEntriesGetRequest",
@@ -1818,6 +1851,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Lists the timeline entries for an object.",
           "errors": [],
           "generatedRequestName": "TimelineEntriesListRequest",
@@ -1907,6 +1941,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Updates an entry on an object's timeline.",
           "errors": [],
           "generatedRequestName": "TimelineEntriesUpdateRequest",
@@ -1949,6 +1984,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Creates a new webhook target.",
           "errors": [],
           "generatedRequestName": "WebhooksCreateRequest",
@@ -1991,6 +2027,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Deletes the requested webhook.",
           "errors": [],
           "generatedRequestName": "WebhooksDeleteRequest",
@@ -2033,6 +2070,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Gets the requested webhook's information.",
           "errors": [],
           "generatedRequestName": "WebhooksGetRequest",
@@ -2076,6 +2114,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Lists the webhooks.",
           "errors": [],
           "generatedRequestName": "WebhooksListRequest",
@@ -2107,6 +2146,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Updates the requested webhook.",
           "errors": [],
           "generatedRequestName": "WebhooksUpdateRequest",
@@ -2149,6 +2189,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
@@ -2193,6 +2234,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Deletes a work item.",
           "errors": [],
           "generatedRequestName": "WorksDeleteRequest",
@@ -2235,6 +2277,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Exports a collection of work items.",
           "errors": [],
           "generatedRequestName": "WorksExportRequest",
@@ -2456,6 +2499,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Gets a work item's information.",
           "errors": [],
           "generatedRequestName": "WorksGetRequest",
@@ -2499,6 +2543,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Lists a collection of work items.",
           "errors": [],
           "generatedRequestName": "WorksListRequest",
@@ -2751,6 +2796,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "authed": true,
           "description": "Updates a work item's information.",
           "errors": [],
           "generatedRequestName": "WorksUpdateRequest",
@@ -11081,6 +11127,7 @@ exports[`open api parser hathora simple 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetAppsRequest",
@@ -11116,6 +11163,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreateAppRequest",
@@ -11237,6 +11285,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UpdateAppRequest",
@@ -11371,6 +11420,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetAppInfoRequest",
@@ -11415,6 +11465,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "DeleteAppRequest",
@@ -11449,6 +11500,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "LoginAnonymousRequest",
@@ -11504,6 +11556,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "LoginNicknameRequest",
@@ -11581,6 +11634,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "LoginGoogleRequest",
@@ -11658,6 +11712,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetBuildsRequest",
@@ -11706,6 +11761,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetBuildInfoRequest",
@@ -11762,6 +11818,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreateBuildRequest",
@@ -11806,6 +11863,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RunBuildRequest",
@@ -11874,6 +11932,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "DeleteBuildRequest",
@@ -11920,6 +11979,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetDeploymentsRequest",
@@ -11968,6 +12028,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetDeploymentInfoRequest",
@@ -12024,6 +12085,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreateDeploymentRequest",
@@ -12091,6 +12153,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetPingServiceEndpointsRequest",
@@ -12122,6 +12185,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
@@ -12210,6 +12274,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
@@ -12298,6 +12363,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
@@ -12390,6 +12456,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreatePrivateLobbyRequest",
@@ -12499,6 +12566,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreatePublicLobbyRequest",
@@ -12608,6 +12676,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreateLocalLobbyRequest",
@@ -12717,6 +12786,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreateLobbyRequest",
@@ -12852,6 +12922,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "ListActivePublicLobbiesRequest",
@@ -12917,6 +12988,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetLobbyInfoRequest",
@@ -12973,6 +13045,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SetLobbyStateRequest",
@@ -13054,6 +13127,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetLogsForAppRequest",
@@ -13144,6 +13218,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetLogsForProcessRequest",
@@ -13230,6 +13305,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetLogsForDeploymentRequest",
@@ -13312,6 +13388,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetMetricsRequest",
@@ -13434,6 +13511,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetRunningProcessesRequest",
@@ -13499,6 +13577,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetStoppedProcessesRequest",
@@ -13564,6 +13643,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetProcessInfoRequest",
@@ -13620,6 +13700,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CreateRoomRequest",
@@ -13687,6 +13768,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetRoomInfoRequest",
@@ -13743,6 +13825,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetActiveRoomsForProcessRequest",
@@ -13803,6 +13886,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetInactiveRoomsForProcessRequest",
@@ -13863,6 +13947,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "DestroyRoomRequest",
@@ -13909,6 +13994,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SuspendRoomRequest",
@@ -13955,6 +14041,7 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "GetConnectionInfoRequest",
@@ -15746,6 +15833,7 @@ exports[`open api parser squidex simple 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementGetUsersRequest",
@@ -15826,6 +15914,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementPostUserRequest",
@@ -15871,6 +15960,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementGetUserRequest",
@@ -15917,6 +16007,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementPutUserRequest",
@@ -15974,6 +16065,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementDeleteUserRequest",
@@ -16010,6 +16102,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementLockUserRequest",
@@ -16056,6 +16149,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserManagementUnlockUserRequest",
@@ -16102,6 +16196,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsersGetUserResourcesRequest",
@@ -16136,6 +16231,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Search the user by query that contains the email address or the part of the email address.",
           "errors": [],
           "generatedRequestName": "UsersGetUsersRequest",
@@ -16190,6 +16286,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsersGetUserRequest",
@@ -16236,6 +16333,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsersGetUserPictureRequest",
@@ -16272,6 +16370,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TranslationsPostTranslationRequest",
@@ -16329,6 +16428,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TemplatesGetTemplatesRequest",
@@ -16363,6 +16463,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TemplatesGetTemplateRequest",
@@ -16409,6 +16510,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamContributorsGetContributorsRequest",
@@ -16455,6 +16557,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamContributorsPostContributorRequest",
@@ -16512,6 +16615,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamContributorsDeleteMyselfRequest",
@@ -16558,6 +16662,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamContributorsDeleteContributorRequest",
@@ -16615,6 +16720,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all teams, where you are assigned as a contributor.",
           "errors": [],
@@ -16654,6 +16760,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new team automatically.",
           "errors": [],
@@ -16700,6 +16807,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamsGetTeamRequest",
@@ -16746,6 +16854,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamsPutTeamRequest",
@@ -16803,6 +16912,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetLogRequest",
@@ -16849,6 +16959,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetUsagesRequest",
@@ -16917,6 +17028,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetUsagesForTeamRequest",
@@ -16985,6 +17097,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetCurrentStorageSizeRequest",
@@ -17031,6 +17144,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetTeamCurrentStorageSizeForTeamRequest",
@@ -17077,6 +17191,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetStorageSizesRequest",
@@ -17149,6 +17264,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UsagesGetStorageSizesForTeamRequest",
@@ -17221,6 +17337,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SearchGetSearchResultsRequest",
@@ -17287,6 +17404,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPostFieldRequest",
@@ -17355,6 +17473,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPostNestedFieldRequest",
@@ -17434,6 +17553,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPutSchemaUiFieldsRequest",
@@ -17502,6 +17622,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPutSchemaFieldOrderingRequest",
@@ -17570,6 +17691,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPutNestedFieldOrderingRequest",
@@ -17649,6 +17771,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPutFieldRequest",
@@ -17728,6 +17851,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsDeleteFieldRequest",
@@ -17796,6 +17920,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsPutNestedFieldRequest",
@@ -17886,6 +18011,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemaFieldsDeleteNestedFieldRequest",
@@ -17965,6 +18091,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A locked field cannot be updated or deleted.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsLockFieldRequest",
@@ -18033,6 +18160,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A locked field cannot be edited or deleted.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsLockNestedFieldRequest",
@@ -18112,6 +18240,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsHideFieldRequest",
@@ -18180,6 +18309,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsHideNestedFieldRequest",
@@ -18259,6 +18389,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsShowFieldRequest",
@@ -18327,6 +18458,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsShowNestedFieldRequest",
@@ -18406,6 +18538,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsEnableFieldRequest",
@@ -18474,6 +18607,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsEnableNestedFieldRequest",
@@ -18553,6 +18687,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsDisableFieldRequest",
@@ -18621,6 +18756,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errors": [],
           "generatedRequestName": "SchemaFieldsDisableNestedFieldRequest",
@@ -18700,6 +18836,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasGetSchemasRequest",
@@ -18746,6 +18883,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPostSchemaRequest",
@@ -18803,6 +18941,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasGetSchemaRequest",
@@ -18860,6 +18999,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPutSchemaRequest",
@@ -18928,6 +19068,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasDeleteSchemaRequest",
@@ -18975,6 +19116,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPutSchemaSyncRequest",
@@ -19043,6 +19185,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPutCategoryRequest",
@@ -19111,6 +19254,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPutPreviewUrlsRequest",
@@ -19179,6 +19323,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPutScriptsRequest",
@@ -19247,6 +19392,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPutRulesRequest",
@@ -19315,6 +19461,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasPublishSchemaRequest",
@@ -19372,6 +19519,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "SchemasUnpublishSchemaRequest",
@@ -19429,6 +19577,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesGetActionsRequest",
@@ -19470,6 +19619,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesGetRulesRequest",
@@ -19516,6 +19666,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesPostRuleRequest",
@@ -19573,6 +19724,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesDeleteRuleRunRequest",
@@ -19609,6 +19761,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesPutRuleRequest",
@@ -19677,6 +19830,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesDeleteRuleRequest",
@@ -19724,6 +19878,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesEnableRuleRequest",
@@ -19781,6 +19936,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesDisableRuleRequest",
@@ -19838,6 +19994,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesTriggerRuleRequest",
@@ -19885,6 +20042,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesPutRuleRunRequest",
@@ -19948,6 +20106,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesDeleteRuleEventsRequest",
@@ -19995,6 +20154,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesSimulatePostRequest",
@@ -20052,6 +20212,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesSimulateGetRequest",
@@ -20109,6 +20270,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesGetEventsRequest",
@@ -20201,6 +20363,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesDeleteEventsRequest",
@@ -20237,6 +20400,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesPutEventRequest",
@@ -20284,6 +20448,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesDeleteEventRequest",
@@ -20331,6 +20496,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesGetEventTypesRequest",
@@ -20368,6 +20534,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RulesGetEventSchemaRequest",
@@ -20409,6 +20576,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppPlansGetPlansRequest",
@@ -20455,6 +20623,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppPlansPutPlanRequest",
@@ -20512,6 +20681,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamPlansGetTeamPlansRequest",
@@ -20558,6 +20728,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "TeamPlansPutTeamPlanRequest",
@@ -20615,6 +20786,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "PingGetInfoRequest",
@@ -20649,6 +20821,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Can be used to test, if the Squidex API is alive and responding.",
           "errors": [],
           "generatedRequestName": "PingGetPingRequest",
@@ -20673,6 +20846,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Can be used to test, if the Squidex API is alive and responding.",
           "errors": [],
           "generatedRequestName": "PingGetAppPingRequest",
@@ -20709,6 +20883,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "NewsGetNewsRequest",
@@ -20759,6 +20934,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Provide a list of supported language codes, following the ISO2Code standard.",
           "errors": [],
           "generatedRequestName": "LanguagesGetLanguagesRequest",
@@ -20797,6 +20973,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "HistoryGetAppHistoryRequest",
@@ -20863,6 +21040,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "HistoryGetTeamHistoryRequest",
@@ -20929,6 +21107,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "EventConsumersGetEventConsumersRequest",
@@ -20963,6 +21142,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "EventConsumersStartEventConsumerRequest",
@@ -21009,6 +21189,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "EventConsumersStopEventConsumerRequest",
@@ -21055,6 +21236,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "EventConsumersResetEventConsumerRequest",
@@ -21101,6 +21283,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "DiagnosticsGetDumpRequest",
@@ -21125,6 +21308,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "DiagnosticsGetGcDumpRequest",
@@ -21149,6 +21333,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetContentsRequest",
@@ -21237,6 +21422,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsPostContentRequest",
@@ -21351,6 +21537,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetContentsPostRequest",
@@ -21419,6 +21606,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetContentRequest",
@@ -21503,6 +21691,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsPostUpsertContentRequest",
@@ -21628,6 +21817,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsPutContentRequest",
@@ -21707,6 +21897,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsPatchContentRequest",
@@ -21786,6 +21977,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsDeleteContentRequest",
@@ -21875,6 +22067,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetContentValidityRequest",
@@ -21933,6 +22126,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetReferencesRequest",
@@ -22017,6 +22211,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetReferencingRequest",
@@ -22101,6 +22296,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsGetContentVersionRequest",
@@ -22170,6 +22366,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsPostContentsRequest",
@@ -22242,6 +22439,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsBulkUpdateContentsRequest",
@@ -22314,6 +22512,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsPutContentStatusRequest",
@@ -22393,6 +22592,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsDeleteContentStatusRequest",
@@ -22461,6 +22661,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsCreateDraftRequest",
@@ -22529,6 +22730,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errors": [],
           "generatedRequestName": "ContentsDeleteVersionRequest",
@@ -22597,6 +22799,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CommentsGetWatchingUsersRequest",
@@ -22661,6 +22864,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "When passing in a version you can retrieve all updates since then.",
           "errors": [],
           "generatedRequestName": "CommentsGetCommentsRequest",
@@ -22734,6 +22938,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CommentsPostCommentRequest",
@@ -22802,6 +23007,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CommentsPutCommentRequest",
@@ -22871,6 +23077,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "CommentsDeleteCommentRequest",
@@ -22929,6 +23136,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "When passing in a version you can retrieve all updates since then.",
           "errors": [],
           "generatedRequestName": "UserNotificationsGetNotificationsRequest",
@@ -22991,6 +23199,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "UserNotificationsDeleteCommentRequest",
@@ -23038,6 +23247,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "BackupContentGetBackupContentRequest",
@@ -23085,6 +23295,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "BackupsDeleteBackupRequest",
@@ -23132,6 +23343,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "BackupContentGetBackupContentV2Request",
@@ -23199,6 +23411,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "BackupsGetBackupsRequest",
@@ -23245,6 +23458,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "BackupsPostBackupRequest",
@@ -23281,6 +23495,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RestoreGetRestoreJobRequest",
@@ -23315,6 +23530,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "RestorePostRestoreJobRequest",
@@ -23350,6 +23566,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetContentGetAssetContentBySlugRequest",
@@ -23625,6 +23842,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetContentGetAssetContentRequest",
@@ -23874,6 +24092,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Get all asset folders for the app.",
           "errors": [],
           "generatedRequestName": "AssetFoldersGetAssetFoldersRequest",
@@ -23952,6 +24171,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetFoldersPostAssetFolderRequest",
@@ -24009,6 +24229,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetFoldersPutAssetFolderRequest",
@@ -24077,6 +24298,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetFoldersDeleteAssetFolderRequest",
@@ -24124,6 +24346,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetFoldersPutAssetFolderParentRequest",
@@ -24192,6 +24415,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Get all tags for assets.",
           "errors": [],
           "generatedRequestName": "AssetsGetTagsRequest",
@@ -24244,6 +24468,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetsPutTagRequest",
@@ -24318,6 +24543,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Get all assets for the app.",
           "errors": [],
           "generatedRequestName": "AssetsGetAssetsRequest",
@@ -24470,6 +24696,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
           "errors": [],
           "generatedRequestName": "AssetsPostAssetRequest",
@@ -24575,6 +24802,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Get all assets for the app.",
           "errors": [],
           "generatedRequestName": "AssetsGetAssetsPostRequest",
@@ -24632,6 +24860,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetsGetAssetRequest",
@@ -24689,6 +24918,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
           "errors": [],
           "generatedRequestName": "AssetsPostUpsertAssetRequest",
@@ -24790,6 +25020,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetsPutAssetRequest",
@@ -24858,6 +25089,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetsDeleteAssetRequest",
@@ -24936,6 +25168,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetsBulkUpdateAssetsRequest",
@@ -24997,6 +25230,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Use multipart request to upload an asset.",
           "errors": [],
           "generatedRequestName": "AssetsPutAssetContentRequest",
@@ -25067,6 +25301,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AssetsPutAssetParentRequest",
@@ -25135,6 +25370,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppAssetsGetAssetScriptsRequest",
@@ -25181,6 +25417,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppAssetsPutAssetScriptsRequest",
@@ -25238,6 +25475,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Gets all configured clients for the app with the specified name.",
           "errors": [],
           "generatedRequestName": "AppClientsGetClientsRequest",
@@ -25284,6 +25522,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "Create a new client for the app with the specified name.
 The client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
           "errors": [],
@@ -25342,6 +25581,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": "Only the display name can be changed, create a new client if necessary.",
           "errors": [],
           "generatedRequestName": "AppClientsPutClientRequest",
@@ -25410,6 +25650,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
           "errors": [],
           "generatedRequestName": "AppClientsDeleteClientRequest",
@@ -25467,6 +25708,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppContributorsGetContributorsRequest",
@@ -25513,6 +25755,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppContributorsPostContributorRequest",
@@ -25570,6 +25813,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppContributorsDeleteMyselfRequest",
@@ -25616,6 +25860,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppContributorsDeleteContributorRequest",
@@ -25673,6 +25918,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppImageGetImageRequest",
@@ -25709,6 +25955,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppsUploadImageRequest",
@@ -25768,6 +26015,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppsDeleteImageRequest",
@@ -25814,6 +26062,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppLanguagesGetLanguagesRequest",
@@ -25860,6 +26109,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppLanguagesPostLanguageRequest",
@@ -25917,6 +26167,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppLanguagesPutLanguageRequest",
@@ -25985,6 +26236,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppLanguagesDeleteLanguageRequest",
@@ -26042,6 +26294,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppRolesGetRolesRequest",
@@ -26088,6 +26341,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppRolesPostRoleRequest",
@@ -26145,6 +26399,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppRolesGetPermissionsRequest",
@@ -26194,6 +26449,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppRolesPutRoleRequest",
@@ -26262,6 +26518,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppRolesDeleteRoleRequest",
@@ -26319,6 +26576,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "authed": true,
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
           "errors": [],
@@ -26358,6 +26616,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new app automatically.",
           "errors": [],
@@ -26404,6 +26663,7 @@ You will be assigned as owner of the new app automatically.",
           ],
         },
         {
+          "authed": true,
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
           "errors": [],
@@ -26455,6 +26715,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppsGetAppRequest",
@@ -26501,6 +26762,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppsPutAppRequest",
@@ -26558,6 +26820,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppsDeleteAppRequest",
@@ -26594,6 +26857,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppsPutAppTeamRequest",
@@ -26651,6 +26915,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppSettingsGetSettingsRequest",
@@ -26697,6 +26962,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppSettingsPutSettingsRequest",
@@ -26754,6 +27020,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppWorkflowsGetWorkflowsRequest",
@@ -26800,6 +27067,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppWorkflowsPostWorkflowRequest",
@@ -26857,6 +27125,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppWorkflowsPutWorkflowRequest",
@@ -26925,6 +27194,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "authed": true,
           "description": undefined,
           "errors": [],
           "generatedRequestName": "AppWorkflowsDeleteWorkflowRequest",
@@ -40385,6 +40655,7 @@ exports[`open api parser suger simple 1`] = `
       "description": "CRUD operations on a set of resources, including organizations, products, offers, entitlements, usage record groups for meterting, etc.",
       "endpoints": [
         {
+          "authed": true,
           "description": "list all buyers by the given organization",
           "errors": [],
           "generatedRequestName": "ListBuyersByOrganizationRequest",
@@ -40432,6 +40703,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "get buyer by the given organization and buyer id",
           "errors": [],
           "generatedRequestName": "GetBuyerRequest",
@@ -40486,6 +40758,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "update buyer name and description by the given organization and buyer id",
           "errors": [],
           "generatedRequestName": "UpdateBuyerNameDescriptionRequest",
@@ -40551,6 +40824,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all entitlements of the given buyer",
           "errors": [],
           "generatedRequestName": "ListEntitlementsByBuyerRequest",
@@ -40609,6 +40883,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
           "errors": [],
           "generatedRequestName": "CreateOrUpdateDraftOfferRequest",
@@ -40663,6 +40938,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all entitlements under the organization",
           "errors": [],
           "generatedRequestName": "ListEntitlementsRequest",
@@ -40710,6 +40986,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Get the entitlement by ID",
           "errors": [],
           "generatedRequestName": "GetEntitlementRequest",
@@ -40764,6 +41041,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
           "errors": [],
           "generatedRequestName": "AddEntitlementCreditRequest",
@@ -40829,6 +41107,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Update the name of the given Entitlement",
           "errors": [],
           "generatedRequestName": "UpdateEntitlementNameRequest",
@@ -40894,6 +41173,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all Entitlement Terms of the given Entitlement",
           "errors": [],
           "generatedRequestName": "ListEntitlementTermsRequest",
@@ -40952,6 +41232,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Get the entitlement term by ID",
           "errors": [],
           "generatedRequestName": "GetEntitlementTermRequest",
@@ -41017,6 +41298,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list UsageRecordGroups for the given organization and entitlement",
           "errors": [],
           "generatedRequestName": "ListUsageRecordGroupsByEntitlementRequest",
@@ -41132,6 +41414,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
           "errors": [],
           "generatedRequestName": "ReportUsageRecordGroupRequest",
@@ -41197,6 +41480,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
           "errors": [],
           "generatedRequestName": "ListUsageRecordReportsByEntitlementRequest",
@@ -41327,6 +41611,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all integrations for the given organization.",
           "errors": [],
           "generatedRequestName": "ListIntegrationsByOrganizationRequest",
@@ -41374,6 +41659,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "For each organization, partner & service, there should be at most one integration.",
           "errors": [],
           "generatedRequestName": "CreateIntegrationRequest",
@@ -41428,6 +41714,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Get the integration for the given organization, partner & service.",
           "errors": [],
           "generatedRequestName": "GetIntegrationRequest",
@@ -41520,6 +41807,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Update the given integration.",
           "errors": [],
           "generatedRequestName": "UpdateIntegrationRequest",
@@ -41623,6 +41911,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "delete the integration for the given orgId, partner and service.",
           "errors": [],
           "generatedRequestName": "DeleteIntegrationRequest",
@@ -41714,6 +42003,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Verify the given integration, check whether it works correctly.",
           "errors": [],
           "generatedRequestName": "VerifyIntegrationRequest",
@@ -41805,6 +42095,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all offers under the given organization.",
           "errors": [],
           "generatedRequestName": "ListOffersByOrganizationRequest",
@@ -41852,6 +42143,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Create a private offer under the given organization.",
           "errors": [],
           "generatedRequestName": "CreateOfferRequest",
@@ -41906,6 +42198,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Get the offer by the given offer ID.",
           "errors": [],
           "generatedRequestName": "GetOfferRequest",
@@ -41960,6 +42253,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be deleted.",
           "errors": [],
           "generatedRequestName": "DeleteOfferRequest",
@@ -42013,6 +42307,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is allowed to cancel.",
           "errors": [],
           "generatedRequestName": "CancelOfferRequest",
@@ -42066,6 +42361,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all entitlements under the given offer",
           "errors": [],
           "generatedRequestName": "ListEntitlementsByOfferRequest",
@@ -42124,6 +42420,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
           "errors": [],
           "generatedRequestName": "ListOperationsRequest",
@@ -42232,6 +42529,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all entitlements under the given partner",
           "errors": [],
           "generatedRequestName": "ListEntitlementsByPartnerRequest",
@@ -42306,6 +42604,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": false,
           "description": "List all offers under the given organization & cloud partner.",
           "errors": [],
           "generatedRequestName": "ListOffersByPartnerRequest",
@@ -42392,6 +42691,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list all products under the given organization and cloud partner",
           "errors": [],
           "generatedRequestName": "ListProductsByPartnerRequest",
@@ -42466,6 +42766,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list the revenue records for the given organization, product, entitlement, or buyer.",
           "errors": [],
           "generatedRequestName": "ListRevenueRecordsRequest",
@@ -42642,6 +42943,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
           "errors": [],
           "generatedRequestName": "ListRevenueRecordDetailsRequest",
@@ -42818,6 +43120,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list all products under the given organization",
           "errors": [],
           "generatedRequestName": "ListProductsByOrganizationRequest",
@@ -42865,6 +43168,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "get product by product id",
           "errors": [],
           "generatedRequestName": "GetProductRequest",
@@ -42919,6 +43223,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "currently only the Fulfillment URL is allowed to update via this API.",
           "errors": [],
           "generatedRequestName": "UpdateProductRequest",
@@ -42984,6 +43289,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
           "errors": [],
           "generatedRequestName": "DeleteProductRequest",
@@ -43037,6 +43343,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list all metering dimensions of the given product",
           "errors": [],
           "generatedRequestName": "ListProductMeteringDimensionsRequest",
@@ -43095,6 +43402,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all entitlements under the given product",
           "errors": [],
           "generatedRequestName": "ListEntitlementsByProductRequest",
@@ -43153,6 +43461,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List all offers under the given organization & product.",
           "errors": [],
           "generatedRequestName": "ListOffersByProductRequest",
@@ -43211,6 +43520,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list UsageRecordGroups for the given organization and product",
           "errors": [],
           "generatedRequestName": "ListUsageRecordGroupsByProductRequest",
@@ -43326,6 +43636,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List usageRecordReports for the given organization and product",
           "errors": [],
           "generatedRequestName": "ListUsageRecordReportsByProductRequest",
@@ -43441,6 +43752,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "Get the revenue report of the given organization, product, entitlement, or buyer.",
           "errors": [],
           "generatedRequestName": "GetRevenueReportRequest",
@@ -43495,6 +43807,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "list UsageRecordGroups under the given organization.",
           "errors": [],
           "generatedRequestName": "ListUsageRecordGroupsByOrganizationRequest",
@@ -43599,6 +43912,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
           "errors": [],
           "generatedRequestName": "GetUsageRecordGroupRequest",
@@ -43653,6 +43967,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "List usageRecordReports under the given organization",
           "errors": [],
           "generatedRequestName": "ListUsageRecordReportsByOrganizationRequest",
@@ -43757,6 +44072,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "get the usageRecordReport for a given organization and usageRecordReport ID.",
           "errors": [],
           "generatedRequestName": "GetUsageRecordReportRequest",
@@ -43811,6 +44127,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": true,
           "description": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
           "errors": [],
           "generatedRequestName": "GetUsageReportRequest",
@@ -43865,6 +44182,7 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
         {
+          "authed": false,
           "description": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
           "errors": [],
           "generatedRequestName": "GetApiClientAccessTokenRequest",
@@ -61771,6 +62089,7 @@ with all stable endpoints. You can find them here:
 ",
       "endpoints": [
         {
+          "authed": true,
           "description": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -61867,6 +62186,7 @@ Used to list documents. Optionally filter on supported fields.
           ],
         },
         {
+          "authed": true,
           "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a completion using a previously defined deployment.
@@ -61913,6 +62233,7 @@ Generate a completion using a previously defined deployment.
           ],
         },
         {
+          "authed": true,
           "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -61960,6 +62281,7 @@ Used to retrieve a model version given its ID.
           ],
         },
         {
+          "authed": true,
           "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Perform a search against a document index.
@@ -62012,6 +62334,7 @@ Perform a search against a document index.
           ],
         },
         {
+          "authed": true,
           "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Used to submit feedback regarding the quality of previously generated completions.
@@ -62054,6 +62377,7 @@ Used to submit feedback regarding the quality of previously generated completion
           ],
         },
         {
+          "authed": true,
           "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Upload a document to be indexed and used for search.
