@@ -53,6 +53,7 @@ service:
     listPets:
       path: /pets
       method: GET
+      auth: false
       request:
         name: ListPetsRequest
         query-parameters:
@@ -65,10 +66,12 @@ service:
     createPets:
       path: /pets
       method: POST
+      auth: false
 
     showPetById:
       path: /pets/{petId}
       method: GET
+      auth: false
       path-parameters:
         petId:
           type: string
