@@ -12,8 +12,8 @@ export const V19_TO_V18_MIGRATION: IrMigration<
     earlierVersion: "v18",
     minGeneratorVersionsToExclude: {
         [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_SDK]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: AlwaysRunMigration,
+        [GeneratorName.TYPESCRIPT_SDK]: "0.5.19-1-gef223230",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.19-1-gef223230",
         [GeneratorName.JAVA]: AlwaysRunMigration,
         [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
         [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
