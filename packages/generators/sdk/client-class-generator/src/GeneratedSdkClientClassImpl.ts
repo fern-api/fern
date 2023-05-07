@@ -31,7 +31,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
-        npmPackage: NpmPackage;
+        npmPackage: NpmPackage | undefined;
     }
 }
 
@@ -56,7 +56,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private allowCustomFetcher: boolean;
     private packageResolver: PackageResolver;
     private requireDefaultEnvironment: boolean;
-    private npmPackage: NpmPackage;
+    private npmPackage: NpmPackage | undefined;
 
     constructor({
         intermediateRepresentation,
@@ -383,7 +383,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             },
         ];
 
-        if (this.npmPackage.publishInfo != null) {
+        if (this.npmPackage != null) {
             headers.push(
                 {
                     header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkName,

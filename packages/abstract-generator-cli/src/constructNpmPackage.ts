@@ -7,17 +7,11 @@ export function constructNpmPackage({
 }: {
     generatorConfig: FernGeneratorExec.GeneratorConfig;
     isPackagePrivate: boolean;
-}): NpmPackage {
+}): NpmPackage | undefined {
     const outputMode = generatorConfig.output.mode;
     switch (outputMode.type) {
         case "downloadFiles":
-            return {
-                packageName: "test-package",
-                version: "0.0.0",
-                private: true,
-                publishInfo: undefined,
-                repoUrl: undefined,
-            };
+            return undefined;
         case "publish":
             return {
                 packageName: outputMode.registriesV2.npm.packageName,

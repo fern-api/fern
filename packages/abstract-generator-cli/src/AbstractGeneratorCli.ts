@@ -65,7 +65,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             await generatorNotificationService?.sendUpdateOrThrow(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
-                        npmPackage.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
+                        npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
                 })
             );
 
@@ -102,7 +102,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                         await writeGitHubWorkflows({
                             githubOutputMode,
-                            isPackagePrivate: npmPackage.private,
+                            isPackagePrivate: npmPackage != null && npmPackage.private,
                             pathToProject,
                         });
                     });
@@ -145,7 +145,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract generateTypescriptProject(args: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: CustomConfig;
-        npmPackage: NpmPackage;
+        npmPackage: NpmPackage | undefined;
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject>;

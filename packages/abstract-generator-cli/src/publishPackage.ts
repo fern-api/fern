@@ -13,11 +13,11 @@ export async function publishPackage({
 }: {
     generatorNotificationService: GeneratorNotificationService | undefined;
     logger: Logger;
-    npmPackage: NpmPackage;
+    npmPackage: NpmPackage | undefined;
     dryRun: boolean;
     typescriptProject: PersistedTypescriptProject;
 }): Promise<void> {
-    if (npmPackage.publishInfo == null) {
+    if (npmPackage?.publishInfo == null) {
         throw new Error("npmPackage.publishInfo is not defined.");
     }
 

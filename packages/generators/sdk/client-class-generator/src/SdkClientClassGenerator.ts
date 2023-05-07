@@ -14,7 +14,7 @@ export declare namespace SdkClientClassGenerator {
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
-        npmPackage: NpmPackage;
+        npmPackage: NpmPackage | undefined;
     }
 
     export namespace generateService {
@@ -34,7 +34,7 @@ export class SdkClientClassGenerator {
     private allowCustomFetcher: boolean;
     private requireDefaultEnvironment: boolean;
     private timeoutInSeconds: number | "infinity" | undefined;
-    private npmPackage: NpmPackage;
+    private npmPackage: NpmPackage | undefined;
 
     constructor({
         intermediateRepresentation,

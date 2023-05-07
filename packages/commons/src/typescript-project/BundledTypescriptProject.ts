@@ -9,7 +9,7 @@ import { TypescriptProject } from "./TypescriptProject";
 
 export declare namespace BundledTypescriptProject {
     export interface Init extends TypescriptProject.Init {
-        npmPackage: NpmPackage;
+        npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
     }
 }
@@ -29,7 +29,7 @@ export class BundledTypescriptProject extends TypescriptProject {
     private static BUNDLE_SCRIPT_NAME = "bundle";
     private static BUILD_SCRIPT_NAME = "build";
 
-    private npmPackage: NpmPackage;
+    private npmPackage: NpmPackage | undefined;
     private dependencies: PackageDependencies;
 
     constructor({ npmPackage, dependencies, ...superInit }: BundledTypescriptProject.Init) {
@@ -206,14 +206,20 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
-            name: this.npmPackage.packageName,
-            version: this.npmPackage.version,
+            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package",
         };
+
+        if (this.npmPackage != null) {
+            packageJson = {
+                ...packageJson,
+                version: this.npmPackage.version,
+                private: this.npmPackage.private,
+                repository: this.npmPackage.repoUrl,
+            };
+        }
 
         packageJson = {
             ...packageJson,
-            private: this.npmPackage.private,
-            repository: this.npmPackage.repoUrl,
             files: [
                 BundledTypescriptProject.DIST_DIRECTORY,
                 BundledTypescriptProject.TYPES_DIRECTORY,

@@ -62,7 +62,7 @@ export declare namespace SdkGenerator {
         namespaceExport: string;
         intermediateRepresentation: IntermediateRepresentation;
         context: GeneratorContext;
-        npmPackage: NpmPackage;
+        npmPackage: NpmPackage | undefined;
         config: Config;
     }
 
@@ -86,7 +86,7 @@ export class SdkGenerator {
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
     private config: SdkGenerator.Config;
-    private npmPackage: NpmPackage;
+    private npmPackage: NpmPackage | undefined;
 
     private project: Project;
     private rootDirectory: Directory;

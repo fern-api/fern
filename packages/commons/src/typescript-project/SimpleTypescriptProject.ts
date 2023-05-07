@@ -10,7 +10,7 @@ const FERN_IGNORE_FILENAME = ".fernignore";
 
 export declare namespace SimpleTypescriptProject {
     export interface Init extends TypescriptProject.Init {
-        npmPackage: NpmPackage;
+        npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
         outputEsm: boolean;
     }
@@ -21,7 +21,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
     private static BUILD_SCRIPT_NAME = "build";
     private static PRETTIER_RC_FILENAME = ".prettierrc.yml" as const;
 
-    private npmPackage: NpmPackage;
+    private npmPackage: NpmPackage | undefined;
     private dependencies: PackageDependencies;
     private outputEsm: boolean;
 
@@ -118,14 +118,20 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
-            name: this.npmPackage.packageName,
-            version: this.npmPackage.version,
+            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package",
         };
+
+        if (this.npmPackage != null) {
+            packageJson = {
+                ...packageJson,
+                version: this.npmPackage.version,
+                private: this.npmPackage.private,
+                repository: this.npmPackage.repoUrl,
+            };
+        }
 
         packageJson = {
             ...packageJson,
-            private: this.npmPackage.private,
-            repository: this.npmPackage.repoUrl,
             main: "./index.js",
             types: "./index.d.ts",
             scripts: {
