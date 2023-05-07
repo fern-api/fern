@@ -112,6 +112,7 @@ types:
       pathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       headers: list<Header>
+      sdkName: optional<EndpointSdkName>
       generatedRequestName:
         type: string
         docs: |
@@ -127,6 +128,15 @@ types:
       response: optional<Response>
       errors: list<HttpError>
       server: list<Server>
+
+  EndpointSdkName:
+    properties:
+      groupName:
+        type: optional<string>
+        docs: This is populated by `x-fern-sdk-method-name`
+      methodName:
+        type: string
+        docs: This is populated by `x-fern-sdk-group-name`
 
   HttpMethod:
     enum:

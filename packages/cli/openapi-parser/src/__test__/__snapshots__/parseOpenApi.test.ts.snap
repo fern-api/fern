@@ -43,6 +43,7 @@ exports[`open api parser devrev simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -85,6 +86,7 @@ exports[`open api parser devrev simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -128,6 +130,7 @@ authenticated user.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -161,6 +164,7 @@ given Dev organization.
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -205,6 +209,7 @@ given Dev organization.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -284,6 +289,7 @@ token type issued for a given subject.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -317,6 +323,7 @@ authenticated user.
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -360,6 +367,7 @@ organization.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -407,6 +415,7 @@ enterprise connections can be created by an organization.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -442,6 +451,7 @@ connections can not be deleted using this method.
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -485,6 +495,7 @@ connections can not be deleted using this method.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -520,6 +531,7 @@ created by the user.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -557,6 +569,7 @@ disabled.
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -599,6 +612,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -735,6 +749,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -765,6 +780,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -806,6 +822,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -847,6 +864,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -890,6 +908,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1045,6 +1064,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1087,6 +1107,7 @@ disabled.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1130,6 +1151,7 @@ organization.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1171,6 +1193,7 @@ organization.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1213,6 +1236,7 @@ organization.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1410,6 +1434,7 @@ to access.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1451,6 +1476,7 @@ to access.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1494,6 +1520,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1535,6 +1562,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1577,6 +1605,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1654,6 +1683,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1695,6 +1725,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1736,6 +1767,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1778,6 +1810,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1866,6 +1899,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1907,6 +1941,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1948,6 +1983,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -1989,6 +2025,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2031,6 +2068,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2061,6 +2099,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2102,6 +2141,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2145,6 +2185,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2186,6 +2227,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2406,6 +2448,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2448,6 +2491,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2699,6 +2743,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -2740,6 +2785,7 @@ and a logical concept denoted by the tag's name.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11062,6 +11108,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11182,6 +11229,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11315,6 +11363,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11358,6 +11407,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11391,6 +11441,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11445,6 +11496,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11521,6 +11573,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11597,6 +11650,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11644,6 +11698,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11699,6 +11754,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11742,6 +11798,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11809,6 +11866,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11854,6 +11912,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11901,6 +11960,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -11956,6 +12016,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12022,6 +12083,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12052,6 +12114,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12139,6 +12202,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12226,6 +12290,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12317,6 +12382,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12425,6 +12491,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12533,6 +12600,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12641,6 +12709,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12775,6 +12844,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12839,6 +12909,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12894,6 +12965,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -12974,6 +13046,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13063,6 +13136,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13148,6 +13222,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13229,6 +13304,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13350,6 +13426,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13414,6 +13491,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13478,6 +13556,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13533,6 +13612,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13599,6 +13679,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13654,6 +13735,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13713,6 +13795,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13772,6 +13855,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13817,6 +13901,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13862,6 +13947,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -13917,6 +14003,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -15728,6 +15815,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "getUsers",
+          },
           "server": [],
           "summary": "Get users by query.",
           "tags": [
@@ -15769,6 +15860,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "postUser",
+          },
           "server": [],
           "summary": "Create a new user.",
           "tags": [
@@ -15811,6 +15906,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "getUser",
+          },
           "server": [],
           "summary": "Get a user by ID.",
           "tags": [
@@ -15864,6 +15963,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "putUser",
+          },
           "server": [],
           "summary": "Update a user.",
           "tags": [
@@ -15896,6 +15999,10 @@ exports[`open api parser squidex simple 1`] = `
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "deleteUser",
+          },
           "server": [],
           "summary": "Delete a User.",
           "tags": [
@@ -15938,6 +16045,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "lockUser",
+          },
           "server": [],
           "summary": "Lock a user.",
           "tags": [
@@ -15980,6 +16091,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "userManagement",
+            "methodName": "unlockUser",
+          },
           "server": [],
           "summary": "Unlock a user.",
           "tags": [
@@ -16010,6 +16125,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "users",
+            "methodName": "getUserResources",
+          },
           "server": [],
           "summary": "Get the user resources.",
           "tags": [
@@ -16060,6 +16179,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "users",
+            "methodName": "getUsers",
+          },
           "server": [],
           "summary": "Get users by query.",
           "tags": [
@@ -16102,6 +16225,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "users",
+            "methodName": "getUser",
+          },
           "server": [],
           "summary": "Get user by id.",
           "tags": [
@@ -16134,6 +16261,10 @@ exports[`open api parser squidex simple 1`] = `
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "users",
+            "methodName": "getUserPicture",
+          },
           "server": [],
           "summary": "Get user picture by id.",
           "tags": [
@@ -16187,6 +16318,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "translations",
+            "methodName": "postTranslation",
+          },
           "server": [],
           "summary": "Translate a text.",
           "tags": [
@@ -16217,6 +16352,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "templates",
+            "methodName": "getTemplates",
+          },
           "server": [],
           "summary": "Get all templates.",
           "tags": [
@@ -16259,6 +16398,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "templates",
+            "methodName": "getTemplate",
+          },
           "server": [],
           "summary": "Get template details.",
           "tags": [
@@ -16301,6 +16444,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "getContributors",
+          },
           "server": [],
           "summary": "Get team contributors.",
           "tags": [
@@ -16354,6 +16501,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "postContributor",
+          },
           "server": [],
           "summary": "Assign contributor to team.",
           "tags": [
@@ -16396,6 +16547,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "deleteMyself",
+          },
           "server": [],
           "summary": "Remove yourself.",
           "tags": [
@@ -16449,6 +16604,10 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "deleteContributor",
+          },
           "server": [],
           "summary": "Remove contributor.",
           "tags": [
@@ -16484,6 +16643,10 @@ You will retrieve all teams, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "getTeams",
+          },
           "server": [],
           "summary": "Get your teams.",
           "tags": [
@@ -16526,6 +16689,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "postTeam",
+          },
           "server": [],
           "summary": "Create a new team.",
           "tags": [
@@ -16568,6 +16735,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "getTeam",
+          },
           "server": [],
           "summary": "Get an team by name.",
           "tags": [
@@ -16621,6 +16792,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "teams",
+            "methodName": "putTeam",
+          },
           "server": [],
           "summary": "Update the team.",
           "tags": [
@@ -16663,6 +16838,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getLog",
+          },
           "server": [],
           "summary": "Get api calls as log file.",
           "tags": [
@@ -16727,6 +16906,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getUsages",
+          },
           "server": [],
           "summary": "Get api calls in date range.",
           "tags": [
@@ -16791,6 +16974,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getUsagesForTeam",
+          },
           "server": [],
           "summary": "Get api calls in date range for team.",
           "tags": [
@@ -16833,6 +17020,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getCurrentStorageSize",
+          },
           "server": [],
           "summary": "Get total asset size.",
           "tags": [
@@ -16875,6 +17066,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getTeamCurrentStorageSizeForTeam",
+          },
           "server": [],
           "summary": "Get total asset size by team.",
           "tags": [
@@ -16943,6 +17138,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getStorageSizes",
+          },
           "server": [],
           "summary": "Get asset usage by date.",
           "tags": [
@@ -17011,6 +17210,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "statistics",
+            "methodName": "getStorageSizesForTeam",
+          },
           "server": [],
           "summary": "Get asset usage by date for team.",
           "tags": [
@@ -17073,6 +17276,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "search",
+            "methodName": "getSearchResults",
+          },
           "server": [],
           "summary": "Get search results.",
           "tags": [
@@ -17137,6 +17344,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "postField",
+          },
           "server": [],
           "summary": "Add a schema field.",
           "tags": [
@@ -17212,6 +17423,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "postNestedField",
+          },
           "server": [],
           "summary": "Add a nested field.",
           "tags": [
@@ -17276,6 +17491,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putSchemaUIFields",
+          },
           "server": [],
           "summary": "Configure UI fields.",
           "tags": [
@@ -17340,6 +17559,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putSchemaFieldOrdering",
+          },
           "server": [],
           "summary": "Reorder all fields.",
           "tags": [
@@ -17415,6 +17638,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putNestedFieldOrdering",
+          },
           "server": [],
           "summary": "Reorder all nested fields.",
           "tags": [
@@ -17490,6 +17717,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putField",
+          },
           "server": [],
           "summary": "Update a schema field.",
           "tags": [
@@ -17554,6 +17785,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "deleteField",
+          },
           "server": [],
           "summary": "Delete a schema field.",
           "tags": [
@@ -17640,6 +17875,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putNestedField",
+          },
           "server": [],
           "summary": "Update a nested field.",
           "tags": [
@@ -17715,6 +17954,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "deleteNestedField",
+          },
           "server": [],
           "summary": "Delete a nested field.",
           "tags": [
@@ -17779,6 +18022,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "lockField",
+          },
           "server": [],
           "summary": "Lock a schema field.",
           "tags": [
@@ -17854,6 +18101,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "lockNestedField",
+          },
           "server": [],
           "summary": "Lock a nested field.",
           "tags": [
@@ -17918,6 +18169,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "hideField",
+          },
           "server": [],
           "summary": "Hide a schema field.",
           "tags": [
@@ -17993,6 +18248,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "hideNestedField",
+          },
           "server": [],
           "summary": "Hide a nested field.",
           "tags": [
@@ -18057,6 +18316,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "showField",
+          },
           "server": [],
           "summary": "Show a schema field.",
           "tags": [
@@ -18132,6 +18395,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "showNestedField",
+          },
           "server": [],
           "summary": "Show a nested field.",
           "tags": [
@@ -18196,6 +18463,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "enableField",
+          },
           "server": [],
           "summary": "Enable a schema field.",
           "tags": [
@@ -18271,6 +18542,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "enableNestedField",
+          },
           "server": [],
           "summary": "Enable a nested field.",
           "tags": [
@@ -18335,6 +18610,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "disableField",
+          },
           "server": [],
           "summary": "Disable a schema field.",
           "tags": [
@@ -18410,6 +18689,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "disableNestedField",
+          },
           "server": [],
           "summary": "Disable a nested field.",
           "tags": [
@@ -18452,6 +18735,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "getSchemas",
+          },
           "server": [],
           "summary": "Get schemas.",
           "tags": [
@@ -18505,6 +18792,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "postSchema",
+          },
           "server": [],
           "summary": "Create a new schema.",
           "tags": [
@@ -18558,6 +18849,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "getSchema",
+          },
           "server": [],
           "summary": "Get a schema by name.",
           "tags": [
@@ -18622,6 +18917,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putSchema",
+          },
           "server": [],
           "summary": "Update a schema.",
           "tags": [
@@ -18665,6 +18964,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "deleteSchema",
+          },
           "server": [],
           "summary": "Delete a schema.",
           "tags": [
@@ -18729,6 +19032,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putSchemaSync",
+          },
           "server": [],
           "summary": "Synchronize a schema.",
           "tags": [
@@ -18793,6 +19100,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putCategory",
+          },
           "server": [],
           "summary": "Update a schema category.",
           "tags": [
@@ -18857,6 +19168,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putPreviewUrls",
+          },
           "server": [],
           "summary": "Update the preview urls.",
           "tags": [
@@ -18921,6 +19236,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putScripts",
+          },
           "server": [],
           "summary": "Update the scripts.",
           "tags": [
@@ -18985,6 +19304,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "putRules",
+          },
           "server": [],
           "summary": "Update the rules.",
           "tags": [
@@ -19038,6 +19361,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "publishSchema",
+          },
           "server": [],
           "summary": "Publish a schema.",
           "tags": [
@@ -19091,6 +19418,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "schemas",
+            "methodName": "unpublishSchema",
+          },
           "server": [],
           "summary": "Unpublish a schema.",
           "tags": [
@@ -19128,6 +19459,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "getActions",
+          },
           "server": [],
           "summary": "Get supported rule actions.",
           "tags": [
@@ -19170,6 +19505,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "getRules",
+          },
           "server": [],
           "summary": "Get rules.",
           "tags": [
@@ -19223,6 +19562,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "postRule",
+          },
           "server": [],
           "summary": "Create a new rule.",
           "tags": [
@@ -19255,6 +19598,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "deleteRuleRun",
+          },
           "server": [],
           "summary": "Cancel the current run.",
           "tags": [
@@ -19319,6 +19666,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "putRule",
+          },
           "server": [],
           "summary": "Update a rule.",
           "tags": [
@@ -19362,6 +19713,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "deleteRule",
+          },
           "server": [],
           "summary": "Delete a rule.",
           "tags": [
@@ -19415,6 +19770,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "enableRule",
+          },
           "server": [],
           "summary": "Enable a rule.",
           "tags": [
@@ -19468,6 +19827,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "disableRule",
+          },
           "server": [],
           "summary": "Disable a rule.",
           "tags": [
@@ -19511,6 +19874,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "triggerRule",
+          },
           "server": [],
           "summary": "Trigger a rule.",
           "tags": [
@@ -19570,6 +19937,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "putRuleRun",
+          },
           "server": [],
           "summary": "Run a rule.",
           "tags": [
@@ -19613,6 +19984,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "deleteRuleEvents",
+          },
           "server": [],
           "summary": "Cancels all rule events.",
           "tags": [
@@ -19666,6 +20041,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "simulatePOST",
+          },
           "server": [],
           "summary": "Simulate a rule.",
           "tags": [
@@ -19719,6 +20098,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "simulateGET",
+          },
           "server": [],
           "summary": "Simulate a rule.",
           "tags": [
@@ -19807,6 +20190,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "getEvents",
+          },
           "server": [],
           "summary": "Get rule events.",
           "tags": [
@@ -19839,6 +20226,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "deleteEvents",
+          },
           "server": [],
           "summary": "Cancels all events.",
           "tags": [
@@ -19882,6 +20273,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "putEvent",
+          },
           "server": [],
           "summary": "Retry the event immediately.",
           "tags": [
@@ -19925,6 +20320,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "deleteEvent",
+          },
           "server": [],
           "summary": "Cancels an event.",
           "tags": [
@@ -19958,6 +20357,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "getEventTypes",
+          },
           "server": [],
           "summary": "Provide a list of all event types that are used in rules.",
           "tags": [
@@ -19995,6 +20398,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "rules",
+            "methodName": "getEventSchema",
+          },
           "server": [],
           "summary": "Provide the json schema for the event with the specified name.",
           "tags": [
@@ -20037,6 +20444,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "plans",
+            "methodName": "getPlans",
+          },
           "server": [],
           "summary": "Get app plan information.",
           "tags": [
@@ -20090,6 +20501,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "plans",
+            "methodName": "putPlan",
+          },
           "server": [],
           "summary": "Change the app plan.",
           "tags": [
@@ -20132,6 +20547,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "plans",
+            "methodName": "getTeamPlans",
+          },
           "server": [],
           "summary": "Get team plan information.",
           "tags": [
@@ -20185,6 +20604,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "plans",
+            "methodName": "putTeamPlan",
+          },
           "server": [],
           "summary": "Change the team plan.",
           "tags": [
@@ -20215,6 +20638,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "ping",
+            "methodName": "getInfo",
+          },
           "server": [],
           "summary": "Get API information.",
           "tags": [
@@ -20235,6 +20662,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "ping",
+            "methodName": "getPing",
+          },
           "server": [],
           "summary": "Get ping status of the API.",
           "tags": [
@@ -20267,6 +20698,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "ping",
+            "methodName": "getAppPing",
+          },
           "server": [],
           "summary": "Get ping status.",
           "tags": [
@@ -20313,6 +20748,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "news",
+            "methodName": "getNews",
+          },
           "server": [],
           "summary": "Get features since version.",
           "tags": [
@@ -20347,6 +20786,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "languages",
+            "methodName": "getLanguages",
+          },
           "server": [],
           "summary": "Get supported languages.",
           "tags": [
@@ -20409,6 +20852,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "history",
+            "methodName": "getAppHistory",
+          },
           "server": [],
           "summary": "Get historical events.",
           "tags": [
@@ -20471,6 +20918,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "history",
+            "methodName": "getTeamHistory",
+          },
           "server": [],
           "summary": "Get historical events for a team.",
           "tags": [
@@ -20501,6 +20952,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "eventConsumers",
+            "methodName": "getEventConsumers",
+          },
           "server": [],
           "summary": "Get event consumers.",
           "tags": [
@@ -20543,6 +20998,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "eventConsumers",
+            "methodName": "startEventConsumer",
+          },
           "server": [],
           "summary": "Start an event consumer.",
           "tags": [
@@ -20585,6 +21044,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "eventConsumers",
+            "methodName": "stopEventConsumer",
+          },
           "server": [],
           "summary": "Stop an event consumer.",
           "tags": [
@@ -20627,6 +21090,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "eventConsumers",
+            "methodName": "resetEventConsumer",
+          },
           "server": [],
           "summary": "Reset an event consumer.",
           "tags": [
@@ -20647,6 +21114,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "diagnostics",
+            "methodName": "getDump",
+          },
           "server": [],
           "summary": "Creates a dump and writes it into storage..",
           "tags": [
@@ -20667,6 +21138,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "diagnostics",
+            "methodName": "getGCDump",
+          },
           "server": [],
           "summary": "Creates a gc dump and writes it into storage.",
           "tags": [
@@ -20751,6 +21226,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getContents",
+          },
           "server": [],
           "summary": "Queries contents.",
           "tags": [
@@ -20861,6 +21340,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "postContent",
+          },
           "server": [],
           "summary": "Create a content item.",
           "tags": [
@@ -20925,6 +21408,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getContentsPost",
+          },
           "server": [],
           "summary": "Queries contents.",
           "tags": [
@@ -21005,6 +21492,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getContent",
+          },
           "server": [],
           "summary": "Get a content item.",
           "tags": [
@@ -21126,6 +21617,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "postUpsertContent",
+          },
           "server": [],
           "summary": "Upsert a content item.",
           "tags": [
@@ -21201,6 +21696,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "putContent",
+          },
           "server": [],
           "summary": "Update a content item.",
           "tags": [
@@ -21276,6 +21775,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "patchContent",
+          },
           "server": [],
           "summary": "Patchs a content item.",
           "tags": [
@@ -21361,6 +21864,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "deleteContent",
+          },
           "server": [],
           "summary": "Delete a content item.",
           "tags": [
@@ -21415,6 +21922,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getContentValidity",
+          },
           "server": [],
           "summary": "Get a content item validity.",
           "tags": [
@@ -21495,6 +22006,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getReferences",
+          },
           "server": [],
           "summary": "Get all references of a content.",
           "tags": [
@@ -21575,6 +22090,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getReferencing",
+          },
           "server": [],
           "summary": "Get a referencing contents of a content item.",
           "tags": [
@@ -21640,6 +22159,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "getContentVersion",
+          },
           "server": [],
           "summary": "Get a content by version.",
           "tags": [
@@ -21708,6 +22231,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "postContents",
+          },
           "server": [],
           "summary": "Import content items.",
           "tags": [
@@ -21776,6 +22303,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "bulkUpdateContents",
+          },
           "server": [],
           "summary": "Bulk update content items.",
           "tags": [
@@ -21851,6 +22382,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "putContentStatus",
+          },
           "server": [],
           "summary": "Change status of a content item.",
           "tags": [
@@ -21915,6 +22450,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "deleteContentStatus",
+          },
           "server": [],
           "summary": "Cancel status change of a content item.",
           "tags": [
@@ -21979,6 +22518,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "createDraft",
+          },
           "server": [],
           "summary": "Create a new draft version.",
           "tags": [
@@ -22043,6 +22586,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "contents",
+            "methodName": "deleteVersion",
+          },
           "server": [],
           "summary": "Delete the draft version.",
           "tags": [
@@ -22103,6 +22650,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "comments",
+            "methodName": "getWatchingUsers",
+          },
           "server": [],
           "summary": "Get all watching users..",
           "tags": [
@@ -22172,6 +22723,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "comments",
+            "methodName": "getComments",
+          },
           "server": [],
           "summary": "Get all comments.",
           "tags": [
@@ -22236,6 +22791,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "comments",
+            "methodName": "postComment",
+          },
           "server": [],
           "summary": "Create a new comment.",
           "tags": [
@@ -22301,6 +22860,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "comments",
+            "methodName": "putComment",
+          },
           "server": [],
           "summary": "Update a comment.",
           "tags": [
@@ -22355,6 +22918,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "comments",
+            "methodName": "deleteComment",
+          },
           "server": [],
           "summary": "Delete a comment.",
           "tags": [
@@ -22413,6 +22980,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "notifications",
+            "methodName": "getNotifications",
+          },
           "server": [],
           "summary": "Get all notifications.",
           "tags": [
@@ -22456,6 +23027,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "notifications",
+            "methodName": "deleteComment",
+          },
           "server": [],
           "summary": "Delete a notification.",
           "tags": [
@@ -22499,6 +23074,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "getBackupContent",
+          },
           "server": [],
           "summary": "Get the backup content.",
           "tags": [
@@ -22542,6 +23121,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "deleteBackup",
+          },
           "server": [],
           "summary": "Delete a backup.",
           "tags": [
@@ -22605,6 +23188,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "getBackupContentV2",
+          },
           "server": [],
           "summary": "Get the backup content.",
           "tags": [
@@ -22647,6 +23234,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "getBackups",
+          },
           "server": [],
           "summary": "Get all backup jobs.",
           "tags": [
@@ -22679,6 +23270,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "postBackup",
+          },
           "server": [],
           "summary": "Start a new backup.",
           "tags": [
@@ -22709,6 +23304,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "getRestoreJob",
+          },
           "server": [],
           "summary": "Get current restore status.",
           "tags": [
@@ -22740,6 +23339,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "backups",
+            "methodName": "postRestoreJob",
+          },
           "server": [],
           "summary": "Restore a backup.",
           "tags": [
@@ -23011,6 +23614,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getAssetContentBySlug",
+          },
           "server": [],
           "summary": "Get the asset content.",
           "tags": [
@@ -23256,6 +23863,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getAssetContent",
+          },
           "server": [],
           "summary": "Get the asset content.",
           "tags": [
@@ -23330,6 +23941,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getAssetFolders",
+          },
           "server": [],
           "summary": "Get asset folders.",
           "tags": [
@@ -23383,6 +23998,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "postAssetFolder",
+          },
           "server": [],
           "summary": "Create an asset folder.",
           "tags": [
@@ -23447,6 +24066,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "putAssetFolder",
+          },
           "server": [],
           "summary": "Update an asset folder.",
           "tags": [
@@ -23490,6 +24113,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "deleteAssetFolder",
+          },
           "server": [],
           "summary": "Delete an asset folder.",
           "tags": [
@@ -23554,6 +24181,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "putAssetFolderParent",
+          },
           "server": [],
           "summary": "Move an asset folder.",
           "tags": [
@@ -23602,6 +24233,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getTags",
+          },
           "server": [],
           "summary": "Get assets tags.",
           "tags": [
@@ -23672,6 +24307,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "putTag",
+          },
           "server": [],
           "summary": "Rename an asset tag.",
           "tags": [
@@ -23820,6 +24459,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getAssets",
+          },
           "server": [],
           "summary": "Get assets.",
           "tags": [
@@ -23921,6 +24564,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "postAsset",
+          },
           "server": [],
           "summary": "Upload a new asset.",
           "tags": [
@@ -23974,6 +24621,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getAssetsPost",
+          },
           "server": [],
           "summary": "Get assets.",
           "tags": [
@@ -24027,6 +24678,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "getAsset",
+          },
           "server": [],
           "summary": "Get an asset by id.",
           "tags": [
@@ -24124,6 +24779,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "postUpsertAsset",
+          },
           "server": [],
           "summary": "Upsert an asset.",
           "tags": [
@@ -24188,6 +24847,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "putAsset",
+          },
           "server": [],
           "summary": "Update an asset.",
           "tags": [
@@ -24262,6 +24925,10 @@ You will be assigned as owner of the new team automatically.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "deleteAsset",
+          },
           "server": [],
           "summary": "Delete an asset.",
           "tags": [
@@ -24319,6 +24986,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "bulkUpdateAssets",
+          },
           "server": [],
           "summary": "Bulk update assets.",
           "tags": [
@@ -24385,6 +25056,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "putAssetContent",
+          },
           "server": [],
           "summary": "Replace asset content.",
           "tags": [
@@ -24449,6 +25124,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "assets",
+            "methodName": "putAssetParent",
+          },
           "server": [],
           "summary": "Moves the asset.",
           "tags": [
@@ -24491,6 +25170,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getAssetScripts",
+          },
           "server": [],
           "summary": "Get the app asset scripts.",
           "tags": [
@@ -24544,6 +25227,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putAssetScripts",
+          },
           "server": [],
           "summary": "Update the app asset scripts.",
           "tags": [
@@ -24586,6 +25273,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getClients",
+          },
           "server": [],
           "summary": "Get app clients.",
           "tags": [
@@ -24640,6 +25331,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "postClient",
+          },
           "server": [],
           "summary": "Create a new app client.",
           "tags": [
@@ -24704,6 +25399,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putClient",
+          },
           "server": [],
           "summary": "Updates an app client.",
           "tags": [
@@ -24757,6 +25456,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteClient",
+          },
           "server": [],
           "summary": "Revoke an app client.",
           "tags": [
@@ -24799,6 +25502,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getContributors",
+          },
           "server": [],
           "summary": "Get app contributors.",
           "tags": [
@@ -24852,6 +25559,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "postContributor",
+          },
           "server": [],
           "summary": "Assign contributor to app.",
           "tags": [
@@ -24894,6 +25605,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteMyself",
+          },
           "server": [],
           "summary": "Remove yourself.",
           "tags": [
@@ -24947,6 +25662,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteContributor",
+          },
           "server": [],
           "summary": "Remove contributor.",
           "tags": [
@@ -24979,6 +25698,10 @@ The client secret is auto generated on the server and returned. The client does 
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getImage",
+          },
           "server": [],
           "summary": "Get the app image.",
           "tags": [
@@ -25034,6 +25757,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "uploadImage",
+          },
           "server": [],
           "summary": "Upload the app image.",
           "tags": [
@@ -25076,6 +25803,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteImage",
+          },
           "server": [],
           "summary": "Remove the app image.",
           "tags": [
@@ -25118,6 +25849,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getLanguages",
+          },
           "server": [],
           "summary": "Get app languages.",
           "tags": [
@@ -25171,6 +25906,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "postLanguage",
+          },
           "server": [],
           "summary": "Attaches an app language.",
           "tags": [
@@ -25235,6 +25974,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putLanguage",
+          },
           "server": [],
           "summary": "Updates an app language.",
           "tags": [
@@ -25288,6 +26031,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteLanguage",
+          },
           "server": [],
           "summary": "Deletes an app language.",
           "tags": [
@@ -25330,6 +26077,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getRoles",
+          },
           "server": [],
           "summary": "Get app roles.",
           "tags": [
@@ -25383,6 +26134,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "postRole",
+          },
           "server": [],
           "summary": "Add role to app.",
           "tags": [
@@ -25428,6 +26183,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getPermissions",
+          },
           "server": [],
           "summary": "Get app permissions.",
           "tags": [
@@ -25492,6 +26251,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putRole",
+          },
           "server": [],
           "summary": "Update an app role.",
           "tags": [
@@ -25545,6 +26308,10 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteRole",
+          },
           "server": [],
           "summary": "Remove role from app.",
           "tags": [
@@ -25580,6 +26347,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getApps",
+          },
           "server": [],
           "summary": "Get your apps.",
           "tags": [
@@ -25622,6 +26393,10 @@ You will be assigned as owner of the new app automatically.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "postApp",
+          },
           "server": [],
           "summary": "Create a new app.",
           "tags": [
@@ -25669,6 +26444,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getTeamApps",
+          },
           "server": [],
           "summary": "Get team apps.",
           "tags": [
@@ -25711,6 +26490,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getApp",
+          },
           "server": [],
           "summary": "Get an app by name.",
           "tags": [
@@ -25764,6 +26547,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putApp",
+          },
           "server": [],
           "summary": "Update the app.",
           "tags": [
@@ -25796,6 +26583,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteApp",
+          },
           "server": [],
           "summary": "Delete the app.",
           "tags": [
@@ -25849,6 +26640,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putAppTeam",
+          },
           "server": [],
           "summary": "Transfer the app.",
           "tags": [
@@ -25891,6 +26686,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getSettings",
+          },
           "server": [],
           "summary": "Get the app settings.",
           "tags": [
@@ -25944,6 +26743,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putSettings",
+          },
           "server": [],
           "summary": "Update the app settings.",
           "tags": [
@@ -25986,6 +26789,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "getWorkflows",
+          },
           "server": [],
           "summary": "Get app workflow.",
           "tags": [
@@ -26039,6 +26846,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "postWorkflow",
+          },
           "server": [],
           "summary": "Create a workflow.",
           "tags": [
@@ -26103,6 +26914,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "putWorkflow",
+          },
           "server": [],
           "summary": "Update a workflow.",
           "tags": [
@@ -26156,6 +26971,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "responseIsStreaming": false,
+          "sdkName": {
+            "groupName": "apps",
+            "methodName": "deleteWorkflow",
+          },
           "server": [],
           "summary": "Delete a workflow.",
           "tags": [
@@ -39605,6 +40424,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list buyers by organization",
           "tags": [
@@ -39658,6 +40478,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get buyer",
           "tags": [
@@ -39722,6 +40543,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "update buyer name and description",
           "tags": [
@@ -39779,6 +40601,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list entitlements by buyer",
           "tags": [
@@ -39832,6 +40655,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "create or update draft offer",
           "tags": [
@@ -39878,6 +40702,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list entitlements",
           "tags": [
@@ -39931,6 +40756,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get entitlement",
           "tags": [
@@ -39995,6 +40821,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "add entitlement credit",
           "tags": [
@@ -40059,6 +40886,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "update entitlement name",
           "tags": [
@@ -40116,6 +40944,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list entitlement terms",
           "tags": [
@@ -40180,6 +41009,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get entitlement term",
           "tags": [
@@ -40294,6 +41124,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list usageRecordGroups by entitlement",
           "tags": [
@@ -40358,6 +41189,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "report usageRecordGroup",
           "tags": [
@@ -40487,6 +41319,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list usageRecordReports by entitlement",
           "tags": [
@@ -40533,6 +41366,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list integrations by organization",
           "tags": [
@@ -40586,6 +41420,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "create integration",
           "tags": [
@@ -40677,6 +41512,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get integration",
           "tags": [
@@ -40779,6 +41615,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "update integration",
           "tags": [
@@ -40869,6 +41706,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "delete integration",
           "tags": [
@@ -40959,6 +41797,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "verify integration",
           "tags": [
@@ -41005,6 +41844,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list offers by organization",
           "tags": [
@@ -41058,6 +41898,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "create offer",
           "tags": [
@@ -41111,6 +41952,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get offer",
           "tags": [
@@ -41163,6 +42005,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "delete offer",
           "tags": [
@@ -41215,6 +42058,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "cancel offer",
           "tags": [
@@ -41272,6 +42116,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list entitlements by offer",
           "tags": [
@@ -41379,6 +42224,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list operations",
           "tags": [
@@ -41452,6 +42298,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list entitlements by partner",
           "tags": [
@@ -41537,6 +42384,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list offers by partner",
           "tags": [
@@ -41610,6 +42458,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list products by partner",
           "tags": [
@@ -41785,6 +42634,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list revenue records",
           "tags": [
@@ -41960,6 +42810,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list revenue record details",
           "tags": [
@@ -42006,6 +42857,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list products by organization",
           "tags": [
@@ -42059,6 +42911,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get product",
           "tags": [
@@ -42123,6 +42976,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "update product",
           "tags": [
@@ -42175,6 +43029,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "delete product",
           "tags": [
@@ -42232,6 +43087,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list metering dimensions of product",
           "tags": [
@@ -42289,6 +43145,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list entitlements by product",
           "tags": [
@@ -42346,6 +43203,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list offers by product",
           "tags": [
@@ -42460,6 +43318,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list usageRecordGroups by product",
           "tags": [
@@ -42574,6 +43433,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list usageRecordReports by product",
           "tags": [
@@ -42627,6 +43487,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get revenue report",
           "tags": [
@@ -42730,6 +43591,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list usageRecordGroups by organization",
           "tags": [
@@ -42783,6 +43645,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get usageRecordGroup",
           "tags": [
@@ -42886,6 +43749,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "list usageRecordReports by organization",
           "tags": [
@@ -42939,6 +43803,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get usageRecordReport",
           "tags": [
@@ -42992,6 +43857,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get usage report",
           "tags": [
@@ -43033,6 +43899,7 @@ exports[`open api parser suger simple 1`] = `
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": "get api access token",
           "tags": [
@@ -60992,6 +61859,7 @@ Used to list documents. Optionally filter on supported fields.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -61037,6 +61905,7 @@ Generate a completion using a previously defined deployment.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -61083,6 +61952,7 @@ Used to retrieve a model version given its ID.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [],
           "summary": undefined,
           "tags": [
@@ -61128,6 +61998,7 @@ Perform a search against a document index.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [
             {
               "description": undefined,
@@ -61169,6 +62040,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "requestNameOverride": undefined,
           "response": undefined,
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [
             {
               "description": undefined,
@@ -61298,6 +62170,7 @@ Upload a document to be indexed and used for search.
             },
           },
           "responseIsStreaming": false,
+          "sdkName": undefined,
           "server": [
             {
               "description": undefined,
