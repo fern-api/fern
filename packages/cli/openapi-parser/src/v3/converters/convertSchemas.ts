@@ -128,6 +128,21 @@ function convertSchemaObject(
         });
     }
 
+    // handle object with discriminant
+    if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
+        return convertDiscriminatedOneOf({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
+            description,
+            discriminator: schema.discriminator,
+            properties: schema.properties ?? {},
+            required: schema.required,
+            wrapAsOptional,
+            context,
+        });
+    }
+
     // handle oneOf
     if (schema.oneOf != null && schema.oneOf.length > 0) {
         if (

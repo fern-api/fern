@@ -13,6 +13,7 @@ describe("open api converter", () => {
     testFixture("devrev", "openapi.yml");
     testFixture("suger", "swagger.json");
     testFixture("hathora", "openapi.json");
+    testFixture("squidex", "openapi.json");
 });
 
 function testFixture(fixtureName: string, filename: string) {
