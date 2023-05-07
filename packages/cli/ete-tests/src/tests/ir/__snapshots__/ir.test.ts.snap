@@ -105,8 +105,8 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -1261,8 +1261,8 @@ exports[`ir {"name":"extended-examples"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -1709,8 +1709,8 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -7488,8 +7488,8 @@ exports[`ir {"name":"migration","version":"v1"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     },
     "errors": [
@@ -8344,8 +8344,8 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -9628,8 +9628,8 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -10766,8 +10766,8 @@ exports[`ir {"name":"packages"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -12978,8 +12978,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -22049,8 +22049,8 @@ exports[`ir {"name":"simple"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -22502,8 +22502,8 @@ exports[`ir {"name":"streaming"} 1`] = `
         "hasStreamingEndpoints": true,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"
@@ -23393,8 +23393,8 @@ exports[`ir {"name":"variables"} 1`] = `
         "hasStreamingEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
-            "sdkName": "X-SDK-Name",
-            "sdkVersion": "X-SDK-Version"
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
         }
     }
 }"

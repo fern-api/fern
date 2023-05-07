@@ -277,8 +277,8 @@ export async function generateIntermediateRepresentation({
             hasStreamingEndpoints,
             platformHeaders: {
                 language: "X-Fern-Language",
-                sdkName: "X-SDK-Name",
-                sdkVersion: "X-SDK-Version",
+                sdkName: "X-Fern-SDK-Name",
+                sdkVersion: "X-Fern-SDK-Version",
             },
         },
     };
