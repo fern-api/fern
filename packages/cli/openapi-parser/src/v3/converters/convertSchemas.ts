@@ -193,10 +193,14 @@ function convertSchemaObject(
     // handle objects
     if (schema.allOf != null || schema.properties != null) {
         // convert a singular allOf as a reference or inlined schema
-        if (hasNoProperties(schema) && schema.allOf != null && schema.allOf.length === 1 && schema.allOf[0] != null) {
-            const convertedSchema = convertSchema(schema.allOf[0], wrapAsOptional, context, breadcrumbs);
-            return maybeInjectDescription(convertedSchema, description);
+        if (schema.allOf != null) {
+            const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
+            if (maybeSingularAllOf != null) {
+                const convertedSchema = convertSchema(maybeSingularAllOf, wrapAsOptional, context, breadcrumbs);
+                return maybeInjectDescription(convertedSchema, description);
+            }
         }
+
         // otherwise convert as an object
         return convertObject({
             nameOverride,
@@ -282,6 +286,25 @@ function maybeInjectDescription(schema: Schema, description: string | undefined)
         });
     }
     return schema;
+}
+
+function getSingularAllOf({
+    properties,
+    allOf,
+}: {
+    properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
+    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+}): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    if (hasNoProperties({ properties }) && allOf.length === 1 && allOf[0] != null) {
+        return allOf[0];
+    } else if (hasNoProperties({ properties }) && allOf.length === 2 && allOf[0] != null && allOf[1] != null) {
+        if (Object.keys(allOf[0]) === ["default"] || Object.keys(allOf[0]) === ["default", "description"]) {
+            return allOf[1];
+        } else if (Object.keys(allOf[1]) === ["default"] || Object.keys(allOf[0]) === ["default", "description"]) {
+            return allOf[2];
+        }
+    }
+    return undefined;
 }
 
 export function wrapPrimitive({
