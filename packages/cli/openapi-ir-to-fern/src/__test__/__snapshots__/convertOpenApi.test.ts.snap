@@ -903,7 +903,7 @@ exports[`open api converter devrev simple 1`] = `
       "types": {
         "ArtifactSummary": {
           "docs": undefined,
-          "type": "AtomBaseSummary",
+          "properties": {},
         },
         "ArtifactsLocateResponse": {
           "docs": "The response to getting an artifact's download URL.",
@@ -1436,11 +1436,11 @@ issue a Rev session token.
         },
         "Capability": {
           "docs": undefined,
-          "type": "PartBase",
+          "properties": {},
         },
         "CapabilitySummary": {
           "docs": undefined,
-          "type": "PartBaseSummary",
+          "properties": {},
         },
         "DevOrgAuthConnectionsCreateRequest": {
           "base-properties": {
@@ -1632,7 +1632,7 @@ connection.
         },
         "DevUserSummary": {
           "docs": undefined,
-          "type": "UserBaseSummary",
+          "properties": {},
         },
         "DevUsersListResponse": {
           "docs": "The response to listing the Dev users.",
@@ -1676,7 +1676,7 @@ sort order. If not set, then no prior elements exist.
         },
         "EnhancementSummary": {
           "docs": undefined,
-          "type": "PartBaseSummary",
+          "properties": {},
         },
         "ErrorBadRequest": {
           "docs": undefined,
@@ -2043,15 +2043,15 @@ inquiry.
         },
         "Feature": {
           "docs": undefined,
-          "type": "PartBase",
+          "properties": {},
         },
         "FeatureSummary": {
           "docs": undefined,
-          "type": "PartBaseSummary",
+          "properties": {},
         },
         "GroupSummary": {
           "docs": undefined,
-          "type": "AtomBaseSummary",
+          "properties": {},
         },
         "Issue": {
           "docs": undefined,
@@ -2459,11 +2459,11 @@ empty.
         },
         "Product": {
           "docs": undefined,
-          "type": "PartBase",
+          "properties": {},
         },
         "ProductSummary": {
           "docs": undefined,
-          "type": "PartBaseSummary",
+          "properties": {},
         },
         "RevOrg": {
           "docs": undefined,
@@ -2488,7 +2488,7 @@ organization.
         },
         "RevOrgSummary": {
           "docs": undefined,
-          "type": "OrgBaseSummary",
+          "properties": {},
         },
         "RevOrgsCreateResponse": {
           "docs": "Response object for request to create a new Rev organization.
@@ -2603,7 +2603,7 @@ the value must be one that's specified in the tag's allowed values.
         },
         "SysUserSummary": {
           "docs": undefined,
-          "type": "UserBaseSummary",
+          "properties": {},
         },
         "Tag": {
           "docs": undefined,
@@ -2975,7 +2975,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "TimelineEntryBase": {
           "docs": undefined,
-          "type": "AtomBase",
+          "properties": {},
         },
         "TimelineEntryType": {
           "docs": undefined,
@@ -5681,7 +5681,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "currentAllocation": {
               "docs": undefined,
-              "type": "optional<RoomAllocation>",
+              "type": "optional<PickRoomExcludeKeyofRoomAllocationsCurrentAllocation>",
             },
             "roomId": {
               "docs": undefined,
@@ -5692,6 +5692,10 @@ exports[`open api converter hathora simple 1`] = `
               "type": "RoomStatus",
             },
           },
+        },
+        "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation": {
+          "docs": undefined,
+          "properties": {},
         },
         "PlanName": {
           "docs": undefined,
@@ -5883,7 +5887,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "currentAllocation": {
               "docs": undefined,
-              "type": "optional<RoomAllocation>",
+              "type": "optional<RoomCurrentAllocation>",
             },
             "roomId": {
               "docs": undefined,
@@ -5919,6 +5923,10 @@ exports[`open api converter hathora simple 1`] = `
         "RoomAllocationId": {
           "docs": undefined,
           "type": "string",
+        },
+        "RoomCurrentAllocation": {
+          "docs": undefined,
+          "properties": {},
         },
         "RoomId": {
           "docs": undefined,
@@ -15910,7 +15918,7 @@ exports[`open api converter suger simple 1`] = `
             },
             "originalPlan": {
               "docs": "the pricing plan of the original plan.",
-              "type": "optional<AzurePriceAndAvailabilityPrivateOfferPlan>",
+              "type": "optional<AzureMarketplacePrivateOfferPricingOriginalPlan>",
             },
             "plan": {
               "docs": "in format of "plan/product-durable-id/plan-durable-id"",
@@ -15930,7 +15938,7 @@ exports[`open api converter suger simple 1`] = `
             },
             "privateOfferPlan": {
               "docs": "the pricing plan of the private offer",
-              "type": "optional<AzurePriceAndAvailabilityPrivateOfferPlan>",
+              "type": "optional<AzureMarketplacePrivateOfferPricingPrivateOfferPlan>",
             },
             "product": {
               "docs": "in format of "product/product-durable-id"",
@@ -15955,6 +15963,10 @@ exports[`open api converter suger simple 1`] = `
             },
           ],
         },
+        "AzureMarketplacePrivateOfferPricingOriginalPlan": {
+          "docs": undefined,
+          "properties": {},
+        },
         "AzureMarketplacePrivateOfferPricingPlanType": {
           "docs": undefined,
           "enum": [
@@ -15967,6 +15979,10 @@ exports[`open api converter suger simple 1`] = `
               "value": "PER_USER",
             },
           ],
+        },
+        "AzureMarketplacePrivateOfferPricingPrivateOfferPlan": {
+          "docs": undefined,
+          "properties": {},
         },
         "AzureMarketplacePrivateOfferPrivateOfferType": {
           "docs": undefined,
@@ -17418,13 +17434,17 @@ This member is required.",
             },
             "status": {
               "docs": "Status of the operation.",
-              "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum>",
+              "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessageStatus>",
             },
             "usageEventId": {
               "docs": "Unique identifier associated with the usage event",
               "type": "optional<string>",
             },
           },
+        },
+        "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageBatchEventOkMessageStatus": {
+          "docs": undefined,
+          "properties": {},
         },
         "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse": {
           "docs": undefined,
@@ -17485,13 +17505,17 @@ This member is required.",
             },
             "status": {
               "docs": "Status of the operation.",
-              "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum>",
+              "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponseStatus>",
             },
             "usageEventId": {
               "docs": "Unique identifier associated with the usage event",
               "type": "optional<string>",
             },
           },
+        },
+        "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventOkResponseStatus": {
+          "docs": undefined,
+          "properties": {},
         },
         "GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum": {
           "docs": undefined,
@@ -17927,7 +17951,7 @@ This member is required.",
           "properties": {
             "resultMetadata": {
               "docs": "Metadata pertaining to the operation's result.",
-              "type": "optional<middleware.Metadata>",
+              "type": "optional<MarketplacemeteringBatchMeterUsageOutputResultMetadata>",
             },
             "results": {
               "docs": "Contains all UsageRecords processed by BatchMeterUsage. These records were
@@ -17943,6 +17967,10 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             },
           },
         },
+        "MarketplacemeteringBatchMeterUsageOutputResultMetadata": {
+          "docs": undefined,
+          "properties": {},
+        },
         "ServicecontrolReportError": {
           "docs": undefined,
           "properties": {
@@ -17952,9 +17980,13 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
             },
             "status": {
               "docs": "Status: Details of the error when processing the Operation.",
-              "type": "optional<ServicecontrolStatus>",
+              "type": "optional<ServicecontrolReportErrorStatus>",
             },
           },
+        },
+        "ServicecontrolReportErrorStatus": {
+          "docs": undefined,
+          "properties": {},
         },
         "ServicecontrolReportResponse": {
           "docs": undefined,
@@ -18681,11 +18713,11 @@ in the google.rpc.Status.details field, or localized by the client.",
           "properties": {
             "awsBuyer": {
               "docs": "Buyer from AWS Marketplace",
-              "type": "optional<SharedAwsAccountIdentifier>",
+              "type": "optional<SharedBuyerInfoAwsBuyer>",
             },
             "azureBuyer": {
               "docs": "Buyer from Azure Marketplace",
-              "type": "optional<SharedAzureAdIdentifier>",
+              "type": "optional<SharedBuyerInfoAzureBuyer>",
             },
             "collectableAmount": {
               "docs": "The amount that the seller can collect. It excludes the marketplace commision fee.",
@@ -18697,13 +18729,25 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "gcpBuyer": {
               "docs": "Buyer from GCP Marketplace",
-              "type": "optional<SharedGcpMarketplaceUserAccount>",
+              "type": "optional<SharedBuyerInfoGcpBuyer>",
             },
             "invoicedAmount": {
               "docs": "The amount that the buyer has got invoiced.",
               "type": "optional<double>",
             },
           },
+        },
+        "SharedBuyerInfoAwsBuyer": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedBuyerInfoAzureBuyer": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedBuyerInfoGcpBuyer": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedCommitDimension": {
           "docs": "The commit dimension. There may be one or more commit dimensions defined in single product, offer or entitlement.",
@@ -18871,6 +18915,10 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": "MARKETPLACE",
             },
           ],
+        },
+        "SharedCreateUsageRecordGroupParamsMetaInfo": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedEntitlementInfo": {
           "docs": undefined,
@@ -19230,7 +19278,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "price": {
               "docs": "the Monthly subscription fee as commit.",
-              "type": "optional<SharedGcpCommerceProducerPrice>",
+              "type": "optional<SharedGcpCommerceProducerPriceSubscriptionPrice>",
             },
             "taxCategoryOverride": {
               "docs": undefined,
@@ -19246,6 +19294,10 @@ in the google.rpc.Status.details field, or localized by the client.",
               "value": "ONE_YEAR",
             },
           ],
+        },
+        "SharedGcpCommerceProducerPriceSubscriptionPrice": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedGcpCommerceProducerPriceSubscriptionTaxCategoryOverride": {
           "docs": undefined,
@@ -19265,13 +19317,17 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "price": {
               "docs": "The price of this tier",
-              "type": "optional<SharedGcpCommerceProducerPrice>",
+              "type": "optional<SharedGcpCommerceProducerPriceTierPrice>",
             },
             "startUsageAmount": {
               "docs": "The usage amount beyond which this tier is effective.",
               "type": "optional<double>",
             },
           },
+        },
+        "SharedGcpCommerceProducerPriceTierPrice": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedGcpCommerceProducerPriceUsage": {
           "docs": undefined,
@@ -20021,33 +20077,57 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "awsAceIntegration": {
               "docs": "AWS ACE Integration",
-              "type": "optional<SharedAwsAceIntegration>",
+              "type": "optional<SharedIntegrationInfoAwsAceIntegration>",
             },
             "awsIntegration": {
               "docs": "AWS Marketplace Integration",
-              "type": "optional<SharedAwsMarketplaceIntegration>",
+              "type": "optional<SharedIntegrationInfoAwsIntegration>",
             },
             "azureIntegration": {
               "docs": "Azure Marketplace Integration",
-              "type": "optional<SharedAzureIntegration>",
+              "type": "optional<SharedIntegrationInfoAzureIntegration>",
             },
             "gcpIntegration": {
               "docs": "GCP Marketplace Integration",
-              "type": "optional<SharedGcpIntegration>",
+              "type": "optional<SharedIntegrationInfoGcpIntegration>",
             },
             "hubspotCrmIntegration": {
               "docs": "Integration for HubSpot CRM",
-              "type": "optional<SharedHubspotCrmIntegration>",
+              "type": "optional<SharedIntegrationInfoHubspotCrmIntegration>",
             },
             "salesforceCrmIntegration": {
               "docs": "Integration for Salesforce CRM",
-              "type": "optional<SharedSalesforceCrmIntegration>",
+              "type": "optional<SharedIntegrationInfoSalesforceCrmIntegration>",
             },
             "slackIntegration": {
               "docs": undefined,
               "type": "optional<SharedSlackIntegration>",
             },
           },
+        },
+        "SharedIntegrationInfoAwsAceIntegration": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedIntegrationInfoAwsIntegration": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedIntegrationInfoAzureIntegration": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedIntegrationInfoGcpIntegration": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedIntegrationInfoHubspotCrmIntegration": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedIntegrationInfoSalesforceCrmIntegration": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedListRevenueRecordDetailsResponse": {
           "docs": undefined,
@@ -20134,13 +20214,17 @@ This field is present only if the product has usage-based billing configured.",
             },
             "usageCount": {
               "docs": "The current Dimension Usage Count. Available when call GetEntitlement API.",
-              "type": "optional<SharedUsageCount>",
+              "type": "optional<SharedMeteringDimensionUsageCount>",
             },
             "valueType": {
               "docs": undefined,
               "type": "optional<SharedValueType>",
             },
           },
+        },
+        "SharedMeteringDimensionUsageCount": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedMeteringUsageRecordGroup": {
           "docs": undefined,
@@ -20234,11 +20318,11 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "awsMeteringResponse": {
               "docs": "The raw response from AWS metering service.",
-              "type": "optional<MarketplacemeteringBatchMeterUsageOutput>",
+              "type": "optional<SharedMeteringUsageRecordReportInfoAwsMeteringResponse>",
             },
             "azureMeteringResponse": {
               "docs": "The raw response from Azure metering service.",
-              "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse>",
+              "type": "optional<SharedMeteringUsageRecordReportInfoAzureMeteringResponse>",
             },
             "commitAmount": {
               "docs": "The amount of the commit if applicable.",
@@ -20262,7 +20346,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "gcpMeteringResponse": {
               "docs": "The raw response from GCP metering service.",
-              "type": "optional<ServicecontrolReportResponse>",
+              "type": "optional<SharedMeteringUsageRecordReportInfoGcpMeteringResponse>",
             },
             "includedRecords": {
               "docs": "The included usage records in the map of <DimensionKey, Count>",
@@ -20298,6 +20382,18 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
+        "SharedMeteringUsageRecordReportInfoAwsMeteringResponse": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedMeteringUsageRecordReportInfoAzureMeteringResponse": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedMeteringUsageRecordReportInfoGcpMeteringResponse": {
+          "docs": undefined,
+          "properties": {},
+        },
         "SharedNotificationEvent": {
           "docs": undefined,
           "properties": {
@@ -20323,7 +20419,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "eventStatus": {
               "docs": "notification event status.",
-              "type": "optional<SharedNotificationEventStatus>",
+              "type": "optional<SharedNotificationEventEventStatus>",
             },
             "lastUpdateTime": {
               "docs": "timestamp of the event when it is updated.",
@@ -20392,6 +20488,10 @@ This field is present only if the product has usage-based billing configured.",
             },
           ],
         },
+        "SharedNotificationEventEventStatus": {
+          "docs": undefined,
+          "properties": {},
+        },
         "SharedNotificationEventStatus": {
           "docs": undefined,
           "enum": [
@@ -20422,11 +20522,11 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "azureOriginalPlan": {
               "docs": "The origin pricing of Azure plan. Only applicable for Azure Marketplace plans.",
-              "type": "optional<AzurePriceAndAvailabilityPrivateOfferPlan>",
+              "type": "optional<SharedOfferInfoAzureOriginalPlan>",
             },
             "azurePrivateOffer": {
               "docs": "The private offer for Azure Marketplace. Only applicable for Azure Marketplace private offers.",
-              "type": "optional<AzureMarketplacePrivateOffer>",
+              "type": "optional<SharedOfferInfoAzurePrivateOffer>",
             },
             "azureProductVariant": {
               "docs": undefined,
@@ -20493,6 +20593,14 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedOfferInfoVisibility>",
             },
           },
+        },
+        "SharedOfferInfoAzureOriginalPlan": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedOfferInfoAzurePrivateOffer": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedOfferInfoVisibility": {
           "docs": undefined,
@@ -20730,17 +20838,29 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "awsRevenueRecordDetail": {
               "docs": "For AWS Marketplace",
-              "type": "optional<GithubComSugerioMarketplaceServiceRdsDbLibBillingAwsBillingEvent>",
+              "type": "optional<SharedRevenueRecordDetailAwsRevenueRecordDetail>",
             },
             "azureRevenueRecordDetail": {
               "docs": "For Azure Marketplace",
-              "type": "optional<GithubComSugerioMarketplaceServiceRdsDbLibBillingAzureCmaRevenue>",
+              "type": "optional<SharedRevenueRecordDetailAzureRevenueRecordDetail>",
             },
             "gcpRevenueRecordDetail": {
               "docs": "For GCP Marketplace",
-              "type": "optional<GithubComSugerioMarketplaceServiceRdsDbLibBillingGcpChargeUsage>",
+              "type": "optional<SharedRevenueRecordDetailGcpRevenueRecordDetail>",
             },
           },
+        },
+        "SharedRevenueRecordDetailAwsRevenueRecordDetail": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedRevenueRecordDetailAzureRevenueRecordDetail": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SharedRevenueRecordDetailGcpRevenueRecordDetail": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedRevenueRecordInfo": {
           "docs": undefined,
@@ -20843,7 +20963,7 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "credential": {
               "docs": "System created",
-              "type": "optional<SharedSalesforceCrmCredential>",
+              "type": "optional<SharedSalesforceCrmIntegrationCredential>",
             },
             "filters": {
               "docs": undefined,
@@ -20866,6 +20986,10 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
           },
+        },
+        "SharedSalesforceCrmIntegrationCredential": {
+          "docs": undefined,
+          "properties": {},
         },
         "SharedSalesforceSyncFilter": {
           "docs": undefined,
@@ -21767,7 +21891,7 @@ the same customer, dimension, and time, but a different quantity.",
             },
             "usageRecord": {
               "docs": "The UsageRecord that was part of the BatchMeterUsage request.",
-              "type": "optional<TypesUsageRecord>",
+              "type": "optional<TypesUsageRecordResultUsageRecord>",
             },
           },
         },
@@ -21787,6 +21911,10 @@ the same customer, dimension, and time, but a different quantity.",
               "value": "DuplicateRecord",
             },
           ],
+        },
+        "TypesUsageRecordResultUsageRecord": {
+          "docs": undefined,
+          "properties": {},
         },
         "UpdateIntegrationRequestPartner": {
           "docs": undefined,
@@ -22724,7 +22852,7 @@ the same customer, dimension, and time, but a different quantity.",
                   },
                   "metaInfo": {
                     "docs": "read-only, don't set it when reporting the usage record group.",
-                    "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
+                    "type": "optional<root.SharedCreateUsageRecordGroupParamsMetaInfo>",
                   },
                   "organizationID": {
                     "docs": undefined,
@@ -23341,7 +23469,7 @@ exports[`open api converter vellum simple 1`] = `
                   },
                   "options": {
                     "docs": "Additional configuration that can be used to control what's included in the response.",
-                    "type": "optional<GenerateOptionsRequest>",
+                    "type": "optional<GenerateRequestBodyRequestOptions>",
                   },
                   "requests": {
                     "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
@@ -23374,7 +23502,7 @@ exports[`open api converter vellum simple 1`] = `
                   },
                   "options": {
                     "docs": "Configuration options for the search.",
-                    "type": "optional<SearchRequestOptionsRequest>",
+                    "type": "optional<SearchRequestBodyRequestOptions>",
                   },
                   "query": {
                     "docs": "The query to search for.",
@@ -23449,9 +23577,13 @@ exports[`open api converter vellum simple 1`] = `
             },
             "indexing_state": {
               "docs": "An enum value representing where this document is along its indexing lifecycle for this index.",
-              "type": "optional<IndexingStateEnum>",
+              "type": "optional<DocumentDocumentToDocumentIndexIndexingState>",
             },
           },
+        },
+        "DocumentDocumentToDocumentIndexIndexingState": {
+          "docs": undefined,
+          "properties": {},
         },
         "EnrichedNormalizedCompletion": {
           "docs": undefined,
@@ -23462,7 +23594,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "finish_reason": {
               "docs": "The reason the generation finished.",
-              "type": "FinishReasonEnum",
+              "type": "EnrichedNormalizedCompletionFinishReason",
             },
             "id": {
               "docs": "The Vellum-generated ID of the completion.",
@@ -23470,7 +23602,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "logprobs": {
               "docs": "The logprobs of the completion. Only present if specified in the original request options.",
-              "type": "optional<NormalizedLogProbs>",
+              "type": "optional<EnrichedNormalizedCompletionLogprobs>",
             },
             "model_version_id": {
               "docs": "The ID of the model version used to generate this completion.",
@@ -23481,6 +23613,14 @@ exports[`open api converter vellum simple 1`] = `
               "type": "string",
             },
           },
+        },
+        "EnrichedNormalizedCompletionFinishReason": {
+          "docs": "The reason the generation finished.",
+          "properties": {},
+        },
+        "EnrichedNormalizedCompletionLogprobs": {
+          "docs": undefined,
+          "properties": {},
         },
         "FinishReasonEnum": {
           "docs": undefined,
@@ -23513,9 +23653,17 @@ exports[`open api converter vellum simple 1`] = `
           "properties": {
             "logprobs": {
               "docs": "Which logprobs to include, if any. Defaults to NONE.",
-              "type": "optional<LogprobsEnum>",
+              "type": "optional<GenerateOptionsRequestLogprobs>",
             },
           },
+        },
+        "GenerateOptionsRequestLogprobs": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "GenerateRequestBodyRequestOptions": {
+          "docs": undefined,
+          "properties": {},
         },
         "GenerateRequestRequest": {
           "docs": undefined,
@@ -23630,9 +23778,13 @@ exports[`open api converter vellum simple 1`] = `
             },
             "sandbox_snapshot": {
               "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
-              "type": "optional<ModelVersionSandboxSnapshot>",
+              "type": "optional<ModelVersionBuildConfigSandboxSnapshot>",
             },
           },
+        },
+        "ModelVersionBuildConfigSandboxSnapshot": {
+          "docs": undefined,
+          "properties": {},
         },
         "ModelVersionExecConfigParameters": {
           "docs": undefined,
@@ -23680,7 +23832,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "parameters": {
               "docs": "The generation parameters that are passed to the LLM provider at runtime.",
-              "type": "ModelVersionExecConfigParameters",
+              "type": "ModelVersionExecConfigReadParameters",
             },
             "prompt_template": {
               "docs": "The template used to generate prompts for this model version.",
@@ -23688,12 +23840,16 @@ exports[`open api converter vellum simple 1`] = `
             },
           },
         },
+        "ModelVersionExecConfigReadParameters": {
+          "docs": "The generation parameters that are passed to the LLM provider at runtime.",
+          "properties": {},
+        },
         "ModelVersionRead": {
           "docs": undefined,
           "properties": {
             "build_config": {
               "docs": "Configuration used to build this model version.",
-              "type": "ModelVersionBuildConfig",
+              "type": "ModelVersionReadBuildConfig",
             },
             "created": {
               "docs": "Timestamp of when this model version was created.",
@@ -23701,7 +23857,7 @@ exports[`open api converter vellum simple 1`] = `
             },
             "exec_config": {
               "docs": "Configuration used to execute this model version.",
-              "type": "ModelVersionExecConfigRead",
+              "type": "ModelVersionReadExecConfig",
             },
             "external_id": {
               "docs": "The unique id of this model version as it exists in the above provider's system.",
@@ -23717,13 +23873,29 @@ exports[`open api converter vellum simple 1`] = `
             },
             "model_type": {
               "docs": "The type of task this model is used for.",
-              "type": "ModelTypeEnum",
+              "type": "ModelVersionReadModelType",
             },
             "provider": {
               "docs": "Which LLM provider this model version is associated with.",
-              "type": "ProviderEnum",
+              "type": "ModelVersionReadProvider",
             },
           },
+        },
+        "ModelVersionReadBuildConfig": {
+          "docs": "Configuration used to build this model version.",
+          "properties": {},
+        },
+        "ModelVersionReadExecConfig": {
+          "docs": "Configuration used to execute this model version.",
+          "properties": {},
+        },
+        "ModelVersionReadModelType": {
+          "docs": "The type of task this model is used for.",
+          "properties": {},
+        },
+        "ModelVersionReadProvider": {
+          "docs": "Which LLM provider this model version is associated with.",
+          "properties": {},
         },
         "ModelVersionSandboxSnapshot": {
           "docs": undefined,
@@ -23849,12 +24021,16 @@ exports[`open api converter vellum simple 1`] = `
             },
           },
         },
+        "SearchRequestBodyRequestOptions": {
+          "docs": undefined,
+          "properties": {},
+        },
         "SearchRequestOptionsRequest": {
           "docs": undefined,
           "properties": {
             "filters": {
               "docs": "The filters to apply to the search.",
-              "type": "optional<SearchFiltersRequest>",
+              "type": "optional<SearchRequestOptionsRequestFilters>",
             },
             "limit": {
               "docs": "The maximum number of results to return.",
@@ -23862,13 +24038,25 @@ exports[`open api converter vellum simple 1`] = `
             },
             "result_merging": {
               "docs": "The configuration for merging results.",
-              "type": "optional<SearchResultMergingRequest>",
+              "type": "optional<SearchRequestOptionsRequestResultMerging>",
             },
             "weights": {
               "docs": "The weights to use for the search. Must add up to 1.0.",
-              "type": "optional<SearchWeightsRequest>",
+              "type": "optional<SearchRequestOptionsRequestWeights>",
             },
           },
+        },
+        "SearchRequestOptionsRequestFilters": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SearchRequestOptionsRequestResultMerging": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SearchRequestOptionsRequestWeights": {
+          "docs": undefined,
+          "properties": {},
         },
         "SearchResponse": {
           "docs": undefined,
@@ -23884,7 +24072,7 @@ exports[`open api converter vellum simple 1`] = `
           "properties": {
             "document": {
               "docs": "The document that contains the chunk that matched the search query.",
-              "type": "Document",
+              "type": "SearchResultDocument",
             },
             "keywords": {
               "docs": undefined,
@@ -23899,6 +24087,10 @@ exports[`open api converter vellum simple 1`] = `
               "type": "string",
             },
           },
+        },
+        "SearchResultDocument": {
+          "docs": "The document that contains the chunk that matched the search query.",
+          "properties": {},
         },
         "SearchResultMergingRequest": {
           "docs": undefined,
@@ -23951,13 +24143,21 @@ exports[`open api converter vellum simple 1`] = `
             },
             "processing_state": {
               "docs": "The current processing state of the document",
-              "type": "optional<ProcessingStateEnum>",
+              "type": "optional<SlimDocumentProcessingState>",
             },
             "status": {
               "docs": "The document's current status.",
-              "type": "optional<StatusEnum>",
+              "type": "optional<SlimDocumentStatus>",
             },
           },
+        },
+        "SlimDocumentProcessingState": {
+          "docs": undefined,
+          "properties": {},
+        },
+        "SlimDocumentStatus": {
+          "docs": undefined,
+          "properties": {},
         },
         "StatusEnum": {
           "docs": undefined,
