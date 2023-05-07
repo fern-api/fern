@@ -289,9 +289,6 @@ function maybeInjectDescription(schema: Schema, description: string | undefined)
     return schema;
 }
 
-const DEFAULT_KEY = ["default"];
-const DEFAULT_DESCRIPTION_KEYS = ["default", "description"];
-
 function getSingularAllOf({
     properties,
     allOf,
@@ -304,15 +301,22 @@ function getSingularAllOf({
     } else if (hasNoProperties({ properties }) && allOf.length === 2 && allOf[0] != null && allOf[1] != null) {
         const allOfZero = allOf[0];
         const allOfOne = allOf[1];
-        const allOfZeroKeys = Object.keys(allOf[0]);
-        const allOfOneKeys = Object.keys(allOf[1]);
-        if (isEqual(allOfZeroKeys, DEFAULT_KEY) || isEqual(allOfZeroKeys, DEFAULT_DESCRIPTION_KEYS)) {
+        if (isAllOfElementEmpty(allOfZero)) {
             return allOfOne;
-        } else if (isEqual(allOfOneKeys, DEFAULT_KEY) || isEqual(allOfOneKeys, DEFAULT_DESCRIPTION_KEYS)) {
+        } else if (isAllOfElementEmpty(allOfOne)) {
             return allOfZero;
         }
     }
     return undefined;
+}
+
+const DEFAULT_KEY = ["default"];
+const DEFAULT_DESCRIPTION_KEYS = ["default", "description"];
+const DESCRIPTION_KEY = ["description"];
+
+function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): boolean {
+    const keys = Object.keys(schema);
+    return isEqual(keys, DEFAULT_KEY) || isEqual(keys, DESCRIPTION_KEY) || isEqual(keys, DEFAULT_DESCRIPTION_KEYS);
 }
 
 export function wrapPrimitive({
