@@ -36,9 +36,6 @@ export function convertObject({
             }
             referencedAllOf.push(convertToReferencedSchema(allOfElement, [getSchemaIdFromReference(allOfElement)]));
         } else {
-            if (allOfElement.default != null) {
-                continue; // skip all
-            }
             if (allOfElement.properties != null) {
                 propertiesToConvert = { ...allOfElement.properties, ...propertiesToConvert };
             }
