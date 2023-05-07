@@ -118,11 +118,26 @@ function convertSchemaObject(
     }
 
     // maps
-    if (schema.additionalProperties != null) {
+    if (schema.additionalProperties != null && schema.additionalProperties !== false) {
         return convertAdditionalProperties({
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
+            wrapAsOptional,
+            context,
+        });
+    }
+
+    // handle object with discriminant
+    if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
+        return convertDiscriminatedOneOf({
+            nameOverride,
+            generatedName,
+            breadcrumbs,
+            description,
+            discriminator: schema.discriminator,
+            properties: schema.properties ?? {},
+            required: schema.required,
             wrapAsOptional,
             context,
         });

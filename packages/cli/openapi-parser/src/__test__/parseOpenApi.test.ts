@@ -11,6 +11,7 @@ describe("open api parser", () => {
     testFixture("devrev", "openapi.yml");
     testFixture("hathora", "openapi.json");
     testFixture("suger", "swagger.json");
+    testFixture("squidex", "openapi.json");
 });
 
 function testFixture(fixtureName: string, filename: string) {
