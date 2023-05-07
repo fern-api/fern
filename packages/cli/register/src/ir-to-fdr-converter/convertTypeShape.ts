@@ -1,15 +1,15 @@
 import * as Ir from "@fern-fern/ir-model";
 import { FernRegistry } from "@fern-fern/registry";
 
-export function convertTypeShape(irType: Ir.types.Type): FernRegistry.TypeShape {
-    return Ir.types.Type._visit<FernRegistry.TypeShape>(irType, {
+export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.register.TypeShape {
+    return Ir.types.Type._visit<FernRegistry.api.v1.register.TypeShape>(irType, {
         alias: (alias) => {
-            return FernRegistry.TypeShape.alias(convertTypeReference(alias.aliasOf));
+            return FernRegistry.api.v1.register.TypeShape.alias(convertTypeReference(alias.aliasOf));
         },
         enum: (enum_) => {
-            return FernRegistry.TypeShape.enum({
+            return FernRegistry.api.v1.register.TypeShape.enum({
                 values: enum_.values.map(
-                    (value): FernRegistry.EnumValue => ({
+                    (value): FernRegistry.api.v1.register.EnumValue => ({
                         description: value.docs ?? undefined,
                         value: value.name.wireValue,
                     })
@@ -17,10 +17,10 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.TypeShape 
             });
         },
         object: (object) => {
-            return FernRegistry.TypeShape.object({
+            return FernRegistry.api.v1.register.TypeShape.object({
                 extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
                 properties: object.properties.map(
-                    (property): FernRegistry.ObjectProperty => ({
+                    (property): FernRegistry.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
                         valueType: convertTypeReference(property.valueType),
@@ -29,47 +29,50 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.TypeShape 
             });
         },
         union: (union) => {
-            return FernRegistry.TypeShape.discriminatedUnion({
+            return FernRegistry.api.v1.register.TypeShape.discriminatedUnion({
                 discriminant: union.discriminant.wireValue,
-                members: union.types.map((member): FernRegistry.DiscriminatedUnionMember => {
+                variants: union.types.map((variant): FernRegistry.api.v1.register.DiscriminatedUnionVariant => {
                     return {
-                        description: member.docs ?? undefined,
-                        discriminantValue: member.discriminantValue.wireValue,
-                        additionalProperties: Ir.types.SingleUnionTypeProperties._visit<FernRegistry.ObjectType>(
-                            member.shape,
-                            {
-                                samePropertiesAsObject: (extension) => ({
-                                    extends: [convertTypeId(extension.typeId)],
-                                    properties: [],
-                                }),
-                                singleProperty: (singleProperty) => ({
-                                    extends: [],
-                                    properties: [
-                                        {
-                                            key: singleProperty.name.wireValue,
-                                            valueType: convertTypeReference(singleProperty.type),
-                                        },
-                                    ],
-                                }),
-                                noProperties: () => ({
-                                    extends: [],
-                                    properties: [],
-                                }),
-                                _unknown: () => {
-                                    throw new Error("Unknown SingleUnionTypeProperties: " + member.shape._type);
-                                },
-                            }
-                        ),
+                        description: variant.docs ?? undefined,
+                        discriminantValue: variant.discriminantValue.wireValue,
+                        additionalProperties:
+                            Ir.types.SingleUnionTypeProperties._visit<FernRegistry.api.v1.register.ObjectType>(
+                                variant.shape,
+                                {
+                                    samePropertiesAsObject: (extension) => ({
+                                        extends: [convertTypeId(extension.typeId)],
+                                        properties: [],
+                                    }),
+                                    singleProperty: (singleProperty) => ({
+                                        extends: [],
+                                        properties: [
+                                            {
+                                                key: singleProperty.name.wireValue,
+                                                valueType: convertTypeReference(singleProperty.type),
+                                            },
+                                        ],
+                                    }),
+                                    noProperties: () => ({
+                                        extends: [],
+                                        properties: [],
+                                    }),
+                                    _unknown: () => {
+                                        throw new Error("Unknown SingleUnionTypeProperties: " + variant.shape._type);
+                                    },
+                                }
+                            ),
                     };
                 }),
             });
         },
         undiscriminatedUnion: (union) => {
-            return FernRegistry.TypeShape.undiscriminatedUnion({
-                members: union.members.map((member) => ({
-                    description: member.docs ?? undefined,
-                    type: convertTypeReference(member.type),
-                })),
+            return FernRegistry.api.v1.register.TypeShape.undiscriminatedUnion({
+                variants: union.members.map((variant): FernRegistry.api.v1.register.UndiscriminatedUnionVariant => {
+                    return {
+                        description: variant.docs ?? undefined,
+                        type: convertTypeReference(variant.type),
+                    };
+                }),
             });
         },
         _unknown: () => {
@@ -78,33 +81,43 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.TypeShape 
     });
 }
 
-export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FernRegistry.TypeReference {
-    return Ir.types.TypeReference._visit<FernRegistry.TypeReference>(irTypeReference, {
+export function convertTypeReference(
+    irTypeReference: Ir.types.TypeReference
+): FernRegistry.api.v1.register.TypeReference {
+    return Ir.types.TypeReference._visit<FernRegistry.api.v1.register.TypeReference>(irTypeReference, {
         container: (container) => {
-            return Ir.types.ContainerType._visit<FernRegistry.TypeReference>(container, {
+            return Ir.types.ContainerType._visit<FernRegistry.api.v1.register.TypeReference>(container, {
                 list: (itemType) => {
-                    return FernRegistry.TypeReference.list({
+                    return FernRegistry.api.v1.register.TypeReference.list({
                         itemType: convertTypeReference(itemType),
                     });
                 },
                 map: ({ keyType, valueType }) => {
-                    return FernRegistry.TypeReference.map({
+                    return FernRegistry.api.v1.register.TypeReference.map({
                         keyType: convertTypeReference(keyType),
                         valueType: convertTypeReference(valueType),
                     });
                 },
                 optional: (itemType) => {
-                    return FernRegistry.TypeReference.optional({
+                    return FernRegistry.api.v1.register.TypeReference.optional({
                         itemType: convertTypeReference(itemType),
                     });
                 },
                 set: (itemType) => {
-                    return FernRegistry.TypeReference.set({
+                    return FernRegistry.api.v1.register.TypeReference.set({
                         itemType: convertTypeReference(itemType),
                     });
                 },
-                literal: () => {
-                    throw new Error("Literals are not supported");
+                literal: (literal) => {
+                    return Ir.types.Literal._visit(literal, {
+                        string: (stringLiteral) =>
+                            FernRegistry.api.v1.register.TypeReference.literal(
+                                FernRegistry.api.v1.register.LiteralType.stringLiteral(stringLiteral)
+                            ),
+                        _unknown: () => {
+                            throw new Error("Unknown literal type: " + literal.type);
+                        },
+                    });
                 },
                 _unknown: () => {
                     throw new Error("Unknown container reference: " + container._type);
@@ -112,20 +125,20 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             });
         },
         named: (name) => {
-            return FernRegistry.TypeReference.id(convertTypeId(name.typeId));
+            return FernRegistry.api.v1.register.TypeReference.id(convertTypeId(name.typeId));
         },
         primitive: (primitive) => {
-            return FernRegistry.TypeReference.primitive(
-                Ir.types.PrimitiveType._visit<FernRegistry.PrimitiveType>(primitive, {
-                    integer: FernRegistry.PrimitiveType.integer,
-                    double: FernRegistry.PrimitiveType.double,
-                    long: FernRegistry.PrimitiveType.long,
-                    string: FernRegistry.PrimitiveType.string,
-                    boolean: FernRegistry.PrimitiveType.boolean,
-                    dateTime: FernRegistry.PrimitiveType.datetime,
-                    date: FernRegistry.PrimitiveType.string, // TODO(dsinghvi): FDR to accept Date
-                    base64: FernRegistry.PrimitiveType.string, // TODO(dsinghvi): FDR to accept Date
-                    uuid: FernRegistry.PrimitiveType.uuid,
+            return FernRegistry.api.v1.register.TypeReference.primitive(
+                Ir.types.PrimitiveType._visit<FernRegistry.api.v1.register.PrimitiveType>(primitive, {
+                    integer: FernRegistry.api.v1.register.PrimitiveType.integer,
+                    double: FernRegistry.api.v1.register.PrimitiveType.double,
+                    long: FernRegistry.api.v1.register.PrimitiveType.long,
+                    string: FernRegistry.api.v1.register.PrimitiveType.string,
+                    boolean: FernRegistry.api.v1.register.PrimitiveType.boolean,
+                    dateTime: FernRegistry.api.v1.register.PrimitiveType.datetime,
+                    date: FernRegistry.api.v1.register.PrimitiveType.string,
+                    base64: FernRegistry.api.v1.register.PrimitiveType.string,
+                    uuid: FernRegistry.api.v1.register.PrimitiveType.uuid,
                     _unknown: () => {
                         throw new Error("Unknown primitive: " + primitive);
                     },
@@ -133,7 +146,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
             );
         },
         unknown: () => {
-            return FernRegistry.TypeReference.unknown();
+            return FernRegistry.api.v1.register.TypeReference.unknown();
         },
         _unknown: () => {
             throw new Error("Unknown Type reference: " + irTypeReference._type);
@@ -141,6 +154,6 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
     });
 }
 
-export function convertTypeId(irTypeId: Ir.commons.TypeId): FernRegistry.TypeId {
-    return FernRegistry.TypeId(irTypeId);
+export function convertTypeId(irTypeId: Ir.commons.TypeId): FernRegistry.api.v1.register.TypeId {
+    return FernRegistry.api.v1.register.TypeId(irTypeId);
 }

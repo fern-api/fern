@@ -1,6 +1,5 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsConfiguration as RawDocsConfiguration } from "@fern-fern/docs-config/api";
 import { DocsConfiguration as RawDocsConfigurationSerializer } from "@fern-fern/docs-config/serialization";
@@ -9,27 +8,18 @@ import yaml from "js-yaml";
 import path from "path";
 
 export async function loadRawDocsConfiguration({
-    absolutePathToWorkspace,
+    absolutePathOfConfiguration,
     context,
 }: {
-    absolutePathToWorkspace: AbsoluteFilePath;
+    absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<RawDocsConfiguration | undefined> {
-    const absolutePathToDocsConfiguration = join(
-        absolutePathToWorkspace,
-        RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
-    );
-
-    if (!(await doesPathExist(absolutePathToDocsConfiguration))) {
-        return undefined;
-    }
-
-    const contentsStr = await readFile(absolutePathToDocsConfiguration);
+}): Promise<RawDocsConfiguration> {
+    const contentsStr = await readFile(absolutePathOfConfiguration);
     const contentsJson = yaml.load(contentsStr.toString());
     return await validateSchema({
         value: contentsJson,
         context,
-        filepathBeingParsed: absolutePathToDocsConfiguration,
+        filepathBeingParsed: absolutePathOfConfiguration,
     });
 }
 

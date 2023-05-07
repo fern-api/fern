@@ -2,7 +2,6 @@ export { DEFAULT_GROUP_NAME } from "./constants";
 export { GeneratorName } from "./GeneratorName";
 export {
     GenerationLanguage,
-    type GeneratorAudiences,
     type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration,

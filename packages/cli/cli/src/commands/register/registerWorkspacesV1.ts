@@ -61,7 +61,7 @@ export async function registerWorkspacesV1({
                 const tarPath = path.join(tmpDir.path, "definition.tgz");
 
                 context.logger.debug(`Compressing definition at ${tmpDir.path}`);
-                await tar.create({ file: tarPath, cwd: workspace.absolutePathToWorkspace }, ["."]);
+                await tar.create({ file: tarPath, cwd: workspace.absoluteFilepath }, ["."]);
 
                 context.logger.info("Uploading definition...");
                 await axios.put(registerApiResponse.body.definitionS3UploadUrl, await readFile(tarPath));

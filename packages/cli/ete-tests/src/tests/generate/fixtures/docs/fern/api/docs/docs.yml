@@ -1,0 +1,8 @@
+navigation:
+  - foo.md
+  - section: Section
+    pages:
+      - foo.md
+  - api: API Reference
+
+colors: {}

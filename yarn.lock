@@ -3460,6 +3460,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -3785,6 +3786,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -4088,6 +4090,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -4207,6 +4210,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -4539,17 +4543,17 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.1688
-    "@fern-fern/registry": 0.0.300
+    "@fern-fern/registry": ^0.0.328
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
-    chalk: ^5.0.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.0.3
@@ -4568,17 +4572,21 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
     "@fern-api/logger": "workspace:*"
+    "@fern-api/register": "workspace:*"
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.193
     "@fern-fern/ir-model": 0.0.1688
+    "@fern-fern/registry": ^0.0.328
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -4688,7 +4696,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry": 0.0.300
+    "@fern-fern/registry": ^0.0.328
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5272,6 +5280,18 @@ __metadata:
     js-base64: 3.7.2
     url-join: 4.0.1
   checksum: 8e0a3ee0afb288e5d1015d49c3e8c46ce54b4d052fa95d38c792edbac3727f68ea73e14abc84ab2b66e3842d4d6be12ca8d57eb64a31fbd45425f2bef2b0ffe5
+  languageName: node
+  linkType: hard
+
+"@fern-fern/registry@npm:^0.0.328":
+  version: 0.0.328
+  resolution: "@fern-fern/registry@npm:0.0.328"
+  dependencies:
+    "@types/url-join": 4.0.1
+    axios: 0.27.2
+    js-base64: 3.7.2
+    url-join: 4.0.1
+  checksum: 9661dce1c444b78dadb9f38ad779872b763fdf7c6e49ae8254e8a541eb6b57d997170fc7fdb6687eb102ba379e2fe0bbc6d5ceeb10ede2c5e0754dfb0028d7ee
   languageName: node
   linkType: hard
 
@@ -12381,7 +12401,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.113
+    mrlint: ^0.0.114
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -16750,12 +16770,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.113":
-  version: 0.0.113
-  resolution: "mrlint@npm:0.0.113"
+"mrlint@npm:^0.0.114":
+  version: 0.0.114
+  resolution: "mrlint@npm:0.0.114"
   bin:
     mrlint: cli.cjs
-  checksum: b8e8836662f9613629392ba78bb8bea95cdfe0cce27f8d9459df3fbb9d6ecbb4a6c19659c1d1344ffe0e708add52c7d1b1aa354d4b1103871c40859892d51642
+  checksum: 4ae5cfc3b3f9cfb71dca222521ae048a6b5788a143b77016466e7b2768b657e7d14998a157bf6187391f596edded55580738846311f02ccd93ccb1008b0dac9a
   languageName: node
   linkType: hard
 
