@@ -113,7 +113,12 @@ export function convertHttpService({
                           )
                         : [],
                 requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                sdkRequest: convertHttpSdkRequest({ request: endpoint.request, file }),
+                sdkRequest: convertHttpSdkRequest({
+                    service: serviceDefinition,
+                    request: endpoint.request,
+                    file,
+                    typeResolver,
+                }),
                 ...convertHttpResponse({ endpoint, file }),
                 errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                 examples:

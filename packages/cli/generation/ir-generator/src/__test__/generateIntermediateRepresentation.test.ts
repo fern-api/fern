@@ -21,6 +21,11 @@ const FIXTURES: Fixture[] = [
         generationLanguage: undefined,
         audiences: { type: "all" },
     },
+    {
+        name: "headers-sdk-request",
+        generationLanguage: undefined,
+        audiences: { type: "all" },
+    },
 ];
 
 interface Fixture {

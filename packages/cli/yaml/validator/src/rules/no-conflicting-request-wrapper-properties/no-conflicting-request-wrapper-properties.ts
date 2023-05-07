@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    constructFernFileContext,
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     doesRequestHaveNonBodyProperties,
     getHeaderName,
@@ -11,6 +12,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { Rule, RuleViolation } from "../../Rule";
+import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
@@ -111,7 +113,19 @@ function getRequestWrapperPropertiesByName({
 
     if (endpoint.request != null && typeof endpoint.request !== "string") {
         const isBodyReferenced = endpoint.request.body != null && !isInlineRequestBody(endpoint.request.body);
-        if (isBodyReferenced && doesRequestHaveNonBodyProperties(endpoint.request)) {
+        if (
+            isBodyReferenced &&
+            doesRequestHaveNonBodyProperties({
+                request: endpoint.request,
+                file: constructFernFileContext({
+                    relativeFilepath,
+                    definitionFile,
+                    casingsGenerator: CASINGS_GENERATOR,
+                    rootApiFile: workspace.definition.rootApiFile.contents,
+                }),
+                typeResolver: new TypeResolverImpl(workspace),
+            })
+        ) {
             addProperty(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER, {
                 type: "referenced-body",
                 propertyName: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
