@@ -11106,71 +11106,17 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "AppAssets_GetAssetScripts": {
-            "method": "GET",
-            "path": "/api/apps/{app}/assets/scripts",
+          "deleteApp": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
                 "docs": undefined,
                 "type": "string",
               },
             },
-            "response": {
-              "docs": "Asset scripts returned.",
-              "type": "root.AssetScriptsDto",
-            },
           },
-          "AppAssets_PutAssetScripts": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/assets/scripts",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "annotate": {
-                    "docs": "The script that is executed when annotating a content.",
-                    "type": "optional<string>",
-                  },
-                  "create": {
-                    "docs": "The script that is executed when creating an asset.",
-                    "type": "optional<string>",
-                  },
-                  "delete": {
-                    "docs": "The script that is executed when deleting a content.",
-                    "type": "optional<string>",
-                  },
-                  "move": {
-                    "docs": "The script that is executed when moving a content.",
-                    "type": "optional<string>",
-                  },
-                  "query": {
-                    "docs": "The script that is executed for each asset when querying assets.",
-                    "type": "optional<string>",
-                  },
-                  "queryPre": {
-                    "docs": "The script that is executed for all assets when querying assets.",
-                    "type": "optional<string>",
-                  },
-                  "update": {
-                    "docs": "The script that is executed when updating a content.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "UpdateAssetScriptsDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Asset scripts updated.",
-              "type": "root.AssetScriptsDto",
-            },
-          },
-          "AppClients_DeleteClient": {
+          "deleteClient": {
             "method": "PATCH",
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
@@ -11188,7 +11134,143 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.ClientsDto",
             },
           },
-          "AppClients_GetClients": {
+          "deleteContributor": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/contributors/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Contributor removed.",
+              "type": "root.ContributorsDto",
+            },
+          },
+          "deleteImage": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/image",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "App image removed.",
+              "type": "root.AppDto",
+            },
+          },
+          "deleteLanguage": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/languages/{language}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "language": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Language deleted.",
+              "type": "root.AppLanguagesDto",
+            },
+          },
+          "deleteMyself": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/contributors/me",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Contributor removed.",
+              "type": "root.ContributorsDto",
+            },
+          },
+          "deleteRole": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/roles/{roleName}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "roleName": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Role deleted.",
+              "type": "root.RolesDto",
+            },
+          },
+          "deleteWorkflow": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/workflows/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Workflow deleted.",
+              "type": "root.WorkflowsDto",
+            },
+          },
+          "getApp": {
+            "method": "GET",
+            "path": "/api/apps/{app}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Apps returned.",
+              "type": "root.AppDto",
+            },
+          },
+          "getApps": {
+            "method": "GET",
+            "path": "/api/apps",
+            "response": {
+              "docs": "Apps returned.",
+              "type": "list<root.AppDto>",
+            },
+          },
+          "getAssetScripts": {
+            "method": "GET",
+            "path": "/api/apps/{app}/assets/scripts",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Asset scripts returned.",
+              "type": "root.AssetScriptsDto",
+            },
+          },
+          "getClients": {
             "method": "GET",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
@@ -11202,7 +11284,139 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.ClientsDto",
             },
           },
-          "AppClients_PostClient": {
+          "getContributors": {
+            "method": "GET",
+            "path": "/api/apps/{app}/contributors",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Contributors returned.",
+              "type": "root.ContributorsDto",
+            },
+          },
+          "getImage": {
+            "method": "GET",
+            "path": "/api/apps/{app}/image",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+          },
+          "getLanguages": {
+            "method": "GET",
+            "path": "/api/apps/{app}/languages",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Languages returned.",
+              "type": "root.AppLanguagesDto",
+            },
+          },
+          "getPermissions": {
+            "method": "GET",
+            "path": "/api/apps/{app}/roles/permissions",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "App permissions returned.",
+              "type": "list<string>",
+            },
+          },
+          "getRoles": {
+            "method": "GET",
+            "path": "/api/apps/{app}/roles",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Roles returned.",
+              "type": "root.RolesDto",
+            },
+          },
+          "getSettings": {
+            "method": "GET",
+            "path": "/api/apps/{app}/settings",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "App settings returned.",
+              "type": "root.AppSettingsDto",
+            },
+          },
+          "getTeamApps": {
+            "method": "GET",
+            "path": "/api/teams/{team}/apps",
+            "path-parameters": {
+              "team": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Apps returned.",
+              "type": "list<root.AppDto>",
+            },
+          },
+          "getWorkflows": {
+            "method": "GET",
+            "path": "/api/apps/{app}/workflows",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Workflows returned.",
+              "type": "root.WorkflowsDto",
+            },
+          },
+          "postApp": {
+            "method": "POST",
+            "path": "/api/apps",
+            "request": {
+              "body": {
+                "properties": {
+                  "name": {
+                    "docs": "The name of the app.",
+                    "type": "string",
+                  },
+                  "template": {
+                    "docs": "Initialize the app with the inbuilt template.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "CreateAppDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "App created.",
+              "type": "root.AppDto",
+            },
+          },
+          "postClient": {
             "method": "POST",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
@@ -11228,99 +11442,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.ClientsDto",
             },
           },
-          "AppClients_PutClient": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/clients/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "allowAnonymous": {
-                    "docs": "True to allow anonymous access without an access token for this client.",
-                    "type": "optional<boolean>",
-                  },
-                  "apiCallsLimit": {
-                    "docs": "The number of allowed api calls per month for this client.",
-                    "type": "optional<integer>",
-                  },
-                  "apiTrafficLimit": {
-                    "docs": "The number of allowed api traffic bytes per month for this client.",
-                    "type": "optional<integer>",
-                  },
-                  "name": {
-                    "docs": "The new display name of the client.",
-                    "type": "optional<string>",
-                  },
-                  "role": {
-                    "docs": "The role of the client.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "UpdateClientDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Client updated.",
-              "type": "root.ClientsDto",
-            },
-          },
-          "AppContributors_DeleteContributor": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/contributors/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Contributor removed.",
-              "type": "root.ContributorsDto",
-            },
-          },
-          "AppContributors_DeleteMyself": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/contributors/me",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Contributor removed.",
-              "type": "root.ContributorsDto",
-            },
-          },
-          "AppContributors_GetContributors": {
-            "method": "GET",
-            "path": "/api/apps/{app}/contributors",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Contributors returned.",
-              "type": "root.ContributorsDto",
-            },
-          },
-          "AppContributors_PostContributor": {
+          "postContributor": {
             "method": "POST",
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
@@ -11340,49 +11462,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.ContributorsDto",
             },
           },
-          "AppImage_GetImage": {
-            "method": "GET",
-            "path": "/api/apps/{app}/image",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-          },
-          "AppLanguages_DeleteLanguage": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/languages/{language}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "language": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Language deleted.",
-              "type": "root.AppLanguagesDto",
-            },
-          },
-          "AppLanguages_GetLanguages": {
-            "method": "GET",
-            "path": "/api/apps/{app}/languages",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Languages returned.",
-              "type": "root.AppLanguagesDto",
-            },
-          },
-          "AppLanguages_PostLanguage": {
+          "postLanguage": {
             "method": "POST",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
@@ -11408,91 +11488,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.AppLanguagesDto",
             },
           },
-          "AppLanguages_PutLanguage": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/languages/{language}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "language": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "fallback": {
-                    "docs": "Optional fallback languages.",
-                    "type": "optional<list<string>>",
-                  },
-                  "isMaster": {
-                    "docs": "Set the value to true to make the language the master.",
-                    "type": "optional<boolean>",
-                  },
-                  "isOptional": {
-                    "docs": "Set the value to true to make the language optional.",
-                    "type": "optional<boolean>",
-                  },
-                },
-              },
-              "name": "UpdateLanguageDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Language updated.",
-              "type": "root.AppLanguagesDto",
-            },
-          },
-          "AppRoles_DeleteRole": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/roles/{roleName}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "roleName": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Role deleted.",
-              "type": "root.RolesDto",
-            },
-          },
-          "AppRoles_GetPermissions": {
-            "method": "GET",
-            "path": "/api/apps/{app}/roles/permissions",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "App permissions returned.",
-              "type": "list<string>",
-            },
-          },
-          "AppRoles_GetRoles": {
-            "method": "GET",
-            "path": "/api/apps/{app}/roles",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Roles returned.",
-              "type": "root.RolesDto",
-            },
-          },
-          "AppRoles_PostRole": {
+          "postRole": {
             "method": "POST",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
@@ -11518,125 +11514,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.RolesDto",
             },
           },
-          "AppRoles_PutRole": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/roles/{roleName}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "roleName": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "permissions": {
-                    "docs": "Associated list of permissions.",
-                    "type": "list<string>",
-                  },
-                  "properties": {
-                    "docs": "Associated list of UI properties.",
-                    "type": "optional<map<string, unknown>>",
-                  },
-                },
-              },
-              "name": "UpdateRoleDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Role updated.",
-              "type": "root.RolesDto",
-            },
-          },
-          "AppSettings_GetSettings": {
-            "method": "GET",
-            "path": "/api/apps/{app}/settings",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "App settings returned.",
-              "type": "root.AppSettingsDto",
-            },
-          },
-          "AppSettings_PutSettings": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/settings",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "editors": {
-                    "docs": "The configured UI editors.",
-                    "type": "list<root.EditorDto>",
-                  },
-                  "hideDateTimeModeButton": {
-                    "docs": "Hide the datetime mode button.",
-                    "type": "optional<boolean>",
-                  },
-                  "hideScheduler": {
-                    "docs": "Hide the scheduler for content items.",
-                    "type": "optional<boolean>",
-                  },
-                  "patterns": {
-                    "docs": "The configured app patterns.",
-                    "type": "list<root.PatternDto>",
-                  },
-                },
-              },
-              "name": "UpdateAppSettingsDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "App updated.",
-              "type": "root.AppSettingsDto",
-            },
-          },
-          "AppWorkflows_DeleteWorkflow": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/workflows/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Workflow deleted.",
-              "type": "root.WorkflowsDto",
-            },
-          },
-          "AppWorkflows_GetWorkflows": {
-            "method": "GET",
-            "path": "/api/apps/{app}/workflows",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Workflows returned.",
-              "type": "root.WorkflowsDto",
-            },
-          },
-          "AppWorkflows_PostWorkflow": {
+          "postWorkflow": {
             "method": "POST",
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
@@ -11660,132 +11538,6 @@ exports[`open api converter squidex simple 1`] = `
             "response": {
               "docs": "Workflow created.",
               "type": "root.WorkflowsDto",
-            },
-          },
-          "AppWorkflows_PutWorkflow": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/workflows/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "initial": {
-                    "docs": "The initial step.",
-                    "type": "string",
-                  },
-                  "name": {
-                    "docs": "The name of the workflow.",
-                    "type": "optional<string>",
-                  },
-                  "schemaIds": {
-                    "docs": "The schema ids.",
-                    "type": "optional<list<string>>",
-                  },
-                  "steps": {
-                    "docs": "The workflow steps.",
-                    "type": "map<string, root.WorkflowStepDto>",
-                  },
-                },
-              },
-              "name": "UpdateWorkflowDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Workflow updated.",
-              "type": "root.WorkflowsDto",
-            },
-          },
-          "deleteApp": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-          },
-          "deleteImage": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/image",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "App image removed.",
-              "type": "root.AppDto",
-            },
-          },
-          "getApp": {
-            "method": "GET",
-            "path": "/api/apps/{app}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Apps returned.",
-              "type": "root.AppDto",
-            },
-          },
-          "getApps": {
-            "method": "GET",
-            "path": "/api/apps",
-            "response": {
-              "docs": "Apps returned.",
-              "type": "list<root.AppDto>",
-            },
-          },
-          "getTeamApps": {
-            "method": "GET",
-            "path": "/api/teams/{team}/apps",
-            "path-parameters": {
-              "team": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Apps returned.",
-              "type": "list<root.AppDto>",
-            },
-          },
-          "postApp": {
-            "method": "POST",
-            "path": "/api/apps",
-            "request": {
-              "body": {
-                "properties": {
-                  "name": {
-                    "docs": "The name of the app.",
-                    "type": "string",
-                  },
-                  "template": {
-                    "docs": "Initialize the app with the inbuilt template.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "CreateAppDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "App created.",
-              "type": "root.AppDto",
             },
           },
           "putApp": {
@@ -11844,6 +11596,254 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.AppDto",
             },
           },
+          "putAssetScripts": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/assets/scripts",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "annotate": {
+                    "docs": "The script that is executed when annotating a content.",
+                    "type": "optional<string>",
+                  },
+                  "create": {
+                    "docs": "The script that is executed when creating an asset.",
+                    "type": "optional<string>",
+                  },
+                  "delete": {
+                    "docs": "The script that is executed when deleting a content.",
+                    "type": "optional<string>",
+                  },
+                  "move": {
+                    "docs": "The script that is executed when moving a content.",
+                    "type": "optional<string>",
+                  },
+                  "query": {
+                    "docs": "The script that is executed for each asset when querying assets.",
+                    "type": "optional<string>",
+                  },
+                  "queryPre": {
+                    "docs": "The script that is executed for all assets when querying assets.",
+                    "type": "optional<string>",
+                  },
+                  "update": {
+                    "docs": "The script that is executed when updating a content.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "UpdateAssetScriptsDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Asset scripts updated.",
+              "type": "root.AssetScriptsDto",
+            },
+          },
+          "putClient": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/clients/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "allowAnonymous": {
+                    "docs": "True to allow anonymous access without an access token for this client.",
+                    "type": "optional<boolean>",
+                  },
+                  "apiCallsLimit": {
+                    "docs": "The number of allowed api calls per month for this client.",
+                    "type": "optional<integer>",
+                  },
+                  "apiTrafficLimit": {
+                    "docs": "The number of allowed api traffic bytes per month for this client.",
+                    "type": "optional<integer>",
+                  },
+                  "name": {
+                    "docs": "The new display name of the client.",
+                    "type": "optional<string>",
+                  },
+                  "role": {
+                    "docs": "The role of the client.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "UpdateClientDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Client updated.",
+              "type": "root.ClientsDto",
+            },
+          },
+          "putLanguage": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/languages/{language}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "language": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "fallback": {
+                    "docs": "Optional fallback languages.",
+                    "type": "optional<list<string>>",
+                  },
+                  "isMaster": {
+                    "docs": "Set the value to true to make the language the master.",
+                    "type": "optional<boolean>",
+                  },
+                  "isOptional": {
+                    "docs": "Set the value to true to make the language optional.",
+                    "type": "optional<boolean>",
+                  },
+                },
+              },
+              "name": "UpdateLanguageDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Language updated.",
+              "type": "root.AppLanguagesDto",
+            },
+          },
+          "putRole": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/roles/{roleName}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "roleName": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "permissions": {
+                    "docs": "Associated list of permissions.",
+                    "type": "list<string>",
+                  },
+                  "properties": {
+                    "docs": "Associated list of UI properties.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
+              },
+              "name": "UpdateRoleDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Role updated.",
+              "type": "root.RolesDto",
+            },
+          },
+          "putSettings": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/settings",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "editors": {
+                    "docs": "The configured UI editors.",
+                    "type": "list<root.EditorDto>",
+                  },
+                  "hideDateTimeModeButton": {
+                    "docs": "Hide the datetime mode button.",
+                    "type": "optional<boolean>",
+                  },
+                  "hideScheduler": {
+                    "docs": "Hide the scheduler for content items.",
+                    "type": "optional<boolean>",
+                  },
+                  "patterns": {
+                    "docs": "The configured app patterns.",
+                    "type": "list<root.PatternDto>",
+                  },
+                },
+              },
+              "name": "UpdateAppSettingsDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "App updated.",
+              "type": "root.AppSettingsDto",
+            },
+          },
+          "putWorkflow": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/workflows/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initial": {
+                    "docs": "The initial step.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the workflow.",
+                    "type": "optional<string>",
+                  },
+                  "schemaIds": {
+                    "docs": "The schema ids.",
+                    "type": "optional<list<string>>",
+                  },
+                  "steps": {
+                    "docs": "The workflow steps.",
+                    "type": "map<string, root.WorkflowStepDto>",
+                  },
+                },
+              },
+              "name": "UpdateWorkflowDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Workflow updated.",
+              "type": "root.WorkflowsDto",
+            },
+          },
           "uploadImage": {
             "method": "POST",
             "path": "/api/apps/{app}/image",
@@ -11878,7 +11878,106 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "AssetContent_GetAssetContent": {
+          "bulkUpdateAssets": {
+            "method": "POST",
+            "path": "/api/apps/{app}/assets/bulk",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "checkReferrers": {
+                    "docs": "True to check referrers of deleted assets.",
+                    "type": "optional<boolean>",
+                  },
+                  "doNotScript": {
+                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                  "jobs": {
+                    "docs": "The contents to update or insert.",
+                    "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
+                  },
+                  "optimizeValidation": {
+                    "docs": "True to turn off costly validation: Folder checks. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                },
+              },
+              "name": "BulkUpdateAssetsDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Assets created, update or delete.",
+              "type": "list<root.BulkResultDto>",
+            },
+          },
+          "deleteAsset": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/assets/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "AssetsDeleteAssetRequest",
+              "query-parameters": {
+                "CheckReferrers": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "Permanent": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+              },
+            },
+          },
+          "deleteAssetFolder": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/assets/folders/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+          },
+          "getAsset": {
+            "method": "GET",
+            "path": "/api/apps/{app}/assets/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Asset found.",
+              "type": "root.AssetDto",
+            },
+          },
+          "getAssetContent": {
             "method": "GET",
             "path": "/api/assets/{id}",
             "path-parameters": {
@@ -11963,7 +12062,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
           },
-          "AssetContent_GetAssetContentBySlug": {
+          "getAssetContentBySlug": {
             "method": "GET",
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
@@ -12056,21 +12155,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
           },
-          "AssetFolders_DeleteAssetFolder": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/assets/folders/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-          },
-          "AssetFolders_GetAssetFolders": {
+          "getAssetFolders": {
             "method": "GET",
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
@@ -12097,181 +12182,6 @@ exports[`open api converter squidex simple 1`] = `
             "response": {
               "docs": "Asset folders returned.",
               "type": "root.AssetFoldersDto",
-            },
-          },
-          "AssetFolders_PostAssetFolder": {
-            "method": "POST",
-            "path": "/api/apps/{app}/assets/folders",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "folderName": {
-                    "docs": "The name of the folder.",
-                    "type": "string",
-                  },
-                  "parentId": {
-                    "docs": "The ID of the parent folder.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "CreateAssetFolderDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Asset folder created.",
-              "type": "root.AssetFolderDto",
-            },
-          },
-          "AssetFolders_PutAssetFolder": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/assets/folders/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "folderName": {
-                    "docs": "The name of the folder.",
-                    "type": "string",
-                  },
-                },
-              },
-              "name": "RenameAssetFolderDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Asset folder updated.",
-              "type": "root.AssetFolderDto",
-            },
-          },
-          "AssetFolders_PutAssetFolderParent": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/assets/folders/{id}/parent",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "parentId": {
-                    "docs": "The parent folder id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "name": "MoveAssetFolderDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Asset folder moved.",
-              "type": "root.AssetFolderDto",
-            },
-          },
-          "bulkUpdateAssets": {
-            "method": "POST",
-            "path": "/api/apps/{app}/assets/bulk",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "checkReferrers": {
-                    "docs": "True to check referrers of deleted assets.",
-                    "type": "optional<boolean>",
-                  },
-                  "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                  "jobs": {
-                    "docs": "The contents to update or insert.",
-                    "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
-                  },
-                  "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Folder checks. Default: true.",
-                    "type": "optional<boolean>",
-                  },
-                },
-              },
-              "name": "BulkUpdateAssetsDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Assets created, update or delete.",
-              "type": "list<root.BulkResultDto>",
-            },
-          },
-          "deleteAsset": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/assets/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "AssetsDeleteAssetRequest",
-              "query-parameters": {
-                "CheckReferrers": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "Permanent": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-              },
-            },
-          },
-          "getAsset": {
-            "method": "GET",
-            "path": "/api/apps/{app}/assets/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Asset found.",
-              "type": "root.AssetDto",
             },
           },
           "getAssets": {
@@ -12401,6 +12311,36 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.AssetDto",
             },
           },
+          "postAssetFolder": {
+            "method": "POST",
+            "path": "/api/apps/{app}/assets/folders",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "folderName": {
+                    "docs": "The name of the folder.",
+                    "type": "string",
+                  },
+                  "parentId": {
+                    "docs": "The ID of the parent folder.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "CreateAssetFolderDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Asset folder created.",
+              "type": "root.AssetFolderDto",
+            },
+          },
           "postUpsertAsset": {
             "method": "POST",
             "path": "/api/apps/{app}/assets/{id}",
@@ -12512,6 +12452,66 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.AssetDto",
             },
           },
+          "putAssetFolder": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/assets/folders/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "folderName": {
+                    "docs": "The name of the folder.",
+                    "type": "string",
+                  },
+                },
+              },
+              "name": "RenameAssetFolderDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Asset folder updated.",
+              "type": "root.AssetFolderDto",
+            },
+          },
+          "putAssetFolderParent": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/assets/folders/{id}/parent",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "parentId": {
+                    "docs": "The parent folder id.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "name": "MoveAssetFolderDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Asset folder moved.",
+              "type": "root.AssetFolderDto",
+            },
+          },
           "putAssetParent": {
             "method": "PUT",
             "path": "/api/apps/{app}/assets/{id}/parent",
@@ -12583,7 +12583,21 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "BackupContent_GetBackupContent": {
+          "deleteBackup": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/backups/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+          },
+          "getBackupContent": {
             "method": "GET",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
@@ -12597,7 +12611,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
           },
-          "BackupContent_GetBackupContentV2": {
+          "getBackupContentV2": {
             "method": "GET",
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
@@ -12622,7 +12636,21 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
           },
-          "Restore_GetRestoreJob": {
+          "getBackups": {
+            "method": "GET",
+            "path": "/api/apps/{app}/backups",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Backups returned.",
+              "type": "root.BackupJobsDto",
+            },
+          },
+          "getRestoreJob": {
             "method": "GET",
             "path": "/api/apps/restore",
             "response": {
@@ -12630,7 +12658,17 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.RestoreJobDto",
             },
           },
-          "Restore_PostRestoreJob": {
+          "postBackup": {
+            "method": "POST",
+            "path": "/api/apps/{app}/backups",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+          },
+          "postRestoreJob": {
             "method": "POST",
             "path": "/api/apps/restore",
             "request": {
@@ -12648,44 +12686,6 @@ exports[`open api converter squidex simple 1`] = `
               },
               "name": "RestoreRequestDto",
               "query-parameters": undefined,
-            },
-          },
-          "deleteBackup": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/backups/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-          },
-          "getBackups": {
-            "method": "GET",
-            "path": "/api/apps/{app}/backups",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Backups returned.",
-              "type": "root.BackupJobsDto",
-            },
-          },
-          "postBackup": {
-            "method": "POST",
-            "path": "/api/apps/{app}/backups",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
             },
           },
         },
@@ -13411,7 +13411,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/diagnostics/dump",
           },
-          "getGcDump": {
+          "getGCDump": {
             "method": "GET",
             "path": "/api/diagnostics/gcdump",
           },
@@ -13594,7 +13594,7 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "UserNotifications_DeleteComment": {
+          "deleteComment": {
             "method": "PATCH",
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
@@ -13608,7 +13608,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
           },
-          "UserNotifications_GetNotifications": {
+          "getNotifications": {
             "method": "GET",
             "path": "/api/users/{userId}/notifications",
             "path-parameters": {
@@ -13676,7 +13676,7 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "AppPlans_GetPlans": {
+          "getPlans": {
             "method": "GET",
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
@@ -13690,7 +13690,21 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.PlansDto",
             },
           },
-          "AppPlans_PutPlan": {
+          "getTeamPlans": {
+            "method": "GET",
+            "path": "/api/teams/{team}/plans",
+            "path-parameters": {
+              "team": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Team plan information returned.",
+              "type": "root.PlansDto",
+            },
+          },
+          "putPlan": {
             "method": "PUT",
             "path": "/api/apps/{app}/plan",
             "path-parameters": {
@@ -13710,21 +13724,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.PlanChangedDto",
             },
           },
-          "TeamPlans_GetTeamPlans": {
-            "method": "GET",
-            "path": "/api/teams/{team}/plans",
-            "path-parameters": {
-              "team": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Team plan information returned.",
-              "type": "root.PlansDto",
-            },
-          },
-          "TeamPlans_PutTeamPlan": {
+          "putTeamPlan": {
             "method": "PUT",
             "path": "/api/teams/{team}/plan",
             "path-parameters": {
@@ -14031,7 +14031,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
           },
-          "simulateGet": {
+          "simulateGET": {
             "method": "GET",
             "path": "/api/apps/{app}/rules/{id}/simulate",
             "path-parameters": {
@@ -14049,7 +14049,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SimulatedRuleEventsDto",
             },
           },
-          "simulatePost": {
+          "simulatePOST": {
             "method": "POST",
             "path": "/api/apps/{app}/rules/simulate",
             "path-parameters": {
@@ -14094,7 +14094,7 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "SchemaFields_DeleteField": {
+          "deleteField": {
             "method": "PATCH",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
@@ -14116,7 +14116,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
-          "SchemaFields_DeleteNestedField": {
+          "deleteNestedField": {
             "method": "PATCH",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
@@ -14142,7 +14142,21 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
-          "SchemaFields_DisableField": {
+          "deleteSchema": {
+            "method": "PATCH",
+            "path": "/api/apps/{app}/schemas/{schema}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+          },
+          "disableField": {
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
             "path-parameters": {
@@ -14164,7 +14178,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
-          "SchemaFields_DisableNestedField": {
+          "disableNestedField": {
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
             "path-parameters": {
@@ -14190,7 +14204,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
-          "SchemaFields_EnableField": {
+          "enableField": {
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
             "path-parameters": {
@@ -14212,7 +14226,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
-          "SchemaFields_EnableNestedField": {
+          "enableNestedField": {
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
             "path-parameters": {
@@ -14236,362 +14250,6 @@ exports[`open api converter squidex simple 1`] = `
             "response": {
               "docs": "Schema field enabled.",
               "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_HideField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Schema field hidden.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_HideNestedField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "parentId": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Schema field hidden.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_LockField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Schema field shown.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_LockNestedField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "parentId": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Schema field hidden.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PostField": {
-            "method": "POST",
-            "path": "/api/apps/{app}/schemas/{schema}/fields",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AddFieldDto",
-              },
-            },
-            "response": {
-              "docs": "Schema field created.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PostNestedField": {
-            "method": "POST",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "parentId": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AddFieldDto",
-              },
-            },
-            "response": {
-              "docs": "Schema field created.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PutField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.UpdateFieldDto",
-              },
-            },
-            "response": {
-              "docs": "Schema field updated.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PutNestedField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "parentId": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.UpdateFieldDto",
-              },
-            },
-            "response": {
-              "docs": "Schema field updated.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PutNestedFieldOrdering": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "parentId": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.ReorderFieldsDto",
-              },
-            },
-            "response": {
-              "docs": "Schema fields reordered.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PutSchemaFieldOrdering": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.ReorderFieldsDto",
-              },
-            },
-            "response": {
-              "docs": "Schema fields reordered.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_PutSchemaUIFields": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "properties": {
-                  "fieldsInLists": {
-                    "docs": "The name of fields that are used in content lists.",
-                    "type": "optional<list<string>>",
-                  },
-                  "fieldsInReferences": {
-                    "docs": "The name of fields that are used in content references.",
-                    "type": "optional<list<string>>",
-                  },
-                },
-              },
-              "name": "ConfigureUiFieldsDto",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "Schema UI fields defined.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_ShowField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Schema field shown.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "SchemaFields_ShowNestedField": {
-            "method": "PUT",
-            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "id": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "parentId": {
-                "docs": undefined,
-                "type": "integer",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "Schema field shown.",
-              "type": "root.SchemaDto",
-            },
-          },
-          "deleteSchema": {
-            "method": "PATCH",
-            "path": "/api/apps/{app}/schemas/{schema}",
-            "path-parameters": {
-              "app": {
-                "docs": undefined,
-                "type": "string",
-              },
-              "schema": {
-                "docs": undefined,
-                "type": "string",
-              },
             },
           },
           "getSchema": {
@@ -14624,6 +14282,154 @@ exports[`open api converter squidex simple 1`] = `
             "response": {
               "docs": "Schemas returned.",
               "type": "root.SchemasDto",
+            },
+          },
+          "hideField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Schema field hidden.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "hideNestedField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "parentId": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Schema field hidden.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "lockField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Schema field shown.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "lockNestedField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "parentId": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Schema field hidden.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "postField": {
+            "method": "POST",
+            "path": "/api/apps/{app}/schemas/{schema}/fields",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.AddFieldDto",
+              },
+            },
+            "response": {
+              "docs": "Schema field created.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "postNestedField": {
+            "method": "POST",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "parentId": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.AddFieldDto",
+              },
+            },
+            "response": {
+              "docs": "Schema field created.",
+              "type": "root.SchemaDto",
             },
           },
           "postSchema": {
@@ -14705,6 +14511,94 @@ exports[`open api converter squidex simple 1`] = `
             },
             "response": {
               "docs": "Schema updated.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "putField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.UpdateFieldDto",
+              },
+            },
+            "response": {
+              "docs": "Schema field updated.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "putNestedField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "parentId": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.UpdateFieldDto",
+              },
+            },
+            "response": {
+              "docs": "Schema field updated.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "putNestedFieldOrdering": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "parentId": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.ReorderFieldsDto",
+              },
+            },
+            "response": {
+              "docs": "Schema fields reordered.",
               "type": "root.SchemaDto",
             },
           },
@@ -14816,6 +14710,30 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
+          "putSchemaFieldOrdering": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.ReorderFieldsDto",
+              },
+            },
+            "response": {
+              "docs": "Schema fields reordered.",
+              "type": "root.SchemaDto",
+            },
+          },
           "putSchemaSync": {
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/sync",
@@ -14850,6 +14768,40 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.SchemaDto",
             },
           },
+          "putSchemaUIFields": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "fieldsInLists": {
+                    "docs": "The name of fields that are used in content lists.",
+                    "type": "optional<list<string>>",
+                  },
+                  "fieldsInReferences": {
+                    "docs": "The name of fields that are used in content references.",
+                    "type": "optional<list<string>>",
+                  },
+                },
+              },
+              "name": "ConfigureUiFieldsDto",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Schema UI fields defined.",
+              "type": "root.SchemaDto",
+            },
+          },
           "putScripts": {
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/scripts",
@@ -14871,6 +14823,54 @@ exports[`open api converter squidex simple 1`] = `
             },
             "response": {
               "docs": "Schema updated.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "showField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Schema field shown.",
+              "type": "root.SchemaDto",
+            },
+          },
+          "showNestedField": {
+            "method": "PUT",
+            "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
+            "path-parameters": {
+              "app": {
+                "docs": undefined,
+                "type": "string",
+              },
+              "id": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "parentId": {
+                "docs": undefined,
+                "type": "integer",
+              },
+              "schema": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Schema field shown.",
               "type": "root.SchemaDto",
             },
           },
@@ -14938,7 +14938,7 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "Usages_GetCurrentStorageSize": {
+          "getCurrentStorageSize": {
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/today",
             "path-parameters": {
@@ -14952,7 +14952,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.CurrentStorageDto",
             },
           },
-          "Usages_GetLog": {
+          "getLog": {
             "method": "GET",
             "path": "/api/apps/{app}/usages/log",
             "path-parameters": {
@@ -14966,7 +14966,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.LogDownloadDto",
             },
           },
-          "Usages_GetStorageSizes": {
+          "getStorageSizes": {
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
@@ -14988,7 +14988,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "list<root.StorageUsagePerDateDto>",
             },
           },
-          "Usages_GetStorageSizesForTeam": {
+          "getStorageSizesForTeam": {
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
@@ -15010,7 +15010,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "list<root.StorageUsagePerDateDto>",
             },
           },
-          "Usages_GetTeamCurrentStorageSizeForTeam": {
+          "getTeamCurrentStorageSizeForTeam": {
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/today",
             "path-parameters": {
@@ -15024,7 +15024,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.CurrentStorageDto",
             },
           },
-          "Usages_GetUsages": {
+          "getUsages": {
             "method": "GET",
             "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
@@ -15046,7 +15046,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.CallsUsageDtoDto",
             },
           },
-          "Usages_GetUsagesForTeam": {
+          "getUsagesForTeam": {
             "method": "GET",
             "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
@@ -15079,7 +15079,7 @@ exports[`open api converter squidex simple 1`] = `
         "auth": true,
         "base-path": "",
         "endpoints": {
-          "TeamContributors_DeleteContributor": {
+          "deleteContributor": {
             "method": "PATCH",
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
@@ -15097,7 +15097,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.ContributorsDto",
             },
           },
-          "TeamContributors_DeleteMyself": {
+          "deleteMyself": {
             "method": "PATCH",
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
@@ -15111,7 +15111,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "root.ContributorsDto",
             },
           },
-          "TeamContributors_GetContributors": {
+          "getContributors": {
             "method": "GET",
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
@@ -15122,26 +15122,6 @@ exports[`open api converter squidex simple 1`] = `
             },
             "response": {
               "docs": "Contributors returned.",
-              "type": "root.ContributorsDto",
-            },
-          },
-          "TeamContributors_PostContributor": {
-            "method": "POST",
-            "path": "/api/teams/{team}/contributors",
-            "path-parameters": {
-              "team": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AssignContributorDto",
-              },
-            },
-            "response": {
-              "docs": "Contributor assigned to team.",
               "type": "root.ContributorsDto",
             },
           },
@@ -15165,6 +15145,26 @@ exports[`open api converter squidex simple 1`] = `
             "response": {
               "docs": "Teams returned.",
               "type": "list<root.TeamDto>",
+            },
+          },
+          "postContributor": {
+            "method": "POST",
+            "path": "/api/teams/{team}/contributors",
+            "path-parameters": {
+              "team": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.AssignContributorDto",
+              },
+            },
+            "response": {
+              "docs": "Contributor assigned to team.",
+              "type": "root.ContributorsDto",
             },
           },
           "postTeam": {

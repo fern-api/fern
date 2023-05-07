@@ -1,4 +1,4 @@
-import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, EndpointSdkName, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
@@ -107,6 +107,7 @@ function convertOperation(
         summary: operation.summary,
         operationId: operation.operationId,
         tags: operation.tags ?? [],
+        sdkName: maybeGetSdkName(operation),
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
@@ -119,4 +120,18 @@ function convertOperation(
         description: operation.description,
         responseIsStreaming: isStreaming ?? false,
     };
+}
+
+function maybeGetSdkName(operation: OpenAPIV3.OperationObject): EndpointSdkName | undefined {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sdkMethodName = (operation as any)["x-fern-sdk-method-name"] as string | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sdkGroupName = (operation as any)["x-fern-sdk-group-name"] as string | undefined;
+    if (sdkMethodName != null) {
+        return {
+            groupName: sdkGroupName,
+            methodName: sdkMethodName,
+        };
+    }
+    return undefined;
 }
