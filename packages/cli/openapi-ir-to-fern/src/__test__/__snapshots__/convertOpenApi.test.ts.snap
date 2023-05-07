@@ -991,7 +991,31 @@ exports[`open api converter devrev simple 1`] = `
           },
         },
         "AuthConnection": {
-          "base-properties": {},
+          "base-properties": {
+            "display_name": {
+              "docs": "Display name of the authentication connection. This name will be
+visible to all the users when they sign in to this Dev
+organization. For example, if the display_name is 'abclogin', then
+it would appear on the login button as 'Log in to abclogin'.
+",
+              "type": "optional<string>",
+            },
+            "enabled": {
+              "docs": "Whether the authentication connection is enabled or disabled. If
+set to false, the authentication connection will not show up on the
+login screen as a login option.
+",
+              "type": "optional<boolean>",
+            },
+            "id": {
+              "docs": "ID of the authentication connection.",
+              "type": "string",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "AuthConnectionType",
+            },
+          },
           "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
 ",
@@ -1419,7 +1443,20 @@ issue a Rev session token.
           "type": "PartBaseSummary",
         },
         "DevOrgAuthConnectionsCreateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "display_name": {
+              "docs": "Display name of the authentication connection. This name will be
+visible to all the users when they sign in to this Dev
+organization. For example, if the display_name is 'abclogin', then
+it would appear on the login button as 'Log in to abclogin'.
+",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "DevOrgAuthConnectionsCreateRequestType",
+            },
+          },
           "docs": "Request to create a new enterprise authentication connection.
 ",
           "union": {
@@ -1500,7 +1537,25 @@ a Dev organization.
           },
         },
         "DevOrgAuthConnectionsUpdateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "display_name": {
+              "docs": "New display name of the authentication connection. This name will
+be visible to all the users when they sign in to this Dev
+organization. For example, if the display_name is 'abclogin', then
+it would appear on the login button as 'Log in to abclogin'.
+",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "ID of the authentication connection which is to be updated.
+",
+              "type": "string",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "DevOrgAuthConnectionsUpdateRequestType",
+            },
+          },
           "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
@@ -2083,7 +2138,12 @@ always be returned in the specified sort-by order.
           ],
         },
         "OrgSummary": {
-          "base-properties": {},
+          "base-properties": {
+            "type": {
+              "docs": undefined,
+              "type": "OrgType",
+            },
+          },
           "docs": undefined,
           "union": {
             "rev_org": {
@@ -2102,7 +2162,12 @@ always be returned in the specified sort-by order.
           ],
         },
         "Part": {
-          "base-properties": {},
+          "base-properties": {
+            "type": {
+              "docs": undefined,
+              "type": "PartType",
+            },
+          },
           "docs": undefined,
           "union": {
             "capability": {
@@ -2158,7 +2223,12 @@ always be returned in the specified sort-by order.
           },
         },
         "PartSummary": {
-          "base-properties": {},
+          "base-properties": {
+            "type": {
+              "docs": undefined,
+              "type": "PartType",
+            },
+          },
           "docs": undefined,
           "union": {
             "capability": {
@@ -2201,7 +2271,24 @@ always be returned in the specified sort-by order.
           ],
         },
         "PartsCreateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "description": {
+              "docs": "Description of the part.",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "Name of the part.",
+              "type": "string",
+            },
+            "owned_by": {
+              "docs": "The users that own the part.",
+              "type": "list<string>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "PartType",
+            },
+          },
           "docs": undefined,
           "union": {
             "capability": {
@@ -2295,7 +2382,28 @@ sort order. If not set, then no prior elements exist.
           },
         },
         "PartsUpdateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "description": {
+              "docs": "The updated description of the part.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "The ID of the part to update.",
+              "type": "string",
+            },
+            "name": {
+              "docs": "The updated name of the part.",
+              "type": "optional<string>",
+            },
+            "owned_by": {
+              "docs": undefined,
+              "type": "optional<PartsUpdateRequestOwnedBy>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "PartType",
+            },
+          },
           "docs": undefined,
           "union": {
             "capability": {
@@ -2679,7 +2787,20 @@ will appear in the response.
           ],
         },
         "TimelineEntriesCreateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "object": {
+              "docs": "The ID of the object to create the timeline entry for.",
+              "type": "string",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "TimelineEntriesCreateRequestType",
+            },
+            "visibility": {
+              "docs": undefined,
+              "type": "optional<TimelineEntryVisibility>",
+            },
+          },
           "docs": "The request to create a timeline entry for an object.",
           "union": {
             "timeline_comment": {
@@ -2758,7 +2879,16 @@ sort order. If not set, then no prior elements exist.
           },
         },
         "TimelineEntriesUpdateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "id": {
+              "docs": "The ID of the timeline entry to update.",
+              "type": "string",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "TimelineEntriesUpdateRequestType",
+            },
+          },
           "docs": "The request to update a timeline entry.",
           "union": {
             "timeline_comment": {
@@ -2829,7 +2959,12 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           },
         },
         "TimelineEntry": {
-          "base-properties": {},
+          "base-properties": {
+            "type": {
+              "docs": undefined,
+              "type": "TimelineEntryType",
+            },
+          },
           "docs": undefined,
           "union": {
             "timeline_comment": {
@@ -2945,7 +3080,12 @@ default visibility.
           ],
         },
         "UserSummary": {
-          "base-properties": {},
+          "base-properties": {
+            "type": {
+              "docs": undefined,
+              "type": "UserType",
+            },
+          },
           "docs": undefined,
           "union": {
             "dev_user": {
@@ -3295,7 +3435,12 @@ event types. Note this is mutually exclusive with 'add' and
           },
         },
         "Work": {
-          "base-properties": {},
+          "base-properties": {
+            "type": {
+              "docs": undefined,
+              "type": "WorkType",
+            },
+          },
           "docs": undefined,
           "union": {
             "issue": {
@@ -3363,7 +3508,52 @@ event types. Note this is mutually exclusive with 'add' and
           ],
         },
         "WorksCreateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "applies_to_part": {
+              "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
+applies to. Specifying a part is required when creating tickets and
+issues.
+",
+              "type": "string",
+            },
+            "artifacts": {
+              "docs": "The IDs of the artifacts to associate with the work item.
+",
+              "type": "optional<list<string>>",
+            },
+            "body": {
+              "docs": "Body of the work object.",
+              "type": "optional<string>",
+            },
+            "owned_by": {
+              "docs": "The users that own the work.",
+              "type": "list<string>",
+            },
+            "reported_by": {
+              "docs": "The users that reported the work.",
+              "type": "optional<list<string>>",
+            },
+            "stage": {
+              "docs": undefined,
+              "type": "optional<StageInit>",
+            },
+            "tags": {
+              "docs": "Tags associated with the work item.",
+              "type": "optional<list<SetTagWithValue>>",
+            },
+            "target_close_date": {
+              "docs": "Timestamp for when the work is expected to be complete.",
+              "type": "optional<string>",
+            },
+            "title": {
+              "docs": "Title of the work object.",
+              "type": "string",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "WorkType",
+            },
+          },
           "docs": undefined,
           "union": {
             "issue": {
@@ -3455,7 +3645,55 @@ sort order. If not set, then no prior elements exist.
           },
         },
         "WorksUpdateRequest": {
-          "base-properties": {},
+          "base-properties": {
+            "applies_to_part": {
+              "docs": "Updates the part that the work applies to.",
+              "type": "optional<string>",
+            },
+            "artifacts": {
+              "docs": undefined,
+              "type": "optional<WorksUpdateRequestArtifactIds>",
+            },
+            "body": {
+              "docs": "Updated body of the work object, or unchanged if not provided.
+",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "The work's ID.",
+              "type": "string",
+            },
+            "owned_by": {
+              "docs": undefined,
+              "type": "optional<WorksUpdateRequestOwnedBy>",
+            },
+            "reported_by": {
+              "docs": undefined,
+              "type": "optional<WorksUpdateRequestReportedBy>",
+            },
+            "stage": {
+              "docs": undefined,
+              "type": "optional<StageUpdate>",
+            },
+            "tags": {
+              "docs": undefined,
+              "type": "optional<WorksUpdateRequestTags>",
+            },
+            "target_close_date": {
+              "docs": "Updates the timestamp for when the work is expected to be complete.
+",
+              "type": "optional<string>",
+            },
+            "title": {
+              "docs": "Updated title of the work object, or unchanged if not provided.
+",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "WorkType",
+            },
+          },
           "docs": undefined,
           "union": {
             "issue": {
@@ -6861,19 +7099,20 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AddFieldDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "AddLanguageDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "AddRoleDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "AddWorkflowDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "name": {
+              "docs": "The name of the field. Must be unique within the schema.",
+              "type": "string",
+            },
+            "partitioning": {
+              "docs": "Determines the optional partitioning of the field.",
+              "type": "optional<string>",
+            },
+            "properties": {
+              "docs": undefined,
+              "type": "FieldPropertiesDto",
+            },
+          },
         },
         "AlgoliaRuleActionDto": {
           "docs": undefined,
@@ -6902,11 +7141,33 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AllContentsByPostDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "AnnotateAssetDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "ids": {
+              "docs": "The list of ids to query.",
+              "type": "optional<list<string>>",
+            },
+            "oData": {
+              "docs": "The optional odata query.",
+              "type": "optional<string>",
+            },
+            "q": "unknown",
+            "references": {
+              "docs": "The ID of the reference content item.",
+              "type": "optional<string>",
+            },
+            "referencing": {
+              "docs": "The ID of the referencing content item.",
+              "type": "optional<string>",
+            },
+            "scheduledFrom": {
+              "docs": "The start of the schedule.",
+              "type": "optional<string>",
+            },
+            "scheduledTo": {
+              "docs": "The end of the schedule.",
+              "type": "optional<string>",
+            },
+          },
         },
         "AppDto": {
           "docs": undefined,
@@ -7208,7 +7469,12 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssetMeta": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "isDuplicate": {
+              "docs": "Indicates whether the asset is a duplicate.",
+              "type": "string",
+            },
+          },
         },
         "AssetPreviewMode": {
           "docs": "",
@@ -7385,7 +7651,20 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssignContributorDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "contributorId": {
+              "docs": "The id or email of the user to add to the app.",
+              "type": "string",
+            },
+            "invite": {
+              "docs": "Set to true to invite the user if he does not exist.",
+              "type": "optional<boolean>",
+            },
+            "role": {
+              "docs": "The role of the contributor.",
+              "type": "optional<string>",
+            },
+          },
         },
         "AzureQueueRuleActionDto": {
           "docs": undefined,
@@ -7478,7 +7757,24 @@ exports[`open api converter squidex simple 1`] = `
         },
         "BulkResultDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "contentId": {
+              "docs": "The ID of the entity that has been handled successfully or not.",
+              "type": "optional<string>",
+            },
+            "error": {
+              "docs": undefined,
+              "type": "optional<ErrorDto>",
+            },
+            "id": {
+              "docs": "The ID of the entity that has been handled successfully or not.",
+              "type": "optional<string>",
+            },
+            "jobIndex": {
+              "docs": "The index of the bulk job where the result belongs to. The order can change.",
+              "type": "integer",
+            },
+          },
         },
         "BulkUpdateAssetType": {
           "docs": "",
@@ -7497,13 +7793,50 @@ exports[`open api converter squidex simple 1`] = `
             },
           ],
         },
-        "BulkUpdateAssetsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
         "BulkUpdateAssetsJobDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "expectedVersion": {
+              "docs": "The expected version.",
+              "type": "optional<integer>",
+            },
+            "fileName": {
+              "docs": "The new name of the asset.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "An optional ID of the asset to update.",
+              "type": "optional<string>",
+            },
+            "isProtected": {
+              "docs": "True, when the asset is not public.",
+              "type": "optional<boolean>",
+            },
+            "metadata": {
+              "docs": "The asset metadata.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "parentId": {
+              "docs": "The parent folder id.",
+              "type": "optional<string>",
+            },
+            "permanent": {
+              "docs": "True to delete the asset permanently.",
+              "type": "optional<boolean>",
+            },
+            "slug": {
+              "docs": "The new slug of the asset.",
+              "type": "optional<string>",
+            },
+            "tags": {
+              "docs": "The new asset tags.",
+              "type": "optional<list<string>>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "optional<BulkUpdateAssetType>",
+            },
+          },
         },
         "BulkUpdateContentType": {
           "docs": "",
@@ -7538,33 +7871,125 @@ exports[`open api converter squidex simple 1`] = `
             },
           ],
         },
-        "BulkUpdateContentsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
         "BulkUpdateContentsJobDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "data": {
+              "docs": undefined,
+              "type": "optional<ContentData>",
+            },
+            "dueTime": {
+              "docs": "The due time.",
+              "type": "optional<string>",
+            },
+            "expectedCount": {
+              "docs": "The number of expected items. Set it to a higher number to update multiple items when a query is defined.",
+              "type": "optional<integer>",
+            },
+            "expectedVersion": {
+              "docs": "The expected version.",
+              "type": "optional<integer>",
+            },
+            "id": {
+              "docs": "An optional ID of the content to update.",
+              "type": "optional<string>",
+            },
+            "patch": {
+              "docs": "Makes the update as patch.",
+              "type": "optional<boolean>",
+            },
+            "permanent": {
+              "docs": "True to delete the content permanently.",
+              "type": "optional<boolean>",
+            },
+            "query": {
+              "docs": undefined,
+              "type": "optional<QueryJsonDto>",
+            },
+            "schema": {
+              "docs": "The optional schema id or name.",
+              "type": "optional<string>",
+            },
+            "status": {
+              "docs": "The new status when the type is set to 'ChangeStatus' or 'Upsert'.",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "optional<BulkUpdateContentType>",
+            },
+          },
         },
         "CallsUsageDtoDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "allowedBytes": {
+              "docs": "The included API traffic.",
+              "type": "integer",
+            },
+            "allowedCalls": {
+              "docs": "The included API calls.",
+              "type": "integer",
+            },
+            "averageElapsedMs": {
+              "docs": "The average duration in milliseconds.",
+              "type": "double",
+            },
+            "blockingApiCalls": {
+              "docs": "The amount of calls that will block the app.",
+              "type": "integer",
+            },
+            "details": {
+              "docs": "The statistics by date and group.",
+              "type": "map<string, list<CallsUsagePerDateDto>>",
+            },
+            "monthBytes": {
+              "docs": "The total number of bytes transferred this month.",
+              "type": "integer",
+            },
+            "monthCalls": {
+              "docs": "The total number of API calls this month.",
+              "type": "integer",
+            },
+            "totalBytes": {
+              "docs": "The total number of bytes transferred.",
+              "type": "integer",
+            },
+            "totalCalls": {
+              "docs": "The total number of API calls.",
+              "type": "integer",
+            },
+          },
         },
         "CallsUsagePerDateDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "ChangeCategoryDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "averageElapsedMs": {
+              "docs": "The average duration in milliseconds.",
+              "type": "double",
+            },
+            "date": {
+              "docs": "The date when the usage was tracked.",
+              "type": "string",
+            },
+            "totalBytes": {
+              "docs": "The total number of bytes transferred.",
+              "type": "integer",
+            },
+            "totalCalls": {
+              "docs": "The total number of API calls.",
+              "type": "integer",
+            },
+          },
         },
         "ChangePlanDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "ChangeStatusDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "planId": {
+              "docs": "The new plan id.",
+              "type": "string",
+            },
+          },
         },
         "ClientDto": {
           "docs": undefined,
@@ -7610,7 +8035,28 @@ exports[`open api converter squidex simple 1`] = `
         },
         "CommentDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "id": {
+              "docs": "The ID of the comment.",
+              "type": "string",
+            },
+            "text": {
+              "docs": "The text of the comment.",
+              "type": "string",
+            },
+            "time": {
+              "docs": "The time when the comment was created or updated last.",
+              "type": "string",
+            },
+            "url": {
+              "docs": "The url where the comment is created.",
+              "type": "optional<string>",
+            },
+            "user": {
+              "docs": "The user who created or updated the comment.",
+              "type": "string",
+            },
+          },
         },
         "CommentRuleActionDto": {
           "docs": undefined,
@@ -7636,7 +8082,24 @@ exports[`open api converter squidex simple 1`] = `
         },
         "CommentsDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "createdComments": {
+              "docs": "The created comments including the updates.",
+              "type": "optional<list<CommentDto>>",
+            },
+            "deletedComments": {
+              "docs": "The deleted comments since the last version.",
+              "type": "optional<list<string>>",
+            },
+            "updatedComments": {
+              "docs": "The updates comments since the last version.",
+              "type": "optional<list<CommentDto>>",
+            },
+            "version": {
+              "docs": "The current version.",
+              "type": "integer",
+            },
+          },
         },
         "ComponentFieldPropertiesDto": {
           "docs": undefined,
@@ -7668,17 +8131,9 @@ exports[`open api converter squidex simple 1`] = `
             },
           },
         },
-        "ConfigureFieldRulesDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
         "ConfigurePreviewUrlsDto": {
           "docs": undefined,
           "type": "map<string, string>",
-        },
-        "ConfigureUIFieldsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
         },
         "ContentChangedRuleTriggerDto": {
           "docs": undefined,
@@ -7840,19 +8295,12 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ContributorsMetadata": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "CreateAppDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "CreateAssetFolderDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "CreateClientDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "isInvited": {
+              "docs": "Indicates whether the user has been invited.",
+              "type": "string",
+            },
+          },
         },
         "CreateContentRuleActionDto": {
           "docs": undefined,
@@ -7877,19 +8325,29 @@ exports[`open api converter squidex simple 1`] = `
         },
         "CreateRuleDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "CreateTeamDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "CreateUserDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "action": {
+              "docs": undefined,
+              "type": "RuleActionDto",
+            },
+            "trigger": {
+              "docs": undefined,
+              "type": "RuleTriggerDto",
+            },
+          },
         },
         "CurrentStorageDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "maxAllowed": {
+              "docs": "The maximum allowed asset size.",
+              "type": "integer",
+            },
+            "size": {
+              "docs": "The size in bytes.",
+              "type": "integer",
+            },
+          },
         },
         "DateTimeCalculatedDefaultValue": {
           "docs": "",
@@ -7985,7 +8443,16 @@ exports[`open api converter squidex simple 1`] = `
         },
         "EditorDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "name": {
+              "docs": "The name of the editor.",
+              "type": "string",
+            },
+            "url": {
+              "docs": "The url to the editor.",
+              "type": "string",
+            },
+          },
         },
         "ElasticSearchRuleActionDto": {
           "docs": undefined,
@@ -8055,7 +8522,32 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ErrorDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "details": {
+              "docs": "Detailed error messages.",
+              "type": "optional<list<string>>",
+            },
+            "errorCode": {
+              "docs": "The error code.",
+              "type": "optional<string>",
+            },
+            "message": {
+              "docs": "Error message.",
+              "type": "string",
+            },
+            "statusCode": {
+              "docs": "Status code of the http response.",
+              "type": "integer",
+            },
+            "traceId": {
+              "docs": "The optional trace id.",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": "Link to the error details.",
+              "type": "optional<string>",
+            },
+          },
         },
         "EventConsumerDto": {
           "docs": undefined,
@@ -8114,11 +8606,29 @@ exports[`open api converter squidex simple 1`] = `
         },
         "FeatureDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "name": {
+              "docs": "The name of the feature.",
+              "type": "string",
+            },
+            "text": {
+              "docs": "The description text.",
+              "type": "string",
+            },
+          },
         },
         "FeaturesDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "features": {
+              "docs": "The latest features.",
+              "type": "list<FeatureDto>",
+            },
+            "version": {
+              "docs": "The recent version.",
+              "type": "integer",
+            },
+          },
         },
         "FieldDto": {
           "docs": undefined,
@@ -8158,8 +8668,99 @@ exports[`open api converter squidex simple 1`] = `
           },
         },
         "FieldPropertiesDto": {
+          "base-properties": {
+            "editorUrl": {
+              "docs": "Optional url to the editor.",
+              "type": "optional<string>",
+            },
+            "fieldType": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "hints": {
+              "docs": "Hints to describe the field.",
+              "type": "optional<string>",
+            },
+            "isHalfWidth": {
+              "docs": "Indicates if the field should be rendered with half width only.",
+              "type": "boolean",
+            },
+            "isRequired": {
+              "docs": "Indicates if the field is required.",
+              "type": "boolean",
+            },
+            "isRequiredOnPublish": {
+              "docs": "Indicates if the field is required when publishing.",
+              "type": "boolean",
+            },
+            "label": {
+              "docs": "Optional label for the editor.",
+              "type": "optional<string>",
+            },
+            "placeholder": {
+              "docs": "Placeholder to show when no value has been entered.",
+              "type": "optional<string>",
+            },
+            "tags": {
+              "docs": "Tags for automation processes.",
+              "type": "optional<list<string>>",
+            },
+          },
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "union": {
+            "Array": {
+              "docs": undefined,
+              "type": "ArrayFieldPropertiesDto",
+            },
+            "Assets": {
+              "docs": undefined,
+              "type": "AssetsFieldPropertiesDto",
+            },
+            "Boolean": {
+              "docs": undefined,
+              "type": "BooleanFieldPropertiesDto",
+            },
+            "Component": {
+              "docs": undefined,
+              "type": "ComponentFieldPropertiesDto",
+            },
+            "Components": {
+              "docs": undefined,
+              "type": "ComponentsFieldPropertiesDto",
+            },
+            "DateTime": {
+              "docs": undefined,
+              "type": "DateTimeFieldPropertiesDto",
+            },
+            "Geolocation": {
+              "docs": undefined,
+              "type": "GeolocationFieldPropertiesDto",
+            },
+            "Json": {
+              "docs": undefined,
+              "type": "JsonFieldPropertiesDto",
+            },
+            "Number": {
+              "docs": undefined,
+              "type": "NumberFieldPropertiesDto",
+            },
+            "References": {
+              "docs": undefined,
+              "type": "ReferencesFieldPropertiesDto",
+            },
+            "String": {
+              "docs": undefined,
+              "type": "StringFieldPropertiesDto",
+            },
+            "Tags": {
+              "docs": undefined,
+              "type": "TagsFieldPropertiesDto",
+            },
+            "UI": {
+              "docs": undefined,
+              "type": "UiFieldPropertiesDto",
+            },
+          },
         },
         "FieldRuleAction": {
           "docs": "",
@@ -8180,7 +8781,20 @@ exports[`open api converter squidex simple 1`] = `
         },
         "FieldRuleDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "action": {
+              "docs": undefined,
+              "type": "FieldRuleAction",
+            },
+            "condition": {
+              "docs": "The condition.",
+              "type": "optional<string>",
+            },
+            "field": {
+              "docs": "The field to update.",
+              "type": "string",
+            },
+          },
         },
         "GeolocationFieldEditor": {
           "docs": "",
@@ -8202,7 +8816,32 @@ exports[`open api converter squidex simple 1`] = `
         },
         "HistoryEventDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "actor": {
+              "docs": "The user who called the action.",
+              "type": "string",
+            },
+            "created": {
+              "docs": "The time when the event happened.",
+              "type": "string",
+            },
+            "eventId": {
+              "docs": "Gets a unique id for the event.",
+              "type": "string",
+            },
+            "eventType": {
+              "docs": "The type of the original event.",
+              "type": "string",
+            },
+            "message": {
+              "docs": "The message for the event.",
+              "type": "string",
+            },
+            "version": {
+              "docs": "The version identifier.",
+              "type": "integer",
+            },
+          },
         },
         "ImageFormat": {
           "docs": "",
@@ -8241,10 +8880,6 @@ exports[`open api converter squidex simple 1`] = `
             },
           ],
         },
-        "ImportContentsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
         "JobStatus": {
           "docs": "",
           "enum": [
@@ -8277,7 +8912,20 @@ exports[`open api converter squidex simple 1`] = `
         },
         "LanguageDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "englishName": {
+              "docs": "The english name of the language.",
+              "type": "string",
+            },
+            "iso2Code": {
+              "docs": "The iso code of the language.",
+              "type": "string",
+            },
+            "nativeName": {
+              "docs": "The native name of the language.",
+              "type": "string",
+            },
+          },
         },
         "LocalizedValueOfNullableBoolean": {
           "docs": undefined,
@@ -8301,7 +8949,12 @@ exports[`open api converter squidex simple 1`] = `
         },
         "LogDownloadDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "downloadUrl": {
+              "docs": "The url to download the log.",
+              "type": "optional<string>",
+            },
+          },
         },
         "ManualRuleTriggerDto": {
           "docs": undefined,
@@ -8339,14 +8992,6 @@ exports[`open api converter squidex simple 1`] = `
               "type": "optional<string>",
             },
           },
-        },
-        "MoveAssetDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "MoveAssetFolderDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
         },
         "NestedFieldDto": {
           "docs": undefined,
@@ -8487,19 +9132,107 @@ exports[`open api converter squidex simple 1`] = `
         },
         "PatternDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "message": {
+              "docs": "The regex message.",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": "The name of the suggestion.",
+              "type": "string",
+            },
+            "regex": {
+              "docs": "The regex pattern.",
+              "type": "string",
+            },
+          },
         },
         "PlanChangedDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "redirectUri": {
+              "docs": "Optional redirect uri.",
+              "type": "optional<string>",
+            },
+          },
         },
         "PlanDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "confirmText": {
+              "docs": "An optional confirm text for the monthly subscription.",
+              "type": "optional<string>",
+            },
+            "costs": {
+              "docs": "The monthly costs of the plan.",
+              "type": "string",
+            },
+            "id": {
+              "docs": "The ID of the plan.",
+              "type": "string",
+            },
+            "maxApiBytes": {
+              "docs": "The maximum number of API traffic.",
+              "type": "integer",
+            },
+            "maxApiCalls": {
+              "docs": "The maximum number of API calls.",
+              "type": "integer",
+            },
+            "maxAssetSize": {
+              "docs": "The maximum allowed asset size.",
+              "type": "integer",
+            },
+            "maxContributors": {
+              "docs": "The maximum number of contributors.",
+              "type": "integer",
+            },
+            "name": {
+              "docs": "The name of the plan.",
+              "type": "string",
+            },
+            "yearlyConfirmText": {
+              "docs": "An optional confirm text for the yearly subscription.",
+              "type": "optional<string>",
+            },
+            "yearlyCosts": {
+              "docs": "The yearly costs of the plan.",
+              "type": "optional<string>",
+            },
+            "yearlyId": {
+              "docs": "The yearly ID of the plan.",
+              "type": "optional<string>",
+            },
+          },
         },
         "PlansDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "currentPlanId": {
+              "docs": "The current plan id.",
+              "type": "optional<string>",
+            },
+            "locked": {
+              "docs": undefined,
+              "type": "PlansLockedReason",
+            },
+            "planOwner": {
+              "docs": "The plan owner.",
+              "type": "optional<string>",
+            },
+            "plans": {
+              "docs": "The available plans.",
+              "type": "list<PlanDto>",
+            },
+            "portalLink": {
+              "docs": "The link to the management portal.",
+              "type": "optional<string>",
+            },
+            "referral": {
+              "docs": undefined,
+              "type": "optional<ReferralInfo>",
+            },
+          },
         },
         "PlansLockedReason": {
           "docs": "",
@@ -8541,11 +9274,51 @@ exports[`open api converter squidex simple 1`] = `
         },
         "QueryDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "ids": {
+              "docs": "The optional list of ids to query.",
+              "type": "optional<list<string>>",
+            },
+            "oData": {
+              "docs": "The optional odata query.",
+              "type": "optional<string>",
+            },
+            "parentId": {
+              "docs": "The parent id (for assets).",
+              "type": "optional<string>",
+            },
+            "q": "unknown",
+          },
         },
         "QueryJsonDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "filter": "unknown",
+            "fullText": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "random": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "skip": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "sort": {
+              "docs": undefined,
+              "type": "optional<list<SortNode>>",
+            },
+            "take": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "top": {
+              "docs": undefined,
+              "type": "integer",
+            },
+          },
         },
         "ReferencesFieldEditor": {
           "docs": "",
@@ -8615,19 +9388,29 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ReferralInfo": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "RenameAssetFolderDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "RenameTagDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "code": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "condition": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "earned": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
         },
         "ReorderFieldsDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "fieldIds": {
+              "docs": "The field ids in the target order.",
+              "type": "list<integer>",
+            },
+          },
         },
         "ResizeMode": {
           "docs": "",
@@ -8664,11 +9447,29 @@ exports[`open api converter squidex simple 1`] = `
         },
         "Resource": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "_links": {
+              "docs": "The links.",
+              "type": "map<string, ResourceLink>",
+            },
+          },
         },
         "ResourceLink": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "href": {
+              "docs": "The link url.",
+              "type": "string",
+            },
+            "metadata": {
+              "docs": "Additional data about the link.",
+              "type": "optional<string>",
+            },
+            "method": {
+              "docs": "The link method.",
+              "type": "string",
+            },
+          },
         },
         "ResourcesDto": {
           "docs": undefined,
@@ -8676,11 +9477,28 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RestoreJobDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "RestoreRequestDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "log": {
+              "docs": "The status log.",
+              "type": "list<string>",
+            },
+            "started": {
+              "docs": "The time when the job has been started.",
+              "type": "string",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "JobStatus",
+            },
+            "stopped": {
+              "docs": "The time when the job has been stopped.",
+              "type": "optional<string>",
+            },
+            "url": {
+              "docs": "The uri to load from.",
+              "type": "string",
+            },
+          },
         },
         "RoleDto": {
           "docs": undefined,
@@ -8721,8 +9539,87 @@ exports[`open api converter squidex simple 1`] = `
           },
         },
         "RuleActionDto": {
+          "base-properties": {
+            "actionType": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "union": {
+            "Algolia": {
+              "docs": undefined,
+              "type": "AlgoliaRuleActionDto",
+            },
+            "AzureQueue": {
+              "docs": undefined,
+              "type": "AzureQueueRuleActionDto",
+            },
+            "Comment": {
+              "docs": undefined,
+              "type": "CommentRuleActionDto",
+            },
+            "CreateContent": {
+              "docs": undefined,
+              "type": "CreateContentRuleActionDto",
+            },
+            "Discourse": {
+              "docs": undefined,
+              "type": "DiscourseRuleActionDto",
+            },
+            "ElasticSearch": {
+              "docs": undefined,
+              "type": "ElasticSearchRuleActionDto",
+            },
+            "Email": {
+              "docs": undefined,
+              "type": "EmailRuleActionDto",
+            },
+            "Fastly": {
+              "docs": undefined,
+              "type": "FastlyRuleActionDto",
+            },
+            "Medium": {
+              "docs": undefined,
+              "type": "MediumRuleActionDto",
+            },
+            "Notification": {
+              "docs": undefined,
+              "type": "NotificationRuleActionDto",
+            },
+            "OpenSearch": {
+              "docs": undefined,
+              "type": "OpenSearchRuleActionDto",
+            },
+            "Prerender": {
+              "docs": undefined,
+              "type": "PrerenderRuleActionDto",
+            },
+            "Script": {
+              "docs": undefined,
+              "type": "ScriptRuleActionDto",
+            },
+            "SignalR": {
+              "docs": undefined,
+              "type": "SignalRRuleActionDto",
+            },
+            "Slack": {
+              "docs": undefined,
+              "type": "SlackRuleActionDto",
+            },
+            "Tweet": {
+              "docs": undefined,
+              "type": "TweetRuleActionDto",
+            },
+            "Typesense": {
+              "docs": undefined,
+              "type": "TypesenseRuleActionDto",
+            },
+            "Webhook": {
+              "docs": undefined,
+              "type": "WebhookRuleActionDto",
+            },
+          },
         },
         "RuleDto": {
           "docs": undefined,
@@ -8783,11 +9680,69 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RuleElementDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "description": {
+              "docs": "Describes the action or trigger type.",
+              "type": "string",
+            },
+            "display": {
+              "docs": "The label for the action or trigger type.",
+              "type": "string",
+            },
+            "iconColor": {
+              "docs": "The color for the icon.",
+              "type": "optional<string>",
+            },
+            "iconImage": {
+              "docs": "The image for the icon.",
+              "type": "optional<string>",
+            },
+            "properties": {
+              "docs": "The properties.",
+              "type": "list<RuleElementPropertyDto>",
+            },
+            "readMore": {
+              "docs": "The optional link to the product that is integrated.",
+              "type": "optional<string>",
+            },
+            "title": {
+              "docs": "Optional title.",
+              "type": "optional<string>",
+            },
+          },
         },
         "RuleElementPropertyDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "description": {
+              "docs": "The optional description.",
+              "type": "optional<string>",
+            },
+            "display": {
+              "docs": "The label to use.",
+              "type": "string",
+            },
+            "editor": {
+              "docs": undefined,
+              "type": "RuleFieldEditor",
+            },
+            "isFormattable": {
+              "docs": "Indicates if the property is formattable.",
+              "type": "boolean",
+            },
+            "isRequired": {
+              "docs": "Indicates if the property is required.",
+              "type": "boolean",
+            },
+            "name": {
+              "docs": "The name of the editor.",
+              "type": "string",
+            },
+            "options": {
+              "docs": "The options, if the editor is a dropdown.",
+              "type": "optional<list<string>>",
+            },
+          },
         },
         "RuleEventDto": {
           "docs": undefined,
@@ -8931,8 +9886,39 @@ exports[`open api converter squidex simple 1`] = `
           ],
         },
         "RuleTriggerDto": {
+          "base-properties": {
+            "triggerType": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "union": {
+            "AssetChanged": {
+              "docs": undefined,
+              "type": "AssetChangedRuleTriggerDto",
+            },
+            "Comment": {
+              "docs": undefined,
+              "type": "CommentRuleTriggerDto",
+            },
+            "ContentChanged": {
+              "docs": undefined,
+              "type": "ContentChangedRuleTriggerDto",
+            },
+            "Manual": {
+              "docs": undefined,
+              "type": "ManualRuleTriggerDto",
+            },
+            "SchemaChanged": {
+              "docs": undefined,
+              "type": "SchemaChangedRuleTriggerDto",
+            },
+            "Usage": {
+              "docs": undefined,
+              "type": "UsageRuleTriggerDto",
+            },
+          },
         },
         "RulesDto": {
           "docs": undefined,
@@ -8949,7 +9935,28 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ScheduleJobDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "color": {
+              "docs": "The color of the scheduled status.",
+              "type": "string",
+            },
+            "dueTime": {
+              "docs": "The target date and time when the content should be scheduled.",
+              "type": "string",
+            },
+            "id": {
+              "docs": "The ID of the schedule job.",
+              "type": "string",
+            },
+            "scheduledBy": {
+              "docs": "The user who schedule the content.",
+              "type": "string",
+            },
+            "status": {
+              "docs": "The new status.",
+              "type": "string",
+            },
+          },
         },
         "SchemaChangedRuleTriggerDto": {
           "docs": undefined,
@@ -8962,7 +9969,16 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SchemaCondition": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "condition": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "schemaId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
         },
         "SchemaDto": {
           "docs": undefined,
@@ -9043,11 +10059,65 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SchemaPropertiesDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "contentEditorUrl": {
+              "docs": "The url to the editor plugin.",
+              "type": "optional<string>",
+            },
+            "contentSidebarUrl": {
+              "docs": "The url to a the sidebar plugin for content items.",
+              "type": "optional<string>",
+            },
+            "contentsSidebarUrl": {
+              "docs": "The url to a the sidebar plugin for content lists.",
+              "type": "optional<string>",
+            },
+            "hints": {
+              "docs": "Hints to describe the schema.",
+              "type": "optional<string>",
+            },
+            "label": {
+              "docs": "Optional label for the editor.",
+              "type": "optional<string>",
+            },
+            "tags": {
+              "docs": "Tags for automation processes.",
+              "type": "optional<list<string>>",
+            },
+            "validateOnPublish": {
+              "docs": "True to validate the content items on publish.",
+              "type": "boolean",
+            },
+          },
         },
         "SchemaScriptsDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "change": {
+              "docs": "The script that is executed when change a content status.",
+              "type": "optional<string>",
+            },
+            "create": {
+              "docs": "The script that is executed when creating a content.",
+              "type": "optional<string>",
+            },
+            "delete": {
+              "docs": "The script that is executed when deleting a content.",
+              "type": "optional<string>",
+            },
+            "query": {
+              "docs": "The script that is executed for each content when querying contents.",
+              "type": "optional<string>",
+            },
+            "queryPre": {
+              "docs": "The script that is executed for all contents when querying contents.",
+              "type": "optional<string>",
+            },
+            "update": {
+              "docs": "The script that is executed when updating a content.",
+              "type": "optional<string>",
+            },
+          },
         },
         "SchemaType": {
           "docs": "",
@@ -9161,7 +10231,38 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SimulatedRuleEventDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "actionData": {
+              "docs": "The name of the action.",
+              "type": "optional<string>",
+            },
+            "actionName": {
+              "docs": "The data for the action.",
+              "type": "optional<string>",
+            },
+            "enrichedEvent": "unknown",
+            "error": {
+              "docs": "The name of the event.",
+              "type": "optional<string>",
+            },
+            "event": "unknown",
+            "eventId": {
+              "docs": "The unique event id.",
+              "type": "string",
+            },
+            "eventName": {
+              "docs": "The name of the event.",
+              "type": "string",
+            },
+            "skipReasons": {
+              "docs": "The reason why the event has been skipped.",
+              "type": "list<SkipReason>",
+            },
+            "uniqueId": {
+              "docs": "The the unique id of the simulated event.",
+              "type": "string",
+            },
+          },
         },
         "SimulatedRuleEventsDto": {
           "docs": undefined,
@@ -9240,7 +10341,16 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SortNode": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "order": {
+              "docs": undefined,
+              "type": "SortOrder",
+            },
+            "path": {
+              "docs": undefined,
+              "type": "PropertyPath",
+            },
+          },
         },
         "SortOrder": {
           "docs": "",
@@ -9257,11 +10367,33 @@ exports[`open api converter squidex simple 1`] = `
         },
         "StatusInfoDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "color": {
+              "docs": "The color of the status.",
+              "type": "string",
+            },
+            "status": {
+              "docs": "The name of the status.",
+              "type": "string",
+            },
+          },
         },
         "StorageUsagePerDateDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "date": {
+              "docs": "The date when the usage was tracked.",
+              "type": "string",
+            },
+            "totalCount": {
+              "docs": "The number of assets.",
+              "type": "integer",
+            },
+            "totalSize": {
+              "docs": "The size in bytes.",
+              "type": "integer",
+            },
+          },
         },
         "StringContentType": {
           "docs": "",
@@ -9524,17 +10656,18 @@ exports[`open api converter squidex simple 1`] = `
             },
           },
         },
-        "TransferToTeamDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "TranslateDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
         "TranslationDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "result": {
+              "docs": undefined,
+              "type": "TranslationResultCode",
+            },
+            "text": {
+              "docs": "The translated text.",
+              "type": "optional<string>",
+            },
+          },
         },
         "TranslationResultCode": {
           "docs": "",
@@ -9607,10 +10740,6 @@ exports[`open api converter squidex simple 1`] = `
             },
           },
         },
-        "UISettingsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
         "UiFieldEditor": {
           "docs": "",
           "enum": [
@@ -9629,73 +10758,145 @@ exports[`open api converter squidex simple 1`] = `
             },
           },
         },
-        "UpdateAppDto": {
+        "UiSettingsDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateAppSettingsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateAssetScriptsDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateClientDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "canCreateApps": {
+              "docs": "True when the user can create apps.",
+              "type": "boolean",
+            },
+            "canCreateTeams": {
+              "docs": "True when the user can create teams.",
+              "type": "boolean",
+            },
+          },
         },
         "UpdateFieldDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateLanguageDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateRoleDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateRuleDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateSchemaDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "properties": {
+              "docs": undefined,
+              "type": "FieldPropertiesDto",
+            },
+          },
         },
         "UpdateSettingDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateTeamDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateUserDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
-        },
-        "UpdateWorkflowDto": {
-          "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "value": "unknown",
+          },
         },
         "UpsertCommentDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "text": {
+              "docs": "The comment text.",
+              "type": "string",
+            },
+            "url": {
+              "docs": "The url where the comment is created.",
+              "type": "optional<string>",
+            },
+          },
         },
         "UpsertSchemaDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "category": {
+              "docs": "The category.",
+              "type": "optional<string>",
+            },
+            "fieldRules": {
+              "docs": "The optional field Rules.",
+              "type": "optional<list<FieldRuleDto>>",
+            },
+            "fields": {
+              "docs": "Optional fields.",
+              "type": "optional<list<UpsertSchemaFieldDto>>",
+            },
+            "fieldsInLists": {
+              "docs": "The names of the fields that should be shown in lists, including meta fields.",
+              "type": "optional<list<string>>",
+            },
+            "fieldsInReferences": {
+              "docs": "The names of the fields that should be used in references.",
+              "type": "optional<list<string>>",
+            },
+            "isPublished": {
+              "docs": "Set it to true to autopublish the schema.",
+              "type": "boolean",
+            },
+            "previewUrls": {
+              "docs": "The optional preview urls.",
+              "type": "optional<map<string, optional<string>>>",
+            },
+            "properties": {
+              "docs": undefined,
+              "type": "optional<SchemaPropertiesDto>",
+            },
+            "scripts": {
+              "docs": undefined,
+              "type": "optional<SchemaScriptsDto>",
+            },
+          },
         },
         "UpsertSchemaFieldDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "isDisabled": {
+              "docs": "Defines if the field is disabled.",
+              "type": "boolean",
+            },
+            "isHidden": {
+              "docs": "Defines if the field is hidden.",
+              "type": "boolean",
+            },
+            "isLocked": {
+              "docs": "Defines if the field is locked.",
+              "type": "boolean",
+            },
+            "name": {
+              "docs": "The name of the field. Must be unique within the schema.",
+              "type": "string",
+            },
+            "nested": {
+              "docs": "The nested fields.",
+              "type": "optional<list<UpsertSchemaNestedFieldDto>>",
+            },
+            "partitioning": {
+              "docs": "Determines the optional partitioning of the field.",
+              "type": "optional<string>",
+            },
+            "properties": {
+              "docs": undefined,
+              "type": "FieldPropertiesDto",
+            },
+          },
         },
         "UpsertSchemaNestedFieldDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "isDisabled": {
+              "docs": "Defines if the field is disabled.",
+              "type": "boolean",
+            },
+            "isHidden": {
+              "docs": "Defines if the field is hidden.",
+              "type": "boolean",
+            },
+            "isLocked": {
+              "docs": "Defines if the field is locked.",
+              "type": "boolean",
+            },
+            "name": {
+              "docs": "The name of the field. Must be unique within the schema.",
+              "type": "string",
+            },
+            "properties": {
+              "docs": undefined,
+              "type": "FieldPropertiesDto",
+            },
+          },
         },
         "UsageRuleTriggerDto": {
           "docs": undefined,
@@ -9737,7 +10938,16 @@ exports[`open api converter squidex simple 1`] = `
         },
         "UserProperty": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
         },
         "UsersDto": {
           "docs": undefined,
@@ -9833,11 +11043,45 @@ exports[`open api converter squidex simple 1`] = `
         },
         "WorkflowStepDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "color": {
+              "docs": "The optional color.",
+              "type": "optional<string>",
+            },
+            "noUpdate": {
+              "docs": "Indicates if updates should not be allowed.",
+              "type": "optional<boolean>",
+            },
+            "noUpdateExpression": {
+              "docs": "Optional expression that must evaluate to true when you want to prevent updates.",
+              "type": "optional<string>",
+            },
+            "noUpdateRoles": {
+              "docs": "Optional list of roles to restrict the updates for users with these roles.",
+              "type": "optional<list<string>>",
+            },
+            "transitions": {
+              "docs": "The transitions.",
+              "type": "optional<map<string, optional<WorkflowTransitionDto>>>",
+            },
+            "validate": {
+              "docs": "True if the content should be validated when moving to this step.",
+              "type": "optional<boolean>",
+            },
+          },
         },
         "WorkflowTransitionDto": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "expression": {
+              "docs": "The optional expression.",
+              "type": "optional<string>",
+            },
+            "roles": {
+              "docs": "The optional restricted role.",
+              "type": "optional<list<string>>",
+            },
+          },
         },
         "WorkflowsDto": {
           "docs": undefined,
@@ -9887,9 +11131,39 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "annotate": {
+                    "docs": "The script that is executed when annotating a content.",
+                    "type": "optional<string>",
+                  },
+                  "create": {
+                    "docs": "The script that is executed when creating an asset.",
+                    "type": "optional<string>",
+                  },
+                  "delete": {
+                    "docs": "The script that is executed when deleting a content.",
+                    "type": "optional<string>",
+                  },
+                  "move": {
+                    "docs": "The script that is executed when moving a content.",
+                    "type": "optional<string>",
+                  },
+                  "query": {
+                    "docs": "The script that is executed for each asset when querying assets.",
+                    "type": "optional<string>",
+                  },
+                  "queryPre": {
+                    "docs": "The script that is executed for all assets when querying assets.",
+                    "type": "optional<string>",
+                  },
+                  "update": {
+                    "docs": "The script that is executed when updating a content.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "UpdateAssetScriptsDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset scripts updated.",
@@ -9939,9 +11213,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "id": {
+                    "docs": "The ID of the client.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "CreateClientDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Client created.",
@@ -9963,9 +11243,31 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "allowAnonymous": {
+                    "docs": "True to allow anonymous access without an access token for this client.",
+                    "type": "optional<boolean>",
+                  },
+                  "apiCallsLimit": {
+                    "docs": "The number of allowed api calls per month for this client.",
+                    "type": "optional<integer>",
+                  },
+                  "apiTrafficLimit": {
+                    "docs": "The number of allowed api traffic bytes per month for this client.",
+                    "type": "optional<integer>",
+                  },
+                  "name": {
+                    "docs": "The new display name of the client.",
+                    "type": "optional<string>",
+                  },
+                  "role": {
+                    "docs": "The role of the client.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "UpdateClientDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Client updated.",
@@ -10030,7 +11332,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.AssignContributorDto",
               },
             },
             "response": {
@@ -10091,9 +11393,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "language": {
+                    "docs": "The language to add.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "AddLanguageDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Language created.",
@@ -10115,9 +11423,23 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "fallback": {
+                    "docs": "Optional fallback languages.",
+                    "type": "optional<list<string>>",
+                  },
+                  "isMaster": {
+                    "docs": "Set the value to true to make the language the master.",
+                    "type": "optional<boolean>",
+                  },
+                  "isOptional": {
+                    "docs": "Set the value to true to make the language optional.",
+                    "type": "optional<boolean>",
+                  },
+                },
               },
+              "name": "UpdateLanguageDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Language updated.",
@@ -10181,9 +11503,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The role name.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "AddRoleDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Role created.",
@@ -10205,9 +11533,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "permissions": {
+                    "docs": "Associated list of permissions.",
+                    "type": "list<string>",
+                  },
+                  "properties": {
+                    "docs": "Associated list of UI properties.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                },
               },
+              "name": "UpdateRoleDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Role updated.",
@@ -10239,9 +11577,27 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "editors": {
+                    "docs": "The configured UI editors.",
+                    "type": "list<root.EditorDto>",
+                  },
+                  "hideDateTimeModeButton": {
+                    "docs": "Hide the datetime mode button.",
+                    "type": "optional<boolean>",
+                  },
+                  "hideScheduler": {
+                    "docs": "Hide the scheduler for content items.",
+                    "type": "optional<boolean>",
+                  },
+                  "patterns": {
+                    "docs": "The configured app patterns.",
+                    "type": "list<root.PatternDto>",
+                  },
+                },
               },
+              "name": "UpdateAppSettingsDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "App updated.",
@@ -10291,9 +11647,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The name of the workflow.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "AddWorkflowDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Workflow created.",
@@ -10315,9 +11677,27 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "initial": {
+                    "docs": "The initial step.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "The name of the workflow.",
+                    "type": "optional<string>",
+                  },
+                  "schemaIds": {
+                    "docs": "The schema ids.",
+                    "type": "optional<list<string>>",
+                  },
+                  "steps": {
+                    "docs": "The workflow steps.",
+                    "type": "map<string, root.WorkflowStepDto>",
+                  },
+                },
               },
+              "name": "UpdateWorkflowDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Workflow updated.",
@@ -10389,9 +11769,19 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps",
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The name of the app.",
+                    "type": "string",
+                  },
+                  "template": {
+                    "docs": "Initialize the app with the inbuilt template.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "CreateAppDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "App created.",
@@ -10409,9 +11799,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "description": {
+                    "docs": "The optional description of your app.",
+                    "type": "optional<string>",
+                  },
+                  "label": {
+                    "docs": "The optional label of your app.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "UpdateAppDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "App updated.",
@@ -10429,9 +11829,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "teamId": {
+                    "docs": "The ID of the team.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "TransferToTeamDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "App transferred.",
@@ -10704,9 +12110,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "folderName": {
+                    "docs": "The name of the folder.",
+                    "type": "string",
+                  },
+                  "parentId": {
+                    "docs": "The ID of the parent folder.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "CreateAssetFolderDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset folder created.",
@@ -10728,9 +12144,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "folderName": {
+                    "docs": "The name of the folder.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "RenameAssetFolderDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset folder updated.",
@@ -10752,9 +12174,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "parentId": {
+                    "docs": "The parent folder id.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "MoveAssetFolderDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset folder moved.",
@@ -10772,9 +12200,27 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "checkReferrers": {
+                    "docs": "True to check referrers of deleted assets.",
+                    "type": "optional<boolean>",
+                  },
+                  "doNotScript": {
+                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                  "jobs": {
+                    "docs": "The contents to update or insert.",
+                    "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
+                  },
+                  "optimizeValidation": {
+                    "docs": "True to turn off costly validation: Folder checks. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                },
               },
+              "name": "BulkUpdateAssetsDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Assets created, update or delete.",
@@ -10894,7 +12340,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.QueryDto",
               },
             },
             "response": {
@@ -11008,9 +12454,31 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "fileName": {
+                    "docs": "The new name of the asset.",
+                    "type": "optional<string>",
+                  },
+                  "isProtected": {
+                    "docs": "True, when the asset is not public.",
+                    "type": "optional<boolean>",
+                  },
+                  "metadata": {
+                    "docs": "The asset metadata.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "slug": {
+                    "docs": "The new slug of the asset.",
+                    "type": "optional<string>",
+                  },
+                  "tags": {
+                    "docs": "The new asset tags.",
+                    "type": "optional<list<string>>",
+                  },
+                },
               },
+              "name": "AnnotateAssetDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset updated.",
@@ -11059,9 +12527,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "parentId": {
+                    "docs": "The parent folder id.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "MoveAssetDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset moved.",
@@ -11083,9 +12557,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "tagName": {
+                    "docs": "The new name for the tag.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "RenameTagDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Asset tag renamed and new tags returned.",
@@ -11155,9 +12635,19 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/restore",
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The name of the app.",
+                    "type": "optional<string>",
+                  },
+                  "url": {
+                    "docs": "The url to the restore file.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "RestoreRequestDto",
+              "query-parameters": undefined,
             },
           },
           "deleteBackup": {
@@ -11289,7 +12779,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.UpsertCommentDto",
               },
             },
             "response": {
@@ -11317,7 +12807,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.UpsertCommentDto",
               },
             },
           },
@@ -11347,9 +12837,39 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "checkReferrers": {
+                    "docs": "True to check referrers of deleted contents.",
+                    "type": "optional<boolean>",
+                  },
+                  "doNotScript": {
+                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                  "doNotValidate": {
+                    "docs": "True to turn off validation for faster inserts. Default: false.",
+                    "type": "optional<boolean>",
+                  },
+                  "doNotValidateWorkflow": {
+                    "docs": "True to turn off validation of workflow rules. Default: false.",
+                    "type": "optional<boolean>",
+                  },
+                  "jobs": {
+                    "docs": "The contents to update or insert.",
+                    "type": "list<root.BulkUpdateContentsJobDto>",
+                  },
+                  "optimizeValidation": {
+                    "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                  "publish": {
+                    "docs": "True to automatically publish the content.",
+                    "type": "optional<boolean>",
+                  },
+                },
               },
+              "name": "BulkUpdateContentsDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "",
@@ -11576,7 +13096,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.QueryDto",
               },
             },
             "response": {
@@ -11733,9 +13253,27 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "datas": {
+                    "docs": "The data to import.",
+                    "type": "list<root.ContentData>",
+                  },
+                  "doNotScript": {
+                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                  "optimizeValidation": {
+                    "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+                    "type": "optional<boolean>",
+                  },
+                  "publish": {
+                    "docs": "True to automatically publish the content.",
+                    "type": "optional<boolean>",
+                  },
+                },
               },
+              "name": "ImportContentsDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Contents created.",
@@ -11835,9 +13373,23 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "checkReferrers": {
+                    "docs": "True to check referrers of this content.",
+                    "type": "optional<boolean>",
+                  },
+                  "dueTime": {
+                    "docs": "The due time.",
+                    "type": "optional<string>",
+                  },
+                  "status": {
+                    "docs": "The new status.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "ChangeStatusDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Content status changed.",
@@ -12150,7 +13702,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.ChangePlanDto",
               },
             },
             "response": {
@@ -12184,7 +13736,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.ChangePlanDto",
               },
             },
             "response": {
@@ -12391,7 +13943,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.CreateRuleDto",
               },
             },
             "response": {
@@ -12428,9 +13980,27 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "action": {
+                    "docs": undefined,
+                    "type": "optional<root.RuleActionDto>",
+                  },
+                  "isEnabled": {
+                    "docs": "Enable or disable the rule.",
+                    "type": "optional<boolean>",
+                  },
+                  "name": {
+                    "docs": "Optional rule name.",
+                    "type": "optional<string>",
+                  },
+                  "trigger": {
+                    "docs": undefined,
+                    "type": "optional<root.RuleTriggerDto>",
+                  },
+                },
               },
+              "name": "UpdateRuleDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Rule updated.",
@@ -12491,7 +14061,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.CreateRuleDto",
               },
             },
             "response": {
@@ -12780,7 +14350,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.AddFieldDto",
               },
             },
             "response": {
@@ -12808,7 +14378,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.AddFieldDto",
               },
             },
             "response": {
@@ -12836,7 +14406,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.UpdateFieldDto",
               },
             },
             "response": {
@@ -12868,7 +14438,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.UpdateFieldDto",
               },
             },
             "response": {
@@ -12896,7 +14466,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.ReorderFieldsDto",
               },
             },
             "response": {
@@ -12920,7 +14490,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.ReorderFieldsDto",
               },
             },
             "response": {
@@ -12943,9 +14513,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "fieldsInLists": {
+                    "docs": "The name of fields that are used in content lists.",
+                    "type": "optional<list<string>>",
+                  },
+                  "fieldsInReferences": {
+                    "docs": "The name of fields that are used in content references.",
+                    "type": "optional<list<string>>",
+                  },
+                },
               },
+              "name": "ConfigureUiFieldsDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema UI fields defined.",
@@ -13113,9 +14693,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The name of the category.",
+                    "type": "optional<string>",
+                  },
+                },
               },
+              "name": "ChangeCategoryDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema updated.",
@@ -13161,9 +14747,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "fieldRules": {
+                    "docs": "The field rules to configure.",
+                    "type": "optional<list<root.FieldRuleDto>>",
+                  },
+                },
               },
+              "name": "ConfigureFieldRulesDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema updated.",
@@ -13185,9 +14777,39 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "contentEditorUrl": {
+                    "docs": "The url to the editor plugin.",
+                    "type": "optional<string>",
+                  },
+                  "contentSidebarUrl": {
+                    "docs": "The url to a the sidebar plugin for content items.",
+                    "type": "optional<string>",
+                  },
+                  "contentsSidebarUrl": {
+                    "docs": "The url to a the sidebar plugin for content lists.",
+                    "type": "optional<string>",
+                  },
+                  "hints": {
+                    "docs": "Hints to describe the schema.",
+                    "type": "optional<string>",
+                  },
+                  "label": {
+                    "docs": "Optional label for the editor.",
+                    "type": "optional<string>",
+                  },
+                  "tags": {
+                    "docs": "Tags for automation processes.",
+                    "type": "optional<list<string>>",
+                  },
+                  "validateOnPublish": {
+                    "docs": "True to validate the content items on publish.",
+                    "type": "boolean",
+                  },
+                },
               },
+              "name": "UpdateSchemaDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Schema updated.",
@@ -13244,7 +14866,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.SchemaScriptsDto",
               },
             },
             "response": {
@@ -13515,7 +15137,7 @@ exports[`open api converter squidex simple 1`] = `
             "request": {
               "body": {
                 "docs": undefined,
-                "type": "map<string, unknown>",
+                "type": "root.AssignContributorDto",
               },
             },
             "response": {
@@ -13550,9 +15172,15 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/teams",
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The name of the team.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "CreateTeamDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Team created.",
@@ -13570,9 +15198,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "name": {
+                    "docs": "The name of the team.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "UpdateTeamDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Team updated.",
@@ -13634,9 +15268,23 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "sourceLanguage": {
+                    "docs": "The optional source language.",
+                    "type": "optional<string>",
+                  },
+                  "targetLanguage": {
+                    "docs": "The target language.",
+                    "type": "string",
+                  },
+                  "text": {
+                    "docs": "The text to translate.",
+                    "type": "string",
+                  },
+                },
               },
+              "name": "TranslateDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "Text translated.",
@@ -13725,9 +15373,27 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/user-management",
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "displayName": {
+                    "docs": "The display name (usually first name and last name) of the user.",
+                    "type": "string",
+                  },
+                  "email": {
+                    "docs": "The email of the user. Unique value.",
+                    "type": "string",
+                  },
+                  "password": {
+                    "docs": "The password of the user.",
+                    "type": "string",
+                  },
+                  "permissions": {
+                    "docs": "Additional permissions for the user.",
+                    "type": "list<string>",
+                  },
+                },
               },
+              "name": "CreateUserDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "User created.",
@@ -13745,9 +15411,27 @@ exports[`open api converter squidex simple 1`] = `
             },
             "request": {
               "body": {
-                "docs": undefined,
-                "type": "map<string, unknown>",
+                "properties": {
+                  "displayName": {
+                    "docs": "The display name (usually first name and last name) of the user.",
+                    "type": "string",
+                  },
+                  "email": {
+                    "docs": "The email of the user. Unique value.",
+                    "type": "string",
+                  },
+                  "password": {
+                    "docs": "The password of the user.",
+                    "type": "optional<string>",
+                  },
+                  "permissions": {
+                    "docs": "Additional permissions for the user.",
+                    "type": "list<string>",
+                  },
+                },
               },
+              "name": "UpdateUserDto",
+              "query-parameters": undefined,
             },
             "response": {
               "docs": "User created.",
