@@ -274,6 +274,11 @@ export async function generateIntermediateRepresentation({
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,
+            platformHeaders: {
+                language: "X-Fern-Language",
+                sdkName: "X-SDK-Name",
+                sdkVersion: "X-SDK-Version",
+            },
         },
     };
 }

@@ -42,6 +42,12 @@ types:
     properties:
       isAuthMandatory: boolean
       hasStreamingEndpoints: boolean
+      platformHeaders: PlatformHeaders
+  PlatformHeaders:
+    properties:
+      language: string
+      sdkName: string
+      sdkVersion: string
   ErrorDiscriminationStrategy:
     union:
       statusCode: {}
