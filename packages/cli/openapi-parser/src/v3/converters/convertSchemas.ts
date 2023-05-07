@@ -1,4 +1,5 @@
 import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
@@ -288,6 +289,9 @@ function maybeInjectDescription(schema: Schema, description: string | undefined)
     return schema;
 }
 
+const DEFAULT_KEY = ["default"];
+const DEFAULT_DESCRIPTION_KEYS = ["default", "description"];
+
 function getSingularAllOf({
     properties,
     allOf,
@@ -298,10 +302,14 @@ function getSingularAllOf({
     if (hasNoProperties({ properties }) && allOf.length === 1 && allOf[0] != null) {
         return allOf[0];
     } else if (hasNoProperties({ properties }) && allOf.length === 2 && allOf[0] != null && allOf[1] != null) {
-        if (Object.keys(allOf[0]) === ["default"] || Object.keys(allOf[0]) === ["default", "description"]) {
-            return allOf[1];
-        } else if (Object.keys(allOf[1]) === ["default"] || Object.keys(allOf[0]) === ["default", "description"]) {
-            return allOf[2];
+        const allOfZero = allOf[0];
+        const allOfOne = allOf[1];
+        const allOfZeroKeys = Object.keys(allOf[0]);
+        const allOfOneKeys = Object.keys(allOf[1]);
+        if (isEqual(allOfZeroKeys, DEFAULT_KEY) || isEqual(allOfZeroKeys, DEFAULT_DESCRIPTION_KEYS)) {
+            return allOfOne;
+        } else if (isEqual(allOfOneKeys, DEFAULT_KEY) || isEqual(allOfOneKeys, DEFAULT_DESCRIPTION_KEYS)) {
+            return allOfZero;
         }
     }
     return undefined;
